@@ -17,11 +17,13 @@
 
 ## Developers
 
- - {Dev01} - {Role(s)}
- - {Dev02} - {Role(s)}
- - {Dev03} - {Role(s)}
- - {Dev04} - {Role(s)}
- - {Dev05} - {Role(s)}
+ - {Angel Gonzalez} - {Project Lead, Programmer, Designer}
+ - {Aitor Luque} - {Lead Designer, QA}
+ - {Pau Fiol} - {Lead Artist}
+ - {Pau Pedra} - {Lead Programmer}
+ - {Gerard Romeu} - {Designer}
+ - {Guillem Turmo} - {Management}
+ - {Francisco Guerrero} - {UI Artist/Designer}
 
 ## License
 
