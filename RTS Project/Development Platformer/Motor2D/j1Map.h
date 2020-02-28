@@ -1,6 +1,7 @@
 #ifndef __j1MAP_H__
 #define __j1MAP_H__
 
+#include <list>
 #include "PugiXml/src/pugixml.hpp"
 #include "p2List.h"
 #include "p2Point.h"
@@ -53,16 +54,14 @@ struct Properties
 	~Properties()															//Deletes every property and frees all allocated memory.
 	{
 		LOG("The Properties' destructor has been called");
-		LOG("property_list has %d elements", property_list.count());
-
-		p2List_item<Property*>* prop_iterator = property_list.start;		//Item that will iterate all the items in the property_list.
+		LOG("property_list has %d elements", property_list.size());
 		 
 		int i = 0;
-		while (prop_iterator != NULL)
+
+		for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++ )
 		{
 			++i;
-			RELEASE(prop_iterator->data);									//Deletes all data members of a property and frees all allocated memory.
-			prop_iterator = prop_iterator->next;
+			RELEASE((*prop_iterator));									//Deletes all data members of a property and frees all allocated memory.
 		}
 
 		property_list.clear();												//Clears poperty_list by deleting all items in the list and freeing all allocated memory.
@@ -72,9 +71,10 @@ struct Properties
 
 	//values Get(p2SString name, values* default_value = nullptr) const;			//Will get a specified property's data members. //Revise string type (p2SString, const char*...)
 	
-	int Get(p2SString name, int default_value = 0) const;			//Will get a specified property's data members. //This version will be used exclusively for pathfinding. (Draw / Nodraw)
+	int Get(p2SString name, int default_value = 0);			//Will get a specified property's data members. //This version will be used exclusively for pathfinding. (Draw / Nodraw)
+	//Changed to non const because of list unknown problem
 
-	p2List<Property*>	property_list;
+	std::list<Property*>	property_list;
 };
 
 //Information of a specific object in the map.
@@ -166,9 +166,9 @@ struct MapData
 	int						tile_height;		//Tile height in pixels.
 	SDL_Color				background_color;	//Background colours.
 	MapTypes				type;				//Type of map (Orthogonal, Isometric, Staggered or Hexagonal)
-	p2List<TileSet*>		tilesets;			//List that accesses all tilesets and their data members/properties.
-	p2List<MapLayer*>		layers;				//List that accesses all layers and their data members/properties.
-	p2List<ObjectGroup*>	objectGroups;		//List that accesses all object groups and their data members/properties.
+	std::list<TileSet*>		tilesets;			//List that accesses all tilesets and their data members/properties.
+	std::list<MapLayer*>	layers;				//List that accesses all layers and their data members/properties.
+	std::list<ObjectGroup*>	objectGroups;		//List that accesses all object groups and their data members/properties.
 
 	p2SString music_File;
 };
@@ -192,7 +192,7 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;	//This method translates the position of the tile on the map to its equivalent position on screen.
 	iPoint WorldToMap(int x, int y) const;	//This method translates the position of the tile on the screen to its equivalent position on the map.
-	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer) const;
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer); //Changed to non const because of list unknown problem
 	
 	bool SwitchMaps(p2SString* new_map);	//Unloads the map and changes by another one. 
 	bool ChangeMap(const char* newMap);		//Change map with a fade time
@@ -207,7 +207,7 @@ private:
 	bool LoadObjectLayers(pugi::xml_node& node, ObjectGroup* group);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	TileSet* GetTilesetFromTileId(int id) const;
+	TileSet* GetTilesetFromTileId(int id); //Changed to non const because of list unknown problem
 
 public:
 

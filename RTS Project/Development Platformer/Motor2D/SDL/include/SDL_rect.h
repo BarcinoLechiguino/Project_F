@@ -133,7 +133,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_EnclosePoints(const SDL_Point * points,
  *  \return SDL_TRUE if there is an intersection, SDL_FALSE otherwise.
  */
 extern DECLSPEC SDL_bool SDLCALL SDL_IntersectRectAndLine(const SDL_Rect *
-                                                          collider, int *X1,
+                                                          rect, int *X1,
                                                           int *Y1, int *X2,
                                                           int *Y2);
 

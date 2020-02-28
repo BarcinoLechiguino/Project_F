@@ -56,20 +56,18 @@ void j1Map::Draw()
 	camera_collider.collider = { -App->render->camera.x, -App->render->camera.y, (int)winWidth, (int)winHeight };	//Sets the dimensions and position of the camera collider.
 
 	int cam_tileWidth = winWidth / data.tile_width;																	//Width of the camera in tiles.
-	int cam_tileHeight = winHeight / data.tile_height;																//Height of the camera in tiles.
-	
-	p2List_item<MapLayer*>* layer = data.layers.start;																//List_item that will iterate all layers.
+	int cam_tileHeight = winHeight / data.tile_height;																//Height of the camera in tiles.	
 
-	for (layer; layer != NULL; layer = layer->next)																	//As long as the item is not null.
+	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
 	{
-		cam_tilePos.x = (-App->render->camera.x * layer->data->speed) / data.tile_width;							//Position in the X axis of the camera in tiles. Takes into account parallax speed.
-		cam_tilePos.y = (-App->render->camera.y * layer->data->speed) / data.tile_height;							//Position in the Y axis of the camera in tiles. Takes into account parallax speed.
+		cam_tilePos.x = (-App->render->camera.x * (*layer)->speed) / data.tile_width;							//Position in the X axis of the camera in tiles. Takes into account parallax speed.
+		cam_tilePos.y = (-App->render->camera.y * (*layer)->speed) / data.tile_height;							//Position in the Y axis of the camera in tiles. Takes into account parallax speed.
 
 		for (uint y = cam_tilePos.y; y < (cam_tilePos.y + cam_tileHeight + 2); ++y)									//While y is less than the camera's height in tiles //Change it so it is not hardcoded.
 		{
 			for (uint x = cam_tilePos.x; x < (cam_tilePos.x + cam_tileWidth + 2); ++x)								//While x is less than the camera's width in tiles. //Change it so it is not hardcoded.
 			{	
-				int tile_id = layer->data->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
+				int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
 				if (tile_id > 0)																					//If tile_id is not 0
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);												//Gets the tileset corresponding with the tile_id. If tile id is 34 and the current tileset first gid is 35, that means that the current  tile belongs to the previous tileset. 
@@ -79,45 +77,45 @@ void j1Map::Draw()
 						iPoint pos = MapToWorld(x, y);																//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map pos: x = 1 --> World pos: x = 32...
 
 					
-						if (layer->data->name == "Background")														//If the name of the layer  is "Background" its elements will be blitted with the specified parameters.
+						if ((*layer)->name == "Background")														//If the name of the layer  is "Background" its elements will be blitted with the specified parameters.
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
 						}
-						else if (layer->data->name == "Parallax")
+						else if ((*layer)->name == "Parallax")
 						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect, false, layer->data->speed);	//As we need to add parallax to this layer, we pass a value as speed argument.
+							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect, false, (*layer)->speed);	//As we need to add parallax to this layer, we pass a value as speed argument.
 						}
-						else if (layer->data->name == "ParallaxDecor")
+						else if ((*layer)->name == "ParallaxDecor")
 						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect, false, layer->data->speed);
+							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect, false, (*layer)->speed);
 						}
-						else if (layer->data->name == "Decor")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-						}
-						else if (layer->data->name == "Ground")
+						else if ((*layer)->name == "Decor")
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
 						}
-						else if (layer->data->name == "Platforms")
+						else if ((*layer)->name == "Ground")
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
 						}
-						else if (layer->data->name == "Hazards")
+						else if ((*layer)->name == "Platforms")
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
 						}
-						else if (layer->data->name == "Desactivable")
+						else if ((*layer)->name == "Hazards")
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
 						}
-						else if (layer->data->name == "Portal")
+						else if ((*layer)->name == "Desactivable")
+						{
+							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
+						}
+						else if ((*layer)->name == "Portal")
 						{
 							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
 						}
 
 						//---------------------- PATHFINDING META TILES ----------------------
-						else if (layer->data->name == "PathfindingCollisions")
+						else if ((*layer)->name == "PathfindingCollisions")
 						{
 							if (pathfindingMetaDebug == true)									//If pathfindingMetaDebug is true (Switch the bool state with F11)
 							{
@@ -193,22 +191,28 @@ SDL_Rect TileSet::GetTileRect(uint tile_id) const
 	return tile_rect;
 }
 
-TileSet* j1Map::GetTilesetFromTileId(int id) const				//Revise. Its possible that it should do id < tilesetIter->data->firstgid.
+TileSet* j1Map::GetTilesetFromTileId(int id) 				//Revise. Its possible that it should do id < tilesetIter->data->firstgid.
 {
-	p2List_item<TileSet*>* tilesetIter = data.tilesets.start;
-	//TileSet* ret = NULL;
-	TileSet* ret = tilesetIter->data;
+	std::list<TileSet*>::iterator tilesetIter = data.tilesets.begin();
 
-	while (tilesetIter != NULL)
+	//TileSet* ret = NULL;
+	TileSet* ret = (*tilesetIter);
+
+	while( tilesetIter != data.tilesets.begin() )
 	{
-		if (id < /*>=*/ tilesetIter->data->firstgid)
+		if (id < /*>=*/ (*tilesetIter)->firstgid)
 		{
 			//ret = tilesetIter->data;
-			ret = tilesetIter->prev->data;
+			tilesetIter--; //Fix
+			ret = (*tilesetIter);
+			tilesetIter++;
+
 			break;
 		}
-		ret = tilesetIter->data;
-		tilesetIter = tilesetIter->next;
+
+		ret = (*tilesetIter);
+
+		tilesetIter++;
 	}
 	
 	return ret;
@@ -220,36 +224,28 @@ bool j1Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets from memory
-	p2List_item<TileSet*>* item;
-	item = data.tilesets.start;
-
-	while(item != NULL)
+	for (std::list<TileSet*>::iterator item = data.tilesets.begin() ; item != data.tilesets.end(); item++)
 	{	
-		SDL_DestroyTexture(item->data->texture);
-		RELEASE(item->data);
-		item = item->next;
+		SDL_DestroyTexture((*item)->texture);
+		RELEASE((*item));
 	}
 	data.tilesets.clear();
 
 	// Remove all layers from memory
-	p2List_item<MapLayer*>* map_layer_item;
-	map_layer_item = data.layers.start;
-
-	while (map_layer_item != NULL)
-	{	
-		RELEASE(map_layer_item->data);
-		map_layer_item = map_layer_item->next;
+	for (std::list<MapLayer*>::iterator map_layer_item = data.layers.begin(); map_layer_item != data.layers.end(); map_layer_item++)
+	{
+		RELEASE((*map_layer_item));
+		map_layer_item++;
 	}
 	data.layers.clear();
 
 	//Removing all Objects from memory
-	p2List_item<ObjectGroup*>* object_iterator = data.objectGroups.start;
-	while (object_iterator != NULL)
+	for (std::list<ObjectGroup*>::iterator object_iterator = data.objectGroups.begin() ; object_iterator != data.objectGroups.end();object_iterator++)
 	{	
-		delete[] object_iterator->data->object;		//Frees the memory allocated to the object array. LoadObjectLayers() line 544.
+		delete[] (*object_iterator)->object;		//Frees the memory allocated to the object array. LoadObjectLayers() line 544.
 
-		RELEASE(object_iterator->data);				//RELEASE frees all memory allocated for a list item. All declared news that were added to the list will be deleted here.
-		object_iterator = object_iterator->next;
+		RELEASE((*object_iterator));				//RELEASE frees all memory allocated for a list item. All declared news that were added to the list will be deleted here.
+		object_iterator++;
 	}
 	data.objectGroups.clear();
 	
@@ -301,7 +297,7 @@ bool j1Map::Load(const char* file_name)
 			ret = LoadTilesetImage(tileset, set);
 		}
 
-		data.tilesets.add(set);
+		data.tilesets.push_back(set);
 	}
 
 	// Load layer info ----------------------------------------------
@@ -315,7 +311,7 @@ bool j1Map::Load(const char* file_name)
 			ret = LoadLayer(layer, set_layer);
 		}
 
-		data.layers.add(set_layer);
+		data.layers.push_back(set_layer);
 	}
 
 	//Load Object / ObjectGroup / Collider Info ------------------------------------------
@@ -333,7 +329,7 @@ bool j1Map::Load(const char* file_name)
 				LOG("Creating coins from object layer %s", new_objectgroup->name.GetString());
 			}
 		}
-		data.objectGroups.add(new_objectgroup);						//Adds the object group being iterated to the list.
+		data.objectGroups.push_back(new_objectgroup);						//Adds the object group being iterated to the list.
 	}
 
 	//--------------------------- LOGS ----------------------------
@@ -343,38 +339,32 @@ bool j1Map::Load(const char* file_name)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
-		p2List_item<TileSet*>* item = data.tilesets.start;
-		while(item != NULL)
+		
+		for(std::list<TileSet*>::iterator item = data.tilesets.begin() ; item != data.tilesets.end() ; item++)
 		{
-			TileSet* tileset = item->data;
+			TileSet* tileset = (*item);
 			LOG("Tileset ----");
 			LOG("name: %s firstgid: %d", tileset->name.GetString(), tileset->firstgid);
 			LOG("tile width: %d tile height: %d", tileset->tile_width, tileset->tile_height);
 			LOG("spacing: %d margin: %d", tileset->spacing, tileset->margin);
-			item = item->next;
 		}
 
-		// Adapt this code with your own variables
-		
-		p2List_item<MapLayer*>* item_layer = data.layers.start;
-		while (item_layer != NULL)
+		for (std::list<MapLayer*>::iterator item_layer = data.layers.begin(); item_layer != data.layers.end(); item_layer++)
 		{
-			MapLayer* layer = item_layer->data;
+			MapLayer* layer = (*item_layer);
 			LOG("Layer ----");
 			LOG("name: %s", layer->name.GetString());
 			LOG("layer width: %d layer height: %d", layer->width, layer->height);
 			LOG("parallax speed: %f", layer->speed);
-			item_layer = item_layer->next;
 		}
 
-		p2List_item<ObjectGroup*>* obj_layer = data.objectGroups.start;
-		while (obj_layer != NULL)
+		for (std::list<ObjectGroup*>::iterator obj_layer = data.objectGroups.begin(); obj_layer != data.objectGroups.end(); obj_layer++)
 		{
-			ObjectGroup* object = obj_layer->data;
+			ObjectGroup* object = (*obj_layer);
 			LOG("Group ----");
 			LOG("Gname: %s", object->name.GetString());
 
-			obj_layer = obj_layer->next;
+
 		}
 	}
 
@@ -665,22 +655,20 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)							/
 			p->name				= prop.attribute("name").as_string();								//Sets the Property's name to the name of the property being iterated.
 			p->intValue			= prop.attribute("value").as_int();								//Sets the Property's value to the value of the property being iterated.
 
-			properties.property_list.add(p);														//Adds the property beint iterated to property_list.
+			properties.property_list.push_back(p);														//Adds the property beint iterated to property_list.
 		}
 	}
 
 	return ret;
 }
 
-bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
+bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 {
 	bool ret = false;
 
-	p2List_item<MapLayer*>* item = data.layers.start;								//List item that iterates the layers list.
-
-	for (item = data.layers.start; item != NULL; item = item->next)					//While the item is not NULL, continue to iterate.
+	for (std::list<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end() ; item++)					//While the item is not NULL, continue to iterate.
 	{
-		MapLayer* layer = item->data;												//Sets the item of the list as item->data. Done for readability.
+		MapLayer* layer = (*item);												//Sets the item of the list as item->data. Done for readability.
 
 		if (layer->properties.Get("Navigation", 0) == 0)							//If the value of the Navigation property of the mapLayer is 0.
 		{
@@ -723,20 +711,17 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer) const
 	return ret;
 }
 
-int Properties::Get(p2SString name, int default_value) const					//Revise how to be able to not have a property without default value being nullptr.
+int Properties::Get(p2SString name, int default_value)					//Revise how to be able to not have a property without default value being nullptr.
 {
-	p2List_item<Property*>* prop_iterator = property_list.start;
+	
 
-	while (prop_iterator != NULL)
+	for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++)
 	{
-		if (prop_iterator->data->name == name)										//If the string passed as argument matches the name of a property in the property_list.						
+		if ((*prop_iterator)->name == name)										//If the string passed as argument matches the name of a property in the property_list.						
 		{
-			return prop_iterator->data->intValue;										//Returns the value of the property.
+			return (*prop_iterator)->intValue;										//Returns the value of the property.
 		}
-
-		prop_iterator = prop_iterator->next;
 	}
-
 	return default_value;															//If no property is found then the value returned is 0.
 }
 

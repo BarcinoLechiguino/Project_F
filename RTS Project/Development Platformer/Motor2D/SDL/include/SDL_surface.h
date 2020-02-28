@@ -335,7 +335,7 @@ extern DECLSPEC int SDLCALL SDL_GetSurfaceBlendMode(SDL_Surface * surface,
  *  and destination surfaces.
  */
 extern DECLSPEC SDL_bool SDLCALL SDL_SetClipRect(SDL_Surface * surface,
-                                                 const SDL_Rect * collider);
+                                                 const SDL_Rect * rect);
 
 /**
  *  Gets the clipping rectangle for the destination surface in a blit.
@@ -344,7 +344,7 @@ extern DECLSPEC SDL_bool SDLCALL SDL_SetClipRect(SDL_Surface * surface,
  *  with the correct values.
  */
 extern DECLSPEC void SDLCALL SDL_GetClipRect(SDL_Surface * surface,
-                                             SDL_Rect * collider);
+                                             SDL_Rect * rect);
 
 /**
  *  Creates a new surface of the specified format, and then copies and maps
@@ -383,7 +383,7 @@ extern DECLSPEC int SDLCALL SDL_ConvertPixels(int width, int height,
  *  \return 0 on success, or -1 on error.
  */
 extern DECLSPEC int SDLCALL SDL_FillRect
-    (SDL_Surface * dst, const SDL_Rect * collider, Uint32 color);
+    (SDL_Surface * dst, const SDL_Rect * rect, Uint32 color);
 extern DECLSPEC int SDLCALL SDL_FillRects
     (SDL_Surface * dst, const SDL_Rect * rects, int count, Uint32 color);
 

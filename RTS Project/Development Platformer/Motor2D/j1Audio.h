@@ -4,6 +4,7 @@
 #include "j1Module.h"
 #include "SDL_mixer\include\SDL_mixer.h"
 #include "p2List.h"
+#include <list>
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -44,7 +45,7 @@ public:
 private:
 
 	_Mix_Music*			music;
-	p2List<Mix_Chunk*>	fx;
+	std::list<Mix_Chunk*>	fx;
 	
 	uint				volume_fx;
 

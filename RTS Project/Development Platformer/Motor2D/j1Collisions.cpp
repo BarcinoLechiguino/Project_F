@@ -215,15 +215,14 @@ void j1Collisions::Collider_Debug()
 //Loads all the objects that are in the tmx map file and iterates through them generating a new collider for each one of them.
 void j1Collisions::LoadColliderFromMap()																			// Remember to call it in fade to black.
 {
-	p2List_item<ObjectGroup*>* object_iterator = App->map->data.objectGroups.start;									//Declares a list item pointer that iterates through the ObjectGroup list and sets it starting position to the first objectgroup in the list.  
-	while (object_iterator != NULL)
+										//Declares a list item pointer that iterates through the ObjectGroup list and sets it starting position to the first objectgroup in the list.  
+	for (std::list<ObjectGroup*>::iterator object_iterator = App->map->data.objectGroups.begin() ; object_iterator != App->map->data.objectGroups.end(); object_iterator++)
 	{
-		for (int i = 0; i < object_iterator->data->num_objects; i++)												//This loop will iterate as many times as objects the objectgroup being iterated has. Done like this to avoid wasting memory.
+		for (int i = 0; i < (*object_iterator)->num_objects; i++)												//This loop will iterate as many times as objects the objectgroup being iterated has. Done like this to avoid wasting memory.
 		{
-			AddCollider(*object_iterator->data->object[i].collider, object_iterator->data->object[i].type, NULL);	//Adds a new collider for each object that is iterated.
-			RELEASE(object_iterator->data->object[i].collider);														//Deletes from memory the buffer collider specific for an object. LoadObjectLayers() --> SDL_Rect* collider = new SDL_Rect(); at line 555.
-		}
-		object_iterator = object_iterator->next;																	//Gets the next objectGroup that will be iterated through to load all its objects.
+			AddCollider(*(*object_iterator)->object[i].collider, (*object_iterator)->object[i].type, NULL);	//Adds a new collider for each object that is iterated.
+			RELEASE((*object_iterator)->object[i].collider);														//Deletes from memory the buffer collider specific for an object. LoadObjectLayers() --> SDL_Rect* collider = new SDL_Rect(); at line 555.
+		}																	//Gets the next objectGroup that will be iterated through to load all its objects.
 	}
 }
 

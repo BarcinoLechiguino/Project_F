@@ -182,7 +182,7 @@ extern DECLSPEC void SDLCALL SDL_StopTextInput(void);
  *
  *  \sa SDL_StartTextInput()
  */
-extern DECLSPEC void SDLCALL SDL_SetTextInputRect(SDL_Rect *collider);
+extern DECLSPEC void SDLCALL SDL_SetTextInputRect(SDL_Rect *rect);
 
 /**
  *  \brief Returns whether the platform has some screen keyboard support.

@@ -5,7 +5,7 @@
 #include "j1Fonts.h"
 
 #include "SDL\include\SDL.h"
-#include "SDL_TTF\include\SDL_ttf.h"
+#include "SDL_ttf\include\SDL_ttf.h"
 #pragma comment( lib, "SDL_ttf/libx86/SDL2_ttf.lib" )
 
 j1Fonts::j1Fonts() : j1Module()
@@ -56,11 +56,10 @@ bool j1Fonts::Start()
 bool j1Fonts::CleanUp()
 {
 	LOG("Freeing True Type fonts and library");
-	p2List_item<TTF_Font*>* item;
 
-	for (item = fonts.start; item != NULL; item = item->next)
+	for (std::list<TTF_Font*>::iterator item = fonts.begin(); item != fonts.end(); item++)
 	{
-		TTF_CloseFont(item->data);
+		TTF_CloseFont((*item));
 	}
 
 	fonts.clear();
@@ -80,7 +79,7 @@ TTF_Font* const j1Fonts::Load(const char* path, int size)
 	else
 	{
 		LOG("Successfully loaded font %s size %d", path, size);
-		fonts.add(font);
+		fonts.push_back(font);
 	}
 
 	return font;

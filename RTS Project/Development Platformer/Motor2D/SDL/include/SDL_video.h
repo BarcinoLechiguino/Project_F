@@ -296,7 +296,7 @@ extern DECLSPEC const char * SDLCALL SDL_GetDisplayName(int displayIndex);
  *
  *  \sa SDL_GetNumVideoDisplays()
  */
-extern DECLSPEC int SDLCALL SDL_GetDisplayBounds(int displayIndex, SDL_Rect * collider);
+extern DECLSPEC int SDLCALL SDL_GetDisplayBounds(int displayIndex, SDL_Rect * rect);
 
 /**
  *  \brief Get the dots/pixels-per-inch for a display

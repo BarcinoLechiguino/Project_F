@@ -61,7 +61,7 @@ public:
 
 public:
 	int					currentMap;
-	p2List<p2SString*>	map_names;
+	std::list<p2SString*>	map_names;
 	float				fade_time;
 	bool				to_end;
 	p2SString			music_path;

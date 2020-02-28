@@ -378,7 +378,7 @@ extern DECLSPEC int SDLCALL SDL_GetTextureBlendMode(SDL_Texture * texture,
  *  \note This is a fairly slow function.
  */
 extern DECLSPEC int SDLCALL SDL_UpdateTexture(SDL_Texture * texture,
-                                              const SDL_Rect * collider,
+                                              const SDL_Rect * rect,
                                               const void *pixels, int pitch);
 
 /**
@@ -401,7 +401,7 @@ extern DECLSPEC int SDLCALL SDL_UpdateTexture(SDL_Texture * texture,
  *        this function is available if your pixel data is not contiguous.
  */
 extern DECLSPEC int SDLCALL SDL_UpdateYUVTexture(SDL_Texture * texture,
-                                                 const SDL_Rect * collider,
+                                                 const SDL_Rect * rect,
                                                  const Uint8 *Yplane, int Ypitch,
                                                  const Uint8 *Uplane, int Upitch,
                                                  const Uint8 *Vplane, int Vpitch);
@@ -422,7 +422,7 @@ extern DECLSPEC int SDLCALL SDL_UpdateYUVTexture(SDL_Texture * texture,
  *  \sa SDL_UnlockTexture()
  */
 extern DECLSPEC int SDLCALL SDL_LockTexture(SDL_Texture * texture,
-                                            const SDL_Rect * collider,
+                                            const SDL_Rect * rect,
                                             void **pixels, int *pitch);
 
 /**
@@ -515,7 +515,7 @@ extern DECLSPEC void SDLCALL SDL_RenderGetLogicalSize(SDL_Renderer * renderer, i
  *  \sa SDL_RenderSetLogicalSize()
  */
 extern DECLSPEC int SDLCALL SDL_RenderSetViewport(SDL_Renderer * renderer,
-                                                  const SDL_Rect * collider);
+                                                  const SDL_Rect * rect);
 
 /**
  *  \brief Get the drawing area for the current target.
@@ -523,7 +523,7 @@ extern DECLSPEC int SDLCALL SDL_RenderSetViewport(SDL_Renderer * renderer,
  *  \sa SDL_RenderSetViewport()
  */
 extern DECLSPEC void SDLCALL SDL_RenderGetViewport(SDL_Renderer * renderer,
-                                                   SDL_Rect * collider);
+                                                   SDL_Rect * rect);
 
 /**
  *  \brief Set the clip rectangle for the current target.
@@ -537,7 +537,7 @@ extern DECLSPEC void SDLCALL SDL_RenderGetViewport(SDL_Renderer * renderer,
  *  \sa SDL_RenderGetClipRect()
  */
 extern DECLSPEC int SDLCALL SDL_RenderSetClipRect(SDL_Renderer * renderer,
-                                                  const SDL_Rect * collider);
+                                                  const SDL_Rect * rect);
 
 /**
  *  \brief Get the clip rectangle for the current target.
@@ -549,7 +549,7 @@ extern DECLSPEC int SDLCALL SDL_RenderSetClipRect(SDL_Renderer * renderer,
  *  \sa SDL_RenderSetClipRect()
  */
 extern DECLSPEC void SDLCALL SDL_RenderGetClipRect(SDL_Renderer * renderer,
-                                                   SDL_Rect * collider);
+                                                   SDL_Rect * rect);
 
 /**
  *  \brief Get whether clipping is enabled on the given renderer.
@@ -725,7 +725,7 @@ extern DECLSPEC int SDLCALL SDL_RenderDrawLines(SDL_Renderer * renderer,
  *  \return 0 on success, or -1 on error
  */
 extern DECLSPEC int SDLCALL SDL_RenderDrawRect(SDL_Renderer * renderer,
-                                               const SDL_Rect * collider);
+                                               const SDL_Rect * rect);
 
 /**
  *  \brief Draw some number of rectangles on the current rendering target.
@@ -750,7 +750,7 @@ extern DECLSPEC int SDLCALL SDL_RenderDrawRects(SDL_Renderer * renderer,
  *  \return 0 on success, or -1 on error
  */
 extern DECLSPEC int SDLCALL SDL_RenderFillRect(SDL_Renderer * renderer,
-                                               const SDL_Rect * collider);
+                                               const SDL_Rect * rect);
 
 /**
  *  \brief Fill some number of rectangles on the current rendering target with the drawing color.
@@ -821,7 +821,7 @@ extern DECLSPEC int SDLCALL SDL_RenderCopyEx(SDL_Renderer * renderer,
  *  \warning This is a very slow operation, and should not be used frequently.
  */
 extern DECLSPEC int SDLCALL SDL_RenderReadPixels(SDL_Renderer * renderer,
-                                                 const SDL_Rect * collider,
+                                                 const SDL_Rect * rect,
                                                  Uint32 format,
                                                  void *pixels, int pitch);
 

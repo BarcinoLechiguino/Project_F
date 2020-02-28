@@ -1,6 +1,7 @@
 #ifndef __j1APP_H__
 #define __j1APP_H__
 
+#include <list>
 #include "p2List.h"
 #include "j1Module.h"
 #include "j1PerfTimer.h"
@@ -84,7 +85,7 @@ private:
 
 	// Load / Save
 	bool LoadGameNow();
-	bool SavegameNow() const;
+	bool SavegameNow(); //Chenged to non const due to list unknown problem
 
 public:
 
@@ -116,7 +117,7 @@ public:
 
 private:
 
-	p2List<j1Module*>	modules;
+	std::list<j1Module*>	modules;
 	int					argc;
 	char**				args;
 
