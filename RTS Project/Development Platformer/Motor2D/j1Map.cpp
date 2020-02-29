@@ -235,17 +235,15 @@ bool j1Map::CleanUp()
 	for (std::list<MapLayer*>::iterator map_layer_item = data.layers.begin(); map_layer_item != data.layers.end(); map_layer_item++)
 	{
 		RELEASE((*map_layer_item));
-		map_layer_item++;
 	}
 	data.layers.clear();
 
 	//Removing all Objects from memory
-	for (std::list<ObjectGroup*>::iterator object_iterator = data.objectGroups.begin() ; object_iterator != data.objectGroups.end();object_iterator++)
+	for (std::list<ObjectGroup*>::iterator object_iterator = data.objectGroups.begin() ; object_iterator != data.objectGroups.end() ; object_iterator++)
 	{	
 		delete[] (*object_iterator)->object;		//Frees the memory allocated to the object array. LoadObjectLayers() line 544.
 
 		RELEASE((*object_iterator));				//RELEASE frees all memory allocated for a list item. All declared news that were added to the list will be deleted here.
-		object_iterator++;
 	}
 	data.objectGroups.clear();
 	

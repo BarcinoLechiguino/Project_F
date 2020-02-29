@@ -73,7 +73,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	for (std::list<j1Module*>::iterator item = modules.end(); item != modules.begin() ; item--)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() ; item++)
 	{
 		RELEASE((*item));
 	}
@@ -338,9 +338,12 @@ bool j1App::CleanUp()
 {
 	bool ret = true;
 
-	for (std::list<j1Module*>::iterator item = modules.end(); item != modules.begin() && ret == true; item--)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
 	{
-		ret = (*item)->CleanUp();
+		if ((*item)->name != nullptr)
+		{
+			ret = (*item)->CleanUp();
+		}
 	}
 
 	return ret;
