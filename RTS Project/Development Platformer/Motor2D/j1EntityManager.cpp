@@ -18,7 +18,7 @@
 
 j1EntityManager::j1EntityManager() : player(nullptr), player2(nullptr)	//Sets the j1Player1* pointers declared in the header to nullptr
 {
-	name.create("entities");
+	name = ("entities");
 }
 
 j1EntityManager::~j1EntityManager()

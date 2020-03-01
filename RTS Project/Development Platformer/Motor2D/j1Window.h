@@ -37,7 +37,7 @@ public:
 	//The surface contained by the window
 	SDL_Surface* screen_surface;
 
-	p2SString	title;
+	std::string	title;
 	int		width;
 	int		height;
 	int		scale;

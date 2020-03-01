@@ -579,12 +579,12 @@ void j1Player2::SetPlayer2Position()
 	if (App->scene->firstMap == true)
 	{
 		player.mapTag = player_entity.child("factoryMap").attribute("mapName").as_string();
-		LoadPlayerPosition(nameTag.GetString(), player.mapTag.GetString());
+		LoadPlayerPosition(nameTag.c_str(), player.mapTag.c_str());
 	}
 	if (App->scene->secondMap == true)
 	{
 		player.mapTag = player_entity.child("forestMap").attribute("mapName").as_string();
-		LoadPlayerPosition(nameTag.GetString(), player.mapTag.GetString());
+		LoadPlayerPosition(nameTag.c_str(), player.mapTag.c_str());
 	}
 }
 

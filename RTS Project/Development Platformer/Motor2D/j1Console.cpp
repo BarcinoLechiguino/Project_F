@@ -16,7 +16,7 @@
 
 j1Console::j1Console() : j1Module(), commandWasFound(false)
 {
-	name.create("console");
+	name = ("console");
 }
 
 j1Console::~j1Console()

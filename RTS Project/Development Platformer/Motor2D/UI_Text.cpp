@@ -240,6 +240,6 @@ void UI_Text::RefreshTextInput(const char* newString)
 
 	if (currentTex != NULL)
 	{
-		LOG("CurrentTex is %s", newString);
+		//LOG("CurrentTex is %s", newString);
 	}
 }

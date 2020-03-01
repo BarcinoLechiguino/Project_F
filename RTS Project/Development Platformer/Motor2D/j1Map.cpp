@@ -22,7 +22,7 @@
 
 j1Map::j1Map() : j1Module(), map_loaded(false)
 {
-	name.create("map");
+	name = ("map");
 }
 
 // Destructor
@@ -35,7 +35,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	LOG("Loading Map Parser");
 	bool ret = true;
 
-	folder.create(config.child("folder").child_value());
+	folder = (config.child("folder").child_value());
 
 	/*spawn_position_cam.x = config.child("renderer").child("cam").attribute("x").as_float();
 	spawn_position_cam.x = config.child("renderer").child("cam").attribute("y").as_float();*/
@@ -258,13 +258,13 @@ bool j1Map::CleanUp()
 }
 
 // Load new map
-bool j1Map::Load(const char* file_name)
+bool j1Map::Load(std::string file_name)
 {
 	BROFILER_CATEGORY("Load Map", Profiler::Color::Khaki);
 	bool ret = true;
-	p2SString tmp("%s%s", folder.GetString(), file_name);
+	std::string tmp = folder + file_name;
 
-	pugi::xml_parse_result result = map_file.load_file(tmp.GetString());
+	pugi::xml_parse_result result = map_file.load_file(tmp.c_str());
 
 	if(result == NULL)
 	{
@@ -322,9 +322,9 @@ bool j1Map::Load(const char* file_name)
 		{
 			ret = LoadObjectLayers(objectgroup, new_objectgroup);	//Loads the data members of the objectgroup that is being iterated.
 			
-			if (new_objectgroup->name.GetString() == "Coins")
+			if (new_objectgroup->name.c_str() == "Coins")
 			{
-				LOG("Creating coins from object layer %s", new_objectgroup->name.GetString());
+				LOG("Creating coins from object layer %s", new_objectgroup->name.c_str());
 			}
 		}
 		data.objectGroups.push_back(new_objectgroup);						//Adds the object group being iterated to the list.
@@ -342,7 +342,7 @@ bool j1Map::Load(const char* file_name)
 		{
 			TileSet* tileset = (*item);
 			LOG("Tileset ----");
-			LOG("name: %s firstgid: %d", tileset->name.GetString(), tileset->firstgid);
+			LOG("name: %s firstgid: %d", tileset->name.c_str(), tileset->firstgid);
 			LOG("tile width: %d tile height: %d", tileset->tile_width, tileset->tile_height);
 			LOG("spacing: %d margin: %d", tileset->spacing, tileset->margin);
 		}
@@ -351,7 +351,7 @@ bool j1Map::Load(const char* file_name)
 		{
 			MapLayer* layer = (*item_layer);
 			LOG("Layer ----");
-			LOG("name: %s", layer->name.GetString());
+			LOG("name: %s", layer->name.c_str());
 			LOG("layer width: %d layer height: %d", layer->width, layer->height);
 			LOG("parallax speed: %f", layer->speed);
 		}
@@ -360,12 +360,9 @@ bool j1Map::Load(const char* file_name)
 		{
 			ObjectGroup* object = (*obj_layer);
 			LOG("Group ----");
-			LOG("Gname: %s", object->name.GetString());
-
-
+			LOG("Gname: %s", object->name.c_str());
 		}
 	}
-
 	map_loaded = ret;
 
 	return ret;
@@ -390,33 +387,33 @@ bool j1Map::LoadMap()
 		data.tile_height	= map.attribute("tileheight").as_int();
 		data.music_File		= map.child("properties").child("property").attribute("value").as_string();
 
-		p2SString bg_color(map.attribute("backgroundcolor").as_string());
+		std::string bg_color = (map.attribute("backgroundcolor").as_string());
 
 		data.background_color.r = 0;
 		data.background_color.g = 0;
 		data.background_color.b = 0;
 		data.background_color.a = 0;
 
-		if (bg_color.Length() > 0)
+		if (bg_color.length() > 0)
 		{
-			p2SString red, green, blue;
-			bg_color.SubString(1, 2, red);
-			bg_color.SubString(3, 4, green);
-			bg_color.SubString(5, 6, blue);
+			std::string red, green, blue;
+			red = bg_color.substr(1, 2);
+			green = bg_color.substr(3, 4);
+			blue = bg_color.substr(5, 6);
 
 			int v = 0;
 
-			sscanf_s(red.GetString(), "%x", &v);
+			sscanf_s(red.c_str(), "%x", &v);
 			if (v >= 0 && v <= 255) data.background_color.r = v;
 
-			sscanf_s(green.GetString(), "%x", &v);
+			sscanf_s(green.c_str(), "%x", &v);
 			if (v >= 0 && v <= 255) data.background_color.g = v;
 
-			sscanf_s(blue.GetString(), "%x", &v);
+			sscanf_s(blue.c_str(), "%x", &v);
 			if (v >= 0 && v <= 255) data.background_color.b = v;
 		}
 
-		p2SString orientation(map.attribute("orientation").as_string());
+		std::string orientation = (map.attribute("orientation").as_string());
 
 		if(orientation == "orthogonal")
 		{
@@ -442,7 +439,7 @@ bool j1Map::LoadMap()
 bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
-	set->name.create(tileset_node.attribute("name").as_string());
+	set->name = (tileset_node.attribute("name").as_string());
 	set->firstgid		= tileset_node.attribute("firstgid").as_int();
 	set->tile_width		= tileset_node.attribute("tilewidth").as_int();
 	set->tile_height	= tileset_node.attribute("tileheight").as_int();
@@ -477,7 +474,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	}
 	else
 	{
-		set->texture = App->tex->Load(PATH(folder.GetString(), image.attribute("source").as_string()));
+		set->texture = App->tex->Load(PATH(folder.c_str(), image.attribute("source").as_string()));
 		int w, h;
 		SDL_QueryTexture(set->texture, NULL, NULL, &w, &h);
 		set->tex_width = image.attribute("width").as_int();
@@ -568,7 +565,7 @@ bool j1Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 
 		objectgroup->object[index].collider = collider;					//Passes the buffer rect's data members to the object in this index position. Need to use a buffer due to objectgroup only accepting a class expression.
 
-		p2SString object_type(object_iterator.attribute("type").as_string());		//Buffer string that improves readability of the code.
+		std::string object_type = (object_iterator.attribute("type").as_string());		//Buffer string that improves readability of the code.
 
 		//Checking the object type string being loaded from the tmx file. It's a string that's abitrarily set on Tiled, so it should be known exactly which type strings will be passed. 
 		if (object_type == "solid")
@@ -699,7 +696,6 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 				}
 			}
 		}
-
 		*buffer		= map;															//Sets buffer as the map array.
 		width		= data.width;													//Sets width to the width of the map in tiles.
 		height		= data.height;													//Sets height to the height of the map in tiles. 
@@ -709,10 +705,8 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	return ret;
 }
 
-int Properties::Get(p2SString name, int default_value)					//Revise how to be able to not have a property without default value being nullptr.
+int Properties::Get(std::string name, int default_value)					//Revise how to be able to not have a property without default value being nullptr.
 {
-	
-
 	for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++)
 	{
 		if ((*prop_iterator)->name == name)										//If the string passed as argument matches the name of a property in the property_list.						
@@ -740,12 +734,12 @@ int Properties::Get(p2SString name, int default_value)					//Revise how to be ab
 //	return *default_value;															//If no property is found then the value returned is 0.
 //}
 
-bool j1Map::SwitchMaps(p2SString* new_map) // switch map function that passes the number of map defined in config.xml
+bool j1Map::SwitchMaps(std::string new_map) // switch map function that passes the number of map defined in config.xml
 {
 	CleanUp();
 	App->scene->to_end = false; // we put this in false so there are no repetitions
-	Load(new_map->GetString());
-	App->audio->PlayMusic(App->map->data.music_File.GetString());
+	Load( new_map.c_str() );
+	App->audio->PlayMusic(App->map->data.music_File.c_str());
 
 	return true;
 }

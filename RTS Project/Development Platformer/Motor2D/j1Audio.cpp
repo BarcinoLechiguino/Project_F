@@ -12,7 +12,7 @@
 j1Audio::j1Audio() : j1Module()
 {
 	music = NULL;
-	name.create("audio");
+	name = ("audio");
 }
 
 // Destructor
@@ -56,7 +56,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	music_folder.create(config.child("folder").child_value());
+	music_folder = (config.child("folder").child_value());
 
 	return ret;
 }
@@ -114,10 +114,10 @@ bool j1Audio::CleanUp()
 }
 
 // Play a music file
-bool j1Audio::PlayMusic(const char* path, float fade_time)
+bool j1Audio::PlayMusic(std::string path, float fade_time)
 {
 	bool ret = true;
-	p2SString tmp("%s%s", music_folder.GetString(), path);
+	std::string tmp = music_folder + path;
 	if(!active)
 		return false;
 
@@ -136,7 +136,7 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 		Mix_FreeMusic(music);
 	}
 
-	music = Mix_LoadMUS(tmp.GetString());
+	music = Mix_LoadMUS(tmp.c_str());
 
 	if(music == NULL)
 	{
@@ -168,16 +168,16 @@ bool j1Audio::PlayMusic(const char* path, float fade_time)
 }
 
 // Load WAV
-unsigned int j1Audio::LoadFx(const char* path)
+unsigned int j1Audio::LoadFx(std::string path)
 {
 	unsigned int ret = 0;
 
-	p2SString tmp("%s%s", sfx_folder.GetString(), path);
+	std::string tmp = sfx_folder + path;
 
 	if(!active)
 		return 0;
 
-	Mix_Chunk* chunk = Mix_LoadWAV(path);
+	Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
 
 
 	if(chunk == NULL)

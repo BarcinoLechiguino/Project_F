@@ -11,7 +11,7 @@
 //With the constructor call collider_debug (draw colliders on screen) is set to true or false.
 j1Collisions::j1Collisions() : j1Module()
 {
-	name.create("collisions");
+	name = ("collisions");
 	collider_debug = false;		//F9 key sets it to true or false.
 }
 
@@ -37,9 +37,8 @@ bool j1Collisions::Start()
 bool j1Collisions::PreUpdate()
 {
 	BROFILER_CATEGORY("Collision PreUpdate", Profiler::Color::GreenYellow);
-	
 
-	LOG("There Are %d colliders", collider_list.size());
+	//LOG("There Are %d colliders", collider_list.size());
 	
 	//This loop deletes from memory any collider that has been set to be deleted before calculating any new collisions.
 	for (std::list<Collider*>::iterator collider_iterator = collider_list.begin(); collider_iterator != collider_list.end() ; collider_iterator++)
@@ -61,8 +60,6 @@ bool j1Collisions::PreUpdate()
 	Collider* C2;		//Declares the second collider's pointer.
 
 	// Declares a new list item pointer that will be associated with the first collider and sets it to the start of the list in case any colliders have been deleted.
-	
-
 	for (std::list<Collider*>::iterator C1_iterator = collider_list.begin() ; C1_iterator != collider_list.end() ; C1_iterator++)
 	{
 		C1 = (*C1_iterator);										//Sets the data members of the first collider to the data members of the collider being iterated.

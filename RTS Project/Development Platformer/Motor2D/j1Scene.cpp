@@ -24,7 +24,7 @@
 
 j1Scene::j1Scene() : j1Module()
 {
-	name.create("scene");
+	name = ("scene");
 }
 
 // Destructor
@@ -42,15 +42,15 @@ bool j1Scene::Awake(pugi::xml_node& config)
 	
 	for (pugi::xml_node map = config.child("map_name"); map; map = map.next_sibling("map_name"))
 	{
-		p2SString* data = new p2SString;							//Memory Leak. Should delete un CleanUp
+		std::string data;							
 	
-		data->create(map.attribute("name").as_string());
+		data = (map.attribute("name").as_string());
 		map_names.push_back(data);
 	}
 	
-	music_path.create(config.child("audio").attribute("path").as_string());
-	music_path2.create(config.child("audio2").attribute("path").as_string());
-	music_path3.create(config.child("audio3").attribute("path").as_string());
+	music_path = (config.child("audio").attribute("path").as_string());
+	music_path2=(config.child("audio2").attribute("path").as_string());
+	music_path3=(config.child("audio3").attribute("path").as_string());
 	
 	return ret;
 }
@@ -65,8 +65,8 @@ bool j1Scene::Start()
 	firstMap	= true;
 	secondMap	= false;
 	
-	ret = App->map->Load((*map_names.begin())->GetString());
-	LOG("Map Name: %s", (*map_names.begin())->GetString());
+	ret = App->map->Load((*map_names.begin()).c_str());
+	LOG("Map Name: %s", (*map_names.begin()).c_str());
 	
 	App->entityManager->CreatePlayers();								//THIS HERE
 	/*App->entityManager->SpawnEnemies();*/								//If SpawnEnemies is called here then it should not be called in the PreUpdate()
@@ -89,7 +89,7 @@ bool j1Scene::Start()
 	
 	LoadGuiElements();
 	
-	App->audio->PlayMusic(App->scene->music_path2.GetString());
+	App->audio->PlayMusic(App->scene->music_path2.c_str());
 	
 	return ret;
 
@@ -298,8 +298,7 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 			hearts[5]->isVisible = true;
 		}
 	}
-	
-	
+
 	// --- Coins, Score and Timer
 	p2SString players_score = { "%d", App->entityManager->player->player.score };
 	score_player->RefreshTextInput(players_score.GetString());
@@ -378,11 +377,11 @@ bool j1Scene::Load(pugi::xml_node& data)
 		LOG("Calling switch maps");
 		currentMap = data.child("currentMap").attribute("num").as_int();
 
-		std::list<p2SString*>::iterator map_iterator = map_names.begin();
+		std::list<std::string>::iterator map_iterator = map_names.begin();
 
 		std::advance(map_iterator, data.child("currentMap").attribute("num").as_int() );
 
-		App->map->SwitchMaps((*map_iterator));
+		App->map->SwitchMaps( (*map_iterator) );
 	}
 	return true;
 }
@@ -395,7 +394,7 @@ bool j1Scene::Save(pugi::xml_node& data) const
 
 bool j1Scene::Load_lvl(int time)
 {
-	std::list<p2SString*>::iterator map_iterator = map_names.begin();
+	std::list<std::string>::iterator map_iterator = map_names.begin();
 
 	std::advance(map_iterator, time);
 

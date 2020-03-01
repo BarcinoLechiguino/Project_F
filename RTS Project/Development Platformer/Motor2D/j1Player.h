@@ -68,7 +68,7 @@ struct Player
 	bool			extraLife;				//Bool that keep track of whether or not a player has been awarded an extra life.
 
 	int				boostThreshold;			//Threshold from within which the boost jump is activated. Temporal
-	p2SString		mapTag;					//Depending on the mapTag, the initial position loaded from the xml file of the player will be one or another. mapTag = "factoryMap" --> Origin Pos in the factory map.
+	std::string		mapTag;					//Depending on the mapTag, the initial position loaded from the xml file of the player will be one or another. mapTag = "factoryMap" --> Origin Pos in the factory map.
 
 	SDL_Rect		HitBox;					//Rectangle that represents a player.
 	SDL_Rect		atkHitBox;				//Rectangle that represents a player's attack reach / range.
@@ -111,7 +111,7 @@ public: //P1 Variables
 	void LoadEntityAudio();														//Loads a player's audio.
 
 	virtual bool InitPlayer();													//Initializes all variables and colliders of the players (Position, Colliders...) and loads them on screen. 
-	virtual bool LoadPlayerPosition(p2SString playerPosition, p2SString map);	//Loads the player's position from the config file. Takes into account which map the player is at.
+	virtual bool LoadPlayerPosition(std::string playerPosition, std::string map);	//Loads the player's position from the config file. Takes into account which map the player is at.
 	virtual void GodModeInput();												//Enables / Disables the God Mode.
 
 	virtual void SetPlayerState(Player_State& player_state);					//Depending on the input, a player will be set in a state or another. Without "&" the state would not be chenged.

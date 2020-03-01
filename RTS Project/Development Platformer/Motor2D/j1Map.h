@@ -45,7 +45,7 @@ struct Properties
 {
 	struct Property															//Property struct that will hold the data members of the properties of a layer.
 	{
-		p2SString	name;													//Name of the property in a layer.
+		std::string	name;													//Name of the property in a layer.
 		values		value;													//Value of the property in a layer.
 		int			intValue;												//Int value of the property in a layer. Used mainly for pathfinding
 	};
@@ -70,7 +70,7 @@ struct Properties
 
 	//values Get(p2SString name, values* default_value = nullptr) const;			//Will get a specified property's data members. //Revise string type (p2SString, const char*...)
 	
-	int Get(p2SString name, int default_value = 0);			//Will get a specified property's data members. //This version will be used exclusively for pathfinding. (Draw / Nodraw)
+	int Get(std::string name, int default_value = 0);			//Will get a specified property's data members. //This version will be used exclusively for pathfinding. (Draw / Nodraw)
 	//Changed to non const because of list unknown problem
 
 	std::list<Property*>	property_list;
@@ -80,7 +80,7 @@ struct Properties
 struct ObjectData
 {
 	uint				id;				//Object's id.
-	p2SString			name;			//Object's name.
+	std::string			name;			//Object's name.
 	Object_Type			type;			//Type of collider associated with the object.
 	SDL_Rect*			collider;		//Rectangle that represents the object. As x, y, w and h are object properties, they can be grouped in a SDL_Rect.
 	float				rotation;		//Rotation of the object in degrees clockwise.
@@ -91,16 +91,16 @@ struct ObjectData
 struct ObjectGroup
 {
 	uint				id;				//ObjectGroup layer id.
-	p2SString			name;			//ObjectGroup's name.
+	std::string			name;			//ObjectGroup's name.
 	ObjectData*			object;			//Individual info of each object in the ObjectGroup layer.
-	p2SString			type;			//ObjectGroup's type. It's an arbitrary string added in Tiled to the Object/ObjectGroup.
+	std::string			type;			//ObjectGroup's type. It's an arbitrary string added in Tiled to the Object/ObjectGroup.
 	uint				num_objects;	//Quantity of objects. Treure per obj def.
 };
 
 // Map Layer data members --------------------------------
 struct MapLayer
 {
-	p2SString			name;			//Map name.
+	std::string			name;			//Map name.
 	uint*				gid;			//Tile Id.
 	uint				width;			//Layer width in tiles.
 	uint				height;			//Layer height in tiles.
@@ -128,7 +128,7 @@ struct TileSet
 	//This method calculates the position of each tile when given a tile id. 
 	SDL_Rect GetTileRect(uint tile_id) const;
 
-	p2SString			name;					//Tileset name.
+	std::string			name;					//Tileset name.
 	int					firstgid;				//First global tile id. Maps to the first id in the tileset.
 	int					tile_width;				//Maximum width of tiles in a given tileset.
 	int					tile_height;			//Maximum height of tiles in a given tilesset.
@@ -154,8 +154,6 @@ enum MapTypes
 	MAPTYPE_HEXAGONAL
 };
 
-
-
 // ----------------------------------------------------
 struct MapData
 {
@@ -169,7 +167,7 @@ struct MapData
 	std::list<MapLayer*>	layers;				//List that accesses all layers and their data members/properties.
 	std::list<ObjectGroup*>	objectGroups;		//List that accesses all object groups and their data members/properties.
 
-	p2SString music_File;
+	std::string music_File;
 };
 
 // ----------------------------------------------------
@@ -187,13 +185,13 @@ public:
 	// Called before quitting
 	bool CleanUp();
 	// Load new map
-	bool Load(const char* path);
+	bool Load(std::string path);
 
 	iPoint MapToWorld(int x, int y) const;	//This method translates the position of the tile on the map to its equivalent position on screen.
 	iPoint WorldToMap(int x, int y) const;	//This method translates the position of the tile on the screen to its equivalent position on the map.
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer); //Changed to non const because of list unknown problem
 	
-	bool SwitchMaps(p2SString* new_map);	//Unloads the map and changes by another one. 
+	bool SwitchMaps(std::string new_map);	//Unloads the map and changes by another one. 
 	bool ChangeMap(const char* newMap);		//Change map with a fade time
 	void Restart_Cam();
 
@@ -223,7 +221,7 @@ public:
 
 private:
 	pugi::xml_document	map_file;
-	p2SString			folder;
+	std::string			folder;
 	bool				map_loaded;
 };
 

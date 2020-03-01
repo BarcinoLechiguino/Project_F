@@ -6,8 +6,8 @@
 #ifndef __j1MODULE_H__
 #define __j1MODULE_H__
 
-#include "p2SString.h"
 #include "PugiXml\src\pugixml.hpp"
+#include <string>
 
 class j1App;
 struct SDL_Texture;
@@ -110,7 +110,7 @@ public:
 
 public:
 
-	p2SString name;
+	std::string name;
 	bool active;
 	bool enabled = true;
 };

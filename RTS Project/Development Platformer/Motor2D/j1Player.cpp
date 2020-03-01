@@ -78,14 +78,14 @@ void j1Player::LoadAnimationPushbacks()
 	return;
 }
 
-bool j1Player::LoadPlayerPosition(p2SString playerPosition, p2SString map)
+bool j1Player::LoadPlayerPosition(std::string playerPosition, std::string map)
 {
 	config_file.load_file("config.xml");				//REVISE THIS HERE  Can a pugi object be reused as a copy in another class?
 
-	player_entity = config_file.child("config").child("entities").child("player").child(playerPosition.GetString());
+	player_entity = config_file.child("config").child("entities").child("player").child(playerPosition.c_str());
 
-	position.x = player_entity.child(map.GetString()).attribute("x").as_float();
-	position.y = player_entity.child(map.GetString()).attribute("y").as_float();
+	position.x = player_entity.child(map.c_str()).attribute("x").as_float();
+	position.y = player_entity.child(map.c_str()).attribute("y").as_float();
 
 	//Sets the spawn position to where the player appears at first.
 	player.spawn_position.x = position.x;

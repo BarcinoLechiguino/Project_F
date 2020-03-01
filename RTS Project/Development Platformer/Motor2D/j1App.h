@@ -2,6 +2,7 @@
 #define __j1APP_H__
 
 #include <list>
+#include <string>
 #include "j1Module.h"
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
@@ -60,7 +61,7 @@ public:
 	float GetDt();
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(std::list<p2SString>& list_to_fill);
+	void GetSaveGames(std::list<std::string>& list_to_fill);
 
 private:
 
@@ -120,13 +121,13 @@ private:
 	int					argc;
 	char**				args;
 
-	p2SString			title;
-	p2SString			organization;
+	std::string			title;
+	std::string			organization;
 
 	mutable bool		want_to_save;
 	bool				want_to_load;
-	p2SString			load_game;
-	mutable p2SString	save_game;
+	std::string			load_game;
+	mutable std::string	save_game;
 
 	//Framerate
 	uint64				frame_count;			//Calculates the amount of frames per second. frames++ after each Update() loop.

@@ -26,14 +26,14 @@ public:
 		frames[last_frame++] = collider;
 	}
 
-	void LoadAnimation(p2SString entity, p2SString animationName)
+	void LoadAnimation(std::string entity, std::string animationName)
 	{
 		pugi::xml_node animations;
 		pugi::xml_parse_result animations_config = animations_file.load_file("animations.xml");										//Loads the animation_data.xml file.
 
 		if (animations_config != NULL)																								//If the animation_data.xml could be loaded.
 		{
-			animations = animations_file.child("animations").child(entity.GetString()).child(animationName.GetString());								//Get the set of animations' name (passed as argument).
+			animations = animations_file.child("animations").child(entity.c_str()).child(animationName.c_str());								//Get the set of animations' name (passed as argument).
 			
 			speed = animations.attribute("speed").as_float();																		//Loads the animations set's speed from the xml file.
 			loop = animations.attribute("loop").as_bool();																			//Loads the loop bool state from the xml file.

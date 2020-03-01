@@ -16,7 +16,7 @@
 
 j1Gui::j1Gui() : j1Module()
 {
-	name.create("gui");
+	name = ("gui");
 	audioAlreadyLoaded = false;
 }
 
@@ -100,7 +100,7 @@ bool j1Gui::PreUpdate()
 		{
 			Mix_HaltMusic();
 			SetElementsVisibility(App->scene->main_in_menu, !App->scene->main_in_menu->isVisible);
-			App->audio->PlayMusic(App->scene->music_path3.GetString());
+			App->audio->PlayMusic(App->scene->music_path3.c_str());
 			if (!App->scene->main_in_menu->isVisible)
 			{
 				App->pause = false;
@@ -311,7 +311,7 @@ void j1Gui::OnEventCall(UI* element, UI_Event ui_event)
 
 		game_started = true;
 		App->audio->PlayFx(play_fx, 0);
-		App->audio->PlayMusic(App->scene->music_path.GetString());
+		App->audio->PlayMusic(App->scene->music_path.c_str());
 	}
 
 	if (element == App->scene->main_button_continue && ui_event == UI_Event::UNCLICKED)
@@ -329,7 +329,7 @@ void j1Gui::OnEventCall(UI* element, UI_Event ui_event)
 		}
 
 		App->audio->PlayFx(play_fx, 0);
-		App->audio->PlayMusic(App->scene->music_path.GetString());
+		App->audio->PlayMusic(App->scene->music_path.c_str());
 	}
 
 	if (element == App->scene->main_button_settings && ui_event == UI_Event::UNCLICKED)
@@ -415,7 +415,7 @@ void j1Gui::OnEventCall(UI* element, UI_Event ui_event)
 		}
 
 		App->audio->PlayFx(play_fx, 0);
-		App->audio->PlayMusic(App->scene->music_path.GetString());
+		App->audio->PlayMusic(App->scene->music_path.c_str());
 	}
 
 	if (element == App->scene->in_buttons_save && ui_event == UI_Event::UNCLICKED)
@@ -436,7 +436,7 @@ void j1Gui::OnEventCall(UI* element, UI_Event ui_event)
 		
 		App->LoadGame("save_game.xml");
 		App->audio->PlayFx(play_fx, 0);
-		App->audio->PlayMusic(App->scene->music_path.GetString());
+		App->audio->PlayMusic(App->scene->music_path.c_str());
 	}
 
 	if (element == App->scene->in_buttons_exit && ui_event == UI_Event::UNCLICKED)
@@ -454,7 +454,7 @@ void j1Gui::OnEventCall(UI* element, UI_Event ui_event)
 		}
 		
 		App->audio->PlayFx(exit_fx, 0);
-		App->audio->PlayMusic(App->scene->music_path2.GetString());
+		App->audio->PlayMusic(App->scene->music_path2.c_str());
 	}
 
 	if (element == App->scene->unmute_in && ui_event == UI_Event::UNCLICKED)

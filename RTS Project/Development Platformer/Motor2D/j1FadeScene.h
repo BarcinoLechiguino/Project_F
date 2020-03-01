@@ -8,7 +8,6 @@ enum ListOfMapNames;
 
 class j1Fade_Scene : public j1Module
 {
-
 public:
 
 	j1Fade_Scene();
@@ -44,7 +43,6 @@ private:
 		fade_to_black,
 		fade_from_black
 	} current_step = fade_step::none;
-
 
 	int nextMap;
 	uint start_time = 0;

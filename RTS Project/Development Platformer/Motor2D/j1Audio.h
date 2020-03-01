@@ -29,10 +29,10 @@ public:
 	bool Update(float dt);
 
 	// Play a music file
-	bool PlayMusic(const char* path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
+	bool PlayMusic(std::string path, float fade_time = DEFAULT_MUSIC_FADE_TIME);
 
 	// Load a WAV in memory
-	unsigned int LoadFx(const char* path);
+	unsigned int LoadFx(std::string path);
 
 	// Play a previously loaded WAV
 	bool PlayFx(unsigned int fx, int repeat = 0);
@@ -45,13 +45,12 @@ private:
 
 	_Mix_Music*			music;
 	std::list<Mix_Chunk*>	fx;
-	
 	uint				volume_fx;
 
 public:
 	float				volume;
-	p2SString			music_folder;
-	p2SString			sfx_folder;
+	std::string			music_folder;
+	std::string			sfx_folder;
 	uint general_volume;
 };
 
