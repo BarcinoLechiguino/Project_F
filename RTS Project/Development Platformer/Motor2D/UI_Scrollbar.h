@@ -57,6 +57,6 @@ private:
 	float		arrowPosFactor;
 	iPoint		newThumbPos;
 
-	p2List<UI*> linkedElements;
+	std::list<UI*> linkedElements;
 };
 #endif // !__UI_SCROLLBAR_H__

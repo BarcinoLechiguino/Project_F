@@ -48,14 +48,14 @@ bool j1Console::PreUpdate()
 	{
 		commandWasFound = false;
 		
-		for (p2List_item<Command*>* command = commands.start; command != NULL; command = command->next)
+		for (std::list<Command*>::iterator command = commands.begin(); command != commands.end(); command++)
 		{
-			Command* comm = command->data;
+			Command* comm = (*command);
 
 			if (App->input->CmpStr(App->input->GetInputText(), comm->command.GetString()))
 			{
 				comm->callback->OnCommand(comm->command.GetString());
-				commandHistory.add(comm);
+				commandHistory.push_back(comm);
 				commandWasFound = true;
 				break;
 			}
@@ -95,9 +95,9 @@ bool j1Console::PostUpdate()
 
 bool j1Console::CleanUp()
 {
-	for (p2List_item<Command*>* command = commands.start; command != NULL; command = command->next)
+	for (std::list<Command*>::iterator command = commands.begin(); command != commands.end(); command++)
 	{
-		RELEASE(command->data);
+		RELEASE((*command));
 	}
 
 	commandHistory.clear();
@@ -274,7 +274,7 @@ Command* j1Console::CreateCommand(const char* command, j1Module* callback, int m
 
 	if (comm != nullptr)
 	{
-		commands.add(comm);
+		commands.push_back(comm);
 	}
 
 	return comm;

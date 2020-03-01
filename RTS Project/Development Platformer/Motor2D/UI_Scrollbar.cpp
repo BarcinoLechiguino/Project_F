@@ -181,16 +181,16 @@ void UI_Scrollbar::DrawScrollbarElements()
 
 void UI_Scrollbar::LinkScroll(UI* element)
 {
-	linkedElements.add(element);
+	linkedElements.push_back(element);
 }
 
 void UI_Scrollbar::UpdateLinkedElements()
 {
 	BROFILER_CATEGORY("Scrollbar_UpdateLinkedElements", Profiler::Color::LightGoldenRodYellow);
 
-	for (p2List_item<UI*>* element = linkedElements.start; element != NULL; element = element->next)
+	for (std::list<UI*>::iterator element = linkedElements.begin(); element != linkedElements.end(); element++)
 	{
-		UI* elem = element->data;
+		UI* elem = (*element);
 
 		if (thumb->GetScreenPos() != thumb->initialPosition)
 		{
@@ -234,9 +234,9 @@ void UI_Scrollbar::UpdateLinkedElements()
 
 bool UI_Scrollbar::LinkedElementsBeingHovered()
 {	
-	for (p2List_item<UI*>* element = linkedElements.start; element != NULL; element = element->next)
+	for (std::list<UI*>::iterator element = linkedElements.begin(); element != linkedElements.end(); element++)
 	{
-		if (element->data->IsHovered())
+		if ((*element)->IsHovered())
 		{
 			return true;
 		}

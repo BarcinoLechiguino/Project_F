@@ -107,8 +107,8 @@ public:
 
 	bool				runGame;
 	bool				commandWasFound;
-	p2List<Command*>	commands;
-	p2List<Command*>	commandHistory;
+	std::list<Command*>	commands;
+	std::list<Command*>	commandHistory;
 
 private:
 	pugi::xml_document	config_file;

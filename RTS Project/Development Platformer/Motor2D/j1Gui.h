@@ -3,7 +3,6 @@
 
 #include "j1Module.h"
 #include "j1Textures.h"
-#include "p2List.h"
 #include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
@@ -66,10 +65,10 @@ public:
 	void PassFocus();														//Method that passes the focus from an interactible and able to focused element to another with the same conditions.
 	bool ElementCanBeFocused(UI* focusElement) const;						//If an element fulfills all requirements (is a button or a scrollbar), then this method returns true. Used to filter which UI elements can or cannot have focus.
 	
-	UI* FirstElementUnderMouse() const;										//Returs the first element under the mouse.
+	UI* FirstElementUnderMouse();	//Changed to non const because unknown list error	//Returs the first element under the mouse.
 	bool ElementCanBeClicked(UI* clickedElement) const;
 
-	bool ElementHasChilds(UI* parentElement) const;							//Returns true if the element passed as argument has at least one child.
+	bool ElementHasChilds(UI* parentElement);	//Changed to non const because unknown list error						//Returns true if the element passed as argument has at least one child.
 	void UpdateChilds(UI* parentElement);									//Updates all UI Elements that have the element passed as argument as a parent.
 	void SetElementsVisibility(UI* parentElement, bool state);				//Enables/Disables the isVisible bool of a UI Element and its childs according to the passed arguments.
 
@@ -80,7 +79,7 @@ public:
 
 public:
 	UI*					focusedElement;					//Change to list item
-	p2List_item<UI*>*	iteratedElement;
+	std::list<UI*>::iterator iteratedElement;
 
 	bool escape;										//When this bool is true the game is exited.
 	bool ui_debug;										//When this bool is true, debug mode is activated.
@@ -101,7 +100,7 @@ private:
 	SDL_Texture* atlas;									//Texture of the atlas (UI Spritesheet)
 	p2SString atlas_file_name;							//Name of the atlas in the xml file.
 
-	p2List<UI*> elements;								//List where all the UI elements in a scene will be stored at.
+	std::list<UI*> elements;								//List where all the UI elements in a scene will be stored at.
 
 public:
 	bool			game_started = false;				// To know if the user has enter the game

@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "SDL/include/SDL.h"
+#include <list>
 
 enum Object_Type;	//If it was enum class we would need to refer to the types with Object_Type::SOLID for examole.
 struct ObjectData;	//Declaration gives access to Object Data from here.
@@ -66,7 +67,7 @@ private:
 public:
 	//Variables
 	Collider collider; //Call to struct from the j1 collision module.
-	p2List<Collider*> collider_list;
+	std::list<Collider*> collider_list;
 	bool collider_debug;
 
 private:

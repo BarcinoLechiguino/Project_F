@@ -2,7 +2,6 @@
 #define __j1APP_H__
 
 #include <list>
-#include "p2List.h"
 #include "j1Module.h"
 #include "j1PerfTimer.h"
 #include "j1Timer.h"
@@ -61,7 +60,7 @@ public:
 	float GetDt();
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(p2List<p2SString>& list_to_fill) const;
+	void GetSaveGames(std::list<p2SString>& list_to_fill);
 
 private:
 

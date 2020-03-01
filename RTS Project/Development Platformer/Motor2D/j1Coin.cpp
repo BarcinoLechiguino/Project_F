@@ -87,9 +87,12 @@ void j1Coin::OnCollision(Collider* C1, Collider* C2)
 						App->audio->PlayFx(15, 0);	    //Coin Acquisition sfx.
 
 						collider->to_delete = true;
-						int num = App->entityManager->entities.find(this);
-						RELEASE(App->entityManager->entities.At(num)->data);
-						App->entityManager->entities.del(App->entityManager->entities.At(num));
+
+						std::list<j1Entity*>::iterator entity_iterator = std::find(App->entityManager->entities.begin(), App->entityManager->entities.end(), this);
+
+						RELEASE((*entity_iterator));
+
+						App->entityManager->entities.erase(entity_iterator);
 	
 						App->entityManager->player->player.coins += 1;
 						App->entityManager->player2->player.coins += 1;
@@ -105,9 +108,12 @@ void j1Coin::OnCollision(Collider* C1, Collider* C2)
 						App->audio->PlayFx(15, 0);	    //Coin Acquisition sfx.
 	
 						collider->to_delete = true;
-						int num = App->entityManager->entities.find(this);
-						RELEASE(App->entityManager->entities.At(num)->data);
-						App->entityManager->entities.del(App->entityManager->entities.At(num));
+
+						std::list<j1Entity*>::iterator entity_iterator = std::find(App->entityManager->entities.begin(), App->entityManager->entities.end(), this);
+
+						RELEASE((*entity_iterator));
+
+						App->entityManager->entities.erase(entity_iterator);
 
 						App->entityManager->player->player.coins += 1;
 						App->entityManager->player2->player.coins += 1;
@@ -126,9 +132,12 @@ void j1Coin::OnCollision(Collider* C1, Collider* C2)
 						App->audio->PlayFx(15, 0);	    //Coin Acquisition sfx.
 	
 						collider->to_delete = true;
-						int num = App->entityManager->entities.find(this);
-						RELEASE(App->entityManager->entities.At(num)->data);
-						App->entityManager->entities.del(App->entityManager->entities.At(num));
+
+						std::list<j1Entity*>::iterator entity_iterator = std::find(App->entityManager->entities.begin(), App->entityManager->entities.end(), this);
+
+						RELEASE((*entity_iterator));
+
+						App->entityManager->entities.erase(entity_iterator);
 
 						App->entityManager->player->player.coins += 1;
 						App->entityManager->player2->player.coins += 1;
@@ -144,9 +153,12 @@ void j1Coin::OnCollision(Collider* C1, Collider* C2)
 						App->audio->PlayFx(15, 0);	    //Coin Acquisition sfx.
 	
 						collider->to_delete = true;
-						int num = App->entityManager->entities.find(this);
-						RELEASE(App->entityManager->entities.At(num)->data);
-						App->entityManager->entities.del(App->entityManager->entities.At(num));
+
+						std::list<j1Entity*>::iterator entity_iterator = std::find(App->entityManager->entities.begin(), App->entityManager->entities.end(), this);
+
+						RELEASE((*entity_iterator));
+
+						App->entityManager->entities.erase(entity_iterator);
 
 						App->entityManager->player->player.coins += 1;
 						App->entityManager->player2->player.coins += 1;

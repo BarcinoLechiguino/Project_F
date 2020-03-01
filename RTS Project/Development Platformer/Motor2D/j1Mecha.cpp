@@ -136,9 +136,12 @@ void j1Mecha::OnCollision(Collider* C1, Collider* C2)
 
 				isDying = true;
 				collider->to_delete = true;
-				int num = App->entityManager->entities.find(this);
-				RELEASE(App->entityManager->entities.At(num)->data);
-				App->entityManager->entities.del(App->entityManager->entities.At(num));
+
+				std::list<j1Entity*>::iterator entity_iterator = std::find(App->entityManager->entities.begin(), App->entityManager->entities.end(), this);
+
+				RELEASE((*entity_iterator));
+
+				App->entityManager->entities.erase(entity_iterator);
 
 				App->entityManager->player->player.score += pointsOnKill;
 				App->entityManager->player2->player.score += pointsOnKill;
