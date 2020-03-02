@@ -55,14 +55,10 @@ struct Properties
 		LOG("The Properties' destructor has been called");
 		LOG("property_list has %d elements", property_list.size());
 		 
-		int i = 0;
-
 		for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++ )
 		{
-			++i;
 			RELEASE((*prop_iterator));									//Deletes all data members of a property and frees all allocated memory.
 		}
-
 		property_list.clear();												//Clears poperty_list by deleting all items in the list and freeing all allocated memory.
 	}
 

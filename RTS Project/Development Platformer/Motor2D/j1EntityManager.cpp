@@ -237,8 +237,8 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 void j1EntityManager::CreatePlayers()
 {
-	player = (j1Player1*)CreateEntity(ENTITY_TYPE::PLAYER);
-	player2 = (j1Player2*)CreateEntity(ENTITY_TYPE::PLAYER2);
+	//player = (j1Player1*)CreateEntity(ENTITY_TYPE::PLAYER);
+	//player2 = (j1Player2*)CreateEntity(ENTITY_TYPE::PLAYER2);
 }
 
 void j1EntityManager::AddEnemy(ENTITY_TYPE type, int x, int y)

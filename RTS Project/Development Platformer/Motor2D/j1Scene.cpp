@@ -133,8 +133,8 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
 	//Camera Movement With Arrow Keys
-	if (App->render->cam.camera_debug == true)
-	{
+	//if (App->render->cam.camera_debug == true)
+	//{
 		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 		{
 			App->render->camera.x += ceil(cam_debug_speed * dt);	//As the value is multiplied by dt, camera movement will be adjusted to the framerate.  (100 * 0.033s (30fps), 100 * 0.066s (60fps)...)
@@ -151,7 +151,7 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 		{
 			App->render->camera.y -= ceil(cam_debug_speed * dt);
 		}
-	}
+	//}
 
 	// ---------------------------------------- DEBUG KEYS ----------------------------------------
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)			//Load First Level Key
@@ -259,7 +259,7 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 	App->win->SetTitle(title.GetString());*/
 	
 	// UI
-	if (App->gui->game_started && App->console->console_background->isVisible == false)
+	/*if (App->gui->game_started && App->console->console_background->isVisible == false)
 	{
 		if (App->entityManager->player->player.lives >= 3 || App->entityManager->player2->player.lives >= 3)
 		{
@@ -297,19 +297,19 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 			hearts[4]->isVisible = true;
 			hearts[5]->isVisible = true;
 		}
-	}
+	}*/
 
 	// --- Coins, Score and Timer
-	char buffer[10];
+	/*char buffer[10];
 	sprintf_s(buffer,"%d", App->entityManager->player->player.score );
 	std::string players_score = buffer;
-	score_player->RefreshTextInput(players_score.c_str());
+	score_player->RefreshTextInput(players_score.c_str());*/
 	
 	p2SString game_time = { "%.2f", App->seconds_since_startup };
 	timer->RefreshTextInput(game_time.GetString());
 
-	p2SString coin_count = { "%d", App->entityManager->player->player.coins };
-	count_coins->RefreshTextInput(coin_count.GetString());
+	/*p2SString coin_count = { "%d", App->entityManager->player->player.coins };
+	count_coins->RefreshTextInput(coin_count.GetString());*/
 
 	// --- Audio Scrollbars
 	if (scrollbar_settings->isVisible)

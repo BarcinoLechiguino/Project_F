@@ -53,8 +53,6 @@ void j1Map::Draw()
 
 	App->win->GetWindowSize(winWidth, winHeight);																	//Gets the window size so it can be added to the camera collider as parameters.
 
-	camera_collider.collider = { -App->render->camera.x, -App->render->camera.y, (int)winWidth, (int)winHeight };	//Sets the dimensions and position of the camera collider.
-
 	int cam_tileWidth = winWidth / data.tile_width;																	//Width of the camera in tiles.
 	int cam_tileHeight = winHeight / data.tile_height;																//Height of the camera in tiles.	
 
@@ -76,52 +74,7 @@ void j1Map::Draw()
 						SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 
 						iPoint pos = MapToWorld(x, y);																//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map pos: x = 1 --> World pos: x = 32...
 
-					
-						if ((*layer)->name == "Background")														//If the name of the layer  is "Background" its elements will be blitted with the specified parameters.
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-						}
-						else if ((*layer)->name == "Parallax")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect, false, (*layer)->speed);	//As we need to add parallax to this layer, we pass a value as speed argument.
-						}
-						else if ((*layer)->name == "ParallaxDecor")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect, false, (*layer)->speed);
-						}
-						else if ((*layer)->name == "Decor")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-						}
-						else if ((*layer)->name == "Ground")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-						}
-						else if ((*layer)->name == "Platforms")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-						}
-						else if ((*layer)->name == "Hazards")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-						}
-						else if ((*layer)->name == "Desactivable")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-						}
-						else if ((*layer)->name == "Portal")
-						{
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-						}
-
-						//---------------------- PATHFINDING META TILES ----------------------
-						else if ((*layer)->name == "PathfindingCollisions")
-						{
-							if (pathfindingMetaDebug == true)									//If pathfindingMetaDebug is true (Switch the bool state with F11)
-							{
-								App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect);
-							}
-						}
+						App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect,false,(*layer)->speed);
 					}
 				}
 			}
