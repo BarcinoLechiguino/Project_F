@@ -316,24 +316,24 @@ bool j1Map::Load(std::string file_name)
 	pugi::xml_node objectgroup;
 	for (objectgroup = map_file.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
 	{
-		ObjectGroup* new_objectgroup = new ObjectGroup();			//Allocates memory for the objectgroup being iterated.
+		ObjectGroup* new_objectgroup = new ObjectGroup();									//Allocates memory for the objectgroup being iterated.
 
 		if (ret == true)
 		{
-			ret = LoadObjectLayers(objectgroup, new_objectgroup);	//Loads the data members of the objectgroup that is being iterated.
+			ret = LoadObjectLayers(objectgroup, new_objectgroup);							//Loads the data members of the objectgroup that is being iterated.
 			
 			if (new_objectgroup->name.c_str() == "Coins")
 			{
 				LOG("Creating coins from object layer %s", new_objectgroup->name.c_str());
 			}
 		}
-		data.objectGroups.push_back(new_objectgroup);						//Adds the object group being iterated to the list.
+		data.objectGroups.push_back(new_objectgroup);										//Adds the object group being iterated to the list.
 	}
 
 	//--------------------------- LOGS ----------------------------
 	if(ret == true)
 	{
-		LOG("Successfully parsed map XML file: %s", file_name.c_str());			//This crashes to desktop for some reason.
+		LOG("Successfully parsed map XML file: %s", file_name.c_str());
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
@@ -536,19 +536,21 @@ bool j1Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 {
 	bool ret = true;
 
-	objectgroup->id		= node.attribute("id").as_int();					//Sets the id of a given objectgroup to the id loaded from the tmx map.
-	objectgroup->name	= node.attribute("name").as_string();				//Sets the name of a given objectgroup to the name loaded from the tmx map.
+	objectgroup->id		= node.attribute("id").as_int();							//Sets the id of a given objectgroup to the id loaded from the tmx map.
+	objectgroup->name	= node.attribute("name").as_string();						//Sets the name of a given objectgroup to the name loaded from the tmx map.
 
 	int object_count = 0;
-	//This loop iterates all the childs with the object tag, with each iteration of the loop one object is added to the count. Used to reduce memory space waste.
+	//This loop iterates all the childs with the object tag.
+	//With each iteration of the loop one object is added to the count. 
+	//Used to reduce memory space waste.
 	for (pugi::xml_node object_iterator = node.child("object"); object_iterator; object_iterator = object_iterator.next_sibling("object"))	//Iterates the data members inside the object tag and stops when the pointer is NULL(there are no objects left to iterate) or if ret == false.
 	{
 		object_count++;
 	}
 
-	objectgroup->num_objects = object_count;							//Sets the value of num_objects to the value gotten from iteration all the objectgroups.
-	objectgroup->object = new ObjectData[object_count];					//Individually allocates memory for each object. Here object_count is the exact number of objects all objectgroups contain, so there is no memory waste.
-	memset(objectgroup->object, 0, object_count * sizeof(ObjectData));	//Sets all allocated memory to 0;
+	objectgroup->num_objects = object_count;										//Sets the value of num_objects to the value gotten from iteration all the objectgroups.
+	objectgroup->object = new ObjectData[object_count];								//Individually allocates memory for each object. Here object_count is the exact number of objects all objectgroups contain, so there is no memory waste.
+	memset(objectgroup->object, 0, object_count * sizeof(ObjectData));				//Sets all allocated memory to 0;
 
 	int index = 0;
 	for (pugi::xml_node object_iterator = node.child("object"); object_iterator; object_iterator = object_iterator.next_sibling("object")) //Iterates again all objects passed in the tmx map.
@@ -558,56 +560,56 @@ bool j1Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 
 		SDL_Rect* collider = new SDL_Rect();
 
-		collider->x = object_iterator.attribute("x").as_int();			//Sets the buffer rect's x position to the x position of the object given by the tmx map this iteration.
-		collider->y = object_iterator.attribute("y").as_int();			//Sets the buffer rect's y position to the y position of the object given by the tmx map this iteration.
-		collider->w = object_iterator.attribute("width").as_int();		//Sets the buffer rect's width to the width of the object given by the tmx map this iteration.
-		collider->h = object_iterator.attribute("height").as_int();		//Sets the buffer rect's height to the height of the object given by the tmx map this iteration.
+		collider->x = object_iterator.attribute("x").as_int();						//Sets the buffer rect's x position to the x position of the object given by the tmx map this iteration.
+		collider->y = object_iterator.attribute("y").as_int();						//Sets the buffer rect's y position to the y position of the object given by the tmx map this iteration.
+		collider->w = object_iterator.attribute("width").as_int();					//Sets the buffer rect's width to the width of the object given by the tmx map this iteration.
+		collider->h = object_iterator.attribute("height").as_int();					//Sets the buffer rect's height to the height of the object given by the tmx map this iteration.
 
-		objectgroup->object[index].collider = collider;					//Passes the buffer rect's data members to the object in this index position. Need to use a buffer due to objectgroup only accepting a class expression.
+		objectgroup->object[index].collider = collider;								//Passes the buffer rect's data members to the object in this index position. Need to use a buffer due to objectgroup only accepting a class expression.
 
-		std::string object_type = (object_iterator.attribute("type").as_string());		//Buffer string that improves readability of the code.
+		std::string object_type = (object_iterator.attribute("type").as_string());	//Buffer string that improves readability of the code.
 
 		//Checking the object type string being loaded from the tmx file. It's a string that's abitrarily set on Tiled, so it should be known exactly which type strings will be passed. 
 		if (object_type == "solid")
 		{
-			objectgroup->object[index].type = SOLID;					//As the object type string matches "solid" the object's type will be set to SOLID.
+			objectgroup->object[index].type = SOLID;								//As the object type string matches "solid" the object's type will be set to SOLID.
 		}
 		else if (object_type == "platform")
 		{
-			objectgroup->object[index].type = PLATFORM;					//As the object type string matches "platform" the object's type will be set to PLATFORM.
+			objectgroup->object[index].type = PLATFORM;								//As the object type string matches "platform" the object's type will be set to PLATFORM.
 		}
 		else if (object_type == "hazard")
 		{
-			objectgroup->object[index].type = HAZARD;					//As the object type string matches "hazard" the object's type will be set to HAZARD.
+			objectgroup->object[index].type = HAZARD;								//As the object type string matches "hazard" the object's type will be set to HAZARD.
 		}
 		else if (object_type == "item")
 		{
-			objectgroup->object[index].type = SWITCH;						//As the object type string matches "item" the object's type will be set to ITEM.
+			objectgroup->object[index].type = SWITCH;								//As the object type string matches "item" the object's type will be set to ITEM.
 		}
 		else if (object_type == "desactivable")
 		{
-			objectgroup->object[index].type = DEACTIVABLE;				//As the object type string matches "desactivable" the object's type will be set to DESACTIVABLE.
+			objectgroup->object[index].type = DEACTIVABLE;							//As the object type string matches "desactivable" the object's type will be set to DESACTIVABLE.
 		}
 		else if (object_type == "respawn")
 		{
-			objectgroup->object[index].type = RESPAWN;					//As the object type string matches "respawn" the object's type will be set to RESPAWN.
+			objectgroup->object[index].type = RESPAWN;								//As the object type string matches "respawn" the object's type will be set to RESPAWN.
 		}
 		else if (object_type == "checkpoint")
 		{
-			objectgroup->object[index].type = CHECKPOINT;				//As the object type string matches "checkpoint", the object's type will be set to CHECKPOINT.
+			objectgroup->object[index].type = CHECKPOINT;							//As the object type string matches "checkpoint", the object's type will be set to CHECKPOINT.
 		}
 		else if (object_type == "goal")
 		{
-			objectgroup->object[index].type = GOAL;						//As the object type string matches "goal" the object's type will be set to GOAL.
+			objectgroup->object[index].type = GOAL;									//As the object type string matches "goal" the object's type will be set to GOAL.
 		}
 		
 		// ------------------------------------------- LOADING ENEMIES FROM THE MAP -------------------------------------------
-		else if (object_type == "mecha")								//If the object loaded from the map matches the "mecha" type
+		else if (object_type == "mecha")											//If the object loaded from the map matches the "mecha" type
 		{
 			App->entityManager->AddEnemy(ENTITY_TYPE::MECHA, object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
 			objectgroup->object[index].type = NONE;
 		}
-		else if (object_type == "alien")								//If the object loaded from the map matches the "alien" type
+		else if (object_type == "alien")											//If the object loaded from the map matches the "alien" type
 		{
 			App->entityManager->AddEnemy(ENTITY_TYPE::ALIEN , object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
 			objectgroup->object[index].type = NONE;
@@ -617,7 +619,6 @@ bool j1Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 		{
 			//App->entityManager->AddItems(ENTITY_TYPE::COIN, object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
 			App->entityManager->AddEnemy(ENTITY_TYPE::COIN, object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
-			//LOG("Adding a Coin at Position %d, %d", object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
 			objectgroup->object[index].type = NONE;
 		}
 		// --------------------------------------------------------------------------------------------------------------------
