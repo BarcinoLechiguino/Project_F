@@ -300,8 +300,10 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 	}
 
 	// --- Coins, Score and Timer
-	p2SString players_score = { "%d", App->entityManager->player->player.score };
-	score_player->RefreshTextInput(players_score.GetString());
+	char buffer[10];
+	sprintf_s(buffer,"%d", App->entityManager->player->player.score );
+	std::string players_score = buffer;
+	score_player->RefreshTextInput(players_score.c_str());
 	
 	p2SString game_time = { "%.2f", App->seconds_since_startup };
 	timer->RefreshTextInput(game_time.GetString());
