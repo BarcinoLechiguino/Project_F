@@ -15,8 +15,8 @@ class Command
 public:
 	Command(const char* command, j1Module* callback, int min_arg, int max_arg);
 	
-	p2SString command;			//"map iso.tmx" --> The string is separated at the space and the first string will be the name of the command 
-								//and the second one are the number of arguments that the command has (speed would have 1 argument).
+	std::string command;	//"map iso.tmx" --> The string is separated at the space and the first string will be the name of the command
+							//and the second one are the number of arguments that the command has (speed would have 1 argument).
 	uint n_arguments;
 
 	int min_arg;

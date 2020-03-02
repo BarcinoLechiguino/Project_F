@@ -52,9 +52,9 @@ bool j1Console::PreUpdate()
 		{
 			Command* comm = (*command);
 
-			if (App->input->CmpStr(App->input->GetInputText(), comm->command.GetString()))
+			if (App->input->CmpStr(App->input->GetInputText(), comm->command.c_str()))
 			{
-				comm->callback->OnCommand(comm->command.GetString());
+				comm->callback->OnCommand(comm->command.c_str());
 				commandHistory.push_back(comm);
 				commandWasFound = true;
 				break;
