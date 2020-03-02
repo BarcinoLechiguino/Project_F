@@ -333,7 +333,7 @@ bool j1Map::Load(std::string file_name)
 	//--------------------------- LOGS ----------------------------
 	if(ret == true)
 	{
-		LOG("Successfully parsed map XML file: %s", file_name);
+		LOG("Successfully parsed map XML file: %s", file_name.c_str());			//This crashes to desktop for some reason.
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
