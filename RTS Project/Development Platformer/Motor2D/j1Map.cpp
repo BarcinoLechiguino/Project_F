@@ -53,19 +53,37 @@ void j1Map::Draw()
 
 	App->win->GetWindowSize(winWidth, winHeight);																	//Gets the window size so it can be added to the camera collider as parameters.
 
-	int cam_tileWidth = winWidth / data.tile_width;																	//Width of the camera in tiles.
-	int cam_tileHeight = winHeight / data.tile_height;																//Height of the camera in tiles.	
-
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
 	{
-		cam_tilePos.x = (-App->render->camera.x * (*layer)->speed) / data.tile_width;							//Position in the X axis of the camera in tiles. Takes into account parallax speed.
-		cam_tilePos.y = (-App->render->camera.y * (*layer)->speed) / data.tile_height;							//Position in the Y axis of the camera in tiles. Takes into account parallax speed.
+		int camera_pos_in_pixels_x = -App->render->camera.x ;
+		int camera_pos_in_pixels_y = -App->render->camera.y ;
 
-		for (uint y = cam_tilePos.y; y < (cam_tilePos.y + cam_tileHeight + 2); ++y)									//While y is less than the camera's height in tiles //Change it so it is not hardcoded.
+		LOG("camera x and y: %f,%f", camera_pos_in_pixels_x, camera_pos_in_pixels_y);
+
+		LOG("win width %d, win height %d", winWidth, winHeight);
+
+		LOG("Sum of %d,%d", (camera_pos_in_pixels_x + winWidth) / 32 , (camera_pos_in_pixels_y / 32) );
+
+		int a = (camera_pos_in_pixels_x + winWidth) / 32 -3;
+		int b = camera_pos_in_pixels_y / 16 -3;
+
+		LOG("a = %d, b = %d", a, b);
+		LOG("a+b = %d", a + b);
+		
+		int max_tile_sum_top = (camera_pos_in_pixels_y / 32) * 2;
+		int max_tile_sum_bottom = (camera_pos_in_pixels_y + winWidth / 32) * 2;
+
+		/*for (int x = 0; x < max_tile_sum_bottom - max_tile_sum_top; x++)
 		{
-			for (uint x = cam_tilePos.x; x < (cam_tilePos.x + cam_tileWidth + 2); ++x)								//While x is less than the camera's width in tiles. //Change it so it is not hardcoded.
-			{	
+			for (int y = 0; y < max_tile_sum_bottom - max_tile_sum_top; y++)*/
+
+		for (int x = 0; x < 100; x++)
+		{
+			for (int y = 0; y < 100; y++)
+			{
+
 				int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
+
 				if (tile_id > 0)																					//If tile_id is not 0
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);												//Gets the tileset corresponding with the tile_id. If tile id is 34 and the current tileset first gid is 35, that means that the current  tile belongs to the previous tileset. 
@@ -74,7 +92,7 @@ void j1Map::Draw()
 						SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 
 						iPoint pos = MapToWorld(x, y);																//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map pos: x = 1 --> World pos: x = 32...
 
-						App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect,false,(*layer)->speed);
+						App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect); //, false, (*layer)->speed)
 					}
 				}
 			}

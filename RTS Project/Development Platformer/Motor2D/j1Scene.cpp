@@ -232,7 +232,7 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 	}
 	// --------------------------------------------------------------------------------------------
 	
-	App->map->Draw();
+	App->map->Draw(); //Map Draw
 	
 	if (App->map->pathfindingMetaDebug == true)
 	{
