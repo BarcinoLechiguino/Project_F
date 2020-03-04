@@ -1,0 +1,3 @@
+﻿  j1Gui.cpp
+b:\documents\github\rts project\rts project code\motor2d\j1gui.cpp(491): warning C4715: 'j1Gui::FirstElementUnderMouse': not all control paths return a value
+  Motor2D.vcxproj -> B:\Documents\GitHub\RTS Project\Debug\Motor 2D.exe
