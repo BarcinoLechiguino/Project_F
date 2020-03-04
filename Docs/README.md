@@ -13,6 +13,7 @@
  - {Francisco Guerrero} - {UI Artist/Designer} - {GitHub}
  
 ## Sections
+ - Game Reference: General Analysis of a Similar Game {Docs/GameReference.md}
  - GDD: Game Design Document {Docs/GDD.md}
  - TDD: Tech Design Document {Docs/TDD.md}
  - GUI Document {Docs/GUIDocument.md}
