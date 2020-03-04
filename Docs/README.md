@@ -20,4 +20,4 @@
  - Art Bible [Docs/ArtBible.md](../Docs/ArtBible.md)
  - Audio Bible [Docs/AudioBible.md](../Docs/AudioBible.md)
  - QA Workflow [Docs/QAWorkflow.md](../Docs/QAWorkflow.md)
- - Production Plan [Docs/ProductionPlan.md](..//Docs/ProductionPlan.md)
+ - Production Plan [Docs/ProductionPlan.md](../Docs/ProductionPlan.md)
