@@ -16,10 +16,10 @@
 - {Table with the CPU, GPU... specifications}
 
 ## Performance Budgets
-- {See Alex's research}
+- {See Enric's research}
 
 ## Branching Policy
-- {See Alex's research}
+- {See Enric's research}
 
 ## Version List
 - {List containing all the current and previous versions}
@@ -32,6 +32,10 @@
 - {Specifying all external libraries that were used during development}
 
 ## Build Delivery Method
-- {See Alex's Research}
+- {See Enric's Research}
 
 ## {The file's structures can be modified should it be needed}
+
+## TDD References:
+- [Final TDD Reference](https://github.com/DevCrumbs/Warcraft-II/wiki/7.-Tech-Design-Document)
+- [Enric's TDD Research](https://github.com/EnricGDV/Research-TDD)
