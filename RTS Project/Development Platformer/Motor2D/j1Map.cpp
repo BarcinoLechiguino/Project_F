@@ -51,6 +51,8 @@ void j1Map::Draw()
 		return;
 	}
 
+	int tiles_drawn = 0;
+
 	App->win->GetWindowSize(winWidth, winHeight);																	//Gets the window size so it can be added to the camera collider as parameters.
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
@@ -58,46 +60,58 @@ void j1Map::Draw()
 		int camera_pos_in_pixels_x = -App->render->camera.x ;
 		int camera_pos_in_pixels_y = -App->render->camera.y ;
 
-		LOG("camera x and y: %f,%f", camera_pos_in_pixels_x, camera_pos_in_pixels_y);
+		//LOG("camera x and y: %d,%d", camera_pos_in_pixels_x, camera_pos_in_pixels_y);
 
-		LOG("win width %d, win height %d", winWidth, winHeight);
+		int bottom_right_x = camera_pos_in_pixels_x + winWidth;
+		int bottom_right_y = camera_pos_in_pixels_y + winHeight;
 
-		LOG("Sum of %d,%d", (camera_pos_in_pixels_x + winWidth) / 32 , (camera_pos_in_pixels_y / 32) );
+		int top_left_x_row = WorldToMap(camera_pos_in_pixels_x, camera_pos_in_pixels_y).x;
 
-		int a = (camera_pos_in_pixels_x + winWidth) / 32 -3;
-		int b = camera_pos_in_pixels_y / 16 -3;
+		int bottom_right_x_row = WorldToMap(bottom_right_x , bottom_right_y ).x;
 
-		LOG("a = %d, b = %d", a, b);
-		LOG("a+b = %d", a + b);
+		int top_right_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels_y).y; //Esquina dereche arriba
+		int bottom_left_y_row = WorldToMap(camera_pos_in_pixels_x, bottom_right_y).y; //Esquina izquierda abajo
+
+		//LOG("min x row %d, max x row %d", top_left_x_row, bottom_right_x_row);
+		//LOG("min y row %d, max y row %d", top_right_y_row, bottom_left_y_row);
 		
-		int max_tile_sum_top = (camera_pos_in_pixels_y / 32) * 2;
-		int max_tile_sum_bottom = (camera_pos_in_pixels_y + winWidth / 32) * 2;
-
-		/*for (int x = 0; x < max_tile_sum_bottom - max_tile_sum_top; x++)
+		if (top_left_x_row < 0)
 		{
-			for (int y = 0; y < max_tile_sum_bottom - max_tile_sum_top; y++)*/
+			top_left_x_row = 0;
+		}
 
-		for (int x = 0; x < 100; x++)
+		if (top_right_y_row < 0)
 		{
-			for (int y = 0; y < 100; y++)
+			top_right_y_row = 0;
+		}
+
+		for (int x = top_left_x_row ; x < bottom_right_x_row && x < data.width; x++)
+		{
+			for (int y = top_right_y_row ; y < bottom_left_y_row && y < data.height; y++)
 			{
+
+
 
 				int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
 
 				if (tile_id > 0)																					//If tile_id is not 0
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);												//Gets the tileset corresponding with the tile_id. If tile id is 34 and the current tileset first gid is 35, that means that the current  tile belongs to the previous tileset. 
+					
 					if (tileset != NULL)																			//While the tileset pointer is not null.
 					{
 						SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 
 						iPoint pos = MapToWorld(x, y);																//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map pos: x = 1 --> World pos: x = 32...
 
 						App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect); //, false, (*layer)->speed)
+
+						tiles_drawn++;
 					}
 				}
 			}
 		}
 	}
+	//LOG("Tiles drawn: %d", tiles_drawn);
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const 
