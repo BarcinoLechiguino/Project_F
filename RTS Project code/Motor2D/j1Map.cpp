@@ -13,7 +13,6 @@
 #include "j1Pathfinding.h"
 #include "j1Scene.h"
 #include "j1EntityManager.h"
-
 #include "j1Console.h"
 #include "Brofiler\Brofiler.h"
 #include <math.h>
@@ -36,9 +35,6 @@ bool j1Map::Awake(pugi::xml_node& config)
 	bool ret = true;
 
 	folder = (config.child("folder").child_value());
-
-	/*spawn_position_cam.x = config.child("renderer").child("cam").attribute("x").as_float();
-	spawn_position_cam.x = config.child("renderer").child("cam").attribute("y").as_float();*/
 
 	return ret;
 }
@@ -87,7 +83,6 @@ void j1Map::Draw()
 		{
 			for (int y = top_right_y_row ; y < bottom_left_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels_x - data.tile_width; y++)
 			{
-
 				if (MapToWorld(x, y).y > camera_pos_in_pixels_y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
 				{
 					int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
@@ -587,25 +582,7 @@ bool j1Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 			objectgroup->object[index].type = GOAL;									//As the object type string matches "goal" the object's type will be set to GOAL.
 		}
 		
-		// ------------------------------------------- LOADING ENEMIES FROM THE MAP -------------------------------------------
-		else if (object_type == "mecha")											//If the object loaded from the map matches the "mecha" type
-		{
-			App->entityManager->AddEnemy(ENTITY_TYPE::MECHA, object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
-			objectgroup->object[index].type = NONE;
-		}
-		else if (object_type == "alien")											//If the object loaded from the map matches the "alien" type
-		{
-			App->entityManager->AddEnemy(ENTITY_TYPE::ALIEN , object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
-			objectgroup->object[index].type = NONE;
-		}
-		// -------------------------------------------- LOADING COINS FROM THE MAP --------------------------------------------
-		else if (object_type == "coin")
-		{
-			//App->entityManager->AddItems(ENTITY_TYPE::COIN, object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
-			App->entityManager->AddEnemy(ENTITY_TYPE::COIN, object_iterator.attribute("x").as_int(), object_iterator.attribute("y").as_int());
-			objectgroup->object[index].type = NONE;
-		}
-		// --------------------------------------------------------------------------------------------------------------------
+		
 
 		else
 		{

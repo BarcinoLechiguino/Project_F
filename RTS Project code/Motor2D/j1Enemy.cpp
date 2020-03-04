@@ -87,26 +87,7 @@ void j1Enemy::LoadEntityAudio()
 
 void j1Enemy::InitEnemy()
 {
-	enemy_HitBox.x = position.x;
-	enemy_HitBox.y = position.y;
-	enemy_HitBox.w = sprite_width;
-	enemy_HitBox.h = sprite_height;
 
-	collider = App->collisions->AddCollider(enemy_HitBox, Object_Type::ENEMY, App->entityManager);				//THIS HERE This one loads the enemy collider.
-
-	// ------------------- ENEMY STATUS BOOLS -------------------
-	isAlive				= true;
-	grounded			= false;
-	airborne			= false;
-	flip				= false;
-	isGoingRight		= false; 
-	isGoingLeft			= false;
-	fading				= false;
-	isDying				= false;
-	againstRightWall	= false;
-	againstLeftWall		= false;
-
-	hasTarget			= false;
 }
 
 void j1Enemy::EnemyDebugInputs()
@@ -145,9 +126,4 @@ void j1Enemy::PathfindingMovement(Entity_State state, float dt)
 void j1Enemy::SetEnemyState(iPoint enemyPos, iPoint playerPos)
 {
 	return;
-}
-
-int j1Enemy::DistanceFromPlayer(j1Player* player) const
-{
-	return 0;
 }

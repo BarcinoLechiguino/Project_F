@@ -28,9 +28,6 @@
     <ClCompile Include="j1Main.cpp">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="j1Collisions.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClCompile>
     <ClCompile Include="j1FadeScene.cpp">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClCompile>
@@ -88,6 +85,9 @@
     <ClCompile Include="j1Fonts.cpp">
       <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
     </ClCompile>
+    <ClCompile Include="j1Collisions.cpp">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -134,9 +134,6 @@
     </ClInclude>
     <ClInclude Include="j1App.h">
       <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Collisions.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="j1FadeScene.h">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
@@ -194,6 +191,9 @@
     </ClInclude>
     <ClInclude Include="j1Fonts.h">
       <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Collisions.h">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

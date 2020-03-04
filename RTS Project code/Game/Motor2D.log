@@ -1,3 +1,22 @@
-﻿  j1Gui.cpp
-b:\documents\github\rts project\rts project code\motor2d\j1gui.cpp(491): warning C4715: 'j1Gui::FirstElementUnderMouse': not all control paths return a value
+﻿  j1Map.cpp
+b:\documents\github\rts project\rts project code\motor2d\j1map.cpp(122): warning C4244: '=': conversion from 'double' to 'TYPE', possible loss of data
+          with
+          [
+              TYPE=int
+          ]
+b:\documents\github\rts project\rts project code\motor2d\j1map.cpp(123): warning C4244: '=': conversion from 'double' to 'TYPE', possible loss of data
+          with
+          [
+              TYPE=int
+          ]
+b:\documents\github\rts project\rts project code\motor2d\j1map.cpp(760): warning C4244: '=': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+b:\documents\github\rts project\rts project code\motor2d\j1map.cpp(761): warning C4244: '=': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
   Motor2D.vcxproj -> B:\Documents\GitHub\RTS Project\Debug\Motor 2D.exe

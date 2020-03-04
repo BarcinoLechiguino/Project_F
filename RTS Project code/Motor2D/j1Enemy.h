@@ -6,8 +6,6 @@
 #include "Animation.h"
 #include "p2Point.h"
 
-class j1Player;
-
 enum class Entity_State
 {
 	IDLE = 0,
@@ -60,24 +58,11 @@ public:
 	virtual void PathfindingLogic();								//Depending on how far a player is from an enemy entity, a path will be created and the enemy will path towards that player.
 	virtual void PathfindingMovement(Entity_State state, float dt);	//Holds all the states a specific enemy entity can be in and the specific movement for each state.
 	virtual void SetEnemyState(iPoint enemyPos, iPoint playerPos);	//Depending on where a player in pathfinding range is, the enemy will be set in a state or another (Entity_State::PATHING_RIGHT).
-	int DistanceFromPlayer(j1Player* player) const;					//Calculates the distance between a player and an enemy entity.
-
 public:
 	Entity_State	state;									//State in which the entity is in any given moment.
 	SDL_Rect		enemy_HitBox;							//Rectangle that will represent the enemy in the world. Used to create colliders, 
 	int				detectionRadius;						//Threshold that the enemy will have to detect whether or not a player is inside its detection range. Distance in tiles, not pixels.
 	int				pointsOnKill;							//Amount of points awarded to the players on enemy kill.
-
-	bool grounded;											//
-	bool airborne;											//
-	bool flip;												//
-	bool isGoingRight;										//
-	bool isGoingLeft;										//
-	bool fading;											//
-	bool isAlive;											//
-	bool isDying;											//
-	bool againstRightWall;									//
-	bool againstLeftWall;									//
 	
 	bool hasTarget;											//Keeps track whether an enemy entity already has a target or not.
 

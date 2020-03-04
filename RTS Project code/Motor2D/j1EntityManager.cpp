@@ -10,16 +10,14 @@
 
 //#include "mmgr/mmgr.h"
 
-j1EntityManager::j1EntityManager() : player(nullptr), player2(nullptr)	//Sets the j1Player1* pointers declared in the header to nullptr
+j1EntityManager::j1EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
 {
 	name = ("entities");
 }
 
 j1EntityManager::~j1EntityManager()
 {
-	//As the pointers have been set in the constructor, they must be destroyed / deleted in the destructor.
-	delete player;
-	delete player2;
+
 }
 
 bool j1EntityManager::Awake(pugi::xml_node& config)
@@ -50,8 +48,6 @@ bool j1EntityManager::Start()
 
 bool j1EntityManager::PreUpdate()
 {
-	SpawnEnemies();   					//Should this be here?
-
 	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
 		(*entity_iterator)->PreUpdate();
@@ -106,9 +102,6 @@ bool j1EntityManager::CleanUp()
 	}
 
 	entities.clear();									//Deletes all items in the entities list and frees all allocated memory.
-
-	player = NULL;										//Sets the j1Player* player pointer to NULL.
-	player2 = NULL;
 
 	return true;
 }
@@ -165,16 +158,6 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 bool j1EntityManager::Load(pugi::xml_node& data)
 {
 
-	for (pugi::xml_node mecha = data.child("mecha").child("position"); mecha; mecha = mecha.next_sibling()) {
-		iPoint mechapos = { mecha.attribute("x").as_int(), mecha.attribute("y").as_int() };
-		AddEnemy(ENTITY_TYPE::MECHA, mechapos.x, mechapos.y );
-	}
-
-	for (pugi::xml_node alien = data.child("alien").child("position"); alien; alien = alien.next_sibling()) {
-		iPoint alienpos = { alien.attribute("x").as_int(), alien.attribute("y").as_int() };
-		AddEnemy(ENTITY_TYPE::ALIEN, alienpos.x, alienpos.y);
-	}
-
 	return true;
 }
 
@@ -209,74 +192,6 @@ void j1EntityManager::CreatePlayers()
 	//player = (j1Player1*)CreateEntity(ENTITY_TYPE::PLAYER);
 	//player2 = (j1Player2*)CreateEntity(ENTITY_TYPE::PLAYER2);
 }
-
-void j1EntityManager::AddEnemy(ENTITY_TYPE type, int x, int y)
-{
-	int i = 0;
-	LOG("Adding enemy %d", i);
-	i++;
-	
-	EntityData* data = new EntityData();
-
-	data->position.x = x;
-	data->position.y = y;
-	data->type = type;
-
-	entityData_list.push_back(data);
-}
-
-void j1EntityManager::SpawnEnemies()
-{
-
-	int i = 0;
-	//for (std::list<EntityData*>::iterator enemy_iterator = entityData_list.begin(); enemy_iterator != entityData_list.end(); enemy_iterator++)												//Iterates the entityData_list.
-	//{
-	//	j1Entity * enemy = nullptr;																									//Pointer that will be assigned to each enemy entity.
-
-	//	switch ((*enemy_iterator)->type)			//REVISE TYPE, maybe it will not work.
-	//	{
-	//	case ENTITY_TYPE::MECHA:
-	//		enemy = new j1Mecha((*enemy_iterator)->position.x, (*enemy_iterator)->position.y, (*enemy_iterator)->type);	//Spawns a MECHA type enemy.
-	//		break;
-
-	//	case ENTITY_TYPE::ALIEN:
-	//		enemy = new j1Alien((*enemy_iterator)->position.x, (*enemy_iterator)->position.y, (*enemy_iterator)->type);	//Spawns an ALIEN type enemy.
-	//		break;
-
-	//	case ENTITY_TYPE::COIN:
-	//		enemy = new j1Coin((*enemy_iterator)->position.x, (*enemy_iterator)->position.y, (*enemy_iterator)->type);
-	//		
-	//		break;
-	//	}
-
-	//	if (enemy != NULL)							//Uncomment when entities can be spawned.
-	//	{
-	//		entities.push_back(enemy);																									//The entity is added to the entities list
-	//		enemy->Start();																											//The entity's start method is called.
-	//		//break;								//Unless this method is used to spawn a single entity at a time, this needs to be kept commented. 
-	//	}
-
-	//	RELEASE((*enemy_iterator));				//Frees all memory allocated for the entity. AddEnemy() --> EntityData* data = new EntityData();
-	//}
- 
-	entityData_list.clear();						//Once all enemies have been spawned, the list is cleared.
-}
-
-//void j1EntityManager::AddItems(ENTITY_TYPE type, int x, int y)
-//{
-//	(j1Coin*)CreateEntity(type, x, y);
-//	LOG("There are %d entities in the entities list at Coin creation.", entities.count());
-//
-//	/*int i = 0;
-//	for (p2List_item<j1Entity*>* entity_iterator = entities.start; entity_iterator != NULL; entity_iterator = entity_iterator->next)
-//	{
-//		if (entity_iterator->data->type == ENTITY_TYPE::COIN)
-//		{
-//			LOG("Coins in the entities list at coin Addition n %d", i);
-//			i++;
-//		}
-//	}*/
-//}
 
 void j1EntityManager::DestroyEntities()
 {

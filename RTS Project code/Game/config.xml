@@ -7,7 +7,7 @@
   </app>
 	
   <renderer>
-    <vsync value="false"/>
+    <vsync value="true"/>
     <camera x ="0" y ="-570" smoothing_speed ="0.01f"/>
     <spawn_cam x ="0" y ="-570"/>
     <camera_debug value="false" speed="400.0f"/>
@@ -42,33 +42,6 @@
 
   <entities>
     <player>
-      <speed x="350.0f" y="0"/>
-      <max_speed x="240.0f" y="700.0f"/>                 <!--500.0f-->  <!--1000.0f-->
-      <acceleration x="60.0f" y="450.0f"/>               <!--625.0f-->
-      <gravity value="1200.0f"/>
-      <boost_jump x="0"  y="650.0f" threshold="1000"/>   <!--700.0f--> <!--950.0f-->
-      <frontflip start="-75.0f" end="75.0f"/>
-      <sprite_size w="38" h="58"/>
-      <lives lives="3"/>
-      <points points="0"/>
-      <tpCooldown timer="0.0f" cd="1.0f"/>
-      <godspeed gspeed ="450.0f"/>
-      <jumpFX name ="Jump.wav"/>
-      <DuoJumpFX name ="Jump_Duo.wav"/>
-      <DeathFX name ="Death.wav"/>
-      <ActivateFX name = "Activate.wav"/>
-      <TPFX name = "TP.wav"/>
-      <PassFX name = "Pass.wav"/>
-
-      <player_1 name="player_1">
-        <factoryMap mapName="factoryMap" x="192.0f" y="400.0f"/>
-        <forestMap mapName="forestMap" x="192.0f" y="1088.0f"/>
-      </player_1>
-
-      <player_2 name="player_2">
-        <factoryMap mapName="factoryMap" x="182.0f" y="400.0f"/>
-        <forestMap mapName="forestMap" x="182.0f" y="1088.0f"/>
-      </player_2>
     </player>
 
     <enemies>
