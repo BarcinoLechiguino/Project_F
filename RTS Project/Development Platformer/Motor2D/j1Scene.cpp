@@ -229,6 +229,7 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 		{
 			App->frame_cap = CAP_AT_60;
 		}
+
 	}
 	// --------------------------------------------------------------------------------------------
 	

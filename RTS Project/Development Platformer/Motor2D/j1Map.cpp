@@ -87,31 +87,32 @@ void j1Map::Draw()
 
 		for (int x = top_left_x_row ; x < bottom_right_x_row && x < data.width; x++)
 		{
-			for (int y = top_right_y_row ; y < bottom_left_y_row && y < data.height; y++)
+			for (int y = top_right_y_row ; y < bottom_left_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels_x; y++)
 			{
 
-
-
-				int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
-
-				if (tile_id > 0)																					//If tile_id is not 0
+				if (MapToWorld(x, y - 1).y > camera_pos_in_pixels_y && MapToWorld(x - 1, y).x <= bottom_right_x)
 				{
-					TileSet* tileset = GetTilesetFromTileId(tile_id);												//Gets the tileset corresponding with the tile_id. If tile id is 34 and the current tileset first gid is 35, that means that the current  tile belongs to the previous tileset. 
-					
-					if (tileset != NULL)																			//While the tileset pointer is not null.
+					int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
+
+					if (tile_id > 0)																					//If tile_id is not 0
 					{
-						SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 
-						iPoint pos = MapToWorld(x, y);																//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map pos: x = 1 --> World pos: x = 32...
+						TileSet* tileset = GetTilesetFromTileId(tile_id);												//Gets the tileset corresponding with the tile_id. If tile id is 34 and the current tileset first gid is 35, that means that the current  tile belongs to the previous tileset. 
 
-						App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect); //, false, (*layer)->speed)
+						if (tileset != NULL)																			//While the tileset pointer is not null.
+						{
+							SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 
+							iPoint pos = MapToWorld(x, y);																//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map pos: x = 1 --> World pos: x = 32...
 
-						tiles_drawn++;
+							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect); //, false, (*layer)->speed)
+
+							tiles_drawn++;
+						}
 					}
 				}
 			}
 		}
 	}
-	//LOG("Tiles drawn: %d", tiles_drawn);
+	LOG("Tiles drawn: %d", tiles_drawn);
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const 
