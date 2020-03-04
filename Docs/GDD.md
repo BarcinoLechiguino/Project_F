@@ -32,8 +32,8 @@
 - {Unit 03}
 - {Unit 04}
 
-## AI
-- {AI System UML(?)}
+## AI Design
+- {AI Behaviour Design}
 
 ## Buildings
 - {All Buildings (Along with their stats)}
