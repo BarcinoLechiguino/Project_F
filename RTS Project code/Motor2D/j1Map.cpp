@@ -87,16 +87,15 @@ void j1Map::Draw()
 				{
 					int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
 
-					if (tile_id > 0)																					//If tile_id is not 0
+					if (tile_id > 0)																				
 					{
 						TileSet* tileset = GetTilesetFromTileId(tile_id);												//Gets the tileset corresponding with the tile_id. If tile id is 34 and the current tileset first gid is 35, that means that the current  tile belongs to the previous tileset. 
-
-						if (tileset != NULL)																			//While the tileset pointer is not null.
+						if (tileset != nullptr)																			
 						{
 							SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 
 							iPoint pos = MapToWorld(x, y);																//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map pos: x = 1 --> World pos: x = 32...
 
-							App->render->Blit(tileset->texture, pos.x, pos.y, &tile_rect); //, false, (*layer)->speed)
+							App->render->Blit(tileset->texture, pos.x + tileset->offset_x, pos.y + tileset->offset_y, &tile_rect); //, false, (*layer)->speed)
 
 							tiles_drawn++;
 						}
@@ -158,19 +157,19 @@ iPoint j1Map::WorldToMap(int x, int y) const
 
 SDL_Rect TileSet::GetTileRect(uint tile_id) const
 {
-	SDL_Rect tile_rect;						//Declares a SDL_Rect where the tile's rect data members will be stored.
+	SDL_Rect tile_rect;						
 
 	int relative_id = tile_id - firstgid;	//Calculates the relative position of the tile_id respect the  first initial global id.
 
-	tile_rect.w = tile_width;				//Sets the width of the Rect holding the tile to the width of the tile in pixels.
-	tile_rect.h = tile_height;				//Sets the width of the Rect holding the tile to the height of the tile in pixels.
+	tile_rect.w = tile_width;				
+	tile_rect.h = tile_height;				
 	tile_rect.x = margin + ((tile_rect.w + spacing) * (relative_id % num_tiles_width));
 	tile_rect.y = margin + ((tile_rect.h + spacing) * (relative_id / num_tiles_width));
 
 	return tile_rect;
 }
 
-TileSet* j1Map::GetTilesetFromTileId(int id) 				//Revise. Its possible that it should do id < tilesetIter->data->firstgid.
+TileSet* j1Map::GetTilesetFromTileId(int id) 				
 {
 	std::list<TileSet*>::iterator tilesetIter = data.tilesets.begin();
 
@@ -178,17 +177,11 @@ TileSet* j1Map::GetTilesetFromTileId(int id) 				//Revise. Its possible that it 
 
 	for(tilesetIter; tilesetIter != data.tilesets.end(); tilesetIter++)
 	{
-		if (id >  (*tilesetIter)->firstgid )
+		if (id >=  (*tilesetIter)->firstgid)
 		{
-
 			ret = (*tilesetIter);
-			
-			break;
 		}
-
-		ret = (*tilesetIter);
 	}
-	
 	return ret;
 }
 
@@ -422,7 +415,7 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 
 	pugi::xml_node offset = tileset_node.child("tileoffset");
 
-	if(offset != NULL)
+	if(offset != nullptr)
 	{
 		set->offset_x = offset.attribute("x").as_int();
 		set->offset_y = offset.attribute("y").as_int();

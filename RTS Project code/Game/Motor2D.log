@@ -1,22 +1,24 @@
-﻿  j1Map.cpp
+﻿  j1Enemy.cpp
+  j1Map.cpp
+c:\users\paupb2\documents\github\project-rts\rts project code\motor2d\j1map.cpp(121): warning C4244: '=': conversión de 'double' a 'TYPE'; posible pérdida de datos
+          with
+          [
+              TYPE=int
+          ]
 c:\users\paupb2\documents\github\project-rts\rts project code\motor2d\j1map.cpp(122): warning C4244: '=': conversión de 'double' a 'TYPE'; posible pérdida de datos
           with
           [
               TYPE=int
           ]
-c:\users\paupb2\documents\github\project-rts\rts project code\motor2d\j1map.cpp(123): warning C4244: '=': conversión de 'double' a 'TYPE'; posible pérdida de datos
-          with
-          [
-              TYPE=int
-          ]
-c:\users\paupb2\documents\github\project-rts\rts project code\motor2d\j1map.cpp(760): warning C4244: '=': conversión de 'TYPE' a 'int'; posible pérdida de datos
+c:\users\paupb2\documents\github\project-rts\rts project code\motor2d\j1map.cpp(748): warning C4244: '=': conversión de 'TYPE' a 'int'; posible pérdida de datos
           with
           [
               TYPE=float
           ]
-c:\users\paupb2\documents\github\project-rts\rts project code\motor2d\j1map.cpp(761): warning C4244: '=': conversión de 'TYPE' a 'int'; posible pérdida de datos
+c:\users\paupb2\documents\github\project-rts\rts project code\motor2d\j1map.cpp(749): warning C4244: '=': conversión de 'TYPE' a 'int'; posible pérdida de datos
           with
           [
               TYPE=float
           ]
+  Generando código...
   Motor2D.vcxproj -> C:\Users\paupb2\Documents\GitHub\Project-RTS\Debug\Motor 2D.exe
