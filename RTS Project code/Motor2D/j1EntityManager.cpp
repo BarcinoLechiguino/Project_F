@@ -8,6 +8,8 @@
 #include "j1Window.h"
 #include "Brofiler\Brofiler.h"
 
+
+
 //#include "mmgr/mmgr.h"
 
 j1EntityManager::j1EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
@@ -127,7 +129,7 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 {
 	
 
-	pugi::xml_node mecha = data.append_child("mecha");
+	/*pugi::xml_node mecha = data.append_child("mecha");
 	pugi::xml_node alien = data.append_child("alien");
 
 	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
@@ -150,7 +152,7 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 			position.append_attribute("x") = enemies[i].position.x;
 			position.append_attribute("y") = enemies[i].position.y;
 		}	
-	}
+	}*/
 
 	return true;
 }
@@ -169,15 +171,16 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 	j1Entity* ret = nullptr;
 
-	//switch (type)
-	//{
-	//case ENTITY_TYPE::PLAYER:							//If the ENTITT_TYPE passed as argument is PLAYER.
-	//	//ret = new j1Player(x, y, type);				//Allocates memory for an entity from the j1Player module.
-	//	ret = new j1Player1(x, y, type);
-	//	break;
+	switch (type)
+	{
 
-	//}
-	//ret->type = type;
+		//case ENTITY_TYPE::DYNAMIC:							//If the ENTITT_TYPE passed as argument is PLAYER.
+		//ret = new j1Dynamic_Object(x, y, type);				//Allocates memory for an entity from the j1Player module.
+	
+		//break;
+
+	}
+	ret->type = type;
 
 	if (ret != nullptr)									//If the j1Entity* pointer is not NULL.
 	{
@@ -201,12 +204,11 @@ void j1EntityManager::DestroyEntities()
 	
 	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
-		if ((*entity_iterator)->type != ENTITY_TYPE::PLAYER && (*entity_iterator)->type != ENTITY_TYPE::PLAYER2)
-		{
-			(*entity_iterator)->CleanUp();			//Calls the CleanUp() method of the iterated entity (an enemy entity).
-			RELEASE((*entity_iterator));			//Deletes the data buffer
-			entities.erase(entity_iterator);		//Deletes the entity being iterated from the list.
+		
+		(*entity_iterator)->CleanUp();			//Calls the CleanUp() method of the iterated entity (an enemy entity).
+		RELEASE((*entity_iterator));			//Deletes the data buffer
+		entities.erase(entity_iterator);		//Deletes the entity being iterated from the list.
 			//break;
-		}
+		
 	}
 }
