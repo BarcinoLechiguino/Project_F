@@ -174,24 +174,19 @@ TileSet* j1Map::GetTilesetFromTileId(int id) 				//Revise. Its possible that it 
 {
 	std::list<TileSet*>::iterator tilesetIter = data.tilesets.begin();
 
-	//TileSet* ret = NULL;
 	TileSet* ret = (*tilesetIter);
 
-	while( tilesetIter != data.tilesets.begin() )
+	for(tilesetIter; tilesetIter != data.tilesets.end(); tilesetIter++)
 	{
-		if (id < /*>=*/ (*tilesetIter)->firstgid)
+		if (id >  (*tilesetIter)->firstgid )
 		{
-			//ret = tilesetIter->data;
-			tilesetIter--; //Fix
-			ret = (*tilesetIter);
-			tilesetIter++;
 
+			ret = (*tilesetIter);
+			
 			break;
 		}
 
 		ret = (*tilesetIter);
-
-		tilesetIter++;
 	}
 	
 	return ret;
@@ -501,9 +496,9 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		memset(layer->gid, 0, layer->width*layer->height);
 
 		int i = 0;
-		for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"))
+		for (pugi::xml_node tile = layer_data.child("tile") ; tile; tile = tile.next_sibling("tile"), i++)
 		{
-			layer->gid[i++] = tile.attribute("gid").as_int(0);
+			layer->gid[i] = tile.attribute("gid").as_int(0);
 		}
 	}
 
