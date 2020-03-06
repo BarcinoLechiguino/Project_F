@@ -26,7 +26,10 @@ public:
 private:
 
 public:
+ 
+	int tile_width;
+	int tile_height;
 
-
+private:
 
 };

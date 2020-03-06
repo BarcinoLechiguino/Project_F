@@ -7,6 +7,7 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "Brofiler\Brofiler.h"
+#include "j1Rock.h"
 
 
 
@@ -174,15 +175,16 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 	switch (type)
 	{
 
-		//case ENTITY_TYPE::DYNAMIC:							//If the ENTITT_TYPE passed as argument is PLAYER.
-		//ret = new j1Dynamic_Object(x, y, type);				//Allocates memory for an entity from the j1Player module.
+		case ENTITY_TYPE::ROCK:							
+		ret = new j1Rock(x, y, type);				//Allocates memory for an entity from the j1Player module.
 	
-		//break;
+		break;
 
 	}
+
 	ret->type = type;
 
-	if (ret != nullptr)									//If the j1Entity* pointer is not NULL.
+	if (ret != nullptr)									
 	{
 		entities.push_back(ret);								//Adds the generated entity to the entities list.
 	}

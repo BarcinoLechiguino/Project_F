@@ -94,6 +94,9 @@
     <ClCompile Include="j1Dynamic_Object.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities\Dynamic</Filter>
     </ClCompile>
+    <ClCompile Include="j1Rock.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static\Obstacles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -207,6 +210,9 @@
     <ClInclude Include="j1Dynamic_Object.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Dynamic</Filter>
     </ClInclude>
+    <ClInclude Include="j1Rock.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static\Obstacles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
@@ -278,6 +284,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Entities\Dynamic\Enemies">
       <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entities\Static\Obstacles">
+      <UniqueIdentifier>{15ffcaff-8973-48e6-b92f-ec6be2c7d83a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
