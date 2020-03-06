@@ -50,7 +50,7 @@
       <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
     </ClCompile>
     <ClCompile Include="j1Enemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="j1Map.cpp">
       <Filter>Desenvolupament  ========\Modules\Map</Filter>
@@ -87,6 +87,12 @@
     </ClCompile>
     <ClCompile Include="j1Collisions.cpp">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Static_Object.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="j1Dynamic_Object.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -160,7 +166,7 @@
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="j1Enemy.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Enemies</Filter>
+      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="j1Map.h">
       <Filter>Desenvolupament  ========\Modules\Map</Filter>
@@ -194,6 +200,12 @@
     </ClInclude>
     <ClInclude Include="j1Collisions.h">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Static_Object.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="j1Dynamic_Object.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -231,9 +243,6 @@
     <Filter Include="Desenvolupament  ========\Modules\Entities">
       <UniqueIdentifier>{44d2af4a-f01e-4adb-851a-562cb452e1d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Enemies">
-      <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
       <UniqueIdentifier>{edcc3690-592f-4bb9-b993-23146d742d79}</UniqueIdentifier>
     </Filter>
@@ -260,6 +269,15 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Sources">
       <UniqueIdentifier>{2c952b81-74fb-4fef-9e28-a7299a9498f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entities\Static">
+      <UniqueIdentifier>{36e35673-638c-4c24-9dad-f5d06c9b884b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entities\Dynamic">
+      <UniqueIdentifier>{e96a4ccf-5996-4da6-8d54-7d5fcc7477e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entities\Dynamic\Enemies">
+      <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

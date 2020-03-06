@@ -17,11 +17,7 @@ struct SDL_Rect;
 enum class ENTITY_TYPE
 {
 	UNKNOWN_TYPE,
-	PLAYER,
-	PLAYER2,
-	MECHA,
-	ALIEN,
-	COIN
+	DYNAMIC
 };
 
 struct EntityData
@@ -64,9 +60,6 @@ public:
 	ENTITY_TYPE		type;					//Type of the entity (ENTITY_TYPE::PLAYER...)
 	std::string		nameTag;				//Name of the entity in the xml file.
 	fPoint			position;				//Initial position of the entity.
-	fPoint			speed;					//Movement speed of the entity.
-	uint			sprite_width;			//Width of the sprite. Applied to the entity's collider width.
-	uint			sprite_height;			//Height of the sprite. Applied to the entity's collider height.
 
 	SDL_Texture*	entity_sprite;			//Sprite / Spritesheet of the entity.
 	Collider*		collider;				//Collider of the entity.

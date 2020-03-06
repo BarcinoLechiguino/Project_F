@@ -5,12 +5,11 @@
 #include "j1Entity.h"		
 #include <list>
 #include <algorithm>
-
 #define MAX_ENEMIES 200
 
 struct SDL_Texture;
-class j1Entity;
 class j1Enemy;
+
 
 struct EnemyData
 {
@@ -51,9 +50,10 @@ public:
 	bool Save(pugi::xml_node&);
 
 public:
+
 	pugi::xml_node			config;
 	
-	std::list<j1Entity*>	entities;			//List of entities. Each created entity will be added to this list and then iterated in the class methods (Update()...)
+	std::list<j1Entity*>	entities;	
 
 	std::list<EntityData*>	entityData_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
 
