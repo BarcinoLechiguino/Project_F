@@ -22,41 +22,31 @@ public:
 
 	j1PathFinding();
 
-	// Destructor
-	~j1PathFinding();
+	~j1PathFinding();														// Destructor
 
-	// Called before quitting
-	bool CleanUp();
+	bool CleanUp();															// Called before quitting
 
-	// Sets up the walkability map
-	void SetMap(uint width, uint height, uchar* data);
+	void SetMap(uint width, uint height, uchar* data);						// Sets up the walkability map
 
-	// Main function to request a path from A to B
-	int CreatePath(const iPoint& origin, const iPoint& destination);
+	int CreatePath(const iPoint& origin, const iPoint& destination);		// Main function to request a path from A to B
 
-	// To request all tiles involved in the last generated path
-	const p2DynArray<iPoint>* GetLastPath() const;
+	const p2DynArray<iPoint>* GetLastPath() const;							// To request all tiles involved in the last generated path
 
-	// Utility: return true if pos is inside the map boundaries
-	bool CheckBoundaries(const iPoint& pos) const;
+	bool CheckBoundaries(const iPoint& pos) const;							// Utility: return true if pos is inside the map boundaries
 
-	// Utility: returns true is the tile is walkable
-	bool IsWalkable(const iPoint& pos) const;
+	bool IsWalkable(const iPoint& pos) const;								// Utility: returns true is the tile is walkable
 
-	// Utility: return the walkability value of a tile
-	uchar GetTileAt(const iPoint& pos) const;
+	uchar GetTileAt(const iPoint& pos) const;								// Utility: return the walkability value of a tile
 
 private:
 
-	// size of the map
-	uint width;
-	uint height;
+	
+	uint width;																// Width of the map.
+	uint height;															// Height of the map.
 
-	// all map walkability values [0..255]
-	uchar* map;
+	uchar* map;																// All map walkability values [0..255]
 
-	// we store the created path here
-	p2DynArray<iPoint> last_path;
+	p2DynArray<iPoint> last_path;											// We store the created path here
 };
 
 // forward declaration
