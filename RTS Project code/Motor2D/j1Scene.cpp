@@ -66,10 +66,12 @@ bool j1Scene::Start()
 	
 	ret = App->map->Load((*map_names.begin()).c_str());
 	LOG("Map Name: %s", (*map_names.begin()).c_str());
-	
-	App->entityManager->CreatePlayers();								//THIS HERE
-	/*App->entityManager->SpawnEnemies();*/								//If SpawnEnemies is called here then it should not be called in the PreUpdate()
-	
+
+	rock_test.push_back( (j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0) );
+	rock_test.push_back((j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 11, 2));
+	rock_test.push_back((j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 5, 1));
+	rock_test.push_back((j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 2, 5));
+
 	cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
 	
 	if (ret == true)													//If the first map is loaded then create the walkability map for it.
@@ -231,51 +233,6 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 			App->render->Blit(path_debug_tex, pos.x, pos.y);
 		}
 	}
-	
-	//Technical title
-	/*p2SString title("Map:%dx%d Tiles:%dx%d Tilesets:%d", App->map->data.width, App->map->data.height, App->map->data.tile_width, App->map->data.tile_height, App->map->data.tilesets.count());
-	App->win->SetTitle(title.GetString());*/
-	
-	// UI
-	/*if (App->gui->game_started && App->console->console_background->isVisible == false)
-	{
-		if (App->entityManager->player->player.lives >= 3 || App->entityManager->player2->player.lives >= 3)
-		{
-			hearts[0]->isVisible = true;
-			hearts[1]->isVisible = true;
-			hearts[2]->isVisible = true;
-			hearts[3]->isVisible = true;
-			hearts[4]->isVisible = true;
-			hearts[5]->isVisible = true;
-		}
-		if (App->entityManager->player->player.lives == 2 || App->entityManager->player2->player.lives == 2)
-		{
-			hearts[0]->isVisible = true;
-			hearts[1]->isVisible = true;
-			hearts[2]->isVisible = false;
-			hearts[3]->isVisible = true;
-			hearts[4]->isVisible = true;
-			hearts[5]->isVisible = false;
-		}
-		if (App->entityManager->player->player.lives == 1 || App->entityManager->player2->player.lives == 1)
-		{
-			hearts[0]->isVisible = true;
-			hearts[1]->isVisible = false;
-			hearts[2]->isVisible = false;
-			hearts[3]->isVisible = true;
-			hearts[4]->isVisible = false;
-			hearts[5]->isVisible = false;
-		}
-		if (App->entityManager->player->player.lives == 0 || App->entityManager->player2->player.lives == 0)
-		{
-			hearts[0]->isVisible = true;
-			hearts[1]->isVisible = true;
-			hearts[2]->isVisible = true;
-			hearts[3]->isVisible = true;
-			hearts[4]->isVisible = true;
-			hearts[5]->isVisible = true;
-		}
-	}*/
 
 	// --- Audio Scrollbars
 	if (scrollbar_settings->isVisible)
@@ -287,14 +244,6 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 		App->audio->volume = offset;
 	}
 
-	/*if (scrollbar_in->isVisible)
-	{
-		iPoint currentThumbPos = { scrollbar_in->GetThumbHitbox().x, scrollbar_in->GetThumbHitbox().y };
-
-		int offset = currentThumbPos.x - scrollbar_in->GetHitbox().x;
-
-		App->audio->volume = offset;
-	}*/
 
 	return true;
 }

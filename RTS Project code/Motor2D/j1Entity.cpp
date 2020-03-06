@@ -12,7 +12,7 @@
 #include "j1Render.h"
 #include "j1Window.h"
 
-j1Entity::j1Entity(int x, int y, ENTITY_TYPE type) : position(x, y), type(type), entity_sprite(nullptr), collider(nullptr), animation(nullptr)	//Initializes the variables to the specified values when the constructor is called.
+j1Entity::j1Entity(int x, int y, ENTITY_TYPE type) : tile_position(x, y), type(type), entity_sprite(nullptr), collider(nullptr), animation(nullptr)	//Initializes the variables to the specified values when the constructor is called.
 {
 	return;
 }

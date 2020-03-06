@@ -6,6 +6,8 @@
 #include "j1Timer.h"
 #include "j1Gui.h"
 #include "UI_Image.h"
+#include "j1Rock.h"
+#include <vector>
 
 struct SDL_Texture;
 
@@ -68,6 +70,8 @@ public:
 	std::string			music_path3;
 	bool				firstMap;			//Keeps track of which map is loaded. In this case this one keeps track of the first map.
 	bool				secondMap;			//Keeps track of which map is loaded. In this case this one keeps track of the second map.
+
+	std::vector<j1Rock*> rock_test;
 
 	UI_Image* test;
 
