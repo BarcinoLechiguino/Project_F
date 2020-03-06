@@ -194,9 +194,9 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	BROFILER_CATEGORY("CreatePath", Profiler::Color::SlateGray)
 	
-	int ret = -1;		//Revise, Should be 1?															//The value returned by the function. Done to improve readability.
+	int ret = -1;		//Revise, Should be 1?											//The value returned by the function. Done to improve readability.
 	
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false)	//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
+	if (IsWalkable(origin) == false || IsWalkable(destination) == false)				//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
 	{
 		return ret = -1;
 	}

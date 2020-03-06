@@ -49,8 +49,7 @@ private:
 	p2DynArray<iPoint> last_path;											// We store the created path here
 };
 
-// forward declaration
-struct PathList;
+struct PathList;															// forward declaration
 
 // ---------------------------------------------------------------------
 // Pathnode: Helper struct to represent a node in the path creation
@@ -62,12 +61,11 @@ struct PathNode
 	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
 	PathNode(const PathNode& node);
 
-	// Fills a list (PathList) of all valid adjacent pathnodes
-	uint FindWalkableAdjacents(PathList& list_to_fill) const;
-	// Calculates this tile score
-	int Score() const;
-	// Calculate the F for a specific destination tile
-	int CalculateF(const iPoint& destination);
+	uint FindWalkableAdjacents(PathList& list_to_fill) const;				// Fills a list (PathList) of all valid adjacent pathnodes
+
+	int Score() const;														// Calculates this tile score
+	
+	int CalculateF(const iPoint& destination);								// Calculate the F for a specific destination tile
 
 	// -----------
 	int g;
@@ -81,11 +79,9 @@ struct PathNode
 // ---------------------------------------------------------------------
 struct PathList
 {
-	// Looks for a node in this list and returns it's list node or NULL
-	p2List_item<PathNode>* Find(const iPoint& point) const;
+	p2List_item<PathNode>* Find(const iPoint& point) const;					// Looks for a node in this list and returns it's list node or NULL
 
-	// Returns the Pathnode with lowest score in this list or NULL if empty
-	p2List_item<PathNode>* GetNodeLowestScore() const;
+	p2List_item<PathNode>* GetNodeLowestScore() const;						// Returns the Pathnode with lowest score in this list or NULL if empty
 
 	// -----------
 	// The list itself, note they are not pointers!
