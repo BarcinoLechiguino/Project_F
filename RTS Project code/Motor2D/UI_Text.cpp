@@ -8,8 +8,8 @@
 
 //UI_Text can be interactible and draggable. Can potentially have all events.
 //This element can receive up to 5 different strings (one for each possible event).
-UI_Text::UI_Text(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, p2SString* string,
-			p2SString* hoverString, p2SString* leftClickString, p2SString* rightClickString): UI(element, x, y, hitbox, parent),
+UI_Text::UI_Text(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, std::string* string,
+			std::string* hoverString, std::string* leftClickString, std::string* rightClickString): UI(element, x, y, hitbox, parent),
 			idleTex(nullptr), hoverTex(nullptr), leftClickTex(nullptr), rightClickTex(nullptr), inputTextTex (nullptr), currentTex (nullptr)
 {	
 	// --- Setting this element's flags to the ones passed as argument.
@@ -25,22 +25,22 @@ UI_Text::UI_Text(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* f
 	//Loading all strings. Print() generates a texture with the given string with the a font and a colour.
 	if (string != NULL)
 	{
-		idleTex = App->font->Print(string->GetString(), fontColour, font);					//Creates the texture for the idle state.
+		idleTex = App->font->Print(string->c_str(), fontColour, font);					//Creates the texture for the idle state.
 	}
 
 	if (hoverString != NULL)
 	{
-		hoverTex = App->font->Print(hoverString->GetString(), fontColour, font);			//Creates the texture for the hover state.
+		hoverTex = App->font->Print(hoverString->c_str(), fontColour, font);			//Creates the texture for the hover state.
 	}
 	
 	if (leftClickString != NULL)
 	{
-		leftClickTex = App->font->Print(leftClickString->GetString(), fontColour, font);	//Creates the texture for the left-clicked state.
+		leftClickTex = App->font->Print(leftClickString->c_str(), fontColour, font);	//Creates the texture for the left-clicked state.
 	}
 
 	if (rightClickString != NULL)
 	{
-		rightClickTex = App->font->Print(rightClickString->GetString(), fontColour, font);	//Crates the texture for the right_clicked state.
+		rightClickTex = App->font->Print(rightClickString->c_str(), fontColour, font);	//Crates the texture for the right_clicked state.
 	}
 	// ----------------------------------------------------------------------------------------------------
 

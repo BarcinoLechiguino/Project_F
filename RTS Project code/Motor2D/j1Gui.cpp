@@ -38,7 +38,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool j1Gui::Start()
 {
-	atlas = App->tex->Load(atlas_file_name.GetString());
+	atlas = App->tex->Load(atlas_file_name.c_str());
 
 	if (atlas == NULL)
 	{
@@ -228,7 +228,7 @@ UI* j1Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool i
 }
 
 UI* j1Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable,
-					UI* parent, p2SString* string, p2SString* hoverString, p2SString* leftClickString, p2SString* rightClickString)
+					UI* parent, std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString)
 {
 	BROFILER_CATEGORY("GUI_Text", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
@@ -259,7 +259,7 @@ UI* j1Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool i
 }
 
 UI* j1Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursor, SDL_Color cursorColour, iPoint textOffset, 
-					float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, p2SString* defaultString, bool emptyElements)
+					float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, std::string* defaultString, bool emptyElements)
 {
 	BROFILER_CATEGORY("GUI_InputBox", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;

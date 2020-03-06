@@ -220,10 +220,10 @@ void j1Console::InitConsole()
 
 void j1Console::CreateConsoleElements()
 {
-	output_font = App->font->Load(output_font_path.GetString(), output_font_size);
-	input_font = App->font->Load(input_font_path.GetString(), input_font_size);
+	output_font = App->font->Load(output_font_path.c_str(), output_font_size);
+	input_font = App->font->Load(input_font_path.c_str(), input_font_size);
 
-	p2SString defaultString = "DefaultString";
+	std::string defaultString = "DefaultString";
 
 	console_background = (UI_Image*)App->gui->CreateImage(UI_Element::EMPTY, bg_position.x, bg_position.y, bg_rect, bg_isVisible, bg_isInteractible, bg_isDraggable, NULL);
 	

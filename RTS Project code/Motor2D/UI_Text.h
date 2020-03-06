@@ -1,7 +1,6 @@
 #ifndef __UI_TEXT_H__
 #define __UI_TEXT_H__
 
-#include "p2SString.h"
 #include "j1Fonts.h"
 #include "UI.h"
 
@@ -10,7 +9,7 @@ class UI_Text : public UI
 public:
 	UI_Text();
 	UI_Text(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible = true, bool isInteractible = false, bool isDraggable = false,
-		UI* parent = nullptr, p2SString* string = nullptr, p2SString* hoverString = nullptr, p2SString* leftClickString = nullptr, p2SString* rightClickString = nullptr);
+		UI* parent = nullptr, std::string* string = nullptr, std::string* hoverString = nullptr, std::string* leftClickString = nullptr, std::string* rightClickString = nullptr);
 
 	bool Draw();
 
@@ -25,7 +24,7 @@ public:
 	void RefreshTextInput(const char* newString);
 
 private:
-	p2SString*		string;							//String of the UI Text element
+	std::string*	string;							//String of the UI Text element
 	_TTF_Font*		font;							//Loaded font.
 	SDL_Color		font_colour;					//Colour of the font.
 	SDL_Texture*	idleTex;						//Texture for the idle state of the text.

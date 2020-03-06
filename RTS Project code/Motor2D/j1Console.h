@@ -2,7 +2,6 @@
 #define __j1CONSOLE_H__
 
 #include "j1Module.h"
-#include "p2SString.h"
 
 class UI;
 class UI_Image;
@@ -69,7 +68,7 @@ public:
 
 	iPoint				output_position;
 	SDL_Rect			output_rect;
-	p2SString			output_font_path;
+	std::string			output_font_path;
 	_TTF_Font*			output_font;
 	int					output_font_size;
 	SDL_Color			output_font_colour;
@@ -79,7 +78,7 @@ public:
 
 	iPoint				input_position;
 	SDL_Rect			input_rect;
-	p2SString			input_font_path;
+	std::string			input_font_path;
 	_TTF_Font*			input_font;
 	int					input_font_size;
 	SDL_Color			input_font_colour;

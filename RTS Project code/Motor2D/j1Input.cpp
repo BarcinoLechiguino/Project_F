@@ -116,24 +116,6 @@ bool j1Input::PreUpdate()
 
 				CheckNewTextInput(event.text.text);
 
-				//LOG("Input String %s", input_text.GetString());
-
-				//for (int i = 0; i < MAX_KEYS; ++i)
-				//{
-				//	if (keys[i] == 1)
-				//	{
-				//		/*strcat_s(input_text, 1, event.text.text);
-				//		input_text = event.text.text;
-				//		LOG("Input String %s", input_text);
-				//		
-				//		if (keyboard[i] == KEY_DOWN)
-				//		{
-				//			input_text = event.text.text;
-				//			LOG("Input String %s", input_text);
-				//		}*/
-				//	}
-				//}
-
 				break;
 
 			case SDL_TEXTEDITING:
@@ -233,7 +215,7 @@ void j1Input::TextInput()																// ------------------------------------
 
 	if (input_string == nullptr)														// If input_string is NULL.
 	{
-		Allocate(1);																	// Allocate memory for string of one character.
+		Allocate(1);																	// Allocate memory for a string of one character of length.
 		ClearTextInput();																// Delete everything in the string (Residual characters may remain in the string after allocation).
 		cursorIndex = 0;																// The cursor's index is initialized to 0.
 		prevLength = 0;																	// prevLength is initialized to 0.

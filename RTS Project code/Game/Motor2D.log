@@ -1,5 +1,7 @@
-﻿  j1Dynamic_Object.cpp
-  j1EntityManager.cpp
-b:\documents\github\rts project\rts project code\motor2d\j1entitymanager.cpp(182): warning C4060: switch statement contains no 'case' or 'default' labels
-  Generating Code...
-  Motor2D.vcxproj -> B:\Documents\GitHub\RTS Project\Debug\Motor 2D.exe
+﻿  j1Scene.cpp
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(139): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(143): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(147): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(151): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(287): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Motor2D.vcxproj -> C:\Users\Angel\Documents\GitHub\Project-RTS\Debug\Motor 2D.exe

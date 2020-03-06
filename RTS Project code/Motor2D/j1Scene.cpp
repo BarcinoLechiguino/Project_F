@@ -401,16 +401,16 @@ void j1Scene::LoadGuiElements()
 	_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 20);
 	_TTF_Font* font_sub = App->font->Load("fonts/Minecraftia-Regular.ttf");
 	SDL_Color fontRgb = { 0, 0, 0, 255 };
-	p2SString string_title = "MUTUAL COOPERATION";
-	p2SString string_subtitle = "Can you trust your friend?";
+	std::string string_title = "MUTUAL COOPERATION";
+	std::string string_subtitle	= "Can you trust your friend?";
 	title_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 388, 114, textHitbox, font, fontRgb, true, false, false, main_window, &string_title);
 	title_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 415, 155, textHitbox, font_sub, fontRgb, true, false, false, main_window, &string_subtitle);
 
 	_TTF_Font* font_button = App->font->Load("fonts/Future Now.ttf", 40);
-	p2SString string_play = "PLAY";
-	p2SString string_continue = "CONTINUE";
-	p2SString string_settings = "SETTINGS";
-	p2SString string_exit = "EXIT";
+	std::string string_play			= "PLAY";
+	std::string string_continue		= "CONTINUE";
+	std::string string_settings		= "SETTINGS";
+	std::string string_exit			= "EXIT";
 	title_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 480, 219, textHitbox, font_button, fontRgb, true, false, false, main_window, &string_play);
 	title_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 440, 320, textHitbox, font_button, fontRgb, true, false, false, main_window, &string_continue);
 	title_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 440, 429, textHitbox, font_button, fontRgb, true, false, false, main_window, &string_settings);
@@ -426,7 +426,7 @@ void j1Scene::LoadGuiElements()
 	label_1_settings = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 323, 160, label1_rect_settings, false, false, false, main_settings_menu);
 	
 	_TTF_Font* font_settings = App->font->Load("fonts/Minecraftia-Regular.ttf", 22);
-	p2SString string_title_settings = "SETTINGS MENU";
+	std::string string_title_settings = "SETTINGS MENU";
 	settings_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 420, 176, textHitbox, font_settings, fontRgb, false, false, false, main_settings_menu, &string_title_settings);
 	
 	SDL_Rect unmute_rect = { 512,147,57,57 };
@@ -440,11 +440,11 @@ void j1Scene::LoadGuiElements()
 	SDL_Rect clicked_m = { 440,214,57,57 };
 	mute = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 300, 300, false, true, false, main_settings_menu, &idle_m, &hover_m, &clicked_m);
 	
-	p2SString string_volume = "Sound Settings";
+	std::string string_volume = "Sound Settings";
 	_TTF_Font* font_settings_sub = App->font->Load("fonts/Future Now.ttf", 25);
 	settings_button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 428, 253, textHitbox, font_settings_sub, fontRgb, false, false, false, main_settings_menu, &string_volume);
 	
-	p2SString string_cap = "Cap To 30 FPS";
+	std::string string_cap = "Cap To 30 FPS";
 	settings_button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 300, 433, textHitbox, font_settings_sub, fontRgb, false, false, false, main_settings_menu, &string_cap);
 	
 	SDL_Rect check_rect = { 633,323,53,53 };
@@ -469,7 +469,7 @@ void j1Scene::LoadGuiElements()
 	github = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 670, 555, false, true, false, main_settings_menu, &idle_g, &hover_g, &clicked_g);
 	
 	_TTF_Font* font_settings_sub_back = App->font->Load("fonts/Future Now.ttf", 40);
-	p2SString string_back = "BACK";
+	std::string string_back = "BACK";
 	settings_button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 470, 570, textHitbox, font_settings_sub_back, fontRgb, false, false, false, main_settings_menu, &string_back);
 	
 	SDL_Rect scrollbarBar = { 674,273,200,38 };
@@ -491,7 +491,7 @@ void j1Scene::LoadGuiElements()
 	label_1_credits = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 323, 160, label1_rect_credits, false, false, false, main_credits_menu);
 	
 	_TTF_Font* font_credits = App->font->Load("fonts/Minecraftia-Regular.ttf", 22);
-	p2SString string_title_credits = "CREDITS";
+	std::string string_title_credits = "CREDITS";
 	credits_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 460, 173, textHitbox, font_credits, fontRgb, false, false, false, main_credits_menu, &string_title_credits);
 	
 	SDL_Rect back_c_rect = { 1057,30,173,45 };
@@ -505,23 +505,23 @@ void j1Scene::LoadGuiElements()
 	
 	_TTF_Font* default = App->font->Load("fonts/arial.ttf", 12);
 	_TTF_Font* default_bigger = App->font->Load("fonts/arial.ttf", 15);
-	p2SString one = "MIT License Copyright(c)[2019][Gerard Romeu, �ngel Gonz�lez]";
-	p2SString two = "Permission is hereby granted, free of charge, to any person obtaining a copy";
-	p2SString three = "of this software and associated documentation files(the Software), to deal in";
-	p2SString four = "the Software without restriction, including without limitation the rights to use,";
-	p2SString five = "copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the ";
-	p2SString six = "Software, and to permit persons to whom the Software is furnished to do so, ";
-	p2SString seven = "subject to the following conditions : ";
-	p2SString eight = "The above copyright notice and this permission notice shall be included in all  ";
-	p2SString nine = "copies or substantial portions of the Software. ";
-	p2SString ten = "THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, ";
-	p2SString eleven = "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES ";
-	p2SString twelve = "OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON";
-	p2SString thirteen = "INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT  ";
-	p2SString fourteen = "HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, ";
-	p2SString fifteen = "WHETHER IN AN  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING ";
-	p2SString sixteen = "FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR ";
-	p2SString seventeen = "OTHER DEALINGS IN THE SOFTWARE. ";
+	std::string one			= "MIT License Copyright(c)[2019][Angel Gonzalez, Gerard Romeu]";
+	std::string two			= "Permission is hereby granted, free of charge, to any person obtaining a copy";
+	std::string three		= "of this software and associated documentation files(the Software), to deal in";
+	std::string four		= "the Software without restriction, including without limitation the rights to use,";
+	std::string five		= "copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the ";
+	std::string six			= "Software, and to permit persons to whom the Software is furnished to do so, ";
+	std::string seven		= "subject to the following conditions : ";
+	std::string eight		= "The above copyright notice and this permission notice shall be included in all  ";
+	std::string nine		= "copies or substantial portions of the Software. ";
+	std::string ten			= "THE SOFTWARE IS PROVIDED AS IS, WITHOUT WARRANTY OF ANY KIND, ";
+	std::string eleven		= "EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES ";
+	std::string twelve		= "OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON";
+	std::string thirteen	= "INFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT  ";
+	std::string fourteen	= "HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, ";
+	std::string fifteen		= "WHETHER IN AN  ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING ";
+	std::string sixteen		= "FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR ";
+	std::string seventeen	= "OTHER DEALINGS IN THE SOFTWARE. ";
 	text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 300, 250, textHitbox, default_bigger, fontRgb, false, false, false, main_credits_menu, &one);
 	text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 298, 300, textHitbox, default, fontRgb, false, false, false, main_credits_menu, &two);
 	text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 298, 315, textHitbox, default, fontRgb, false, false, false, main_credits_menu, &three);
@@ -599,7 +599,7 @@ void j1Scene::LoadGuiElements()
 	label_1_in = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 323, 160, label1_rect_in, false, false, false, main_in_menu);
 	
 	_TTF_Font* font_in_esc = App->font->Load("fonts/Minecraftia-Regular.ttf", 32);
-	p2SString string_title_in = "PAUSE MENU";
+	std::string string_title_in = "PAUSE MENU";
 	in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 410, 166, textHitbox, font_in_esc, fontRgb, false, false, false, main_in_menu, &string_title_in);
 	
 	SDL_Rect in_rect = { 1057,30,173,45 };
@@ -623,10 +623,10 @@ void j1Scene::LoadGuiElements()
 	mute_in = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 300, 550, false, true, false, main_in_menu, &idle_m_in, &hover_m_in, &clicked_m_in);
 	
 	_TTF_Font* font_in_button = App->font->Load("fonts/Future Now.ttf", 30);
-	p2SString string_play_in_button = "RESUME";
-	p2SString string_save_in_button = "SAVE";
-	p2SString string_load_in_button = "LOAD";
-	p2SString string_exit_in_button = "EXIT";
+	std::string string_play_in_button = "RESUME";
+	std::string string_save_in_button = "SAVE";
+	std::string string_load_in_button = "LOAD";
+	std::string string_exit_in_button = "EXIT";
 	button_in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 470, 257, textHitbox, font_in_button, fontRgb, false, false, false, main_in_menu, &string_play_in_button);
 	button_in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 485, 327, textHitbox, font_in_button, fontRgb, false, false, false, main_in_menu, &string_save_in_button);
 	button_in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 485, 397, textHitbox, font_in_button, fontRgb, false, false, false, main_in_menu, &string_load_in_button);

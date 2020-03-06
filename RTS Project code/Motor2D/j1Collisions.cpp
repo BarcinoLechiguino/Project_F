@@ -43,6 +43,11 @@ bool j1Collisions::PreUpdate()
 	//This loop deletes from memory any collider that has been set to be deleted before calculating any new collisions.
 	for (std::list<Collider*>::iterator collider_iterator = collider_list.begin(); collider_iterator != collider_list.end() ; collider_iterator++)
 	{
+		/*if ((*collider_iterator) == nullptr)
+		{
+			collider_iterator = collider_iterator++;
+		}*/
+		
 		if ((*collider_iterator)->type == Object_Type::UNKNOWN)	//If the delete_collider is set to true this will be run. //Second part breaks with mmgr
 		{
 			(*collider_iterator)->type == Object_Type::SOLID;
@@ -50,8 +55,8 @@ bool j1Collisions::PreUpdate()
 		
 		if ((*collider_iterator)->to_delete == true || (*collider_iterator)->type == Object_Type::NONE)	//If the delete_collider is set to true this will be run. //Second part breaks with mmgr
 		{	
-			RELEASE((*collider_iterator));
 			collider_list.erase(collider_iterator);				//Using the list's properties all colliders set to delete will be deleted from memory.
+			RELEASE((*collider_iterator));
 		}
 	}
 

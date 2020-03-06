@@ -10,7 +10,7 @@
 //UI_InputBox will always be interactible (although it can be set to not be), and can be draggable. Can potentially receive all events.
 //The element receives as arguments all the requiered elements to create a UI_Image (Background), a UI_Text (input text) and another UI_Image (cursor).
 UI_InputBox::UI_InputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColour, iPoint textOffset,
-				float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, p2SString* defaultString, bool emptyElements) : UI(element, x, y, hitbox, parent)
+				float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, std::string* defaultString, bool emptyElements) : UI(element, x, y, hitbox, parent)
 {
 	//tex = App->gui->GetAtlas();
 	

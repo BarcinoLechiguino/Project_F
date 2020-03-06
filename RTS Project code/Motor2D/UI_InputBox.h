@@ -14,7 +14,7 @@ public:
 	UI_InputBox();
 	UI_InputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColor, iPoint textOffset,
 		float blinkFrequency = 0.0f, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, UI* parent = nullptr,
-		p2SString* defaultString = nullptr, bool emptyElements = false);
+		std::string* defaultString = nullptr, bool emptyElements = false);
 
 	bool Draw();
 
