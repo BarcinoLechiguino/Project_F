@@ -1,7 +1,39 @@
-﻿  j1Scene.cpp
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(141): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(145): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(149): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(153): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(244): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Motor2D.vcxproj -> B:\Documents\GitHub\RTS Project\Debug\Motor 2D.exe
+﻿  j1App.cpp
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1app.cpp(215): warning C4244: 'initializing': conversion from 'uint' to 'float', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1app.cpp(216): warning C4244: 'initializing': conversion from 'uint32' to 'float', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1app.cpp(224): warning C4244: 'argument': conversion from 'float' to 'Uint32', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1app.cpp(226): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1app.cpp(257): warning C4477: 'sprintf_s' : format string '%lu' requires an argument of type 'unsigned long', but variadic argument 6 has type 'uint64'
+  c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1app.cpp(257): note: consider using '%llu' in the format string
+  c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1app.cpp(257): note: consider using '%I64u' in the format string
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1app.cpp(257): warning C4477: 'sprintf_s' : format string '%d' requires an argument of type 'int', but variadic argument 7 has type 'char *'
+  j1Map.cpp
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1map.cpp(121): warning C4244: '=': conversion from 'double' to 'TYPE', possible loss of data
+          with
+          [
+              TYPE=int
+          ]
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1map.cpp(122): warning C4244: '=': conversion from 'double' to 'TYPE', possible loss of data
+          with
+          [
+              TYPE=int
+          ]
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1map.cpp(748): warning C4244: '=': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1map.cpp(749): warning C4244: '=': conversion from 'TYPE' to 'int', possible loss of data
+          with
+          [
+              TYPE=float
+          ]
+  j1Pathfinding.cpp
+  j1Scene.cpp
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(142): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(146): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(150): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(154): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1scene.cpp(247): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+  Generating Code...
+  Motor2D.vcxproj -> C:\Users\Angel\Documents\GitHub\Project-RTS\Debug\Motor 2D.exe

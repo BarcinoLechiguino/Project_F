@@ -655,11 +655,11 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	return ret;
 }
 
-int Properties::Get(std::string name, int default_value)					//Revise how to be able to not have a property without default value being nullptr.
+int Properties::Get(std::string name, int default_value)							//Revise how to be able to not have a property without default value being nullptr.
 {
 	for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++)
 	{
-		if ((*prop_iterator)->name == name)										//If the string passed as argument matches the name of a property in the property_list.						
+		if ((*prop_iterator)->name == name)											//If the string passed as argument matches the name of a property in the property_list.						
 		{
 			return (*prop_iterator)->intValue;										//Returns the value of the property.
 		}
@@ -667,7 +667,7 @@ int Properties::Get(std::string name, int default_value)					//Revise how to be 
 	return default_value;															//If no property is found then the value returned is 0.
 }
 
-//values Properties::Get(p2SString name, values* default_value) const					//Revise how to be able to not have a property without default value being nullptr.
+//values Properties::Get(p2SString name, values* default_value) const				//Revise how to be able to not have a property without default value being nullptr.
 //{
 //	p2List_item<Property*>* prop_iterator = property_list.start;
 //

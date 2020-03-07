@@ -29,7 +29,7 @@ bool j1Rock::PreUpdate()
 
 bool j1Rock::Update(float dt, bool doLogic)
 {
-	App->render->Blit(this->entity_sprite, pixel_position.x,pixel_position.y,nullptr);
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
 
 	return true;
 }

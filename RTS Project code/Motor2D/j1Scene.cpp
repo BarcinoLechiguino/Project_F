@@ -86,7 +86,8 @@ bool j1Scene::Start()
 		RELEASE_ARRAY(data);											//Frees all memory allocated to the data array.
 	}
 	
-	path_debug_tex = App->tex->Load("maps/path2_centered.png");					//Sets the path_debug_tex as path2.png.
+	//path_debug_tex = App->tex->Load("maps/path2_centered.png");					//Sets the path_debug_tex as path2.png.
+	path_debug_tex = App->tex->Load("maps/path2.png");					//Sets the path_debug_tex as path2.png.
 	
 	LoadGuiElements();
 	
@@ -224,12 +225,14 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 		p = App->map->MapToWorld(p.x, p.y);
 	
 		App->render->Blit(path_debug_tex, p.x, p.y);								//Should we want it, we could make a separate texture called mouse_debug_tex so the tex at mouse pos and the tex at path tile are different.
+
+		const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
 	
-		const p2DynArray<iPoint>* path = App->pathfinding->GetLastPath();
-	
-		for (uint i = 0; i < path->Count(); ++i)
+		for (uint i = 0; i < path->size(); ++i)
 		{
-			iPoint pos = App->map->MapToWorld(path->At(i)->x, path->At(i)->y);
+			iPoint pos = App->map->MapToWorld(path->at(i).x, path->at(i).y);		//Both work, reach a consensus on which to use.
+			//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
+
 			App->render->Blit(path_debug_tex, pos.x, pos.y);
 		}
 	}

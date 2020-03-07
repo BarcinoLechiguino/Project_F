@@ -20,7 +20,10 @@ bool j1PathFinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
 
-	last_path.Clear();
+	//last_path.Clear();
+	last_path.clear();													//Clears all elements in the last_path array/vector.
+	last_path.shrink_to_fit();											//Frees all unused allocated memory.
+
 	RELEASE_ARRAY(map);
 	return true;
 }
@@ -60,7 +63,12 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 }
 
 // To request all tiles involved in the last generated path
-const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
+/*const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
+{
+	return &last_path;
+}*/
+
+const std::vector<iPoint>* j1PathFinding::GetLastPath() const
 {
 	return &last_path;
 }
@@ -217,20 +225,22 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		if (current_node->data.pos == destination)										//If destination is in the closed list (visited) and the position of the current node is the same as destination's.
 		{
-			last_path.Clear();															//Sets the last_path dynArray count of number of elements to 0. Clears the dynArray.
+			last_path.clear();															//Sets the last_path dynArray count of number of elements to 0. Clears the dynArray.
+			last_path.shrink_to_fit();													//Frees unused allocated memory.
 
 			const PathNode* path_node = &current_node->data;							//Declares a node with the data members of the current_node (current position, parent, cost...). Improves readability.
 
 			while (path_node != NULL)													//While path_node is not NULL (path_node contains data)
 			{
-				last_path.PushBack(path_node->pos);										//Adds to last_path dynArray the current path_node tile (position data members).
+				last_path.push_back(path_node->pos);									//Adds to last_path dynArray the current path_node tile (position data members).
 				//LOG("Path_node at: (%d, %d)", path_node->pos.x, path_node->pos.y);
 				path_node = path_node->parent;											//Sets the data members of the current path_node as the data members of the parent node. (Backtracks one node/tile)
 			}
 
-			last_path.Flip();															//Flips the dynArray members so the first element of the array is the origin tile and the destination tile the last.
-			ret = last_path.Count();													//Returns the amount of steps the path has.
-			//LOG("Number of steps: %d", last_path.Count());
+			//FLIP(last_path);															//Flips the dynArray members so the first element of the array is the origin tile and the destination tile the last.
+			std::reverse(last_path.begin(), last_path.end());							//Flips the vector's elements. The first element of the array will be the origin tile and the destination tile the last one.
+			ret = last_path.size();														//Returns the amount of steps the path has.
+
 			break;
 		}
 
@@ -255,6 +265,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				else
 				{
 					neighbour_iterator->data.CalculateF(destination);												//Calculates the F (F = G + H) of the neighbour being iterated. Sets both G and H for this tile/node for a specific path.
+					open.list.add(neighbour_iterator->data);														//Adds the neighbour being iterated to the open list.
 					open.list.add(neighbour_iterator->data);														//Adds the neighbour being iterated to the open list.
 				}
 			}

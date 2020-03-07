@@ -210,7 +210,7 @@ void j1EntityManager::DestroyEntities()
 		(*entity_iterator)->CleanUp();			//Calls the CleanUp() method of the iterated entity (an enemy entity).
 		RELEASE((*entity_iterator));			//Deletes the data buffer
 		entities.erase(entity_iterator);		//Deletes the entity being iterated from the list.
-			//break;
 		
+		//break;
 	}
 }

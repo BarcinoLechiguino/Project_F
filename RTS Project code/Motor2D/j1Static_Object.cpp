@@ -1,6 +1,4 @@
-
 #include "j1Static_Object.h"
-
 
 
 j1Static_Object::j1Static_Object(int x, int y, ENTITY_TYPE type) : j1Entity(x, y, type)
