@@ -1,4 +1,3 @@
-
 #include "j1Static_Object.h"
 
 

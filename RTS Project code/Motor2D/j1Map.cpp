@@ -53,18 +53,18 @@ void j1Map::Draw()
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
 	{
-		int camera_pos_in_pixels_x = -App->render->camera.x ;
-		int camera_pos_in_pixels_y = -App->render->camera.y ;
+		camera_pos_in_pixels_x = -App->render->camera.x ;
+		camera_pos_in_pixels_y = -App->render->camera.y ;
 
-		int bottom_right_x = camera_pos_in_pixels_x + winWidth;
-		int bottom_right_y = camera_pos_in_pixels_y + winHeight;
+		bottom_right_x = camera_pos_in_pixels_x + winWidth;
+		bottom_right_y = camera_pos_in_pixels_y + winHeight;
 
-		int top_left_x_row = WorldToMap(camera_pos_in_pixels_x, camera_pos_in_pixels_y).x;
+		top_left_x_row = WorldToMap(camera_pos_in_pixels_x, camera_pos_in_pixels_y).x;
 
-		int bottom_right_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
+		bottom_right_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
 
-		int top_right_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels_y).y; //Esquina dereche arriba
-		int bottom_left_y_row = WorldToMap(camera_pos_in_pixels_x, bottom_right_y + data.tile_height).y; //Esquina izquierda abajo
+		top_right_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels_y).y; //Esquina dereche arriba
+		bottom_left_y_row = WorldToMap(camera_pos_in_pixels_x, bottom_right_y + data.tile_height).y; //Esquina izquierda abajo
 
 		//LOG("min x row %d, max x row %d", top_left_x_row, bottom_right_x_row);
 		//LOG("min y row %d, max y row %d", top_right_y_row, bottom_left_y_row);
@@ -104,7 +104,7 @@ void j1Map::Draw()
 			}
 		}
 	}
-	LOG("Tiles drawn: %d", tiles_drawn);
+	//LOG("Tiles drawn: %d", tiles_drawn);
 }
 
 iPoint j1Map::MapToWorld(int x, int y) const 

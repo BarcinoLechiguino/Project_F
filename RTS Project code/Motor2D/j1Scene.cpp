@@ -244,6 +244,7 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 		App->audio->volume = offset;
 	}
 
+	LOG("Rocks %d", rock_test.size());
 
 	return true;
 }
