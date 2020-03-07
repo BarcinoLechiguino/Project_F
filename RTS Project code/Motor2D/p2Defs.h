@@ -48,6 +48,15 @@ template <class VALUE_TYPE> void SWAP(VALUE_TYPE& a, VALUE_TYPE& b)
 	b = tmp;
 }
 
+/*template <class VALUE_TYPE> void FLIP(VALUE_TYPE& a)					//Alternative method to flip an array/vector. WIP
+{
+	VALUE_TYPE* start = &a[0];
+	VALUE_TYPE* end = &a[num_elements - 1];
+
+	while (start < end)
+		SWAP(*start++, *end--);
+}*/
+
 // Standard string size
 #define SHORT_STR	32
 #define MID_STR		255

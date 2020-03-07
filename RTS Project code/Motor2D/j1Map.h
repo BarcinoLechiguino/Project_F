@@ -57,16 +57,16 @@ struct Properties
 		 
 		for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++ )
 		{
-			RELEASE((*prop_iterator));									//Deletes all data members of a property and frees all allocated memory.
+			RELEASE((*prop_iterator));										//Deletes all data members of a property and frees all allocated memory.
 		}
 		property_list.clear();												//Clears poperty_list by deleting all items in the list and freeing all allocated memory.
 	}
 
 	//values default_values = { 0 };
 
-	//values Get(p2SString name, values* default_value = nullptr) const;			//Will get a specified property's data members. //Revise string type (p2SString, const char*...)
+	//values Get(p2SString name, values* default_value = nullptr) const;	//Will get a specified property's data members. //Revise string type (p2SString, const char*...)
 	
-	int Get(std::string name, int default_value = 0);			//Will get a specified property's data members. //This version will be used exclusively for pathfinding. (Draw / Nodraw)
+	int Get(std::string name, int default_value = 0);						//Will get a specified property's data members. //This version will be used exclusively for pathfinding. (Draw / Nodraw)
 	//Changed to non const because of list unknown problem
 
 	std::list<Property*>	property_list;
