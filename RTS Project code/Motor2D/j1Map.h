@@ -219,6 +219,19 @@ private:
 	pugi::xml_document	map_file;
 	std::string			folder;
 	bool				map_loaded;
+
+	int camera_pos_in_pixels_x;
+	int camera_pos_in_pixels_y;
+
+	int bottom_right_x ;
+	int bottom_right_y;
+
+	int top_left_x_row;
+
+	int bottom_right_x_row;
+
+	int top_right_y_row; //Esquina dereche arriba
+	int bottom_left_y_row; //Esquina izquierda abajo
 };
 
 #endif // __j1MAP_H__
