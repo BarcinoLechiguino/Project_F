@@ -689,7 +689,7 @@ bool j1Map::SwitchMaps(std::string new_map) // switch map function that passes t
 	CleanUp();
 	App->scene->to_end = false; // we put this in false so there are no repetitions
 	Load( new_map.c_str() );
-	App->audio->PlayMusic(App->map->data.music_File.c_str());
+	//App->audio->PlayMusic(App->map->data.music_File.c_str());
 
 	return true;
 }
