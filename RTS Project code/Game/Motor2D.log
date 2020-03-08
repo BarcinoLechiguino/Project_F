@@ -1,1 +1,4 @@
-﻿
+﻿  j1Collisions.cpp
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1collisions.cpp(53): warning C4553: '==': result of expression not used; did you intend '='?
+c:\users\angel\documents\github\project-rts\rts project code\motor2d\j1collisions.cpp(219): warning C4018: '<': signed/unsigned mismatch
+  Motor2D.vcxproj -> C:\Users\Angel\Documents\GitHub\Project-RTS\Debug\Motor 2D.exe

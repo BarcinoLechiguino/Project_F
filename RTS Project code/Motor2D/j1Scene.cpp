@@ -134,120 +134,25 @@ bool j1Scene::PreUpdate()
 bool j1Scene::Update(float dt)														//Receives dt as an argument.
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
-	//Camera Movement With Arrow Keys
+	
 	//if (App->render->cam.camera_debug == true)
 	//{
-		if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-		{
-			App->render->camera.x += ceil(cam_debug_speed * dt);	//As the value is multiplied by dt, camera movement will be adjusted to the framerate.  (100 * 0.033s (30fps), 100 * 0.066s (60fps)...)
-		}
-		if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-		{
-			App->render->camera.x -= ceil(cam_debug_speed * dt);	//Ceil rounds up all the decimal values, returning the smallest integral value not less than the given value. 
-		}
-		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-		{
-			App->render->camera.y += ceil(cam_debug_speed * dt);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-		{
-			App->render->camera.y -= ceil(cam_debug_speed * dt);
-		}
+		DebugCameraMovement(dt);							//Camera Movement With Arrow Keys
 	//}
 
-	// ---------------------------------------- DEBUG KEYS ----------------------------------------
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)			//Load First Level Key
-	{
-		App->fadescene->FadeToBlack("Test_map.tmx");
-		
-	}
+	DebugKeys();											//Debug Keys
 	
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)			//Load Second Level Key
-	{
-		App->fadescene->FadeToBlack("Test_map_2.tmx");
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-	{
-		App->pause = !App->pause;
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)			//Save Game Key
-	{
-		App->SaveGame("save_game.xml");
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)			//Load Game Key
-	{
-		App->LoadGame("save_game.xml");
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)			//Enable / Diable free camera movement Key
-	{
-		App->render->cam.camera_debug = !App->render->cam.camera_debug;
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)			//PathfindingCollisions meta layer Debug Key
-	{
-		App->gui->ui_debug = !App->gui->ui_debug;
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)			//Collider Debug Key
-	{
-		App->collisions->collider_debug = !App->collisions->collider_debug;
-		App->map->pathfindingMetaDebug = !App->map->pathfindingMetaDebug;
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)		//Enabling / Disabling frame cap
-	{
-		//App->framesAreCapped = !App->framesAreCapped;
-		if (App->frame_cap == CAP_AT_60)
-		{
-			App->frame_cap = CAP_AT_30;
-		}
-		else
-		{
-			App->frame_cap = CAP_AT_60;
-		}
-
-	}
-	// --------------------------------------------------------------------------------------------
-	
-	App->map->Draw(); //Map Draw
+	App->map->Draw();										//Map Draw
 	
 	if (App->map->pathfindingMetaDebug == true)
 	{
-		// Debug pathfinding ------------------------------
-		int x, y;
-		App->input->GetMousePosition(x, y);
-		iPoint p = App->render->ScreenToWorld(x, y);
-		p = App->map->WorldToMap(p.x, p.y);
-		p = App->map->MapToWorld(p.x, p.y);
-	
-		App->render->Blit(path_debug_tex, p.x, p.y);								//Should we want it, we could make a separate texture called mouse_debug_tex so the tex at mouse pos and the tex at path tile are different.
-
-		const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
-	
-		for (uint i = 0; i < path->size(); ++i)
-		{
-			iPoint pos = App->map->MapToWorld(path->at(i).x, path->at(i).y);		//Both work, reach a consensus on which to use.
-			//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
-
-			App->render->Blit(path_debug_tex, pos.x, pos.y);
-		}
+		PathfindingDebug();									//Pathfinding Debug. Shows a debug texture on the path's tiles.
 	}
 
 	// --- Audio Scrollbars
-	if (scrollbar_settings->isVisible)
-	{
-		iPoint currentThumbPos = { scrollbar_settings->GetThumbHitbox().x, scrollbar_settings->GetThumbHitbox().y };
+	ManageAudioVolumeWithScrollbar(scrollbar_settings);		//Rises or lowers the audio's volume depending on which position the scrollbar thumb is.
 
-		int offset = currentThumbPos.x - scrollbar_settings->GetHitbox().x;
-
-		App->audio->volume = offset;
-	}
-
-	LOG("Rocks %d", rock_test.size());
+	//LOG("Rocks %d", rock_test.size());
 
 	return true;
 }
@@ -319,8 +224,6 @@ void j1Scene::LoadGuiElements()
 {
 	// Main Menu
 	//--------------------------------------------------------------------------------------------
-
-
 	SDL_Rect image_rect{ 1654,56,915,768 };
 	background_image = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 45, 0, image_rect, true, false, false, NULL);
 
@@ -590,4 +493,117 @@ void j1Scene::LoadGuiElements()
 
 	firstScrollPosCalc = false;
 	secondScrollPosCalc = false;
+}
+
+void j1Scene::ManageAudioVolumeWithScrollbar(UI_Scrollbar* scrollbar)
+{
+	if (scrollbar->isVisible)
+	{
+		iPoint currentThumbPos = { scrollbar->GetThumbHitbox().x, scrollbar->GetThumbHitbox().y };
+
+		int offset = currentThumbPos.x - scrollbar->GetHitbox().x;
+
+		App->audio->volume = offset;
+	}
+}
+
+void j1Scene::DebugKeys()
+{
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)			//Load First Level Key
+	{
+		App->fadescene->FadeToBlack("Test_map.tmx");
+
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)			//Load Second Level Key
+	{
+		App->fadescene->FadeToBlack("Test_map_2.tmx");
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
+	{
+		App->pause = !App->pause;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)			//Save Game Key
+	{
+		App->SaveGame("save_game.xml");
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)			//Load Game Key
+	{
+		App->LoadGame("save_game.xml");
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)			//Enable / Diable free camera movement Key
+	{
+		App->render->cam.camera_debug = !App->render->cam.camera_debug;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)			//PathfindingCollisions meta layer Debug Key
+	{
+		App->gui->ui_debug = !App->gui->ui_debug;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)			//Collider Debug Key
+	{
+		App->collisions->collider_debug = !App->collisions->collider_debug;
+		App->map->pathfindingMetaDebug = !App->map->pathfindingMetaDebug;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)		//Enabling / Disabling frame cap
+	{
+		//App->framesAreCapped = !App->framesAreCapped;
+		if (App->frame_cap == CAP_AT_60)
+		{
+			App->frame_cap = CAP_AT_30;
+		}
+		else
+		{
+			App->frame_cap = CAP_AT_60;
+		}
+
+	}
+}
+
+void j1Scene::PathfindingDebug()
+{
+	// Debug pathfinding ------------------------------
+	int x, y;
+	App->input->GetMousePosition(x, y);
+	iPoint p = App->render->ScreenToWorld(x, y);
+	p = App->map->WorldToMap(p.x, p.y);
+	p = App->map->MapToWorld(p.x, p.y);
+
+	App->render->Blit(path_debug_tex, p.x, p.y);								//Should we want it, we could make a separate texture called mouse_debug_tex so the tex at mouse pos and the tex at path tile are different.
+
+	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
+
+	for (uint i = 0; i < path->size(); ++i)
+	{
+		iPoint pos = App->map->MapToWorld(path->at(i).x, path->at(i).y);		//Both work, reach a consensus on which to use.
+		//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
+
+		App->render->Blit(path_debug_tex, pos.x, pos.y);
+	}
+}
+
+void j1Scene::DebugCameraMovement(float dt)
+{
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	{
+		App->render->camera.x += ceil(cam_debug_speed * dt);	//As the value is multiplied by dt, camera movement will be adjusted to the framerate.  (100 * 0.033s (30fps), 100 * 0.066s (60fps)...)
+	}
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
+	{
+		App->render->camera.x -= ceil(cam_debug_speed * dt);	//Ceil rounds up all the decimal values, returning the smallest integral value not less than the given value. 
+	}
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
+	{
+		App->render->camera.y += ceil(cam_debug_speed * dt);
+	}
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
+	{
+		App->render->camera.y -= ceil(cam_debug_speed * dt);
+	}
 }
