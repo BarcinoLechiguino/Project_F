@@ -139,7 +139,7 @@ void j1Collisions::Collider_Debug()
 
 	else
 	{
-		LOG("Elements in the collider_list: %d", collider_list.size());	//Used to count how many items there are in a list
+		//LOG("Elements in the collider_list: %d", collider_list.size());	//Used to count how many items there are in a list
 
 			//Declares a list item pointer that iterates a given list, in this case the collider list.
 		for (std::list<Collider*>::iterator collider_iterator = collider_list.begin(); collider_iterator != collider_list.end() ; collider_iterator++)

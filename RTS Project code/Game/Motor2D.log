@@ -1,7 +1,1 @@
-﻿  j1Scene.cpp
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(153): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(157): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(161): warning C4244: '+=': conversion from 'float' to 'int', possible loss of data
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(165): warning C4244: '-=': conversion from 'float' to 'int', possible loss of data
-b:\documents\github\rts project\rts project code\motor2d\j1scene.cpp(258): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-  Motor2D.vcxproj -> B:\Documents\GitHub\RTS Project\Debug\Motor 2D.exe
+﻿

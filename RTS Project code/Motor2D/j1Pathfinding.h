@@ -82,17 +82,23 @@ struct PathNode
 // ---------------------------------------------------------------------
 struct PathList
 {
-	p2List_item<PathNode>* Find(const iPoint& point) const;					// Looks for a node in this list and returns it's list node or NULL
-	//std::list<PathNode>* Find(const iPoint& point) const;					// Looks for a node in this list and returns it's list node or NULL
+	//p2List_item<PathNode>* Find(const iPoint& point) const;					// Looks for a node in this list and returns it's list node or NULL
+	//std::list<PathNode>::iterator* Find(const iPoint& point) /*const*/;			// const causes some problems with std::iterator. // Looks for a node in this list and returns it's list node or NULL
 
-	p2List_item<PathNode>* GetNodeLowestScore() const;						// Returns the Pathnode with lowest score in this list or NULL if empty
-	//std::list<PathNode>* GetNodeLowestScore() const;						// Returns the Pathnode with lowest score in this list or NULL if empty
+	//p2List_item<PathNode>* GetNodeLowestScore() const;						// Returns the Pathnode with lowest score in this list or NULL if empty
+	//std::list<PathNode>::iterator* GetNodeLowestScore() /*const*/;				// const causes some problems with std::iterator. // Returns the Pathnode with lowest score in this list or NULL if empty
+
+	std::vector<PathNode>::iterator* Find(const iPoint& point) /*const*/;
+	std::vector<PathNode>::iterator* GetNodeLowestScore() /*const*/;
+
+	/*int Find(const iPoint& point) const;
+	PathNode* GetNodeLowestScore() const;*/
 
 	// -----------
 	// The list itself, note they are not pointers!
-	p2List<PathNode> list;
+	//p2List<PathNode> list;
 	//std::list<PathNode> list;
-	//std::vector<PathNode> list;
+	std::vector<PathNode> list;
 };
 
 
