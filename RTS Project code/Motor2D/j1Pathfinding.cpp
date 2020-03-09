@@ -149,11 +149,11 @@ std::vector<PathNode>::iterator* PathList::GetNodeLowestScore() /*const*/
 	std::vector<PathNode>::iterator* ret = NULL;
 	int min = 65535;
 
-	std::vector<PathNode>::iterator* item;
+	
 
 	int i = 0;
 
-	for (item = &list.begin(); i < list.size() /*item != &list.end()*/; item++)
+	for (std::vector<PathNode>::iterator* item = &list.begin(); /*i < list.size()*/ *item != list.end(); item++)
 	{
 		if ((*item)->Score() < min)
 		{
