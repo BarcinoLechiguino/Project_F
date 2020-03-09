@@ -68,9 +68,9 @@ bool j1Scene::Start()
 	LOG("Map Name: %s", (*map_names.begin()).c_str());
 
 	rock_test.push_back( (j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0) );
-	rock_test.push_back((j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 11, 2));
-	rock_test.push_back((j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 5, 1));
-	rock_test.push_back((j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 2, 5));
+
+	rock_test.back->entity_sprite = App->tex->Load("maps/debug_tile.png");
+
 
 	cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
 	
@@ -91,7 +91,7 @@ bool j1Scene::Start()
 	
 	LoadGuiElements();
 	
-	App->audio->PlayMusic(App->scene->music_path2.c_str());
+	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	
 	return ret;
 

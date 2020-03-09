@@ -149,11 +149,22 @@ std::vector<PathNode>::iterator* PathList::GetNodeLowestScore() /*const*/
 	std::vector<PathNode>::iterator* ret = NULL;
 	int min = 65535;
 
-	std::vector<PathNode>::iterator* item = &list.end();
-	
-	LOG("Vector Size %d", list.size());
+	std::vector<PathNode>::iterator* item;
 
-	while (item)
+	int i = 0;
+
+	for (item = &list.begin(); i < list.size() /*item != &list.end()*/; item++)
+	{
+		if ((*item)->Score() < min)
+		{
+			min = (*item)->Score();
+			ret = item;
+		}
+
+		i++;
+	}
+	
+	/*while (item)
 	{
 		if ((*item)->Score() < min)
 		{
@@ -162,7 +173,7 @@ std::vector<PathNode>::iterator* PathList::GetNodeLowestScore() /*const*/
 		}
 
 		item = item--;
-	}
+	}*/
 	return ret;
 }
 
@@ -281,6 +292,7 @@ int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		std::vector<PathNode>::iterator* lowest_node = open.GetNodeLowestScore();
 
+		closed.list.push_back(*lowest_node->_Ptr);
 		std::vector<PathNode>::iterator* current_node = lowest_node/*closed.list.push_back(*lowest_node->_Ptr)*/;
 
 		//open.list.del(lowestNode);														//Deletes from the open (frontier) list the node with the lowest score, as it has been the one chosen to be moved to.
