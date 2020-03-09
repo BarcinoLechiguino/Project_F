@@ -69,7 +69,7 @@ bool j1Scene::Start()
 
 	rock_test.push_back( (j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0) );
 
-	rock_test.back->entity_sprite = App->tex->Load("maps/debug_tile.png");
+	rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
 
 
 	cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
