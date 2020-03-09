@@ -3,7 +3,11 @@
 {Brief Description}
 
 ## Music/Audio Style
-- {Description of the Music/Audio Style}
+-{Description of the Music/Audio Style}
+Most of the FX that will be in the game are from "Kenney.net" that are completely free and with no copyright. But, in some cases there will be modified with Audacity to suit to the type of game having a Sci-Fi thematic as lasers, robotic voices, etc.
+
+In the case of music
+
 
 ## Music and Fx
 - {Which musics and effects are going to be used and where}
