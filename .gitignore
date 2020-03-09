@@ -6,6 +6,9 @@
 *.lo
 *.o
 *.obj
+*.suo
+*.ipch
+*.tlog
 
 # Precompiled Headers
 *.gch
