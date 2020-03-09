@@ -9,6 +9,8 @@
 *.suo
 *.ipch
 *.tlog
+*.suo
+
 
 # Precompiled Headers
 *.gch
