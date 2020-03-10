@@ -37,34 +37,101 @@ If one day there was some kind of human civilization living there, it is gone. E
 - {Control mapping}
 
 ## Gameplay
-- {Feature 01}
-- {Feature 02}
-- {Feature 03}
-- {Feature 04}
-- {Feature 05}
+### **Exploration and objectives** 
+You can send your units through the fog of war deep into the unexplored area, a dangerous land but also very rewarding. In there new resources sources can be found, trapped allies and others. But even while exploring the player must keep an eye on the base having in mind the hordes never stop coming.
+Some of the mandatory quests will require your units to enter the fog of war in order to perform the task requested in the unexplored area.
+
+### **Resource recollecting**
+Some buildings are specifically made for that purpose, taking into account the upgrade level of the building it will gather a certain amount of the specified resource in a defined time space. There are various resource collecting buildings for each available resource.
+Natural source are another way to gather resources that can’t be obtained through an specific building, in order to achieve those the player will have to explore through the fog of war.
+
+### **Buildings creation and upgrading**
+The creation or upgrading of a building will consume an specific amount of resources and time, so the constant income of resources is vital in order to keep making the base grow. Even the training and creation of new units will require resources and time. Those factors are a very important mechanic to consider, the timing when it comes to create and upgrade a building or train a unit is essential, doing it while the enemy is attacking could result in a catastrophic outcome.
+(The option of upgrading your buildings is still a decision to make by the development team, we are considering the benefits for the game and the handicaps for the production.)
+
+### **Unit management**
+When you start the game, you start with a single explorer and a single collector. From here, your job is to recollect other resources to start building new structures and recruiting new troops. 
+
+Currently the management of the units rely on it’s functionality, it will be simplified to the movement, meaning that the player will have the control over where a unit will be set at any moment, any further action will be automatic depending on the proximity of the target for an attacking unit, or an ore for a recollector unit.
+
+Any decision to improve the player control of the units, and adding a wider range of actions for the units will be properly record in this document. 
+
 
 ## Elements
-- {All Maps Drawn}
-- {Map 01}
-- {Map 02}
-- {Map 03}
+### **Buildings**
+
+- **Oxygen Generator**: Will provide a specific amount of oxygen periodically, it is a fundamental resource given every unit will consume it. More units implies more oxygen.
+- **“Townhall”**: The headquarters of the base, as long as the townhall stand firm the player can keep playing.
+- **Barracks**: This building will provide the training/creation of the units.
+- **Towers**: A mix between defensive and offensive structure, a building prepared to attack the upcoming enemies and impair their movement.
+- **Walls**: Purely defensive structures, prepared to impair the enemy seize and take damage.
+
+### **Units**
+#### **Allies**
+There are 4 types of units that you can recruit, all of them are different types of spaceships:
+
+- **Scout**: It is the fastest unit, but It has the lowest HP. It is useful to advance faster through the map.
+- **Recollector**: Useful to collect a lot faster. It moves slower and has low HP. Scout and this unit can attack but Its not their main function. 
+- **Infantry**: Combat unit. Attacks a single unit. 
+- **Heavy**: It has high HP and attacks a bunch of units as It does explosive damage. Slower unit and consumes more resources than infantry.
+
+#### **Enemies**
+They will have the same structure, but the enemy won’t have collectors and explorers as their objective is just to destroy your base. 
+
+- **Infantry**
+- **Heavy**
+- **Final Boss**
+
+#### **Balancing**
+This will be a variant changing while we develop the game trying to adjust it to be as fair as possible with the player, without leaving aside the difficulty as a core aspect of it, taking into account our aim for the game and also our limitations.
+At this current state of the development we can’t provide with any exact information of the exact balance numbers we will be working on, like amount of resources needed to build an structure, the time to train or create a unit, etc.
+
 
 ## Map
-- {All Units (Along with their stats)}
-- {Unit 01}
-- {Unit 02}
-- {Unit 03}
-- {Unit 04}
+### **Exploration (Fog of War)**
+One of the game pillars is the exploration, not only focusing on fortifying your base also finding out other features and benefits that you can obtain of the surroundings.
+Although it won’t be easy, around the base, covering the unexplored area, there will be a fog keeping the player off seeing further from a small radius, so the enemies will come from any possible angle without any previous warning.
+
+Exploration will be a fundamental feature, the core of most of the quests will require to explore and even fight outside the base, we will include an increase of 
+the difficulty as you advance stages.
+
+The real difficulty here is that the game forces the player to keep an eye on the base every time he goes to explore as without any warning and if you are far away from home and your base It is not well protected, the hordes will siege It.
+
+### **Enemy Position (Hordes)**
+Enemies won’t have an specific location as enemies will come and attack your with hordes that will come from any direction at any time. 
+
+It is true that there will be other enemies spread around the map on the exploration zone, so we create a variety of enemies and dangers in the game.
+
+You have some probabilities to find some enemies while you explore so It is important not to pick a single unit to explore and to accompany your recollectors and scouts with troops to defend them as well as to leave some units in base to defend It and gain time for the player to reach the base and beat the specific horde.
+
+### **Minimap**
+At the top-”..” on the screen we will see the minimap that shows a generic view of the map as quests, resources, etc. 
+
+As the map may be too big, the minimap’s radius will be limited and the minimap will move within the map. Next to the minimap we have a button that by pressing it allows the player to change the minimap range. So if player wants a general or a focused view It can be changed with a single click.
+
 
 ## Learn To Play
-- {AI Behaviour Design}
+At the start of every game, an icon with the face of the General “...” will appear at the top-”...” corner of the screen. He will welcome the player to the new planet and the importance of the mission the player is taking part. He is the omniscient character who knows everything taking place in the game universe.
+The General will show you the controls of the game as It advances and will introduce the quests every time the player accepts It. Guiding you to the challenges and warning you if a new horde appears.
+
 
 ## Rewards
-- {All Buildings (Along with their stats)}
-- {Building 01}
-- {Building 02}
-- {Building 03}
-- {Building 04}
+The player will have to complete 4 different quests. Those quests will be different types:
+
+- **2 kill quest**:
+- **1 gather quest**:
+- **1 delivery quests**: 
+
 
 ## Controls
-- {All Items (Along with their stats)}
+We recommend to play the game with both mouse and keyboard, but it can be played also with gamepad. 
+
+### **Mouse**: 
+- Right click: Target an enemy/resource/building
+- Left click: Select a building/unit
+- Left drag: Select a group of units
+
+### **Keyboard**:
+
+### **Gamepad**: 
+
