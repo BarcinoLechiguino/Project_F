@@ -283,18 +283,18 @@ bool j1Map::Load(std::string file_name)
 	pugi::xml_node objectgroup;
 	for (objectgroup = map_file.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
 	{
-		ObjectGroup* new_objectgroup = new ObjectGroup();									//Allocates memory for the objectgroup being iterated.
+		ObjectGroup* new_objectgroup = new ObjectGroup();									
 
 		if (ret == true)
 		{
-			ret = LoadObjectLayers(objectgroup, new_objectgroup);							//Loads the data members of the objectgroup that is being iterated.
+			ret = LoadObjectLayers(objectgroup, new_objectgroup);							
 			
 			if (new_objectgroup->name.c_str() == "Coins")
 			{
 				LOG("Creating coins from object layer %s", new_objectgroup->name.c_str());
 			}
 		}
-		data.objectGroups.push_back(new_objectgroup);										//Adds the object group being iterated to the list.
+		data.objectGroups.push_back(new_objectgroup);										
 	}
 
 	//--------------------------- LOGS ----------------------------
@@ -472,8 +472,8 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->name			= node.attribute("name").as_string();
 	layer->width		= node.attribute("width").as_int();
 	layer->height		= node.attribute("height").as_int();
-	layer->speed		= node.child("properties").child("property").attribute("value").as_float();		//Gets the speed property of a layer.
-	LoadProperties(node, layer->properties);															//Loads the layer's properties and stores them in a list (property_list) //REVISE THIS HERE
+	layer->speed		= node.child("properties").child("property").attribute("value").as_float();		
+	LoadProperties(node, layer->properties);															
 	
 	pugi::xml_node layer_data = node.child("data");
 
@@ -503,81 +503,78 @@ bool j1Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 {
 	bool ret = true;
 
-	objectgroup->id		= node.attribute("id").as_int();							//Sets the id of a given objectgroup to the id loaded from the tmx map.
-	objectgroup->name	= node.attribute("name").as_string();						//Sets the name of a given objectgroup to the name loaded from the tmx map.
+	objectgroup->id		= node.attribute("id").as_int();							
+	objectgroup->name	= node.attribute("name").as_string();						
 
 	int object_count = 0;
 	//This loop iterates all the childs with the object tag.
 	//With each iteration of the loop one object is added to the count. 
 	//Used to reduce memory space waste.
-	for (pugi::xml_node object_iterator = node.child("object"); object_iterator; object_iterator = object_iterator.next_sibling("object"))	//Iterates the data members inside the object tag and stops when the pointer is NULL(there are no objects left to iterate) or if ret == false.
+	for (pugi::xml_node object_iterator = node.child("object"); object_iterator; object_iterator = object_iterator.next_sibling("object"))	
 	{
 		object_count++;
 	}
 
-	objectgroup->num_objects = object_count;										//Sets the value of num_objects to the value gotten from iteration all the objectgroups.
-	objectgroup->object = new ObjectData[object_count];								//Individually allocates memory for each object. Here object_count is the exact number of objects all objectgroups contain, so there is no memory waste.
-	memset(objectgroup->object, 0, object_count * sizeof(ObjectData));				//Sets all allocated memory to 0;
+	objectgroup->num_objects = object_count;										
+	objectgroup->object = new ObjectData[object_count];								
+	memset(objectgroup->object, 0, object_count * sizeof(ObjectData));				//Set allocated memory to 0;
 
 	int index = 0;
-	for (pugi::xml_node object_iterator = node.child("object"); object_iterator; object_iterator = object_iterator.next_sibling("object")) //Iterates again all objects passed in the tmx map.
+	for (pugi::xml_node object_iterator = node.child("object"); object_iterator; object_iterator = object_iterator.next_sibling("object"))
 	{
-		objectgroup->object[index].id		= object_iterator.attribute("id").as_int();			//Gets the id of the object being loaded from tmx and sets it to the corresponding object in the world.
-		objectgroup->object[index].name		= object_iterator.attribute("name").as_string();	//Gets the name of the object being loaded from tmx and sets it to the corresponding object in the world.
+		objectgroup->object[index].id		= object_iterator.attribute("id").as_int();			
+		objectgroup->object[index].name		= object_iterator.attribute("name").as_string();	
 
 		SDL_Rect* collider = new SDL_Rect();
 
-		collider->x = object_iterator.attribute("x").as_int();						//Sets the buffer rect's x position to the x position of the object given by the tmx map this iteration.
-		collider->y = object_iterator.attribute("y").as_int();						//Sets the buffer rect's y position to the y position of the object given by the tmx map this iteration.
-		collider->w = object_iterator.attribute("width").as_int();					//Sets the buffer rect's width to the width of the object given by the tmx map this iteration.
-		collider->h = object_iterator.attribute("height").as_int();					//Sets the buffer rect's height to the height of the object given by the tmx map this iteration.
+		collider->x = object_iterator.attribute("x").as_int();						
+		collider->y = object_iterator.attribute("y").as_int();						
+		collider->w = object_iterator.attribute("width").as_int();					
+		collider->h = object_iterator.attribute("height").as_int();					
 
-		objectgroup->object[index].collider = collider;								//Passes the buffer rect's data members to the object in this index position. Need to use a buffer due to objectgroup only accepting a class expression.
+		objectgroup->object[index].collider = collider;								
 
-		std::string object_type = (object_iterator.attribute("type").as_string());	//Buffer string that improves readability of the code.
+		std::string object_type = (object_iterator.attribute("type").as_string());	
 
-		//Checking the object type string being loaded from the tmx file. It's a string that's abitrarily set on Tiled, so it should be known exactly which type strings will be passed. 
+		//Checking the object type string being loaded from the tmx file. It's a string that's abitrarily set on Tiled
 		if (object_type == "solid")
 		{
-			objectgroup->object[index].type = SOLID;								//As the object type string matches "solid" the object's type will be set to SOLID.
+			objectgroup->object[index].type = SOLID;
 		}
 		else if (object_type == "platform")
 		{
-			objectgroup->object[index].type = PLATFORM;								//As the object type string matches "platform" the object's type will be set to PLATFORM.
+			objectgroup->object[index].type = PLATFORM;
 		}
 		else if (object_type == "hazard")
 		{
-			objectgroup->object[index].type = HAZARD;								//As the object type string matches "hazard" the object's type will be set to HAZARD.
+			objectgroup->object[index].type = HAZARD;
 		}
 		else if (object_type == "item")
 		{
-			objectgroup->object[index].type = SWITCH;								//As the object type string matches "item" the object's type will be set to ITEM.
+			objectgroup->object[index].type = SWITCH;
 		}
 		else if (object_type == "desactivable")
 		{
-			objectgroup->object[index].type = DEACTIVABLE;							//As the object type string matches "desactivable" the object's type will be set to DESACTIVABLE.
+			objectgroup->object[index].type = DEACTIVABLE;
 		}
 		else if (object_type == "respawn")
 		{
-			objectgroup->object[index].type = RESPAWN;								//As the object type string matches "respawn" the object's type will be set to RESPAWN.
+			objectgroup->object[index].type = RESPAWN;
 		}
 		else if (object_type == "checkpoint")
 		{
-			objectgroup->object[index].type = CHECKPOINT;							//As the object type string matches "checkpoint", the object's type will be set to CHECKPOINT.
+			objectgroup->object[index].type = CHECKPOINT;
 		}
 		else if (object_type == "goal")
 		{
-			objectgroup->object[index].type = GOAL;									//As the object type string matches "goal" the object's type will be set to GOAL.
+			objectgroup->object[index].type = GOAL;
 		}
-		
-		
-
 		else
 		{
-			objectgroup->object[index].type = SOLID;					//If the object type string does not match any type, the object will be assigned the UKNOWN type.
+			objectgroup->object[index].type = SOLID;				
 		}
 
-		index++;	//index is increased in one so the next object is iterated.
+		index++;
 	}
 
 	return ret;
@@ -587,20 +584,20 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)							/
 {
 	bool ret = false;
 
-	pugi::xml_node data = node.child("properties");													//Sets an xml_node with the properties child of the layer node in the map tmx file.
+	pugi::xml_node data = node.child("properties");					
 
-	if (data != NULL)
+	if (data != nullptr)
 	{
 		pugi::xml_node prop;
 		
-		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))		//Iterates all property childs from the layer's properties child.
+		for (prop = data.child("property"); prop; prop = prop.next_sibling("property"))		
 		{
-			Properties::Property* p = new Properties::Property();									//Allocates memory for a new property.
+			Properties::Property* p = new Properties::Property();									
 
-			p->name				= prop.attribute("name").as_string();								//Sets the Property's name to the name of the property being iterated.
-			p->intValue			= prop.attribute("value").as_int();								//Sets the Property's value to the value of the property being iterated.
+			p->name				= prop.attribute("name").as_string();
+			p->intValue			= prop.attribute("value").as_int();	
 
-			properties.property_list.push_back(p);														//Adds the property beint iterated to property_list.
+			properties.property_list.push_back(p);
 		}
 	}
 
@@ -611,28 +608,29 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 {
 	bool ret = false;
 
-	for (std::list<MapLayer*>::iterator item = data.layers.begin(); item != data.layers.end() ; item++)					//While the item is not NULL, continue to iterate.
+	for (std::list<MapLayer*>::iterator item = data.layers.begin() ; item != data.layers.end() ; item++)
 	{
-		MapLayer* layer = (*item);												//Sets the item of the list as item->data. Done for readability.
+		MapLayer* layer = (*item);
 
-		if (layer->properties.Get("Navigation", 0) == 0)							//If the value of the Navigation property of the mapLayer is 0.
+		if (layer->properties.Get("Navigation", 0) == 0)							
 		{
-			continue;																//If the value mentioned above is 0, jump to the next iteration (of layers list).
+			continue;
 		}
 
-		uchar* map = new uchar[layer->width*layer->height];							//Allocates memory for all the tiles in the map.
-		memset(map, 1, layer->width*layer->height);									//Sets all memory allocated for map to 1. 
+		uchar* map = new uchar[layer->width * layer->height];						//Allocates memory for for tiles an set to 1
+		memset(map, 1, layer->width*layer->height);									
 
-		for (int y = 0; y < data.height; ++y)										//Iterate all the tiles in the y axis of the map.
+		for (int y = 0; y < data.height; ++y)										
 		{
-			for (int x = 0; x < data.width; ++x)									//Iterate all the tiles in the x axis of the map.
+			for (int x = 0; x < data.width; ++x)									
 			{
-				int index = (y * layer->width) + x;									//Tile index of a tile in the map: If 32x32, (2, 1) --> Index = (1 * 32) + 2 = 34; 
+				int index = (y * layer->width) + x;									
 
-				int tile_id = layer->Get(x, y);										//Gets the tile id  for a given tile.
+				int tile_id = layer->Get(x, y);	
+
 				if (tile_id > 0)
 				{
-					TileSet* tileset = GetTilesetFromTileId(tile_id);				//Gets the corresponding tileset for a tile by taking into account the tile_id.
+					TileSet* tileset = GetTilesetFromTileId(tile_id);
 					if (tileset != NULL)
 					{
 						map[index] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;		//If (tile_id - firstgid) > 0, return 0. Else return 1.
@@ -646,10 +644,10 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 				}
 			}
 		}
-		*buffer		= map;															//Sets buffer as the map array.
-		width		= data.width;													//Sets width to the width of the map in tiles.
-		height		= data.height;													//Sets height to the height of the map in tiles. 
-		ret			= true;															//Sets the ret bool to true as the walkability map could be created.
+		*buffer		= map;															
+		width		= data.width;													
+		height		= data.height;													
+		ret			= true;
 	}
 
 	return ret;
@@ -659,12 +657,12 @@ int Properties::Get(std::string name, int default_value)							//Revise how to b
 {
 	for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++)
 	{
-		if ((*prop_iterator)->name == name)											//If the string passed as argument matches the name of a property in the property_list.						
+		if ((*prop_iterator)->name == name)															
 		{
-			return (*prop_iterator)->intValue;										//Returns the value of the property.
+			return (*prop_iterator)->intValue;										
 		}
 	}
-	return default_value;															//If no property is found then the value returned is 0.
+	return default_value;															//Default value is 0
 }
 
 //values Properties::Get(p2SString name, values* default_value) const				//Revise how to be able to not have a property without default value being nullptr.
@@ -700,10 +698,10 @@ bool j1Map::ChangeMap(const char* newMap)
 
 	App->scene->CleanUp();
 
-	App->map->Load(newMap);						//Loads a specified map
-	App->collisions->LoadColliderFromMap();		//Load Collisions
+	App->map->Load(newMap);						
+	App->collisions->LoadColliderFromMap();		
 
-	if (newMap == "Test_map.tmx")
+	if (newMap == "Test_map.tmx") //Fix
 	{
 		App->scene->firstMap	= true;
 		App->scene->secondMap	= false;
@@ -711,7 +709,7 @@ bool j1Map::ChangeMap(const char* newMap)
 		//This needs to be changed somewhere else. Here it works but probably this is not it's place.
 		int w, h;
 		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))				//If CreatewalkabilityMap() returns true. It means that the walkability map could be created.
+		if (App->map->CreateWalkabilityMap(w, h, &data))				//It means that the walkability map could be created.
 		{
 			App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
 		}
