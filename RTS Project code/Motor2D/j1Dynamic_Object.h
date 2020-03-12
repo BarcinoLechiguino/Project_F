@@ -2,6 +2,11 @@
 #include "j1EntityManager.h"
 #include "j1Entity.h"
 
+enum class dynamic_state
+{
+	IDLE,
+	WALKING
+};
 
 class j1Dynamic_Object : public j1Entity
 {
@@ -26,6 +31,10 @@ private:
 
 public:
 
+	dynamic_state unit_state;
 
+	int speed;
+
+	iPoint target_tile;
 
 };

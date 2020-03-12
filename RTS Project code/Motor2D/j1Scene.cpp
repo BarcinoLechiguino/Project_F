@@ -69,6 +69,8 @@ bool j1Scene::Start()
 
 	rock_test.push_back( (j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0) );
 
+	enemy_test.push_back((j1Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 1, 1));
+
 	rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
 
 

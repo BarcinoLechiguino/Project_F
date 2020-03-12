@@ -75,21 +75,6 @@ void j1Entity::Restart()
 	return;
 }
 
-void j1Entity::LoadAnimationPushbacks()
-{
-	return;
-}
-
-void j1Entity::LoadEntityProperties()
-{
-	return;
-}
-
-void j1Entity::LoadEntityAudio()
-{
-	return;
-}
-
 void j1Entity::BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip)
 {
 	//App->render->Blit(entity_sprite, x, y, &entity_rect, flip);

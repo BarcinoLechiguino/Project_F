@@ -3,6 +3,7 @@
 
 #include "j1Module.h"
 #include "j1Entity.h"
+#include "j1Dynamic_Object.h"
 #include "Animation.h"
 #include "p2Point.h"
 
@@ -23,7 +24,7 @@ enum class Entity_State
 	HURT
 };
 
-class j1Enemy : public j1Entity
+class j1Enemy : public j1Dynamic_Object
 {
 public:
 	j1Enemy(int x, int y, ENTITY_TYPE type);
@@ -44,36 +45,19 @@ public:
 
 	void OnCollision(Collider* C1, Collider* C2);
 
+
+
 public:
 	bool Load(pugi::xml_node&);
 	bool Save(pugi::xml_node&) const;
-
-	void LoadAnimationPushbacks();							//Loads a set of animation pushbacks.
-	void LoadEntityProperties();							//Loads an entity's specific properties.
-	void LoadEntityAudio();									//Loads an entity's specific audios/sfx.
-
-	void InitEnemy();										//Initializes an enemy's specific data members.
-
-	void EnemyDebugInputs();										//Debug inputs for moving all entities around at the same time.
-	virtual void PathfindingLogic();								//Depending on how far a player is from an enemy entity, a path will be created and the enemy will path towards that player.
-	virtual void PathfindingMovement(Entity_State state, float dt);	//Holds all the states a specific enemy entity can be in and the specific movement for each state.
-	virtual void SetEnemyState(iPoint enemyPos, iPoint playerPos);	//Depending on where a player in pathfinding range is, the enemy will be set in a state or another (Entity_State::PATHING_RIGHT).
+	
 public:
 	Entity_State	state;									//State in which the entity is in any given moment.
-	SDL_Rect		enemy_HitBox;							//Rectangle that will represent the enemy in the world. Used to create colliders, 
-	int				detectionRadius;						//Threshold that the enemy will have to detect whether or not a player is inside its detection range. Distance in tiles, not pixels.
-	int				pointsOnKill;							//Amount of points awarded to the players on enemy kill.
-	
-	bool hasTarget;											//Keeps track whether an enemy entity already has a target or not.
 
 	const p2DynArray<iPoint>* entity_path;					//Will store the path created between the enemy entity and a player.
 
-public:
-	pugi::xml_document	config_file;	//
-	pugi::xml_node		enemy_entity;	//
 	
-	Animation	idle;					//Idle animation.
-	Animation	running;				//Running animation.
+	
 };
 
 #endif // __j1ENEMY_H__

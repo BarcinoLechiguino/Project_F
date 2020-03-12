@@ -17,7 +17,8 @@ struct SDL_Rect;
 enum class ENTITY_TYPE
 {
 	UNKNOWN_TYPE,
-	ROCK
+	ROCK,
+	ENEMY
 };
 
 struct EntityData
@@ -52,9 +53,6 @@ public:
 	
 	virtual void BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip);
 	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
-	virtual void LoadAnimationPushbacks();										//Loads an entity's specific animations.
-	virtual void LoadEntityProperties();										//Loads an entity's specific properties.
-	virtual void LoadEntityAudio();												//Loads an entity's specific audios.
 
 	//Entity Variables
 	ENTITY_TYPE		type;					//Type of the entity (ENTITY_TYPE::PLAYER...)

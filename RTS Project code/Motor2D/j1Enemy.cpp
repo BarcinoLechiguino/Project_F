@@ -13,9 +13,13 @@
 #include "j1Enemy.h"
 #include "j1EntityManager.h"
 
-j1Enemy::j1Enemy(int x, int y, ENTITY_TYPE type) : j1Entity(x, y, type)  //Constructor. Called at the first frame.
+j1Enemy::j1Enemy(int x, int y, ENTITY_TYPE type) : j1Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
+	entity_sprite = App->tex->Load("maps/debug_enemy_tile.png");
 
+	pixel_position = App->map->MapToWorld(x, y);
+
+	speed = 1;
 };
 
 j1Enemy::~j1Enemy()  //Destructor. Called at the last frame.
@@ -40,6 +44,44 @@ bool j1Enemy::PreUpdate()
 
 bool j1Enemy::Update(float dt, bool doLogic)
 {
+	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+	{
+		target_tile = iPoint(tile_position.x,tile_position.y + 1);
+
+		unit_state = dynamic_state::WALKING;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+	{
+		target_tile = iPoint(tile_position.x + 1, tile_position.y);
+
+		unit_state = dynamic_state::WALKING;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
+	{
+		target_tile = iPoint(tile_position.x - 1, tile_position.y);
+
+		unit_state = dynamic_state::WALKING;
+	}
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
+	{
+		target_tile = iPoint(tile_position.x, tile_position.y - 1);
+
+		unit_state = dynamic_state::WALKING;
+	}
+
+
+
+	if (unit_state == dynamic_state::WALKING)
+	{
+		pixel_position = App->map->MapToWorld(target_tile.x, target_tile.y);
+
+		tile_position = target_tile;
+
+		
+	}
+
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
+
 	return true;
 };
 
@@ -67,63 +109,4 @@ bool j1Enemy::Load(pugi::xml_node& data)
 bool j1Enemy::Save(pugi::xml_node&  data) const
 {
 	return true;
-}
-
-//---------------------------- Enemy methods ----------------------------
-void j1Enemy::LoadAnimationPushbacks()
-{
-	return;
-}
-
-void j1Enemy::LoadEntityProperties()
-{
-	return;
-}
-
-void j1Enemy::LoadEntityAudio()
-{
-	return;
-}
-
-void j1Enemy::InitEnemy()
-{
-
-}
-
-void j1Enemy::EnemyDebugInputs()
-{
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		state = Entity_State::PATHING_UP;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		state = Entity_State::PATHING_DOWN;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		state = Entity_State::PATHING_RIGHT;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		state = Entity_State::PATHING_LEFT;
-	}
-}
-
-void j1Enemy::PathfindingLogic()
-{
-	return;
-}
-
-void j1Enemy::PathfindingMovement(Entity_State state, float dt)
-{
-	return;
-}
-
-void j1Enemy::SetEnemyState(iPoint enemyPos, iPoint playerPos)
-{
-	return;
 }

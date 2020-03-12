@@ -80,6 +80,7 @@ public:
 	bool					secondMap;			//Keeps track of which map is loaded. In this case this one keeps track of the second map.
 
 	std::vector<j1Rock*>	rock_test;
+	std::vector<j1Enemy*>   enemy_test;
 
 	UI_Image* test;
 

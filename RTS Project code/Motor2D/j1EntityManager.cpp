@@ -7,7 +7,9 @@
 #include "j1Input.h"
 #include "j1Window.h"
 #include "Brofiler\Brofiler.h"
+
 #include "j1Rock.h"
+#include "j1Enemy.h"
 
 
 
@@ -178,6 +180,11 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 		case ENTITY_TYPE::ROCK:							
 		ret = new j1Rock(x, y, type);				//Allocates memory for an entity from the j1Player module.
 	
+		break;
+
+		case ENTITY_TYPE::ENEMY:
+		ret = new j1Enemy(x, y, type);
+
 		break;
 
 	}

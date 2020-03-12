@@ -5,7 +5,7 @@
 
 j1Dynamic_Object::j1Dynamic_Object(int x, int y, ENTITY_TYPE type) : j1Entity(x, y, type)
 {
-
+	unit_state = dynamic_state::IDLE;
 }
 
 bool j1Dynamic_Object::Awake(pugi::xml_node&)
