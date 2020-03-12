@@ -612,7 +612,7 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	{
 		MapLayer* layer = (*item);
 
-		if (layer->properties.Get("Navigation", 0) == 0)							
+		if (layer->name != "walkability_map")							
 		{
 			continue;
 		}
@@ -628,18 +628,13 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 
 				int tile_id = layer->Get(x, y);	
 
-				if (tile_id > 0)
+				if (tile_id > 0)		//skips empty tiles
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
+
 					if (tileset != NULL)
 					{
-						map[index] = (tile_id - tileset->firstgid) > 0 ? 0 : 1;		//If (tile_id - firstgid) > 0, return 0. Else return 1.
-
-						/*TileType* ts = tileset->GetTileType(tile_id);
-						if (ts != NULL)
-						{
-							map[i] = ts->properties.Get("walkable", 1);
-						}*/
+						map[index] = tile_id - tileset->firstgid; //get the id of the tile we assigned: 0 = walkable, 1 = non walkable...
 					}
 				}
 			}
@@ -701,38 +696,19 @@ bool j1Map::ChangeMap(const char* newMap)
 	App->map->Load(newMap);						
 	App->collisions->LoadColliderFromMap();		
 
-	if (newMap == "Test_map.tmx") //Fix
+	App->scene->firstMap	= true;
+	App->scene->secondMap	= false;
+
+	//This needs to be changed somewhere else. Here it works but probably this is not it's place.
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))				//It means that the walkability map could be created.
 	{
-		App->scene->firstMap	= true;
-		App->scene->secondMap	= false;
-
-		//This needs to be changed somewhere else. Here it works but probably this is not it's place.
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))				//It means that the walkability map could be created.
-		{
-			App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
-		}
-
-		RELEASE_ARRAY(data);
-	}
-	if (newMap == "Test_map_2.tmx")
-	{
-		App->scene->secondMap	= true;
-		App->scene->firstMap	= false;
-
-		//This needs to be changed somewhere else. Here it works but probably this is not it's place.
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))				//If CreatewalkabilityMap() returns true. It means that the walkability map could be created.
-		{
-			App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
-		}
-
-		RELEASE_ARRAY(data);
+		App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
 	}
 
-
+	RELEASE_ARRAY(data);
+	
 	App->gui->Start();
 	App->console->Start();
 	App->scene->LoadGuiElements();

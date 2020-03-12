@@ -2,6 +2,7 @@
 #include "p2Log.h"
 #include "j1App.h"
 #include "j1PathFinding.h"
+#include "j1Map.h"
 #include "Brofiler\Brofiler.h"
 
 j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
@@ -50,7 +51,12 @@ bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
 bool j1PathFinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
-	return t != INVALID_WALK_CODE && t > 0;				//Revise. Should erase?
+	//return t != INVALID_WALK_CODE && t > 0;				//Revise. Should erase?
+	if (t == 0)
+	{
+		return true;
+	}
+	return false;
 }
 
 // Utility: return the walkability value of a tile
@@ -62,6 +68,15 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 	return INVALID_WALK_CODE;
 }
 
+bool j1PathFinding::ChangeWalkability(const iPoint& pos, uchar walkability)
+{
+	if (map != NULL)
+	{
+		map[(pos.y * App->map->data.width) + pos.x] = walkability;
+	}
+
+	return true;
+}
 // To request all tiles involved in the last generated path
 /*const p2DynArray<iPoint>* j1PathFinding::GetLastPath() const
 {
@@ -147,9 +162,8 @@ std::vector<PathNode>::iterator* PathList::Find(const iPoint& point) /*const*/
 std::vector<PathNode>::iterator* PathList::GetNodeLowestScore() /*const*/
 {
 	std::vector<PathNode>::iterator* ret = NULL;
-	int min = 65535;
 
-	
+	int min = 65535;
 
 	int i = 0;
 

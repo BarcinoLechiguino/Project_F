@@ -12,6 +12,7 @@
 #include "j1Audio.h"
 #include "j1Enemy.h"
 #include "j1EntityManager.h"
+#include "j1Pathfinding.h"
 
 j1Enemy::j1Enemy(int x, int y, ENTITY_TYPE type) : j1Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
@@ -46,27 +47,39 @@ bool j1Enemy::Update(float dt, bool doLogic)
 {
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
-		target_tile = iPoint(tile_position.x,tile_position.y + 1);
+		if (App->pathfinding->IsWalkable(iPoint(tile_position.x, tile_position.y + 1)))
+		{
+			target_tile = iPoint(tile_position.x, tile_position.y + 1);
 
-		unit_state = dynamic_state::WALKING;
+			unit_state = dynamic_state::WALKING;
+		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
 	{
-		target_tile = iPoint(tile_position.x + 1, tile_position.y);
+		if (App->pathfinding->IsWalkable(iPoint(tile_position.x + 1, tile_position.y)))
+		{
+			target_tile = iPoint(tile_position.x + 1, tile_position.y);
 
-		unit_state = dynamic_state::WALKING;
+			unit_state = dynamic_state::WALKING;
+		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_DOWN)
 	{
-		target_tile = iPoint(tile_position.x - 1, tile_position.y);
+		if (App->pathfinding->IsWalkable(iPoint(tile_position.x - 1, tile_position.y)))
+		{
+			target_tile = iPoint(tile_position.x - 1, tile_position.y);
 
-		unit_state = dynamic_state::WALKING;
+			unit_state = dynamic_state::WALKING;
+		}
 	}
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_DOWN)
 	{
-		target_tile = iPoint(tile_position.x, tile_position.y - 1);
+		if (App->pathfinding->IsWalkable(iPoint(tile_position.x, tile_position.y - 1)))
+		{
+			target_tile = iPoint(tile_position.x, tile_position.y - 1);
 
-		unit_state = dynamic_state::WALKING;
+			unit_state = dynamic_state::WALKING;
+		}
 	}
 
 
@@ -77,7 +90,7 @@ bool j1Enemy::Update(float dt, bool doLogic)
 
 		tile_position = target_tile;
 
-		
+		unit_state = dynamic_state::IDLE;
 	}
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);

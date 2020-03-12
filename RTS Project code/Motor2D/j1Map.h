@@ -110,10 +110,10 @@ struct MapLayer
 	{
 		RELEASE(gid);		//Breaks with mmgr.
 	}
-
-	inline uint Get(uint x, uint y) const
+	//Get id of tile in position x, y from gid[] array
+	inline uint Get(uint x, uint y) const 
 	{
-		return gid[(y * width) + x];
+		return gid[(y * width) + x]; 
 		//return x + y * width;
 	}
 };

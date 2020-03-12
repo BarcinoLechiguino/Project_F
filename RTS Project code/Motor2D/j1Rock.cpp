@@ -3,6 +3,7 @@
 #include "j1Render.h"
 #include "j1Map.h"
 #include "j1Textures.h"
+#include "j1Pathfinding.h"
 
 
 j1Rock::j1Rock(int x, int y, ENTITY_TYPE type) : j1Static_Object(x,y,type)
@@ -24,6 +25,8 @@ bool j1Rock::Start()
 
 bool j1Rock::PreUpdate()
 {
+	App->pathfinding->ChangeWalkability(tile_position, 1);
+
 	return true;
 }
 

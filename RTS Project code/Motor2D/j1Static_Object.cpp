@@ -1,9 +1,10 @@
 #include "j1Static_Object.h"
-
+#include "j1Pathfinding.h"
+#include "j1App.h"
 
 j1Static_Object::j1Static_Object(int x, int y, ENTITY_TYPE type) : j1Entity(x, y, type)
 {
-
+	
 }
 
 bool j1Static_Object::Awake(pugi::xml_node&)
@@ -18,6 +19,8 @@ bool j1Static_Object::Start()
 
 bool j1Static_Object::PreUpdate()
 {
+	
+
 	return true;
 }
 
