@@ -10,25 +10,13 @@ You will have to explore all the surroundings, find resources, complete quests t
 
 
 ## Plot/Lore
-We are in an era where the earth conquers other planetes- A message arrives to the earth notifying that planet “.....” has been conquered and that the troops had been devastated. You have sent to this planet to repopulate it. 
 
-We are located in an era where earth and humans, tired of their worldly life, launched themselves into space exploration and intergalactic conquest. Soon, led by General “...”, they managed to conquer much of the other planets of the milky way. 
-Anyway, the ambition of the general and his army was bigger than that. In a matter of months, better ships were built with better resources to withstand the dangers beyond the milky way. 
-In this stage of conquests, “...” focused on the planet “...”. A planet 10 times larger than Earth, which contained an immense amounts of minerals and oil that could supply the earth for ages. The occupation of the planet was easy and fast and for a few years, an infinity resources could be extracted and “...” remained as a base of operations of the earth. But not anymore.
-
-
-General “...” calls you and seems important. No signal is received from the planet. Apparently the monthly supplies haven’t reach its destination and nobody answers the calls. The general sends you there to gather information and inform about it as soon as possible. 
-
-But when you arrive there, the expectations are different. The appearance of the planet is the same as when It was conquered years ago. 
-If one day there was some kind of human civilization living there, it is gone. Everything is deserted and there is nothing left.Why are you the only human on a planet apparently uninhabited?  
 
 
 ## Game Pillars
 **Exploration**: the dungeon pattern of the map. If you recruit an explorer, you can explore all the map to find resources as metal, fuel and others. The more explored and more recollected, the better base and troops you’ll have.
 
 **System of hordes**: Horde after horde enemies will keep coming with a break in between so you can prepare yourself against the next seizing or even explore and complete quests.The time set between hordes it is thought to give the player enough time to engage on a new quest, without taking an eye out of the timer and the base. The difficulty will grow within the hordes.
-
-**Building system**: Structure your base with a well balanced combination of the available buildings, defensive walls or structures which attack your enemies, building in charge to gather resources for your troops or upgrading your other buildings and the ones in charge of training and creating new troops to fight against the upcoming hordes.
 
 **Combat system**: By clicking and dragging you can select the amount of units you want to move wherever the player wants a long as is a walkable area for the units. When enemy units slip into the attack area of those units, they will begin to attack them. This system improves the strategy side of the game, placing your units to defend the weaker side of your base.
 
@@ -47,33 +35,29 @@ Natural source are another way to gather resources that can’t be obtained thro
 
 ### **Buildings creation and upgrading**
 The creation or upgrading of a building will consume an specific amount of resources and time, so the constant income of resources is vital in order to keep making the base grow. Even the training and creation of new units will require resources and time. Those factors are a very important mechanic to consider, the timing when it comes to create and upgrade a building or train a unit is essential, doing it while the enemy is attacking could result in a catastrophic outcome.
-(The option of upgrading your buildings is still a decision to make by the development team, we are considering the benefits for the game and the handicaps for the production.)
+Buildings and units will have an specific resource to be upgraded so your base keeps growing up in terms of defensive and attacking stats, as the basic stats of buildings and units will improve at the same time the they get upgraded.
 
 ### **Unit management**
 When you start the game, you start with a single explorer and a single collector. From here, your job is to recollect other resources to start building new structures and recruiting new troops. 
 
-Currently the management of the units rely on it’s functionality, it will be simplified to the movement, meaning that the player will have the control over where a unit will be set at any moment, any further action will be automatic depending on the proximity of the target for an attacking unit, or an ore for a recollector unit.
+If you left click in a unit, a menu will display that will provide all the actions the unit can do, anyway, shortcuts will be provided to set your troops in a mode in an easier way.
 
-Any decision to improve the player control of the units, and adding a wider range of actions for the units will be properly record in this document. 
+All units will have shortcuts to do some actions and some of those mechanics will be specific for a few units, in other words not all units will have the same functionality or actions. Anyway, let’s start with general ones. 
+
+All units can move, individually or in group if you right click the terrain. Also, all units, except for recollectors, can attack if you right click an enemy unit. Also, all the units that can attack will be able to set in defensive/guard mode. The unit will stop in the zone the player set before and if any enemy gets inside their attack radius, that unit will start attack until it dies or the enemy does so. Finally, the last action that only collectors can do is to repair. If your base and your buildings are damaged but not destroyed, all of them will recover their HP automatically with an amount of time. Otherwise and only if the building is destroyed, only collectors will be able to repair It.
 
 
 ## Elements
 ### **Buildings**
 
-- **Oxygen Generator**: Will provide a specific amount of oxygen periodically, it is a fundamental resource given every unit will consume it. More units implies more oxygen.
-- **“Townhall”**: The headquarters of the base, as long as the townhall stand firm the player can keep playing.
-- **Barracks**: This building will provide the training/creation of the units.
-- **Towers**: A mix between defensive and offensive structure, a building prepared to attack the upcoming enemies and impair their movement.
-- **Walls**: Purely defensive structures, prepared to impair the enemy seize and take damage.
-
 ### **Units**
 #### **Allies**
 There are 4 types of units that you can recruit, all of them are different types of spaceships:
 
-- **Scout**: It is the fastest unit, but It has the lowest HP. It is useful to advance faster through the map.
-- **Recollector**: Useful to collect a lot faster. It moves slower and has low HP. Scout and this unit can attack but Its not their main function. 
+- **Scout**:  It is the fastest unit, but It has the lowest HP. It is useful to advance faster through the map. Its attack is also low.
+- **Recollector**: Useful to collect resources as it is the only unit that can do so. It moves slower and has low HP. 
 - **Infantry**: Combat unit. Attacks a single unit. 
-- **Heavy**: It has high HP and attacks a bunch of units as It does explosive damage. Slower unit and consumes more resources than infantry.
+- **Heavy**: It has high HP. Slower unit and consumes more resources than infantry.
 
 #### **Enemies**
 They will have the same structure, but the enemy won’t have collectors and explorers as their objective is just to destroy your base. 
