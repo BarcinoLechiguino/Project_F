@@ -1,13 +1,12 @@
 # Art Bible
 
-{Brief Description}
 The game will follow a minimalistic approach to art, using low-poly, texture-less 3D assets. These assets are then rendered in isometric view to create a tileset compatible with our current pipeline.
 
 ## References
 - {All art from where we drew our inspiration}
 
 ## Art Style
-- We will be using the different aircrafts and vehicles available at [kenney.nl](https://kenney.nl/assets?q=3d), recolored accordingly to the game's palette. As long as assets are sourced from the same artist, 
+- We will be using the different aircrafts and vehicles available at [kenney.nl](https://kenney.nl/assets?q=3d), recolored accordingly to the game's palette.
 
 
 - {Scenarios}
@@ -29,15 +28,13 @@ A tile should measure 151x107 px, and should still be resolvable viewed at 48px 
 - {Font}
 
 ## Technical Guidelines
-- {How to Export}
-  All images will be exported as .png files. Tiles will not have a margin, both against edges and other tiles. 
-  When possible, lowest file size will be prefered. For example, if exporting with any Adobe software, in the export settings should be set as 'best compresion'.
+- How to Export
+  All images will be exported as .png files. Tiles will not have a margin, both against edges and other tiles. The tile will be exported at 151px wide. When possible, lowest file size will be prefered. For example, if exporting with any Adobe software, in the export settings should be set as 'best compresion'. Avoid excessive manipulation in 2D software, when possible we will be creating the model in 3D over cropping and bashing in Photoshop (or equivalent).
   
-- {Tools}
-  - Adobe Photoshop, Adobe Illustrator: This will be our go to tools for editing the final tileset we will be using. Both will produce same exact results when exporting as long as they are exported as specified 
+- Tools
+  - Adobe Photoshop: Our go to tool for 2D bitmap editing. It will be used for all task related to recolour and generating Tilesets from individual images. Since most assets will be retrieved from [Kenney](https://kenney.nl/) 
   - [Asset Forge](https://kenney.nl/tools/assetforge): We have available this tool which will allow us to create more specific assets we might need. We do not expect to get most assets through this, but might come handy.
 
-## {The file's structures can be modified should it be needed}
 
 ## Art Bible References:
 - [Final Art Bible Reference](https://github.com/DevCrumbs/Warcraft-II/wiki/6.-Art-Bible)
