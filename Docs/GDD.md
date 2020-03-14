@@ -49,6 +49,12 @@ All units can move, individually or in group if you right click the terrain. Als
 
 ## Elements
 ### **Buildings**
+- **Wall**
+- **Recollector**
+- **Defensive**
+- **Barracks**
+- **Hall**
+
 
 ### **Units**
 #### **Allies**
