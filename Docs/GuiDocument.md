@@ -1,26 +1,49 @@
 # GUI Document
+In this document the entire UI of this project will be extensively laid out. All the elements  
 
 ## GUI STYLE
 
-The GUI will combine both minimalistic and neon visual style with the intention to design a clean and clear interface that does not saturate the player with information. The GUI will be focused on aiding the player in focusing on the truly relevant and useful information gameplay wise.
+The GUI will combine both minimalistic and neon visual styles with the intention to bring to life a clean and clear interface that does not saturate the player with information. The GUI will be focused on aiding the player in focusing on the truly relevant and useful information, gameplay wise.
 
-## HUD
-
-On the HUD in gameplay, there will be a minimap on the top right part of the screen with a radial design, the minimap size can be modified touching it with the mouse with three size options to not disturb the visual zone. To upgrade units or modify them, clicking on them, it will emerge a little window to configure each unit. If you only put the mouse on the units or buildings without clicking, there will merge the most important info about them.
-On the top left part of the screen there will be some info about your resources.
-Every time the player clicks on every part of the screen, there will appear a wave on the position  of the mouse to give feedback.
-
-## Menus
-- **Main menu**
+## Main Menu
 The Main Menu will present the player with three different options:
 - **New Game:** Starts a new game. In case there was an already existing saved game, it will be overwritten.
+
 - **Continue:** Allows the player to continue the game from wherever he/she left it last time.
+
 - **Options:** Sends the player to the *Options Menu*. 
 
-- **Options**
-In this menu, the player can configure audio values, configure controls of keyboard or controller. An option to configure the screen size, that allows three sizes with the same ratio. When the player clicks on back button, the game will save the configuration so there is another button to reset the values to the initial values.
+{Show the concept art of the Main Menu, just to see how will the elements be placed}
 
-- **In-Game**
+### Options Menu:
+This menu will have the following elements:
+- **Music Audio Volume Slider:** Modifies the music audio volume.
+
+- **FX Audio Volume Slider:** Modifies the FX audio volume.
+
+- **Control Remapping Window:** Allows to remap both keyboard and controller controls. There will be a tab on the window that, on click, will switch between keyboard and controller control schemes.
+
+- **Screen Size Selector:** Switches the screen size between three pre-stablished sizes with the same aspect ratio (Fullscreen, windowed, window). The selector will have the common (<-- Fullscreen -->) design.
+
+Moreover, there will be two additional buttons:
+- **Back Button:** The current configuration will be saved and the player will be sent back to the **Main Menu**.
+
+- **Default Configuration Button:** The current configuration will be reset to the original pre-established parameters.
+
+{Show the concept art of the Options Menu, just to see how will the elements be placed}
+
+## In-Game
+**HUD**
+- **Player Mouse Cursor:** Every time the player clicks on every part of the screen, there will appear a wave on the position  of the mouse to give feedback.
+
+- **Minimap:** The minimap will be placed at the top right corner of the screen, and it will have a circular design. It's size can be modified in-game by clicking on the "+" and "-" tabs on the minimap's window. There will be 3 standard sizes, all of which will have been tested not to disturb teh gameplay in any way.
+
+- **Unit Management:** To upgrade or modify the behaviour of the units, the units themselves need to be clicked on and a little window will appear with the different options of each of them. An information window will appear if the mouse is hovered over a specific unit.
+
+- **Building Management:** To upgrade a building, the player will need to click on top of each individual building. The building menu that will appear will allow the player to upgrade the building if the required resources are at hand. 
+
+- **Resources:** The current amount of the different resources will be displayed at the top left corner.
+
 While in-game the player can access the *Pause Menu*, which offers the following options:
 - **Music Volume Slider:**
 - **FX Volume Slider:**
@@ -31,7 +54,6 @@ The player can access to a pause menu to go back to title screen, save, go to op
 
 ### Menu Diagram
 ![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/UML_Menus.png?raw=true)
-
 
 ## Sprites
 
