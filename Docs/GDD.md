@@ -72,6 +72,12 @@ They will have the same structure, but the enemy won’t have collectors and exp
 - **Heavy**
 - **Final Boss**
 
+#### **Resources** 
+- **For building**: chunks of data.
+- **For recruiting**: electricity.
+- **For upgrading**: byte, pixels.
+
+
 #### **Balancing**
 This will be a variant changing while we develop the game trying to adjust it to be as fair as possible with the player, without leaving aside the difficulty as a core aspect of it, taking into account our aim for the game and also our limitations.
 At this current state of the development we can’t provide with any exact information of the exact balance numbers we will be working on, like amount of resources needed to build an structure, the time to train or create a unit, etc.
