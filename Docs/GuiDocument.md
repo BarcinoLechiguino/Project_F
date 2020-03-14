@@ -1,5 +1,5 @@
 # GUI Document
-In this document the entire UI of this project will be extensively laid out. All the elements
+This document has been redacted to show and keep track of all the UI's functionalities, as well as all the design related decisions made regarding it. In this document, and with the purpose of being as clear and informative as possible, multiple flow diagrams and UI Art will be displayed.
 
 ## GUI STYLE
 The GUI will combine both minimalistic and neon visual styles with the intention to bring to life a clean and clear interface that does not saturate the player with information. The GUI will be focused on aiding the player in focusing on the truly relevant and useful information, gameplay wise.
