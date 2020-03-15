@@ -108,11 +108,11 @@ We have listed different situations that might happen during the production of t
 | --------------- |:---------------:| ----------:| ------------ |
 | A teammate is not able to continue with the project| Really Low | Really High | The tasks assigned to the missing teammate will be divided with the rest of the group as long as it's possible, if it weren't possible we would study to eliminate that task from the final product |
 | A team member falls sick    | High  |    Low/Medium      | Depending on the severity of the illness, either the weekly objectives that this team member had we'll be transferred to the team or if he is able to work but in a slower pace, management will assign a team member that is a bit ahead of schedule to assist him in their tasks|
-| Weekly objectives are not completed   | Low        |    Medium      | During our weekly metting, the tasks will be redistributed and we will evaluate why we weren't able to complete them. We will also remind ourselves that we should warn the team before the due date that a task might not be completed in time, so we can plan ahead and help each other |
-| Milestones not completed in time   | Really Low        |    High      | We will start evaluating what caused the issue so we don't encounter it again, after that, we will reschedule the missing items (in case we choose not to exclude them from the final product) and decide if we eliminate some from the next milestones in case we didn't consider them possible according to the new schedule          |
-| Main mechanic is not working properly   | Medium        |    High      | The QA we'll get in touch with the Code lead to fix the issue as soon as possible |
-| Visuals/Animations are not correclty placed   | Low        |    Medium/High      | The QA we'll get in touch with the Art&Audio lead to fix the issue as soon as possible         |
-| A team member's equipment fails   | Very Low        |   Very High      | The team member we'll be recommended to stay after class hours in the CITM in order to work from there, in case the CITM is closed we will try to get in touch with someone that can lend us some equipment   |
+| Weekly objectives are not completed   | Low<|    Medium | During our weekly metting, the tasks will be redistributed and we will evaluate why we weren't able to complete them. We will also remind ourselves that we should warn the team before the due date that a task might not be completed in time, so we can plan ahead and help each other |
+| Milestones not completed in time   | Really Low | High | We will start evaluating what caused the issue so we don't encounter it again, after that, we will reschedule the missing items (in case we choose not to exclude them from the final product) and decide if we eliminate some from the next milestones in case we didn't consider them possible according to the new schedule |
+| Main mechanic is not working properly   | Medium | High | The QA we'll get in touch with the Code lead to fix the issue as soon as possible |
+| Visuals/Animations are not correclty placed   | Low | Medium/High | The QA we'll get in touch with the Art&Audio lead to fix the issue as soon as possible |
+| A team member's equipment fails | Very Low | Very High | The team member we'll be recommended to stay after class hours in the CITM in order to work from there, in case the CITM is closed we will try to get in touch with someone that can lend us some equipment |
 
 ## Sprint Record and Log of Average Estimation Deviation
 - {Details of each sprint (Sprint Number and the Date of the Sprint)}
@@ -189,8 +189,6 @@ We have listed different situations that might happen during the production of t
 - **Duration:** 1 Week
 - **Points:**
 - **Postmortem:**
-
-## {The file's structures can be modified should it be needed}
 
 ## Production Plan References
 - [Production Plan Research I](https://vlaad96.github.io/Production-Plan/)
