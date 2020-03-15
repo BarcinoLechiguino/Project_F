@@ -76,6 +76,8 @@ Ex: infantry_walk_ground_2.wav
 The folder organization and distribution will be as shown below:
 {Link images of how our audio file directory is organized}
 
+
+{Is this needed? Add any new information to the corresponding subsections}
 ## Music and Fx
 
 - *Menus:* When the game starts and goes to the main menu,there will be a voice that says the name of the game and then in menu there will be a retro calm track.
