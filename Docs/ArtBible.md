@@ -77,12 +77,12 @@ Regarding colour, the pallette will take after the vaporwave aesthetic:
 
 ## Technical Guidelines
 ### How to Export
-  All images will be exported as .png files. Tiles will not have a margin, both against edges and other tiles. The tile will be exported at 151px wide. When possible, lowest file size will be prefered. For example, if exporting with any Adobe software, in the export settings should be set as 'best compresion'. Avoid excessive manipulation in 2D software, when possible we will be creating the model in 3D over cropping and bashing in Photoshop (or equivalent).
+  All images will be exported as .png files. Tiles will not have a margin, as all will be placed edge against edge. Each tile will be exported at 151px wide. When possible, the lowest file size will be prefered. For instance, when exporting with any Adobe software, the export settings should be set at 'best compresion'. Excessive manipulation in 2D software should be avoided and, when possible, modeling a new 3D model is preferabble over cropping and bashing in Photoshop (or any other equivalent software).
   
 ### Tools
-  - Adobe Photoshop: Our go to tool for 2D bitmap editing. It will be used for all task related to recolour and generating Tilesets from individual images. Since most assets will be retrieved from [Kenney](https://kenney.nl/) 
-  - [Asset Forge](https://kenney.nl/tools/assetforge): We have available this tool which will allow us to create more specific assets we might need. We do not expect to get most assets through this, but might come handy.
-
+  - Adobe Photoshop: The go to tool for 2D bitmap editing. It will be used for all tasks related with recolouring and generating Tilesets from individual images. Since most assets will be retrieved from [Kenney](https://kenney.nl/)
+  
+  - [Asset Forge](https://kenney.nl/tools/assetforge): This tool which will allow the team to create more specific assets that might be needed. The intended use that will be given to the tool is a supporting one, the majority of the project's assets will already be available for implementation.
 
 ## Art Bible References:
 - [Final Art Bible Reference](https://github.com/DevCrumbs/Warcraft-II/wiki/6.-Art-Bible)
