@@ -5,39 +5,39 @@ The vast majority of the audio, both music and FX, that will be implemented will
 The overall style of all the audio implemented in the game will have a heavy retro Sci-Fi / Retrowave (Outrun) influence. The game's main theme will be virtual reality envisioned from the 80's, and the audio will work synergistically around that.
 
 ### Sound/FX
-- **Ambience:** {The sounds that are being constantly reproduced during the gameplay}. There will always be a theme background music playing softly (so as not to disturb the player). There will be differnt FXs being triggered by the player actions, such as the units' animations for instance.  
+- **Ambience:** {The sounds that are being constantly reproduced during the gameplay}. There will be the main part of the gameplay a theme background music playing softly (so as not to disturb the player), but when the player starts a fight, the music turns epic. There will be differnt FXs being triggered by the player actions, such as the units' animations for instance.  
 
 - **Characters:** {Sound related with the in-game entities}. Each of the units will have their corresponding FX, such as the unit spawning/dying, unit movement, combat... 
 
 - **Impact:** {Sounds that give feedback to the player}. Almost all the player's possible actions will have their own feedback FX. The FX reproduced when the mouse hovers over a building, a unit's audio response to being given an order ("Roger that" i.e)...
 
-- **UI:** {FX Feedback given by the UI}. All the UI's interactible elements will play a FX when the player interacts with them. (Hovering/Clicking a button...) 
+- **UI:** {FX Feedback given by the UI}. All the UI's interactible elements will play a FX when the player interacts with them. (Hovering/Clicking a button...)
 
 ### Music
-- **Genre:** All the game's music tracks will have a heavy retro Sci-Fi influence along with influences from derived genres such as Retrowave or Vaporwave. As mentioned before, there will always be background music playing through all the phases of the game. Each stage of the gameplay will have it's own theme (Main Menu, Pause Menu, Campaign...). 
+- **Genre:** All the game's music tracks will have a heavy retro Sci-Fi influence along with influences from derived genres such as Retrowave or Vaporwave. As mentioned before, there will always be background music playing through all the phases of the game. Each stage of the gameplay will have it's own theme (Main Menu, Pause Menu, Campaign...).
 
 - **Style:** {Is the track epic? Relaxed? what do we want to achieve with it?}. The overall aesthetic that the soundtrack intends to achieve is the feeling of nostalgia that can be felt by listening to old records or watching old movies, in this case from the 80's. Moreover, the music will pick up the pace when there is an in-game event (combat...) to convey the player the distinct change of pace, as well as influence the player to be aggressive instead of passive.
 
-- **Implementation:** {How will all the music be layered?}
+- **Implementation:** {How will all the music be layered?} The music will always be playing as a main layer, after that the sounds of the characters and animation sounds will be applied, joined with the UI sounds. Dialogue will be played decreasing the volume of the other sounds and allow the player listen them clearly.
 
-- **Recording:** {How will the music be recorded?} All the tracks that are to be implemented have already been recorded, as they have been acquired from ready to use sources.
+- **Recording:** {How will the music be recorded?} All the tracks that are to be implemented have already been recorded, as they have been acquired from ready to use sources. In case of dialogue, some lines will be recorded by ourself and modified to have a good implementation in the game.
 
 - **Flow:** {How will the music change according to in-game events?} The music flow will change according to whatever happens to the player. During gameplay the main theme song will be playing softly in the background. However, if the player is engaged in combat or triggers an important event (a quest has been cleared i.e), the music will change accordingly. (Louder/Faster in combat, etc).
 
 ### Dialogue
-- **Style:** {What will the voices sound like? Distorted? Mechanized?}
+- **Style:** {What will the voices sound like? Distorted? Mechanized?} In case of concrete sentences as "Le's go" or "Come back", will be recorded and added like a metallic voice. On the other hand, long dialogues will not be recorder, instead that, it will sound like a voice but not saying anithing clearly.
 
 - **Type:** {What will be tone of the voices? Which emotion will they convey} The units will have strict and disciplined voices that take after military trained soldiers.
 
-- **Visualization:** {When will the dialog appear and what will it convey?}
+- **Visualization:** {When will the dialog appear and what will it convey?} When the dialog appear, it will sound a voice talking accompanied with the text.
 
-- **Entities with dialog:** {Which entities will have a voice/dialog? Will their voices be distored?}
+- **Entities with dialog:** {Which entities will have a voice/dialog? Will their voices be distored?} Every type unit will have the same dialog but with different voices.
 
 ### Animations
-- **On Event:** {Unit attack, unit movement, building creation...}
+- **On Event:** {Unit attack, unit movement, building creation...} When units run, there will be SFX of steps. When the player builds something, it will sound like a virtual instance.
 
 ### References
-{All the references that were used to reach the current audio library}
+{All the references that were used to reach the current audio library} 
 
 ## Implementation
 {How will the audio be organized in-game}

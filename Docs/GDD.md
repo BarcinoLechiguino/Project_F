@@ -1,12 +1,12 @@
 # Game Design Document
 ## Overview
-“Name” is a survival RTS game. The basic pillars that sustain the game are exploration, the system of hordes and the combat system. The player will have to create, control and sustain different troops and buildings. 
+“Project F” is a survival RTS game. The basic pillars that sustain the game are exploration, the system of hordes and the combat system. The player will have to create, manage and sustain different troops and buildings. 
 
-The main objective is to explore through the map, fortify your base and gathering resources across the map to beat the final boss that will be waiting for you at the end of the It.
+The main objective is to explore the map through a fog keeping the player from having a complete vision, fortify your base in order to hold the seizing and gather resources across the map to beat the final boss that will be waiting for you at the end of it.
 
-The game creates unique and challenging experiences where the player is forced to use his experience and wisdom in order to success on his mission and doesn’t let the nerves to get over him.
+The game creates unique and challenging experiences where the player is forced to use his experience and put his five sense in disposal in order to success on his mission without leaving the nerves get over him.
 
-You will have to explore all the surroundings, find resources, complete quests to gain more and more materials to build the strongest wing to defeat the final boss. Anyway, don’t leave alone your city, don’t go too far away as hordes of enemies will appear to besiege your base. Think strategies and make sure to cover your back. 
+You will have to explore all the surroundings, find resources, complete quests to gain more and more materials to build the strongest wing and defeat the final boss. Anyway, don’t leave alone your city, don’t go too far away as hordes of enemies will appear to besiege your base. Think strategies and make sure to cover your back. 
 
 
 ## Plot/Lore
@@ -26,11 +26,11 @@ Everything consists on doing a “nano-transformation”, a concept invented by 
 
 
 ## Game Pillars
-**Exploration**: the dungeon pattern of the map. If you recruit an explorer, you can explore all the map to find resources as data, electricity and others. The more explored and more recollected, the better base and troops you’ll have.
+**Exploration**: the dungeon pattern of the map. Exploring the map allows the player to find resources as data, electricity and others it's an equilibrated risk-reward system, the more explored and more recollected, the better base and troops you’ll have. 
 
 **System of hordes**: Horde after horde enemies will keep coming with a break in between so you can prepare yourself against the next seizing or even explore and complete quests.The time set between hordes it is thought to give the player enough time to engage on a new quest, without taking an eye out of the timer and the base. The difficulty will grow within the hordes.
 
-**Combat system**: By clicking and dragging you can select the amount of units you want to move wherever the player wants a long as is a walkable area for the units. When enemy units slip into the attack area of those units, they will begin to attack them. This system improves the strategy side of the game, placing your units to defend the weaker side of your base.
+**Combat system**: By clicking and dragging you can select the amount of units you want to move wherever the player wants as long as it's a walkable area for the units. When enemy units slip into the attack area of those units, they will begin to attack them. This system improves the strategy side of the game, placing your units to defend the weaker side of your base.
 
 
 ## Game Flow
@@ -42,7 +42,7 @@ You can send your units through the fog of war deep into the unexplored area, a 
 Some of the mandatory quests will require your units to enter the fog of war in order to perform the task requested in the unexplored area.
 
 ### **Resource recollecting**
-Some buildings are specifically made for that purpose, taking into account the upgrade level of the building it will gather a certain amount of the specified resource in a defined time space. There are various resource collecting buildings for each available resource.
+Some buildings are specifically made for that purpose, taking into account the upgrade level of the building it will gather a certain amount of the specified resource in a defined time space. There are various resource collecting buildings for some of the available resource.
 Natural source are another way to gather resources that can’t be obtained through an specific building, in order to achieve those the player will have to explore through the fog of war.
 
 ### **Buildings creation and upgrading**
@@ -54,9 +54,9 @@ When you start the game, you start with a single explorer and a single collector
 
 If you left click in a unit, a menu will display that will provide all the actions the unit can do, anyway, shortcuts will be provided to set your troops in a mode in an easier way.
 
-All units will have shortcuts to do some actions and some of those mechanics will be specific for a few units, in other words not all units will have the same functionality or actions. Anyway, let’s start with general ones. 
+All units will have shortcuts to do some actions however some of them require exclusive shortcuts due to their unique available actions.
 
-All units can move, individually or in group if you right click the terrain. Also, all units, except for recollectors, can attack if you right click an enemy unit. Also, all the units that can attack will be able to set in defensive/guard mode. The unit will stop in the zone the player set before and if any enemy gets inside their attack radius, that unit will start attack until it dies or the enemy does so. Finally, the last action that only collectors can do is to repair. If your base and your buildings are damaged but not destroyed, all of them will recover their HP automatically with an amount of time. Otherwise and only if the building is destroyed, only collectors will be able to repair It.
+All units can move, individually or in group if you right click the terrain. Also, all units, except for recollectors, can attack if you right click an enemy unit, targeting an enemy forces the selected allies to walk towards him ignoring any other interference. Also, all the units that can attack will be able to set in defensive/guard mode. The unit will stop in the preselected zone by the player and if any enemy gets inside their attack range, that unit will start attacking until it dies or the enemy does so. Finally, the last action that only collectors can do is to repair. If your base and your buildings are damaged but not destroyed, all of them will recover their HP automatically with an amount of time. Otherwise and only if the building is destroyed, collectors will be able to repair it.
 
 
 ## Elements
@@ -103,14 +103,13 @@ Although it won’t be easy, around the base, covering the unexplored area, ther
 Exploration will be a fundamental feature, the core of most of the quests will require to explore and even fight outside the base, we will include an increase of 
 the difficulty as you advance stages.
 
-The real difficulty here is that the game forces the player to keep an eye on the base every time he goes to explore as without any warning and if you are far away from home and your base It is not well protected, the hordes will siege It.
+The real difficulty here relies in the game forcing the player to keep an eye on the base every time he goes to explore since the hordes will keep coming no matter how far the player went to explore.
 
 ### **Enemy Position (Hordes)**
-Enemies won’t have an specific location as enemies will come and attack your with hordes that will come from any direction at any time. 
+Enemies won’t have an specific spawn location so the hordes will be less predictable. 
 
-It is true that there will be other enemies spread around the map on the exploration zone, so we create a variety of enemies and dangers in the game.
+There will be other enemies spread around the map on the exploration zone, creating a deeper and more challenging quest and exploration system.
 
-You have some probabilities to find some enemies while you explore so It is important not to pick a single unit to explore and to accompany your recollectors and scouts with troops to defend them as well as to leave some units in base to defend It and gain time for the player to reach the base and beat the specific horde.
 
 ### **Minimap**
 At the top-”..” on the screen we will see the minimap that shows a generic view of the map as quests, resources, etc. 

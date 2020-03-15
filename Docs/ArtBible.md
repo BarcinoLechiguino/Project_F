@@ -5,15 +5,28 @@ The game will take a minimalistic approach to the artstyle, using low-poly, text
 
 
 ## References
-{Add a brief explanation on which will be the main artistic reference and which are the overall characteristics that are sought after in the references. Ex. Low-poly texture-less 3d models.} 
+Here can be seen how this reliance on shape only is something present in other succesful games such as Astroneer, Crossy Road or Untitled Gooose Game. In astroneer you can see how a spacial theme can blend with a minimalistic approach to modelling. 
 
 ![Astroneer 1](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/astroneer-ref1.jpg?raw=true)
 ![Astroneer 2](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/astroneer-ref2.jpg?raw=true)
 ![Kenney](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/kenney_ref.png?raw=true)
 ![Crossy Road](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/crossy-road_ref.jpg?raw=true)
 ![Goose game](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/untitled_goose_game_ref.jpg?raw=true)
+
+
+
+Vaporwave will have its influence specially in palettes. In addition, Vaporwave also features heavy use of technology which fits into our theme. Another key is retrofuturism: We will be using togheter high tech elements and out of fashion gadgets. This allows having a wider range of assets and helps us evoque nostalgia on the player. 
+
 ![Vaporwave](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/vaporwave.jpg?raw=true)
 
+Kung Fury
+![[Kung Fury](https://www.youtube.com/watch?v=sUwny2hyHCE)](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/kung_fury_ref.jpg?raw=true)
+
+Hotline Miami
+![Hotline Miami](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/hotline_miami_ref.png?raw=true)
+
+Far Cry 3: Blood Dragon
+![Blood Dragon](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/blood_dragon_ref.jpg?raw=true)
 
 ## Art Style
 The core of the project's art assets will be [kenney.nl](https://kenney.nl/assets?q=3d). Following its style when editing any asset will be key in avoiding stand outs.
@@ -45,7 +58,7 @@ We will be using the different aircrafts and vehicles available at [kenney.nl](h
 
 
 ### Scenarios
-{Add a general description about the setting of our game and how the theme affects how the scenarios are depicted}
+We will be using a tileset 
 {Later on, the map should be added with an explanation on why it was designed that way artwise}
 
 ![Example 1](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/Sample_HD_1.png?raw=true)
@@ -57,12 +70,14 @@ We will be using the different aircrafts and vehicles available at [kenney.nl](h
 As stated before, low polygon 3D models rendered to 2D will be used as assets. This assets do not have any textures, only solid colours. They are rendered with a hard light that creates three distinctly separate colours, which represent the natural, highlighted and darkened sides. High level of detail is discouraged, since the game should be resolvable whilst zooming out, so assets should be clear based in shape and color only.
 
 ### Camera
-The isometric tiles that will be used follow a width-height ratio of sqrt(2) (or 1.414:1)
-{Talk about the technical aspects of the camera. The camera angle will be isometric and the player will have full agency to move the camera around. Will the camera be able to zoom-in/zoom-out?. What will be shown in the minimap? Will the player be able to move the camera by clicking and dragging on it?}
+The isometric tiles that will be used follow a width-height ratio of sqrt(2) (or 1.414:1).  It will not be able to rotate, but it will be able to move freely. It will also feature zoom, where the closest will be at true tile size (151px) and will be furthest with a tile size of about 48px.
+
 
 ### Scale
 A tile should measure 151x107 px, and should still be resolvable viewed at 48px wide.
-{Talk about the relation between unit size and building size. Will the units be bigger to make them more distinguishable and visible?}
+
+Units will have a rough correspondance with tiles, but they can exceed the size of the tile. It will depend on the size of the unit. For example, Heavy units will be larger than a tile whereas scouts, for example, won't.
+
 
 ## Color Palettes
 Regarding colour, the pallette will take after the vaporwave aesthetic:
@@ -83,7 +98,3 @@ Regarding colour, the pallette will take after the vaporwave aesthetic:
   - Adobe Photoshop: The go to tool for 2D bitmap editing. It will be used for all tasks related with recolouring and generating Tilesets from individual images. Since most assets will be retrieved from [Kenney](https://kenney.nl/), this tool will be mostly employed for tile editing purposes.
   
   - [Asset Forge](https://kenney.nl/tools/assetforge): This tool which will allow the team to create more specific assets that might be needed. The intended use that will be given to the tool is a supporting one, the majority of the project's assets will already be available for implementation.
-
-## Art Bible References:
-- [Final Art Bible Reference](https://github.com/DevCrumbs/Warcraft-II/wiki/6.-Art-Bible)
-- [Alex's Art Bible Research](https://github.com/AlexLA99/Art-Bible/blob/master/docs/Art%20Bible.pdf)

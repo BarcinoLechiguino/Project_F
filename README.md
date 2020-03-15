@@ -1,7 +1,6 @@
-# {Project Name}
+# {Project F}
 
 ## Description
-
 {project description}
 
 ## Key Features
@@ -17,13 +16,13 @@
 
 ## Developers
 
- - {Angel Gonzalez} - {Project Lead, Programmer, Designer}
- - {Aitor Luque} - {Lead Designer, QA}
- - {Pau Fiol} - {Lead Artist}
- - {Pau Pedra} - {Lead Programmer}
- - {Gerard Romeu} - {Designer}
- - {Guillem Turmo} - {Management}
- - {Francisco Guerrero} - {UI Artist/Designer}
+ - {Angel Gonzalez} - {Project Lead, Management, Programmer} - GitHub: [BarcinoLechiguino](https://github.com/BarcinoLechiguino)
+ - {Aitor Luque} - {Lead Designer, QA} - GitHub: [Aitorlb7](https://github.com/Aitorlb7)
+ - {Pau Fiol} - {Lead Artist} - GitHub: [paufiol](https://github.com/paufiol)
+ - {Pau Pedra} - {Lead Programmer} - GitHub: [paupedra](https://github.com/paupedra)
+ - {Gerard Romeu} - {Designer} - GitHub: [Gromeu2000](https://github.com/Gromeu2000)
+ - {Guillem Turmo} - {Management} - GitHub: [Turmo11](https://github.com/Turmo11)
+ - {Francisco Guerrero} - {UI Artist/Designer} - GitHub: [FranGV98](https://github.com/FranGV98)
 
 ## License
 
