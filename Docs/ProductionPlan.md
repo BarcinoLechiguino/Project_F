@@ -1,6 +1,6 @@
 # Production Plan
 
-{Brief General Description}
+For the production of this game, we've scheduled a 14 weeks plan divided in different stages and milestones
 
 ## General Calendar
 - {Sprints (Kanban)}
