@@ -1,10 +1,10 @@
 # Game Design Document
 ## Overview
-“Name” is a survival RTS game. The basic pillars that sustain the game are “....”. The player will have to create, control and sustain different troops and buildings. 
+“Name” is a survival RTS game. The basic pillars that sustain the game are exploration, the system of hordes and the combat system. The player will have to create, control and sustain different troops and buildings. 
 
 The main objective is to explore through the map, fortify your base and gathering resources across the map to beat the final boss that will be waiting for you at the end of the It.
 
-The game creates unique and challenging experiences where the player is forced to use his experience and wisdom in order to success on his mission and don’t let the nerves to get over him.
+The game creates unique and challenging experiences where the player is forced to use his experience and wisdom in order to success on his mission and doesn’t let the nerves to get over him.
 
 You will have to explore all the surroundings, find resources, complete quests to gain more and more materials to build the strongest wing to defeat the final boss. Anyway, don’t leave alone your city, don’t go too far away as hordes of enemies will appear to besiege your base. Think strategies and make sure to cover your back. 
 
@@ -14,7 +14,7 @@ You will have to explore all the surroundings, find resources, complete quests t
 
 
 ## Game Pillars
-**Exploration**: the dungeon pattern of the map. If you recruit an explorer, you can explore all the map to find resources as metal, fuel and others. The more explored and more recollected, the better base and troops you’ll have.
+**Exploration**: the dungeon pattern of the map. If you recruit an explorer, you can explore all the map to find resources as data, electricity and others. The more explored and more recollected, the better base and troops you’ll have.
 
 **System of hordes**: Horde after horde enemies will keep coming with a break in between so you can prepare yourself against the next seizing or even explore and complete quests.The time set between hordes it is thought to give the player enough time to engage on a new quest, without taking an eye out of the timer and the base. The difficulty will grow within the hordes.
 
@@ -107,7 +107,7 @@ As the map may be too big, the minimap’s radius will be limited and the minima
 
 
 ## Learn To Play
-At the start of every game, an icon with the face of the General “...” will appear at the top-”...” corner of the screen. He will welcome the player to the new planet and the importance of the mission the player is taking part. He is the omniscient character who knows everything taking place in the game universe.
+At the start of every game, an icon with the face of the Dr. Ackermann will appear at the top-”...” corner of the screen. He will welcome the player to the new planet and the importance of the mission the player is taking part. He is the omniscient character who knows everything taking place in the game universe.
 The General will show you the controls of the game as It advances and will introduce the quests every time the player accepts It. Guiding you to the challenges and warning you if a new horde appears.
 
 
