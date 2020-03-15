@@ -31,13 +31,13 @@ The overall style of all the audio implemented in the game will have a heavy ret
 
 - **Visualization:** {When will the dialog appear and what will it convey?} When the dialog appear, it will sound a voice talking accompanied with the text.
 
-- **Entities with dialog:** {Which entities will have a voice/dialog? Will their voices be distored?} 
+- **Entities with dialog:** {Which entities will have a voice/dialog? Will their voices be distored?} Every type unit will have the same dialog but with different voices.
 
 ### Animations
-- **On Event:** {Unit attack, unit movement, building creation...} 
+- **On Event:** {Unit attack, unit movement, building creation...} When units run, there will be SFX of steps. When the player builds something, it will sound like a virtual instance.
 
 ### References
-{All the references that were used to reach the current audio library}
+{All the references that were used to reach the current audio library} 
 
 ## Implementation
 {How will the audio be organized in-game}
