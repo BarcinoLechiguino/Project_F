@@ -1,7 +1,7 @@
 # GUI Document
 This document has been redacted to show and keep track of all the UI's functionalities, as well as all the design related decisions made regarding it. In this document, and with the purpose of being as clear and informative as possible, multiple flow diagrams and UI Art will be displayed.
 
-## GUI STYLE
+## GUI Style
 The GUI will combine both minimalistic and neon visual styles with the intention to bring to life a clean and clear interface that does not saturate the player with information. The GUI will be focused on aiding the player in focusing on the truly relevant and useful information, gameplay wise.
 
 ## Main Menu
@@ -32,6 +32,8 @@ Moreover, there will be two additional buttons:
 
 {Show the concept art of the Options Menu, just to see how will the elements be placed}
 
+{Add a workflow diagram of the Main Menu}
+
 ## In-Game
 ### HUD
 - **Player Mouse Cursor:** The Cursor will take after the standard mouse cursor that can be found in Windows OS. Art wise, the cursor will be designed according to the game's aesthetics (Vaporwave / Outrun). {Link the cursor image / sprite)
@@ -45,6 +47,7 @@ Moreover, there will be two additional buttons:
 - **Resources:** The current amount of the different resources will be displayed in little windows at the top left corner of the screen along with their corresponding sprite. If the mouse is hovered over any of the resource windows, a text pop-up will appear giving a brief summary of the possible uses of that specific resource.
 
 {Show the concept art of the different HUD elements, just to see how will the elements be placed}
+{Add a the workflow diagram of the HUD}
 
 ### Pause Menu
 While in-game the player can access the *Pause Menu* (by pressing the ESCAPE Key or the PAUSE Button), which offers the following options:
@@ -57,9 +60,13 @@ While in-game the player can access the *Pause Menu* (by pressing the ESCAPE Key
 - **Exit to Main Menu:** Exits the current game and sends the player back to the **Main Menu**.
 
 {Show the concept art of the Pause Menu, just to see how will the elements be placed}
+{Add a Pause Menu workflow diagram}
 
 ### Menu Diagram
 ![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/UML_Menus.png?raw=true)
+
+## Victory/Defeat Screen
+{Will our game have a victory/defeat screen? What will they show?}
 
 ## Sprites
 ### UI Spritesheet (v0.2)
@@ -69,6 +76,6 @@ While in-game the player can access the *Pause Menu* (by pressing the ESCAPE Key
 ![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/preview_Fonts.png?raw=true)
 
 
-## {Use this as reference}
+## {Use this as reference} {See the GUI Document from the first reference and see how many workflow diagrams are needed}
 - [GUI Document Reference](https://github.com/DevCrumbs/Warcraft-II/wiki/4.-User-Interface-Document)
 - [GUI Document Reference II](https://github.com/CheckTheDog/Fantasy-Brawl/wiki/3.-User-Interface-Document)

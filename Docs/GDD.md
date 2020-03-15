@@ -10,7 +10,19 @@ You will have to explore all the surroundings, find resources, complete quests t
 
 
 ## Plot/Lore
+We are in the 80s, a time where journalism is one of the main pillars of information. Our character, Vrainen Heber, is a journalist who works for the Austrian national newspaper and is on the verge of dismissal. His continuous failures in the company when publishing inconspicuous, ridiculous and even, in some cases, false articles, have led him to the serious situation of seeing himself as a homeless person in a matter of weeks.
 
+Our character is on a critical situation but still has something to hold on to. The newspaper editor gives him one last chance and suggests to him to write an article about a possible case of corruption and data retention in the Austrian government that directly concerns the actual President: Rudolf Kirchschläger.
+
+Motivated by this last opportunity, he is determined to uncover the government once and for all. But how would he do it? Who was him to deal with a subject of the first order when his most important article had been about a robbery in a greengrocer? he didn't have the means or the resources to get that type of information. At least not legally.
+
+Vrainen took out the little money he had been saving during these bad months, he barely gave him enough to survive the day to day and that is why he was so appreciated about It. All his savings were 500 shillings. 
+These past weeks, in the streets a name was being rumored, a certain scientist of bad reputation, with macabre ideas but with a magnificent brain, who had just moved to the city after being expelled from the engineering university in Berlin. In a few days he was able to find him, Dr. Luka Ackermann.
+Vrainen brought him up to date and the Professor decided to help him. Since the doctor is a nanotechnology expert, he told him about a method that he had been working on for years, it had benn remained a secret and was the reason why he was expelled from the university. This does not give Vrainen peace of mind but it is the only way. Immediately afterwards, Dr. Ackermann explains how this method works.
+
+Everything consists on doing a “nano-transformation”, a concept invented by the professor himself, where his molecules will be converted into nano-pixels and will be introduced into the power supply of the professor's computer. In this way, Vrainen will be able to be within the network and use everything at his hand such as electricity flows, data structures, servers, wi-fi network, among others, to get to the bottom of the government's data system and uncover them, and thus keep your job and enhance your name in the journalistic world.
+
+3,2,1 ... Immersion.
 
 
 ## Game Pillars
@@ -75,7 +87,7 @@ They will have the same structure, but the enemy won’t have collectors and exp
 #### **Resources** 
 - **For building**: chunks of data.
 - **For recruiting**: electricity.
-- **For upgrading**: byte, pixels.
+- **For upgrading**: byte.
 
 
 #### **Balancing**
