@@ -94,6 +94,20 @@ Apart from having weekly objectives, we have also set five general milestones or
 - {Classified by Probability and Impact}
 - {Clear solution to each of the found problems}
 
+| **RISK**        | **PROBABILITY** | **IMPACT** | **SOLUTION** |
+| --------------- |:---------------:| ----------:| ------------ |
+| No Hay Clase    |   Really Low    |    Low     | ---          |
+| No Hay Clase    |      Low        |   Medium   | ---          |
+| No Hay Clase    |     Medium      |    High    | ---          |
+| No Hay Clase    |      High       |    CTD     | ---          |
+| zebra stripes   | are neat        |    $1      | ---          |
+| zebra stripes   | are neat        |    $1      | ---          |
+| zebra stripes   | are neat        |    $1      | ---          |
+| zebra stripes   | are neat        |    $1      | ---          |
+| zebra stripes   | are neat        |    $1      | ---          |
+| zebra stripes   | are neat        |    $1      | ---          |
+| zebra stripes   | are neat        |    $1      | ---          |
+| zebra stripes   | are neat        |    $1      | ---          |
 
 
 ## Sprint Record and Log of Average Estimation Deviation
