@@ -80,7 +80,7 @@ Regarding colour, the pallette will take after the vaporwave aesthetic:
   All images will be exported as .png files. Tiles will not have a margin, as all will be placed edge against edge. Each tile will be exported at 151px wide. When possible, the lowest file size will be prefered. For instance, when exporting with any Adobe software, the export settings should be set at 'best compresion'. Excessive manipulation in 2D software should be avoided and, when possible, modeling a new 3D model is preferabble over cropping and bashing in Photoshop (or any other equivalent software).
   
 ### Tools
-  - Adobe Photoshop: The go to tool for 2D bitmap editing. It will be used for all tasks related with recolouring and generating Tilesets from individual images. Since most assets will be retrieved from [Kenney](https://kenney.nl/)
+  - Adobe Photoshop: The go to tool for 2D bitmap editing. It will be used for all tasks related with recolouring and generating Tilesets from individual images. Since most assets will be retrieved from [Kenney](https://kenney.nl/), this tool will be mostly employed for tile editing purposes.
   
   - [Asset Forge](https://kenney.nl/tools/assetforge): This tool which will allow the team to create more specific assets that might be needed. The intended use that will be given to the tool is a supporting one, the majority of the project's assets will already be available for implementation.
 
