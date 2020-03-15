@@ -1,19 +1,100 @@
 # Production Plan
 
-For the production of this game, we've scheduled a 14 weeks plan divided in different stages and milestones
+For the production of this game, we've scheduled a 14 weeks plan divided in different stages and milestones that will be completed using many techniques such as Sprints and a Gantt Chart
 
 ## General Calendar
-- {Sprints (Kanban)}
-- {Milestones}
-- {Gantt Chart}
+
+### Sprints (Kanban)
+
+- **Weekly goals:** set to make sure that progression is going according to the plan
+
+- **Weekly meetings:** will be placed every Thursday by 10:30 am and as long as it is possible, they will always be face-to-face meetings. These meetings will have a list of subjects to analyse and discuss, however, the main key point of these meeting will be to evaluate our progress (according to our weekly goals) and set the objectives for the next week.
+
+- **During the week:** we will mantain constant communication through our *discord* server, where everyone can be tagged as their role, to coordinate properly any task related issue. Additionally, we will also keep a *Trello* board updated in order to keep track of the state of each tasks, either if they are done, in progress or still to do.
+
+### Milestones
+
+Apart from having weekly objectives, we have also set five general milestones or due dates for the base, the concept discovery, the vertical slice, the alpha, and the gold. 
+
+***Base - March 8th***
+- Team Name
+- Team Logo
+- Game theme
+- Base game idea
+- Social Media set up
+
+***Concept Discovery - March 15th***
+- Game Pitch
+- Production Plan
+- Game Design Document
+- Technical Design Document
+- GUI document
+- Art Bible
+- Audio Bible
+- QA Workflow
+
+
+***Vertical Slice - April 12th***
+- Base Code
+- Adapting Code to STL
+- Screen Resolution
+- Camera Culling
+- Keyboard/Mouse Inputs
+- Gamepad Implementation
+- Camera Movement
+- Camera Zoom (?)
+- Transition Manager
+- Map Prototype w/ 2 Zones
+- Minimap
+- Adapt Entity System
+- Adapt Collision System
+- Implement 2 Units **
+- Unit Selector
+- Basic Combat
+- Basic Town Hall
+- Implement 1 Resource **
+- Group Movement **
+- Fog of War **
+- Scene Management
+- Particle System ** 
+- Dialog System **
+- Quest Manager **
+- God Mode
+-  QA & Testing
+- Basic UI
+- Basic Audio/Sound
+- Design 2 Basic Dialogs
+- Design 2 Basic Quests
+
+***Alpha - May 10th***
+- Final Map With All Zones
+- Final Minimap
+- All Units (4) 
+- Functional Combat
+- Functional Non-Linear Difficulty
+- All Buildings (x)
+- All Resources (3)
+- All Particle Systems (5)
+- All Dialogs (4)
+- All Quests (3)
+- All Transitions
+- Definitive Entities Sprites
+- Definitive UI
+- Definitive Audio/Sound
+- QA & Testing
+
+***Gold - June 7th***
+- Bugfixing.
+- Polish both the art and the audio.
+- Tutorial Design
+- Game Balancing
 
 ## Risk Contingency List
 - {List of possible problems that can happen during the development process}
 - {Classified by Probability and Impact}
 - {Clear solution to each of the found problems}
 
-## Milestones
-- {A list with all the milestones that need to be accomplished and by when}
+
 
 ## Sprint Record and Log of Average Estimation Deviation
 - {Details of each sprint (Sprint Number and the Date of the Sprint)}
