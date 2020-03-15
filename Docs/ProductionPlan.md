@@ -1,12 +1,12 @@
 # Production Plan
 
-For the production of this game, we've scheduled a 14 weeks plan divided in different stages and milestones that will be completed using many techniques such as Sprints and a Gantt Chart
+For the production of this game, a 14 weeks plan divided in different stages and milestones, that will be completed using many techniques such as Sprints and a Gantt Chart, has been scheduled.
 
 ## General Calendar
 
 ### Sprints (Kanban)
 
-- **Weekly goals:** set to make sure that progression is going according to the plan
+- **Weekly goals:** Set to make sure that progression is going according to the plan.
 
 - **Weekly meetings:** will be placed every Thursday by 10:30 am and as long as it is possible, they will always be face-to-face meetings. These meetings will have a list of subjects to analyse and discuss, however, the main key point of these meeting will be to evaluate our progress (according to our weekly goals) and set the objectives for the next week.
 
@@ -34,7 +34,7 @@ Apart from having weekly objectives, we have also set five general milestones or
 - QA Workflow
 
 
-***Vertical Slice - April 12th***
+***Vertical Slice - April 19th***
 - Base Code
 - Adapting Code to STL
 - Screen Resolution
@@ -66,7 +66,7 @@ Apart from having weekly objectives, we have also set five general milestones or
 - Design 2 Basic Dialogs
 - Design 2 Basic Quests
 
-***Alpha - May 10th***
+***Alpha - May 17th***
 - Final Map With All Zones
 - Final Minimap
 - All Units (4) 
@@ -101,6 +101,76 @@ Apart from having weekly objectives, we have also set five general milestones or
 - {Duration of the sprint}
 - {Points/Milestones Accomplished}
 - {Postmortem (Comment analyzing the sprint at the end of it)}
+
+### Sprint 1: 02/03/2020
+- **Duration:** 1 Week
+- **Points:** General game idea, planning and organization of the project's milestones (Gantt Chart).
+- **Postmortem:** Game idea too general, theme too unoriginal.
+
+### Sprint 2: 09/03/2020
+- **Duration:** 1 Week
+- **Points:** Docs completed.
+- **Postmortem:** Many documents lack content.
+
+### Sprint 3: 16/03/2020
+- **Duration:** 1 Week
+- **Points:** 
+- **Postmortem:**
+
+### Sprint 4: 23/03/2020
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 5: 30/03/2020
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 6: 06/04/2020 {Vertical Slice}
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 7: 13/04/2020
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 8: 20/04/2020
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 9: 27/04/2020
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 10: 04/05/2020
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 11: 11/05/2020 {Alpha}
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 12: 18/05/2020
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 13: 25/05/2020
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
+
+### Sprint 14: 01/06/2020 {Gold}
+- **Duration:** 1 Week
+- **Points:**
+- **Postmortem:**
 
 ## {The file's structures can be modified should it be needed}
 
