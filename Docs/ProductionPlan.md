@@ -3,6 +3,13 @@
 For the production of this game, a 14 weeks plan divided in different stages and milestones, that will be completed using many techniques such as Sprints and a Gantt Chart, has been scheduled.
 
 ## General Calendar
+### Gantt Chart
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Production_Plan/Gantt_Chart_15_03_2020.png)
+
+### Workable Hours
+To be able to correctly and acurately distribute all the tasks that the project requires, every member of the development team filled a timetable with the amount of workable hours each could allocate to said tasks:
+
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Production_Plan/Workable_Hours.png)
 
 ### Sprints (Kanban)
 
@@ -88,6 +95,11 @@ Apart from having weekly objectives, we have also set five general milestones or
 - Polish both the art and the audio.
 - Tutorial Design
 - Game Balancing
+
+### Keeping track of the milestones
+As there is a daunting amount of milestones to reach, a Trello board was created with all the tasks to do and at which stage each of them is at.
+
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Production_Plan/Trello_15_03_2020.PNG)
 
 ## Risk Contingency List
 - {List of possible problems that can happen during the development process}
