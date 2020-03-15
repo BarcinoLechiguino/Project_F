@@ -1,16 +1,16 @@
-# {Game Title}
+# Project F
 ## Description
 {Short Description}
 {Screenshot of the game}
 
 ## Students Involved
- - {Angel Gonzalez} - {Project Lead, Programmer, Designer} - {GitHub}
- - {Aitor Luque} - {Lead Designer, QA} - {GitHub}
- - {Pau Fiol} - {Lead Artist} - {GitHub}
- - {Pau Pedra} - {Lead Programmer} - {GitHub}
- - {Gerard Romeu} - {Designer} - {GitHub}
- - {Guillem Turmo} - {Management} - {GitHub}
- - {Francisco Guerrero} - {UI Artist/Designer} - {GitHub}
+ - {Angel Gonzalez} - {Project Lead, Management, Programmer} - [BarcinoLechiguino](https://github.com/BarcinoLechiguino)
+ - {Aitor Luque} - {Lead Designer, QA} - [Aitorlb7](https://github.com/Aitorlb7)
+ - {Pau Fiol} - {Lead Artist} - [paufiol](https://github.com/paufiol)
+ - {Pau Pedra} - {Lead Programmer} - [paupedra](https://github.com/paupedra)
+ - {Gerard Romeu} - {Designer} - [Gromeu2000](https://github.com/Gromeu2000)
+ - {Guillem Turmo} - {Management} - [Turmo11](https://github.com/Turmo11)
+ - {Francisco Guerrero} - {UI Artist/Designer} - [FranGV98](https://github.com/FranGV98)
  
 ## Sections
  - Game Reference: General Analysis of a Similar Game [Docs/GameReference.md](../Docs/GameReference.md)
