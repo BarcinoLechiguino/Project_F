@@ -90,72 +90,65 @@ There will be 2 main branches, development branch and master branch. Development
 ## Code Style
 {Separate the code  guidelines in different subsections}
 
-### 1. Naming Conventions
+### 1. General
 
-### 2. Variables
-
-### 3. Conditionals
-
-### 4. Loops
-
-### 5. Classes & Structs
-
-### 6. Indentation
-
-### 7. XML Conventions
-
-General:
-
--Curly braces 
-
--Always put first { in next line of function:
+- Curly braces 
+Always put first { in next line of function:
+```
 if()
 {
+```
+- Enters:
+Only use double enter when separating includes/defines and code or if it dramatically improves readability in code.
 
--Enters:
-
--Only use double enter when separating includes/defines and code or if it dramatically improves readability in code.
-
--Separate functions with one single enter. 
+Separate functions with one single enter. 
+```
 DoLogic()
 {
 
 };
 
 DoRoutine()
+```
+- Spaces
 
--Spaces
-
-- Leave spaces between +, -, >, ()... to improve readability
-- Leave space between ( and first item in parenthesis.
-- Don’t leave spaces between () inside bigger () so that are seen as items in the statement.
-if( a > b && (b + a) == 10 )
-
+-Leave spaces between +, -, >, ()... to improve readability
+-Leave space between ( and first item in parenthesis.
+-Space each item inside statement.
+```
+if(a > b && (b + a) == 10)
+{
+```
 - Comment Policy:
 
-Only comment on variables on functions which seem unclear at first sight.
-Avoid commenting non complexe functions.
-Code should not need comments to be understood.
+-Only comment on variables on functions which seem unclear at first sight.
+-Avoid commenting non complexe functions.
+-Code should not need comments to be understood.
 
-Naming conventions:
+### 2. Naming Conventions
 
-Variables: 
-- Always use lower case and underscore between words. 
-- Words should be full so that they are more easily understood (position over pos). 
-
+- Variables:
+-Always use lower case and underscore between words. 
+-Words should be full so that they are more easily understood (position over pos).
 -Compound words should use uppercase on second word. 
 
-Functions:
-- Always use uppercase for every word and nothing between them. DoLogic()
+- Functions:
+-Always use uppercase for every word and nothing between them. DoLogic()
+### 3. Loops
 
-Loops:
 - Use for() over while()
 
+### 4. Condition Statements
 
-Class:
+- If statements:
+
+-if(bool) instead of if(bool == true)
+-nullptr prefered over NULL
+
+### 5. Classes & Structs
 
 Example class structure:
-
+```
 class Entity
 {
 public:
@@ -169,21 +162,12 @@ public:
 	public variables (order by types, then alphabetically)
 private:
 	private variables (order by type, then alphabetically)
+```
 
+### 6. Indentation
 
-Bool:
+### 7. XML Conventions
 
-
-If statements:
-- if(bool) instead of if(bool == true)
-- nullptr over NULL
-- if()
-{
-
-}
-
-
-- enum class
 
 
 ## UML
