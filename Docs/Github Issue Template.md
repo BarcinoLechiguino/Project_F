@@ -9,7 +9,7 @@
 
 Example: PATHFINDING Visual: Character walks in tile occupied by building (2)
 
-##Inside issue template:
+## Inside issue template:
 
 ### Detailed explanation of the bug:
 
