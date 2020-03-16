@@ -42,8 +42,8 @@ Everything consists on doing a “nano-transformation”, a concept invented by 
 The main objective of the game will be to conquer all 4 security servers and get access to the government's classified information.
 
 - **1. Short-term Objectives:** Explore, gather resources and defend the Headquarters.
-- **2. Mid-term Objectives:** Construct Buildings, expand the army and attack enemy bases. 
-- **3. Long-term Objectives:** Eliminate all enemies and complete all quests.
+- **2. Mid-term Objectives:** Construct Buildings, expand the army and attack enemy outposts. 
+- **3. Long-term Objectives:** Complete all quests and eliminate all enemies.
 
 To achieve the aforementioned objectives, players will need to correctly manage their units and resources while exploring the map and defending their Headquarters. A minimap will be implemented to aid them in navigating the environment and keeping track of their immediate objectives. 
 
@@ -55,6 +55,8 @@ Only by completing all four quests can players reach the win condition. The ques
 - **Quest 2: ---**
 - **Quest 3: ---**
 - **Quest 4: ---**
+
+The difficulty of each quest will depend on which quests players complete first, so the difficulty will be divided in 4 Tiers. If additional information on this topic is required, see the **Enemy Outposts** subsection in the **Map** section and the **Rewards** section.
 
 ### Loss Condition
 There will be 2 loss conditions:
@@ -117,7 +119,6 @@ All the possible unit actions will be listed down below:
   - **While in Guard Mode:** If a unit is in Guard Mode, it will remain static at the given position. The unit will follow the same behaviour as while idle, with the only difference being that if the enemy gets out of range, it will not be followed after.
   
 - **Repairs:** Only Gatherers can perform this action. Should a building be completely destroyed, only a Gatherer can restore it back to a fully functional state. By right clicking on an Idle Gatherer and left-clicking on a destroyed building, the gatherer will path towards the building and start the repairs. Gatherers can also be sent to speed up the natural recovery rate of damaged buildings.
-
 
 {Follow the same structure as in the Buildings subsection, if possible}
 
@@ -195,54 +196,138 @@ At this current state of the development we can’t provide with any exact infor
 {Here all the zones of the map as well as all the elements that are to be placed in said zones should be mentioned.}
 {Additionally, mechanics such as the Fog of War should be explained in full detail.}
 
-## Exploration (Fog of War)
-One of the game pillars is the exploration, not only focusing on fortifying your base also finding out other features and benefits that you can obtain of the surroundings.
-Although it won’t be easy, around the base, covering the unexplored area, there will be a fog keeping the player off seeing further from a small radius, so the enemies will come from any possible angle without any previous warning.
+{Add a PNG showing all the map in its full extension}
 
-Exploration will be a fundamental feature, the core of most of the quests will require to explore and even fight outside the base, we will include an increase of 
-the difficulty as you advance stages.
+## Player Headquarters/Server/Whatever
+The players' base will remain the same through all playthroughs. It will be the main center of operations and all buildings will only be possible to create within a certain range with the base as it's center.
 
-The real difficulty here relies in the game forcing the player to keep an eye on the base every time he goes to explore since the hordes will keep coming no matter how far the player went to explore.
+{PNG of the Player's Base}
 
-## Enemy Position (Incursions)
-Enemies won’t have an specific spawn location so the hordes will be less predictable. 
+{Explain the different functions of the base}
 
-There will be other enemies spread around the map on the exploration zone, creating a deeper and more challenging quest and exploration system.
+The Headquarters will be occasionally raided by the enemy, so effective defenses must be built around it. Moreover, there should always be some troops stationed there, in case the exploring military force cannot make it back in time.
 
+## Enemy Outposts
+There will be a total of 4 enemy outposts, one on each of the zones.  Each will be equipped with defensive buildings and their own military task force.
+
+{PNGs of all 4 outposts. Should each have a different design? Should each be the same but with different colours?}
+
+Each destroyed outpost increases the defenses of the remaining ones, so if at the beginning al 4 outposts have X units and X walls, once one has been run over, the remaining ones will have X+5 units and X+10 walls, for instance.
+
+### Tier 1 Outpost
+- **North Outpost:**
+- **South Outpost:**
+- **East Outpost:**
+- **West Outpost:**
+
+### Tier 2 Outpost
+- **North Outpost:**
+- **South Outpost:**
+- **East Outpost:**
+- **West Outpost:**
+
+### Tier 3 Outpost
+- **North Outpost:**
+- **South Outpost:**
+- **East Outpost:**
+- **West Outpost:**
+
+### Tier 4 Outpost
+- **North Outpost:**
+- **South Outpost:**
+- **East Outpost:**
+- **West Outpost:**
+
+{Maybe making 4 tables, one for each tier, will make things clearer}
+
+{PNGs of the same outposts with increased difficulty}
+
+## Neutral Areas
+### Resources to be found
+
+### Enemy Patrols
+
+
+## Fog of War
+The fog of war will cover everything on the map except the players' headquarters. It will have 3 distinct states:
+
+- **Black:** Unexplored areas will be covered by a black tile.
+- **Semi-Transparent:** Areas which have already been explored but are no longer within the players' range of sight (No ally buildings or units near that area). The terrain layout of such areas can still be seen, but any changes such as new enemy buildings or units will not be revealed until said area is within range again. These areas will be covered by a semi-transparent black tile.
+- **Visible:** Areas that have been already explored and ally entities are currently within. These areas will not be covered.
+
+{PNGs of the different stages of the Fog of War}
+
+The Fog of War will also be represented on the minimap.
 
 ## Minimap
-At the top-”..” on the screen we will see the minimap that shows a generic view of the map as quests, resources, etc. 
+The minimap will be placced at the top-”..” corner of the screen. It will offer a view on a section of the map as well as highlighting both ally (in green/blue) and enemy (in red and if they are within sight) units and buildings.
 
-As the map may be too big, the minimap’s radius will be limited and the minimap will move within the map. Next to the minimap we have a button that by pressing it allows the player to change the minimap range. So if player wants a general or a focused view It can be changed with a single click.
+As the map may be too big, the minimap’s radius will be limited and the minimap will move within the map. Next to the minimap we have a button that, by pressing it, will allow players to change the minimap range.
+
+The camera will be able to be manipulated by clicking and dragging on the minimap (the camera will be centered around wherever the mouse cursor is at).
 
 
 # Learn To Play
-At the start of every game, an icon with the face of the Dr. Ackermann will appear at the top-”...” corner of the screen. He will welcome the player to the new planet and the importance of the mission the player is taking part. He is the omniscient character who knows everything taking place in the game universe.
-The General will show you the controls of the game as It advances and will introduce the quests every time the player accepts It. Guiding you to the challenges and warning you if a new horde appears.
+At the start of every game, an icon with the face of the Dr. Ackermann will appear at the top-”...” corner of the screen. He will welcome the players to the simulation will convey to them the importance of the mission they are taking part in. 
+
+The Doctor will show you the controls of the game as well as explain and the main mechanics of the game (Resource Gathering, Combat...)
 
 
 # Rewards
-The player will have to complete 4 different quests. Those quests will be different types:
+Each of the 4 main quests will reward players with additional resources {?}. As the difficulty for each quest will vary depending on which route player's take, all rewards have been separated in tiers:
 
-- **2 kill quest**:
-- **1 gather quest**:
-- **1 delivery quests**: 
+## Tier 1 Rewards
+- **Mission 1:**
+- **Mission 2:**
+- **Mission 3:**
+- **Mission 4:**
+
+
+## Tier 2 Rewards
+- **Mission 1:**
+- **Mission 2:**
+- **Mission 3:**
+- **Mission 4:**
+
+## Tier 3 Rewards
+- **Mission 1:**
+- **Mission 2:**
+- **Mission 3:**
+- **Mission 4:**
+
+## Tier 4 Rewards
+- **Mission 1:**
+- **Mission 2:**
+- **Mission 3:**
+- **Mission 4:**
+
+{Maybe making 4 tables, one for each tier, will make things clearer}
 
 
 # Controls
-We recommend to play the game with both mouse and keyboard, but it can be played also with gamepad. 
+We recommend to play the game with both mouse and keyboard, but it can be played also with gamepad.
+Although it is heavily advise to play with mouse and keyboard, the game can also be played with a game pad:
 
-## Mouse: 
+## Mouse and Keyboard Control Map
+### Mouse: 
 - Right click: Target an enemy/resource/building
 - Left click: Select a building/unit
 - Left drag: Select a group of units
 
-## Keyboard:
+### Keyboard:
+- 
 
-## Gamepad:
+{Add a PNG with a visual representation of the map}
+
+## Gamepad Control Map
+
+{Add a PNG with a visual representation of the map}
 
 
-# Previous Text
+## { -----------------------------------------------------}
+
+
+# Previous Text {Erase Later}
 ### Overview
 {The main objective is to explore the map through a fog keeping the player from having a complete vision, fortify your base in order to hold the seizing and gather resources across the map to beat the final boss that will be waiting for you at the end of it. Summarizing, players will have to spawn and manage different troops and buildings while balancing exploring the map and defending their Headquarters. 
 {Revise, incorrect structure.}
@@ -283,14 +368,22 @@ Buildings and units will have an specific resource to be upgraded so your base k
 #### Unit Management
 All units can move, individually or in group if you right click the terrain. Also, all units, except for recollectors, can attack if you right click an enemy unit, targeting an enemy forces the selected allies to walk towards him ignoring any other interference. Also, all the units that can attack will be able to set in defensive/guard mode. The unit will stop in the preselected zone by the player and if any enemy gets inside their attack range, that unit will start attacking until it dies or the enemy does so. Finally, the last action that only collectors can do is to repair. If your base and your buildings are damaged but not destroyed, all of them will recover their HP automatically with an amount of time. Otherwise and only if the building is destroyed, collectors will be able to repair it.
 
-###
+### Map
+#### Exploration (Fog of War)
+One of the game pillars is the exploration, not only focusing on fortifying your base also finding out other features and benefits that you can obtain of the surroundings.
+Although it won’t be easy, around the base, covering the unexplored area, there will be a fog keeping the player off seeing further from a small radius, so the enemies will come from any possible angle without any previous warning.
 
-###
+Exploration will be a fundamental feature, the core of most of the quests will require to explore and even fight outside the base, we will include an increase of 
+the difficulty as you advance stages.
 
-###
+The real difficulty here relies in the game forcing the player to keep an eye on the base every time he goes to explore since the hordes will keep coming no matter how far the player went to explore.
 
-###
+#### Enemy Position (Incursions)
+Enemies won’t have an specific spawn location so the hordes will be less predictable. 
 
-###
+There will be other enemies spread around the map on the exploration zone, creating a deeper and more challenging quest and exploration system.}
 
-###
+### Rewards
+- **2 kill quest**:
+- **1 gather quest**:
+- **1 delivery quests**: 
