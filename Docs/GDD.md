@@ -1,13 +1,14 @@
 # Game Design Document
 ## Overview
-“Project F” is a survival RTS game. The basic pillars that sustain the game are exploration, the system of hordes and the combat system. The player will have to create, manage and sustain different troops and buildings. 
+“Project F” is a survival RTS game made by {}. The game pillars that sustain the game are Exploration, the Horde System and the Combat System {Are you sure that these are really game pillars?}.
 
-The main objective is to explore the map through a fog keeping the player from having a complete vision, fortify your base in order to hold the seizing and gather resources across the map to beat the final boss that will be waiting for you at the end of it.
+The main objective is to explore the map through a fog keeping the player from having a complete vision, fortify your base in order to hold the seizing and gather resources across the map to beat the final boss that will be waiting for you at the end of it. Summarizing, players will have to spawn and manage different troops and buildings while balancing exploring the map and defending their Headquarters. 
+{Revise, incorrect structure.}
 
-The game creates unique and challenging experiences where the player is forced to use his experience and put his five sense in disposal in order to success on his mission without leaving the nerves get over him.
+The game offers unique and challenging experiences where the player will have no other option than be forced to make use of their dexterity as well as put their five senses in disposal in order to success on his mission without leaving the nerves get over him. {Revise, incorrect structure and expressions}
 
 You will have to explore all the surroundings, find resources, complete quests to gain more and more materials to build the strongest wing and defeat the final boss. Anyway, don’t leave alone your city, don’t go too far away as hordes of enemies will appear to besiege your base. Think strategies and make sure to cover your back. 
-
+{Revise, incorrect structure and format not formal enough.}
 
 ## Plot/Lore
 We are in the 80s, a time where journalism is one of the main pillars of information. Our character, Vrainen Heber, is a journalist who works for the Austrian national newspaper and is on the verge of dismissal. His continuous failures in the company when publishing inconspicuous, ridiculous and even, in some cases, false articles, have led him to the serious situation of seeing himself as a homeless person in a matter of weeks.
@@ -23,15 +24,17 @@ Vrainen brought him up to date and the Professor decided to help him. Since the 
 Everything consists on doing a “nano-transformation”, a concept invented by the professor himself, where his molecules will be converted into nano-pixels and will be introduced into the power supply of the professor's computer. In this way, Vrainen will be able to be within the network and use everything at his hand such as electricity flows, data structures, servers, wi-fi network, among others, to get to the bottom of the government's data system and uncover them, and thus keep your job and enhance your name in the journalistic world.
 
 3,2,1 ... Immersion.
-
+{Revise grammar and word distribution.}
 
 ## Game Pillars
-**Exploration**: the dungeon pattern of the map. Exploring the map allows the player to find resources as data, electricity and others it's an equilibrated risk-reward system, the more explored and more recollected, the better base and troops you’ll have. 
+**Exploration**: the dungeon pattern of the map{?}. Exploring the map allows the player to find resources as data, electricity and others it's an equilibrated risk-reward system, the more explored and more recollected, the better base and troops you’ll have.
+{Revise. Incorrect structure and no formal grammar. Some punctuation signs are missing}
 
-**System of hordes**: Horde after horde enemies will keep coming with a break in between so you can prepare yourself against the next seizing or even explore and complete quests.The time set between hordes it is thought to give the player enough time to engage on a new quest, without taking an eye out of the timer and the base. The difficulty will grow within the hordes.
+**System of hordes**: Horde after horde enemies will keep coming with a break in between so you can prepare yourself against the next seizing or even explore and complete quests. The time set between hordes it is thought to give the player enough time to engage on a new quest, without taking an eye out of the timer and the base. The difficulty will grow within the hordes.
+{Revise. Many grammar mistakes and the structure is all over the place. The 5 questions (What, when...) are not answered clearly}
 
 **Combat system**: By clicking and dragging you can select the amount of units you want to move wherever the player wants as long as it's a walkable area for the units. When enemy units slip into the attack area of those units, they will begin to attack them. This system improves the strategy side of the game, placing your units to defend the weaker side of your base.
-
+{Revise. Incorrect structure. Weak reasoning behind the decisions made on the combat system}
 
 ## Game Flow
 - {Control mapping}
