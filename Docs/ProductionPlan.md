@@ -4,6 +4,10 @@ For the production of this game, a 14 weeks plan divided in different stages and
 
 ## General Calendar
 ### Gantt Chart
+In order to have a better perspective of the development plan, a Gantt chart was created. This chart allows to represent both all the milestones and the available development time. 
+
+In the chart shown below all the project's milestones as well as their development in time can be observed:
+
 ![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Production_Plan/Gantt_Chart_15_03_2020.png)
 
 ### Workable Hours
@@ -13,17 +17,16 @@ To be able to correctly and acurately distribute all the tasks that the project 
 
 ### Sprints (Kanban)
 
-- **Weekly goals:** Set to make sure that progression is going according to the plan.
+- **Weekly goals:** Set to make sure that the development phase is progressing according to plan.
 
-- **Weekly meetings:** will be placed every Thursday by 10:30 am and as long as it is possible, they will always be face-to-face meetings. These meetings will have a list of subjects to analyse and discuss, however, the main key point of these meeting will be to evaluate our progress (according to our weekly goals) and set the objectives for the next week.
+- **Weekly meetings:** Will take place every Thursday by 10:30 am and as long as it is possible, they will always be face-to-face meetings. ALthough these meetings will have a list of subjects to analyse and discuss, the main key point will be to evaluate the current progress (according to our weekly goals) and set the objectives for the next week.
 
-- **During the week:** we will mantain constant communication through our *discord* server, where everyone can be tagged as their role, to coordinate properly any task related issue. Additionally, we will also keep a *Trello* board updated in order to keep track of the state of each tasks, either if they are done, in progress or still to do.
+- **During the week:** Constant communication will be maintained through the development team's *discord* server, where every member has been tagged according to their role, to coordinate properly any task related issue. Additionally, a *Trello* board will keep being updated in order to keep track of the state of each tasks (Done, In Progress or still To Do).
 
 ### Milestones
+Having weekly objectives aside, five major milestones/deadlines have been set. The aforementioned milestones are comprised by: The Project Base, the Concept Discovery, the Vertical Slice, the Alpha, and the Gold. 
 
-Apart from having weekly objectives, we have also set five general milestones or due dates for the base, the concept discovery, the vertical slice, the alpha, and the gold. 
-
-***Base - March 8th***
+***Project Base - March 8th***
 - Team Name
 - Team Logo
 - Game theme
@@ -102,17 +105,17 @@ As there is a daunting amount of milestones to reach, a Trello board was created
 ![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Production_Plan/Trello_15_03_2020.PNG)
 
 ## Risk Contingency List
-We have listed different situations that might happen during the production of the game and ranked them based on the probability of actually happening, their impact on the project and their possible solution
+Different situations that might occur during the production phase of the project have been listed and ranked according to the probability of ocurrence, their impact on the project. Moreover, a fesible contingency plan has been developed for each of the events.
 
 | **RISK**        | **PROBABILITY** | **IMPACT** | **SOLUTION** |
 | --------------- |:---------------:| :----------:| ------------ |
-| A teammate is not able to continue with the project| Really Low | Really High | The tasks assigned to the missing teammate will be divided with the rest of the group as long as it's possible, if it weren't possible we would study to eliminate that task from the final product |
-| A team member falls sick    | High  | Low/Medium | Depending on the severity of the illness, either the weekly objectives that this team member had we'll be transferred to the team or if he is able to work but in a slower pace, management will assign a team member that is a bit ahead of schedule to assist him in their tasks|
-| Weekly objectives are not completed   | Low| Medium | During our weekly metting, the tasks will be redistributed and we will evaluate why we weren't able to complete them. We will also remind ourselves that we should warn the team before the due date that a task might not be completed in time, so we can plan ahead and help each other |
-| Milestones not completed in time   | Really Low | High | We will start evaluating what caused the issue so we don't encounter it again, after that, we will reschedule the missing items (in case we choose not to exclude them from the final product) and decide if we eliminate some from the next milestones in case we didn't consider them possible according to the new schedule |
-| Main mechanic is not working properly   | Medium | High | The QA we'll get in touch with the Code lead to fix the issue as soon as possible |
-| Visuals/Animations are not correclty placed | Low | Medium/High | The QA we'll get in touch with the Art&Audio lead to fix the issue as soon as possible |
-| A team member's equipment fails | Very Low | Very High | The team member we'll be recommended to stay after class hours in the CITM in order to work from there, in case the CITM is closed we will try to get in touch with someone that can lend us some equipment |
+| A team member is unable to continue working on the project| Really Low | Really High | The tasks assigned to the missing member will be divided and reasigned to the rest of the team. Should it not be possible, whether it is possible to abandon and eliminate the tasks  without heavily affecting the final product or not will be studied. |
+| A team member has fallen sick    | High  | Low/Medium | Depending on the severity of the illness, either the weekly objectives assigned to the affected team member will be transferred to other members or, if the aforementioned is able to work but at a slower pace, management will call in an ahead-of-schedule team member in assistance.|
+| Weekly objectives have not been met   | Medium | Medium | During the scheduled weekly meeting, the unachieved milestones will be redistributed and why the team was not able to accomplish them will be evaluated. Should any team member know that their objectives will not be met under any circumstances, management should be notified as soon as possible so a contingency plan can be prepared. |
+| Major milestones not achieved in time   | Low | High | An evaluation on what caused the issue will start so the team avoids facing the same issues at a later date. Following that, all missing tasks will be rescheduled (in case they cannot be excluded from the final product without major issues) and decide whether to eliminate some of the items of the next major milestone or not. |
+| A core mechanic is not working properly   | Medium | High | QA will get in touch with the Code Lead in order to fix the issue as soon as possible. |
+| Art/Audio being incorrectly implemented | Low | Medium/High | QA will get in touch with the Art&Audio Lead in order to fix the issue as soon as possible. |
+| A team member's equipment breaks down | Very Low | Very High | The team member will be recommended to stay after class hours at the TTC in order to work from there. In case of being unable to access the center, the possibility of temporarily borrowing the essential elements to be able to work properly will be discussed. |
 
 ## Sprint Record and Log of Average Estimation Deviation
 - {Details of each sprint (Sprint Number and the Date of the Sprint)}
