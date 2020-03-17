@@ -30,7 +30,7 @@ Moreover, there will be two additional buttons:
 
 - **Default Configuration Button:** The current configuration will be reset to the original pre-established parameters.
 
-{Show the concept art of the Options Menu, just to see how will the elements be placed}
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/OptionsMenu.jpg?raw=true)
 
 {Add a workflow diagram of the Main Menu}
 
