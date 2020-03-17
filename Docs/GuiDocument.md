@@ -15,7 +15,7 @@ The Main Menu will present the player with three different options:
 
 - **Exit:** Exits the application and sends the player back to the Desktop.
 
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/MainMenuF.png?raw=true)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/MainMenuF.png?raw=true)
 
 ### Options Menu:
 This menu will have the following elements:
@@ -32,7 +32,7 @@ Moreover, there will be two additional buttons:
 
 - **Default Configuration Button:** The current configuration will be reset to the original pre-established parameters.
 
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/OptionsMenu.jpg?raw=true)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/OptionsMenu.jpg?raw=true)
 
 {Add a workflow diagram of the Main Menu}
 
@@ -65,17 +65,17 @@ While in-game the player can access the *Pause Menu* (by pressing the ESCAPE Key
 {Add a Pause Menu workflow diagram}
 
 ### Menu Diagram
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/UML_Menus.png?raw=true)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/UML_Menus.png?raw=true)
 
 ## Victory/Defeat Screen
 {Will our game have a victory/defeat screen? What will they show?}
 
 ## Sprites
 ### UI Spritesheet (v0.2)
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/HUD_RETRO.png?raw=true)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/HUD_RETRO.png?raw=true)
 
 ### Font samples
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/preview_Fonts.png?raw=true)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/preview_Fonts.png?raw=true)
 
 
 ## {Use this as reference} {See the GUI Document from the first reference and see how many workflow diagrams are needed}
