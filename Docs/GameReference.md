@@ -9,6 +9,8 @@ In an RTS, the participants position, maneuver units and structures are under th
 
 # They are Billions
 
+![](https://media.vandal.net/i/1200x630/6-2017/20176912015_2.jpg)
+
 ## History
 They Are Billions is a post-apocalyptic steampunk real-time strategy survival video game developed and published by Numantian Games. Available on Microsoft Windows, it was released onto Steam's Early Access program with a survival mode in December 2017. The game was released with a campaign titled "New Empire" on June 18, 2019. PlayStation 4 and Xbox One versions were published by BlitWorks on July 1, 2019.
 
@@ -31,10 +33,7 @@ They Are Billions is a post-apocalyptic steampunk real-time strategy survival vi
 - Storage: 4 GB available space
 - Additional Notes: 4K Monitor (3840x2160)
 - Resolution: FULL HD 1920x1080.
-
-- FPS{?}
-- Assets {?}
-- Etc
+- FPS: 60
 
 ## Plot and Narrative (of the Game)
 
@@ -57,9 +56,13 @@ After the Hero successfully conquered the eastern territories, Crane will congra
 They Are Billions pits the player in a randomly generated steampunk themed, zombie-infested world.The player's goal is to build a base to protect themselves, by planning the layout and defenses, exploring the map, collecting resources and expanding while fighting the local zombie population at the same time. There are eight resources that the player must manage: gold, food, workers, wood, stone, iron, oil, and energy. Structures and units, many of different variations and following a tech-tree, will require different materials to be made.
 The player must keep zombies from breaching base defenses and infecting non-defensive structures, especially in tight or overdeveloped areas where a domino effect outbreak can occur. Much like the player has access to different unit types, zombie types are also varied, ranging between slow, decrepit ones, extremely fast zombies called "Harpies", highly-resistant ones known as "Butchers" and others, including a massive "infected giant" that has high health, speed, and damage that is also highlighted on a minimap, requiring the player to not only have a strong defensive perimeter (with walls, turrets, towers and traps), but also adapt tactics accordingly.
 
+![](https://data1.origin.com/asset/content/dam/originx/web/app/games/they-are-billions/they-are-billions/screens/TheyAreBillion%20-%20Train.jpg/1ab3d4b3-758f-4e61-82c0-4c61aee8f3f8/original.jpg)
+
 **Campaign**
 
 The goal of the campaign in They Are Billions is to reconquest a larger territory by building successful and well-defended colonies that are all connected to a railway network. But for the railways to reach a new location to build a new colony, sometimes you will encounter swarms of infected. In the campaign, the player will have a growing personal army to destroy the swarms and free the paths. Those swarms will be dynamic. They will move, they can combine, and they will grow. Because of this, you have to be very careful and strategic on how you expand your colonies.
+
+![](https://steamcdn-a.akamaihd.net/steamcommunity/public/images/clans/28988182/451eb4eee28239f6cd87100f26fbaa295f8e97b2.jpg)
 
 **Units**
 
@@ -83,7 +86,6 @@ Units are the main tools for expanding and defending the player's colony. They c
 *Colonists*
 
 About the colonists, the player cannot control them directly because it would be a huge task. Instead, they behave autonomously. They work, gather resources, travel to buildings, and transport goods. When the infected are close, they run away and hide in the nearby buildings.
-
 
 *Infected*
 
