@@ -99,6 +99,12 @@ The infected are just sick humans that were infected by a disease similar to rab
 
 ## Market Positioning
 
+They are Billions is one of the first Spanish game that manages to sneak so high into viewers of this streaming platform, and a phenomenon of the RTS genre that has completely and surprisingly revitalized games such as Starcraft, Halo Wars or Age of Empires. 
+
+It does not innovate, invent or revolutionize. But it performs wonderfully in mechanics and is technically perfectly supported even in modest PCs, which makes it affordable, massive and for all types of players, because its technical requirements are quite acceptable. In addition, It introduces some mechanics of the board games of the so-called eurogame category, that is, games where management and planning are the most important factor. 
+
+This intensification of the more tactical part is also seasoned by random factors that can fatten a game that seemed to end badly or destroy another that was going wonderfully. And all this without complicating too much and with fairly clear explanations of the different rules, functions and possibilities.
+
 
 # Tooth and Tail
 
