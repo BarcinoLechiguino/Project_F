@@ -72,13 +72,13 @@ Units are the main tools for expanding and defending the player's colony. They c
 
 | Unit        | Sprite        | Function                        |
 | ------------|:-------------:|:--------------------------------:|
-| Ranger      |               | They run extremely fast and can shoot their arrows with their silent bow without inflicting much noise. Rangers are perfect for exploring the map and clearing small infected groups without attracting big swarms. |
-| Soldier     |               |   This versatile unit can serve any purpose. They wear heavy armor and wield a powerful sub-machine-gun. But be careful, their noisy weapons can call the attention of the nearby infected. |
-| Sniper      |               |    Snipers walk slowly and take their time to load their large rifle. However, Snipers have a very high attack range. With their incredible aim, they can kill most of the infected with just one shot to the head. |
-| Lucifer     |               |    Nobody knows if Lucifer is a machine, a human or a ghost from hell. The fire of Lucifer can kill whole hordes of infected. It can not attack through walls but is immune to fire. |
-| Thanatos    |               |    Thanatos has a powerful rocket launcher with a very long range. It can annihilate dozens of infected people with a single shot. When the enemies are too close, Thanatos will fight face to face. |
-| Titan       |               |    This gentleman pilots a formidable killing machine. It has an ultra fast burst shot and a wide area of effect. Order him to chase infected and enjoy the show. |
-| Mutant      |               |    The mutant being is the result of the application of genetic engineering on humans to turn them into infected killing machines. It has mechanical claws so sharp that it can kill several infected in one strike. |
+| Ranger      |![](https://vignette.wikia.nocookie.net/they-are-billions/images/1/10/Ranger_Portrait.PNG/revision/latest/scale-to-width-down/310?cb=20171115184518)               | They run extremely fast and can shoot their arrows with their silent bow without inflicting much noise. Rangers are perfect for exploring the map and clearing small infected groups without attracting big swarms. |
+| Soldier     |![](https://vignette.wikia.nocookie.net/they-are-billions/images/4/4f/Soldier_Portrait.png/revision/latest/scale-to-width-down/310?cb=20171115183212)               |   This versatile unit can serve any purpose. They wear heavy armor and wield a powerful sub-machine-gun. But be careful, their noisy weapons can call the attention of the nearby infected. |
+| Sniper      |![](https://vignette.wikia.nocookie.net/they-are-billions/images/a/af/Sniper_Portrait.png/revision/latest/scale-to-width-down/310?cb=20171115184649)               |    Snipers walk slowly and take their time to load their large rifle. However, Snipers have a very high attack range. With their incredible aim, they can kill most of the infected with just one shot to the head. |
+| Lucifer     |![](https://vignette.wikia.nocookie.net/they-are-billions/images/b/b4/Lucifer_Portrait.png/revision/latest/scale-to-width-down/310?cb=20171115184935)               |    Nobody knows if Lucifer is a machine, a human or a ghost from hell. The fire of Lucifer can kill whole hordes of infected. It can not attack through walls but is immune to fire. |
+| Thanatos    |![](https://vignette.wikia.nocookie.net/they-are-billions/images/b/b3/Thanatos_Portrait.png/revision/latest/scale-to-width-down/310?cb=20171115180428)               |    Thanatos has a powerful rocket launcher with a very long range. It can annihilate dozens of infected people with a single shot. When the enemies are too close, Thanatos will fight face to face. |
+| Titan       |![](https://vignette.wikia.nocookie.net/they-are-billions/images/4/48/Titan_Portrait.png/revision/latest/scale-to-width-down/310?cb=20171115180529)               |    This gentleman pilots a formidable killing machine. It has an ultra fast burst shot and a wide area of effect. Order him to chase infected and enjoy the show. |
+| Mutant      |![](https://vignette.wikia.nocookie.net/they-are-billions/images/d/dd/Mutant_Portrait.png/revision/latest?cb=20190629151006)               |    The mutant being is the result of the application of genetic engineering on humans to turn them into infected killing machines. It has mechanical claws so sharp that it can kill several infected in one strike. |
 
 *Colonists*
 
@@ -91,12 +91,12 @@ The infected are just sick humans that were infected by a disease similar to rab
 
 | Enemy               | Sprite        | Function                        |
 |:--------------------|:-------------:|:--------------------------------:|
-| Infected Giant      |               | The corrupt body of this infected person has swollen to an enormous size. Its thick skin makes it almost invulnerable to low-caliber weapons. |
-| Infected Harpy      |               |  It does not seem very dangerous, but this infected girl is so fast that it can jump over the walls and kill any soldier with its sharp claws. |
-| Infected Aged       |               |    This infected body is very weak and slow. |
-| Infected Decrepit   |               |   This infected body is very weak and slow. |
-| Infected Colonist   |               |    This infected was a worker from some colony that was infected in the past.|
-| Infected Fresh      |               |   His/her body was infected recently so he is quite strong and fast.|
+| Infected Giant      |![](https://vignette.wikia.nocookie.net/they-are-billions/images/3/37/Infected_Giant_portrait.jpg/revision/latest?cb=20181128042230)               | The corrupt body of this infected person has swollen to an enormous size. Its thick skin makes it almost invulnerable to low-caliber weapons. |
+| Infected Harpy      |![](https://vignette.wikia.nocookie.net/they-are-billions/images/7/7e/Infected_Harpy_Portrait.jpg/revision/latest/scale-to-width-down/310?cb=20171116004357)               |  It does not seem very dangerous, but this infected girl is so fast that it can jump over the walls and kill any soldier with its sharp claws. |
+| Infected Aged       |![](https://vignette.wikia.nocookie.net/they-are-billions/images/e/e8/Infected_Aged_Portrait.jpg/revision/latest/scale-to-width-down/310?cb=20171115234534)               |    This infected body is very weak and slow. |
+| Infected Decrepit   |![](https://vignette.wikia.nocookie.net/they-are-billions/images/e/e4/Infected_Decrepited_Portait.jpg/revision/latest/scale-to-width-down/310?cb=20171115235352)               |   This infected body is very weak and slow. |
+| Infected Colonist   |![](https://vignette.wikia.nocookie.net/they-are-billions/images/4/46/Infected_Colonist_%281%29.jpg/revision/latest/scale-to-width-down/310?cb=20171116022517)               |    This infected was a worker from some colony that was infected in the past.|
+| Infected Fresh      |![](https://vignette.wikia.nocookie.net/they-are-billions/images/f/ff/Infected_Fresh%281%29.jpg/revision/latest/scale-to-width-down/310?cb=20171116022333)               |   His/her body was infected recently so he is quite strong and fast.|
 
 ## Market Positioning
 
