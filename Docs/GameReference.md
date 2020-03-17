@@ -104,6 +104,82 @@ The infected are just sick humans that were infected by a disease similar to rab
 ## Market Positioning
 
 
-# Tooth and Tail
+# They are Billions
 
+## History
+
+Tooth and Tail is an Arcade oriented Real-Time Strategy (RTS) game set in a world ruled by an animal revolution. From the creators of the IGF-winning game Monaco, Tooth and Tail developed and published by Pocketwatch Games distills the Real Time Strategy genre down to a few buttons and ten-fifteen minute matches. 
+
+- Genre: Action, Casual, Indie, Strategy
+- Developer: Pocketwatch Games
+- Publisher: Pocketwatch Games
+- Production start: Spring of 2014
+- Release Date: 13 Sep, 2017
+- Platforms: PC, PS4.
+- Languages: English
+
+## Technical Profile
+
+**Windows**
+
+- OS: Windows 7 or later
+- Processor: 2Ghz Processor
+- Memory: 2Gb RAM
+- Graphics: 1.5gb video card required to play nVidia 320M, Radeon HD 2400, Intel HD 3000 or better
+- DirectX: Version 11
+- Storage: 2 GB available space
+
+**Mac**
+
+- OS: OS X Mavericks 10.9
+- Processor: Dual core from Intel
+- Memory: 2 GB RAM
+- Graphics: nVidia 320M or higher, or Radeon HD 2400 or higher, or Intel HD 3000 or higher
+- Storage: 2 GB available space
+
+**SteamOS/Linux**
+
+- OS: Ubuntu 12.04
+- Processor: 2 GHz Processor
+- Memory: 2 GB RAM
+- Graphics: Intel HD 3000 (Driver mesa 10.6)
+- Storage: 1 GB available space
+
+## Plot and Narrative
+
+**Plot**
+
+Tooth and Tail is set during the 19th century in a society where animals are facing food shortages. Many of them decided to draw on cannibalism to overcome the hunger. Four factions were clearly distinguished once the cannibalism begun, each with their own ideals and purposes to manage the lack of supplies.
+A war between the four sides for the food control was about to begin.
+
+**Characters**
+
+*Archimedes*
+
+He leads the Civilized faction, represented by the color yellow. He was one of the forefathers of the Lottery System that is currently in place, which chooses who is slaughtered to feed the masses. However, over time, the Civilized became more and more corrupt until none of the Civilized ever ended up being chosen in the Lottery.
+
+
+*Bellafide*
+
+Bellafide is the leader of the Longcoats faction (representing free market capitalists). After his son was taken from him to feed the masses, he launched a revolution to overthrow the Civilized, led by Archimedes, with the assistance of Hopper, the leader of the Commonfolk. His units carry the colour blue. In his youth Bellafide worked hard to start his own tavern. Eventually becoming so successful that he was able to afford a large mercenary company, which he used at the beginning of the revolution.
+
+*Hopper*
+
+Representing the Commonfolk and wearing the red color Hopper places herseld in favour of a vote-based system to decide who gets to be the food. She is missing an arm, due to willingly given it up to feed her people. Many of the Commonfolk appreciate Hopper's selfless nature, and respect her willingness to fight on their behalf.
+
+*The Quartermaster*
+
+She leads the K.S.R., a secret police tasked with keeping peace in the nation. The K.S.R. became involved in the fighting to quell the Revolution, but now fights to bring peace to the nation, no matter what the cost. The Quartermaster often uses Military style units in combat and lives by a number of rules that can be seen quoting during missions.
+While an intimidating figure, the Quartermaster seems to care about helping the people survive and bringing peace to the nation, though she shows disdain for the Commonfolk due to their repeated stealing of supplies.
+
+## Gameplay
+
+Unlike most RTSs out there that require the player to keep tabs on all of your units, everything is done through your commander, from rallying your troops to building your mills and warrens.
+
+The commander is the only one that you can control directly they don't have any weapons, so it relies on its units to do all of the work. Burrow is a unique ability they have that allows the player to get to any of its mills when in danger or when he is done scouting a base and needs to get back quickly to make a counter.
+
+An additional and critical difference between Tooth and Tail and other RTS games, is the randomness of its maps. Maps are procedurally generated providing various starting locations for neutral gristmills and campfires as well as varied terrain. Player starting locations are typically far apart but can occasionally be found within close proximity to one another, leading to unfair encounters sometimes.
+The mills are the main goal of the game. If you lose all of your mills, you lose. They are the only place where the player build farms (The source of food). Food is only currency in the game, everything is bought and sold for food. If the player can't generate or obtain food, the army starves to death and lose. 
+
+Before the game starts, the player can choose up to six units. They can be any combination of the 3 available tiers. Each unit costs food though, so there is no such thing as an supply of units.
 
