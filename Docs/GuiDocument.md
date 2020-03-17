@@ -1,5 +1,5 @@
 # GUI Document
-This document has been redacted to show and keep track of all the UI's functionalities, as well as all the design related decisions made regarding it. In this document, and with the purpose of being as clear and informative as possible, multiple flow diagrams and UI Art will be displayed.
+This document has been redacted to showcase and keep track of all the UI's functionalities along all the design related decisions made regarding it. In this document, and with the purpose of being as clear and informative as possible, multiple flow diagrams and UI Art will be displayed.
 
 ## GUI Style
 The GUI will combine both minimalistic and neon visual styles with the intention to bring to life a clean and clear interface that does not saturate the player with information. The GUI will be focused on aiding the player in focusing on the truly relevant and useful information, gameplay wise.
@@ -11,9 +11,11 @@ The Main Menu will present the player with three different options:
 
 - **Continue:** Allows the player to continue the game from wherever he/she left it last time.
 
-- **Options:** Sends the player to the *Options Menu*. 
+- **Options:** Sends the player to the *Options Menu*.
 
-{Show the concept art of the Main Menu, just to see how will the elements be placed}
+- **Exit:** Exits the application and sends the player back to the Desktop.
+
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/MainMenuF.png?raw=true)
 
 ### Options Menu:
 This menu will have the following elements:
@@ -30,7 +32,7 @@ Moreover, there will be two additional buttons:
 
 - **Default Configuration Button:** The current configuration will be reset to the original pre-established parameters.
 
-{Show the concept art of the Options Menu, just to see how will the elements be placed}
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/OptionsMenu.jpg?raw=true)
 
 {Add a workflow diagram of the Main Menu}
 
@@ -63,17 +65,17 @@ While in-game the player can access the *Pause Menu* (by pressing the ESCAPE Key
 {Add a Pause Menu workflow diagram}
 
 ### Menu Diagram
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/UML_Menus.png?raw=true)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/UML_Menus.png?raw=true)
 
 ## Victory/Defeat Screen
 {Will our game have a victory/defeat screen? What will they show?}
 
 ## Sprites
 ### UI Spritesheet (v0.2)
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/HUD_RETRO.png?raw=true)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/HUD_RETRO.png?raw=true)
 
 ### Font samples
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/preview_Fonts.png?raw=true)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/UI/preview_Fonts.png?raw=true)
 
 
 ## {Use this as reference} {See the GUI Document from the first reference and see how many workflow diagrams are needed}

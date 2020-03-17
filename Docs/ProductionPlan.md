@@ -3,20 +3,30 @@
 For the production of this game, a 14 weeks plan divided in different stages and milestones, that will be completed using many techniques such as Sprints and a Gantt Chart, has been scheduled.
 
 ## General Calendar
+### Gantt Chart
+In order to have a better perspective of the development plan, a Gantt chart was created. This chart allows to represent both all the milestones and the available development time. 
+
+In the chart shown below all the project's milestones as well as their development in time can be observed:
+
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Production_Plan/Gantt_Chart_15_03_2020.png)
+
+### Workable Hours
+To be able to correctly and acurately distribute all the tasks that the project requires, every member of the development team filled a timetable with the amount of workable hours each could allocate to said tasks:
+
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Production_Plan/Workable_Hours.png)
 
 ### Sprints (Kanban)
 
-- **Weekly goals:** Set to make sure that progression is going according to the plan.
+- **Weekly goals:** Set to make sure that the development phase is progressing according to plan.
 
-- **Weekly meetings:** will be placed every Thursday by 10:30 am and as long as it is possible, they will always be face-to-face meetings. These meetings will have a list of subjects to analyse and discuss, however, the main key point of these meeting will be to evaluate our progress (according to our weekly goals) and set the objectives for the next week.
+- **Weekly meetings:** Will take place every Thursday by 10:30 am and as long as it is possible, they will always be face-to-face meetings. ALthough these meetings will have a list of subjects to analyse and discuss, the main key point will be to evaluate the current progress (according to our weekly goals) and set the objectives for the next week.
 
-- **During the week:** we will mantain constant communication through our *discord* server, where everyone can be tagged as their role, to coordinate properly any task related issue. Additionally, we will also keep a *Trello* board updated in order to keep track of the state of each tasks, either if they are done, in progress or still to do.
+- **During the week:** Constant communication will be maintained through the development team's *discord* server, where every member has been tagged according to their role, to coordinate properly any task related issue. Additionally, a *Trello* board will keep being updated in order to keep track of the state of each tasks (Done, In Progress or still To Do).
 
 ### Milestones
+Having weekly objectives aside, five major milestones/deadlines have been set. The aforementioned milestones are comprised by: The Project Base, the Concept Discovery, the Vertical Slice, the Alpha, and the Gold. 
 
-Apart from having weekly objectives, we have also set five general milestones or due dates for the base, the concept discovery, the vertical slice, the alpha, and the gold. 
-
-***Base - March 8th***
+***Project Base - March 8th***
 - Team Name
 - Team Logo
 - Game theme
@@ -89,26 +99,23 @@ Apart from having weekly objectives, we have also set five general milestones or
 - Tutorial Design
 - Game Balancing
 
+### Keeping track of the milestones
+As there is a daunting amount of milestones to reach, a Trello board was created with all the tasks to do and at which stage each of them is at.
+
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Production_Plan/Trello_15_03_2020.PNG)
+
 ## Risk Contingency List
-- {List of possible problems that can happen during the development process}
-- {Classified by Probability and Impact}
-- {Clear solution to each of the found problems}
+Different situations that might occur during the production phase of the project have been listed and ranked according to the probability of ocurrence, their impact on the project. Moreover, a fesible contingency plan has been developed for each of the events.
 
 | **RISK**        | **PROBABILITY** | **IMPACT** | **SOLUTION** |
-| --------------- |:---------------:| ----------:| ------------ |
-| No Hay Clase    |   Really Low    |    Low     | ---          |
-| No Hay Clase    |      Low        |   Medium   | ---          |
-| No Hay Clase    |     Medium      |    High    | ---          |
-| No Hay Clase    |      High       |    CTD     | ---          |
-| zebra stripes   | are neat        |    $1      | ---          |
-| zebra stripes   | are neat        |    $1      | ---          |
-| zebra stripes   | are neat        |    $1      | ---          |
-| zebra stripes   | are neat        |    $1      | ---          |
-| zebra stripes   | are neat        |    $1      | ---          |
-| zebra stripes   | are neat        |    $1      | ---          |
-| zebra stripes   | are neat        |    $1      | ---          |
-| zebra stripes   | are neat        |    $1      | ---          |
-
+| --------------- |:---------------:| :----------:| ------------ |
+| A team member is unable to continue working on the project| Really Low | Really High | The tasks assigned to the missing member will be divided and reasigned to the rest of the team. Should it not be possible, whether it is feasible to abandon and eliminate the tasks  without heavily affecting the final product or not will be studied. |
+| A team member has fallen sick    | High  | Low/Medium | Depending on the severity of the illness, the weekly objectives assigned to the affected team member will be transferred to other members. Should the aforementioned be able to work, albeit at a slower pace, management will call in an ahead-of-schedule team member in assistance.|
+| Weekly objectives have not been met   | Medium | Medium | During the scheduled weekly meeting, the unachieved milestones will be redistributed and an evaluation on why the team was unable to accomplish them will be made. Should any team member know that their objectives will not be met under any circumstances, management should be notified as soon as possible so a contingency plan can be prepared. |
+| Major milestones not achieved in time   | Low | High | An evaluation on what caused the issue will start so the team avoids facing the same issues at a later date. Following that, all missing tasks will be rescheduled (in case they cannot be excluded from the final product without major issues) and management will decide whether to eliminate some of the items scheduled for the next major milestone or not. |
+| A core mechanic is not working properly   | Medium | High | QA will get in touch with the Code Lead in order to fix the issue as soon as possible. |
+| Art/Audio being incorrectly implemented | Low | Medium/High | QA will get in touch with the Art&Audio Lead in order to fix the issue as soon as possible. |
+| A team member's equipment breaks down | Very Low | Very High | The team member will be recommended to stay after class hours at the TTC in order to work from there. Should the center be inaccessible, the possibility of temporarily borrowing the essential elements to be able to work properly will be discussed. |
 
 ## Sprint Record and Log of Average Estimation Deviation
 - {Details of each sprint (Sprint Number and the Date of the Sprint)}
@@ -185,8 +192,6 @@ Apart from having weekly objectives, we have also set five general milestones or
 - **Duration:** 1 Week
 - **Points:**
 - **Postmortem:**
-
-## {The file's structures can be modified should it be needed}
 
 ## Production Plan References
 - [Production Plan Research I](https://vlaad96.github.io/Production-Plan/)
