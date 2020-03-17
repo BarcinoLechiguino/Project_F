@@ -20,28 +20,28 @@ They Are Billions is a post-apocalyptic steampunk real-time strategy survival vi
 
 ## Technical Profile
 
-**Rercommended System Requirements:**
+### Rercommended System Requirements:
 
-- OS: Windows 7, 8, 10 (64 bits)
-- Processor: INTEL. AMD 4 cores CPU at 3Ghz
-- Memory: 8 GB RAM
-- Graphics: Radeon 7950 or above, Nvidia GTX 670 or above. 4GB video ram.
-- DirectX: Version 9.0c
-- Storage: 4 GB available space
-- Additional Notes: 4K Monitor (3840x2160)
-- Resolution: FULL HD 1920x1080.
-- FPS: 60
+- **OS**: Windows 7, 8, 10 (64 bits)
+- **Processor**: INTEL. AMD 4 cores CPU at 3Ghz
+- **Memory**: 8 GB RAM
+- **Graphics**: Radeon 7950 or above, Nvidia GTX 670 or above. 4GB video ram.
+- **DirectX**: Version 9.0c
+- **Storage**: 4 GB available space
+- **Additional Notes**: 4K Monitor (3840x2160)
+- **Resolution**: FULL HD 1920x1080.
+- **FPS**: 60
 
 ## Plot and Narrative (of the Game)
 
-**Plot**
+### Plot
 
 They Are Billions is set in the 22nd century when only a few thousand remaining humans live in the entire world. The game begins just at the turning point when the surviving humans start to rebuild civilization by developing colonies that can defend themselves from the infected threat. All technology has gone backward at this point, similar to the 19th century.
 The leader of the survivors is General Quintus Crane, which rules the resistance. A very charismatic leader, it is his will to create a new human empire and restore civilization, but always, under their leadership. And you, the player, will be one of their commanders under his orders. Dealing with Quintus won’t be an easy task…
 
-**Characters**
+### Characters
 
-*Quintus Crane*
+**Quintus Crane**
 
 Emperor Quintus Crane is a founder and leader of the New Empire. He is responsible for the expansion and conquest of humanity against the undead horde.
 After the Hero successfully conquered the eastern territories, Crane will congratulate the hero for his accomplishment and revealing that there will be new territories to be conquered in the future with the Hero as a conqueror.
@@ -55,15 +55,15 @@ The player must keep zombies from breaching base defenses and infecting non-defe
 
 ![](https://data1.origin.com/asset/content/dam/originx/web/app/games/they-are-billions/they-are-billions/screens/TheyAreBillion%20-%20Train.jpg/1ab3d4b3-758f-4e61-82c0-4c61aee8f3f8/original.jpg)
 
-**Campaign**
+### Campaign
 
 The goal of the campaign in They Are Billions is to reconquest a larger territory by building successful and well-defended colonies that are all connected to a railway network. But for the railways to reach a new location to build a new colony, sometimes you will encounter swarms of infected. In the campaign, the player will have a growing personal army to destroy the swarms and free the paths. Those swarms will be dynamic. They will move, they can combine, and they will grow. Because of this, you have to be very careful and strategic on how you expand your colonies.
 
 ![](https://steamcdn-a.akamaihd.net/steamcommunity/public/images/clans/28988182/451eb4eee28239f6cd87100f26fbaa295f8e97b2.jpg)
 
-**Units**
+### Units
 
-*Allies*
+**Allies**
 
 Army units can be controlled manually by the player like in others RTS games with the common commands like travel, attack, patrol, hold… Also, they have some special commands like the Chase command in which the unit will use their AI to explore and chase the infected in the surroundings without the player interaction.
 
@@ -84,7 +84,7 @@ Units are the main tools for expanding and defending the player's colony. They c
 
 About the colonists, the player cannot control them directly because it would be a huge task. Instead, they behave autonomously. They work, gather resources, travel to buildings, and transport goods. When the infected are close, they run away and hide in the nearby buildings.
 
-*Infected*
+**Infected**
 
 The infected are just sick humans that were infected by a disease similar to rabies. Because the infection started many years ago, very few people know anything beyond that. During the campaign, the story of the collapse of civilization will unravel little by little. Some special characters will reveal what they know about the infection. By the end of the campaign, the player will know about the origin of the infection. 
 
@@ -108,71 +108,71 @@ The infected are just sick humans that were infected by a disease similar to rab
 
 Tooth and Tail is an Arcade oriented Real-Time Strategy (RTS) game set in a world ruled by an animal revolution. From the creators of the IGF-winning game Monaco, Tooth and Tail developed and published by Pocketwatch Games distills the Real Time Strategy genre down to a few buttons and ten-fifteen minute matches. 
 
-- Genre: Action, Casual, Indie, Strategy
-- Developer: Pocketwatch Games
-- Publisher: Pocketwatch Games
-- Production start: Spring of 2014
-- Release Date: 13 Sep, 2017
-- Platforms: PC, PS4.
-- Languages: English
+- **Genre**: Action, Casual, Indie, Strategy
+- **Developer**: Pocketwatch Games
+- **Publisher**: Pocketwatch Games
+- **Production start**: Spring of 2014
+- **Release Date**: 13 Sep, 2017
+- **Platforms**: PC, PS4.
+- **Languages**: English
 
 ## Technical Profile
 
-**Windows**
+### Windows
 
-- OS: Windows 7 or later
-- Processor: 2Ghz Processor
-- Memory: 2Gb RAM
-- Graphics: 1.5gb video card required to play nVidia 320M, Radeon HD 2400, Intel HD 3000 or better
-- DirectX: Version 11
-- Storage: 2 GB available space
+- **OS**: Windows 7 or later
+- **Processor**: 2Ghz Processor
+- **Memory**: 2Gb RAM
+- **Graphics**: 1.5gb video card required to play nVidia 320M, Radeon HD 2400, Intel HD 3000 or better
+- **DirectX**: Version 11
+- **Storage**: 2 GB available space
 
-**Mac**
+### Mac
 
-- OS: OS X Mavericks 10.9
-- Processor: Dual core from Intel
-- Memory: 2 GB RAM
-- Graphics: nVidia 320M or higher, or Radeon HD 2400 or higher, or Intel HD 3000 or higher
-- Storage: 2 GB available space
+- **OS**: OS X Mavericks 10.9
+- **Processor**: Dual core from Intel
+- **Memory**: 2 GB RAM
+- **Graphics**: nVidia 320M or higher, or Radeon HD 2400 or higher, or Intel HD 3000 or higher
+- **Storage**: 2 GB available space
 
-**SteamOS/Linux**
+### SteamOS/Linux**
 
-- OS: Ubuntu 12.04
-- Processor: 2 GHz Processor
-- Memory: 2 GB RAM
-- Graphics: Intel HD 3000 (Driver mesa 10.6)
-- Storage: 1 GB available space
+- **OS**: Ubuntu 12.04
+- **Processor**: 2 GHz Processor
+- **Memory**: 2 GB RAM
+- **Graphics**: Intel HD 3000 (Driver mesa 10.6)
+- **Storage**: 1 GB available space
 
 ## Plot and Narrative
 
-**Plot**
+### Plot
 
 Tooth and Tail is set during the 19th century in a society where animals are facing food shortages. Many of them decided to draw on cannibalism to overcome the hunger. Four factions were clearly distinguished once the cannibalism begun, each with their own ideals and purposes to manage the lack of supplies.
 A war between the four sides for the food control was about to begin. 
 
 ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Commanders.jpg?raw=true)
 
-**Characters**
+### Characters
 
-*Archimedes*
+**Archimedes**
 
 He leads the Civilized faction, represented by the color yellow. He was one of the forefathers of the Lottery System that is currently in place, which chooses who is slaughtered to feed the masses. However, over time, the Civilized became more and more corrupt until none of the Civilized ever ended up being chosen in the Lottery.
 
 ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Archimedes.jpg?raw=true)
 
-*Bellafide*
+**Bellafide**
 
 Bellafide is the leader of the Longcoats faction (representing free market capitalists). After his son was taken from him to feed the masses, he launched a revolution to overthrow the Civilized, led by Archimedes, with the assistance of Hopper, the leader of the Commonfolk. His units carry the colour blue. In his youth Bellafide worked hard to start his own tavern. Eventually becoming so successful that he was able to afford a large mercenary company, which he used at the beginning of the revolution.
 
 ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Bellafide.jpg?raw=true)
 
-*Hopper*
+**Hopper**
 
 Representing the Commonfolk and wearing the red color Hopper places herseld in favour of a vote-based system to decide who gets to be the food. She is missing an arm, due to willingly given it up to feed her people. Many of the Commonfolk appreciate Hopper's selfless nature, and respect her willingness to fight on their behalf.
 
 ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Hopper.jpg?raw=true)
 
-*The Quartermaster*
+**The Quartermaster**
 
 She leads the K.S.R., a secret police tasked with keeping peace in the nation. The K.S.R. became involved in the fighting to quell the Revolution, but now fights to bring peace to the nation, no matter what the cost. The Quartermaster often uses Military style units in combat and lives by a number of rules that can be seen quoting during missions.
 While an intimidating figure, the Quartermaster seems to care about helping the people survive and bringing peace to the nation, though she shows disdain for the Commonfolk due to their repeated stealing of supplies.
@@ -192,34 +192,34 @@ Before the game starts, the player can choose up to six units. They can be any c
 
 ![alt text]()
 
-**Units**
+### Units
 
-*Tier 1*
+**Tier 1**
 - Squirrels --> The Distillery Brothers
 - Lizards --> The Nomads of the North
 - Toads --> The Morning Light Croakers
 - Pigeons --> The Volunteers
 - Moles --> Engineers for Hire
 
-*Tier 2*
+**Tier 2**
 - Ferrets --> The Freight Union
 - Chameleons --> The Trench Gang
 - Falcons --> The Wing Demons
 - Skunks --> The Glorious AFB
 - Snakes --> The Tooth Collectors
 
-*Tier 3*
+**Tier 3**
 - Badger --> Inmate #43B
 - Boar --> Uncle Butters
 - Fox --> Kasha, the Farmhand
 - Owl --> The Matriarch and the Wretches
 - Wolf --> Drill Sergeant Volkov
 
-*Unique*
+**Unique**
 - Pigs (Harvest from the farms)
 - Zombie Mice (Spawned from the Owl)
 
-**Controls**
+### Controls
 
 ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Controls.png?raw=true)
 
