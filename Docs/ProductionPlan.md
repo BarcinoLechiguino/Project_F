@@ -8,12 +8,12 @@ In order to have a better perspective of the development plan, a Gantt chart was
 
 In the chart shown below all the project's milestones as well as their development in time can be observed:
 
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Production_Plan/Gantt_Chart_15_03_2020.png)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Production_Plan/Gantt_Chart_15_03_2020.png)
 
 ### Workable Hours
 To be able to correctly and acurately distribute all the tasks that the project requires, every member of the development team filled a timetable with the amount of workable hours each could allocate to said tasks:
 
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Production_Plan/Workable_Hours.png)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Production_Plan/Workable_Hours.png)
 
 ### Sprints (Kanban)
 
@@ -102,7 +102,7 @@ Having weekly objectives aside, five major milestones/deadlines have been set. T
 ### Keeping track of the milestones
 As there is a daunting amount of milestones to reach, a Trello board was created with all the tasks to do and at which stage each of them is at.
 
-![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Production_Plan/Trello_15_03_2020.PNG)
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Production_Plan/Trello_15_03_2020.PNG)
 
 ## Risk Contingency List
 Different situations that might occur during the production phase of the project have been listed and ranked according to the probability of ocurrence, their impact on the project. Moreover, a fesible contingency plan has been developed for each of the events.
