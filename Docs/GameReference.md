@@ -50,7 +50,7 @@ The leader of the survivors is General Quintus Crane, which rules the resistance
 Emperor Quintus Crane is a founder and leader of the New Empire. He is responsible for the expansion and conquest of humanity against the undead horde.
 After the Hero successfully conquered the eastern territories, Crane will congratulate the hero for his accomplishment and revealing that there will be new territories to be conquered in the future with the Hero as a conqueror.
 
-{Add screenshots for reference}
+![](https://vignette.wikia.nocookie.net/they-are-billions/images/7/7e/Quintus_Crane.png/revision/latest/scale-to-width-down/220?cb=20190611220933)
 
 ## Gameplay
 
