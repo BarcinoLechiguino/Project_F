@@ -13,7 +13,7 @@ The Main Menu will present the player with three different options:
 
 - **Options:** Sends the player to the *Options Menu*. 
 
-{Show the concept art of the Main Menu, just to see how will the elements be placed}
+![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/MainMenuF.png?raw=true)
 
 ### Options Menu:
 This menu will have the following elements:
