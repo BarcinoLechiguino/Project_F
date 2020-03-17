@@ -7,19 +7,19 @@ The game will be campaign based with a gameplay loop that lasts about 30~45min a
 The main objective of the game will be to clear all four different zones of the map that surround the players' headquarters while trying not to be run over by the periodic enemy raids.
 
 
-# Plot/Lore
+# Plot
 We are in the 80s, a time where journalism is one of the main pillars of information. Our character, Vrainen Heber, is a journalist who works for the Austrian national newspaper and is on the verge of dismissal. His continuous failures in the company when publishing inconspicuous, ridiculous and even, in some cases, false articles, have led him to the serious situation of seeing himself as a homeless person in a matter of weeks.
 
 Our character is on a critical situation but still has something to hold on to. The newspaper editor gives him one last chance and suggests to him to write an article about a possible case of corruption and data retention in the Austrian government that directly concerns the actual President: Rudolf Kirchschläger.
 
 Motivated by this last opportunity, he is determined to uncover the government once and for all. But how would he do it? Who was him to deal with a first priority subject when his most important article had been about a robbery in a greengrocer? he didn't have the means or the resources to get such type of information. At least not legally.
 
-Vrainen took out the little money he had been saving during these bad months, since he barely had enough to endure the day to day, all his savings were 500 shillings. 
-These past weeks, in the streets a name was being rumored, a certain scientist of bad reputation, with macabre ideas but with a magnificent brain, who had just moved to the city after being expelled from the engineering university in Berlin. In a few days he was able to find him, Dr. Luka Ackermann.
+Vrainen took out the little money he had been saving during these bad months, since he barely had enough day to day, all he had were 500 shillings. 
+These past weeks, in the streets a name was being rumored, a certain scientist of bad reputation, with macabre ideas but with a magnificent intellect, who had just moved to the city after being expelled from the engineering university in Berlin. In a few days he was able to find him, Dr. Luka Ackermann.
 
-Vrainen approached the Professor and explained his proposal, Dr. Luka agreed without a doubt. Since the doctor is a nanotechnology expert, he told him about a method that he had been working, it remained a secret for years and was the reason why he was expelled from the university. 
+Vrainen approached the Professor and explained his proposal, Dr. Luka agreed without a doubt. Since the doctor was a nanotechnology expert, he told him about a method that he had been working, it remained a secret for years and was the reason why he was expelled from the university. 
 
-Everything consists on doing a “nano-transformation”, a concept invented by the professor himself, where his molecules will be converted into nano-pixels and introduced into the power supply of the professor's computer. This way, Vrainen will be able to be within the network and use everything at his hand such as electricity flows, data structures, servers, wi-fi network, among others, to get to the bottom of the government's data system and uncover them, keeping his job and enhancing his name in the journalistic world.
+Everything consists on doing a “nano-transformation”, a concept invented by the professor himself, where his molecules will be converted into bits and introduced into the power supply of the professor's computer. This way, Vrainen will be able to be within the network and use everything at his hand such as electricity flows, data structures, servers or wi-fi networks, among others, to get to the bottom of the government's data system and uncover them, keeping his job and making a name for himself in the journalistic world.
 
 3,2,1 ... Immersion.
 
