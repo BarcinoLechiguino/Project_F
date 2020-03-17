@@ -1,5 +1,5 @@
 # GUI Document
-This document has been redacted to show and keep track of all the UI's functionalities, as well as all the design related decisions made regarding it. In this document, and with the purpose of being as clear and informative as possible, multiple flow diagrams and UI Art will be displayed.
+This document has been redacted to showcase and keep track of all the UI's functionalities along all the design related decisions made regarding it. In this document, and with the purpose of being as clear and informative as possible, multiple flow diagrams and UI Art will be displayed.
 
 ## GUI Style
 The GUI will combine both minimalistic and neon visual styles with the intention to bring to life a clean and clear interface that does not saturate the player with information. The GUI will be focused on aiding the player in focusing on the truly relevant and useful information, gameplay wise.
@@ -11,7 +11,9 @@ The Main Menu will present the player with three different options:
 
 - **Continue:** Allows the player to continue the game from wherever he/she left it last time.
 
-- **Options:** Sends the player to the *Options Menu*. 
+- **Options:** Sends the player to the *Options Menu*.
+
+- **Exit:** Exits the application and sends the player back to the Desktop.
 
 ![](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/UI/MainMenuF.png?raw=true)
 
