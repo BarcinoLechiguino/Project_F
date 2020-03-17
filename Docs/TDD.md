@@ -159,8 +159,8 @@ bool has_child;
 All constant names must be in uppercase and separated by an underscore should there be a compound name.
 
 ```C++
-ALPHA
-MAX_SIZE
+ALPHA 80
+MAX_SIZE 1000
 ```
 
 #### Enumerations
