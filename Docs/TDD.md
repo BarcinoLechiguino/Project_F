@@ -163,16 +163,24 @@ ALPHA
 MAX_SIZE
 ```
 
-- **Enumeration Items:**
-All Enumeration item names must be in uppercase and separated by an underscore should there be a compound name.
+#### Enumerations
+- All enumerations will be `enum class`
+- All enumeration names must be in uppercase and separated by an underscore should there be a compound name.
+- All enumeration item names must be in uppercase and separated by an underscore should there be a compound name.
 
 ```C++
-EMPTY
-PATHFINDING_RIGHT
+enum class ENTITY_STATE
+{
+	IDLE
+	PATHFINDING_NORTH
+	PATHFINDING_SOUTH
+	PATHFINDING_EAST
+	PATFHINFING_WEST
+};
 ```
 
-- **Functions:**
-  - All function names should follow the `FunctionName()` format and must be clearly descriptive of what they do.
+#### Functions:
+- All function names should follow the `FunctionName()` format and must be clearly descriptive of what they do.
   
   ```C++
   // Function examples extracted from j1Gui.h
@@ -181,7 +189,7 @@ PATHFINDING_RIGHT
   UI* FirstElementUnderMouse();
   ```
   
-  - The object to which the function belongs too should be taken into account when naming a function:
+- The object to which the function belongs too should be taken into account when naming a function:
   
   ```C++
   // Not valid
@@ -191,7 +199,7 @@ PATHFINDING_RIGHT
   player.GetPosition();
   ```
   
-  - Function input variables should have names as similar as possible to their type:
+- Function input variables should have names as similar as possible to their type:
   
   ```C++
   // Function example extracted from j1Text.h
