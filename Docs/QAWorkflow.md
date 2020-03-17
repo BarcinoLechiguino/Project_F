@@ -133,25 +133,25 @@ Will be used to add visual information regarding the current state of each bug a
 
 ### Weekly QA:
 
--Every Saturday if it's not a week before before a Milestone the team will perform a QA test. This Weekly QA does not need the whole team testing it necessarily though it will be preferred. 
+- Every Saturday if it's not a week before before a Milestone the team will perform a QA test. This Weekly QA does not need the whole team testing it necessarily though it will be preferred. 
 
--In this test the team will try to push the boundaries of the game to try and find as many bugs as posible to be fixed, then each one will be submitted to Github Issues. This test will take about 30 minutes or so depending on the time available to the team.
+- In this test the team will try to push the boundaries of the game to try and find as many bugs as posible to be fixed, then each one will be submitted to Github Issues. This test will take about 30 minutes or so depending on the time available to the team.
 
--It would be preferred if right after this testing the team takes some time to fix some of the minor/easily fixed bugs found right away to avoid cluttering the github issues page.
+- It would be preferred if right after this testing the team takes some time to fix some of the minor/easily fixed bugs found right away to avoid cluttering the github issues page.
 
 ### Milestone QA
 
--5 days before each milestone delivery an exhaustive QA will be performed by the members of the team to try and find as many bugs as possible. The game will also be playtested by possible relatives and friends to try and find even more design or technical mistakes. This time the whole team should be present and contributing to the playtest.
+- 5 days before each milestone delivery an exhaustive QA will be performed by the members of the team to try and find as many bugs as possible. The game will also be playtested by possible relatives and friends to try and find even more design or technical mistakes. This time the whole team should be present and contributing to the playtest.
 
--Like in the Weekly QA every bug will be submitted to the github issues page.
+- Like in the Weekly QA every bug will be submitted to the github issues page.
 
 ### External QA
 
--As mentioned before in the Milestone QA there will be external playtesters of our game if possible. This playtest session will be more focused towards making the game more fun and enjoyable for players.
+-  As mentioned before in the Milestone QA there will be external playtesters of our game if possible. This playtest session will be more focused towards making the game more fun and enjoyable for players.
 
--Since this game is meant to be accessible the testers will have different profiles but some will have to be people who doesn't play videogames often or ever.
+- Since this game is meant to be accessible the testers will have different profiles but some will have to be people who doesn't play videogames often or ever.
 
--This playtest will follow the following steps:
+- This playtest will follow the following steps:
 
 ## QA Workflow/Plan References:
 - [Final QA Workflow/Plan Reference I](https://github.com/DevCrumbs/Warcraft-II/wiki/8.-QA-Plan)
