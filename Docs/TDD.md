@@ -99,7 +99,6 @@ All the code conventions that the development team will follow will be stated do
 #### Spaces:
 
 - Leave spaces between +, -, >, ()... to improve readability
-- Leave space between ( and first item in parenthesis.
 - Space each item inside statement.
 ```C++
 if((a > b) && (b + a) == 10)
@@ -118,8 +117,8 @@ if((a > b) && (b + a) == 10)
 - Always use Get()/Set() to get and modify variables.
 
 ```C++
-const int Get() {}
-int Set() {}
+const int GetItem() {}
+int SetValue() {}
 ```
 
 ### 2. Naming Conventions
@@ -127,7 +126,6 @@ int Set() {}
 - Words should be full so that they are more easily understood (position over pos).
 - All variable names should be in lower case.
 - Compound variable names will have each of their words separated by an underscore.
-- Compound words should use uppercase on second word.  {?}
 - Temporal variables should be avoided. Only in the case that they are absolutely necessary, their name should be one word only.
 
 Example:
@@ -143,8 +141,8 @@ int map_width;
 int i;
 ```
 
-- **Bools:**
-Bool Variables should generally be preceeded by `is`:
+#### Bools:
+- Bool Variables should generally be preceeded by `is` or `has` depending on what they do:
 
 ```C++
 // General Rule
@@ -155,8 +153,8 @@ bool is_interactible;
 bool has_child;
 ```
 
-- **Constants:**
-All constant names must be in uppercase and separated by an underscore should there be a compound name.
+#### Constants:
+- All constant names must be in uppercase and separated by an underscore should there be a compound name.
 
 ```C++
 ALPHA 80
@@ -279,7 +277,7 @@ else
 ```C++
 int i = 0;
 
-for (; i < MAX; ++i)
+for (i; i < MAX; ++i)
 {
 	printf("This is the loop iteration n %d.", i);
 }
