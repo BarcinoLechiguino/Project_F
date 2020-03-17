@@ -88,73 +88,212 @@ There will be 2 main branches, development branch and master branch. Development
 
 
 ## Code Style
-{Separate the code  guidelines in different subsections}
+All the code conventions that the development team will follow will be stated down below:
 
-### 1. General
+### 1. General Conventions
+- **Language:** Every line of code and every comment must be written in **English**.
 
-- Curly braces 
-Always put first { in next line of function:
-```
-if()
+- **Coding Language:** C++ nomenclature will be used over C.
+
+
+#### Spaces:
+
+- Leave spaces between +, -, >, ()... to improve readability
+- Leave space between ( and first item in parenthesis.
+- Space each item inside statement.
+```C++
+if((a > b) && (b + a) == 10)
 {
-```
-- Enters:
-Only use double enter when separating includes/defines and code or if it dramatically improves readability in code.
 
-Separate functions with one single enter. 
+}
 ```
-DoLogic()
-{
 
-};
+#### Comment Policy:
+- All methods should have a brief comment on their functionality.
+- Only comment variables on methods which would seem unclear at first sight.
+- Avoid commenting non complex functions.
+- In general, the code should not need any comments to be understood.
 
-DoRoutine()
+#### Getters & Setters:
+- Always use Get()/Set() to get and modify variables.
+
+```C++
+const int Get() {}
+int Set() {}
 ```
-- Spaces
-
--Leave spaces between +, -, >, ()... to improve readability
--Leave space between ( and first item in parenthesis.
--Space each item inside statement.
-```
-if(a > b && (b + a) == 10)
-{
-```
-- Comment Policy:
-
--Only comment on variables on functions which seem unclear at first sight.
--Avoid commenting non complexe functions.
--Code should not need comments to be understood.
 
 ### 2. Naming Conventions
+#### Variables:
+- Words should be full so that they are more easily understood (position over pos).
+- All variable names should be in lower case.
+- Compound variable names will have each of their words separated by an underscore.
+- Compound words should use uppercase on second word.  {?}
+- Temporal variables should be avoided. Only in the case that they are absolutely necessary, their name should be one word only.
 
-- Variables:
--Always use lower case and underscore between words. 
--Words should be full so that they are more easily understood (position over pos).
--Compound words should use uppercase on second word. 
+Example:
+```C++
+// Single & Compound Variable Names
+int position;
+int player_position;
 
-- Functions:
--Always use uppercase for every word and nothing between them. DoLogic()
-### 3. Loops
+// Long Term Variable
+int map_width;
 
-- Use for() over while()
+// Short Term Variable. Understandable due to context.
+int i;
+```
+
+- **Bools:**
+Bool Variables should generally be preceeded by `is`:
+
+```C++
+// General Rule
+bool is_visible;
+bool is_interactible;
+
+// Exception example
+bool has_child;
+```
+
+- **Constants:**
+All constant names must be in uppercase and separated by an underscore should there be a compound name.
+
+```C++
+ALPHA
+MAX_SIZE
+```
+
+- **Enumeration Items:**
+All Enumeration item names must be in uppercase and separated by an underscore should there be a compound name.
+
+```C++
+EMPTY
+PATHFINDING_RIGHT
+```
+
+- **Functions:**
+  - All function names should follow the `FunctionName()` format and must be clearly descriptive of what they do.
+  
+  ```C++
+  // Function examples extracted from j1Gui.h
+  void CreateGuiCommands();
+  bool ElementCanBeFocused();
+  UI* FirstElementUnderMouse();
+  ```
+  
+  - The object to which the function belongs too should be taken into account when naming a function:
+  
+  ```C++
+  // Not valid
+  player.GetPlayerPostion();
+  
+  // Valid
+  player.GetPosition();
+  ```
+  
+  - Function input variables should have names as similar as possible to their type:
+  
+  ```C++
+  // Function example extracted from j1Text.h
+  
+  // Not valid
+  void RefreshTextInput(const char* newInput);
+  
+  // Valid
+  void RefreshTextInput(const char* string);
+  ```
+
+### 3. Variables
+- Variable names should always start at the same column.
+- Variables should never be initialized in their origin .h file.
+- Variables should never be initialized with magic numbers. 
+- Variables should be initialized with values loaded from an xml file, other vars or constants.
+- Variables should be initialized in the same column. {?}
+
+```C++
+// Variable Declaration Examples
+int 	health;
+float 	speed;
+bool 	is_running;
+char* 	unit_name;
+
+// Variable Initialization Examples
+health 		= MAX_HEALTH;
+speed 		= config.child("entities").child("units").child("scout").attribute("speed").as_float();
+is_running 	= false;
+unit_name 	= nullptr;
+```
 
 ### 4. Condition Statements
+- Operators should always be used, regardless of the lines of code that comprise the if() statement:
 
-- If statements:
-
--if(bool) instead of if(bool == true)
--nullptr prefered over NULL
-
-### 5. Classes & Structs
-
-Example class structure:
+```C++
+if (health == 0)
+{
+	DestroyUnit();
+}
 ```
+
+#### Booleans
+- When inputted as conditions, **booleans** will be represented with `is_alive / !is_alive` instead of `is_alive == true / is_alive == false`.
+
+```C++
+if (is_alive)
+{
+	DoAction();
+}
+
+if (!is_alive)
+{
+	DestroyUnit();
+}
+```
+
+- With multiple outcomes, the positive condition will always be placed in the if() statement. {?}
+
+```C++
+if (is_alive)
+{
+	DoLogic();
+}
+else
+{
+	DestroyUnit();
+}
+```
+
+- If possible, sequences of if() else if() statements should be avoided. In such cases switch statements should be used instead, specially when enumerations are involved.
+
+### 5. Loops
+- `for()` over `while()` loops.
+- Loop iterators can be temporal variables.
+
+```C++
+int i = 0;
+
+for (; i < MAX; ++i)
+{
+	printf("This is the loop iteration n %d.", i);
+}
+```
+
+- Always use `++var` over `var++`. It will be less resource consuming, specially with loops.
+
+```C++
+var++ returns the value of the variable BEFORE being incremented.
+++var returns the value of the variable AFTER being incremented.
+```
+
+### 6. Classes & Structs
+- All **class** elements will be organized following the below example:
+
+```C++
 class Entity
 {
 public:
 	constructor/destructor
 	public app functions (order updates)
-	public useful functions (Jump(), LoadMap()...)
+	public utility functions (Jump(), LoadMap()...)
 private:
 	private functions
 
@@ -162,12 +301,86 @@ public:
 	public variables (order by types, then alphabetically)
 private:
 	private variables (order by type, then alphabetically)
+};
 ```
 
-### 6. Indentation
+- All **struct** elements will be organized following the below example:
 
-### 7. XML Conventions
+```C++
+struct Collider
+{
+	variables
+	
+	functions
+	
+	constructor/destructor
+};
+```
 
+### 7. Indentation
+For brace indentation, the [Allman style](http://syque.com/cstyle/ch6.7.htm) will be followed.
+
+- Braces will be placed in the same column where the control statement begins:
+
+```C++
+// Allman indentation example
+
+for (int i = 0; i < MAX; ++i)
+{
+	if (!is_false)
+	{
+		DoRoutine();
+	}
+}
+```
+
+#### Whitespacing:
+- Separate variables/functions that do not belong to the same data type:
+
+```C++
+int health;
+int lives;
+
+bool is_alive;
+bool is_jumping;
+
+void Move();
+void Jump();
+
+bool IsMoving() const;
+bool IsJumping() const;
+```
+
+- Separate functions with one single enter:
+```C++
+DoLogic()
+{
+
+};
+
+DoRoutine()
+```
+
+Only use double enter when separating includes/defines and code or if it dramatically improves readability in code.
+
+
+### 8. XML Conventions
+- Boolean variables must be 0 or 1.
+
+- The structure example shown down below must be followed:
+
+```XML
+<animations>
+	<scout>
+		<idle speed="4.0f" loop="1">
+			<pushback x="27" y="14" w="40" h="58"/>
+      			<pushback x="126" y="12" w="40" h="58"/>
+      			<pushback x="228" y="12" w="40" h="58"/>
+      			<pushback x="326" y="14" w="40" h="58"/>
+		</idle>
+	</scout>
+</animations>
+```
 
 
 ## UML
