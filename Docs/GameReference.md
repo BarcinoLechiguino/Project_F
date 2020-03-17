@@ -76,12 +76,9 @@ Units are the main tools for expanding and defending the player's colony. They c
 | Soldier     |               |   This versatile unit can serve any purpose. They wear heavy armor and wield a powerful sub-machine-gun. But be careful, their noisy weapons can call the attention of the nearby infected. |
 | Sniper      |               |    Snipers walk slowly and take their time to load their large rifle. However, Snipers have a very high attack range. With their incredible aim, they can kill most of the infected with just one shot to the head. |
 | Lucifer     |               |    Nobody knows if Lucifer is a machine, a human or a ghost from hell. The fire of Lucifer can kill whole hordes of infected. It can not attack through walls but is immune to fire. |
-| Thanatos    |               |    Thanatos has a powerful rocket launcher with a very long range. It can annihilate dozens of infected people with a single shot. When the enemies are too close, Thanatos will fight face to face.
- |
-| Titan       |               |    This gentleman pilots a formidable killing machine. It has an ultra fast burst shot and a wide area of effect. Order him to chase infected and enjoy the show.
- |
-| Mutant      |               |    The mutant being is the result of the application of genetic engineering on humans to turn them into infected killing machines. It has mechanical claws so sharp that it can kill several infected in one strike.
- |
+| Thanatos    |               |    Thanatos has a powerful rocket launcher with a very long range. It can annihilate dozens of infected people with a single shot. When the enemies are too close, Thanatos will fight face to face. |
+| Titan       |               |    This gentleman pilots a formidable killing machine. It has an ultra fast burst shot and a wide area of effect. Order him to chase infected and enjoy the show. |
+| Mutant      |               |    The mutant being is the result of the application of genetic engineering on humans to turn them into infected killing machines. It has mechanical claws so sharp that it can kill several infected in one strike. |
 
 *Colonists*
 
@@ -104,7 +101,9 @@ The infected are just sick humans that were infected by a disease similar to rab
 ## Market Positioning
 
 
-# They are Billions
+# Tooth and Tail
+
+![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Title.jpg?raw=true)
 
 ## History
 
@@ -150,7 +149,9 @@ Tooth and Tail is an Arcade oriented Real-Time Strategy (RTS) game set in a worl
 **Plot**
 
 Tooth and Tail is set during the 19th century in a society where animals are facing food shortages. Many of them decided to draw on cannibalism to overcome the hunger. Four factions were clearly distinguished once the cannibalism begun, each with their own ideals and purposes to manage the lack of supplies.
-A war between the four sides for the food control was about to begin.
+A war between the four sides for the food control was about to begin. 
+
+![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Commanders.jpg?raw=true)
 
 **Characters**
 
@@ -158,19 +159,26 @@ A war between the four sides for the food control was about to begin.
 
 He leads the Civilized faction, represented by the color yellow. He was one of the forefathers of the Lottery System that is currently in place, which chooses who is slaughtered to feed the masses. However, over time, the Civilized became more and more corrupt until none of the Civilized ever ended up being chosen in the Lottery.
 
+![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Archimedes.jpg?raw=true)
 
 *Bellafide*
 
 Bellafide is the leader of the Longcoats faction (representing free market capitalists). After his son was taken from him to feed the masses, he launched a revolution to overthrow the Civilized, led by Archimedes, with the assistance of Hopper, the leader of the Commonfolk. His units carry the colour blue. In his youth Bellafide worked hard to start his own tavern. Eventually becoming so successful that he was able to afford a large mercenary company, which he used at the beginning of the revolution.
 
+![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Bellafide.jpg?raw=true)
+
 *Hopper*
 
 Representing the Commonfolk and wearing the red color Hopper places herseld in favour of a vote-based system to decide who gets to be the food. She is missing an arm, due to willingly given it up to feed her people. Many of the Commonfolk appreciate Hopper's selfless nature, and respect her willingness to fight on their behalf.
+
+![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Hopper.jpg?raw=true)
 
 *The Quartermaster*
 
 She leads the K.S.R., a secret police tasked with keeping peace in the nation. The K.S.R. became involved in the fighting to quell the Revolution, but now fights to bring peace to the nation, no matter what the cost. The Quartermaster often uses Military style units in combat and lives by a number of rules that can be seen quoting during missions.
 While an intimidating figure, the Quartermaster seems to care about helping the people survive and bringing peace to the nation, though she shows disdain for the Commonfolk due to their repeated stealing of supplies.
+
+![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Quartermaster.jpg?raw=true)
 
 ## Gameplay
 
@@ -183,3 +191,10 @@ The mills are the main goal of the game. If you lose all of your mills, you lose
 
 Before the game starts, the player can choose up to six units. They can be any combination of the 3 available tiers. Each unit costs food though, so there is no such thing as an supply of units.
 
+![alt text]()
+
+**Controls**
+
+![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Controls.png?raw=true)
+
+The commander is the only one that the player can control directly and it's managed like you would in a third-person game: W A S D (or Joystick) to move and the other buttons to perform actions (image above). They don't have any weapons, so it relies on its units to do all of the work.
