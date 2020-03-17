@@ -1,6 +1,3 @@
-# Game Reference
-{Brief description of the game reference}
-
 ## The RTS Genre
 
 Real-time strategy (RTS) is a subgenre of strategy video games in which the game does not progress incrementally in turns.
