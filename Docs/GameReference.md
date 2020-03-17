@@ -21,7 +21,7 @@ They Are Billions is a post-apocalyptic steampunk real-time strategy survival vi
 
 ## Technical Profile
 
-**Rercommended System Requirements:
+**Rercommended System Requirements:**
 
 - OS: Windows 7, 8, 10 (64 bits)
 - Processor: INTEL. AMD 4 cores CPU at 3Ghz
@@ -38,14 +38,14 @@ They Are Billions is a post-apocalyptic steampunk real-time strategy survival vi
 
 ## Plot and Narrative (of the Game)
 
-**Plot
+**Plot**
 
 They Are Billions is set in the 22nd century when only a few thousand remaining humans live in the entire world. The game begins just at the turning point when the surviving humans start to rebuild civilization by developing colonies that can defend themselves from the infected threat. All technology has gone backward at this point, similar to the 19th century.
 The leader of the survivors is General Quintus Crane, which rules the resistance. A very charismatic leader, it is his will to create a new human empire and restore civilization, but always, under their leadership. And you, the player, will be one of their commanders under his orders. Dealing with Quintus won’t be an easy task…
 
-**Characters
+**Characters**
 
-*Quintus Crane
+*Quintus Crane*
 
 Emperor Quintus Crane is a founder and leader of the New Empire. He is responsible for the expansion and conquest of humanity against the undead horde.
 After the Hero successfully conquered the eastern territories, Crane will congratulate the hero for his accomplishment and revealing that there will be new territories to be conquered in the future with the Hero as a conqueror.
@@ -57,13 +57,13 @@ After the Hero successfully conquered the eastern territories, Crane will congra
 They Are Billions pits the player in a randomly generated steampunk themed, zombie-infested world.The player's goal is to build a base to protect themselves, by planning the layout and defenses, exploring the map, collecting resources and expanding while fighting the local zombie population at the same time. There are eight resources that the player must manage: gold, food, workers, wood, stone, iron, oil, and energy. Structures and units, many of different variations and following a tech-tree, will require different materials to be made.
 The player must keep zombies from breaching base defenses and infecting non-defensive structures, especially in tight or overdeveloped areas where a domino effect outbreak can occur. Much like the player has access to different unit types, zombie types are also varied, ranging between slow, decrepit ones, extremely fast zombies called "Harpies", highly-resistant ones known as "Butchers" and others, including a massive "infected giant" that has high health, speed, and damage that is also highlighted on a minimap, requiring the player to not only have a strong defensive perimeter (with walls, turrets, towers and traps), but also adapt tactics accordingly.
 
-**Campaign
+**Campaign**
 
 The goal of the campaign in They Are Billions is to reconquest a larger territory by building successful and well-defended colonies that are all connected to a railway network. But for the railways to reach a new location to build a new colony, sometimes you will encounter swarms of infected. In the campaign, the player will have a growing personal army to destroy the swarms and free the paths. Those swarms will be dynamic. They will move, they can combine, and they will grow. Because of this, you have to be very careful and strategic on how you expand your colonies.
 
-**Units 
+**Units**
 
-*Allies
+*Allies*
 
 Army units can be controlled manually by the player like in others RTS games with the common commands like travel, attack, patrol, hold… Also, they have some special commands like the Chase command in which the unit will use their AI to explore and chase the infected in the surroundings without the player interaction.
 
@@ -83,12 +83,12 @@ Units are the main tools for expanding and defending the player's colony. They c
 | Mutant      |               |    The mutant being is the result of the application of genetic engineering on humans to turn them into infected killing machines. It has mechanical claws so sharp that it can kill several infected in one strike.
  |
 
-*Colonists
+*Colonists*
 
 About the colonists, the player cannot control them directly because it would be a huge task. Instead, they behave autonomously. They work, gather resources, travel to buildings, and transport goods. When the infected are close, they run away and hide in the nearby buildings.
 
 
-*Infected
+*Infected*
 
 The infected are just sick humans that were infected by a disease similar to rabies. Because the infection started many years ago, very few people know anything beyond that. During the campaign, the story of the collapse of civilization will unravel little by little. Some special characters will reveal what they know about the infection. By the end of the campaign, the player will know about the origin of the infection. 
 
