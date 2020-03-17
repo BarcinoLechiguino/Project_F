@@ -195,8 +195,38 @@ Before the game starts, the player can choose up to six units. They can be any c
 
 ![alt text]()
 
+**Units**
+
+*Tier 1*
+- Squirrels --> The Distillery Brothers
+- Lizards --> The Nomads of the North
+- Toads --> The Morning Light Croakers
+- Pigeons --> The Volunteers
+- Moles --> Engineers for Hire
+
+*Tier 2*
+- Ferrets --> The Freight Union
+- Chameleons --> The Trench Gang
+- Falcons --> The Wing Demons
+- Skunks --> The Glorious AFB
+- Snakes --> The Tooth Collectors
+
+*Tier 3*
+- Badger --> Inmate #43B
+- Boar --> Uncle Butters
+- Fox --> Kasha, the Farmhand
+- Owl --> The Matriarch and the Wretches
+- Wolf --> Drill Sergeant Volkov
+
+*Unique*
+- Pigs (Harvest from the farms)
+- Zombie Mice (Spawned from the Owl)
+
 **Controls**
 
 ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/Tooth%20&%20Tail/Controls.png?raw=true)
 
 The commander is the only one that the player can control directly and it's managed like you would in a third-person game: W A S D (or Joystick) to move and the other buttons to perform actions (image above). They don't have any weapons, so it relies on its units to do all of the work.
+
+## Market Positioning
+
