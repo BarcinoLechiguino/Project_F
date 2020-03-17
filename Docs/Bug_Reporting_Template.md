@@ -13,9 +13,9 @@
 
 **Frequency**
 
-- [ ] Everytime
+- [ ] Always
 - [ ] High
-- [ ] Regular
+- [ ] Average
 - [ ] Low
 
 **Description**
