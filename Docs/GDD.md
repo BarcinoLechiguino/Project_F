@@ -74,7 +74,7 @@ Resources, exploration wise, refer to locations from where resources will be abl
 There will be 3 different resources, each with their own particular use and acquisition conditions:
 
 - **Data:** Dedicated to creating buildings. {Talk about quantity, spread over the map and acquisition conditions}
-- **Memory:** Dedicated to spawning units. {Talk about quantity, spread over the map and acquisition conditions. Maybe only a set amount can be acquired by building "memory centers" or something like that. It would work wonders with unit management. Just an idea though.}
+- **Electricity:** Dedicated to spawning units. {Talk about quantity, spread over the map and acquisition conditions. Maybe only a set amount can be acquired by building "memory centers" or something like that. It would work wonders with unit management. Just an idea though.}
 - **Bytes:** Dedicated to upgrading. There will be a highly limited amount of it spread all over the map and it will require accurate management, regarding which building and which state of the game the player makes use of it.
 
 {While some buildings are specifically made for that purpose, exploring will have its own advantages, like finding "bytes" the upgrading resource which won't have an spececific building to exploit it.}{?}
