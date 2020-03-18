@@ -7,26 +7,25 @@ The game will be campaign based with a gameplay loop that lasts about 30~45min a
 The main objective of the game will be to clear all four different zones of the map that surround the players' headquarters while trying not to be run over by the periodic enemy raids.
 
 
-# Plot/Lore
+# Plot
 We are in the 80s, a time where journalism is one of the main pillars of information. Our character, Vrainen Heber, is a journalist who works for the Austrian national newspaper and is on the verge of dismissal. His continuous failures in the company when publishing inconspicuous, ridiculous and even, in some cases, false articles, have led him to the serious situation of seeing himself as a homeless person in a matter of weeks.
 
 Our character is on a critical situation but still has something to hold on to. The newspaper editor gives him one last chance and suggests to him to write an article about a possible case of corruption and data retention in the Austrian government that directly concerns the actual President: Rudolf Kirchschläger.
 
-Motivated by this last opportunity, he is determined to uncover the government once and for all. But how would he do it? Who was him to deal with a subject of the first order when his most important article had been about a robbery in a greengrocer? he didn't have the means or the resources to get that type of information. At least not legally.
+Motivated by this last opportunity, he is determined to uncover the government once and for all. But how would he do it? Who was him to deal with a first priority subject when his most important article had been about a robbery in a greengrocer? he didn't have the means or the resources to get such type of information. At least not legally.
 
-Vrainen took out the little money he had been saving during these bad months, he barely gave him enough to survive the day to day and that is why he was so appreciated about It. All his savings were 500 shillings. 
-These past weeks, in the streets a name was being rumored, a certain scientist of bad reputation, with macabre ideas but with a magnificent brain, who had just moved to the city after being expelled from the engineering university in Berlin. In a few days he was able to find him, Dr. Luka Ackermann.
+Vrainen took out the little money he had been saving during these bad months, since he barely had enough day to day, all he had were 500 shillings. 
+These past weeks, in the streets a name was being rumored, a certain scientist of bad reputation, with macabre ideas but with a magnificent intellect, who had just moved to the city after being expelled from the engineering university in Berlin. In a few days he was able to find him, Dr. Luka Ackermann.
 
-Vrainen brought him up to date and the Professor decided to help him. Since the doctor is a nanotechnology expert, he told him about a method that he had been working on for years, it had benn remained a secret and was the reason why he was expelled from the university. This does not give Vrainen peace of mind but it is the only way. Immediately afterwards, Dr. Ackermann explains how this method works.
+Vrainen approached the Professor and explained his proposal, Dr. Luka agreed without a doubt. Since the doctor was a nanotechnology expert, he told him about a method that he had been working, it remained a secret for years and was the reason why he was expelled from the university. 
 
-Everything consists on doing a “nano-transformation”, a concept invented by the professor himself, where his molecules will be converted into nano-pixels and will be introduced into the power supply of the professor's computer. In this way, Vrainen will be able to be within the network and use everything at his hand such as electricity flows, data structures, servers, wi-fi network, among others, to get to the bottom of the government's data system and uncover them, and thus keep your job and enhance your name in the journalistic world.
+Everything consists on doing a “nano-transformation”, a concept invented by the professor himself, where his molecules will be converted into bits and introduced into the power supply of the professor's computer. This way, Vrainen will be able to be within the network and use everything at his hand such as electricity flows, data structures, servers or wi-fi networks, among others, to get to the bottom of the government's data system and uncover them, keeping his job and making a name for himself in the journalistic world.
 
 3,2,1 ... Immersion.
-{Revise grammar and word distribution.}
 
 
 # Game Pillars
-- **Approachable:** The project's main goal is to be as accessible as possible, avoiding any mechanics that add unnecessary complexity to the gameplay and simplifying the core concepts that comprise the RTS genre.
+- **Approachable:** The projects' main goal is to be as accessible as possible, avoiding any mechanics that add unnecessary complexity to the gameplay and simplifying the core concepts that comprise the RTS genre.
 
 - **Exploration:** Exploring the map grants players different benefits such as resources and information on the location of enemy bases. Said benefits should encourage players to avoid staying at their base for extended periods of time. 
 
@@ -64,19 +63,19 @@ There will be 2 loss conditions:
 - **No units remaining.** The player has lost all units and cannot produce more (either resource wise and infrastructure wise)
 
 ## Gameplay Systems
-The gameplay of this project will be based around exploration, resource management, unit and building management and survival.
+The gameplay of this project will be based around resource, unit and building management,exploration, and survival.
 
 ### Exploration and objectives 
-Four distinctly different zones, which will surround the player's Headquarters, will be available for exploration. Each one of them will have their own main quest to complete. Moreover, in each of the areas resources and isolated patrolling group of enemies could possibly be found. Exploring and exposing the enemy bases will be highly rewarded.
+Four distinguished zones, which will surround the player's Headquarters, will be available for exploration. Each one of them will have their own main quest to complete. Moreover, in each of the areas resources and isolated patrolling group of enemies could be found. Exploring and exposing the enemy bases will be highly rewarded.
 
 Resources, exploration wise, refer to locations from where resources will be able to be extracted. {?}
 
 ### Resources and resource gathering
 There will be 3 different resources, each with their own particular use and acquisition conditions:
 
--**Data:** Dedicated to creating buildings. {Talk about quantity, spread over the map and acquisition conditions}
--**Memory:** Dedicated to spawning units. {Talk about quantity, spread over the map and acquisition conditions. Maybe only a set amount can be acquired by building "memory centers" or something like that. It would work wonders with unit management. Just an idea though.}
--**Bytes:** Dedicated to upgrading. There will be a highly limited amount of it spread all over the map and it will require accurate management regarding where and when the player makes use of it.
+- **Data:** Dedicated to creating buildings. {Talk about quantity, spread over the map and acquisition conditions}
+- **Memory:** Dedicated to spawning units. {Talk about quantity, spread over the map and acquisition conditions. Maybe only a set amount can be acquired by building "memory centers" or something like that. It would work wonders with unit management. Just an idea though.}
+- **Bytes:** Dedicated to upgrading. There will be a highly limited amount of it spread all over the map and it will require accurate management, regarding which building and which state of the game the player makes use of it.
 
 {While some buildings are specifically made for that purpose, exploring will have its own advantages, like finding "bytes" the upgrading resource which won't have an spececific building to exploit it.}{?}
 The remaining resources can be both obtained by exploring and gathered with the given building.
@@ -91,7 +90,7 @@ The building system will be divided in three categories:
 
 The ally buildings will be further classified into 2 more categories: 
 - **Production Buildings:** For unit and resource production. 
-- **Defense Buildings:** For base defense. 
+- **Defense Buildings:** For purely defense purpouses. 
 
 All demolishable buildings can be in the 3 following states:
 - **The building has sustained no damage:** Will be fully functional.
@@ -112,9 +111,9 @@ All the possible unit actions will be listed down below:
 
 - **Combat:** All units (except Gatherers) can attack enemy units. 
 
-  - **While Idle:** If an enemy unit enters the range of a unit, said unit will attack it if there was no order previously given to the aforementioned, should the enemy unit get out of range, the ally unit will follow it until it is destroyed. 
+  - **While Idle:** If an enemy unit enters the range of a unit, said unit will attack it if there was no order previously given to the aforementioned, should the enemy unit get out of range, the ally unit will follow it until it is destroyed. {Idle it's necesary??}
 
-  - **When given a target:** To attack a specific enemy unit, any selected unit can be given a target bu left-clicking on an enemy. Should the enemy unit be out of range, the selected units will path towards that enemy.
+  - **When given a target:** To attack a specific enemy unit, any selected unit can be given a target by left-clicking on an enemy. Should the enemy unit be out of range, the selected units will path towards that enemy.
   
   - **While in Guard Mode:** If a unit is in Guard Mode, it will remain static at the given position. The unit will follow the same behaviour as while idle, with the only difference being that if the enemy gets out of range, it will not be followed after.
   
@@ -164,6 +163,13 @@ There are 4 types of units that can be recruited, all of which different types o
 
 {Make a table with images of the sprites of each unit as well as the unit name, HP, Cost, Movement Speed, Range, Damage and Attack Speed.}
 
+| Unit        | Sprite       |  HP    | Movement Speed  | Range | Damage | Attack Speed | Cost |
+| ----------- |:------------:| ------:|:-------------:|:-----:|:------:|:----------:|:----:|
+|**Scout**     | ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/Units/scout.png?raw=true) | ?? |?? |?? |?? |?? |?? |
+| **Recollector** | ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/Units/collector.jpg?raw=true)   | ??   |?? |?? |?? |?? |?? |
+| **Infantry** |  ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/Units/infantry.png?raw=true)  |  ??   |?? |?? |?? |?? |?? |
+| **Heavy** | ![alt text](https://github.com/BarcinoLechiguino/Project-RTS/blob/master/Docs/Images/ArtBible/Units/heavy.png?raw=true)    |   ??  |?? |?? |?? |?? |?? |
+
 ### Enemies
 They will have the same structure, but the enemy won’t have collectors and explorers as their objective is just to destroy your base. 
 
@@ -172,6 +178,12 @@ They will have the same structure, but the enemy won’t have collectors and exp
 - **Final Boss**
 
 {Make a table with images of the sprites of each unit as well as the unit name, HP, Cost, Movement Speed, Range, Damage and Attack Speed.}
+
+| Enemy       | Sprite       |  HP    | Movement Speed  | Range | Damage | Attack Speed | Cost |
+| ----------- |:------------:| ------:|:-------------:|:-----:|:------:|:----------:|:----:|
+| **Infantry** |  ![alt text]()  |  ??   |?? |?? |?? |?? |?? |
+| **Heavy** | ![alt text]()    |   ??  |?? |?? |?? |?? |?? |
+| **Final Boss** | ![alt text]()    |   ??  |?? |?? |?? |?? |?? |
 
 ### Resources 
 - **For building**: chunks of data.
@@ -199,7 +211,7 @@ At this current state of the development we can’t provide with any exact infor
 {Add a PNG showing all the map in its full extension}
 
 ## Player Headquarters/Server/Whatever
-The players' base will remain the same through all playthroughs. It will be the main center of operations and all buildings will only be possible to create within a certain range with the base as it's center.
+The players' base will remain the same through all playthroughs. It will be the main center of operations and all buildings will only be possible to create within a certain range around.
 
 {PNG of the Player's Base}
 
@@ -208,7 +220,7 @@ The players' base will remain the same through all playthroughs. It will be the 
 The Headquarters will be occasionally raided by the enemy, so effective defenses must be built around it. Moreover, there should always be some troops stationed there, in case the exploring military force cannot make it back in time.
 
 ## Enemy Outposts
-There will be a total of 4 enemy outposts, one on each of the zones.  Each will be equipped with defensive buildings and their own military task force.
+There will be a total of 4 enemy outposts, one on each zone. All posts will be equipped with defensive buildings and their own military task force.
 
 {PNGs of all 4 outposts. Should each have a different design? Should each be the same but with different colours?}
 
