@@ -52,7 +52,7 @@ bool j1PathFinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
 	//return t != INVALID_WALK_CODE && t > 0;				//Revise. Should erase?
-	if (t == 0)
+	if (t > 0)
 	{
 		return true;
 	}

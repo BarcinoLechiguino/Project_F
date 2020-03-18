@@ -612,13 +612,18 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	{
 		MapLayer* layer = (*item);
 
-		if (layer->name != "walkability_map")							
+		if (layer->properties.Get("Navigation", 0) == 0)							//If the value of the Navigation property of the mapLayer is 0.
+		{
+			continue;																//If the value mentioned above is 0, jump to the next iteration (of layers list).
+		}
+		
+		/*if (layer->name != "walkability_map")							
 		{
 			continue;
-		}
+		}*/
 
-		uchar* map = new uchar[layer->width * layer->height];						//Allocates memory for for tiles an set to 1
-		memset(map, 1, layer->width*layer->height);									
+		uchar* map = new uchar[layer->width * layer->height];						//Allocates memory for all the tiles in the map.
+		memset(map, 1, layer->width*layer->height);									//Sets all memory allocated for map to 1. 
 
 		for (int y = 0; y < data.height; ++y)										
 		{
@@ -628,21 +633,31 @@ bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 
 				int tile_id = layer->Get(x, y);	
 
-				if (tile_id > 0)		//skips empty tiles
+				if (tile_id > 0)													//skips empty tiles
 				{
 					TileSet* tileset = GetTilesetFromTileId(tile_id);
 
-					if (tileset != NULL)
+					if (tileset != nullptr)
 					{
-						map[index] = tile_id - tileset->firstgid; //get the id of the tile we assigned: 0 = walkable, 1 = non walkable...
+						//map[index] = (tile_id - tileset->firstgid);							//get the id of the tile we assigned: 0 = walkable, 1 = non walkable...
+
+						if ((tile_id - tileset->firstgid) > 0)
+						{
+							map[index] = 0;
+						}
+						else
+						{
+							map[index] = 1;
+						}
 					}
 				}
 			}
 		}
-		*buffer		= map;															
-		width		= data.width;													
-		height		= data.height;													
-		ret			= true;
+
+		*buffer		= map;															//Sets buffer as the map array.												
+		width		= data.width;													//Sets width to the width of the map in tiles.
+		height		= data.height;													//Sets height to the height of the map in tiles. 
+		ret			= true;															//Sets the ret bool to true as the walkability map could be created
 	}
 
 	return ret;
