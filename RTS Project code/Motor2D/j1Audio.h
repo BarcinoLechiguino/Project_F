@@ -10,14 +10,14 @@
 struct _Mix_Music;
 struct Mix_Chunk;
 
-class j1Audio : public j1Module
+class Audio : public j1Module
 {
 public:
 
-	j1Audio();
+	Audio();
 
 	// Destructor
-	virtual ~j1Audio();
+	virtual ~Audio();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);

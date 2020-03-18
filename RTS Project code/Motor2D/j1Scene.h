@@ -24,14 +24,14 @@ enum ListOfMapNames
 	FirstLevel
 };
 
-class j1Scene : public j1Module
+class Scene : public j1Module
 {
 public:
 
-	j1Scene();
+	Scene();
 
 	// Destructor
-	virtual ~j1Scene();
+	virtual ~Scene();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);
@@ -55,6 +55,9 @@ public:
 	bool Save(pugi::xml_node& data) const;
 
 public:
+
+	bool LoadFirstMap();						//Loads first map + walkability map
+
 	bool Load_lvl(int time);
 
 	void LoadGuiElements();
@@ -76,8 +79,8 @@ public:
 	std::string				music_path;
 	std::string				music_path2;
 	std::string				music_path3;
-	bool					firstMap;			//Keeps track of which map is loaded. In this case this one keeps track of the first map.
-	bool					secondMap;			//Keeps track of which map is loaded. In this case this one keeps track of the second map.
+	bool					firstMap;			//If First map is loaded
+	bool					secondMap;			//If Second map is loaded
 
 	std::vector<j1Rock*>	rock_test;
 	std::vector<j1Enemy*>   enemy_test;

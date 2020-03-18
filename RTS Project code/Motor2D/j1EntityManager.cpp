@@ -15,17 +15,17 @@
 
 //#include "mmgr/mmgr.h"
 
-j1EntityManager::j1EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
+EntityManager::EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
 {
 	name = ("entities");
 }
 
-j1EntityManager::~j1EntityManager()
+EntityManager::~EntityManager()
 {
 
 }
 
-bool j1EntityManager::Awake(pugi::xml_node& config)
+bool EntityManager::Awake(pugi::xml_node& config)
 {
 	this->config = config;
 
@@ -40,7 +40,7 @@ bool j1EntityManager::Awake(pugi::xml_node& config)
 	return true;
 }
 
-bool j1EntityManager::Start()
+bool EntityManager::Start()
 {
 	//Iterates all entities in the entities list and calls their Start() method.
 	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
@@ -51,7 +51,7 @@ bool j1EntityManager::Start()
 	return true;
 }
 
-bool j1EntityManager::PreUpdate()
+bool EntityManager::PreUpdate()
 {
 	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
@@ -61,7 +61,7 @@ bool j1EntityManager::PreUpdate()
 	return true;
 }
 
-bool j1EntityManager::Update(float dt)
+bool EntityManager::Update(float dt)
 {
 	BROFILER_CATEGORY("EntityManager Update", Profiler::Color::FireBrick);
 	accumulated_time += dt;
@@ -86,7 +86,7 @@ bool j1EntityManager::Update(float dt)
 	return true;
 }
 
-bool j1EntityManager::PostUpdate()
+bool EntityManager::PostUpdate()
 {
 	//Iterates all entities and calls their PostUpdate() methods.
 	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
@@ -97,7 +97,7 @@ bool j1EntityManager::PostUpdate()
 	return true;
 }
 
-bool j1EntityManager::CleanUp()
+bool EntityManager::CleanUp()
 {
 	//Iterates all entities in the entities list and calls their CleanUp() method.
 	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
@@ -111,7 +111,7 @@ bool j1EntityManager::CleanUp()
 	return true;
 }
 
-void j1EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision will manage the collisions of all entities and derive them to their respective OnCollision methods()
+void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision will manage the collisions of all entities and derive them to their respective OnCollision methods()
 {
 	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
@@ -128,7 +128,7 @@ void j1EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollisio
 	}
 }
 
-bool j1EntityManager::Save(pugi::xml_node& data)
+bool EntityManager::Save(pugi::xml_node& data)
 {
 	
 
@@ -160,7 +160,7 @@ bool j1EntityManager::Save(pugi::xml_node& data)
 	return true;
 }
 
-bool j1EntityManager::Load(pugi::xml_node& data)
+bool EntityManager::Load(pugi::xml_node& data)
 {
 
 	return true;
@@ -168,7 +168,7 @@ bool j1EntityManager::Load(pugi::xml_node& data)
 
 
 // -------------------------------------- ENTITY MANAGING METHODS --------------------------------------
-j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
+j1Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 {
 	//static_assert?
 
@@ -199,13 +199,13 @@ j1Entity* j1EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 	return ret;
 }
 
-void j1EntityManager::CreatePlayers()
+void EntityManager::CreatePlayers()
 {
 	//player = (j1Player1*)CreateEntity(ENTITY_TYPE::PLAYER);
 	//player2 = (j1Player2*)CreateEntity(ENTITY_TYPE::PLAYER2);
 }
 
-void j1EntityManager::DestroyEntities()
+void EntityManager::DestroyEntities()
 {
 	BROFILER_CATEGORY("EntityManager PostUpdate", Profiler::Color::FireBrick);
 	//Iterates all entities in the entities list and searches for the entity passed as argument, if it is inside the list and is found, it is then destroyed.

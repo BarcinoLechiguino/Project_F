@@ -15,27 +15,27 @@
 #include "SDL\include\SDL_timer.h"
 
 
-j1Fade_Scene::j1Fade_Scene()
+Fade_Scene::Fade_Scene()
 {
 }
 
-j1Fade_Scene::~j1Fade_Scene()
+Fade_Scene::~Fade_Scene()
 {}
 
-bool j1Fade_Scene::Awake(pugi::xml_node&)
+bool Fade_Scene::Awake(pugi::xml_node&)
 {
 	screen = { 0, 0, App->win->width*App->win->scale, App->win->height*App->win->scale };
 	return true;
 }
 
-bool j1Fade_Scene::Start()
+bool Fade_Scene::Start()
 {
 	LOG("Preparing Fade Screen");
 	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
 	return true;
 }
 
-bool j1Fade_Scene::Update(float dt)
+bool Fade_Scene::Update(float dt)
 {
 	if (current_step == fade_step::none)
 	{
@@ -81,7 +81,7 @@ bool j1Fade_Scene::Update(float dt)
 	return true;
 }
 
-bool j1Fade_Scene::FadeToBlack2(j1Module* module_off, j1Module* module_on, float time)
+bool Fade_Scene::FadeToBlack2(j1Module* module_off, j1Module* module_on, float time)
 {
 	bool ret = false;
 
@@ -98,7 +98,7 @@ bool j1Fade_Scene::FadeToBlack2(j1Module* module_off, j1Module* module_on, float
 	return ret;
 }
 
-bool j1Fade_Scene ::FadeToBlack(const char* mapname, float time)
+bool Fade_Scene ::FadeToBlack(const char* mapname, float time)
 {
 	bool ret = false;
 
@@ -117,7 +117,7 @@ bool j1Fade_Scene ::FadeToBlack(const char* mapname, float time)
 	return ret;
 }
 
-bool j1Fade_Scene::IsChanging() const
+bool Fade_Scene::IsChanging() const
 {
 	return current_step != fade_step::none;
 }

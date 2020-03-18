@@ -5,19 +5,19 @@
 #include "j1Map.h"
 #include "Brofiler\Brofiler.h"
 
-j1PathFinding::j1PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
+PathFinding::PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name = ("pathfinding");
 }
 
 // Destructor
-j1PathFinding::~j1PathFinding()
+PathFinding::~PathFinding()
 {
 	RELEASE_ARRAY(map);
 }
 
 // Called before quitting
-bool j1PathFinding::CleanUp()
+bool PathFinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
 
@@ -30,7 +30,7 @@ bool j1PathFinding::CleanUp()
 }
 
 // Sets up the walkability map
-void j1PathFinding::SetMap(uint width, uint height, uchar* data)
+void PathFinding::SetMap(uint width, uint height, uchar* data)
 {
 	this->width = width;
 	this->height = height;
@@ -41,14 +41,14 @@ void j1PathFinding::SetMap(uint width, uint height, uchar* data)
 }
 
 // Utility: return true if pos is inside the map boundaries
-bool j1PathFinding::CheckBoundaries(const iPoint& pos) const
+bool PathFinding::CheckBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x <= (int)width &&
 			pos.y >= 0 && pos.y <= (int)height);
 }
 
 // Utility: returns true is the tile is walkable
-bool j1PathFinding::IsWalkable(const iPoint& pos) const
+bool PathFinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
 	//return t != INVALID_WALK_CODE && t > 0;				//Revise. Should erase?
@@ -60,7 +60,7 @@ bool j1PathFinding::IsWalkable(const iPoint& pos) const
 }
 
 // Utility: return the walkability value of a tile
-uchar j1PathFinding::GetTileAt(const iPoint& pos) const
+uchar PathFinding::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
 		return map[(pos.y*width) + pos.x];
@@ -68,7 +68,7 @@ uchar j1PathFinding::GetTileAt(const iPoint& pos) const
 	return INVALID_WALK_CODE;
 }
 
-bool j1PathFinding::ChangeWalkability(const iPoint& pos, uchar walkability)
+bool PathFinding::ChangeWalkability(const iPoint& pos, uchar walkability)
 {
 	if (map != NULL)
 	{
@@ -83,7 +83,7 @@ bool j1PathFinding::ChangeWalkability(const iPoint& pos, uchar walkability)
 	return &last_path;
 }*/
 
-const std::vector<iPoint>* j1PathFinding::GetLastPath() const
+const std::vector<iPoint>* PathFinding::GetLastPath() const
 {
 	return &last_path;
 }
@@ -167,7 +167,7 @@ std::vector<PathNode>::iterator* PathList::GetNodeLowestScore() /*const*/
 
 	int i = 0;
 
-	for (std::vector<PathNode>::iterator* item = &list.begin(); /*i < list.size()*/ *item != list.end(); item++)
+	for (std::vector<PathNode>::iterator* item = &list.begin(); /*i < list.size()*/ *item != list.end(); ++item)
 	{
 		if ((*item)->Score() < min)
 		{
@@ -280,7 +280,7 @@ int PathNode::CalculateF(const iPoint& destination)
 // ----------------------------------------------------------------------------------
 // Actual A* algorithm: return number of steps in the creation of the path or -1 ----
 // ----------------------------------------------------------------------------------
-int j1PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
+int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	BROFILER_CATEGORY("CreatePath", Profiler::Color::SlateGray)
 	

@@ -9,24 +9,24 @@
 //#include "mmgr/mmgr.h"
 
 //With the constructor call collider_debug (draw colliders on screen) is set to true or false.
-j1Collisions::j1Collisions() : j1Module()
+Collisions::Collisions() : j1Module()
 {
 	name = ("collisions");
 	collider_debug = false;		//F9 key sets it to true or false.
 }
 
-bool j1Collisions::Init()
+bool Collisions::Init()
 {
 	return true;
 };
 
-bool j1Collisions::Awake(pugi::xml_node& config)
+bool Collisions::Awake(pugi::xml_node& config)
 {
 	return true;
 };
 
 //Loads all objects from the tmx file, adds a collider to them and assigns them a type
-bool j1Collisions::Start()
+bool Collisions::Start()
 {
 	LoadColliderFromMap();
 
@@ -34,7 +34,7 @@ bool j1Collisions::Start()
 };
 
 //Calculates the colliders's collisions and deletes from memory any collider that has been set to be deleted.
-bool j1Collisions::PreUpdate()
+bool Collisions::PreUpdate()
 {
 	BROFILER_CATEGORY("Collision PreUpdate", Profiler::Color::GreenYellow);
 
@@ -99,18 +99,18 @@ bool j1Collisions::PreUpdate()
 	return true;
 };
 
-bool j1Collisions::Update(float dt)
+bool Collisions::Update(float dt)
 {
 	Collider_Debug();
 	return true;
 };
 
-bool j1Collisions::PostUpdate()
+bool Collisions::PostUpdate()
 {
 	return true;
 };
 
-bool j1Collisions::CleanUp()
+bool Collisions::CleanUp()
 {
 	//When this is changed to arrays check if the collider being iterated is null or not and then delete it (delete collider, collider = nullptr)
 	
@@ -129,7 +129,7 @@ bool j1Collisions::CleanUp()
 
 //-------------------------------------------------- COLLIDER METHODS --------------------------------------------------
 //Iterates all the colliders and assigns each type a Draw_Quad() with an identifying colour.
-void j1Collisions::Collider_Debug()
+void Collisions::Collider_Debug()
 {
 	BROFILER_CATEGORY("Collision Debug", Profiler::Color::GreenYellow)
 	if (collider_debug != true)
@@ -211,7 +211,7 @@ void j1Collisions::Collider_Debug()
 }
 
 //Loads all the objects that are in the tmx map file and iterates through them generating a new collider for each one of them.
-void j1Collisions::LoadColliderFromMap()																			// Remember to call it in fade to black.
+void Collisions::LoadColliderFromMap()																			// Remember to call it in fade to black.
 {
 										//Declares a list item pointer that iterates through the ObjectGroup list and sets it starting position to the first objectgroup in the list.  
 	for (std::list<ObjectGroup*>::iterator object_iterator = App->map->data.objectGroups.begin() ; object_iterator != App->map->data.objectGroups.end(); object_iterator++)
@@ -225,7 +225,7 @@ void j1Collisions::LoadColliderFromMap()																			// Remember to call i
 }
 
 //Generates a new collider with the given arguments and allocates it in memory.
-Collider* j1Collisions::AddCollider(SDL_Rect collider, Object_Type type, j1Module* callback)
+Collider* Collisions::AddCollider(SDL_Rect collider, Object_Type type, j1Module* callback)
 {
 	Collider* hitbox = new Collider;	//Allocates memory for the new collider.
 

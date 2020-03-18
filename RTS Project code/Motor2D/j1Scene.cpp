@@ -9,6 +9,7 @@
 #include "j1Map.h"
 #include "j1FadeScene.h"
 #include "j1Scene.h"
+#include "Main_Menu.h"
 
 #include "j1Console.h"
 #include "j1Collisions.h"
@@ -21,17 +22,17 @@
 
 //#include "mmgr/mmgr.h"
 
-j1Scene::j1Scene() : j1Module()
+Scene::Scene() : j1Module()
 {
 	name = ("scene");
 }
 
 // Destructor
-j1Scene::~j1Scene()
+Scene::~Scene()
 {}
 
 // Called before render is available
-bool j1Scene::Awake(pugi::xml_node& config)
+bool Scene::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Scene");
 
@@ -55,41 +56,26 @@ bool j1Scene::Awake(pugi::xml_node& config)
 }
 
 // Called before the first frame
-bool j1Scene::Start()
+bool Scene::Start()
 {
 	bool ret = false;
 
+	cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
+
 	to_end = false;
-	
 	firstMap	= true;
 	secondMap	= false;
 	
-	ret = App->map->Load((*map_names.begin()).c_str());
-	LOG("Map Name: %s", (*map_names.begin()).c_str());
+	ret = LoadFirstMap();
 
-	rock_test.push_back( (j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0) );
+	path_debug_tex = App->tex->Load("maps/path2.png");
+
+	//test
+	rock_test.push_back((j1Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0));
 
 	enemy_test.push_back((j1Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 1, 1));
 
 	rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
-
-
-	cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
-	
-	if (ret == true)													//If the first map is loaded then create the walkability map for it.
-	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))				//If CreatewalkabilityMap() returns true. It means that the walkability map could be created.
-		{
-			App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
-		}
-	
-		RELEASE_ARRAY(data);											//Frees all memory allocated to the data array.
-	}
-	
-	//path_debug_tex = App->tex->Load("maps/path2_centered.png");					//Sets the path_debug_tex as path2.png.
-	path_debug_tex = App->tex->Load("maps/path2.png");					//Sets the path_debug_tex as path2.png.
 	
 	LoadGuiElements();
 	
@@ -100,7 +86,7 @@ bool j1Scene::Start()
 }
 
 // Called each loop iteration
-bool j1Scene::PreUpdate()
+bool Scene::PreUpdate()
 {
 	// debug pathfing ------------------
 	if (App->map->pathfindingMetaDebug == true)
@@ -128,12 +114,18 @@ bool j1Scene::PreUpdate()
 			}
 		}
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_DOWN)
+	{
+		App->mainmenu->Enable();
+		Disable();
+	}
 	
 	return true;
 }
 
 // Called each loop iteration
-bool j1Scene::Update(float dt)														//Receives dt as an argument.
+bool Scene::Update(float dt)														//Receives dt as an argument.
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
 	
@@ -161,7 +153,7 @@ bool j1Scene::Update(float dt)														//Receives dt as an argument.
 
 
 // Called each loop iteration
-bool j1Scene::PostUpdate()
+bool Scene::PostUpdate()
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
 	bool ret = true;
@@ -175,20 +167,18 @@ bool j1Scene::PostUpdate()
 }
 
 // Called before quitting
-bool j1Scene::CleanUp()
+bool Scene::CleanUp()
 {
 	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
 	App->entityManager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
-	//App->audio->CleanUp();
 	
 	App->gui->CleanUp();
-	//App->gui->Disable();
 	
 	return true;
 }
 
-bool j1Scene::Load(pugi::xml_node& data)
+bool Scene::Load(pugi::xml_node& data)
 {
 
 	if (currentMap != data.child("currentMap").attribute("num").as_int())
@@ -205,13 +195,13 @@ bool j1Scene::Load(pugi::xml_node& data)
 	return true;
 }
 
-bool j1Scene::Save(pugi::xml_node& data) const
+bool Scene::Save(pugi::xml_node& data) const
 {
 	data.append_child("currentMap").append_attribute("num") = currentMap;
 	return true;
 }
 
-bool j1Scene::Load_lvl(int time)
+bool Scene::Load_lvl(int time)
 {
 	std::list<std::string>::iterator map_iterator = map_names.begin();
 
@@ -222,7 +212,29 @@ bool j1Scene::Load_lvl(int time)
 	return false;
 }
 
-void j1Scene::LoadGuiElements()
+bool Scene::LoadFirstMap()
+{
+	bool ret = false;
+	
+	//First walkability map created here
+	ret = App->map->Load((*map_names.begin()).c_str());
+	LOG("Map Name: %s", (*map_names.begin()).c_str());
+
+	if (ret)
+	{
+		int w, h;
+		uchar* data = NULL;
+		if (App->map->CreateWalkabilityMap(w, h, &data))
+		{
+			App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
+		}
+		RELEASE_ARRAY(data);											//Frees all memory allocated to the data array.
+	}
+
+	return ret;
+}
+
+void Scene::LoadGuiElements()
 {
 	// Main Menu
 	//--------------------------------------------------------------------------------------------
@@ -497,7 +509,7 @@ void j1Scene::LoadGuiElements()
 	secondScrollPosCalc = false;
 }
 
-void j1Scene::ManageAudioVolumeWithScrollbar(UI_Scrollbar* scrollbar)
+void Scene::ManageAudioVolumeWithScrollbar(UI_Scrollbar* scrollbar)
 {
 	if (scrollbar->isVisible)
 	{
@@ -509,7 +521,7 @@ void j1Scene::ManageAudioVolumeWithScrollbar(UI_Scrollbar* scrollbar)
 	}
 }
 
-void j1Scene::DebugKeys()
+void Scene::DebugKeys()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)			//Load First Level Key
 	{
@@ -568,7 +580,7 @@ void j1Scene::DebugKeys()
 	}
 }
 
-void j1Scene::PathfindingDebug()
+void Scene::PathfindingDebug()
 {
 	// Debug pathfinding ------------------------------
 	int x, y;
@@ -590,7 +602,7 @@ void j1Scene::PathfindingDebug()
 	}
 }
 
-void j1Scene::DebugCameraMovement(float dt)
+void Scene::DebugCameraMovement(float dt)
 {
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
 	{

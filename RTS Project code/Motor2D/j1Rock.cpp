@@ -11,6 +11,7 @@ j1Rock::j1Rock(int x, int y, ENTITY_TYPE type) : j1Static_Object(x,y,type)
 	entity_sprite = App->tex->Load("maps/debug_tile.png");
 	
 	pixel_position = App->map->MapToWorld(x, y);
+
 }
 
 bool j1Rock::Awake(pugi::xml_node&)

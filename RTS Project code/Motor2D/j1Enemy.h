@@ -27,6 +27,7 @@ enum class Entity_State
 class j1Enemy : public j1Dynamic_Object
 {
 public:
+
 	j1Enemy(int x, int y, ENTITY_TYPE type);
 
 	~j1Enemy();
@@ -52,12 +53,10 @@ public:
 	bool Save(pugi::xml_node&) const;
 	
 public:
-	Entity_State	state;									//State in which the entity is in any given moment.
+	Entity_State	state;
 
-	const p2DynArray<iPoint>* entity_path;					//Will store the path created between the enemy entity and a player.
+	const p2DynArray<iPoint>* entity_path;
 
-	
-	
 };
 
 #endif // __j1ENEMY_H__

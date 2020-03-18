@@ -23,12 +23,12 @@ class j1Module
 {
 public:
 
-	j1Module() : active(false)
+	j1Module() : is_active(true)
 	{}
 
 	void Init()
 	{
-		active = true;
+		
 	}
 
 	// Called before render is available
@@ -77,20 +77,20 @@ public:
 		return true;
 	}
 
-	void Enable()
+	void Enable()	//Start()
 	{
-		if (active == false)
+		if (!is_active)
 		{
-			active = true;
+			is_active = true;
 			Start();
 		}
 	}
 
-	void Disable()
+	void Disable()	//CleanUp()
 	{
-		if (active == true)
+		if (is_active)
 		{
-			active = false;
+			is_active = false;
 			CleanUp();
 		}
 	}
@@ -111,8 +111,7 @@ public:
 public:
 
 	std::string name;
-	bool active;
-	bool enabled = true;
+	bool is_active;
 };
 
 #endif // __j1MODULE_H__

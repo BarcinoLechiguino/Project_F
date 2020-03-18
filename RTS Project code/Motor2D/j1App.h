@@ -9,21 +9,22 @@
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
-class j1Window;
-class j1Input;
-class j1Render;
-class j1Textures;
-class j1Audio;
+class Window;
+class Input;
+class Render;
+class Textures;
+class Audio;
 class j1SceneMenu;
-class j1Scene;
-class j1Map;
-class j1PathFinding;
-class j1Fade_Scene;
-class j1Collisions;
-class j1EntityManager;
-class j1Fonts;
-class j1Gui;
-class j1Console;
+class Scene;
+class Map;
+class PathFinding;
+class Fade_Scene;
+class Collisions;
+class EntityManager;
+class Fonts;
+class Gui;
+class Console;
+class Main_Menu;
 
 class j1App
 {
@@ -88,20 +89,21 @@ private:
 public:
 
 	// Modules
-	j1Window*			win;
-	j1Input*			input;
-	j1Render*			render;
-	j1Textures*			tex;
-	j1Audio*			audio;
-	j1Fonts*			font;
-	j1Scene*			scene;
-	j1Map*				map;
-	j1PathFinding*		pathfinding;
-	j1EntityManager*	entityManager;
-	j1Collisions*		collisions;
-	j1Fade_Scene*		fadescene;
-	j1Gui*				gui;
-	j1Console*			console;
+	Window*			win;
+	Input*			input;
+	Render*			render;
+	Textures*			tex;
+	Audio*			audio;
+	Fonts*			font;
+	Scene*			scene;
+	Map*				map;
+	PathFinding*		pathfinding;
+	EntityManager*	entityManager;
+	Collisions*		collisions;
+	Fade_Scene*		fadescene;
+	Gui*				gui;
+	Console*			console;
+	Main_Menu*			mainmenu;
 
 	uint				frame_cap;				//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;		//Stores the original frame cap at application start.
@@ -126,14 +128,14 @@ private:
 	mutable std::string	save_game;
 
 	//Framerate
-	uint64				frame_count;			//Calculates the amount of frames per second. frames++ after each Update() loop.
-	j1Timer				startup_timer;			//Creates a pointer to j1Timer tool. Gives acces to j1Timer's elements. Used to keep track of time since app start.
+	uint64				frame_count;			
+	j1Timer				startup_timer;			//Used to keep track of time since app start.
 	j1Timer				frame_timer;			//Keeps track of everything time related in the span of a frame.
 	j1PerfTimer			perf_timer;				//Creates a pointer to j1PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
 	j1PerfTimer			last_second_timer;		//Creates a pointer to j1PerfTimer tool. Used to calculate variables in spans of one second.
 	uint32				last_update_ms;			//Calculates the amount of milliseconds that the last update spent running.
 	uint32				frames_last_second;		//Calculates the amount of frames that where processed the last second.
-	uint32				prev_sec_frames;		//Stores the number of frames processed last second.
+	uint32				prev_sec_frames;		
 
 	j1PerfTimer			true_delay_timer;		//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
 	float				dt;						//Keeps track of the amount of time in milliseconds that has passed in a frame. Will be used to make everything (update()) be in the same timestep.

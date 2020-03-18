@@ -19,17 +19,17 @@
 
 //#include "mmgr/mmgr.h"
 
-j1Map::j1Map() : j1Module(), map_loaded(false)
+Map::Map() : j1Module(), map_loaded(false)
 {
 	name = ("map");
 }
 
 // Destructor
-j1Map::~j1Map()
+Map::~Map()
 {}
 
 // Called before render is available
-bool j1Map::Awake(pugi::xml_node& config)
+bool Map::Awake(pugi::xml_node& config)
 {
 	LOG("Loading Map Parser");
 	bool ret = true;
@@ -39,7 +39,7 @@ bool j1Map::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-void j1Map::Draw()
+void Map::Draw()
 {
 	BROFILER_CATEGORY("Draw Map", Profiler::Color::Khaki);
 	if (map_loaded == false)																						//If no map was loaded, return.
@@ -107,7 +107,7 @@ void j1Map::Draw()
 	//LOG("Tiles drawn: %d", tiles_drawn);
 }
 
-iPoint j1Map::MapToWorld(int x, int y) const 
+iPoint Map::MapToWorld(int x, int y) const 
 {
 	iPoint ret(0, 0);																//Position of the tile on the world.
 
@@ -130,7 +130,7 @@ iPoint j1Map::MapToWorld(int x, int y) const
 	return ret;
 }
 
-iPoint j1Map::WorldToMap(int x, int y) const
+iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
 
@@ -169,7 +169,7 @@ SDL_Rect TileSet::GetTileRect(uint tile_id) const
 	return tile_rect;
 }
 
-TileSet* j1Map::GetTilesetFromTileId(int id) 				
+TileSet* Map::GetTilesetFromTileId(int id) 				
 {
 	std::list<TileSet*>::iterator tilesetIter = data.tilesets.begin();
 
@@ -186,12 +186,12 @@ TileSet* j1Map::GetTilesetFromTileId(int id)
 }
 
 // Called before quitting
-bool j1Map::CleanUp()
+bool Map::CleanUp()
 {
 	LOG("Unloading map");
 
 	// Remove all tilesets from memory
-	for (std::list<TileSet*>::iterator item = data.tilesets.begin() ; item != data.tilesets.end(); item++)
+	for (std::list<TileSet*>::iterator item = data.tilesets.begin() ; item != data.tilesets.end(); ++item)
 	{	
 		SDL_DestroyTexture((*item)->texture);
 		RELEASE((*item));
@@ -199,7 +199,7 @@ bool j1Map::CleanUp()
 	data.tilesets.clear();
 
 	// Remove all layers from memory
-	for (std::list<MapLayer*>::iterator map_layer_item = data.layers.begin(); map_layer_item != data.layers.end(); map_layer_item++)
+	for (std::list<MapLayer*>::iterator map_layer_item = data.layers.begin(); map_layer_item != data.layers.end(); ++map_layer_item)
 	{
 		RELEASE((*map_layer_item));
 	}
@@ -225,7 +225,7 @@ bool j1Map::CleanUp()
 }
 
 // Load new map
-bool j1Map::Load(std::string file_name)
+bool Map::Load(std::string file_name)
 {
 	BROFILER_CATEGORY("Load Map", Profiler::Color::Khaki);
 	bool ret = true;
@@ -305,7 +305,7 @@ bool j1Map::Load(std::string file_name)
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
 		
-		for(std::list<TileSet*>::iterator item = data.tilesets.begin() ; item != data.tilesets.end() ; item++)
+		for(std::list<TileSet*>::iterator item = data.tilesets.begin() ; item != data.tilesets.end() ; ++item)
 		{
 			TileSet* tileset = (*item);
 			LOG("Tileset ----");
@@ -336,7 +336,7 @@ bool j1Map::Load(std::string file_name)
 }
 
 // Load map general properties
-bool j1Map::LoadMap()
+bool Map::LoadMap()
 {
 	bool ret = true;
 	pugi::xml_node map = map_file.child("map");
@@ -403,7 +403,7 @@ bool j1Map::LoadMap()
 	return ret;
 }
 
-bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
+bool Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 	set->name = (tileset_node.attribute("name").as_string());
@@ -429,7 +429,7 @@ bool j1Map::LoadTilesetDetails(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
+bool Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 {
 	bool ret = true;
 	pugi::xml_node image = tileset_node.child("image");
@@ -465,7 +465,7 @@ bool j1Map::LoadTilesetImage(pugi::xml_node& tileset_node, TileSet* set)
 	return ret;
 }
 
-bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
+bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 {
 	bool ret = true;
 
@@ -499,7 +499,7 @@ bool j1Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 }
 
 //Loads the object layers (colliders) from the xml map. It iterates through  a specific object layer (in the load() it is iterated through to get all the object info).
-bool j1Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
+bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 {
 	bool ret = true;
 
@@ -580,7 +580,7 @@ bool j1Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 	return ret;
 }
 
-bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)							//REVISE THIS HERE. Check why it crashes the game at exit time.
+bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)							//REVISE THIS HERE. Check why it crashes the game at exit time.
 {
 	bool ret = false;
 
@@ -604,11 +604,11 @@ bool j1Map::LoadProperties(pugi::xml_node& node, Properties& properties)							/
 	return ret;
 }
 
-bool j1Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
+bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 {
 	bool ret = false;
 
-	for (std::list<MapLayer*>::iterator item = data.layers.begin() ; item != data.layers.end() ; item++)
+	for (std::list<MapLayer*>::iterator item = data.layers.begin() ; item != data.layers.end() ; ++item)
 	{
 		MapLayer* layer = (*item);
 
@@ -677,7 +677,7 @@ int Properties::Get(std::string name, int default_value)							//Revise how to b
 //	return *default_value;															//If no property is found then the value returned is 0.
 //}
 
-bool j1Map::SwitchMaps(std::string new_map) // switch map function that passes the number of map defined in config.xml
+bool Map::SwitchMaps(std::string new_map) // switch map function that passes the number of map defined in config.xml
 {
 	CleanUp();
 	App->scene->to_end = false; // we put this in false so there are no repetitions
@@ -687,7 +687,7 @@ bool j1Map::SwitchMaps(std::string new_map) // switch map function that passes t
 	return true;
 }
 
-bool j1Map::ChangeMap(const char* newMap)
+bool Map::ChangeMap(const char* newMap)
 {
 	bool ret = true;
 
@@ -717,7 +717,7 @@ bool j1Map::ChangeMap(const char* newMap)
 	return ret;
 }
 
-void j1Map::Restart_Cam() // function that resets the camera
+void Map::Restart_Cam() // function that resets the camera
 {
 	App->render->camera.x = spawn_position_cam.x;
 	App->render->camera.y = spawn_position_cam.y;
