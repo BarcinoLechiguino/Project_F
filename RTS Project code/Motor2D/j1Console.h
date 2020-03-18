@@ -24,12 +24,12 @@ public:
 	j1Module* callback;
 };
 
-class j1Console : public j1Module
+class Console : public j1Module
 {
 public:
-	j1Console();
+	Console();
 
-	~j1Console();
+	~Console();
 
 	bool Awake(pugi::xml_node&);
 

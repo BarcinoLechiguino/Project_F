@@ -17,13 +17,13 @@
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
 
-class j1PathFinding : public j1Module
+class PathFinding : public j1Module
 {
 public:
 
-	j1PathFinding();
+	PathFinding();
 
-	~j1PathFinding();														// Destructor
+	~PathFinding();														// Destructor
 
 	bool CleanUp();															// Called before quitting
 

@@ -30,17 +30,17 @@ struct Collider
 	bool Check_Collision(const SDL_Rect& r) const;
 };
 
-class j1Collisions : public j1Module 
+class Collisions : public j1Module 
 {
 	//Methods
 public:
 
-	j1Collisions();
+	Collisions();
 
 	bool Init();
 
 	// Destructor
-	virtual ~j1Collisions() {};
+	virtual ~Collisions() {};
 
 	// Called before render is available
 	bool Awake(pugi::xml_node& node);

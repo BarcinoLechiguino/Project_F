@@ -14,18 +14,18 @@
 
 #include "Brofiler\Brofiler.h"
 
-j1Gui::j1Gui() : j1Module()
+Gui::Gui() : j1Module()
 {
 	name = ("gui");
 	audioAlreadyLoaded = false;
 }
 
 // Destructor
-j1Gui::~j1Gui()
+Gui::~Gui()
 {}
 
 // Called before render is available
-bool j1Gui::Awake(pugi::xml_node& conf)
+bool Gui::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading GUI atlas");
 	bool ret = true;
@@ -36,7 +36,7 @@ bool j1Gui::Awake(pugi::xml_node& conf)
 }
 
 // Called before the first frame
-bool j1Gui::Start()
+bool Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.c_str());
 
@@ -66,7 +66,7 @@ bool j1Gui::Start()
 }
 
 // Update all guis
-bool j1Gui::PreUpdate()
+bool Gui::PreUpdate()
 {
 	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
 	{
@@ -128,7 +128,7 @@ bool j1Gui::PreUpdate()
 }
 
 // Called after all Updates
-bool j1Gui::PostUpdate()
+bool Gui::PostUpdate()
 {	
 
 	BROFILER_CATEGORY("GUI_Update", Profiler::Color::NavajoWhite);
@@ -188,7 +188,7 @@ bool j1Gui::PostUpdate()
 }
 
 // Called before quitting
-bool j1Gui::CleanUp()
+bool Gui::CleanUp()
 {
 	LOG("Freeing GUI");
 
@@ -205,13 +205,13 @@ bool j1Gui::CleanUp()
 }
 
 // const getter for atlas
-/*const*/ SDL_Texture* j1Gui::GetAtlas() const
+/*const*/ SDL_Texture* Gui::GetAtlas() const
 {
 	return atlas;
 }
 
 //----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
-UI* j1Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, UI* parent)
+UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, UI* parent)
 {
 
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
@@ -227,7 +227,7 @@ UI* j1Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool i
 	return elem;
 }
 
-UI* j1Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable,
+UI* Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable,
 					UI* parent, std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString)
 {
 	BROFILER_CATEGORY("GUI_Text", Profiler::Color::NavajoWhite);
@@ -243,7 +243,7 @@ UI* j1Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Fo
 	return elem;
 }
 
-UI* j1Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
+UI* Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
 {
 	BROFILER_CATEGORY("GUI_Button", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
@@ -258,7 +258,7 @@ UI* j1Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool i
 	return elem;
 }
 
-UI* j1Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursor, SDL_Color cursorColour, iPoint textOffset, 
+UI* Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursor, SDL_Color cursorColour, iPoint textOffset, 
 					float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, std::string* defaultString, bool emptyElements)
 {
 	BROFILER_CATEGORY("GUI_InputBox", Profiler::Color::NavajoWhite);
@@ -275,7 +275,7 @@ UI* j1Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TT
 	return elem;
 }
 
-UI* j1Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
+UI* Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
 					bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, SDL_Rect* scrollMask, iPoint maskOffset, bool emptyElements)
 {
 	BROFILER_CATEGORY("GUI_ScrollBar", Profiler::Color::NavajoWhite);
@@ -293,7 +293,7 @@ UI* j1Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SD
 }
 
 //--------------------------------- INPUT PROCESSING METHODS ---------------------------------
-void j1Gui::OnEventCall(UI* element, UI_Event ui_event)
+void Gui::OnEventCall(UI* element, UI_Event ui_event)
 {
 	BROFILER_CATEGORY("GUI_OnEventCall", Profiler::Color::NavajoWhite);
 	// Main Menu
@@ -472,7 +472,7 @@ void j1Gui::OnEventCall(UI* element, UI_Event ui_event)
 } 
 
 // --- Method to return the foremost element of the UI. (First in inverse order of draw)
-UI* j1Gui::FirstElementUnderMouse()
+UI* Gui::FirstElementUnderMouse()
 {
 	UI* firstElement = nullptr;
 
@@ -490,7 +490,7 @@ UI* j1Gui::FirstElementUnderMouse()
 	}
 }
 
-bool j1Gui::ElementCanBeClicked(UI* clickedElement) const
+bool Gui::ElementCanBeClicked(UI* clickedElement) const
 {
 	bool ret = false;
 
@@ -507,7 +507,7 @@ bool j1Gui::ElementCanBeClicked(UI* clickedElement) const
 
 //----------------------------------- FOCUS MANAGEMENT METHODS -----------------------------------
 // --- Method that will pass the focus from focuseable UI Element to the next.
-void j1Gui::PassFocus()
+void Gui::PassFocus()
 {
 	//if ( &iteratedElement == nullptr)
 	//{
@@ -550,7 +550,7 @@ void j1Gui::PassFocus()
 }
 
 // --- Method that returns true if the passed element is a visible BUTTON, INPUTBOX or a SCROLLBAR
-bool j1Gui::ElementCanBeFocused(UI* focusElement) const
+bool Gui::ElementCanBeFocused(UI* focusElement) const
 {
 	bool ret = false;
 
@@ -568,7 +568,7 @@ bool j1Gui::ElementCanBeFocused(UI* focusElement) const
 
 // --------------------------- PARENT/CHILD UI ELEMENTS METHODS --------------------------
 // --- 
-bool j1Gui::ElementHasChilds(UI* parentElement)
+bool Gui::ElementHasChilds(UI* parentElement)
 {
 	bool ret = false;
 	
@@ -584,7 +584,7 @@ bool j1Gui::ElementHasChilds(UI* parentElement)
 	return ret;
 }
 
-void j1Gui::UpdateChilds(UI* parentElement)
+void Gui::UpdateChilds(UI* parentElement)
 {
 	//Check ElementHasChilds() here instead than in the elements?
 	for (std::list<UI*>::iterator child = elements.begin(); child != elements.end(); child++)
@@ -605,7 +605,7 @@ void j1Gui::UpdateChilds(UI* parentElement)
 	}
 }
 
-void j1Gui::SetElementsVisibility(UI* parentElement, bool state)
+void Gui::SetElementsVisibility(UI* parentElement, bool state)
 {	
 	for (std::list<UI*>::iterator child = elements.begin(); child != elements.end(); child++)
 	{
@@ -625,7 +625,7 @@ void j1Gui::SetElementsVisibility(UI* parentElement, bool state)
 }
 
 //----------------------------------- UI DEBUG METHOD -----------------------------------
-void j1Gui::Debug_UI()
+void Gui::Debug_UI()
 {
 	if (ui_debug == true)
 	{
@@ -667,7 +667,7 @@ void j1Gui::Debug_UI()
 	}
 }
 
-void j1Gui::CreateGuiCommands()
+void Gui::CreateGuiCommands()
 {
 	quitCommand			= "quit";
 	enable_ui_debug		= "enable_ui_debug";
@@ -678,7 +678,7 @@ void j1Gui::CreateGuiCommands()
 	App->console->CreateCommand(disable_ui_debug, this, 1, 1);
 }
 
-void j1Gui::OnCommand(const char* command, const char* subCommand)
+void Gui::OnCommand(const char* command, const char* subCommand)
 {	
 	if (App->input->CmpStr(command, quitCommand))
 	{

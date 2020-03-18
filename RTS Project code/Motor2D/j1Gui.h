@@ -15,14 +15,14 @@
 #define CURSOR_WIDTH 2
 #define DRAG_LIMIT_OFFSET 1
 
-class j1Gui : public j1Module
+class Gui : public j1Module
 {
 public:
 
-	j1Gui();
+	Gui();
 
 	// Destructor
-	virtual ~j1Gui();
+	virtual ~Gui();
 
 	// Called when before render is available
 	bool Awake(pugi::xml_node&);

@@ -6,13 +6,13 @@
 
 enum ListOfMapNames;
 
-class j1Fade_Scene : public j1Module
+class Fade_Scene : public j1Module
 {
 public:
 
-	j1Fade_Scene();
+	Fade_Scene();
 
-	virtual ~j1Fade_Scene();
+	virtual ~Fade_Scene();
 
 	//Called before render is avalible
 	bool Awake(pugi::xml_node&);

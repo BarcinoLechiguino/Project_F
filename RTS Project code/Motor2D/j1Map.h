@@ -9,7 +9,7 @@
 #include "j1Collisions.h"
 #include "SDL/include/SDL.h"
 
-class j1Collisions;
+class Collisions;
 struct Collider;
 
 // Collider Types -------------------------
@@ -167,13 +167,13 @@ struct MapData
 };
 
 // ----------------------------------------------------
-class j1Map : public j1Module
+class Map : public j1Module
 {
 public:
 
-	j1Map();
+	Map();
 	// Destructor
-	virtual ~j1Map();
+	virtual ~Map();
 	// Called before render is available
 	bool Awake(pugi::xml_node& conf);
 	// Called each loop iteration

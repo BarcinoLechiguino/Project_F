@@ -26,14 +26,14 @@ enum j1KeyState
 	KEY_UP
 };
 
-class j1Input : public j1Module
+class Input : public j1Module
 {
 public:
 
-	j1Input();
+	Input();
 
 	// Destructor
-	virtual ~j1Input();
+	virtual ~Input();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);

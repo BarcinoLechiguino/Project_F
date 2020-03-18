@@ -14,24 +14,24 @@
 
 #include "Brofiler\Brofiler.h"
 
-j1Console::j1Console() : j1Module(), commandWasFound(false)
+Console::Console() : j1Module(), commandWasFound(false)
 {
 	name = ("console");
 }
 
-j1Console::~j1Console()
+Console::~Console()
 {
 
 }
 
-bool j1Console::Awake(pugi::xml_node& config)
+bool Console::Awake(pugi::xml_node& config)
 {
 	//config_file = config;
 
 	return true;
 }
 
-bool j1Console::Start()
+bool Console::Start()
 {
 	InitConsole();
 	CreateConsoleElements();
@@ -40,7 +40,7 @@ bool j1Console::Start()
 	return true;
 }
 
-bool j1Console::PreUpdate()
+bool Console::PreUpdate()
 {	
 	BROFILER_CATEGORY("Console_PreUpdate", Profiler::Color::PowderBlue);
 
@@ -80,20 +80,20 @@ bool j1Console::PreUpdate()
 	return true;
 }
 
-bool j1Console::Update(float dt)
+bool Console::Update(float dt)
 {
 
 	return true;
 }
 
-bool j1Console::PostUpdate()
+bool Console::PostUpdate()
 {
 	//DrawBackgroundElement();
 	
 	return true;
 }
 
-bool j1Console::CleanUp()
+bool Console::CleanUp()
 {
 	for (std::list<Command*>::iterator command = commands.begin(); command != commands.end(); command++)
 	{
@@ -106,7 +106,7 @@ bool j1Console::CleanUp()
 	return true;
 }
 
-void j1Console::InitConsole()
+void Console::InitConsole()
 {
 	config_file.load_file("config.xml");
 
@@ -218,7 +218,7 @@ void j1Console::InitConsole()
 	scroll_isDraggable = console.child("scroll_isDraggable").attribute("value").as_bool();
 }
 
-void j1Console::CreateConsoleElements()
+void Console::CreateConsoleElements()
 {
 	output_font = App->font->Load(output_font_path.c_str(), output_font_size);
 	input_font = App->font->Load(input_font_path.c_str(), input_font_size);
@@ -245,7 +245,7 @@ void j1Console::CreateConsoleElements()
 	}
 }
 
-void j1Console::DrawBackgroundElement()
+void Console::DrawBackgroundElement()
 {
 	if (console_background->isVisible)
 	{
@@ -253,7 +253,7 @@ void j1Console::DrawBackgroundElement()
 	}
 }
 
-bool j1Console::ConsoleIsOpen()
+bool Console::ConsoleIsOpen()
 {
 	return console_background->isVisible;
 }
@@ -266,7 +266,7 @@ Command::Command(const char* command, j1Module* callback, int min_arg, int max_a
 	this->max_arg = max_arg;
 }
 
-Command* j1Console::CreateCommand(const char* command, j1Module* callback, int min_arg, int max_arg)
+Command* Console::CreateCommand(const char* command, j1Module* callback, int min_arg, int max_arg)
 {
 	Command* comm = nullptr;
 
@@ -280,7 +280,7 @@ Command* j1Console::CreateCommand(const char* command, j1Module* callback, int m
 	return comm;
 }
 
-void j1Console::CreateConsoleCommands()
+void Console::CreateConsoleCommands()
 {
 	//CreateCommand("quit", this, 1, 1);
 
@@ -323,7 +323,7 @@ void j1Console::CreateConsoleCommands()
 	CreateCommand(second_map, this, 1, 1);
 }
 
-void j1Console::OnCommand(const char* command, const char* subCommand)
+void Console::OnCommand(const char* command, const char* subCommand)
 {
 	// --- CONSOLE COMMANDS
 	if (App->input->CmpStr(command, command_list))

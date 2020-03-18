@@ -5,7 +5,7 @@
 
 #include "SDL/include/SDL.h"
 
-j1Window::j1Window() : j1Module()
+Window::Window() : j1Module()
 {
 	window = NULL;
 	screen_surface = NULL;
@@ -13,12 +13,12 @@ j1Window::j1Window() : j1Module()
 }
 
 // Destructor
-j1Window::~j1Window()
+Window::~Window()
 {
 }
 
 // Called before render is available
-bool j1Window::Awake(pugi::xml_node& config)
+bool Window::Awake(pugi::xml_node& config)
 {
 	LOG("Init SDL window & surface");
 	bool ret = true;
@@ -79,7 +79,7 @@ bool j1Window::Awake(pugi::xml_node& config)
 }
 
 // Called before quitting
-bool j1Window::CleanUp()
+bool Window::CleanUp()
 {
 	LOG("Destroying SDL window and quitting all SDL systems");
 
@@ -95,19 +95,19 @@ bool j1Window::CleanUp()
 }
 
 // Set new window title
-void j1Window::SetTitle(const char* new_title)
+void Window::SetTitle(const char* new_title)
 {
 	//title.create(new_title);
 	SDL_SetWindowTitle(window, new_title);
 }
 
-void j1Window::GetWindowSize(uint& width, uint& height) const
+void Window::GetWindowSize(uint& width, uint& height) const
 {
 	width = this->width;
 	height = this->height;
 }
 
-uint j1Window::GetScale() const
+uint Window::GetScale() const
 {
 	return scale;
 }

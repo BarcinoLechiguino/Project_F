@@ -10,14 +10,14 @@
 struct SDL_Texture;
 struct _TTF_Font;
 
-class j1Fonts : public j1Module
+class Fonts : public j1Module
 {
 public:
 
-	j1Fonts();
+	Fonts();
 
 	// Destructor
-	virtual ~j1Fonts();
+	virtual ~Fonts();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);

@@ -17,13 +17,13 @@ struct EnemyData
 	iPoint			position;
 };
 
-class j1EntityManager : public j1Module
+class EntityManager : public j1Module
 {
 public:
 
-	j1EntityManager();
+	EntityManager();
 
-	~j1EntityManager();
+	~EntityManager();
 
 	bool Awake(pugi::xml_node&);
 

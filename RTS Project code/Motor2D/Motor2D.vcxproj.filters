@@ -97,6 +97,9 @@
     <ClCompile Include="j1Rock.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities\Static\Obstacles</Filter>
     </ClCompile>
+    <ClCompile Include="Main_Menu.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -212,6 +215,9 @@
     </ClInclude>
     <ClInclude Include="j1Rock.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Static\Obstacles</Filter>
+    </ClInclude>
+    <ClInclude Include="Main_Menu.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

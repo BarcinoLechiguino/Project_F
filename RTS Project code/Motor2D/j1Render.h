@@ -31,14 +31,14 @@ struct fixedCamera
 	}
 };
 
-class j1Render : public j1Module
+class Render : public j1Module
 {
 public:
 
-	j1Render();
+	Render();
 
 	// Destructor
-	virtual ~j1Render();
+	virtual ~Render();
 
 	// Called before render is available
 	bool Awake(pugi::xml_node&);

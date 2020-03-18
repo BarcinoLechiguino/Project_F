@@ -9,6 +9,7 @@
 #include "j1Textures.h"
 #include "j1Audio.h"
 #include "j1Scene.h"
+#include "Main_Menu.h"
 #include "j1Map.h"
 #include "j1Fonts.h"
 #include "j1EntityManager.h"
@@ -28,20 +29,21 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 
 	want_to_save = want_to_load = false;
 
-	input			= new j1Input();
-	win				= new j1Window();
-	render			= new j1Render();
-	tex				= new j1Textures();
-	audio			= new j1Audio();
-	scene			= new j1Scene();
-	map				= new j1Map();
-	pathfinding		= new j1PathFinding();
-	collisions		= new j1Collisions();
-	entityManager	= new j1EntityManager();
-	fadescene		= new j1Fade_Scene();
-	font			= new j1Fonts();
-	gui				= new j1Gui();
-	console			= new j1Console();
+	input			= new Input();
+	win				= new Window();
+	render			= new Render();
+	tex				= new Textures();
+	audio			= new Audio();
+	scene			= new Scene();
+	map				= new Map();
+	pathfinding		= new PathFinding();
+	collisions		= new Collisions();
+	entityManager	= new EntityManager();
+	fadescene		= new Fade_Scene();
+	font			= new Fonts();
+	gui				= new Gui();
+	console			= new Console();
+	mainmenu		= new Main_Menu();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -54,8 +56,9 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 	AddModule(gui);
 	AddModule(console);
+	AddModule(mainmenu);
 	AddModule(scene);
-	AddModule(entityManager);				//entityManager is called after module scene (where the player is created) is called.
+	AddModule(entityManager);
 	AddModule(collisions);
 	AddModule(fadescene);
 	
@@ -71,7 +74,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 j1App::~j1App()
 {
 	// release modules
-	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() ; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() ; ++item)
 	{
 		RELEASE((*item));
 	}
@@ -98,9 +101,9 @@ bool j1App::Awake()
 		
 	config = LoadConfig(config_file);
 
-	frame_cap = CAP_AT_60;						//In case the frame cap is not specified the game will be capped at 60.
+	frame_cap = CAP_AT_60;
 	
-	if(config.empty() == false)
+	if(!config.empty())
 	{
 		// self-config
 		ret = true;
@@ -113,9 +116,9 @@ bool j1App::Awake()
 		original_frame_cap = frame_cap;
 	}
 
-	if(ret == true)
+	if(ret)
 	{
-		for (std::list<j1Module*>::iterator item = modules.begin() ; item != modules.end() && ret == true;item++)
+		for (std::list<j1Module*>::iterator item = modules.begin() ; item != modules.end() && ret; ++item)
 		{
 			ret  = (*item)->Awake(config.child((*item)->name.c_str()));
 		}
@@ -133,7 +136,10 @@ bool j1App::Start()
 	
 	bool ret = true;
 
-	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	//Disable scene
+	scene->Disable();
+
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret ; ++item)
 	{
 		ret = (*item)->Start();
 	}
@@ -152,7 +158,7 @@ bool j1App::Update()
 	bool ret = true;
 	PrepareUpdate();
 
-	if(input->GetWindowEvent(WE_QUIT) == true)
+	if(input->GetWindowEvent(WE_QUIT))
 		ret = false;
 
 	if(ret == true)
@@ -186,11 +192,11 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 // ---------------------------------------------
 void j1App::PrepareUpdate()
 {
-	frame_count++;									//Adds +1 to the frame count before each update loop. This variable will keep track of how many frames have been processed through all runtime.
-	frames_last_second++;							//Used to keep track of how many frames there were in the last second.
+	frame_count++;
+	frames_last_second++;
 
 	dt = frame_timer.ReadSec();						//Keeps track of the amount of time that has passed since last frame in seconds (processing time of a frame: Frame 1: 0.033secs, ...).
-	frame_timer.Start();							//Starts the frame timer. Used to calculate ms per frame.
+	frame_timer.Start();
 
 	//LOG("The differential time since last frame: %f", dt);
 }
@@ -198,10 +204,10 @@ void j1App::PrepareUpdate()
 // ---------------------------------------------
 void j1App::FinishUpdate()
 {
-	if(want_to_save == true)
+	if(want_to_save)
 		SavegameNow();
 
-	if(want_to_load == true)
+	if(want_to_load)
 		LoadGameNow();
 
 	//------------ Framerate Calculations ------------
@@ -212,10 +218,10 @@ void j1App::FinishUpdate()
 		frames_last_second = 0;
 	}
 
-	float frame_cap_ms = 1000 / frame_cap;							//Calculates the frame_cap in ms (how fast a frame is processed / how fast an image is refreshed). Done for readability.
-	float current_frame_ms = frame_timer.Read();					//Calculates the current frame's time spent processing. Need to declare it here so the time is consistent through the whole check. Could be below or above the cap.
+	float frame_cap_ms = 1000 / frame_cap;
+	float current_frame_ms = frame_timer.Read();					
 
-	if (framesAreCapped == true)									//If the frame cap is on (bool frames are capped = true) then the frame cap loop is run.
+	if (framesAreCapped)
 	{
 		if (current_frame_ms < frame_cap_ms)						//If the current frame processing time is lower than the specified frame_cap. Timer instead of PerfTimer was used because SDL_Delay is inaccurate.
 		{
@@ -223,18 +229,18 @@ void j1App::FinishUpdate()
 
 			SDL_Delay(frame_cap_ms - current_frame_ms);				//SDL_Delay delays processing for a specified time. In this case, it delays for the difference in ms between the frame cap (30fps so 33,3ms per frame) and the current frame.
 
-			int intended_delay = frame_cap_ms - current_frame_ms;	//Done for readability. Set as the value of the intended delay.
+			int intended_delay = frame_cap_ms - current_frame_ms;
 
 			//LOG("We waited for %d milliseconds and got back in %f", intended_delay, true_delay_timer.ReadMs());
 		}
 	}
 	
-	float avg_fps = frame_count / startup_timer.ReadSec();			//Equals seconds to the returning value of the ReadSec() method, which returns the amount of time passed in seconds. Use timer->ReadSec() to have no decimals (as its a low resolution timer)
-	seconds_since_startup = startup_timer.ReadSec();				//Gets the average frames per second by dividing the actual number of frames with the amount of seconds that have passed.
-	uint32 last_frame_ms = frame_timer.Read();						//As it is the end of the update, the frame's ms can be calculated.
+	float avg_fps = frame_count / startup_timer.ReadSec();
+	seconds_since_startup = startup_timer.ReadSec();				
+	uint32 last_frame_ms = frame_timer.Read();
 	uint32 frames_on_last_update = prev_sec_frames;					//Keeps track of how many frames were processed the last second.
 
-	if (framesAreCapped == true)
+	if (framesAreCapped)
 	{
 		frameCapOnOff = "On";
 	}
@@ -243,7 +249,7 @@ void j1App::FinishUpdate()
 		frameCapOnOff = "Off";
 	}
 
-	if (vsyncIsActive == true)
+	if (vsyncIsActive)
 	{
 		vsyncOnOff = "On";
 	}
@@ -266,13 +272,10 @@ bool j1App::PreUpdate()
 	BROFILER_CATEGORY("PreUpdate_App.cpp", Profiler::Color::Aqua)
 	bool ret = true;
 
-	j1Module* pModule = NULL;
-
-	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret ; ++item)
 	{
-		pModule = (*item);
-
-		if(pModule->active == false) {
+		if(!(*item)->is_active)
+		{
 			continue;
 		}
 
@@ -287,13 +290,10 @@ bool j1App::DoUpdate()
 {
 	bool ret = true;
 
-	j1Module* pModule = NULL;
-
-	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
 	{
-		pModule = (*item);
-
-		if(pModule->active == false) {
+		if(!(*item)->is_active)
+		{
 			continue;
 		}
 
@@ -314,15 +314,15 @@ bool j1App::PostUpdate()
 {
 	BROFILER_CATEGORY("PostUpdate_App.cpp", Profiler::Color::Aqua)
 	bool ret = true;
-	j1Module* pModule = NULL;
 
-	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
 	{
-		pModule = (*item);
 
-		if(pModule->active == false) {
+		if(!(*item)->is_active)
+		{
 			continue;
 		}
+
 		ret = (*item)->PostUpdate();
 	}
 	return ret;
@@ -333,7 +333,7 @@ bool j1App::CleanUp()
 {
 	bool ret = true;
 
-	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
 	{
 		if ((*item)->name.empty())
 		{
@@ -427,7 +427,7 @@ bool j1App::LoadGameNow()
 
 		ret = true;
 
-		for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret == true; item++)
+		for (std::list<j1Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
 		{
 			ret = (*item)->Load(root.child((*item)->name.c_str()));
 		}
@@ -444,7 +444,9 @@ bool j1App::LoadGameNow()
 	{
 		LOG("Could not parse game state xml file %s. pugi error: %s", load_game.c_str(), result.description());
 	}
+
 	want_to_load = false;
+
 	return ret;
 }
 
@@ -462,7 +464,7 @@ bool j1App::SavegameNow() //Chenged to non const due to list unknown problem
 
 	root = data.append_child("game_state");
 
-	for (std::list<j1Module*>::iterator item = modules.begin() ; item != modules.end() && ret == true; item++)
+	for (std::list<j1Module*>::iterator item = modules.begin() ; item != modules.end() && ret; ++item)
 	{
 		ret = (*item)->Save(root.append_child((*item)->name.c_str()));
 	}
@@ -475,7 +477,9 @@ bool j1App::SavegameNow() //Chenged to non const due to list unknown problem
 	else
 		LOG("Save process halted from an error in module %s", ((*item) != NULL) ? (*item)->name.GetString() : "unknown");*/
 
+
 	data.reset();
 	want_to_save = false;
+
 	return ret;
 }														

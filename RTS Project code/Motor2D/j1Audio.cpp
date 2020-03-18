@@ -9,18 +9,18 @@
 #include "SDL_mixer\include\SDL_mixer.h"
 #pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
 
-j1Audio::j1Audio() : j1Module()
+Audio::Audio() : j1Module()
 {
 	music = NULL;
 	name = ("audio");
 }
 
 // Destructor
-j1Audio::~j1Audio()
+Audio::~Audio()
 {}
 
 // Called before render is available
-bool j1Audio::Awake(pugi::xml_node& config)
+bool Audio::Awake(pugi::xml_node& config)
 {
 
 	LOG("Loading Audio Mixer");
@@ -30,7 +30,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	if(SDL_InitSubSystem(SDL_INIT_AUDIO) < 0)
 	{
 		LOG("SDL_INIT_AUDIO could not initialize! SDL_Error: %s\n", SDL_GetError());
-		active = false;
+		is_active = false;
 		ret = true;
 	}
 
@@ -44,7 +44,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	if((init & flags) != flags)
 	{
 		LOG("Could not initialize Mixer lib. Mix_Init: %s", Mix_GetError());
-		active = false;
+		is_active = false;
 		ret = true;
 	}
 
@@ -52,7 +52,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	if(Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		LOG("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
-		active = false;
+		is_active = false;
 		ret = true;
 	}
 
@@ -61,7 +61,7 @@ bool j1Audio::Awake(pugi::xml_node& config)
 	return ret;
 }
 
-bool j1Audio::PreUpdate(float dt) {
+bool Audio::PreUpdate(float dt) {
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_REPEAT)
 	{
@@ -74,11 +74,11 @@ bool j1Audio::PreUpdate(float dt) {
 	return true;
 }
 
-bool j1Audio::Update(float dt)
+bool Audio::Update(float dt)
 {
 	Mix_VolumeMusic(volume);
 
-	for (std::list<Mix_Chunk*>::iterator chunk_item = fx.begin() ; chunk_item != fx.end() ; chunk_item++)
+	for (std::list<Mix_Chunk*>::iterator chunk_item = fx.begin() ; chunk_item != fx.end() ; ++chunk_item)
 	{
 		Mix_VolumeChunk((*chunk_item), volume_fx);
 	}
@@ -87,9 +87,9 @@ bool j1Audio::Update(float dt)
 }
 
 // Called before quitting
-bool j1Audio::CleanUp()
+bool Audio::CleanUp()
 {
-	if(!active)
+	if(!is_active)
 		return true;
 
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
@@ -99,7 +99,7 @@ bool j1Audio::CleanUp()
 		Mix_FreeMusic(music);
 	}
 
-	for (std::list<Mix_Chunk*>::iterator chunk_item = fx.begin(); chunk_item != fx.end(); chunk_item++)
+	for (std::list<Mix_Chunk*>::iterator chunk_item = fx.begin(); chunk_item != fx.end(); ++chunk_item)
 	{
 		Mix_FreeChunk((*chunk_item));
 	}
@@ -114,11 +114,11 @@ bool j1Audio::CleanUp()
 }
 
 // Play a music file
-bool j1Audio::PlayMusic(std::string path, float fade_time)
+bool Audio::PlayMusic(std::string path, float fade_time)
 {
 	bool ret = true;
 	std::string tmp = music_folder + path;
-	if(!active)
+	if(!is_active)
 		return false;
 
 	if(music != NULL)
@@ -168,13 +168,13 @@ bool j1Audio::PlayMusic(std::string path, float fade_time)
 }
 
 // Load WAV
-unsigned int j1Audio::LoadFx(std::string path)
+unsigned int Audio::LoadFx(std::string path)
 {
 	unsigned int ret = 0;
 
 	std::string tmp = sfx_folder + path;
 
-	if(!active)
+	if(!is_active)
 		return 0;
 
 	Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
@@ -194,11 +194,11 @@ unsigned int j1Audio::LoadFx(std::string path)
 }
 
 // Play WAV
-bool j1Audio::PlayFx(unsigned int id, int repeat)
+bool Audio::PlayFx(unsigned int id, int repeat)
 {
 	bool ret = false;
 
-	if(!active)
+	if(!is_active)
 		return false;
 
 	if(id > 0 && id <= fx.size())
@@ -213,13 +213,13 @@ bool j1Audio::PlayFx(unsigned int id, int repeat)
 	return ret;
 }
 
-bool j1Audio::Load(pugi::xml_node & data)
+bool Audio::Load(pugi::xml_node & data)
 {
 	volume = data.child("volume").attribute("value").as_uint();
 	return true;
 }
 
-bool j1Audio::Save(pugi::xml_node& data) const
+bool Audio::Save(pugi::xml_node& data) const
 {
 	pugi::xml_node vol = data.append_child("volume");
 

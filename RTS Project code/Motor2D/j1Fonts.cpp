@@ -8,17 +8,17 @@
 #include "SDL_ttf\include\SDL_ttf.h"
 #pragma comment( lib, "SDL_ttf/libx86/SDL2_ttf.lib" )
 
-j1Fonts::j1Fonts() : j1Module()
+Fonts::Fonts() : j1Module()
 {
 	name = ("fonts");
 }
 
 // Destructor
-j1Fonts::~j1Fonts()
+Fonts::~Fonts()
 {}
 
 // Called before render is available
-bool j1Fonts::Awake(pugi::xml_node& conf)
+bool Fonts::Awake(pugi::xml_node& conf)
 {
 	LOG("Init True Type Font library");
 	bool ret = true;
@@ -38,7 +38,7 @@ bool j1Fonts::Awake(pugi::xml_node& conf)
 	return ret;
 }
 
-bool j1Fonts::Start()
+bool Fonts::Start()
 {
 	default = Load("fonts/arial.ttf", 12);
 	default_bigger = Load("fonts/arial.ttf", 15);
@@ -53,11 +53,11 @@ bool j1Fonts::Start()
 }
 
 // Called before quitting
-bool j1Fonts::CleanUp()
+bool Fonts::CleanUp()
 {
 	LOG("Freeing True Type fonts and library");
 
-	for (std::list<TTF_Font*>::iterator item = fonts.begin(); item != fonts.end(); item++)
+	for (std::list<TTF_Font*>::iterator item = fonts.begin(); item != fonts.end(); ++item)
 	{
 		TTF_CloseFont((*item));
 	}
@@ -68,7 +68,7 @@ bool j1Fonts::CleanUp()
 }
 
 // Load new texture from file path
-TTF_Font* const j1Fonts::Load(const char* path, int size)
+TTF_Font* const Fonts::Load(const char* path, int size)
 {
 	TTF_Font* font = TTF_OpenFont(path, size);
 
@@ -86,7 +86,7 @@ TTF_Font* const j1Fonts::Load(const char* path, int size)
 }
 
 // Print text using font
-SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, _TTF_Font* font)
+SDL_Texture* Fonts::Print(const char* text, SDL_Color color, _TTF_Font* font)
 {
 	SDL_Texture* ret = NULL;
 	SDL_Surface* surface = TTF_RenderText_Blended((font) ? font : default, text, color);
@@ -105,7 +105,7 @@ SDL_Texture* j1Fonts::Print(const char* text, SDL_Color color, _TTF_Font* font)
 }
 
 // calculate size of a text
-bool j1Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* font) const
+bool Fonts::CalcSize(const char* text, int& width, int& height, _TTF_Font* font) const
 {
 	bool ret = false;
 
