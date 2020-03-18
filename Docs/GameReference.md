@@ -233,3 +233,10 @@ The commander is the only one that the player can control directly and it's mana
 
 ## Market Positioning
 
+Tooth and Tail was released with positive reviews from critics, earning "generally favorable reviews" on both PC and PS4 according to the review website Metacritic.
+
+Some critics praised the game's ability to draw newcomers to the real-time strategy genre while also still be appealing to veterans.
+Given the destilled RTS approach the developers took simplifying the resoruce management and the controls, users who didn't played before an RTS or had a bad expirience with another one could have an easy way into Tooth and Tail.
+
+Tooth and Tail's art style, soundtrack, and audio played a big role when it came to make the game appealing to all the target users.
+Tooth and tail reached its largest peak of 1,971 players simultaneously on Steam in June 2018.
