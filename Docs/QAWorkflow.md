@@ -151,7 +151,35 @@ Will be used to add visual information regarding the current state of each bug a
 
 - Since this game is meant to be accessible the testers will have different profiles but some will have to be people who doesn't play videogames often or ever.
 
-- This playtest will follow the following steps:
+This playtest will follow the following steps:
+
+1. Pre-Playtest questions:
+
+- Do you usually use a computer? For what purpose?
+
+- Do you play videogames? If so, how often? In which platform?
+
+- Do you know what an RTS is? If so, have you ever played one?
+
+2. Playtest:
+
+- The tester will set up the game session for the testee and should let it try and go through the whole game. Optionally some tasks can be given to accomplish or certain actions can be told to be performed throughout the session.
+
+- The tester should not give instructions to the testee and should write down observations regarding what parts of the game that is giving them problems as well as parts that the testee liked.
+
+3. Post-Playtest questions:
+
+- Which was the objective of the game?
+
+- Did you feel frustrated at any moment while playing the game?
+
+- Was it intuitive to start playing?
+
+- Was anything confusing?
+
+- Was there anything that you did not like in particular about the game?
+
+- This questions may vary depending on what was tested.
 
 ## QA Workflow/Plan References:
 - [Final QA Workflow/Plan Reference I](https://github.com/DevCrumbs/Warcraft-II/wiki/8.-QA-Plan)
