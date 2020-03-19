@@ -23,7 +23,7 @@ public:
 
 	PathFinding();
 
-	~PathFinding();														// Destructor
+	~PathFinding();															// Destructor
 
 	bool CleanUp();															// Called before quitting
 
@@ -39,8 +39,8 @@ public:
 	bool IsWalkable(const iPoint& pos) const;								// Utility: returns true is the tile is walkable
 
 	uchar GetTileAt(const iPoint& pos) const;								// Utility: return the walkability value of a tile
-	//Change walkability of a tile in array
-	bool ChangeWalkability(const iPoint& pos, uchar walkability);
+
+	bool ChangeWalkability(const iPoint& pos, uchar walkability);			//Change walkability of a tile in array
 private:
 
 	
@@ -89,8 +89,8 @@ struct PathList
 	//p2List_item<PathNode>* GetNodeLowestScore() const;						// Returns the Pathnode with lowest score in this list or NULL if empty
 	//std::list<PathNode>::iterator* GetNodeLowestScore() /*const*/;				// const causes some problems with std::iterator. // Returns the Pathnode with lowest score in this list or NULL if empty
 
-	std::vector<PathNode>::iterator* Find(const iPoint& point) /*const*/;
-	std::vector<PathNode>::iterator* GetNodeLowestScore() /*const*/;
+	std::vector<PathNode>::const_iterator* Find(const iPoint& point) const;
+	std::vector<PathNode>::const_iterator* GetNodeLowestScore() const;
 
 	/*int Find(const iPoint& point) const;
 	PathNode* GetNodeLowestScore() const;*/
