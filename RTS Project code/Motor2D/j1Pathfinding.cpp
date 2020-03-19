@@ -1,11 +1,11 @@
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "j1App.h"
+#include "App.h"
 #include "j1PathFinding.h"
-#include "j1Map.h"
+#include "Map.h"
 #include "Brofiler\Brofiler.h"
 
-PathFinding::PathFinding() : j1Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
+PathFinding::PathFinding() : Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name = ("pathfinding");
 }

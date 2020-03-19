@@ -1,7 +1,7 @@
 #ifndef __UI_TEXT_H__
 #define __UI_TEXT_H__
 
-#include "j1Fonts.h"
+#include "Fonts.h"
 #include "UI.h"
 
 class UI_Text : public UI

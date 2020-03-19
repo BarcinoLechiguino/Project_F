@@ -2,7 +2,7 @@
 #ifndef __j1PATHFINDING_H__
 #define __j1PATHFINDING_H__
 
-#include "j1Module.h"
+#include "Module.h"
 #include "p2Point.h"
 #include "p2DynArray.h"
 #include "p2List.h"
@@ -17,7 +17,7 @@
 // Details: http://theory.stanford.edu/~amitp/GameProgramming/
 // --------------------------------------------------
 
-class PathFinding : public j1Module
+class PathFinding : public Module
 {
 public:
 

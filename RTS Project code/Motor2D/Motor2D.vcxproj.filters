@@ -4,12 +4,6 @@
     <ClCompile Include="p2Log.cpp">
       <Filter>Programacio 2 ===========</Filter>
     </ClCompile>
-    <ClCompile Include="j1Entity.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="j1EntityManager.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClCompile>
@@ -19,50 +13,11 @@
     <ClCompile Include="j1Timer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="j1Scene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="j1App.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Main.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="j1FadeScene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Input.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClCompile>
     <ClCompile Include="j1Pathfinding.cpp">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClCompile>
-    <ClCompile Include="j1Render.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Textures.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Window.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Audio.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Enemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Map.cpp">
-      <Filter>Desenvolupament  ========\Modules\Map</Filter>
-    </ClCompile>
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Desenvolupament  ========\Sources</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Console.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Gui.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
@@ -82,22 +37,67 @@
     <ClCompile Include="UI_Text.cpp">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="j1Fonts.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    <ClCompile Include="Main_Menu.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="j1Collisions.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    <ClCompile Include="App.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="j1Static_Object.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
+    <ClCompile Include="Main.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="j1Dynamic_Object.cpp">
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Dynamic_Object.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities\Dynamic</Filter>
     </ClCompile>
-    <ClCompile Include="j1Rock.cpp">
+    <ClCompile Include="Static_Object.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities\Static\Obstacles</Filter>
     </ClCompile>
-    <ClCompile Include="Main_Menu.cpp">
+    <ClCompile Include="Entity.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityManager.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Collisions.cpp">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeScene.cpp">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Fonts.cpp">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Desenvolupament  ========\Modules\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
@@ -120,12 +120,6 @@
     <ClInclude Include="p2SString.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
-    <ClInclude Include="j1Entity.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="j1EntityManager.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClInclude>
@@ -138,50 +132,11 @@
     <ClInclude Include="j1Timer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClInclude>
-    <ClInclude Include="j1Scene.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Module.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1App.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="j1FadeScene.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Input.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClInclude>
     <ClInclude Include="j1Pathfinding.h">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClInclude>
-    <ClInclude Include="j1Render.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Textures.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Window.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Audio.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Enemy.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Map.h">
-      <Filter>Desenvolupament  ========\Modules\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Console.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Gui.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
@@ -201,22 +156,67 @@
     <ClInclude Include="UI_Text.h">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
-    <ClInclude Include="j1Fonts.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    <ClInclude Include="Main_Menu.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="j1Collisions.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    <ClInclude Include="App.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
-    <ClInclude Include="j1Static_Object.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
+    <ClInclude Include="Module.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
-    <ClInclude Include="j1Dynamic_Object.h">
+    <ClInclude Include="Enemy.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Dynamic_Object.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Dynamic</Filter>
     </ClInclude>
-    <ClInclude Include="j1Rock.h">
+    <ClInclude Include="Static_Object.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Static\Obstacles</Filter>
     </ClInclude>
-    <ClInclude Include="Main_Menu.h">
+    <ClInclude Include="Entity.h">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityManager.h">
+      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Collisions.h">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeScene.h">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Window.h">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="Textures.h">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="Render.h">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="Fonts.h">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="Audio.h">
+      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>Desenvolupament  ========\Modules\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClInclude>
   </ItemGroup>

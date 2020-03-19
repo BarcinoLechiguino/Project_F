@@ -1,4 +1,4 @@
-#include "j1Module.h"
+#include "Module.h"
 
 #include <vector>
 
@@ -11,7 +11,7 @@ class UI_Button;
 class UI_InputBox;
 class UI_Scrollbar;
 
-class Main_Menu : public j1Module
+class Main_Menu : public Module
 {
 public:
 

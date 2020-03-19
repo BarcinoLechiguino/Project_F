@@ -1,7 +1,7 @@
 #include "Main_Menu.h"
-#include "j1Input.h"
-#include "j1App.h"
-#include "j1Scene.h"
+#include "Input.h"
+#include "App.h"
+#include "Scene.h"
 
 Main_Menu::Main_Menu()
 {

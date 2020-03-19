@@ -1,6 +1,6 @@
-#include "j1App.h"
-#include "j1Render.h"
-#include "j1Gui.h"
+#include "App.h"
+#include "Render.h"
+#include "Gui.h"
 #include "UI.h"
 #include "UI_Image.h"
 
