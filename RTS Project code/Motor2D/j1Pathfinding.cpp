@@ -118,30 +118,42 @@ const std::vector<iPoint>* PathFinding::GetLastPath() const
 //	return -1;
 //}
 
-std::vector<PathNode>::const_iterator* PathList::Find(const iPoint& point) const
-{	
+//std::vector<PathNode>::const_iterator* PathList::Find(const iPoint& point) const
+//{	
+//	// std::iterators allow to access their data/pointer directly by using ->. No need to go to iterator->data->var/ iterator->_Ptr->var.
+//	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); ++item)
+//	{
+//		if (item->pos == point)
+//		{
+//			return &item;
+//		}
+//	}
+//
+//	return nullptr;
+//
+//	/*while (item)
+//	{
+//		if ((*item)->pos == point)
+//		{
+//			return item;
+//		}
+//
+//		item = item++;
+//	}*/
+//}
+
+std::vector<PathNode>::const_iterator PathList::Find(const iPoint& point) const
+{
 	// std::iterators allow to access their data/pointer directly by using ->. No need to go to iterator->data->var/ iterator->_Ptr->var.
 	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); ++item)
 	{
 		if (item->pos == point)
 		{
-			return &item;
+			return item;
 		}
 	}
 
-	return nullptr;
-
-	/*while (item)
-	{
-		if ((*item)->pos == point)
-		{
-			return item;
-		}
-
-		item = item++;
-	}*/
-
-	
+	return list.cend();
 }
 
 // PathList ------------------------------------------------------------------------
@@ -165,10 +177,37 @@ std::vector<PathNode>::const_iterator* PathList::Find(const iPoint& point) const
 //	return ret;
 //}
 
-std::vector<PathNode>::const_iterator* PathList::GetNodeLowestScore() const
+//std::vector<PathNode>::const_iterator* PathList::GetNodeLowestScore() const
+//{
+//	//std::vector<PathNode>::const_iterator* ret = nullptr;
+//	std::vector<PathNode>::const_iterator ret = list.end();
+//
+//	int min = 65535;
+//
+//	// This loop should go from end to begin. Make a tmp list with std::reverse list?
+//	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); item++)
+//	{
+//		if (item->Score() < min)
+//		{
+//			min = item->Score();
+//			ret = item;
+//		}
+//	}
+//
+//	if (ret == list.end())
+//	{
+//		return nullptr;
+//	}
+//	else
+//	{
+//		return &ret;
+//	}
+//}
+
+std::vector<PathNode>::const_iterator PathList::GetNodeLowestScore() const
 {
 	//std::vector<PathNode>::const_iterator* ret = nullptr;
-	std::vector<PathNode>::const_iterator ret = list.end();
+	std::vector<PathNode>::const_iterator ret = list.cend();
 
 	int min = 65535;
 
@@ -182,13 +221,13 @@ std::vector<PathNode>::const_iterator* PathList::GetNodeLowestScore() const
 		}
 	}
 
-	if (ret == list.end())
+	if (ret == list.cend())
 	{
-		return nullptr;
+		return list.cend();
 	}
 	else
 	{
-		return &ret;
+		return ret;
 	}
 }
 
@@ -210,6 +249,50 @@ PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), 
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 {
 	iPoint cell;
+	//uint before = list_to_fill.list.count();
+
+	//// north
+	//cell.create(pos.x, pos.y + 1);
+	//if (App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//// south
+	//cell.create(pos.x, pos.y - 1);
+	//if (App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//// east
+	//cell.create(pos.x + 1, pos.y);
+	//if (App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//// west
+	//cell.create(pos.x - 1, pos.y);
+	//if (App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//// North east
+	//cell.create(pos.x + 1, pos.y + 1);
+	//if (App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//// North west
+	//cell.create(pos.x - 1, pos.y + 1);
+	//if (App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//// South east
+	//cell.create(pos.x + 1, pos.y - 1);
+	//if (App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//// South west
+	//cell.create(pos.x - 1, pos.y - 1);
+	//if (App->pathfinding->IsWalkable(cell))
+	//	list_to_fill.list.add(PathNode(-1, -1, cell, this));
+
+	//return list_to_fill.list.count();
+
 	uint before = list_to_fill.list.size();
 
 	// north
@@ -301,13 +384,14 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	open.list.push_back(origin_node);															//Adds the current node storing the data of the origin tile to the open (frontier) list.
 
 
-	while (open.list.size() != 0)														//While the list is not empty. If the count is higher than 0 that means the list is not empty.
+	while (open.list.size() /*open.list.count()*/ != 0)														//While the list is not empty. If the count is higher than 0 that means the list is not empty.
 	{
 		//p2List_item<PathNode>* lowestNode = open.GetNodeLowestScore();					//Gets the node with the lowest score (F = G + H) in the open list. Coded like this to improve readability. 
 		//p2List_item<PathNode>* current_node = closed.list.add(lowestNode->data);		//Assigns current_node the data members of the node/tile with the lowest score. Done to improve readability.
 		//open.list.del(lowestNode);														//Deletes from the open (frontier) list the node with the lowest score, as it has been the one chosen to be moved to.
 
-		std::vector<PathNode>::const_iterator lowest_node = *open.GetNodeLowestScore();
+		//std::vector<PathNode>::const_iterator lowest_node = *open.GetNodeLowestScore();
+		std::vector<PathNode>::const_iterator lowest_node = open.GetNodeLowestScore();
 
 		closed.list.push_back(*lowest_node);
 		std::vector<PathNode>::const_iterator current_node = lowest_node;
@@ -320,13 +404,13 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			last_path.clear();															//Sets the last_path dynArray count of number of elements to 0. Clears the dynArray.
 			last_path.shrink_to_fit();													//Frees unused allocated memory.
 
-			const PathNode* path_node = /*&(*current_node)*/ &(*current_node);								//Declares a node with the data members of the current_node (current position, parent, cost...). Improves readability.
+			const PathNode* path_node = &(*current_node);								//Declares a node with the data members of the current_node (current position, parent, cost...). Improves readability.
 
 			while (path_node != nullptr)													//While path_node is not NULL (path_node contains data)
 			{
 				last_path.push_back(path_node->pos);									//Adds to last_path dynArray the current path_node tile (position data members).
 				//LOG("Path_node at: (%d, %d)", path_node->pos.x, path_node->pos.y);
-				
+
 				path_node = path_node->parent;											//Sets the data members of the current path_node as the data members of the parent node. (Backtracks one node/tile)
 			}
 
@@ -338,12 +422,13 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		}
 
 		PathList neighbours;																//Declares a list that will store the Walkable Adjacent nodes of a given node (current_node).
+		
 		//current_node->data.FindWalkableAdjacents(neighbours);								//Fills the neighbours list with the walkable adjacent nodes of current_node.
 		//p2List_item<PathNode>* neighbour_iterator = neighbours.list.start;											//Declares a list item pointer that will iterate the neighbours list.
 
 		//while (neighbour_iterator != nullptr)																			//If neighbour_iterator pointer is not NULL.
 		//{
-		//	/*if (closed.Find(neighbour_iterator->data.pos) == NULL)													//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
+		//	if (closed.Find(neighbour_iterator->data.pos) == NULL)													//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
 		//	{
 		//		if (open.Find(neighbour_iterator->data.pos) != NULL)												//If the neighbour being iterated is already in the open list.
 		//		{
@@ -361,10 +446,11 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		//		}
 		//	}
 
-		//	neighbour_iterator = neighbour_iterator->next;*/															//Iterates the list. Advances to the next node/element in the list.
+		//	neighbour_iterator = neighbour_iterator->next;															//Iterates the list. Advances to the next node/element in the list.
 
-		//	neighbour_iterator = neighbour_iterator++;
+		//	//neighbour_iterator = neighbour_iterator++;
 		//}
+	//}
 
 		current_node->FindWalkableAdjacents(neighbours);												//Fills the neighbours list with the walkable adjacent nodes of current_node.
 		std::vector<PathNode>::iterator neighbour_iterator = neighbours.list.begin();					//Declares a list item pointer that will iterate the neighbours list.
