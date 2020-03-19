@@ -2,8 +2,8 @@
 #define __j1SCENE_H__
 
 #include "Module.h"
-#include "j1PerfTimer.h"
-#include "j1Timer.h"
+#include "PerfTimer.h"
+#include "Timer.h"
 #include "Gui.h"
 #include "UI_Image.h"
 #include "Rock.h"

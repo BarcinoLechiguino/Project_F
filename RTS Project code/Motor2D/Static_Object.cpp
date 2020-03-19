@@ -1,5 +1,5 @@
 #include "Static_Object.h"
-#include "j1Pathfinding.h"
+#include "Pathfinding.h"
 #include "App.h"
 
 Static_Object::Static_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)

@@ -13,7 +13,7 @@
 #include "Map.h"
 #include "Fonts.h"
 #include "EntityManager.h"
-#include "j1Pathfinding.h"
+#include "Pathfinding.h"
 #include "Collisions.h"
 #include "Gui.h"
 #include "Console.h"

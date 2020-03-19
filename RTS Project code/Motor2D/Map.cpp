@@ -10,7 +10,7 @@
 #include "FadeScene.h"
 #include "Input.h"
 #include "Audio.h"
-#include "j1Pathfinding.h"
+#include "Pathfinding.h"
 #include "Scene.h"
 #include "EntityManager.h"
 #include "Console.h"

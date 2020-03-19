@@ -7,15 +7,6 @@
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
     </ClCompile>
-    <ClCompile Include="j1PerfTimer.cpp">
-      <Filter>Desenvolupament  ========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Timer.cpp">
-      <Filter>Desenvolupament  ========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="j1Pathfinding.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClCompile>
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Desenvolupament  ========\Sources</Filter>
     </ClCompile>
@@ -100,6 +91,15 @@
     <ClCompile Include="Scene.cpp">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="PerfTimer.cpp">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinding.cpp">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -125,15 +125,6 @@
     </ClInclude>
     <ClInclude Include="PugiXml\src\pugixml.hpp">
       <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
-    </ClInclude>
-    <ClInclude Include="j1PerfTimer.h">
-      <Filter>Desenvolupament  ========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Timer.h">
-      <Filter>Desenvolupament  ========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="j1Pathfinding.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Programacio 2 ===========</Filter>
@@ -218,6 +209,15 @@
     </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="PerfTimer.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Pathfinding.h">
+      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

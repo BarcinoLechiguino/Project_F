@@ -5,7 +5,7 @@
 #include "p2Point.h"
 #include "p2DynArray.h"
 #include "SDL/include/SDL_rect.h"
-#include "j1Timer.h"
+#include "Timer.h"
 
 
 class Animation;

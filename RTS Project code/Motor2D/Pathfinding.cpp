@@ -1,7 +1,7 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "App.h"
-#include "j1PathFinding.h"
+#include "PathFinding.h"
 #include "Map.h"
 #include "Brofiler\Brofiler.h"
 
@@ -458,7 +458,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		PathNode neighbour = *neighbour_iterator;
 		//PathNode neighbour = *(*neighbour_iterator);
 
-		for (neighbour_iterator; neighbour_iterator != neighbours.list.cend(); ++neighbour_iterator)
+		/*for (neighbour_iterator; neighbour_iterator != neighbours.list.cend(); ++neighbour_iterator)
 		{
 			if (closed.Find(neighbour.pos) == nullptr)													//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
 			{
@@ -477,7 +477,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 					open.list.push_back(neighbour);														//Adds the neighbour being iterated to the open list.
 				}
 			}
-		}
+		}*/
 
 		neighbours.list.clear();																		//Clears the neighbours list so the elements are not accumulated from node to node (tile to tile).
 	}

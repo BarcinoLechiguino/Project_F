@@ -4,8 +4,8 @@
 #include <list>
 #include <string>
 #include "Module.h"
-#include "j1PerfTimer.h"
-#include "j1Timer.h"
+#include "PerfTimer.h"
+#include "Timer.h"
 #include "PugiXml\src\pugixml.hpp"
 
 // Modules
@@ -129,15 +129,15 @@ private:
 
 	//Framerate
 	uint64				frame_count;			
-	j1Timer				startup_timer;			//Used to keep track of time since app start.
-	j1Timer				frame_timer;			//Keeps track of everything time related in the span of a frame.
-	j1PerfTimer			perf_timer;				//Creates a pointer to j1PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
-	j1PerfTimer			last_second_timer;		//Creates a pointer to j1PerfTimer tool. Used to calculate variables in spans of one second.
+	Timer				startup_timer;			//Used to keep track of time since app start.
+	Timer				frame_timer;			//Keeps track of everything time related in the span of a frame.
+	PerfTimer			perf_timer;				//Creates a pointer to j1PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
+	PerfTimer			last_second_timer;		//Creates a pointer to j1PerfTimer tool. Used to calculate variables in spans of one second.
 	uint32				last_update_ms;			//Calculates the amount of milliseconds that the last update spent running.
 	uint32				frames_last_second;		//Calculates the amount of frames that where processed the last second.
 	uint32				prev_sec_frames;		
 
-	j1PerfTimer			true_delay_timer;		//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
+	PerfTimer			true_delay_timer;		//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
 	float				dt;						//Keeps track of the amount of time in milliseconds that has passed in a frame. Will be used to make everything (update()) be in the same timestep.
 
 	char*				frameCapOnOff;			//String that is set to 'On' when the frame cap is on and  'Off' when it is off.

@@ -16,7 +16,7 @@
 #include "Gui.h"
 #include "EntityManager.h"
 
-#include "j1Pathfinding.h"
+#include "Pathfinding.h"
 
 #include "Brofiler\Brofiler.h"
 

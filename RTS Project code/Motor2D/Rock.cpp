@@ -3,7 +3,7 @@
 #include "Render.h"
 #include "Map.h"
 #include "Textures.h"
-#include "j1Pathfinding.h"
+#include "Pathfinding.h"
 
 
 Rock::Rock(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)

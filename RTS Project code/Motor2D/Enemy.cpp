@@ -12,7 +12,7 @@
 #include "Audio.h"
 #include "Enemy.h"
 #include "EntityManager.h"
-#include "j1Pathfinding.h"
+#include "Pathfinding.h"
 
 Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
