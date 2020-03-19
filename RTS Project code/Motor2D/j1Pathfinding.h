@@ -89,8 +89,11 @@ struct PathList
 	//p2List_item<PathNode>* GetNodeLowestScore() const;						// Returns the Pathnode with lowest score in this list or NULL if empty
 	//std::list<PathNode>::iterator* GetNodeLowestScore() /*const*/;				// const causes some problems with std::iterator. // Returns the Pathnode with lowest score in this list or NULL if empty
 
-	std::vector<PathNode>::const_iterator* Find(const iPoint& point) const;
-	std::vector<PathNode>::const_iterator* GetNodeLowestScore() const;
+	/*std::vector<PathNode>::const_iterator* Find(const iPoint& point) const;
+	std::vector<PathNode>::const_iterator* GetNodeLowestScore() const;*/
+
+	std::vector<PathNode>::const_iterator Find(const iPoint& point) const;
+	std::vector<PathNode>::const_iterator GetNodeLowestScore() const;
 
 	/*int Find(const iPoint& point) const;
 	PathNode* GetNodeLowestScore() const;*/
