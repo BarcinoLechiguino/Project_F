@@ -4,8 +4,6 @@
 
 #include "Module.h"
 #include "p2Point.h"
-#include "p2DynArray.h"
-#include "p2List.h"
 #include <vector>
 
 #define DEFAULT_PATH_LENGTH 50
@@ -31,7 +29,6 @@ public:
 
 	int CreatePath(const iPoint& origin, const iPoint& destination);		// Main function to request a path from A to B
 
-	//const p2DynArray<iPoint>* GetLastPath() const;						// To request all tiles involved in the last generated path
 	const std::vector<iPoint>* GetLastPath() const;							// To request all tiles involved in the last generated path
 
 	bool CheckBoundaries(const iPoint& pos) const;							// Utility: return true if pos is inside the map boundaries
@@ -49,7 +46,6 @@ private:
 
 	uchar* map;																// All map walkability values [0..255]
 
-	//p2DynArray<iPoint> last_path;											// We store the created path here
 	std::vector<iPoint> last_path;
 };
 
@@ -83,15 +79,6 @@ struct PathNode
 // ---------------------------------------------------------------------
 struct PathList
 {
-	//p2List_item<PathNode>* Find(const iPoint& point) const;					// Looks for a node in this list and returns it's list node or NULL
-	//p2List_item<PathNode>* GetNodeLowestScore() const;						// Returns the Pathnode with lowest score in this list or NULL if empty
-
-	//std::vector<PathNode>::const_iterator* Find(const iPoint& point) const;
-	//std::vector<PathNode>::const_iterator* GetNodeLowestScore() const;
-
-	/*std::vector<PathNode>::const_iterator Find(const iPoint& point) const;
-	std::vector<PathNode>::const_iterator GetNodeLowestScore() const;*/
-
 	//std::vector<PathNode>::iterator Find(const iPoint& point);
 	//std::vector<PathNode>::iterator GetNodeLowestScore();
 
@@ -100,7 +87,6 @@ struct PathList
 
 	// -----------
 	// The list itself, note they are not pointers!
-	//p2List<PathNode> list;
 	std::list<PathNode> list;
 	//std::vector<PathNode> list;
 };

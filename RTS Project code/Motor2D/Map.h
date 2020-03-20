@@ -63,8 +63,6 @@ struct Properties
 	}
 
 	//values default_values = { 0 };
-
-	//values Get(p2SString name, values* default_value = nullptr) const;	//Will get a specified property's data members. //Revise string type (p2SString, const char*...)
 	
 	int Get(std::string name, int default_value = 0);						//Will get a specified property's data members. //This version will be used exclusively for pathfinding. (Draw / Nodraw)
 	//Changed to non const because of list unknown problem

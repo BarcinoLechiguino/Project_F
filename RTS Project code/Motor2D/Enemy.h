@@ -55,7 +55,7 @@ public:
 public:
 	Entity_State	state;
 
-	const p2DynArray<iPoint>* entity_path;
+	const std::vector<iPoint>* entity_path;
 
 };
 

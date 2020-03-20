@@ -675,23 +675,6 @@ int Properties::Get(std::string name, int default_value)							//Revise how to b
 	return default_value;															//Default value is 0
 }
 
-//values Properties::Get(p2SString name, values* default_value) const				//Revise how to be able to not have a property without default value being nullptr.
-//{
-//	p2List_item<Property*>* prop_iterator = property_list.start;
-//
-//	while (prop_iterator != NULL)
-//	{
-//		if (prop_iterator->data->name == name)										//If the string passed as argument matches the name of a property in the property_list.						
-//		{
-//			return prop_iterator->data->value;										//Returns the value of the property.
-//		}
-//
-//		prop_iterator = prop_iterator->next;
-//	}
-//
-//	return *default_value;															//If no property is found then the value returned is 0.
-//}
-
 bool Map::SwitchMaps(std::string new_map) // switch map function that passes the number of map defined in config.xml
 {
 	CleanUp();
