@@ -81,11 +81,6 @@ bool Gui::PreUpdate()
 			OnEventCall(focusedElement, focusedElement->ui_event);
 		}
 	}
-
-	if (App->scene->background_image->isVisible)
-	{
-		App->pause = true;
-	}
 	
 	/*if(App->scene->main_in_menu->isVisible)
 	{
@@ -294,112 +289,6 @@ UI* Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_
 void Gui::OnEventCall(UI* element, UI_Event ui_event)
 {
 	BROFILER_CATEGORY("GUI_OnEventCall", Profiler::Color::NavajoWhite);
-	// Main Menu
-	if (element == App->scene->main_button_play && ui_event == UI_Event::UNCLICKED)
-	{
-		Mix_HaltMusic();
-		SetElementsVisibility(App->scene->main_window, !App->scene->main_window->isVisible);
-		SetElementsVisibility(App->scene->background_image, !App->scene->background_image->isVisible);
-		//SetElementsVisibility(App->scene->upper_bar, !App->scene->upper_bar->isVisible);
-
-		if (!App->scene->background_image->isVisible)
-		{
-			App->pause = false;
-		}
-
-		game_started = true;
-		App->audio->PlayFx(play_fx, 0);
-		//App->audio->PlayMusic(App->scene->music_path.c_str());
-	}
-
-	if (element == App->scene->main_button_continue && ui_event == UI_Event::UNCLICKED)
-	{
-		Mix_HaltMusic();
-		App->LoadGame("save_game.xml");
-		SetElementsVisibility(App->scene->main_window, !App->scene->main_window->isVisible);
-		SetElementsVisibility(App->scene->background_image, !App->scene->background_image->isVisible);
-		SetElementsVisibility(App->scene->upper_bar, !App->scene->upper_bar->isVisible);
-		game_started = true;
-
-		if (!App->scene->background_image->isVisible)
-		{
-			App->pause = false;
-		}
-
-		App->audio->PlayFx(play_fx, 0);
-		//App->audio->PlayMusic(App->scene->music_path.c_str());
-	}
-
-	if (element == App->scene->main_button_settings && ui_event == UI_Event::UNCLICKED)
-	{
-		SetElementsVisibility(App->scene->main_settings_menu, !App->scene->main_settings_menu->isVisible);
-		SetElementsVisibility(App->scene->main_window, !App->scene->main_window->isVisible);
-		App->audio->PlayFx(nav_fx, 0);
-	}
-
-	if (element == App->scene->main_button_exit && ui_event == UI_Event::UNCLICKED)
-	{
-		escape = false;
-		App->audio->PlayFx(exit_fx, 0);
-	}
-	//-------------------------------------------------------------------------------------------------------------
-
-	// Settings menu
-	if (element == App->scene->back && ui_event == UI_Event::UNCLICKED)
-	{
-		SetElementsVisibility(App->scene->main_settings_menu, !App->scene->main_settings_menu->isVisible);
-		SetElementsVisibility(App->scene->main_window, !App->scene->main_window->isVisible);
-		App->audio->PlayFx(nav_fx, 0);
-	}
-
-	if (element == App->scene->unmute && ui_event == UI_Event::UNCLICKED)
-	{
-		App->audio->volume = 100;
-		App->audio->PlayFx(nav_fx, 0);
-	}
-
-	if (element == App->scene->mute && ui_event == UI_Event::UNCLICKED)
-	{
-		App->audio->volume = 0;
-		App->audio->PlayFx(nav_fx, 0);
-	}
-
-	if (element == App->scene->check && ui_event == UI_Event::UNCLICKED)
-	{
-		if (App->framesAreCapped == true)
-		{
-			App->framesAreCapped = false;
-		}
-		else
-		{
-			App->framesAreCapped = true;
-		}
-
-		App->audio->PlayFx(nav_fx, 0);
-	}
-
-	if (element == App->scene->credits && ui_event == UI_Event::UNCLICKED)
-	{
-		SetElementsVisibility(App->scene->main_settings_menu, !App->scene->main_settings_menu->isVisible);
-		SetElementsVisibility(App->scene->main_credits_menu, !App->scene->main_credits_menu->isVisible);
-		App->audio->PlayFx(nav_fx, 0);
-	}
-
-	if (element == App->scene->github && ui_event == UI_Event::UNCLICKED)
-	{
-		ShellExecuteA(NULL, "open", "https://gromeu2000.wixsite.com/mutualcooperation", NULL, NULL, SW_SHOWNORMAL);
-		App->audio->PlayFx(nav_fx, 0);
-	}
-	//---------------------------------------------------------------------------------------------------------------------
-
-	// Credits menu
-	if (element == App->scene->back_credits && ui_event == UI_Event::UNCLICKED)
-	{
-		SetElementsVisibility(App->scene->main_settings_menu, !App->scene->main_settings_menu->isVisible);
-		SetElementsVisibility(App->scene->main_credits_menu, !App->scene->main_credits_menu->isVisible);
-		App->audio->PlayFx(nav_fx, 0);
-	}
-	//----------------------------------------------------------------------------------------------------------------------
 
 	// In-game menu
 	if (element == App->scene->in_buttons_resume && ui_event == UI_Event::UNCLICKED)
@@ -439,11 +328,6 @@ void Gui::OnEventCall(UI* element, UI_Event ui_event)
 
 	if (element == App->scene->in_buttons_exit && ui_event == UI_Event::UNCLICKED)
 	{
-		Mix_HaltMusic();
-		SetElementsVisibility(App->scene->main_in_menu, !App->scene->main_in_menu->isVisible);
-		SetElementsVisibility(App->scene->main_window, !App->scene->main_window->isVisible);
-		SetElementsVisibility(App->scene->background_image, !App->scene->background_image->isVisible);
-		
 		game_started = false;
 		
 		if (!App->scene->main_in_menu->isVisible)

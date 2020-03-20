@@ -65,6 +65,8 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	// render last to swap buffer
 	AddModule(render);
 
+	scene->is_active = false;
+
 	pause = false;
 
 	PERF_PEEK(perf_timer);
