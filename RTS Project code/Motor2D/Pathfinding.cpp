@@ -118,18 +118,32 @@ const std::vector<iPoint>* PathFinding::GetLastPath() const
 //	return -1;
 //}
 
-std::vector<PathNode>::const_iterator* PathList::Find(const iPoint& point) const
-{	
+//std::vector<PathNode>::const_iterator* PathList::Find(const iPoint& point) const
+//{	
+//	// std::iterators allow to access their data/pointer directly by using ->. No need to go to iterator->data->var/ iterator->_Ptr->var.
+//	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); ++item)
+//	{
+//		if (item->pos == point)
+//		{
+//			return &item;
+//		}
+//	}
+//
+//	return nullptr;
+//}
+
+std::vector<PathNode>::iterator PathList::Find(const iPoint& point)
+{
 	// std::iterators allow to access their data/pointer directly by using ->. No need to go to iterator->data->var/ iterator->_Ptr->var.
-	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); ++item)
+	for (std::vector<PathNode>::iterator item = list.begin(); item != list.end(); ++item)
 	{
 		if (item->pos == point)
 		{
-			return &item;
+			return item;
 		}
 	}
 
-	return nullptr;
+	return list.end();
 }
 
 // PathList ------------------------------------------------------------------------
@@ -153,15 +167,41 @@ std::vector<PathNode>::const_iterator* PathList::Find(const iPoint& point) const
 //	return ret;
 //}
 
-std::vector<PathNode>::const_iterator* PathList::GetNodeLowestScore() const
+//std::vector<PathNode>::const_iterator* PathList::GetNodeLowestScore() const
+//{
+//	//std::vector<PathNode>::const_iterator* ret = nullptr;
+//	std::vector<PathNode>::const_iterator ret = list.end();
+//
+//	int min = 65535;
+//
+//	// This loop should go from end to begin. Make a tmp list with std::reverse list?
+//	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); item++)
+//	{
+//		if (item->Score() < min)
+//		{
+//			min = item->Score();
+//			ret = item;
+//		}
+//	}
+//
+//	if (ret == list.end())
+//	{
+//		return nullptr;
+//	}
+//	else
+//	{
+//		return &ret;
+//	}
+//}
+
+std::vector<PathNode>::iterator PathList::GetNodeLowestScore()
 {
-	//std::vector<PathNode>::const_iterator* ret = nullptr;
-	std::vector<PathNode>::const_iterator ret = list.end();
+	std::vector<PathNode>::iterator ret = list.end();
 
 	int min = 65535;
 
 	// This loop should go from end to begin. Make a tmp list with std::reverse list?
-	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); item++)
+	for (std::vector<PathNode>::iterator item = list.begin(); item != list.end(); item++)
 	{
 		if (item->Score() < min)
 		{
@@ -170,14 +210,7 @@ std::vector<PathNode>::const_iterator* PathList::GetNodeLowestScore() const
 		}
 	}
 
-	if (ret == list.end())
-	{
-		return nullptr;
-	}
-	else
-	{
-		return &ret;
-	}
+	return ret;
 }
 
 // PathNode -------------------------------------------------------------------------
@@ -341,42 +374,24 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		//p2List_item<PathNode>* current_node = closed.Find(lowestNode->data.pos);	            	//Assigns current_node the data members of the node/tile with the lowest score. Done to improve readability.
 		//open.list.del(lowestNode);												            		//Deletes from the open (frontier) list the node with the lowest score, as it has been the one chosen to be moved to.
 																					            
-		std::vector<PathNode>::const_iterator lowest_node = *open.GetNodeLowestScore();
+		std::vector<PathNode>::iterator lowest_node = open.GetNodeLowestScore();
 
 		closed.list.push_back(*lowest_node);
-		std::vector<PathNode>::const_iterator current_node = *closed.Find(lowest_node->pos);
+		std::vector<PathNode>::iterator current_node = prev(closed.list.end()) /*closed.Find(lowest_node->pos)*/;			//As lowest_node will be pushed to the back of the vector, it will always be at the last position.
 
 		open.list.erase(lowest_node);												            		//Deletes from the open (frontier) list the node with the lowest score, as it has been the one chosen to be moved to.
-			
-		/*if (current_node->parent != nullptr)
-		{
-			LOG("current_node parent: x: %d, y: %d", current_node->parent->pos.x, current_node->parent->pos.y);
-		}*/
+		open.list.shrink_to_fit();
 
 		if (current_node->pos /*current_node->data.pos*/ == destination)			            							//If destination is in the closed list (visited) and the position of the current node is the same as destination's.
 		{																			            
 			last_path.clear();														            	//Sets the last_path dynArray count of number of elements to 0. Clears the dynArray.
-			last_path.shrink_to_fit();												            	//Frees unused allocated memory.
-																					            
-			//const PathNode* path_node = &(*current_node) /*&current_node->data*/;												//Declares a node with the data members of the current_node (current position, parent, cost...). Improves readability.
-			////const PathNode path_node = *current_node;		            							//Declares a node with the data members of the current_node (current position, parent, cost...). Improves readability.
-			//																		            
-			//while (path_node != nullptr)											            		//While path_node is not NULL (path_node contains data)
-			//{																		            
-			//	last_path.push_back(path_node->pos);								            	//Adds to last_path dynArray the current path_node tile (position data members).
-			//	//LOG("Path_node at: (%d, %d)", path_node->pos.x, path_node->pos.y);            
-			//																		            
-			//	path_node = path_node->parent;										            	//Sets the data members of the current path_node as the data members of the parent node. (Backtracks one node/tile)
-			//}																		            
+			last_path.shrink_to_fit();												            	//Frees unused allocated memory.																	            
 			
 			PathNode last_node = (*current_node);
 
 			for (const PathNode* path_node = &last_node; path_node != nullptr; path_node = path_node->parent)
 			{
-				if (path_node->g != -1)
-				{
-					last_path.push_back(path_node->pos);
-				}
+				last_path.push_back(path_node->pos);
 				
 				/*if (path_node->parent != nullptr)
 				{
@@ -384,7 +399,6 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				}*/
 			}
 
-			//FLIP(last_path);														            	//Flips the dynArray members so the first element of the array is the origin tile and the destination tile the last.
 			std::reverse(last_path.begin(), last_path.end());						            	//Flips the vector's elements. The first element of the array will be the origin tile and the destination tile the last one.
 			ret = last_path.size();													            	//Returns the amount of steps the path has.
 
@@ -429,15 +443,15 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			PathNode neighbour = *neighbour_iterator;
 			//PathNode neighbour = *(*neighbour_iterator);
 			
-			if (closed.Find(neighbour.pos) == nullptr)													//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
+			if (closed.Find(neighbour.pos) == closed.list.end())													//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
 			{
-				if (open.Find(neighbour.pos) != nullptr)												//If the neighbour being iterated is already in the open list.
+				if (open.Find(neighbour.pos) != open.list.end())												//If the neighbour being iterated is already in the open list.
 				{
 					neighbour.CalculateF(destination);													//Calculates the F (F = G + H) of the neighbour being iterated. As G is recalculated (taking into account this new path), it can be compared with the same node in the open list (old path), if it's in it.
 
-					if ((neighbour.g) < (open.Find(neighbour.pos)->_Ptr->g))								//Compares Gs (total flat movement cost) between the neigbour being iterated and the same neighbour in the list.
+					if ((neighbour.g) < (open.Find(neighbour.pos)->g))								//Compares Gs (total flat movement cost) between the neigbour being iterated and the same neighbour in the list.
 					{
-						open.Find(neighbour.pos)->_Ptr->parent = neighbour.parent;						//Updates the parent of the neighbour in the list with the parent of the neighbour being iterated. 
+						open.Find(neighbour.pos)->parent = neighbour.parent;						//Updates the parent of the neighbour in the list with the parent of the neighbour being iterated. 
 					}
 				}
 				else
@@ -449,6 +463,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		}
 
 		neighbours.list.clear();																		//Clears the neighbours list so the elements are not accumulated from node to node (tile to tile).
+		neighbours.list.shrink_to_fit();
 	}
 
 	return ret;

@@ -89,14 +89,17 @@ struct PathList
 	/*int Find(const iPoint& point) const;
 	PathNode* GetNodeLowestScore() const;*/
 
-	std::vector<PathNode>::const_iterator* Find(const iPoint& point) const;
-	std::vector<PathNode>::const_iterator* GetNodeLowestScore() const;
+	//std::vector<PathNode>::const_iterator* Find(const iPoint& point) const;
+	//std::vector<PathNode>::const_iterator* GetNodeLowestScore() const;
 
 	/*std::vector<PathNode>::const_iterator Find(const iPoint& point) const;
 	std::vector<PathNode>::const_iterator GetNodeLowestScore() const;*/
 
 	/*std::vector<PathNode>::iterator* Find(const iPoint& point);
 	std::vector<PathNode>::iterator* GetNodeLowestScore();*/
+
+	std::vector<PathNode>::iterator Find(const iPoint& point);
+	std::vector<PathNode>::iterator GetNodeLowestScore();
 
 	// -----------
 	// The list itself, note they are not pointers!
