@@ -1,6 +1,6 @@
-#include "j1App.h"
-#include "j1Input.h"
-#include "j1Gui.h"
+#include "App.h"
+#include "Input.h"
+#include "Gui.h"
 #include "UI_Image.h"
 #include "UI_Scrollbar.h"
 

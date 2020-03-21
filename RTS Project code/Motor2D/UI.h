@@ -2,8 +2,8 @@
 #define __UI_H__
 
 #include "p2Log.h"
-#include "p2Point.h"
-#include "j1Input.h"
+#include "Point.h"
+#include "Input.h"
 #include "SDL/include/SDL.h"
 
 //class iPoint;			//If declared as a forward declaration instead of an include, 
@@ -16,7 +16,7 @@ enum class UI_Element
 	TEXT,
 	BUTTON,
 	SCROLLBAR,
-	INPUTBOX,
+	INPUTBOX
 };
 
 enum class UI_Event
@@ -97,7 +97,8 @@ public:
 	UI_Event	ui_event;							//Defines which events will the UI_Elements send when interacted with.
 	UI_Element	element;							//Enum that defines which kind of element a UI element is.
 
-	j1Module*	listener;							//Callback to j1Module, maybe need to make a virtual event detection function. Whenever an event is triggered, this calls the right module for the event.
+	Module*		listener;								//Callback to j1Module, maybe need to make a virtual event detection function. Whenever an event is triggered, this calls the right module for the event.
+
 	UI*			parent;								//Keeps track of the dependencies between UI elements.
 
 	iPoint		initialPosition;					//Keeps track of the initial position of a UI Element. Create Get/Set Methods?
@@ -105,6 +106,7 @@ public:
 	bool		isFilled;							//Determines if an empty UI Element will have its rect drawn or not.
 
 private:
+
 	iPoint		position;							//Position of the UI element in the world.
 	iPoint		localPosition;						//Position of the UI element relative to its parent's position in the world.
 
