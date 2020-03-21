@@ -58,9 +58,9 @@ bool Render::Awake(pugi::xml_node& config)									//Renderer VSync --> Flags tu
 		camera.x = config.child("camera").attribute("x").as_float();
 		camera.y = config.child("camera").attribute("y").as_float();
 
-		cam.camera_debug = config.child("camera_debug").attribute("value").as_bool();				//Loads the cameraLimit bool state from the config xml file.
-		cam.camera_debug_speed = config.child("camera_debug").attribute("speed").as_float();		//Loads the camera's movement speed value while in debug mode  from the config xml file.
-		cam.smoothingSpeed = config.child("camera").attribute("smoothing_speed").as_float();		//Loads the camera smoothing speed value from the config xml file.
+		//cam.camera_debug = config.child("camera_debug").attribute("value").as_bool();				//Loads the cameraLimit bool state from the config xml file.
+		//cam.camera_debug_speed = config.child("camera_debug").attribute("speed").as_float();		//Loads the camera's movement speed value while in debug mode  from the config xml file.
+		//cam.smoothingSpeed = config.child("camera").attribute("smoothing_speed").as_float();		//Loads the camera smoothing speed value from the config xml file.
 	}
 
 	return ret;
@@ -86,7 +86,7 @@ bool Render::PreUpdate()
 bool Render::Update(float dt)
 {
 	BROFILER_CATEGORY("Render Update", Profiler::Color::DeepSkyBlue);
-	App->win->GetWindowSize(cam.WinWidth, cam.WinHeight);		//Last pixel of window is the 0,0 of the window we see. So we need to add + cam.WinWidth or + cam.WinHeight to set it where we want it to be.
+	//App->win->GetWindowSize(cam.WinWidth, cam.WinHeight);		//Last pixel of window is the 0,0 of the window we see. So we need to add + cam.WinWidth or + cam.WinHeight to set it where we want it to be.
 
 	//fPoint p1Pos = App->entityManager->player->position;													//Sets an fPoint with the position data members of the player1 player entity. Done for readability.
 	//iPoint p1Size( App->entityManager->player->sprite_width , App->entityManager->player->sprite_height);	//Sets an iPoint with the size data members of the player1 player entity. Done for readability.	
@@ -116,8 +116,8 @@ bool Render::Update(float dt)
 	//cam.mapLimit.x = -(App->map->data.tile_width * App->map->data.width) + cam.WinWidth;		//data.tile_width refers to the tile's width in pixels and data.width refers to the map's total width in tiles
 	//cam.mapLimit.y = -(App->map->data.tile_height * App->map->data.height) + cam.WinHeight;		//data.tile_height refers to the tile's height in pixels and data.height refers to the map's total height in tiles.
 	
-	if (cam.camera_debug == false)									//If camera_debug is true then the camera is freed and can be operated to be moved wherever on the world.
-	{
+	//if (cam.camera_debug == false)									//If camera_debug is true then the camera is freed and can be operated to be moved wherever on the world.
+	//{
 		//We set the camera position according to the mid positions.
 		//camera.x = cam.MidPos.x;
 		//camera.y = cam.MidPos.y; //Commented
@@ -140,7 +140,7 @@ bool Render::Update(float dt)
 		//{
 		//	camera.y = cam.mapLimit.y;
 		//}
-	}
+	//}
 	
 	return true;
 }

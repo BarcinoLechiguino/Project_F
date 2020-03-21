@@ -2,34 +2,8 @@
 #define __j1RENDER_H__
 
 #include "SDL/include/SDL.h"
-#include "p2Point.h"
+#include "Point.h"
 #include "Module.h"
-
-struct fixedCamera
-{
-	p2Point<float>	MidPos;					//Keeps track of the mid position between P1 and P2
-	p2Point<float>	MidPosPostMovement;		//MidPosition after movement. Related to lerp.
-	p2Point<float>	p1;						//Keeps track of the position the camera would be if it was fixed on P1
-	p2Point<float>	p2;						//Keeps track of the position the camera would be if it was fixed on P1
-	p2Point<float>	p1PostMovement;			//Keeps track of the position of P1 after movement. Related to lerp.
-	p2Point<float>	p2PostMovement;			//Keeps track of the position of P1 after movement. Related to lerp.
-	p2Point<uint>	mapLimit;				//Keeps track of the map's delimitations.
-
-	uint			WinWidth;				//Width of the executing window.
-	uint			WinHeight;				//Height of the executing window.
-	float			smoothingSpeed;			//Value that defines how much time it takes the camera to reach its destination. Should be kept between 0 and 1 (Closer to 0 slower, closer to 1 faster). Related to lerp.
-
-	bool			camera_debug;			//Will enable or disable camera limits
-	float			camera_debug_speed;	//Camera's movement speed while in camera debug mode.
-
-	//Lerp Method. Takes the position where, for example, P1 is at, the position  P1 wants to go to and the smoothingSpeed.
-	float lerp(float position, float target, float amount) 
-	{
-		float trail = (target - position) * amount;
-
-		return position + trail;
-	}
-};
 
 class Render : public Module
 {
@@ -73,7 +47,6 @@ public:
 	void SetBackgroundColor(SDL_Color color);
 
 public:
-	fixedCamera cam;
 
 	SDL_Renderer*	renderer;
 	SDL_Rect		camera;

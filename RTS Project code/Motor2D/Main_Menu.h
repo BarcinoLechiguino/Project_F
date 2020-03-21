@@ -1,8 +1,6 @@
 #include "Module.h"
-
+#include "SDL/include/SDL_rect.h"
 #include <vector>
-
-//struct SDL_Texture;
 
 class UI;
 class UI_Image;
@@ -37,4 +35,12 @@ public:
 
 	// Called before quitting
 	bool CleanUp();
+
+public:
+
+	UI_Button* play_button;
+	SDL_Rect   play_button_idle;
+	SDL_Rect   play_button_hover;
+	SDL_Rect   play_button_clicked;
+
 };

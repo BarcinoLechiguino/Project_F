@@ -97,6 +97,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="PerfTimer.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Static_Object.cpp" />
@@ -129,6 +130,7 @@
     <ClInclude Include="Map.h" />
     <ClInclude Include="Pathfinding.h" />
     <ClInclude Include="PerfTimer.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Static_Object.h" />
@@ -142,7 +144,7 @@
     <ClInclude Include="p2Defs.h" />
     <ClInclude Include="p2List.h" />
     <ClInclude Include="Module.h" />
-    <ClInclude Include="p2Point.h" />
+    <ClInclude Include="Point.h" />
     <ClInclude Include="Render.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Window.h" />

@@ -3,7 +3,7 @@
 #define __j1PATHFINDING_H__
 
 #include "Module.h"
-#include "p2Point.h"
+#include "Point.h"
 #include <vector>
 
 #define DEFAULT_PATH_LENGTH 50

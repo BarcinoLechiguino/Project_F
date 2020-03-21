@@ -2,7 +2,7 @@
 #define __j1ENTITY_H__
 
 #include "Module.h"
-#include "p2Point.h"
+#include "Point.h"
 #include "SDL/include/SDL_rect.h"
 #include "Timer.h"
 

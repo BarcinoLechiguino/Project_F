@@ -3,7 +3,7 @@
 
 #include <list>
 #include "PugiXml/src/pugixml.hpp"
-#include "p2Point.h"
+#include "Point.h"
 #include "p2Log.h"
 #include "Module.h"
 #include "Collisions.h"
@@ -203,7 +203,7 @@ private:
 public:
 
 	MapData			data;
-	p2Point<float>	spawn_position_cam;
+	Point<float>	spawn_position_cam;
 	Collider		camera_collider;				//Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
 	uint			winWidth;						//Declared to store the window's width.
 	uint			winHeight;						//Declared to store the window's height.

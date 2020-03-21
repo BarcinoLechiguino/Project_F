@@ -1,6 +1,6 @@
 #include "App.h"
 #include "Module.h"
-#include "p2Point.h"
+#include "Point.h"
 #include "Render.h"
 #include "Input.h"
 #include "p2Log.h"

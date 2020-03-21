@@ -58,7 +58,7 @@ bool Scene::Start()
 {
 	bool ret = false;
 
-	cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
+	//cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
 
 	to_end = false;
 	firstMap	= true;
@@ -128,10 +128,7 @@ bool Scene::Update(float dt)														//Receives dt as an argument.
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
 	
-	//if (App->render->cam.camera_debug == true)
-	//{
-		DebugCameraMovement(dt);							//Camera Movement With Arrow Keys
-	//}
+									//Camera Movement With Arrow Keys
 
 	DebugKeys();											//Debug Keys
 	
@@ -168,7 +165,6 @@ bool Scene::CleanUp()
 	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
 	App->entityManager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
-	
 	App->gui->CleanUp();
 	
 	return true;
@@ -176,7 +172,6 @@ bool Scene::CleanUp()
 
 bool Scene::Load(pugi::xml_node& data)
 {
-
 	if (currentMap != data.child("currentMap").attribute("num").as_int())
 	{
 		LOG("Calling switch maps");
@@ -305,7 +300,7 @@ void Scene::DebugKeys()
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)			//Enable / Diable free camera movement Key
 	{
-		App->render->cam.camera_debug = !App->render->cam.camera_debug;
+		//App->render->cam.camera_debug = !App->render->cam.camera_debug;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)			//PathfindingCollisions meta layer Debug Key
@@ -352,25 +347,5 @@ void Scene::PathfindingDebug()
 		//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
 
 		App->render->Blit(path_debug_tex, pos.x, pos.y);
-	}
-}
-
-void Scene::DebugCameraMovement(float dt)
-{
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
-	{
-		App->render->camera.x += ceil(cam_debug_speed * dt);	//As the value is multiplied by dt, camera movement will be adjusted to the framerate.  (100 * 0.033s (30fps), 100 * 0.066s (60fps)...)
-	}
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		App->render->camera.x -= ceil(cam_debug_speed * dt);	//Ceil rounds up all the decimal values, returning the smallest integral value not less than the given value. 
-	}
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		App->render->camera.y += ceil(cam_debug_speed * dt);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		App->render->camera.y -= ceil(cam_debug_speed * dt);
 	}
 }

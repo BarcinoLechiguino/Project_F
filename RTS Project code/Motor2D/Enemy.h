@@ -5,7 +5,8 @@
 #include "Entity.h"
 #include "Dynamic_Object.h"
 #include "Animation.h"
-#include "p2Point.h"
+#include "Point.h"
+#include <vector>
 
 enum class Entity_State
 {

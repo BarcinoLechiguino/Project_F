@@ -1,6 +1,6 @@
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "p2Point.h"
+#include "Point.h"
 #include "App.h"
 #include "Render.h"
 #include "Textures.h"

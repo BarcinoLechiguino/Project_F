@@ -128,50 +128,11 @@ bool Gui::PostUpdate()
 	//escape = true;
 	App->console->DrawBackgroundElement();		//THIS HERE
 
-
 	for (std::list<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
 	{
-		switch ((*element_iterator)->element)
+		if ((*element_iterator)->isVisible)
 		{
-		case UI_Element::IMAGE:
-			if ((*element_iterator)->isVisible)
-			{
-				(*element_iterator)->Draw();
-			}
-
-			break;
-
-		case UI_Element::TEXT:
-			if ((*element_iterator)->isVisible)
-			{
-				(*element_iterator)->Draw();
-			}
-
-			break;
-
-		case UI_Element::BUTTON:
-			if ((*element_iterator)->isVisible)
-			{
-				(*element_iterator)->Draw();
-			}
-
-			break;
-
-		case UI_Element::SCROLLBAR:
-			if ((*element_iterator)->isVisible)
-			{
-				(*element_iterator)->Draw();
-			}
-
-			break;
-
-		case UI_Element::INPUTBOX:
-			if ((*element_iterator)->isVisible)
-			{
-				(*element_iterator)->Draw();
-			}
-			
-			break;
+			(*element_iterator)->Draw();
 		}
 	}
 

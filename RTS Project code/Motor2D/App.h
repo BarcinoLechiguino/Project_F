@@ -25,6 +25,7 @@ class Fonts;
 class Gui;
 class Console;
 class Main_Menu;
+class Player;
 
 class j1App
 {
@@ -92,18 +93,19 @@ public:
 	Window*			win;
 	Input*			input;
 	Render*			render;
-	Textures*			tex;
+	Textures*		tex;
 	Audio*			audio;
 	Fonts*			font;
 	Scene*			scene;
-	Map*				map;
-	PathFinding*		pathfinding;
+	Map*			map;
+	PathFinding*	pathfinding;
 	EntityManager*	entityManager;
 	Collisions*		collisions;
 	Fade_Scene*		fadescene;
-	Gui*				gui;
-	Console*			console;
-	Main_Menu*			mainmenu;
+	Gui*			gui;
+	Console*		console;
+	Main_Menu*		mainmenu;
+	Player*			player;
 
 	uint				frame_cap;				//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;		//Stores the original frame cap at application start.

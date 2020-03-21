@@ -100,6 +100,9 @@
     <ClCompile Include="Pathfinding.cpp">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Desenvolupament  ========\Modules\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -112,9 +115,6 @@
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="p2Log.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Point.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="p2SString.h">
@@ -219,6 +219,12 @@
     <ClInclude Include="Pathfinding.h">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>Desenvolupament  ========\Modules\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Programacio 2 ===========</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
@@ -293,6 +299,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Entities\Static\Obstacles">
       <UniqueIdentifier>{15ffcaff-8973-48e6-b92f-ec6be2c7d83a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Player">
+      <UniqueIdentifier>{50d6b2ae-2ffa-49d0-af6e-b9c7d32974a6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

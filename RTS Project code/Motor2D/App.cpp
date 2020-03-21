@@ -18,6 +18,7 @@
 #include "Gui.h"
 #include "Console.h"
 #include "FadeScene.h"
+#include "Player.h"
 #include "Brofiler\Brofiler.h"
 
 //#include "mmgr/mmgr.h"
@@ -44,6 +45,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	gui				= new Gui();
 	console			= new Console();
 	mainmenu		= new Main_Menu();
+	player			= new Player();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -59,6 +61,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(mainmenu);
 	AddModule(scene);
 	AddModule(entityManager);
+	AddModule(player);
 	AddModule(collisions);
 	AddModule(fadescene);
 	

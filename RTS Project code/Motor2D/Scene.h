@@ -66,7 +66,6 @@ public:
 
 	void PathfindingDebug();
 
-	void DebugCameraMovement(float dt);
 
 
 public:
@@ -85,6 +84,7 @@ public:
 	std::vector<Enemy*>   enemy_test;
 
 private:
+
 	float					cam_debug_speed;	//Will store the movement speed for the camera while in debug mode. Done for readability.
 	//SDL_Texture*			mouse_debug_tex;	//Texture that will appear at mouse position when pathfinding is being debugged.
 	SDL_Texture*			path_debug_tex;		//Texture that will appear at the path tiles when pathfinding is being debugged.
@@ -109,5 +109,4 @@ public:
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
 };
-
 #endif // __j1SCENE_H__

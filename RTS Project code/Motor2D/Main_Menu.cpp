@@ -23,17 +23,22 @@ bool Main_Menu::Awake(pugi::xml_node&)
 // Called before the first frame
 bool Main_Menu::Start()
 {
+
+
 	return true;
 }
 
 // Called before all Updates
 bool Main_Menu::PreUpdate()
 {
+	//Load Scene unload Main Menu
 	if (App->input->GetKey(SDL_SCANCODE_L) == KEY_DOWN)
 	{
 		App->scene->Enable();
 		Disable();
 	}
+
+	//play_button = App->gui->CreateButton(UI_Element::BUTTON,100,100,true,true,false,nullptr,)
 
 	return true;
 }
