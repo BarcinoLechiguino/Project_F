@@ -11,13 +11,11 @@ public:
 
 	bool Awake(pugi::xml_node& conf);
 
-	bool Init();
-
 	bool Start();
 
 	bool PreUpdate();
 
-	bool Update();
+	bool Update(float dt);
 
 	bool PostUpdate();
 
@@ -25,12 +23,17 @@ public:
 
 private:
 
-	void CameraController();
+	void CameraController(float dt);
 
+	void Cursor();
 public:
 
-	iPoint scene_camera_limit_x;
+	iPoint scene_camera_limit;
 
-	iPoint camera_speed;
+	fPoint camera_speed;
+
+	iPoint mouse_position;
+
+	SDL_Texture* cursor_idle;
 
 };

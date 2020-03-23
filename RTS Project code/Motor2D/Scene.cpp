@@ -70,11 +70,11 @@ bool Scene::Start()
 
 	//test
 	rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0));
-
 	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 1, 1));
-
+	
 	rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
 	
+
 	LoadGuiElements();
 	
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
@@ -128,8 +128,6 @@ bool Scene::Update(float dt)														//Receives dt as an argument.
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
 	
-									//Camera Movement With Arrow Keys
-
 	DebugKeys();											//Debug Keys
 	
 	App->map->Draw();										//Map Draw
@@ -278,10 +276,11 @@ void Scene::DebugKeys()
 	{
 		App->fadescene->FadeToBlack("Test_map.tmx");
 	}
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)			//Load Second Level Key
-	{
-		App->fadescene->FadeToBlack("Test_map_2.tmx");
-	}
+
+	//if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)			//Load Second Level Key
+	//{
+	//	App->fadescene->FadeToBlack("Test_map_2.tmx");
+	//}
 
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
