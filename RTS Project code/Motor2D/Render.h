@@ -1,5 +1,5 @@
-#ifndef __j1RENDER_H__
-#define __j1RENDER_H__
+#ifndef __RENDER_H__
+#define __RENDER_H__
 
 #include "SDL/include/SDL.h"
 #include "Point.h"
@@ -54,4 +54,4 @@ public:
 	SDL_Color		background;
 };
 
-#endif // __j1RENDER_H__
+#endif // __RENDER_H__

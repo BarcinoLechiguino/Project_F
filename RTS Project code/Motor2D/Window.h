@@ -1,5 +1,5 @@
-#ifndef __j1WINDOW_H__
-#define __j1WINDOW_H__
+#ifndef __WINDOW_H__
+#define __WINDOW_H__
 
 #include "Module.h"
 
@@ -43,4 +43,4 @@ public:
 	int		scale;
 };
 
-#endif // __j1WINDOW_H__
+#endif // __WINDOW_H__

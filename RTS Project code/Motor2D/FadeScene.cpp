@@ -1,6 +1,6 @@
 #include <math.h>
 #include "p2Log.h"
-#include "App.h"
+#include "Application.h"
 #include "FadeScene.h"
 #include "Render.h"
 #include "Gui.h"
@@ -49,7 +49,7 @@ bool Fade_Scene::Update(float dt)
 	{
 		case fade_step::fade_to_black:
 		{
-			if (now >= total_time) //Point where the screen is totally black, and the new map is loaded.
+			if (now >= total_time)											//Point where the screen is totally black, and the new map is loaded.
 			{
 				App->map->ChangeMap(mapName);								//Here the map is changed
 				

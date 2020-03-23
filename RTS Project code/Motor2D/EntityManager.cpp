@@ -1,11 +1,12 @@
-#include "EntityManager.h"
 #include "p2Log.h"
+#include "Application.h"
+#include "Window.h"
+#include "Input.h"
 #include "Render.h"
 #include "Map.h"
-#include "App.h"
 #include "Collisions.h"
-#include "Input.h"
-#include "Window.h"
+#include "EntityManager.h"
+
 #include "Brofiler\Brofiler.h"
 
 #include "Rock.h"

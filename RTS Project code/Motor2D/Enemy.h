@@ -1,5 +1,5 @@
-#ifndef __j1Enemy_H__
-#define __j1Enemy_H__
+#ifndef __ENEMY_H__
+#define __ENEMY_H__
 
 #include "Module.h"
 #include "Entity.h"
@@ -60,4 +60,4 @@ public:
 
 };
 
-#endif // __j1ENEMY_H__
+#endif // __ENEMY_H__

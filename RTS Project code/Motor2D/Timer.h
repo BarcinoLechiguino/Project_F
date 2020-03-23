@@ -1,5 +1,5 @@
-#ifndef __j1TIMER_H__
-#define __j1TIMER_H__
+#ifndef __TIMER_H__
+#define __TIMER_H__
 
 #include "p2Defs.h"
 
@@ -18,4 +18,4 @@ private:
 	uint32	started_at;
 };
 
-#endif //__j1TIMER_H__
+#endif //__TIMER_H__

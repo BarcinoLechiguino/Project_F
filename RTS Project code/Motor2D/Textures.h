@@ -1,5 +1,5 @@
-#ifndef __j1TEXTURES_H__
-#define __j1TEXTURES_H__
+#ifndef __TEXTURES_H__
+#define __TEXTURES_H__
 
 #include "Module.h"
 
@@ -36,4 +36,4 @@ public:
 };
 
 
-#endif // __j1TEXTURES_H__
+#endif // __TEXTURES_H__

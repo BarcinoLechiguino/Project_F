@@ -1,5 +1,5 @@
-#ifndef __j1FONTS_H__
-#define __j1FONTS_H__
+#ifndef __FONTS_H__
+#define __FONTS_H__
 
 #include "Module.h"
 #include "SDL\include\SDL_pixels.h"
@@ -49,4 +49,4 @@ public:
 };
 
 
-#endif // __j1FONTS_H__
+#endif // __FONTS_H__

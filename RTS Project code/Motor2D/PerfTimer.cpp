@@ -1,5 +1,5 @@
 // ----------------------------------------------------
-// j1PerfTimer.cpp
+// PerfTimer.cpp
 // Slow timer with microsecond precision
 // ----------------------------------------------------
 
@@ -13,7 +13,7 @@ PerfTimer::PerfTimer()
 {
 	if (frequency == 0)
 	{
-		frequency = SDL_GetPerformanceFrequency();		//Sets the frequency cycles in seconds (coming from microsenconds).
+		frequency = SDL_GetPerformanceFrequency();									//Sets the frequency cycles in seconds (coming from microsenconds).
 	}
 	
 	Start();
@@ -22,7 +22,7 @@ PerfTimer::PerfTimer()
 // ---------------------------------------------
 void PerfTimer::Start()
 {
-	started_at = SDL_GetPerformanceCounter();		//Initializes the timer in microseconds.	
+	started_at = SDL_GetPerformanceCounter();										//Initializes the timer in microseconds.	
 }
 
 // ---------------------------------------------

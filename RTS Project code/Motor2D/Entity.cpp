@@ -1,8 +1,6 @@
-#include "EntityManager.h"
-#include "Entity.h"
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "App.h"
+#include "Application.h"
 #include "Textures.h"
 #include "Map.h"
 #include "Input.h"
@@ -11,6 +9,8 @@
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
+#include "EntityManager.h"
+#include "Entity.h"
 
 Entity::Entity(int x, int y, ENTITY_TYPE type) : tile_position(x, y), type(type), entity_sprite(nullptr), collider(nullptr), animation(nullptr)	//Initializes the variables to the specified values when the constructor is called.
 {

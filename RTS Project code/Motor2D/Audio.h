@@ -1,5 +1,5 @@
-#ifndef __j1AUDIO_H__
-#define __j1AUDIO_H__
+#ifndef __AUDIO_H__
+#define __AUDIO_H__
 
 #include "Module.h"
 #include "SDL_mixer\include\SDL_mixer.h"
@@ -54,4 +54,4 @@ public:
 	uint general_volume;
 };
 
-#endif // __j1AUDIO_H__
+#endif // __AUDIO_H__

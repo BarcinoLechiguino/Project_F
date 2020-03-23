@@ -1,15 +1,15 @@
 // ----------------------------------------------------
-// j1Module.h
+// Module.h
 // Interface for all engine modules
 // ----------------------------------------------------
 
-#ifndef __j1MODULE_H__
-#define __j1MODULE_H__
+#ifndef __MODULE_H__
+#define __MODULE_H__
 
 #include "PugiXml\src\pugixml.hpp"
 #include <string>
 
-class j1App;
+class Application;
 struct SDL_Texture;
 struct SDL_Rect; 
 class Animation; 
@@ -114,4 +114,4 @@ public:
 	bool is_active;
 };
 
-#endif // __j1MODULE_H__
+#endif // __MODULE_H__

@@ -1,10 +1,10 @@
-#ifndef __j1ENTITY_MANAGER_H__
-#define __j1ENTITY_MANAGER_H__
+#ifndef __ENTITY_MANAGER_H__
+#define __ENTITY_MANAGER_H__
 
-#include "Module.h"
-#include "Entity.h"		
 #include <list>
 #include <algorithm>
+#include "Module.h"
+#include "Entity.h"		
 #define MAX_ENEMIES 200
 
 struct SDL_Texture;
@@ -40,7 +40,7 @@ public:
 public:
 
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
-	void CreatePlayers();													//Creates P1 and P2. It is called in the j1Scene.cpp.
+	void CreatePlayers();													//Creates P1 and P2. It is called in the Scene.cpp.
 	//void AddItems(ENTITY_TYPE type, int x, int y);
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
 	
@@ -63,4 +63,4 @@ public:
 
 	EnemyData				enemies[MAX_ENEMIES];	//Use this if entities need to be processed in an array instead of a list.
 };
-#endif // __j1ENTITY_MANAGER_H__
+#endif // __ENTITY_MANAGER_H__

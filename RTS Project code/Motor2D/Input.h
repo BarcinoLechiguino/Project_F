@@ -1,5 +1,5 @@
-#ifndef __j1INPUT_H__
-#define __j1INPUT_H__
+#ifndef __INPUT_H__
+#define __INPUT_H__
 
 #include "Module.h"
 
@@ -10,7 +10,7 @@
 
 struct SDL_Rect;
 
-enum j1EventWindow
+enum EventWindow
 {
 	WE_QUIT = 0,
 	WE_HIDE = 1,
@@ -18,7 +18,7 @@ enum j1EventWindow
 	WE_COUNT
 };
 
-enum j1KeyState
+enum KeyState
 {
 	KEY_IDLE = 0,
 	KEY_DOWN,
@@ -48,15 +48,15 @@ public:
 	bool CleanUp();
 
 	// Gather relevant win events
-	bool GetWindowEvent(j1EventWindow ev);
+	bool GetWindowEvent(EventWindow ev);
 
 	// Check key states (includes mouse and joy buttons)
-	j1KeyState GetKey(int id) const
+	KeyState GetKey(int id) const
 	{
 		return keyboard[id];
 	}
 
-	j1KeyState GetMouseButtonDown(int id) const
+	KeyState GetMouseButtonDown(int id) const
 	{
 		return mouse_buttons[id - 1];
 	}
@@ -94,8 +94,8 @@ private:
 
 private:
 	bool		windowEvents[WE_COUNT];
-	j1KeyState*	keyboard;
-	j1KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
+	KeyState*	keyboard;
+	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
 	int			mouse_motion_x;
 	int			mouse_motion_y;
 	int			mouse_x;
@@ -110,4 +110,4 @@ private:
 	int			cursorIndex;
 };
 
-#endif // __j1INPUT_H__
+#endif // __INPUT_H__

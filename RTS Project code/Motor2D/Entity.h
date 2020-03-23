@@ -1,5 +1,5 @@
-﻿#ifndef __j1ENTITY_H__
-#define __j1ENTITY_H__
+﻿#ifndef __ENTITY_H__
+#define __ENTITY_H__
 
 #include "Module.h"
 #include "Point.h"
@@ -64,4 +64,4 @@ public:
 	Animation*		animation;				//Animation of the entity.
 };
 
-#endif // __j1ENTITY_H__
+#endif // __ENTITY_H__

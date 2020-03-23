@@ -1,5 +1,5 @@
-#ifndef __j1CONSOLE_H__
-#define __j1CONSOLE_H__
+#ifndef __jONSOLE_H__
+#define __CONSOLE_H__
 
 #include "Module.h"
 
@@ -133,4 +133,4 @@ private:
 	const char*			second_map;
 };
 
-#endif // !__j1CONSOLE_H__
+#endif // !__CONSOLE_H__

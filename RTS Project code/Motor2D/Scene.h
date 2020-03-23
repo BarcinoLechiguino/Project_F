@@ -1,5 +1,5 @@
-#ifndef __j1SCENE_H__
-#define __j1SCENE_H__
+#ifndef __SCENE_H__
+#define __SCENE_H__
 
 #include "Module.h"
 #include "PerfTimer.h"
@@ -109,4 +109,4 @@ public:
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
 };
-#endif // __j1SCENE_H__
+#endif // __SCENE_H__

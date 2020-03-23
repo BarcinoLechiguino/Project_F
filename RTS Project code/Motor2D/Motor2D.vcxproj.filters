@@ -31,9 +31,6 @@
     <ClCompile Include="Main_Menu.cpp">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="App.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClCompile>
@@ -103,6 +100,9 @@
     <ClCompile Include="Player.cpp">
       <Filter>Desenvolupament  ========\Modules\Player</Filter>
     </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Desenvolupament  ========\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -149,9 +149,6 @@
     </ClInclude>
     <ClInclude Include="Main_Menu.h">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="App.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Desenvolupament  ========\Core</Filter>
@@ -224,6 +221,9 @@
     </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Programacio 2 ===========</Filter>
+    </ClInclude>
+    <ClInclude Include="Application.h">
+      <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

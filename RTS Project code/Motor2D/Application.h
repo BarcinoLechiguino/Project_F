@@ -1,5 +1,5 @@
-#ifndef __j1APP_H__
-#define __j1APP_H__
+#ifndef __APPLICATION_H__
+#define __APPLICATION_H__
 
 #include <list>
 #include <string>
@@ -14,7 +14,6 @@ class Input;
 class Render;
 class Textures;
 class Audio;
-class j1SceneMenu;
 class Scene;
 class Map;
 class PathFinding;
@@ -27,15 +26,15 @@ class Console;
 class Main_Menu;
 class Player;
 
-class j1App
+class Application
 {
 public:
 
 	// Constructor
-	j1App(int argc, char* args[]);
+	Application(int argc, char* args[]);
 
 	// Destructor
-	virtual ~j1App();
+	virtual ~Application();
 
 	// Called before render is available
 	bool Awake();
@@ -90,22 +89,22 @@ private:
 public:
 
 	// Modules
-	Window*			win;
-	Input*			input;
-	Render*			render;
-	Textures*		tex;
-	Audio*			audio;
-	Fonts*			font;
-	Scene*			scene;
-	Map*			map;
-	PathFinding*	pathfinding;
-	EntityManager*	entityManager;
-	Collisions*		collisions;
-	Fade_Scene*		fadescene;
-	Gui*			gui;
-	Console*		console;
-	Main_Menu*		mainmenu;
-	Player*			player;
+	Window*				win;
+	Input*				input;
+	Render*				render;
+	Textures*			tex;
+	Audio*				audio;
+	Fonts*				font;
+	Scene*				scene;
+	Map*				map;
+	PathFinding*		pathfinding;
+	EntityManager*		entityManager;
+	Collisions*			collisions;
+	Fade_Scene*			fadescene;
+	Gui*				gui;
+	Console*			console;
+	Main_Menu*			mainmenu;
+	Player*				player;
 
 	uint				frame_cap;				//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;		//Stores the original frame cap at application start.
@@ -133,8 +132,8 @@ private:
 	uint64				frame_count;			
 	Timer				startup_timer;			//Used to keep track of time since app start.
 	Timer				frame_timer;			//Keeps track of everything time related in the span of a frame.
-	PerfTimer			perf_timer;				//Creates a pointer to j1PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
-	PerfTimer			last_second_timer;		//Creates a pointer to j1PerfTimer tool. Used to calculate variables in spans of one second.
+	PerfTimer			perf_timer;				//Creates a pointer to PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
+	PerfTimer			last_second_timer;		//Creates a pointer to PerfTimer tool. Used to calculate variables in spans of one second.
 	uint32				last_update_ms;			//Calculates the amount of milliseconds that the last update spent running.
 	uint32				frames_last_second;		//Calculates the amount of frames that where processed the last second.
 	uint32				prev_sec_frames;		
@@ -146,6 +145,6 @@ private:
 	char*				vsyncOnOff;				//String that is set to 'On' when Vsync is on and 'Off' when it is off.
 };
 
-extern j1App* App; // No student is asking me about that ... odd :-S
+extern Application* App; // No student is asking me about that ... odd :-S
 
 #endif

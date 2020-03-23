@@ -1,6 +1,6 @@
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "App.h"
+#include "Application.h"
 #include "Input.h"
 #include "Window.h"
 #include "Gui.h"
@@ -13,9 +13,9 @@ Input::Input() : Module()
 {
 	name = ("input");
 
-	keyboard = new j1KeyState[MAX_KEYS];
-	memset(keyboard, KEY_IDLE, sizeof(j1KeyState) * MAX_KEYS);
-	memset(mouse_buttons, KEY_IDLE, sizeof(j1KeyState) * NUM_MOUSE_BUTTONS);
+	keyboard = new KeyState[MAX_KEYS];
+	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
+	memset(mouse_buttons, KEY_IDLE, sizeof(KeyState) * NUM_MOUSE_BUTTONS);
 }
 
 // Destructor
@@ -165,7 +165,7 @@ bool Input::CleanUp()
 }
 
 // ---------
-bool Input::GetWindowEvent(j1EventWindow ev)
+bool Input::GetWindowEvent(EventWindow ev)
 {
 	return windowEvents[ev];
 }

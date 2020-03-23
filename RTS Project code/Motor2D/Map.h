@@ -1,5 +1,5 @@
-#ifndef __j1MAP_H__
-#define __j1MAP_H__
+#ifndef __MAP_H__
+#define __MAP_H__
 
 #include <list>
 #include "PugiXml/src/pugixml.hpp"
@@ -232,4 +232,4 @@ private:
 	int bottom_left_y_row; //Esquina izquierda abajo
 };
 
-#endif // __j1MAP_H__
+#endif // __MAP_H__

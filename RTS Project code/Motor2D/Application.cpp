@@ -2,7 +2,7 @@
 #include <list>
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "App.h"
+#include "Application.h"
 #include "Window.h"
 #include "Input.h"
 #include "Render.h"
@@ -24,7 +24,7 @@
 //#include "mmgr/mmgr.h"
 
 // Constructor
-j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
+Application::Application(int argc, char* args[]) : argc(argc), args(args)
 {
 	PERF_START(perf_timer);
 
@@ -76,7 +76,7 @@ j1App::j1App(int argc, char* args[]) : argc(argc), args(args)
 }
 
 // Destructor
-j1App::~j1App()
+Application::~Application()
 {
 	// release modules
 	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() ; ++item)
@@ -87,14 +87,14 @@ j1App::~j1App()
 	modules.clear();
 }
 
-void j1App::AddModule(Module* module)
+void Application::AddModule(Module* module)
 {
 	module->Init();
 	modules.push_back(module);
 }
 
 // Called before render is available
-bool j1App::Awake()
+bool Application::Awake()
 {
 	PERF_START(perf_timer);
 	
@@ -135,7 +135,7 @@ bool j1App::Awake()
 }
 
 // Called before the first frame
-bool j1App::Start()
+bool Application::Start()
 {
 	PERF_START(perf_timer);
 	
@@ -157,7 +157,7 @@ bool j1App::Start()
 }
 
 // Called each loop iteration
-bool j1App::Update()
+bool Application::Update()
 {
 	BROFILER_CATEGORY("Update_App.cpp", Profiler::Color::Aqua)
 	bool ret = true;
@@ -180,7 +180,7 @@ bool j1App::Update()
 }
 
 // ---------------------------------------------
-pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
+pugi::xml_node Application::LoadConfig(pugi::xml_document& config_file) const
 {
 	pugi::xml_node ret;
 
@@ -195,7 +195,7 @@ pugi::xml_node j1App::LoadConfig(pugi::xml_document& config_file) const
 }
 
 // ---------------------------------------------
-void j1App::PrepareUpdate()
+void Application::PrepareUpdate()
 {
 	frame_count++;
 	frames_last_second++;
@@ -207,7 +207,7 @@ void j1App::PrepareUpdate()
 }
 
 // ---------------------------------------------
-void j1App::FinishUpdate()
+void Application::FinishUpdate()
 {
 	if(want_to_save)
 		SavegameNow();
@@ -272,7 +272,7 @@ void j1App::FinishUpdate()
 }
 
 // Call modules before each loop iteration
-bool j1App::PreUpdate()
+bool Application::PreUpdate()
 {
 	BROFILER_CATEGORY("PreUpdate_App.cpp", Profiler::Color::Aqua)
 	bool ret = true;
@@ -291,7 +291,7 @@ bool j1App::PreUpdate()
 }
 
 // Call modules on each loop iteration
-bool j1App::DoUpdate()
+bool Application::DoUpdate()
 {
 	bool ret = true;
 
@@ -315,7 +315,7 @@ bool j1App::DoUpdate()
 }
 
 // Call modules after each loop iteration
-bool j1App::PostUpdate()
+bool Application::PostUpdate()
 {
 	BROFILER_CATEGORY("PostUpdate_App.cpp", Profiler::Color::Aqua)
 	bool ret = true;
@@ -334,7 +334,7 @@ bool j1App::PostUpdate()
 }
 
 // Called before quitting
-bool j1App::CleanUp()
+bool Application::CleanUp()
 {
 	bool ret = true;
 
@@ -350,13 +350,13 @@ bool j1App::CleanUp()
 }
 
 // ---------------------------------------
-int j1App::GetArgc() const
+int Application::GetArgc() const
 {
 	return argc;
 }
 
 // ---------------------------------------
-const char* j1App::GetArgv(int index) const
+const char* Application::GetArgv(int index) const
 {
 	if(index < argc)
 		return args[index];
@@ -365,18 +365,18 @@ const char* j1App::GetArgv(int index) const
 }
 
 // ---------------------------------------
-const char* j1App::GetTitle() const
+const char* Application::GetTitle() const
 {
 	return title.c_str();
 }
 
 // ---------------------------------------
-const char* j1App::GetOrganization() const
+const char* Application::GetOrganization() const
 {
 	return organization.c_str();
 }
 
-float j1App::GetDt()
+float Application::GetDt()
 {
 	//LOG("dt is: %f", dt);
 	if (!pause)
@@ -390,7 +390,7 @@ float j1App::GetDt()
 }
 
 // Load / Save
-void j1App::LoadGame(const char* file)
+void Application::LoadGame(const char* file)
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list
@@ -398,7 +398,7 @@ void j1App::LoadGame(const char* file)
 }
 
 // ---------------------------------------
-void j1App::SaveGame(const char* file) const
+void Application::SaveGame(const char* file) const
 {
 	// we should be checking if that file actually exist
 	// from the "GetSaveGames" list ... should we overwrite ?
@@ -413,7 +413,7 @@ void GetSaveGames(std::list<std::string>& list_to_fill)
 	// need to add functionality to file_system module for this to work
 }
 
-bool j1App::LoadGameNow()
+bool Application::LoadGameNow()
 {
 	bool ret = false;
 
@@ -455,7 +455,7 @@ bool j1App::LoadGameNow()
 	return ret;
 }
 
-bool j1App::SavegameNow() //Chenged to non const due to list unknown problem
+bool Application::SavegameNow() //Chenged to non const due to list unknown problem
 {
 	bool ret = true;
 
