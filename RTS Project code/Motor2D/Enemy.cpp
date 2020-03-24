@@ -10,9 +10,10 @@
 #include "Collisions.h"
 #include "FadeScene.h"
 #include "Audio.h"
-#include "Enemy.h"
-#include "EntityManager.h"
 #include "Pathfinding.h"
+
+#include "EntityManager.h"
+
 
 Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {

@@ -50,7 +50,7 @@ bool Collisions::PreUpdate()
 		
 		if ((*collider_iterator)->type == Object_Type::UNKNOWN)	//If the delete_collider is set to true this will be run. //Second part breaks with mmgr
 		{
-			(*collider_iterator)->type == Object_Type::SOLID;
+			(*collider_iterator)->type = Object_Type::SOLID;
 		}
 		
 		if ((*collider_iterator)->to_delete == true || (*collider_iterator)->type == Object_Type::NONE)	//If the delete_collider is set to true this will be run. //Second part breaks with mmgr
@@ -216,7 +216,7 @@ void Collisions::LoadColliderFromMap()																			// Remember to call it 
 										//Declares a list item pointer that iterates through the ObjectGroup list and sets it starting position to the first objectgroup in the list.  
 	for (std::list<ObjectGroup*>::iterator object_iterator = App->map->data.objectGroups.begin() ; object_iterator != App->map->data.objectGroups.end(); object_iterator++)
 	{
-		for (int i = 0; i < (*object_iterator)->num_objects; i++)												//This loop will iterate as many times as objects the objectgroup being iterated has. Done like this to avoid wasting memory.
+		for (uint i = 0; i < (*object_iterator)->num_objects; i++)												//This loop will iterate as many times as objects the objectgroup being iterated has. Done like this to avoid wasting memory.
 		{
 			AddCollider(*(*object_iterator)->object[i].collider, (*object_iterator)->object[i].type, NULL);	//Adds a new collider for each object that is iterated.
 			RELEASE((*object_iterator)->object[i].collider);														//Deletes from memory the buffer collider specific for an object. LoadObjectLayers() --> SDL_Rect* collider = new SDL_Rect(); at line 555.

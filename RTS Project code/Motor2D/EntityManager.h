@@ -4,11 +4,20 @@
 #include <list>
 #include <algorithm>
 #include "Module.h"
+#include "Textures.h"
+
 #include "Entity.h"		
+#include "Dynamic_Object.h"
+#include "Static_Object.h"
+
+#include "Rock.h"
+#include "Enemy.h"
+#include "Gatherer.h"
+
 #define MAX_ENEMIES 200
 
 struct SDL_Texture;
-class Enemy;
+
 
 
 struct EnemyData

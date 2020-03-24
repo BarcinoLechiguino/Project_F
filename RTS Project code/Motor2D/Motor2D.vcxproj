@@ -89,6 +89,7 @@
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="FadeScene.cpp" />
     <ClCompile Include="Fonts.cpp" />
+    <ClCompile Include="Gatherer.cpp" />
     <ClCompile Include="Gui.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Application.cpp" />
@@ -126,6 +127,7 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="FadeScene.h" />
+    <ClInclude Include="Gatherer.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Pathfinding.h" />

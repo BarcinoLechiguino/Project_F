@@ -17,7 +17,8 @@ enum class ENTITY_TYPE
 {
 	UNKNOWN_TYPE,
 	ROCK,
-	ENEMY
+	ENEMY,
+	GATHERER
 };
 
 struct EntityData

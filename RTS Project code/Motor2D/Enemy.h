@@ -2,28 +2,9 @@
 #define __ENEMY_H__
 
 #include "Module.h"
-#include "Entity.h"
-#include "Dynamic_Object.h"
 #include "Animation.h"
 #include "Point.h"
 #include <vector>
-
-enum class Entity_State
-{
-	IDLE = 0,
-	PATHING_UP,
-	PATHING_DOWN,
-	PATHING_RIGHT,
-	PATHING_LEFT,
-	PATHING_UP_RIGHT,
-	PATHING_UP_LEFT,
-	PATHING_DOWN_RIGHT,
-	PATHING_DOWN_LEFT,
-	JUMPING,
-	FALLING,
-	DEAD,
-	HURT
-};
 
 class Enemy : public Dynamic_Object
 {

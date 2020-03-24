@@ -1,7 +1,4 @@
 #include "Module.h"
-#include "EntityManager.h"
-#include "Static_Object.h"
-
 
 class Rock : public Static_Object
 {
@@ -21,14 +18,11 @@ public:
 
 	virtual bool CleanUp();
 
-
 private:
 
 public:
 
 	int tile_width;
 	int tile_height;
-
-private:
 
 };

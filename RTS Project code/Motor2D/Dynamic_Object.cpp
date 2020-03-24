@@ -1,5 +1,5 @@
 
-#include "Dynamic_Object.h"
+#include "EntityManager.h"
 
 
 Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)

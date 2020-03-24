@@ -6,8 +6,10 @@
 #include "Timer.h"
 #include "Gui.h"
 #include "UI_Image.h"
-#include "Rock.h"
 #include <vector>
+
+#include "EntityManager.h"
+
 
 struct SDL_Texture;
 
@@ -82,6 +84,7 @@ public:
 
 	std::vector<Rock*>	rock_test;
 	std::vector<Enemy*>   enemy_test;
+	std::vector<Gatherer*>   gatherer_test;
 
 private:
 

@@ -1,7 +1,4 @@
-
 #include "Module.h"
-#include "EntityManager.h"
-#include "Entity.h"
 
 
 class Static_Object : public Entity

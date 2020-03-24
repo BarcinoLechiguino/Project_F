@@ -32,6 +32,8 @@ bool Player::Start()
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
+	selecting = false;
+
 	return true;
 }
 
@@ -47,6 +49,7 @@ bool Player::Update(float dt)
 
 	CameraController(dt);
 
+	SelectionRect();
 
 	Cursor();
 
@@ -87,6 +90,28 @@ void Player::CameraController(float dt)
 	if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
 	{
 		App->render->camera.y += camera_speed.y * dt;
+	}
+}
+
+void Player::SelectionRect()
+{
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		selecting = true;
+
+		selection_start = mouse_position;
+	}
+
+	if (selecting)
+	{
+		selection_rect = { selection_start.x,selection_start.y, mouse_position.x - selection_start.x, mouse_position.y - selection_start.y };
+
+		App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+		{
+			selecting = false;
+		}
 	}
 }
 

@@ -13,10 +13,11 @@
 #include "Console.h"
 #include "Collisions.h"
 #include "Gui.h"
-#include "EntityManager.h"
 #include "Pathfinding.h"
 
 #include "Brofiler\Brofiler.h"
+
+#include "EntityManager.h"
 
 //#include "mmgr/mmgr.h"
 
@@ -71,10 +72,10 @@ bool Scene::Start()
 	//test
 	rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0));
 	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 1, 1));
-	
+	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 0, 2));
+
 	rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
 	
-
 	LoadGuiElements();
 	
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());

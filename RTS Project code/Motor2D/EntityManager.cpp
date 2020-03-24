@@ -5,12 +5,9 @@
 #include "Render.h"
 #include "Map.h"
 #include "Collisions.h"
-#include "EntityManager.h"
-
 #include "Brofiler\Brofiler.h"
 
-#include "Rock.h"
-#include "Enemy.h"
+#include "EntityManager.h"
 
 //#include "mmgr/mmgr.h"
 
@@ -186,6 +183,10 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 		break;
 
+		case ENTITY_TYPE::GATHERER:
+		ret = new Gatherer(x, y, type);
+
+		break;
 	}
 
 	ret->type = type;

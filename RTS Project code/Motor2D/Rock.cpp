@@ -1,10 +1,10 @@
-#include "Rock.h"
 #include "Application.h"
 #include "Render.h"
 #include "Map.h"
 #include "Textures.h"
 #include "Pathfinding.h"
 
+#include "EntityManager.h"
 
 Rock::Rock(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 {
