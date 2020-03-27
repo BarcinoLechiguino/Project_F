@@ -356,10 +356,10 @@ bool Map::LoadMap()
 
 		std::string bg_color = (map.attribute("backgroundcolor").as_string());
 
-		data.background_color.r = 0;
+		data.background_color.r = 126;
 		data.background_color.g = 0;
-		data.background_color.b = 0;
-		data.background_color.a = 0;
+		data.background_color.b = 126;
+		data.background_color.a = 255;
 
 		if (bg_color.length() > 0)
 		{

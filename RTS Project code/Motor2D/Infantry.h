@@ -1,13 +1,13 @@
-#ifndef __GATHERER_H__
-#define __GATHERER_H__
+#ifndef __INFANTRY_H__
+#define __INFANTRY_H__
 
-class Gatherer : public Dynamic_Object
+class Infantry : public Dynamic_Object
 {
 public:
 
-	Gatherer(int x, int y, ENTITY_TYPE type);
+	Infantry(int x, int y, ENTITY_TYPE type);
 
-	~Gatherer();
+	~Infantry();
 
 	bool Awake(pugi::xml_node&);
 

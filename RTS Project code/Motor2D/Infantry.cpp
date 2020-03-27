@@ -14,7 +14,8 @@
 
 #include "EntityManager.h"
 
-Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
+
+Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
 	entity_sprite = App->tex->Load("maps/debug_enemy_tile.png");
 
@@ -23,27 +24,27 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 	speed = 1;
 };
 
-Enemy::~Enemy()  //Destructor. Called at the last frame.
+Infantry::~Infantry()  //Destructor. Called at the last frame.
 {
 
 };
 
-bool Enemy::Awake(pugi::xml_node& config)
-{
-	return true;
-};
-
-bool Enemy::Start()
+bool Infantry::Awake(pugi::xml_node& config)
 {
 	return true;
 };
 
-bool Enemy::PreUpdate()
+bool Infantry::Start()
 {
 	return true;
 };
 
-bool Enemy::Update(float dt, bool doLogic)
+bool Infantry::PreUpdate()
+{
+	return true;
+};
+
+bool Infantry::Update(float dt, bool doLogic)
 {
 	if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 	{
@@ -96,28 +97,18 @@ bool Enemy::Update(float dt, bool doLogic)
 	return true;
 };
 
-bool Enemy::PostUpdate()
+bool Infantry::PostUpdate()
 {
 	return true;
 };
 
-bool Enemy::CleanUp()
+bool Infantry::CleanUp()
 {
 	return true;
 };
 
 // Collision Handling ---------------------------------------
-void Enemy::OnCollision(Collider* C1, Collider* C2)
+void Infantry::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
-}
-
-bool Enemy::Load(pugi::xml_node& data)
-{
-	return true;
-}
-
-bool Enemy::Save(pugi::xml_node&  data) const
-{
-	return true;
 }

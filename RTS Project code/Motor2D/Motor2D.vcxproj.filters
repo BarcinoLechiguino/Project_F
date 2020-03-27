@@ -44,7 +44,7 @@
       <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
     </ClCompile>
     <ClCompile Include="Rock.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static\Obstacles</Filter>
+      <Filter>Desenvolupament  ========\Modules\Entities\Static\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
@@ -104,6 +104,15 @@
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClCompile>
     <ClCompile Include="Gatherer.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClCompile>
+    <ClCompile Include="TownHall.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Infantry.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
     </ClCompile>
   </ItemGroup>
@@ -166,7 +175,7 @@
       <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
     </ClInclude>
     <ClInclude Include="Rock.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static\Obstacles</Filter>
+      <Filter>Desenvolupament  ========\Modules\Entities\Static\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
@@ -229,6 +238,15 @@
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
     <ClInclude Include="Gatherer.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClInclude>
+    <ClInclude Include="TownHall.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Barracks.h">
+      <Filter>Desenvolupament  ========\Modules\Entities\Static\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Infantry.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
     </ClInclude>
   </ItemGroup>
@@ -303,14 +321,17 @@
     <Filter Include="Desenvolupament  ========\Modules\Entities\Dynamic\Enemies">
       <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Static\Obstacles">
-      <UniqueIdentifier>{15ffcaff-8973-48e6-b92f-ec6be2c7d83a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Player">
       <UniqueIdentifier>{50d6b2ae-2ffa-49d0-af6e-b9c7d32974a6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Entities\Dynamic\Allied">
       <UniqueIdentifier>{a7300310-4fa0-4b46-8cbe-f69324b1c8b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entities\Static\Buildings">
+      <UniqueIdentifier>{d8af655e-522b-40ee-b083-1548d8a7be61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Entities\Static\Resources">
+      <UniqueIdentifier>{15ffcaff-8973-48e6-b92f-ec6be2c7d83a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

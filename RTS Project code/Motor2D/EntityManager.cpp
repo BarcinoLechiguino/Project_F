@@ -124,45 +124,6 @@ void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision 
 	}
 }
 
-bool EntityManager::Save(pugi::xml_node& data)
-{
-	
-
-	/*pugi::xml_node mecha = data.append_child("mecha");
-	pugi::xml_node alien = data.append_child("alien");
-
-	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
-	{
-		if ((*entity_iterator)->type == ENTITY_TYPE::MECHA)
-			(*entity_iterator)->Save(mecha);
-		if ((*entity_iterator)->type == ENTITY_TYPE::ALIEN)
-			(*entity_iterator)->Save(alien);
-	}
-
-	for (int i = 0; i < MAX_ENEMIES; ++i)
-	{
-		if (enemies[i].type == ENTITY_TYPE::MECHA) {
-			pugi::xml_node position = mecha.append_child("position");
-			position.append_attribute("x") = enemies[i].position.x;
-			position.append_attribute("y") = enemies[i].position.y;
-		}
-		if (enemies[i].type == ENTITY_TYPE::ALIEN) {
-			pugi::xml_node position = alien.append_child("position");
-			position.append_attribute("x") = enemies[i].position.x;
-			position.append_attribute("y") = enemies[i].position.y;
-		}	
-	}*/
-
-	return true;
-}
-
-bool EntityManager::Load(pugi::xml_node& data)
-{
-
-	return true;
-}
-
-
 // -------------------------------------- ENTITY MANAGING METHODS --------------------------------------
 Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 {

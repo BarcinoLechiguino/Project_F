@@ -13,6 +13,9 @@
 #include "Rock.h"
 #include "Enemy.h"
 #include "Gatherer.h"
+#include "TownHall.h"
+#include "Barracks.h"
+#include "Infantry.h"
 
 #define MAX_ENEMIES 200
 
@@ -54,9 +57,6 @@ public:
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
 	
 	void OnCollision(Collider* C1, Collider* C2);
-
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&);
 
 public:
 

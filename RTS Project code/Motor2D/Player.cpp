@@ -27,8 +27,8 @@ bool Player::Start()
 
 	scene_camera_limit = iPoint(0, 1000);
 
-	camera_speed.x = 500.0f;
-	camera_speed.y = 500.0f;
+	camera_speed.x = 700.0f;
+	camera_speed.y = 700.0f;
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 

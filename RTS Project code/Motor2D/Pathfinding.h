@@ -37,7 +37,8 @@ public:
 
 	uchar GetTileAt(const iPoint& pos) const;								// Utility: return the walkability value of a tile
 
-	bool ChangeWalkability(const iPoint& pos, uchar walkability);			//Change walkability of a tile in array
+	bool ChangeWalkability(const iPoint& pos, uchar walkability);			//Change walkability of a tile in map array
+
 private:
 
 	
