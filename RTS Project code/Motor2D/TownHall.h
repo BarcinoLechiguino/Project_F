@@ -25,6 +25,9 @@ public:
 	int tile_width;
 	int tile_height;
 
+	int tiles_occupied_x;
+	int tiles_occupied_y;
+
 	std::vector<iPoint> tiles_occupied;
 
 };
