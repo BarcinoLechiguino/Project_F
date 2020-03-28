@@ -19,14 +19,12 @@ public:
 
 	virtual bool CleanUp();
 
-
-private:
-
 public:
  
 	int tile_width;
 	int tile_height;
 
-private:
+	int tiles_occupied_x;
+	int tiles_occupied_y;
 
 };

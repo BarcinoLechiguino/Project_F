@@ -153,9 +153,15 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 		ret = new TownHall(x, y, type);
 
 		break;
+
+		case ENTITY_TYPE::BARRACKS:
+		ret = new Barracks(x, y, type);
+
+		break;
 	}
 
 	ret->type = type;
+	ret->Start();
 
 	if (ret != nullptr)									
 	{

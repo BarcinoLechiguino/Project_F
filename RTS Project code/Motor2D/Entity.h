@@ -19,7 +19,8 @@ enum class ENTITY_TYPE
 	ROCK,
 	ENEMY,
 	GATHERER,
-	TOWNHALL
+	TOWNHALL,
+	BARRACKS
 };
 
 struct EntityData
@@ -58,7 +59,7 @@ public:
 	//Entity Variables
 	ENTITY_TYPE		type;					//Type of the entity (ENTITY_TYPE::PLAYER...)
 	std::string		nameTag;				//Name of the entity in the xml file.
-	iPoint			pixel_position;				//Initial position of the entity.
+	fPoint			pixel_position;				//Initial position of the entity.
 	iPoint			tile_position;
 
 	SDL_Texture*	entity_sprite;			//Sprite / Spritesheet of the entity.

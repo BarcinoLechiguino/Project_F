@@ -8,10 +8,13 @@
 
 Barracks::Barracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
 {
-	entity_sprite = App->tex->Load("maps/debug_tile.png");
+	entity_sprite = App->tex->Load("maps/debug_barracks_tile.png");
 
-	pixel_position = App->map->MapToWorld(x, y);
+	pixel_position.x = App->map->MapToWorld(x, y).x;
+	pixel_position.y = App->map->MapToWorld(x, y).y;
 
+	tiles_occupied_x = 2;
+	tiles_occupied_y = 2;
 }
 
 bool Barracks::Awake(pugi::xml_node&)
@@ -19,21 +22,15 @@ bool Barracks::Awake(pugi::xml_node&)
 	return true;
 }
 
-bool Barracks::Start()
-{
-	return true;
-}
-
 bool Barracks::PreUpdate()
 {
-	App->pathfinding->ChangeWalkability(tile_position, 1);
 
 	return true;
 }
 
 bool Barracks::Update(float dt, bool doLogic)
 {
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
+	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y, nullptr);
 
 	return true;
 }

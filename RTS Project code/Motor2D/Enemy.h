@@ -35,7 +35,6 @@ public:
 	bool Save(pugi::xml_node&) const;
 	
 public:
-	Entity_State	state;
 
 	const std::vector<iPoint>* entity_path;
 

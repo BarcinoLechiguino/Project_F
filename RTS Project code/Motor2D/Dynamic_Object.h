@@ -6,7 +6,7 @@ enum class dynamic_state
 	WALKING
 };
 
-enum class Entity_State //Maybe WALKING instead?
+enum class entity_state //Maybe WALKING instead?
 {
 	IDLE = 0,
 	PATHING_UP,
@@ -41,15 +41,13 @@ public:
 
 	virtual bool CleanUp();
 
-
-private:
-
 public:
 
-	dynamic_state unit_state;
+	entity_state unit_state;
 
-	int speed;
+	float speed;
 
 	iPoint target_tile;
+	fPoint target_position;
 
 };

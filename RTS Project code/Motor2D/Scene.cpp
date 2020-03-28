@@ -70,11 +70,11 @@ bool Scene::Start()
 	path_debug_tex = App->tex->Load("maps/path2.png");
 
 	//test entity
-	rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0));
-	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 1, 1));
-	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 0, 2));
-
-	town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, 2,2));
+	rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK,2, 2));
+	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 10, 10));
+	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 5, 5));
+	town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, 0,0));
+	barracks_test.push_back((Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, 5, 2));
 
 	rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
 	

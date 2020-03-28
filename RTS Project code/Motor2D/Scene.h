@@ -86,7 +86,7 @@ public:
 	std::vector<Enemy*>   enemy_test;
 	std::vector<Gatherer*>   gatherer_test;
 	std::vector<TownHall*>   town_hall_test;
-
+	std::vector<Barracks*>   barracks_test;
 
 private:
 

@@ -4,7 +4,7 @@
 
 Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
 {
-	unit_state = dynamic_state::IDLE;
+	unit_state = entity_state::IDLE;
 }
 
 bool Dynamic_Object::Awake(pugi::xml_node&)
