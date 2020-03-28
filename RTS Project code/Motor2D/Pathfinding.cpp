@@ -51,11 +51,13 @@ bool PathFinding::CheckBoundaries(const iPoint& pos) const
 bool PathFinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
+	
 	//return t != INVALID_WALK_CODE && t > 0;
 	if (t > 0 && t != INVALID_WALK_CODE)
 	{
 		return true;
 	}
+
 	return false;
 }
 

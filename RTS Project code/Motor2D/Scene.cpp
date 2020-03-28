@@ -69,17 +69,25 @@ bool Scene::Start()
 
 	path_debug_tex = App->tex->Load("maps/path2.png");
 
-	//test
+	//test entity
 	rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, 0, 0));
 	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 1, 1));
 	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 0, 2));
 
+	town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, 2,2));
+
 	rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
 	
-	LoadGuiElements();
+	//LoadGuiElements();
 	
+	//test background
+	background_rect = { 0,0,1280,720 };
+	background_texture = App->tex->Load("maps/hacker_background.png");
+	
+
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	
+
 	return ret;
 
 }
@@ -131,12 +139,16 @@ bool Scene::Update(float dt)														//Receives dt as an argument.
 	
 	DebugKeys();											//Debug Keys
 	
+	App->render->Blit(background_texture, 0, 0, &background_rect,false,0.0f);
+
 	App->map->Draw();										//Map Draw
 	
 	if (App->map->pathfindingMetaDebug == true)
 	{
 		PathfindingDebug();									//Pathfinding Debug. Shows a debug texture on the path's tiles.
 	}
+
+	
 
 	//LOG("Rocks %d", rock_test.size());
 

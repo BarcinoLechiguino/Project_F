@@ -51,7 +51,7 @@ bool UI_Image::Draw()
 {
 	CheckInput();
 	
-	if (this->element == UI_Element::IMAGE)
+	if (this->element == UI_Element::IMAGE) //???????
 	{
 		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &GetScreenRect());		//GetPosition() is used as the position variable in the UI parent class will be initialized with the values of the UI_Image instance at constructor call
 	}

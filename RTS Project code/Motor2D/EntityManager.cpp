@@ -148,6 +148,11 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 		ret = new Gatherer(x, y, type);
 
 		break;
+
+		case ENTITY_TYPE::TOWNHALL:
+		ret = new TownHall(x, y, type);
+
+		break;
 	}
 
 	ret->type = type;

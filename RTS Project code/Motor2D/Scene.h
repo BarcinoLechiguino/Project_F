@@ -85,6 +85,8 @@ public:
 	std::vector<Rock*>	rock_test;
 	std::vector<Enemy*>   enemy_test;
 	std::vector<Gatherer*>   gatherer_test;
+	std::vector<TownHall*>   town_hall_test;
+
 
 private:
 
@@ -93,6 +95,9 @@ private:
 	SDL_Texture*			path_debug_tex;		//Texture that will appear at the path tiles when pathfinding is being debugged.
 
 public:
+	SDL_Rect background_rect;
+	UI_Image*				background;
+	SDL_Texture* background_texture;
 
 	// In-game menu
 	UI_Image*				main_in_menu;

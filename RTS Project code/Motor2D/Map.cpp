@@ -612,15 +612,15 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	{
 		MapLayer* layer = (*item);
 
-		if (layer->properties.Get("Navigation", 0) == 0)							//If the value of the Navigation property of the mapLayer is 0.
-		{
-			continue;																//If the value mentioned above is 0, jump to the next iteration (of layers list).
-		}
+		//if (layer->properties.Get("walkability", 0) == 0)							
+		//{
+		//	continue;																//If the value mentioned above is 0, jump to the next iteration (of layers list).
+		//}
 		
-		/*if (layer->name != "walkability_map")							
+		if ( layer->name != "walkability")
 		{
 			continue;
-		}*/
+		}
 
 		uchar* map = new uchar[layer->width * layer->height];						//Allocates memory for all the tiles in the map.
 		memset(map, 1, layer->width*layer->height);									//Sets all memory allocated for map to 1. 

@@ -3,15 +3,27 @@
 #include "Map.h"
 #include "Textures.h"
 #include "Pathfinding.h"
+#include <vector>
+#include "Point.h"
 
 #include "EntityManager.h"
 
 TownHall::TownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 {
-	entity_sprite = App->tex->Load("maps/debug_tile.png");
+	entity_sprite = App->tex->Load("maps/town_hall_holder.png");
 	
 	pixel_position = App->map->MapToWorld(x, y);
 
+	tiles_occupied_x = 3;
+	tiles_occupied_y = 3;
+
+	for (int x_tile = x ; x_tile < x + tiles_occupied_x ; ++x_tile)
+	{
+		for (int y_tile = y ; y_tile < y + tiles_occupied_y ; ++y_tile)
+		{
+			App->pathfinding->ChangeWalkability( iPoint(x_tile,y_tile) , 0);
+		}
+	}
 }
 
 bool TownHall::Awake(pugi::xml_node&)
@@ -21,19 +33,24 @@ bool TownHall::Awake(pugi::xml_node&)
 
 bool TownHall::Start()
 {
+	
+	
 	return true;
 }
 
 bool TownHall::PreUpdate()
 {
-	App->pathfinding->ChangeWalkability(tile_position, 1);
 
 	return true;
 }
 
 bool TownHall::Update(float dt, bool doLogic)
 {
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
+	if (!App->pathfinding->IsWalkable(iPoint(2, 2)) )
+	{
+		LOG("2 2 is unwalkable");
+	}
+	App->render->Blit(this->entity_sprite, pixel_position.x - 54, pixel_position.y, nullptr);
 
 	return true;
 }

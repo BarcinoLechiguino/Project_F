@@ -25,4 +25,6 @@ public:
 	int tile_width;
 	int tile_height;
 
+	std::vector<iPoint> tiles_occupied;
+
 };
