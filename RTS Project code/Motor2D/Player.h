@@ -1,6 +1,8 @@
 #include "Module.h"
 #include "Point.h"
 #include "SDL/include/SDL_rect.h"
+#include <vector>
+#include "EntityManager.h"
 
 class Player : public Module
 {
@@ -21,8 +23,6 @@ public:
 	bool PostUpdate();
 
 	bool CleanUp();
-
-private:
 
 	void CameraController(float dt);
 
@@ -45,5 +45,7 @@ public:
 	iPoint selection_start;
 
 	SDL_Rect selection_rect;
+
+	std::vector<Gatherer*> units_selected;
 
 };

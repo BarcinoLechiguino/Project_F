@@ -73,6 +73,8 @@ bool Scene::Start()
 	rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK,2, 2));
 	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 10, 10));
 	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 5, 5));
+	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 10, 5));
+	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 7, 7));
 	town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, 0,0));
 	barracks_test.push_back((Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, 5, 2));
 

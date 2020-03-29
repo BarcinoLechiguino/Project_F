@@ -5,6 +5,8 @@
 #include "Window.h"
 #include "Textures.h"
 #include "p2Log.h"
+#include "EntityManager.h"
+#include "Scene.h"
 
 Player::Player()
 {
@@ -50,6 +52,8 @@ bool Player::Update(float dt)
 	CameraController(dt);
 
 	SelectionRect();
+
+
 
 	Cursor();
 
@@ -100,17 +104,56 @@ void Player::SelectionRect()
 		selecting = true;
 
 		selection_start = mouse_position;
+
+		units_selected.clear();
 	}
 
 	if (selecting)
 	{
-		selection_rect = { selection_start.x,selection_start.y, mouse_position.x - selection_start.x, mouse_position.y - selection_start.y };
+		//Cases with mouse pos
+		if (mouse_position.x > selection_start.x)
+		{
+			selection_rect = { selection_start.x ,selection_start.y, mouse_position.x - selection_start.x, mouse_position.y - selection_start.y };
+		}
+		else
+		{
+			selection_rect = { mouse_position.x ,selection_start.y, selection_start.x - mouse_position.x , mouse_position.y - selection_start.y };
+		}
+
+		if (mouse_position.y < selection_start.y)
+		{
+			selection_rect.y = mouse_position.y;
+			selection_rect.h = selection_start.y - mouse_position.y;
+		}
 
 		App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 		{
 			selecting = false;
+
+			int num_selected = 0;
+
+			for (std::vector<Gatherer*>::iterator item = App->scene->gatherer_test.begin() ; item != App->scene->gatherer_test.end(); ++item)
+			{
+				if ((*item)->type == ENTITY_TYPE::GATHERER)
+				{
+					/*LOG("camera %d, %d", -App->render->camera.x, -App->render->camera.y);
+					LOG("Selection pos %d %d", selection_rect.x - App->render->camera.x , selection_rect.y - App->render->camera.y);
+					LOG("gatherer rect %d %d", (*item)->selection_collider.x, (*item)->selection_collider.y);*/
+
+					//Collision allied units rectangles
+					if (((*item)->selection_collider.x + (*item)->selection_collider.w > selection_rect.x - App->render->camera.x) &&
+						((*item)->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&
+						((*item)->selection_collider.y + (*item)->selection_collider.h > selection_rect.y - App->render->camera.y) &&
+						((*item)->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h))
+					{
+						units_selected.push_back((*item));
+						num_selected++;
+					}
+				}
+			}
+			LOG("Units selected %d", num_selected);
 		}
 	}
 }

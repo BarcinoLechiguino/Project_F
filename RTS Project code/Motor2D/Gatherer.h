@@ -31,6 +31,8 @@ public:
 
 	const std::vector<iPoint>* entity_path;
 
+	SDL_Rect selection_collider;
+
 };
 
 #endif // __ENEMY_H__
