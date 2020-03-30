@@ -141,12 +141,17 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 		case ENTITY_TYPE::ENEMY:
 		ret = new Enemy(x, y, type);
-
+		dynamic_objects.push_back((Dynamic_Object*)ret);
 		break;
 
 		case ENTITY_TYPE::GATHERER:
 		ret = new Gatherer(x, y, type);
+		dynamic_objects.push_back((Dynamic_Object*)ret);
+		break;
 
+		case ENTITY_TYPE::INFANTRY:
+		ret = new Infantry(x, y, type);
+		dynamic_objects.push_back((Dynamic_Object*)ret);
 		break;
 
 		case ENTITY_TYPE::TOWNHALL:

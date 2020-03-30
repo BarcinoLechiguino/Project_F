@@ -7,6 +7,8 @@
 #include "p2Log.h"
 #include "EntityManager.h"
 #include "Scene.h"
+#include "Pathfinding.h"
+#include "Map.h"
 
 Player::Player()
 {
@@ -27,6 +29,8 @@ bool Player::Start()
 {
 	cursor_idle = App->tex->Load("gui/cursor/cursor_idle.png");
 
+	mouse_tile_debug = App->tex->Load("maps/mouse_tile_debug.png");
+
 	scene_camera_limit = iPoint(0, 1000);
 
 	camera_speed.x = 700.0f;
@@ -46,14 +50,13 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	//Get Mouse Position
-	App->input->GetMousePosition(mouse_position.x, mouse_position.y);
+	MouseCalculations();
 
 	CameraController(dt);
 
 	SelectionRect();
 
-
+	MoveToOrder();
 
 	Cursor();
 
@@ -68,6 +71,39 @@ bool Player::PostUpdate()
 bool Player::CleanUp()
 {
 	return true;
+}
+
+void Player::MouseCalculations()
+{
+	//Get Mouse Position
+	App->input->GetMousePosition(mouse_position.x, mouse_position.y);
+
+	iPoint mouse_camera;
+
+	mouse_camera.x = mouse_position.x - App->render->camera.x;
+	mouse_camera.y = mouse_position.y - App->render->camera.y;
+
+	mouse_tile = iPoint(App->map->WorldToMap(mouse_camera.x, mouse_camera.y + 20).x, App->map->WorldToMap(mouse_camera.x, mouse_camera.y + 20).y); //magic
+
+	mouse_map_position = iPoint(App->map->MapToWorld(mouse_tile.x, mouse_tile.y).x, App->map->MapToWorld(mouse_tile.x, mouse_tile.y).y);
+}
+
+void Player::MoveToOrder()//fix
+{
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		int i = 0;
+		for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
+		{
+			if (App->pathfinding->IsWalkable( iPoint(mouse_tile.x + i,mouse_tile.y) ) )
+			{
+				(*item)->GiveNewTarget(iPoint(mouse_tile.x + i, mouse_tile.y));
+			}
+			LOG("path given");
+			i++;
+		}
+	}
+
 }
 
 void Player::CameraController(float dt)
@@ -134,9 +170,9 @@ void Player::SelectionRect()
 
 			int num_selected = 0;
 
-			for (std::vector<Gatherer*>::iterator item = App->scene->gatherer_test.begin() ; item != App->scene->gatherer_test.end(); ++item)
+			for (std::vector<Dynamic_Object*>::iterator item = App->entityManager->dynamic_objects.begin() ; item != App->entityManager->dynamic_objects.end(); ++item)
 			{
-				if ((*item)->type == ENTITY_TYPE::GATHERER)
+				if ((*item)->selectable_unit)
 				{
 					/*LOG("camera %d, %d", -App->render->camera.x, -App->render->camera.y);
 					LOG("Selection pos %d %d", selection_rect.x - App->render->camera.x , selection_rect.y - App->render->camera.y);
@@ -158,9 +194,9 @@ void Player::SelectionRect()
 	}
 }
 
-void Player::Cursor()
+void Player::Cursor() //fix
 {
+	App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
 
 	App->render->Blit(cursor_idle, mouse_position.x, mouse_position.y,nullptr,false,0.f);
-
 }

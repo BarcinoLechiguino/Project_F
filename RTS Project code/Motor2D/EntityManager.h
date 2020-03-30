@@ -64,6 +64,8 @@ public:
 	
 	std::list<Entity*>	entities;	
 
+	std::vector<Dynamic_Object*> dynamic_objects;
+
 	std::list<EntityData*>	entityData_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
 
 	float					accumulated_time;	//Accumulates dt as time goes on.

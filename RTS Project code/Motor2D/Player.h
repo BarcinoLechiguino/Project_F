@@ -24,9 +24,13 @@ public:
 
 	bool CleanUp();
 
+	void MouseCalculations();
+
 	void CameraController(float dt);
 
 	void SelectionRect();
+
+	void MoveToOrder();
 
 	void Cursor();
 
@@ -34,10 +38,12 @@ public:
 
 	iPoint scene_camera_limit;
 	iPoint mouse_position;
-
+	iPoint mouse_map_position;
+	iPoint mouse_tile;
 	fPoint camera_speed;
 
 	SDL_Texture* cursor_idle;
+	SDL_Texture* mouse_tile_debug;
 
 	//selection
 	bool selecting;
@@ -46,6 +52,6 @@ public:
 
 	SDL_Rect selection_rect;
 
-	std::vector<Gatherer*> units_selected;
+	std::vector<Dynamic_Object*> units_selected;
 
 };

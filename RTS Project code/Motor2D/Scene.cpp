@@ -74,7 +74,10 @@ bool Scene::Start()
 	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 10, 10));
 	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 5, 5));
 	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 10, 5));
-	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 7, 7));
+	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 8, 7));
+	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 7, 8));
+	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 9, 7));
+	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 7, 9));
 	town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, 0,0));
 	barracks_test.push_back((Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, 5, 2));
 
@@ -353,11 +356,11 @@ void Scene::PathfindingDebug()
 
 	App->render->Blit(path_debug_tex, p.x, p.y);								//Should we want it, we could make a separate texture called mouse_debug_tex so the tex at mouse pos and the tex at path tile are different.
 
-	const std::vector<iPoint>* path = App->pathfinding->GetLastPath();
+	const std::vector<iPoint> path = App->pathfinding->GetLastPath();
 
-	for (uint i = 0; i < path->size(); ++i)
+	for (uint i = 0; i < path.size(); ++i)
 	{
-		iPoint pos = App->map->MapToWorld(path->at(i).x, path->at(i).y);		//Both work, reach a consensus on which to use.
+		iPoint pos = App->map->MapToWorld(path.at(i).x, path.at(i).y);		//Both work, reach a consensus on which to use.
 		//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
 
 		App->render->Blit(path_debug_tex, pos.x, pos.y);

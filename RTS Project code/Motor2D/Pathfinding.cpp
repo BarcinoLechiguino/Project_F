@@ -81,9 +81,9 @@ bool PathFinding::ChangeWalkability(const iPoint& pos, uchar walkability)
 }
 
 // To request all tiles involved in the last generated path
-const std::vector<iPoint>* PathFinding::GetLastPath() const
+const std::vector<iPoint> PathFinding::GetLastPath() const
 {
-	return &last_path;
+	return last_path;
 }
 
 // PathList ------------------------------------------------------------------------

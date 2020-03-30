@@ -18,10 +18,9 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 {
 	entity_sprite = App->tex->Load("maps/debug_enemy_tile.png");
 
-	pixel_position.x = App->map->MapToWorld(x, y).x;
-	pixel_position.y = App->map->MapToWorld(x, y).y;
+	selectable_unit = false;
 
-	speed = 1;
+	speed = 100;
 };
 
 Enemy::~Enemy()  //Destructor. Called at the last frame.
@@ -46,9 +45,14 @@ bool Enemy::PreUpdate()
 
 bool Enemy::Update(float dt, bool doLogic)
 {
-	
+	HandleMovement(dt);
+
+	selection_collider.x = pixel_position.x;
+	selection_collider.y = pixel_position.y;
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
+
+	App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 
 	return true;
 };

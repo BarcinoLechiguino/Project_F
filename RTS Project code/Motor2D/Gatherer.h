@@ -23,15 +23,12 @@ public:
 
 	void OnCollision(Collider* C1, Collider* C2);
 
-	void MoveInput();
-
-	void Move(float dt);
+	
 
 public:
 
-	const std::vector<iPoint>* entity_path;
 
-	SDL_Rect selection_collider;
+
 
 };
 

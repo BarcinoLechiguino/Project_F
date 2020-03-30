@@ -3,6 +3,7 @@
 #include "Map.h"
 #include "Textures.h"
 #include "Pathfinding.h"
+#include "Input.h"
 
 #include "EntityManager.h"
 
