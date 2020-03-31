@@ -41,14 +41,13 @@ public:
 	iPoint mouse_map_position;
 	iPoint mouse_tile;
 	fPoint camera_speed;
+	iPoint selection_start;
 
 	SDL_Texture* cursor_idle;
 	SDL_Texture* mouse_tile_debug;
 
 	//selection
 	bool selecting;
-
-	iPoint selection_start;
 
 	SDL_Rect selection_rect;
 

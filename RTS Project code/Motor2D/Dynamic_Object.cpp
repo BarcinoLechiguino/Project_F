@@ -4,16 +4,17 @@
 
 #include "EntityManager.h"
 
-
 Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
 {
 
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
 
-	selection_collider = { (int)pixel_position.x, (int)pixel_position.y, 40, 30 };
+	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
 	target_tile = tile_position;
+	next_tile = tile_position;
+
 }
 
 bool Dynamic_Object::Awake(pugi::xml_node&)
@@ -33,8 +34,6 @@ bool Dynamic_Object::PreUpdate()
 
 bool Dynamic_Object::Update(float dt, bool doLogic)
 {
-	
-
 	return true;
 }
 
@@ -50,24 +49,26 @@ bool Dynamic_Object::CleanUp()
 
 void Dynamic_Object::GiveNewTarget(iPoint new_target)
 {
-	entity_path.clear();
+	//New Path using the next tile if it's going to one
+	App->pathfinding->CreatePath(next_tile, new_target);
 
-	App->pathfinding->CreatePath(tile_position, new_target);
+	entity_path.clear();
 	entity_path = App->pathfinding->GetLastPath();
 
 	path_full = true;
 
+	//Change target and current tile to get next
 	target_tile = entity_path.back();
 	current_path_tile = entity_path.begin();
 
-	int pos = 0;
-	for (std::vector<iPoint>::iterator item = entity_path.begin(); item != entity_path.end(); ++item)
-	{
-		pos++;
-		LOG("Path tile: %d pos: %d %d", pos, (*item).x, (*item).y);
-	}
+	//int pos = 0;
+	//for (std::vector<iPoint>::iterator item = entity_path.begin(); item != entity_path.end(); ++item)
+	//{
+	//	pos++;
+	//	LOG("Path tile: %d pos: %d %d", pos, (*item).x, (*item).y);
+	//}
 
-	LOG("target_tile %d %d", entity_path.back().x, entity_path.back().y);
+	//LOG("target_tile %d %d", entity_path.back().x, entity_path.back().y);
 }
 
 void Dynamic_Object::HandleMovement(float dt)
@@ -104,8 +105,6 @@ void Dynamic_Object::HandleMovement(float dt)
 			path_state = pathfind_state::IDLE;
 			unit_state = entity_state::IDLE;
 
-			
-
 			break;
 		}
 
@@ -115,7 +114,7 @@ void Dynamic_Object::HandleMovement(float dt)
 
 		next_tile = (*current_path_tile);
 
-		LOG("Next tile %d %d", next_tile.x, next_tile.y);
+		//LOG("Next tile %d %d", next_tile.x, next_tile.y);
 
 		next_tile_position = App->map->MapToWorld(next_tile.x, next_tile.y);
 
@@ -176,8 +175,8 @@ void Dynamic_Object::Move(float dt)
 	{
 	case entity_state::PATHING_DOWN_LEFT:
 
-		pixel_position.x -= speed * 0.58 * dt;
-		pixel_position.y += speed * 0.42 * dt;
+		pixel_position.x -= speed * 0.58f * dt;
+		pixel_position.y += speed * 0.42f * dt;
 
 		if (pixel_position.x <= next_tile_position.x || pixel_position.y >= next_tile_position.y)
 		{
@@ -188,8 +187,8 @@ void Dynamic_Object::Move(float dt)
 
 	case entity_state::PATHING_DOWN_RIGHT:
 
-		pixel_position.x += speed * 0.58 * dt;
-		pixel_position.y += speed * 0.42 * dt;
+		pixel_position.x += speed * 0.58f * dt;
+		pixel_position.y += speed * 0.42f * dt;
 
 		if (pixel_position.x >= next_tile_position.x || pixel_position.y >= next_tile_position.y)
 		{
@@ -200,8 +199,8 @@ void Dynamic_Object::Move(float dt)
 
 	case entity_state::PATHING_UP_LEFT:
 
-		pixel_position.x -= speed * 0.58 * dt;
-		pixel_position.y -= speed * 0.42 * dt;
+		pixel_position.x -= speed * 0.58f * dt;
+		pixel_position.y -= speed * 0.42f * dt;
 
 		if (pixel_position.x <= next_tile_position.x || pixel_position.y <= next_tile_position.y)
 		{
@@ -212,8 +211,8 @@ void Dynamic_Object::Move(float dt)
 
 	case entity_state::PATHING_UP_RIGHT:
 
-		pixel_position.x += speed * 0.58 * dt;
-		pixel_position.y -= speed * 0.42 * dt;
+		pixel_position.x += speed * 0.58f * dt;
+		pixel_position.y -= speed * 0.42f * dt;
 
 		if (pixel_position.x >= next_tile_position.x || pixel_position.y <= next_tile_position.y)
 		{
@@ -267,6 +266,7 @@ void Dynamic_Object::Move(float dt)
 		break;
 
 	}
+
 	if (next_reached)
 	{
 		pixel_position.x = next_tile_position.x;

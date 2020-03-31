@@ -14,6 +14,7 @@
 #include "Collisions.h"
 #include "Gui.h"
 #include "Pathfinding.h"
+#include "Player.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -70,7 +71,7 @@ bool Scene::Start()
 	path_debug_tex = App->tex->Load("maps/path2.png");
 
 	//test entity
-	rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK,2, 2));
+	/*rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK,2, 2));
 	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 10, 10));
 	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 5, 5));
 	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 10, 5));
@@ -79,9 +80,9 @@ bool Scene::Start()
 	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 9, 7));
 	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 7, 9));
 	town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, 0,0));
-	barracks_test.push_back((Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, 5, 2));
+	barracks_test.push_back((Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, 5, 2));*/
 
-	rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
+	//rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
 	
 	//LoadGuiElements();
 	
@@ -94,7 +95,6 @@ bool Scene::Start()
 	
 
 	return ret;
-
 }
 
 // Called each loop iteration
@@ -153,7 +153,7 @@ bool Scene::Update(float dt)														//Receives dt as an argument.
 		PathfindingDebug();									//Pathfinding Debug. Shows a debug texture on the path's tiles.
 	}
 
-	
+
 
 	//LOG("Rocks %d", rock_test.size());
 
@@ -290,6 +290,27 @@ void Scene::LoadGuiElements()
 
 void Scene::DebugKeys()
 {
+	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	{
+		gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y));
+	}
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+	{
+		barracks_test.push_back((Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y));
+	}
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+	{
+		town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y));
+	}
+	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+	{
+		enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y));
+	}
+	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+	{
+		infantry_test.push_back((Infantry*)App->entityManager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y));
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)			//Load First Level Key
 	{
 		App->fadescene->FadeToBlack("Test_map.tmx");

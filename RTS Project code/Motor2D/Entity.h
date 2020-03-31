@@ -58,14 +58,14 @@ public:
 	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
 
 	//Entity Variables
-	ENTITY_TYPE		type;					//Type of the entity (ENTITY_TYPE::PLAYER...)
+	ENTITY_TYPE		type;					
 	std::string		nameTag;				//Name of the entity in the xml file.
-	fPoint			pixel_position;				//Initial position of the entity.
+	fPoint			pixel_position;			
 	iPoint			tile_position;
 
-	SDL_Texture*	entity_sprite;			//Sprite / Spritesheet of the entity.
-	Collider*		collider;				//Collider of the entity.
-	Animation*		animation;				//Animation of the entity.
+	SDL_Texture*	entity_sprite;	
+	Collider*		collider;
+	Animation*		animation;
 };
 
 #endif // __ENTITY_H__

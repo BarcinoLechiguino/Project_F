@@ -13,9 +13,7 @@ Gatherer::Gatherer(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)
 	selectable_unit = true;
 	path_full = false;
 
-	speed = 100;
-
-	
+	speed = 500;
 }
 
 Gatherer::~Gatherer()
@@ -51,8 +49,8 @@ bool Gatherer::Update(float dt, bool doLogic)
 
 	HandleMovement(dt);
 
-	selection_collider.x = pixel_position.x;
-	selection_collider.y = pixel_position.y;
+	selection_collider.x = pixel_position.x + 10;
+	selection_collider.y = pixel_position.y + 10;
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
 

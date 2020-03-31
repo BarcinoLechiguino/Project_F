@@ -17,11 +17,11 @@
 
 Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
-	entity_sprite = App->tex->Load("maps/debug_enemy_tile.png");
+	entity_sprite = App->tex->Load("maps/debug_infantry_tile.png");
 
-	selectable_unit = false;
+	selectable_unit = true;
 
-	speed = 100;
+	speed = 500;
 };
 
 Infantry::~Infantry()  //Destructor. Called at the last frame.

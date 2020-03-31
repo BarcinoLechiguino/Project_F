@@ -72,13 +72,3 @@ void Enemy::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
 }
-
-bool Enemy::Load(pugi::xml_node& data)
-{
-	return true;
-}
-
-bool Enemy::Save(pugi::xml_node&  data) const
-{
-	return true;
-}

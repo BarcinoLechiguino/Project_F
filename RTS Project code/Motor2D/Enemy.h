@@ -28,12 +28,6 @@ public:
 
 	void OnCollision(Collider* C1, Collider* C2);
 
-
-
-public:
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&) const;
-	
 public:
 
 	const std::vector<iPoint>* entity_path;

@@ -52,8 +52,6 @@ public:
 public:
 
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
-	void CreatePlayers();													//Creates P1 and P2. It is called in the Scene.cpp.
-	//void AddItems(ENTITY_TYPE type, int x, int y);
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
 	
 	void OnCollision(Collider* C1, Collider* C2);

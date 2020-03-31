@@ -23,13 +23,6 @@ public:
 
 	void OnCollision(Collider* C1, Collider* C2);
 
-	
-
-public:
-
-
-
-
 };
 
 #endif // __ENEMY_H__

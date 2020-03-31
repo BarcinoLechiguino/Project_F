@@ -43,19 +43,19 @@ public:
 
 	virtual bool CleanUp();
 
-	void HandleMovement(float dt);
-
-	void Move(float dt);
-
 	void GiveNewTarget(iPoint new_target);
-
+	void HandleMovement(float dt);
+	void Move(float dt);
+	
 public:
+
+	float speed;
+
+	bool path_full;
+	bool selectable_unit;
 
 	entity_state unit_state;
 	pathfind_state path_state;
-	float speed;
-
-	bool selectable_unit;
 
 	std::vector<iPoint> entity_path;
 	std::vector<iPoint>::iterator current_path_tile;
@@ -65,9 +65,4 @@ public:
 	iPoint target_tile;
 
 	SDL_Rect selection_collider;
-
-	bool path_full;
-
-	
-
 };

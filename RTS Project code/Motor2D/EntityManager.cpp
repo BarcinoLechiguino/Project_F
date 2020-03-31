@@ -142,6 +142,7 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 		case ENTITY_TYPE::ENEMY:
 		ret = new Enemy(x, y, type);
 		dynamic_objects.push_back((Dynamic_Object*)ret);
+		
 		break;
 
 		case ENTITY_TYPE::GATHERER:
@@ -174,12 +175,6 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 	}
 
 	return ret;
-}
-
-void EntityManager::CreatePlayers()
-{
-	//player = (j1Player1*)CreateEntity(ENTITY_TYPE::PLAYER);
-	//player2 = (j1Player2*)CreateEntity(ENTITY_TYPE::PLAYER2);
 }
 
 void EntityManager::DestroyEntities()

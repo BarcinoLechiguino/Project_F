@@ -87,7 +87,7 @@ public:
 	std::vector<Gatherer*>   gatherer_test;
 	std::vector<TownHall*>   town_hall_test;
 	std::vector<Barracks*>   barracks_test;
-
+	std::vector<Infantry*>   infantry_test;
 private:
 
 	float					cam_debug_speed;	//Will store the movement speed for the camera while in debug mode. Done for readability.
