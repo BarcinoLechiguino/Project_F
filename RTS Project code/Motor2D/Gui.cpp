@@ -37,10 +37,11 @@ bool Gui::Awake(pugi::xml_node& conf)
 bool Gui::Start()
 {
 	atlas = App->tex->Load(atlas_file_name.c_str());
-
-	if (atlas == NULL)
+	
+	if (atlas == nullptr)
 	{
-		LOG("Texture could not be loaded");
+		LOG("Texture could not be loaded. Reloading...");
+		atlas = App->tex->Load("gui/UI_HUD.png");			//TMP
 	}
 
 	ui_debug = false;
@@ -144,7 +145,7 @@ bool Gui::PostUpdate()
 bool Gui::CleanUp()
 {
 	LOG("Freeing GUI");
-
+	
 	//Iterate the elements list and frees all allocated memory.
 	for (std::list<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
 	{
@@ -153,6 +154,8 @@ bool Gui::CleanUp()
 	}
 
 	elements.clear();
+
+	//App->tex->UnLoad(atlas);
 
 	return true;
 }
