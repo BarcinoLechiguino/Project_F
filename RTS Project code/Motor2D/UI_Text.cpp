@@ -78,7 +78,7 @@ bool UI_Text::Draw()
 
 		SetHitbox({ GetHitbox().x, GetHitbox().y, textRect.w, textRect.h });
 
-		BlitElement(currentTex, GetScreenPos().x, GetScreenPos().y, NULL);
+		BlitElement(currentTex, GetScreenPos().x, GetScreenPos().y, NULL, 0.0f);
 	}
 
 	return true;

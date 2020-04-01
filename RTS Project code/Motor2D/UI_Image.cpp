@@ -9,7 +9,7 @@
 //UI_Image will always be uninteractible and will have 2 events: IDLE & CLICKED (CLICKED when the image is clicked and can be dragged).
 //UI_Image can be draggable and can have a parent element.
 //hitbox argument serves the purpose of both setting the UI_Image's "input collider" and locating the right sprite in the Atlas(tex).
-UI_Image::UI_Image(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent) 
+UI_Image::UI_Image(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, Entity* attached_unit, UI* parent)
 	: UI(element, x, y, hitbox, listener, parent)								//When a UI_Image's constructor is called, a UI element is initialized as a IMAGE element.
 {
 	tex = App->gui->GetAtlas();													//The atlas already has the path to the atlas spritesheet. Check how to work around the const
@@ -25,6 +25,7 @@ UI_Image::UI_Image(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVis
 	this->isDraggable = isDraggable;											//Sets the isDraggable flag to the one passed as argument.
 	this->dragXAxis = isDraggable;												//Sets the dragXaxis flag to the same as isDraggable. If it needs to be changed, it has to be done externally.
 	this->dragYAxis = isDraggable;												//Sets the dragYaxis flag to the same as isDraggable. If it needs to be changed, it has to be done externally.
+	this->attached_unit = attached_unit;
 	this->isFilled = isFilled;
 	prevMousePos = iPoint(0, 0);												//Initializes prevMousePos for this UI Element. Safety measure to avoid weird dragging behaviour.
 	initialPosition = GetScreenPos();											//Records the initial position where the element is at at app execution start.
@@ -54,7 +55,15 @@ bool UI_Image::Draw()
 	
 	if (this->element == UI_Element::IMAGE) //???????
 	{
-		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &GetScreenRect());		//GetPosition() is used as the position variable in the UI parent class will be initialized with the values of the UI_Image instance at constructor call
+		if (this->attached_unit == nullptr)
+		{
+
+			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &GetScreenRect(), 0.0f);		//GetPosition() is used as the position variable in the UI parent class will be initialized with the values of the UI_Image instance at constructor call
+		}
+		else
+		{
+			BlitElement(tex, attached_unit->pixel_position.x, attached_unit->pixel_position.y - 30, &GetScreenRect(), 1.0f); //Magic number
+		}
 	}
 	
 	return true;

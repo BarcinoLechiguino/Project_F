@@ -1,3 +1,5 @@
+#include "UI_Image.h"
+
 #ifndef __INFANTRY_H__
 #define __INFANTRY_H__
 
@@ -28,6 +30,7 @@ public:
 
 	const std::vector<iPoint>* entity_path;
 
+	UI_Image* health_bar;
 };
 
 #endif // __ENEMY_H__

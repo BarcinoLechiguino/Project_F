@@ -164,13 +164,13 @@ bool Gui::CleanUp()
 }
 
 //----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
-UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent)
+UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, Entity* attached_unit, UI* parent)
 {
 
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Image(element, x, y, hitbox, isVisible, isInteractible, isDraggable, listener, parent);
+	elem = new UI_Image(element, x, y, hitbox, isVisible, isInteractible, isDraggable, listener,attached_unit, parent);
 
 	if (elem != nullptr)
 	{

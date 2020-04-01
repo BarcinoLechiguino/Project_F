@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Input.h"
 #include "SDL/include/SDL.h"
+#include "Entity.h"
 
 //class iPoint;			//If declared as a forward declaration instead of an include, 
 //class SDL_Rect;		//then iPoint and SDL_Rect need to be pointers.
@@ -47,7 +48,7 @@ public:
 
 	virtual void CleanUp();
 
-	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect);
+	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float spped);
 
 public:
 	void SetScreenPos(iPoint position);				//Sets the position of a UI_Element with the Screen as point of reference.

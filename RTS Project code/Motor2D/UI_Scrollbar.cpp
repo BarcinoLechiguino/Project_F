@@ -44,18 +44,18 @@ UI_Scrollbar::UI_Scrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SD
 
 	if (!emptyElements)
 	{
-		bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x, y, hitbox, isVisible, false, false, nullptr, this);
-		thumb = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, isVisible, true, true, nullptr, this);
+		bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
+		thumb = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, isVisible, true, true, nullptr, nullptr, this);
 	}
 	else
 	{
-		bar = (UI_Image*)App->gui->CreateImage(UI_Element::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, this);
-		thumb = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, isVisible, true, true, nullptr, this);
+		bar = (UI_Image*)App->gui->CreateImage(UI_Element::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
+		thumb = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, isVisible, true, true, nullptr, nullptr, this);
 	}
 
 	if (scrollMask != nullptr)
 	{
-		this->scrollMask = (UI_Image*)App->gui->CreateImage(UI_Element::EMPTY, x + maskOffset.x, y + maskOffset.y, *scrollMask, false, false, false, nullptr, this);
+		this->scrollMask = (UI_Image*)App->gui->CreateImage(UI_Element::EMPTY, x + maskOffset.x, y + maskOffset.y, *scrollMask, false, false, false, nullptr, nullptr, this);
 	}
 
 	// --- Other Scrollbar Variables

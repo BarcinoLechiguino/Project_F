@@ -43,7 +43,7 @@ public:
 	/*const*/ SDL_Texture* GetAtlas() const;
 
 	UI* CreateImage(UI_Element element, int x, int y, SDL_Rect rect, bool isVisible = false, bool isInteractible = false, bool isDraggable = false
-		, Module* listener = nullptr, UI* parent = nullptr);
+		, Module* listener = nullptr, Entity* attached_unit = nullptr, UI* parent = nullptr);
 
 	UI* CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible = true, bool isInteractible = false, bool isDraggable = false
 		, Module* listener = nullptr, UI* parent = nullptr, std::string* string = nullptr, std::string* hoverString = nullptr, std::string* leftClickString = nullptr, std::string* rightClickString = nullptr);

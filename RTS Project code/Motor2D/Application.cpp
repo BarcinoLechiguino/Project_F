@@ -56,17 +56,16 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(font);
-	AddModule(gui);
 	AddModule(console);
 	AddModule(collisions);
 	AddModule(transition_manager);
 
 	// scene_manager last before render.
+	AddModule(gui);
 	AddModule(scene_manager);
-
 	AddModule(entityManager);
 	AddModule(player);
-	
+
 	// render last to swap buffer
 	AddModule(render);
 

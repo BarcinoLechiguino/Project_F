@@ -21,6 +21,10 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 	selectable_unit = true;
 
 	speed = 500;
+
+	SDL_Rect empty_bar{ 0,158,230,18 };
+	health_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, empty_bar, true, false, false,nullptr,this, NULL); //Magic Number
+
 };
 
 Infantry::~Infantry()  //Destructor. Called at the last frame.

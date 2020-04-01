@@ -59,6 +59,7 @@ bool Scene1::Start()
 	bool ret = false;
 
 	InitScene();
+	App->gui->Start();
 	
 	return ret;
 }
@@ -196,7 +197,7 @@ void Scene1::LoadGuiElements()
 	main_in_menu2 = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 280, 180, main_in_rect, false, false, false, nullptr, nullptr);
 	
 	SDL_Rect label1_rect_in{ 1078,242,382,61 };
-	label_1_in = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 323, 160, label1_rect_in, false, false, false, nullptr, main_in_menu2);
+	label_1_in = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 323, 160, label1_rect_in, false, false, false, nullptr,nullptr, main_in_menu2);
 	
 	_TTF_Font* font_in_esc = App->font->Load("fonts/Minecraftia-Regular.ttf", 32);
 	std::string string_title_in = "PAUSE MENU";
