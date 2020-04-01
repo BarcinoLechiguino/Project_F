@@ -34,19 +34,13 @@ class EntityManager : public Module
 public:
 
 	EntityManager();
-
 	~EntityManager();
 
 	bool Awake(pugi::xml_node&);
-
 	bool Start();
-
 	bool PreUpdate();
-
 	bool Update(float dt);
-
 	bool PostUpdate();
-
 	bool CleanUp();
 
 public:
@@ -58,18 +52,17 @@ public:
 
 public:
 
-	pugi::xml_node			config;
+	pugi::xml_node					config;
 	
-	std::list<Entity*>	entities;	
+	std::list<Entity*>				entities;	
+	std::list<EntityData*>			entity_data_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
 
-	std::vector<Dynamic_Object*> dynamic_objects;
+	std::vector<Dynamic_Object*>	dynamic_objects;
 
-	std::list<EntityData*>	entityData_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
+	float							accumulated_time;	//Accumulates dt as time goes on.
+	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
+	bool							doLogic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
 
-	float					accumulated_time;	//Accumulates dt as time goes on.
-	float					cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
-	bool					doLogic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
-
-	EnemyData				enemies[MAX_ENEMIES];	//Use this if entities need to be processed in an array instead of a list.
+	EnemyData						enemies[MAX_ENEMIES];	//Use this if entities need to be processed in an array instead of a list.
 };
 #endif // __ENTITY_MANAGER_H__

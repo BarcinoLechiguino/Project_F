@@ -3,15 +3,16 @@
 #include "Render.h"
 #include "Input.h"
 #include "Gui.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
 
-UI::UI(UI_Element element, int x, int y, SDL_Rect rect, UI* parent) :
+UI::UI(UI_Element element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
 	element(element),										//The variables of the UI element are initialized at the constructor.
 	position(x, y),
 	rect(rect),
+	listener(listener),
 	parent(parent)
 {
 	//hitbox = {GetPosition().x, GetPosition().y, GetRect().w, GetRect().h };

@@ -5,10 +5,9 @@
 #include "Input.h"
 #include "p2Log.h"
 #include "Map.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Textures.h"
 #include "Collisions.h"
-#include "FadeScene.h"
 #include "Audio.h"
 #include "Pathfinding.h"
 

@@ -35,7 +35,7 @@ enum class UI_Event
 class UI
 {
 public:
-	UI(UI_Element element, int x, int y, SDL_Rect rect, UI* parent = nullptr);
+	UI(UI_Element element, int x, int y, SDL_Rect rect, Module* listener = nullptr, UI* parent = nullptr);
 
 	UI();
 

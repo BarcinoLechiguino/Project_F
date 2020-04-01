@@ -6,8 +6,7 @@
 #include "Fonts.h"
 #include "Input.h"
 #include "Audio.h"
-#include "FadeScene.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Console.h"
 #include "Gui.h"
 
@@ -92,13 +91,13 @@ bool Gui::PreUpdate()
 		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 		{
 			Mix_HaltMusic();
-			SetElementsVisibility(App->scene->main_in_menu, !App->scene->main_in_menu->isVisible);
-			//App->audio->PlayMusic(App->scene->music_path3.c_str());
-			if (!App->scene->main_in_menu->isVisible)
-			{
-				App->pause = false;
-				
-			}
+			//SetElementsVisibility(App->scene1->main_in_menu, !App->scene->main_in_menu->isVisible);
+			////App->audio->PlayMusic(App->scene->music_path3.c_str());
+			//if (!App->scene1->main_in_menu->isVisible)
+			//{
+			//	App->pause = false;
+			//	
+			//}
 		}
 	}
 	
@@ -165,13 +164,13 @@ bool Gui::CleanUp()
 }
 
 //----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
-UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, UI* parent)
+UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent)
 {
 
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Image(element, x, y, hitbox, isVisible, isInteractible, isDraggable, parent);
+	elem = new UI_Image(element, x, y, hitbox, isVisible, isInteractible, isDraggable, listener, parent);
 
 	if (elem != nullptr)
 	{
@@ -181,13 +180,13 @@ UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isV
 	return elem;
 }
 
-UI* Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable,
-					UI* parent, std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString)
+UI* Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable
+	, Module* listener, UI* parent, std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString)
 {
 	BROFILER_CATEGORY("GUI_Text", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Text(element, x, y, hitbox, font, fontColour, isVisible, isInteractible, isDraggable, parent, string, hoverString, leftClickString, rightClickString);
+	elem = new UI_Text(element, x, y, hitbox, font, fontColour, isVisible, isInteractible, isDraggable, listener, parent, string, hoverString, leftClickString, rightClickString);
 
 	if (elem != nullptr)
 	{
@@ -197,12 +196,12 @@ UI* Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font
 	return elem;
 }
 
-UI* Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
+UI* Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
 {
 	BROFILER_CATEGORY("GUI_Button", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Button(element, x, y, isVisible, isInteractible, isDraggable, parent, idle, hover, clicked);
+	elem = new UI_Button(element, x, y, isVisible, isInteractible, isDraggable, listener, parent, idle, hover, clicked);
 
 	if (elem != nullptr)
 	{
@@ -213,12 +212,12 @@ UI* Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool isI
 }
 
 UI* Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursor, SDL_Color cursorColour, iPoint textOffset, 
-					float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, std::string* defaultString, bool emptyElements)
+					float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, std::string* defaultString, bool emptyElements)
 {
 	BROFILER_CATEGORY("GUI_InputBox", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_InputBox(element, x, y, hitbox, font, fontColour, cursor, cursorColour, textOffset, blinkFrequency, isVisible, isInteractible, isDraggable, parent,
+	elem = new UI_InputBox(element, x, y, hitbox, font, fontColour, cursor, cursorColour, textOffset, blinkFrequency, isVisible, isInteractible, isDraggable, listener, parent,
 					defaultString, emptyElements);
 
 	if (elem != nullptr)
@@ -230,13 +229,13 @@ UI* Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_
 }
 
 UI* Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
-					bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, SDL_Rect* scrollMask, iPoint maskOffset, bool emptyElements)
+					bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable,Module* listener, UI* parent, SDL_Rect* scrollMask, iPoint maskOffset, bool emptyElements)
 {
 	BROFILER_CATEGORY("GUI_ScrollBar", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
 	elem = new UI_Scrollbar(element, x, y, hitbox, thumbSize, thumbOffset, dragArea, dragFactor, dragXAxis, dragYAxis, invertedScrolling,
-					isVisible, isInteractible, isDraggable, parent, scrollMask, maskOffset, emptyElements);
+					isVisible, isInteractible, isDraggable, listener, parent, scrollMask, maskOffset, emptyElements);
 
 	if (elem != nullptr)
 	{
@@ -251,66 +250,66 @@ void Gui::OnEventCall(UI* element, UI_Event ui_event)
 {
 	BROFILER_CATEGORY("GUI_OnEventCall", Profiler::Color::NavajoWhite);
 
-	// In-game menu
-	if (element == App->scene->in_buttons_resume && ui_event == UI_Event::UNCLICKED)
-	{
-		Mix_HaltMusic();
-		SetElementsVisibility(App->scene->main_in_menu, !App->scene->main_in_menu->isVisible);
+	//// In-game menu
+	//if (element == App->scene1->in_buttons_resume && ui_event == UI_Event::UNCLICKED)
+	//{
+	//	Mix_HaltMusic();
+	//	SetElementsVisibility(App->scene1->main_in_menu, !App->scene1->main_in_menu->isVisible);
 
-		if (!App->scene->main_in_menu->isVisible)
-		{
-			App->pause = false;
-		}
+	//	if (!App->scene1->main_in_menu->isVisible)
+	//	{
+	//		App->pause = false;
+	//	}
 
-		App->audio->PlayFx(play_fx, 0);
-		//App->audio->PlayMusic(App->scene->music_path.c_str());
-	}
+	//	App->audio->PlayFx(play_fx, 0);
+	//	//App->audio->PlayMusic(App->scene->music_path.c_str());
+	//}
 
-	if (element == App->scene->in_buttons_save && ui_event == UI_Event::UNCLICKED)
-	{
-		App->SaveGame("save_game.xml");
-		App->audio->PlayFx(save_fx, 0);
-	}
+	//if (element == App->scene1->in_buttons_save && ui_event == UI_Event::UNCLICKED)
+	//{
+	//	App->SaveGame("save_game.xml");
+	//	App->audio->PlayFx(save_fx, 0);
+	//}
 
-	if (element == App->scene->in_buttons_load && ui_event == UI_Event::UNCLICKED)
-	{
-		Mix_HaltMusic();
-		SetElementsVisibility(App->scene->main_in_menu, !App->scene->main_in_menu->isVisible);
-		
-		if (!App->scene->main_in_menu->isVisible)
-		{
-			App->pause = false;
-		}
-		
-		App->LoadGame("save_game.xml");
-		App->audio->PlayFx(play_fx, 0);
-		//App->audio->PlayMusic(App->scene->music_path.c_str());
-	}
+	//if (element == App->scene1->in_buttons_load && ui_event == UI_Event::UNCLICKED)
+	//{
+	//	Mix_HaltMusic();
+	//	SetElementsVisibility(App->scene1->main_in_menu, !App->scene1->main_in_menu->isVisible);
+	//	
+	//	if (!App->scene1->main_in_menu->isVisible)
+	//	{
+	//		App->pause = false;
+	//	}
+	//	
+	//	App->LoadGame("save_game.xml");
+	//	App->audio->PlayFx(play_fx, 0);
+	//	//App->audio->PlayMusic(App->scene->music_path.c_str());
+	//}
 
-	if (element == App->scene->in_buttons_exit && ui_event == UI_Event::UNCLICKED)
-	{
-		game_started = false;
-		
-		if (!App->scene->main_in_menu->isVisible)
-		{
-			App->pause = false;
-		}
-		
-		App->audio->PlayFx(exit_fx, 0);
-		//App->audio->PlayMusic(App->scene->music_path2.c_str());
-	}
+	//if (element == App->scene1->in_buttons_exit && ui_event == UI_Event::UNCLICKED)
+	//{
+	//	game_started = false;
+	//	
+	//	if (!App->scene1->main_in_menu->isVisible)
+	//	{
+	//		App->pause = false;
+	//	}
+	//	
+	//	App->audio->PlayFx(exit_fx, 0);
+	//	//App->audio->PlayMusic(App->scene->music_path2.c_str());
+	//}
 
-	if (element == App->scene->unmute_in && ui_event == UI_Event::UNCLICKED)
-	{
-		App->audio->volume = 100;
-		App->audio->PlayFx(nav_fx, 0);
-	}
+	//if (element == App->scene1->unmute_in && ui_event == UI_Event::UNCLICKED)
+	//{
+	//	App->audio->volume = 100;
+	//	App->audio->PlayFx(nav_fx, 0);
+	//}
 
-	if (element == App->scene->mute_in && ui_event == UI_Event::UNCLICKED)
-	{
-		App->audio->volume = 0;
-		App->audio->PlayFx(nav_fx, 0);
-	}
+	//if (element == App->scene1->mute_in && ui_event == UI_Event::UNCLICKED)
+	//{
+	//	App->audio->volume = 0;
+	//	App->audio->PlayFx(nav_fx, 0);
+	//}
 	//----------------------------------------------------------------------------------------------------------------------
 } 
 

@@ -8,16 +8,18 @@
 
 #include "PugiXml\src\pugixml.hpp"
 #include <string>
+#include <vector>
+#include <list>
 
-class Application;
-struct SDL_Texture;
-struct SDL_Rect; 
-class Animation; 
+struct		SDL_Texture;
+struct		SDL_Rect;
+class		Application;
+class		Animation; 
 
-struct Collider;
+struct		Collider;
 
-class UI;
-enum class UI_Event;
+class		UI;
+enum class	UI_Event;
 
 class Module
 {
@@ -77,7 +79,7 @@ public:
 		return true;
 	}
 
-	void Enable()	//Start()
+	void Enable()																	//Start()
 	{
 		if (!is_active)
 		{
@@ -86,7 +88,7 @@ public:
 		}
 	}
 
-	void Disable()	//CleanUp()
+	void Disable()																	//CleanUp()
 	{
 		if (is_active)
 		{
@@ -95,8 +97,7 @@ public:
 		}
 	}
 
-	//Collision handling
-	virtual void OnCollision(Collider* C1, Collider* C2) {}
+	virtual void OnCollision(Collider* C1, Collider* C2) {}							//Collision handling
 
 	virtual void OnEventCall(UI* element, UI_Event ui_event)
 	{
@@ -109,9 +110,8 @@ public:
 	}
 
 public:
-
 	std::string name;
-	bool is_active;
+	bool		is_active;
 };
 
 #endif // __MODULE_H__

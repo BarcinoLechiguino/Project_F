@@ -9,7 +9,8 @@
 //UI_Image will always be uninteractible and will have 2 events: IDLE & CLICKED (CLICKED when the image is clicked and can be dragged).
 //UI_Image can be draggable and can have a parent element.
 //hitbox argument serves the purpose of both setting the UI_Image's "input collider" and locating the right sprite in the Atlas(tex).
-UI_Image::UI_Image(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, UI* parent) : UI(element, x, y, hitbox, parent) //When a UI_Image's constructor is called, a UI element is initialized as a IMAGE element.
+UI_Image::UI_Image(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent) 
+	: UI(element, x, y, hitbox, listener, parent)								//When a UI_Image's constructor is called, a UI element is initialized as a IMAGE element.
 {
 	tex = App->gui->GetAtlas();													//The atlas already has the path to the atlas spritesheet. Check how to work around the const
 
@@ -30,7 +31,7 @@ UI_Image::UI_Image(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVis
 
 	if (this->isInteractible)													//If the Image element is interactible.
 	{
-		listener = App->gui;													//This Image's listener is set to the App->gui module (For OnCallEvent()).
+		this->listener = listener;													//This Image's listener is set to the App->gui module (For OnCallEvent()).
 	}
 
 	if (parent != NULL)															//If a parent is passed as argument.
@@ -127,7 +128,10 @@ void UI_Image::CheckInput()
 
 			if (isInteractible)																	//If the image element is interactible.
 			{
-				listener->OnEventCall(this, ui_event);											//The listener call the OnEventCall() method passing this UI_Image and it's event as arguments.
+				if (listener != nullptr)
+				{
+					listener->OnEventCall(this, ui_event);											//The listener call the OnEventCall() method passing this UI_Image and it's event as arguments.
+				}
 			}
 		}
 	}

@@ -59,7 +59,7 @@ public:
 
 	//Entity Variables
 	ENTITY_TYPE		type;					
-	std::string		nameTag;				//Name of the entity in the xml file.
+	std::string		name_tag;				//Name of the entity in the xml file.
 	fPoint			pixel_position;			
 	iPoint			tile_position;
 

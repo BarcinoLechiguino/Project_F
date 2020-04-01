@@ -7,11 +7,10 @@
 #include "Map.h"
 #include "Window.h"
 #include "Collisions.h"
-#include "FadeScene.h"
 #include "Input.h"
 #include "Audio.h"
 #include "Pathfinding.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "EntityManager.h"
 #include "Console.h"
 #include "Brofiler\Brofiler.h"
@@ -678,7 +677,7 @@ int Properties::Get(std::string name, int default_value)							//Revise how to b
 bool Map::SwitchMaps(std::string new_map) // switch map function that passes the number of map defined in config.xml
 {
 	CleanUp();
-	App->scene->to_end = false; // we put this in false so there are no repetitions
+	//App->scene1->to_end = false; // we put this in false so there are no repetitions
 	Load( new_map.c_str() );
 	//App->audio->PlayMusic(App->map->data.music_File.c_str());
 
@@ -689,13 +688,13 @@ bool Map::ChangeMap(const char* newMap)
 {
 	bool ret = true;
 
-	App->scene->CleanUp();
+	//App->scene1->CleanUp();
 
 	App->map->Load(newMap);						
 	App->collisions->LoadColliderFromMap();		
 
-	App->scene->firstMap	= true;
-	App->scene->secondMap	= false;
+	//App->scene1->firstMap	= true;
+	//App->scene1->secondMap	= false;
 
 	//This needs to be changed somewhere else. Here it works but probably this is not it's place.
 	int w, h;
@@ -709,7 +708,7 @@ bool Map::ChangeMap(const char* newMap)
 	
 	App->gui->Start();
 	App->console->Start();
-	App->scene->LoadGuiElements();
+	//App->scene1->LoadGuiElements();
 	//App->scene->Start();
 
 	return ret;

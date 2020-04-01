@@ -1,6 +1,6 @@
-#include "Module.h"
 #include "SDL/include/SDL_rect.h"
-#include <vector>
+#include "Module.h"
+#include "Scene.h"
 
 class UI;
 class UI_Image;
@@ -9,32 +9,27 @@ class UI_Button;
 class UI_InputBox;
 class UI_Scrollbar;
 
-class Main_Menu : public Module
+class Main_Menu : public Scene
 {
 public:
 
 	Main_Menu();
+	virtual ~Main_Menu();				// Destructor
 
-	// Destructor
-	virtual ~Main_Menu();
+	bool Awake(pugi::xml_node&);		// Called before render is available
+	bool Start();						// Called before the first frame
+	bool PreUpdate();					// Called before all Updates
+	bool Update(float dt);				// Called each loop iteration
+	bool PostUpdate();					// Called before all Updates
+	bool CleanUp();						// Called before quitting
 
-	// Called before render is available
-	bool Awake(pugi::xml_node&);
+public:
 
-	// Called before the first frame
-	bool Start();
+	void LoadGuiElements();
 
-	// Called before all Updates
-	bool PreUpdate();
+	void OnEventCall(UI* element, UI_Event ui_event);
 
-	// Called each loop iteration
-	bool Update(float dt);
-
-	// Called before all Updates
-	bool PostUpdate();
-
-	// Called before quitting
-	bool CleanUp();
+	void ExecuteTransition();
 
 public:
 
@@ -42,5 +37,32 @@ public:
 	SDL_Rect   play_button_idle;
 	SDL_Rect   play_button_hover;
 	SDL_Rect   play_button_clicked;
+
+public:
+	UI_Image* background;
+	SDL_Rect				background_rect;
+	SDL_Texture* background_texture;
+
+	// In-game menu
+	UI_Image* main_in_menu;
+	UI_Image* label_1_in;
+
+	UI_Text* in_text;
+	UI_Text* button_in_text;
+
+	UI_Button* in_buttons_resume;
+	UI_Button* in_buttons_save;
+	UI_Button* in_buttons_load;
+	UI_Button* in_buttons_exit;
+	UI_Button* unmute_in;
+	UI_Button* mute_in;
+
+	UI_Scrollbar* scrollbar_in;
+
+	iPoint					firstOriginalPos;
+	iPoint					secondOrigianlPos;
+
+	bool					firstScrollPosCalc;
+	bool					secondScrollPosCalc;
 
 };

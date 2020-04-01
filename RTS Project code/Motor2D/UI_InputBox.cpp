@@ -10,13 +10,14 @@
 //UI_InputBox will always be interactible (although it can be set to not be), and can be draggable. Can potentially receive all events.
 //The element receives as arguments all the requiered elements to create a UI_Image (Background), a UI_Text (input text) and another UI_Image (cursor).
 UI_InputBox::UI_InputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColour, iPoint textOffset,
-				float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, UI* parent, std::string* defaultString, bool emptyElements) : UI(element, x, y, hitbox, parent)
+				float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, std::string* defaultString, bool emptyElements) 
+				: UI(element, x, y, hitbox, listener, parent)
 {
 	//tex = App->gui->GetAtlas();
 	
 	if (isInteractible)																//If the Input Box element is interactible.
 	{
-		listener = App->gui;														//This input box's listener is set to the App->gui module (For OnCallEvent()).
+		this->listener = listener;													//This input box's listener is set to the App->gui module (For OnCallEvent()).
 	}
 
 	if (parent != NULL)																//If a parent is passed as argument.
@@ -42,16 +43,16 @@ UI_InputBox::UI_InputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF
 	// --- Input Box Elements
 	if (!emptyElements)
 	{
-		this->background = UI_Image(UI_Element::IMAGE, x, y, hitbox, isVisible, false, false, this);
+		this->background = UI_Image(UI_Element::IMAGE, x, y, hitbox, isVisible, false, false, nullptr, this);
 		//this->cursor = UI_Image(UI_Element::IMAGE, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, this);
 	}
 	else
 	{
-		this->background = UI_Image(UI_Element::EMPTY, x, y, hitbox, isVisible, false, false, this);
+		this->background = UI_Image(UI_Element::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, this);
 	}
 
-	this->cursor = UI_Image(UI_Element::EMPTY, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, this);
-	this->text = UI_Text(UI_Element::TEXT, x + textOffset.x, y + textOffset.y, hitbox, font, fontColour, isVisible, false, false, this, defaultString);
+	this->cursor = UI_Image(UI_Element::EMPTY, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, nullptr, this);
+	this->text = UI_Text(UI_Element::TEXT, x + textOffset.x, y + textOffset.y, hitbox, font, fontColour, isVisible, false, false, nullptr, this, defaultString);
 	
 	// --- Text Variables
 	this->font = font;																//Sets the UI input box font to the one being passed as argument.
@@ -171,7 +172,10 @@ void UI_InputBox::CheckInput()
 
 		if (isInteractible)
 		{
-			listener->OnEventCall(this, ui_event);
+			if (listener != nullptr)
+			{
+				listener->OnEventCall(this, ui_event);
+			}
 		}
 	}
 	/*else
