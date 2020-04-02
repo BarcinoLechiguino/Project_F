@@ -60,7 +60,7 @@ bool UI_Button::Draw()
 {
 	CheckInput();																//Calling "Update" and Draw at the same time. 
 
-	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &currentRect, 0.0f);
+	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &currentRect, 0.0f, 1.0f);
 
 	return true;
 }

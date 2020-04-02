@@ -44,9 +44,9 @@ void UI::CleanUp()
 	return;
 }
 
-void UI::BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed)
+void UI::BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed, float render_scale)
 {
-	App->render->Blit(texture, x, y, rect, false, speed);		//Setting the blit's speed argument to 0 will make the UI Element remain static in relation to the camera.
+	App->render->Blit(texture, x, y, rect, false, speed, render_scale);		//Setting the blit's speed argument to 0 will make the UI Element remain static in relation to the camera.
 }
 
 // ----------------------------------------- SET/GET METHODS -----------------------------------------

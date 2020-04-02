@@ -24,6 +24,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* C1, Collider* C2);
+	void ApplyDamage(Entity* attacker);
 
 public:
 
@@ -31,6 +32,7 @@ public:
 	const std::vector<iPoint>* entity_path;
 
 	UI_Image* health_bar;
+	UI_Image* empty_bar;
 };
 
 #endif // __ENEMY_H__

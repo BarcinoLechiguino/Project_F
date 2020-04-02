@@ -48,7 +48,7 @@ public:
 
 	virtual void CleanUp();
 
-	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float spped);
+	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float spped, float render_scale);
 
 public:
 	void SetScreenPos(iPoint position);				//Sets the position of a UI_Element with the Screen as point of reference.

@@ -58,11 +58,11 @@ bool UI_Image::Draw()
 		if (this->attached_unit == nullptr)
 		{
 
-			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &GetScreenRect(), 0.0f);		//GetPosition() is used as the position variable in the UI parent class will be initialized with the values of the UI_Image instance at constructor call
+			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &GetScreenRect(), 0.0f, 1.0f);		//GetPosition() is used as the position variable in the UI parent class will be initialized with the values of the UI_Image instance at constructor call
 		}
 		else
 		{
-			BlitElement(tex, attached_unit->pixel_position.x, attached_unit->pixel_position.y - 30, &GetScreenRect(), 1.0f); //Magic number
+			BlitElement(tex, attached_unit->pixel_position.x - 35, attached_unit->pixel_position.y - 25, &GetScreenRect(), 1.0f, 0.65f); //Magic number
 		}
 	}
 	

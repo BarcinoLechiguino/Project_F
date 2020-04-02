@@ -20,6 +20,7 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 	selectable_unit = false;
 
 	speed = 100;
+	damage = 30;
 };
 
 Enemy::~Enemy()  //Destructor. Called at the last frame.

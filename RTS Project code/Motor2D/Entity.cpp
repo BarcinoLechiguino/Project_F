@@ -86,3 +86,9 @@ void Entity::OnCollision(Collider* C1, Collider* C2)
 	return;
 }
 
+void Entity::ApplyDamage(Entity* attacker)
+{
+
+	return;
+}
+
