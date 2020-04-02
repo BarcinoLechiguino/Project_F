@@ -3,6 +3,8 @@
 
 #include "Module.h"
 
+struct _TTF_Font;
+
 class UI;
 class UI_Image;
 class UI_Text;

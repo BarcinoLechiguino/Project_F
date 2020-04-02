@@ -6,7 +6,7 @@
 #include "Textures.h"
 #include "p2Log.h"
 #include "EntityManager.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Pathfinding.h"
 #include "Map.h"
 
@@ -112,7 +112,7 @@ void Player::MoveToOrder()//fix
 
 void Player::CameraController(float dt)
 {
-	uint window_width, window_height;
+	int window_width, window_height;
 	App->win->GetWindowSize(window_width, window_height);
 	
 	//Left

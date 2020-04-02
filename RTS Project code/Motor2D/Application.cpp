@@ -1,5 +1,6 @@
 #include <iostream> 
 #include <list>
+#include <vector>
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Application.h"
@@ -8,8 +9,6 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Audio.h"
-#include "Scene.h"
-#include "Main_Menu.h"
 #include "Map.h"
 #include "Fonts.h"
 #include "EntityManager.h"
@@ -17,8 +16,10 @@
 #include "Collisions.h"
 #include "Gui.h"
 #include "Console.h"
-#include "FadeScene.h"
 #include "Player.h"
+#include "TransitionManager.h"
+#include "SceneManager.h"
+
 #include "Brofiler\Brofiler.h"
 
 //#include "mmgr/mmgr.h"
@@ -30,22 +31,21 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 
 	want_to_save = want_to_load = false;
 
-	input			= new Input();
-	win				= new Window();
-	render			= new Render();
-	tex				= new Textures();
-	audio			= new Audio();
-	scene			= new Scene();
-	map				= new Map();
-	pathfinding		= new PathFinding();
-	collisions		= new Collisions();
-	entityManager	= new EntityManager();
-	fadescene		= new Fade_Scene();
-	font			= new Fonts();
-	gui				= new Gui();
-	console			= new Console();
-	mainmenu		= new Main_Menu();
-	player			= new Player();
+	input				= new Input();
+	win					= new Window();
+	render				= new Render();
+	tex					= new Textures();
+	audio				= new Audio();
+	map					= new Map();
+	pathfinding			= new PathFinding();
+	collisions			= new Collisions();
+	entityManager		= new EntityManager();
+	font				= new Fonts();
+	gui					= new Gui();
+	console				= new Console();
+	player				= new Player();
+	transition_manager	= new TransitionManager();
+	scene_manager		= new SceneManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -56,19 +56,18 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(font);
-	AddModule(gui);
 	AddModule(console);
-	AddModule(mainmenu);
-	AddModule(scene);
+	AddModule(collisions);
+	AddModule(transition_manager);
+
+	// scene_manager last before render.
+	AddModule(gui);
+	AddModule(scene_manager);
 	AddModule(entityManager);
 	AddModule(player);
-	AddModule(collisions);
-	AddModule(fadescene);
-	
+
 	// render last to swap buffer
 	AddModule(render);
-
-	scene->is_active = false;
 
 	pause = false;
 
@@ -112,13 +111,13 @@ bool Application::Awake()
 	{
 		// self-config
 		ret = true;
-		app_config = config.child("app");
-		title = (app_config.child("title").child_value()); //Calling constructor
-		organization = (app_config.child("organization").child_value());
-		frame_cap = config.child("app").attribute("framerate_cap").as_uint();
-		framesAreCapped = config.child("app").attribute("frame_cap_on").as_bool();
+		app_config			= config.child("app");
+		title				= (app_config.child("title").child_value());					//Calling constructor
+		organization		= (app_config.child("organization").child_value());
+		frame_cap			= config.child("app").attribute("framerate_cap").as_uint();
+		framesAreCapped		= config.child("app").attribute("frame_cap_on").as_bool();
 
-		original_frame_cap = frame_cap;
+		original_frame_cap	= frame_cap;
 	}
 
 	if(ret)
@@ -140,9 +139,6 @@ bool Application::Start()
 	PERF_START(perf_timer);
 	
 	bool ret = true;
-
-	//Disable scene
-	scene->Disable();
 
 	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret ; ++item)
 	{

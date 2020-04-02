@@ -183,13 +183,14 @@ void EntityManager::DestroyEntities()
 	//Iterates all entities in the entities list and searches for the entity passed as argument, if it is inside the list and is found, it is then destroyed.
 	LOG("There are %d entities in the entities list.", entities.size());
 	
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
+	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); ++entity_iterator)
 	{
-		
 		(*entity_iterator)->CleanUp();			//Calls the CleanUp() method of the iterated entity (an enemy entity).
 		RELEASE((*entity_iterator));			//Deletes the data buffer
-		entities.erase(entity_iterator);		//Deletes the entity being iterated from the list.
 		
 		//break;
 	}
+	entities.clear();
+
+	dynamic_objects.clear();
 }

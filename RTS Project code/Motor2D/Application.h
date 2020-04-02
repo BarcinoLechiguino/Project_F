@@ -14,45 +14,32 @@ class Input;
 class Render;
 class Textures;
 class Audio;
-class Scene;
 class Map;
 class PathFinding;
-class Fade_Scene;
 class Collisions;
 class EntityManager;
 class Fonts;
 class Gui;
 class Console;
-class Main_Menu;
 class Player;
+class TransitionManager;
+class SceneManager;
 
 class Application
 {
 public:
+	
+	Application(int argc, char* args[]);						// Constructor
+	virtual ~Application();										// Destructor
 
-	// Constructor
-	Application(int argc, char* args[]);
+	bool Awake();												// Called before render is available
+	bool Start();												// Called before the first frame
+	bool Update();												// Called each loop iteration
+	bool CleanUp();												// Called before quitting
 
-	// Destructor
-	virtual ~Application();
+	void AddModule(Module* module);								// Add a new module to handle
 
-	// Called before render is available
-	bool Awake();
-
-	// Called before the first frame
-	bool Start();
-
-	// Called each loop iteration
-	bool Update();
-
-	// Called before quitting
-	bool CleanUp();
-
-	// Add a new module to handle
-	void AddModule(Module* module);
-
-	// Exposing some properties for reading
-	int GetArgc() const;
+	int GetArgc() const;										// Exposing some properties for reading
 	const char* GetArgv(int index) const;
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
@@ -63,28 +50,21 @@ public:
 	void GetSaveGames(std::list<std::string>& list_to_fill);
 
 private:
+	
+	pugi::xml_node LoadConfig(pugi::xml_document&) const;		// Load config file
 
-	// Load config file
-	pugi::xml_node LoadConfig(pugi::xml_document&) const;
+	void PrepareUpdate();										// Call modules before each loop iteration
 
-	// Call modules before each loop iteration
-	void PrepareUpdate();
+	void FinishUpdate();										// Call modules before each loop iteration
 
-	// Call modules before each loop iteration
-	void FinishUpdate();
+	bool PreUpdate();											// Call modules before each loop iteration
 
-	// Call modules before each loop iteration
-	bool PreUpdate();
+	bool DoUpdate();											// Call modules on each loop iteration
 
-	// Call modules on each loop iteration
-	bool DoUpdate();
+	bool PostUpdate();											// Call modules after each loop iteration
 
-	// Call modules after each loop iteration
-	bool PostUpdate();
-
-	// Load / Save
-	bool LoadGameNow();
-	bool SavegameNow(); //Chenged to non const due to list unknown problem
+	bool LoadGameNow();											// Load / Save
+	bool SavegameNow();											//Chenged to non const due to list unknown problem
 
 public:
 
@@ -95,23 +75,22 @@ public:
 	Textures*			tex;
 	Audio*				audio;
 	Fonts*				font;
-	Scene*				scene;
 	Map*				map;
 	PathFinding*		pathfinding;
 	EntityManager*		entityManager;
 	Collisions*			collisions;
-	Fade_Scene*			fadescene;
 	Gui*				gui;
 	Console*			console;
-	Main_Menu*			mainmenu;
 	Player*				player;
+	TransitionManager*	transition_manager;
+	SceneManager*		scene_manager;
 
-	uint				frame_cap;				//Stores the frames per second cap to be applied.
-	uint				original_frame_cap;		//Stores the original frame cap at application start.
-	float				seconds_since_startup;	//Secons that have elapsed since app start.
+	uint				frame_cap;								//Stores the frames per second cap to be applied.
+	uint				original_frame_cap;						//Stores the original frame cap at application start.
+	float				seconds_since_startup;					//Secons that have elapsed since app start.
 
-	bool				framesAreCapped;		//Keeps track whether the frame cap is on or off.
-	bool				vsyncIsActive;			//Keeps track whether Vsync is on or off.
+	bool				framesAreCapped;						//Keeps track whether the frame cap is on or off.
+	bool				vsyncIsActive;							//Keeps track whether Vsync is on or off.
 	bool				pause;
 
 private:
@@ -130,19 +109,20 @@ private:
 
 	//Framerate
 	uint64				frame_count;			
-	Timer				startup_timer;			//Used to keep track of time since app start.
-	Timer				frame_timer;			//Keeps track of everything time related in the span of a frame.
-	PerfTimer			perf_timer;				//Creates a pointer to PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
-	PerfTimer			last_second_timer;		//Creates a pointer to PerfTimer tool. Used to calculate variables in spans of one second.
-	uint32				last_update_ms;			//Calculates the amount of milliseconds that the last update spent running.
-	uint32				frames_last_second;		//Calculates the amount of frames that where processed the last second.
+	Timer				startup_timer;							//Used to keep track of time since app start.
+	Timer				frame_timer;							//Keeps track of everything time related in the span of a frame.
+	PerfTimer			perf_timer;								//Creates a pointer to PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
+	PerfTimer			last_second_timer;						//Creates a pointer to PerfTimer tool. Used to calculate variables in spans of one second.
+	uint32				last_update_ms;							//Calculates the amount of milliseconds that the last update spent running.
+	uint32				frames_last_second;						//Calculates the amount of frames that where processed the last second.
 	uint32				prev_sec_frames;		
 
-	PerfTimer			true_delay_timer;		//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
-	float				dt;						//Keeps track of the amount of time in milliseconds that has passed in a frame. Will be used to make everything (update()) be in the same timestep.
+	PerfTimer			true_delay_timer;						//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
+	float				dt;										//Keeps track of the amount of time in milliseconds that has passed in a frame. 
+																//Will be used to make everything (update()) be in the same timestep.
 
-	char*				frameCapOnOff;			//String that is set to 'On' when the frame cap is on and  'Off' when it is off.
-	char*				vsyncOnOff;				//String that is set to 'On' when Vsync is on and 'Off' when it is off.
+	char*				frameCapOnOff;							//String that is set to 'On' when the frame cap is on and  'Off' when it is off.
+	char*				vsyncOnOff;								//String that is set to 'On' when Vsync is on and 'Off' when it is off.
 };
 
 extern Application* App; // No student is asking me about that ... odd :-S

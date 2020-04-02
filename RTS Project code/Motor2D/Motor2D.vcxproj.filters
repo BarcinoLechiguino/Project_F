@@ -28,9 +28,6 @@
     <ClCompile Include="UI_Text.cpp">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Main_Menu.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClCompile>
@@ -53,9 +50,6 @@
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Collisions.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="FadeScene.cpp">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
@@ -85,9 +79,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Desenvolupament  ========\Modules\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="PerfTimer.cpp">
       <Filter>Desenvolupament  ========\Tools</Filter>
     </ClCompile>
@@ -114,6 +105,51 @@
     </ClCompile>
     <ClCompile Include="Infantry.cpp">
       <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClCompile>
+    <ClCompile Include="Transition.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="TransitionManager.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="AlternatingBars.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraToMouse.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Cut.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpandingBars.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeToColour.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Slide.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Wipe.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="ZoomToMouse.cpp">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Main_Menu.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene1.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -159,9 +195,6 @@
     <ClInclude Include="UI_Text.h">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Main_Menu.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Desenvolupament  ========\Core</Filter>
     </ClInclude>
@@ -184,9 +217,6 @@
       <Filter>Desenvolupament  ========\Modules\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Collisions.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="FadeScene.h">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
@@ -215,9 +245,6 @@
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Desenvolupament  ========\Modules\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="PerfTimer.h">
       <Filter>Desenvolupament  ========\Tools</Filter>
@@ -248,6 +275,54 @@
     </ClInclude>
     <ClInclude Include="Infantry.h">
       <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClInclude>
+    <ClInclude Include="Transition.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="TransitionManager.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Desenvolupament  ========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="AlternatingBars.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Bar.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="CameraToMouse.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpandingBars.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+    </ClInclude>
+    <ClInclude Include="Cut.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeToColour.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Slide.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Wipe.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClInclude>
+    <ClInclude Include="ZoomToMouse.h">
+      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Main_Menu.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene1.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -332,6 +407,18 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Entities\Static\Resources">
       <UniqueIdentifier>{15ffcaff-8973-48e6-b92f-ec6be2c7d83a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Transitions">
+      <UniqueIdentifier>{1b8b96ad-5b6e-440e-a7ff-3cfc3fce3594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Transitions\Transition Types">
+      <UniqueIdentifier>{3ee19206-a459-43a5-b779-94765ed7ab60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions">
+      <UniqueIdentifier>{8df65860-39a7-4b0f-a322-a03c897b25b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Modules\Scenes\In-Game Scenes">
+      <UniqueIdentifier>{c255404f-2103-4ee7-af32-661d9819c021}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

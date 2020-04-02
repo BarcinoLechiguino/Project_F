@@ -11,36 +11,27 @@ class Window : public Module
 public:
 
 	Window();
+	virtual ~Window();														// Destructor
 
-	// Destructor
-	virtual ~Window();
+	bool Awake(pugi::xml_node&);											// Called before render is available
+	bool CleanUp();															// Called before quitting
 
-	// Called before render is available
-	bool Awake(pugi::xml_node&);
 
-	// Called before quitting
-	bool CleanUp();
+	void SetTitle(const char* new_title);									// Change title
+	void GetWindowSize(int& width, int& height) const;						// Retrive window size
+	void GetWindowRect(SDL_Rect& rect) const;								// Method that will get the current dimensions of the screen and assign them to a given rect.
 
-	// Changae title
-	void SetTitle(const char* new_title);
-
-	// Retrive window size
-	void GetWindowSize(uint& width, uint& height) const;
-
-	// Retrieve window scale
-	uint GetScale() const;
+	float GetScale() const;													// Retrieve window scale
+	void SetScale(float new_scale);											// Modify window scale.
 
 public:
-	//The window we'll be rendering to
-	SDL_Window* window;
-
-	//The surface contained by the window
-	SDL_Surface* screen_surface;
+	SDL_Window* window;														//The window we'll be rendering to
+	SDL_Surface* screen_surface;											//The surface contained by the window
 
 	std::string	title;
-	int		width;
-	int		height;
-	int		scale;
+	int			width;
+	int			height;
+	float		scale;
 };
 
 #endif // __WINDOW_H__

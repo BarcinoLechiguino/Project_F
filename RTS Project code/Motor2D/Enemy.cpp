@@ -5,10 +5,9 @@
 #include "Input.h"
 #include "p2Log.h"
 #include "Map.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Textures.h"
 #include "Collisions.h"
-#include "FadeScene.h"
 #include "Audio.h"
 #include "Pathfinding.h"
 
@@ -21,6 +20,7 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 	selectable_unit = false;
 
 	speed = 100;
+	damage = 30;
 };
 
 Enemy::~Enemy()  //Destructor. Called at the last frame.

@@ -56,10 +56,13 @@ public:
 	
 	virtual void BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip);
 	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
+	virtual void ApplyDamage(Entity* attacker);
 
 	//Entity Variables
-	ENTITY_TYPE		type;					
-	std::string		nameTag;				//Name of the entity in the xml file.
+	ENTITY_TYPE		type;	
+	float			health;
+	float			damage;
+	std::string		name_tag;				//Name of the entity in the xml file.
 	fPoint			pixel_position;			
 	iPoint			tile_position;
 

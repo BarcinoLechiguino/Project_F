@@ -7,8 +7,8 @@
 
 //UI_Button can be interactible (will almost always be) and draggable. Can potentially receive all events.
 //This element can receive up to 3 rects containing the coordinates of the sprites for each event (IDLE, HOVER & CLICKED).
-UI_Button::UI_Button(UI_Element element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, UI* parent,
-				SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked) : UI(element, x, y, *idle, parent)
+UI_Button::UI_Button(UI_Element element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent,
+				SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked) : UI(element, x, y, *idle, listener, parent)
 {
 	tex = App->gui->GetAtlas();
 
@@ -39,7 +39,7 @@ UI_Button::UI_Button(UI_Element element, int x, int y, bool isVisible, bool isIn
 
 	if (this->isInteractible)													//If the button element is interactible.
 	{
-		listener = App->gui;													//This button's listener is set to the App->gui module (For OnCallEvent()).
+		this->listener = listener;												//This button's listener is set to the App->gui module (For OnCallEvent()).
 	}
 
 	if (parent != NULL)															//If a parent is passed as argument.
@@ -60,7 +60,7 @@ bool UI_Button::Draw()
 {
 	CheckInput();																//Calling "Update" and Draw at the same time. 
 
-	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &currentRect);
+	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &currentRect, 0.0f, 1.0f);
 
 	return true;
 }
@@ -134,7 +134,10 @@ void UI_Button::CheckInput()
 			//currentRect = clicked;															//Button Clicked sprite.
 		}
 
-		listener->OnEventCall(this, ui_event);													//This UI element's pointer and ui_event are passed as arguments to the OnEventCall() function.
+		if (listener != nullptr)
+		{
+			listener->OnEventCall(this, ui_event);												//This UI element's pointer and ui_event are passed as arguments to the OnEventCall() function.
+		}
 	}
 }
 

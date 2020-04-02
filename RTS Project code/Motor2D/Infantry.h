@@ -1,3 +1,5 @@
+#include "UI_Image.h"
+
 #ifndef __INFANTRY_H__
 #define __INFANTRY_H__
 
@@ -22,12 +24,15 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* C1, Collider* C2);
+	void ApplyDamage(Entity* attacker);
 
 public:
 
 
 	const std::vector<iPoint>* entity_path;
 
+	UI_Image* health_bar;
+	UI_Image* empty_bar;
 };
 
 #endif // __ENEMY_H__

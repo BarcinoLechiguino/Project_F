@@ -49,13 +49,14 @@ public:
 	
 public:
 
-	float speed;
+	float			speed;
 
-	bool path_full;
-	bool selectable_unit;
 
-	entity_state unit_state;
-	pathfind_state path_state;
+	bool			path_full;
+	bool			selectable_unit;
+
+	entity_state	unit_state;
+	pathfind_state	path_state;
 
 	std::vector<iPoint> entity_path;
 	std::vector<iPoint>::iterator current_path_tile;
@@ -65,5 +66,5 @@ public:
 	iPoint target_tile;
 	iPoint occupied_tile;
 
-	SDL_Rect selection_collider;
+	SDL_Rect		selection_collider;
 };

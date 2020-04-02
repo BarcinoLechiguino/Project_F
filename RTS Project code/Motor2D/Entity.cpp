@@ -4,8 +4,7 @@
 #include "Textures.h"
 #include "Map.h"
 #include "Input.h"
-#include "FadeScene.h"
-#include "Scene.h"
+#include "Scene1.h"
 #include "Audio.h"
 #include "Render.h"
 #include "Window.h"
@@ -84,6 +83,12 @@ void Entity::BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip)
 
 void Entity::OnCollision(Collider* C1, Collider* C2)
 {
+	return;
+}
+
+void Entity::ApplyDamage(Entity* attacker)
+{
+
 	return;
 }
 
