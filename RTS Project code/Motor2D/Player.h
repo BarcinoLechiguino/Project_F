@@ -1,8 +1,8 @@
 #include "Module.h"
 #include "Point.h"
 #include "SDL/include/SDL_rect.h"
-#include <vector>
 #include "EntityManager.h"
+#include <vector>
 
 class Player : public Module
 {
@@ -32,7 +32,7 @@ public:
 
 	void MoveToOrder();
 
-	void Cursor();
+	void DrawCursor();
 
 public:
 
@@ -52,5 +52,6 @@ public:
 	SDL_Rect selection_rect;
 
 	std::vector<Dynamic_Object*> units_selected;
+
 
 };

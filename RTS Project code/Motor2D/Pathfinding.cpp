@@ -63,6 +63,18 @@ bool PathFinding::IsOccupied(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
 
+	if (t == OCCUPIED)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool PathFinding::IsNonWalkable(const iPoint& pos) const
+{
+	uchar t = GetTileAt(pos);
+
 	if (t == NON_WALKABLE)
 	{
 		return true;
@@ -70,6 +82,7 @@ bool PathFinding::IsOccupied(const iPoint& pos) const
 
 	return false;
 }
+
 // Utility: return the walkability value of a tile
 uchar PathFinding::GetTileAt(const iPoint& pos) const
 {
@@ -93,6 +106,55 @@ bool PathFinding::ChangeWalkability(const iPoint& pos, uchar walkability)
 const std::vector<iPoint> PathFinding::GetLastPath() const
 {
 	return last_path;
+}
+
+std::vector<iPoint> PathFinding::FindNearbyWalkable(const iPoint& pos, int quantity)
+{
+	std::vector<iPoint> ret;
+
+	PathList frontier;
+	PathList visited;
+
+	PathNode origin_node(0, 0, pos, nullptr);
+	frontier.list.push_back(origin_node);
+
+	ret.push_back(origin_node.pos);
+	int tiles_filled = 1;
+
+	std::list<PathNode>::iterator current_node = frontier.list.begin(); 
+	PathList neighbours;
+
+	while (frontier.list.size() != 0 && tiles_filled <= quantity)
+	{
+		current_node->FindWalkableAdjacents(neighbours); //Fill starting node
+
+		std::list<PathNode>::iterator neighbour_iterator = neighbours.list.begin();
+
+		for (neighbour_iterator; neighbour_iterator != neighbours.list.end() && tiles_filled <= quantity; ++neighbour_iterator)
+		{
+			if ( visited.Find((*neighbour_iterator).pos) == visited.list.end() ) //if not in visited
+			{
+				if (App->pathfinding->IsWalkable((*neighbour_iterator).pos))
+				{
+					ret.push_back((*neighbour_iterator).pos);
+
+					tiles_filled++;
+				}
+
+				if (App->pathfinding->IsWalkable((*neighbour_iterator).pos) || App->pathfinding->IsOccupied((*neighbour_iterator).pos))
+				{
+					frontier.list.push_back((*neighbour_iterator));
+				}
+			}
+
+		}
+
+		neighbours.list.clear();
+
+		current_node++;
+	}
+
+	return ret;
 }
 
 // Looks for a node in this list and returns it's list node or NULL
@@ -149,42 +211,42 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 
 	// north
 	cell.create(pos.x, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// south
 	cell.create(pos.x, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// North east
 	cell.create(pos.x + 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// North west
 	cell.create(pos.x - 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// South east
 	cell.create(pos.x + 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	// South west
 	cell.create(pos.x - 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell))
+	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
 
 	return list_to_fill.list.size();
@@ -216,9 +278,9 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	
 	int ret = -1;		//Revise, Should be 1?										            	//The value returned by the function. Done to improve readability.
 																					            
-	if (IsWalkable(origin) == false || IsWalkable(destination) == false)			            	//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
+	if ( IsNonWalkable(origin)  || IsNonWalkable(destination) || IsOccupied(destination) )			            	//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
 	{																				            
-		return ret = -1;															            
+		return ret;															            
 	}																				            
 																					            
 	PathList open;																	            	//Declares/Creates the open list (frontier queue).

@@ -39,7 +39,11 @@ public:
 
 	bool IsOccupied(const iPoint& pos) const;								// Utility: returns true is the tile is walkable
 
+	bool IsNonWalkable(const iPoint& pos) const;
+
 	uchar GetTileAt(const iPoint& pos) const;								// Utility: return the walkability value of a tile
+
+	std::vector<iPoint> FindNearbyWalkable(const iPoint& pos, int quantity) ;				//Finds close tiles to send units to
 
 	bool ChangeWalkability(const iPoint& pos, uchar walkability);			//Change walkability of a tile in map array
 
