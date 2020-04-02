@@ -58,7 +58,7 @@ bool Player::Update(float dt)
 
 	MoveToOrder();
 
-	Cursor();
+	DrawCursor();
 
 	return true;
 }
@@ -92,22 +92,22 @@ void Player::MoveToOrder()//fix
 {
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-		int i = 0;
-
 		if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x, mouse_tile.y)))
-		{
+		{ 
+			std::vector<iPoint> group_positions = App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected.size() ); //Vector storing positions for units in group
+
+			std::vector<iPoint>::iterator positions = group_positions.begin();
+
 			for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
 			{
-				if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x + i, mouse_tile.y)))
+				if (App->pathfinding->IsWalkable( (*positions) ))
 				{
-					(*item)->GiveNewTarget(iPoint(mouse_tile.x + i, mouse_tile.y));
+					(*item)->GiveNewTarget( (*positions) );
 				}
-				LOG("path given");
-				i++;
+				++positions;
 			}
 		}
 	}
-
 }
 
 void Player::CameraController(float dt)
@@ -172,8 +172,6 @@ void Player::SelectionRect()
 		{
 			selecting = false;
 
-			int num_selected = 0;
-
 			for (std::vector<Dynamic_Object*>::iterator item = App->entityManager->dynamic_objects.begin() ; item != App->entityManager->dynamic_objects.end(); ++item)
 			{
 				if ((*item)->selectable_unit)
@@ -189,16 +187,16 @@ void Player::SelectionRect()
 						((*item)->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h))
 					{
 						units_selected.push_back((*item));
-						num_selected++;
+						
 					}
 				}
 			}
-			LOG("Units selected %d", num_selected);
+			LOG("Units selected %d", units_selected.size() );
 		}
 	}
 }
 
-void Player::Cursor() //fix
+void Player::DrawCursor() //fix
 {
 	App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
 

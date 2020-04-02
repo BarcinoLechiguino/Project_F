@@ -24,7 +24,10 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 	speed = 100;
 	damage = 30;
 
-	target = *App->entityManager->infantries.begin();
+	if (App->entityManager->infantries.size() != 0)
+	{
+		target = *App->entityManager->infantries.begin();
+	}
 };
 
 Enemy::~Enemy()  //Destructor. Called at the last frame.

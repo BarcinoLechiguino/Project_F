@@ -14,11 +14,10 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, ty
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
-	occupied_tile = tile_position;
 	target_tile = tile_position;
 	next_tile = tile_position;
 
-	//App->pathfinding->ChangeWalkability(occupied_tile, OCCUPIED );
+	App->pathfinding->ChangeWalkability(tile_position, OCCUPIED );
 }
 
 bool Dynamic_Object::Awake(pugi::xml_node&)
@@ -53,6 +52,8 @@ bool Dynamic_Object::CleanUp()
 
 void Dynamic_Object::GiveNewTarget(iPoint new_target)
 {
+	App->pathfinding->ChangeWalkability(target_tile, WALKABLE); //Old target tile is now walkable
+
 	//New Path using the next tile if it's going to one
 	App->pathfinding->CreatePath(next_tile, new_target);
 
@@ -64,6 +65,8 @@ void Dynamic_Object::GiveNewTarget(iPoint new_target)
 	//Change target and current tile to get next
 	target_tile = entity_path.back();
 	current_path_tile = entity_path.begin();
+
+	App->pathfinding->ChangeWalkability(target_tile, OCCUPIED);
 
 	//int pos = 0;
 	//for (std::vector<iPoint>::iterator item = entity_path.begin(); item != entity_path.end(); ++item)
