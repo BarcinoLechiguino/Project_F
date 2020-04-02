@@ -22,13 +22,14 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 
 	speed = 500;
 
-	health = 300;
+	max_health = 300;
+	current_health = max_health;
 	damage = 30;
 
-	SDL_Rect empty_rect{ 0,158,230,18 };
+	empty_rect = { 0,158,MAX_HEALTH_BAR_WIDTH,18 };
 	empty_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, empty_rect, true, false, false,nullptr,this, NULL); //Magic Number
 
-	SDL_Rect health_rect{ 0,198,230,18 };
+	health_rect = { 0,198,MAX_HEALTH_BAR_WIDTH,18 };
 	health_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, health_rect, true, false, false, nullptr, this, NULL); //Magic Number
 };
 
@@ -63,9 +64,9 @@ bool Infantry::Update(float dt, bool doLogic)
 
 	App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 
-	if (health < 300)
+	if (current_health < 300)
 	{
-		LOG("Infantry health: %f", health );
+		LOG("Infantry health: %f", current_health );
 	}
 
 	return true;

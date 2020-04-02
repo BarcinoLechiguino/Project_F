@@ -62,7 +62,7 @@ bool UI_Image::Draw()
 		}
 		else
 		{
-			BlitElement(tex, attached_unit->pixel_position.x - 35, attached_unit->pixel_position.y - 25, &GetScreenRect(), 1.0f, 0.65f); //Magic number
+			BlitElement(tex, attached_unit->pixel_position.x, attached_unit->pixel_position.y - 6, &GetScreenRect(), 1.0f, 0.25f); //Magic number
 		}
 	}
 	

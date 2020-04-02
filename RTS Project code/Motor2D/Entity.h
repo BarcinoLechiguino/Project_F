@@ -6,12 +6,14 @@
 #include "SDL/include/SDL_rect.h"
 #include "Timer.h"
 
-
 class Animation;
+class UI_Image;
 
 struct Collider;
 struct SDL_Texture;	
 struct SDL_Rect;
+
+
 
 enum class ENTITY_TYPE
 {
@@ -56,15 +58,21 @@ public:
 	
 	virtual void BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip);
 	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
-	virtual void ApplyDamage(Entity* objective);
+	virtual void ApplyDamage(Entity* target);									//Applies the current unit damage to the referenced target, also handles the target health bar.
 
 	//Entity Variables
-	ENTITY_TYPE		type;	
-	float			health;
-	float			damage;
+	ENTITY_TYPE		type;
+	int				max_health;
+	int				current_health;
+	int				damage;
 	std::string		name_tag;				//Name of the entity in the xml file.
 	fPoint			pixel_position;			
 	iPoint			tile_position;
+
+	SDL_Rect		empty_rect;
+	SDL_Rect		health_rect;
+	UI_Image*		health_bar;
+	UI_Image*		empty_bar;
 
 	SDL_Texture*	entity_sprite;	
 	Collider*		collider;
