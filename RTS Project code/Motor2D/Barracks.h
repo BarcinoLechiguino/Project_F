@@ -16,4 +16,8 @@ public:
 
 	virtual bool CleanUp();
 
+public:
+
+	SDL_Rect barracks_rect_1;
+	SDL_Rect barracks_rect_2;
 };

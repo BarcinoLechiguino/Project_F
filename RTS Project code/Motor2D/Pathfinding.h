@@ -8,7 +8,9 @@
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
-
+#define OCCUPIED 2
+#define WALKABLE 1
+#define NON_WALKABLE 0
 // --------------------------------------------------
 // Recommended reading:
 // Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding
@@ -34,6 +36,8 @@ public:
 	bool CheckBoundaries(const iPoint& pos) const;							// Utility: return true if pos is inside the map boundaries
 
 	bool IsWalkable(const iPoint& pos) const;								// Utility: returns true is the tile is walkable
+
+	bool IsOccupied(const iPoint& pos) const;								// Utility: returns true is the tile is walkable
 
 	uchar GetTileAt(const iPoint& pos) const;								// Utility: return the walkability value of a tile
 

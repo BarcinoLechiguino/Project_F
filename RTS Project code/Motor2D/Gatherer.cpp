@@ -10,6 +10,8 @@ Gatherer::Gatherer(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)
 {
 	entity_sprite = App->tex->Load("maps/debug_gatherer_tile.png");
 
+	
+
 	selectable_unit = true;
 	path_full = false;
 

@@ -21,8 +21,7 @@ bool PathFinding::CleanUp()
 {
 	LOG("Freeing pathfinding library");
 
-	//last_path.Clear();
-	last_path.clear();													//Clears all elements in the last_path array/vector.
+	last_path.clear();
 	last_path.shrink_to_fit();											//Frees all unused allocated memory.
 
 	RELEASE_ARRAY(map);
@@ -51,9 +50,8 @@ bool PathFinding::CheckBoundaries(const iPoint& pos) const
 bool PathFinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
-	
-	//return t != INVALID_WALK_CODE && t > 0;
-	if (t > 0 && t != INVALID_WALK_CODE)
+
+	if (t == WALKABLE)
 	{
 		return true;
 	}
@@ -61,13 +59,24 @@ bool PathFinding::IsWalkable(const iPoint& pos) const
 	return false;
 }
 
+bool PathFinding::IsOccupied(const iPoint& pos) const
+{
+	uchar t = GetTileAt(pos);
+
+	if (t == NON_WALKABLE)
+	{
+		return true;
+	}
+
+	return false;
+}
 // Utility: return the walkability value of a tile
 uchar PathFinding::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
 		return map[(pos.y*width) + pos.x];
 
-	return INVALID_WALK_CODE;
+	return 0;
 }
 
 bool PathFinding::ChangeWalkability(const iPoint& pos, uchar walkability)
@@ -86,37 +95,7 @@ const std::vector<iPoint> PathFinding::GetLastPath() const
 	return last_path;
 }
 
-// PathList ------------------------------------------------------------------------
 // Looks for a node in this list and returns it's list node or NULL
-// ---------------------------------------------------------------------------------
-//std::vector<PathNode>::const_iterator* PathList::Find(const iPoint& point) const
-//{	
-//	// std::iterators allow to access their data/pointer directly by using ->. No need to go to iterator->data->var/ iterator->_Ptr->var.
-//	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); ++item)
-//	{
-//		if (item->pos == point)
-//		{
-//			return &item;
-//		}
-//	}
-//
-//	return nullptr;
-//}
-
-//std::vector<PathNode>::iterator PathList::Find(const iPoint& point)
-//{
-//	// std::iterators allow to access their data/pointer directly by using ->. No need to go to iterator->data->var/ iterator->_Ptr->var.
-//	for (std::vector<PathNode>::iterator item = list.begin(); item != list.end(); ++item)
-//	{
-//		if (item->pos == point)
-//		{
-//			return item;
-//		}
-//	}
-//
-//	return list.end();
-//}
-
 std::list<PathNode>::iterator PathList::Find(const iPoint& point)
 {
 	// std::iterators allow to access their data/pointer directly by using ->. No need to go to iterator->data->var/ iterator->_Ptr->var.
@@ -131,55 +110,7 @@ std::list<PathNode>::iterator PathList::Find(const iPoint& point)
 	return list.end();
 }
 
-// PathList ------------------------------------------------------------------------
 // Returns the Pathnode with lowest score in this list or NULL if empty
-// ---------------------------------------------------------------------------------
-//std::vector<PathNode>::const_iterator* PathList::GetNodeLowestScore() const
-//{
-//	//std::vector<PathNode>::const_iterator* ret = nullptr;
-//	std::vector<PathNode>::const_iterator ret = list.end();
-//
-//	int min = 65535;
-//
-//	// This loop should go from end to begin. Make a tmp list with std::reverse list?
-//	for (std::vector<PathNode>::const_iterator item = list.cbegin(); item != list.cend(); item++)
-//	{
-//		if (item->Score() < min)
-//		{
-//			min = item->Score();
-//			ret = item;
-//		}
-//	}
-//
-//	if (ret == list.end())
-//	{
-//		return nullptr;
-//	}
-//	else
-//	{
-//		return &ret;
-//	}
-//}
-
-//std::vector<PathNode>::iterator PathList::GetNodeLowestScore()
-//{
-//	std::vector<PathNode>::iterator ret = list.end();
-//
-//	int min = 65535;
-//
-//	// This loop should go from end to begin. Make a tmp list with std::reverse list?
-//	for (std::vector<PathNode>::iterator item = list.begin(); item != list.end(); item++)
-//	{
-//		if (item->Score() < min)
-//		{
-//			min = item->Score();
-//			ret = item;
-//		}
-//	}
-//
-//	return ret;
-//}
-
 std::list<PathNode>::iterator PathList::GetNodeLowestScore()
 {
 	std::list<PathNode>::iterator ret = list.end();
@@ -199,9 +130,7 @@ std::list<PathNode>::iterator PathList::GetNodeLowestScore()
 	return ret;
 }
 
-// PathNode -------------------------------------------------------------------------
 // Convenient constructors
-// ----------------------------------------------------------------------------------
 PathNode::PathNode() : g(-1), h(-1), pos(-1, -1), parent(NULL)
 {}
 
@@ -211,9 +140,7 @@ PathNode::PathNode(int g, int h, const iPoint& pos, const PathNode* parent) : g(
 PathNode::PathNode(const PathNode& node) : g(node.g), h(node.h), pos(node.pos), parent(node.parent)
 {}
 
-// PathNode -------------------------------------------------------------------------
 // Fills a list (PathList) of all valid adjacent pathnodes
-// ----------------------------------------------------------------------------------
 uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 {
 	iPoint cell;
@@ -263,17 +190,13 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 	return list_to_fill.list.size();
 }
 
-// PathNode -------------------------------------------------------------------------
 // Calculates this tile score
-// ----------------------------------------------------------------------------------
 int PathNode::Score() const
 {
 	return g + h;
 }
 
-// PathNode -------------------------------------------------------------------------
 // Calculate the F for a specific destination tile
-// ----------------------------------------------------------------------------------
 int PathNode::CalculateF(const iPoint& destination)
 {
 	g = parent->g + 1;
@@ -286,9 +209,7 @@ int PathNode::CalculateF(const iPoint& destination)
 	return g + h;
  }
 
-// ----------------------------------------------------------------------------------
-// Actual A* algorithm: return number of steps in the creation of the path or -1 ----
-// ----------------------------------------------------------------------------------
+// Actual A* algorithm: return number of steps in the creation of the path or -1 
 int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	BROFILER_CATEGORY("CreatePath", Profiler::Color::SlateGray)
@@ -311,13 +232,6 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 																					            
 	while (open.list.size() != 0)								            						//While the list is not empty. If the count is higher than 0 that means the list is not empty.
 	{																				            
-		//std::vector<PathNode>::iterator lowest_node = open.GetNodeLowestScore();
-
-		//closed.list.push_back(*lowest_node);
-		//std::vector<PathNode>::iterator current_node = prev(closed.list.end()) /*closed.Find(lowest_node->pos)*/;			//As lowest_node will be pushed to the back of the vector, it will always be at the last position.
-
-		//open.list.erase(lowest_node);												            		//Deletes from the open (frontier) list the node with the lowest score, as it has been the one chosen to be moved to.
-		//open.list.shrink_to_fit();
 
 		std::list<PathNode>::iterator lowest_node = open.GetNodeLowestScore();
 

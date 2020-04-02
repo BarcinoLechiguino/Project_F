@@ -10,8 +10,11 @@
 
 TownHall::TownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 {
-	entity_sprite = App->tex->Load("maps/town_hall_holder.png");
+	//entity_sprite = App->tex->Load("maps/town_hall_holder.png");
+	entity_sprite = App->tex->Load("maps/hall.png");
 	
+	hall_rect = {0,0,155,138};
+
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
 
@@ -33,8 +36,7 @@ bool TownHall::PreUpdate()
 
 bool TownHall::Update(float dt, bool doLogic)
 {
-
-	App->render->Blit(entity_sprite, pixel_position.x - 54, pixel_position.y, nullptr);
+	App->render->Blit(entity_sprite, pixel_position.x - 51, pixel_position.y - 20, &hall_rect);
 
 	return true;
 }
