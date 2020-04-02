@@ -93,14 +93,18 @@ void Player::MoveToOrder()//fix
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		int i = 0;
-		for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
+
+		if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x, mouse_tile.y)))
 		{
-			if (App->pathfinding->IsWalkable( iPoint(mouse_tile.x + i,mouse_tile.y) ) )
+			for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
 			{
-				(*item)->GiveNewTarget(iPoint(mouse_tile.x + i, mouse_tile.y));
+				if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x + i, mouse_tile.y)))
+				{
+					(*item)->GiveNewTarget(iPoint(mouse_tile.x + i, mouse_tile.y));
+				}
+				LOG("path given");
+				i++;
 			}
-			LOG("path given");
-			i++;
 		}
 	}
 

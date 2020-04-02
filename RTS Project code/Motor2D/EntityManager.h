@@ -19,6 +19,7 @@
 
 #define MAX_ENEMIES 200
 
+
 struct SDL_Texture;
 
 

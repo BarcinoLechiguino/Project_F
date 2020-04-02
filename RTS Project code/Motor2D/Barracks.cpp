@@ -10,6 +10,10 @@
 Barracks::Barracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
 {
 	entity_sprite = App->tex->Load("maps/debug_barracks_tile.png");
+	entity_sprite = App->tex->Load("maps/Barracks.png");
+
+	barracks_rect_1 = {0,0,106,95};
+	barracks_rect_2 = {108,0,106,95};
 
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
@@ -31,7 +35,7 @@ bool Barracks::PreUpdate()
 
 bool Barracks::Update(float dt, bool doLogic)
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y, nullptr);
+	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y -18, &barracks_rect_1);
 
 	return true;
 }

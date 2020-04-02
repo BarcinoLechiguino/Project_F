@@ -4,6 +4,8 @@
 
 #include "EntityManager.h"
 
+
+
 Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
 {
 
@@ -12,9 +14,11 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, ty
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
+	occupied_tile = tile_position;
 	target_tile = tile_position;
 	next_tile = tile_position;
 
+	//App->pathfinding->ChangeWalkability(occupied_tile, OCCUPIED );
 }
 
 bool Dynamic_Object::Awake(pugi::xml_node&)

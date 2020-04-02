@@ -16,4 +16,7 @@ public:
 
 	virtual bool CleanUp();
 
+public:
+
+	SDL_Rect hall_rect;
 };

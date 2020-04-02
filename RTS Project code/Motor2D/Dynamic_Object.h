@@ -63,6 +63,7 @@ public:
 	iPoint next_tile;
 	iPoint next_tile_position;
 	iPoint target_tile;
+	iPoint occupied_tile;
 
 	SDL_Rect selection_collider;
 };
