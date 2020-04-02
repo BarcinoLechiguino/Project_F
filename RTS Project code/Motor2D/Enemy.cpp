@@ -10,6 +10,8 @@
 #include "Collisions.h"
 #include "Audio.h"
 #include "Pathfinding.h"
+#include "SceneManager.h"
+#include "Scene1.h"
 
 #include "EntityManager.h"
 
@@ -21,6 +23,8 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 
 	speed = 100;
 	damage = 30;
+
+	target = *App->entityManager->infantries.begin();
 };
 
 Enemy::~Enemy()  //Destructor. Called at the last frame.
@@ -49,6 +53,12 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	selection_collider.x = pixel_position.x;
 	selection_collider.y = pixel_position.y;
+
+	
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	{
+		ApplyDamage(target);
+	}
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
 

@@ -70,12 +70,7 @@ public:
 
 	bool					to_end;
 
-	std::vector<Rock*>		rock_test;
-	std::vector<Enemy*>		enemy_test;
-	std::vector<Gatherer*>  gatherer_test;
-	std::vector<TownHall*>  town_hall_test;
-	std::vector<Barracks*>  barracks_test;
-	std::vector<Infantry*>  infantry_test;
+
 
 private:
 

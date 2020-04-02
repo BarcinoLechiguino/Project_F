@@ -21,6 +21,7 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 	selectable_unit = true;
 
 	speed = 500;
+
 	health = 300;
 	damage = 30;
 
@@ -62,11 +63,9 @@ bool Infantry::Update(float dt, bool doLogic)
 
 	App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 
-
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	if (health < 300)
 	{
-		ApplyDamage(this);
-		LOG("Infantry health: %f", health);
+		LOG("Infantry health: %f", health );
 	}
 
 	return true;
@@ -88,8 +87,7 @@ void Infantry::OnCollision(Collider* C1, Collider* C2)
 	return;
 }
 
-void Infantry::ApplyDamage(Entity* attacker)
+void Infantry::ApplyDamage(Entity* objective)
 {
-	health -= attacker->damage;
 	return;
 }

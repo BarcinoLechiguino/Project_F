@@ -57,12 +57,17 @@ public:
 	std::list<Entity*>				entities;	
 	std::list<EntityData*>			entity_data_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
 
+	std::vector<Rock*>				rocks;
+	std::vector<Enemy*>				enemies;
+	std::vector<Gatherer*>			gatherers;
+	std::vector<TownHall*>			town_hall;
+	std::vector<Barracks*>			barracks;
+	std::vector<Infantry*>			infantries;
+
 	std::vector<Dynamic_Object*>	dynamic_objects;
 
 	float							accumulated_time;	//Accumulates dt as time goes on.
 	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
 	bool							doLogic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
-
-	EnemyData						enemies[MAX_ENEMIES];	//Use this if entities need to be processed in an array instead of a list.
 };
 #endif // __ENTITY_MANAGER_H__

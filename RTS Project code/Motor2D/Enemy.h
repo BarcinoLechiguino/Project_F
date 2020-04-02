@@ -5,6 +5,7 @@
 #include "Animation.h"
 #include "Point.h"
 #include <vector>
+class Infantry;
 
 class Enemy : public Dynamic_Object
 {
@@ -31,6 +32,7 @@ public:
 public:
 
 	const std::vector<iPoint>* entity_path;
+	Infantry* target;
 
 };
 

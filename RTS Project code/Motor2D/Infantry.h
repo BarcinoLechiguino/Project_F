@@ -24,7 +24,7 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* C1, Collider* C2);
-	void ApplyDamage(Entity* attacker);
+	void ApplyDamage(Entity* objective);
 
 public:
 

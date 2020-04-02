@@ -170,20 +170,6 @@ void Scene1::InitScene()
 	//test background
 	background_rect = { 0,0,1280,720 };
 	background_texture = App->tex->Load("maps/hacker_background.png");
-	
-	//test entity
-	/*rock_test.push_back((Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK,2, 2));
-	enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, 10, 10));
-	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 5, 5));
-	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 10, 5));
-	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 8, 7));
-	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 7, 8));
-	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 9, 7));
-	gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, 7, 9));
-	town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, 0,0));
-	barracks_test.push_back((Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, 5, 2));*/
-
-	//rock_test.back()->entity_sprite = App->tex->Load("maps/debug_tile.png");
 
 	LoadGuiElements();
 
@@ -254,23 +240,23 @@ void Scene1::UnitDebugKeys()
 {
 	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 	{
-		gatherer_test.push_back((Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y));
+		(Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 	{
-		barracks_test.push_back((Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y));
+		(Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 	{
-		town_hall_test.push_back((TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y));
+		(TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 	{
-		enemy_test.push_back((Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y));
+		(Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y);
 	}
 	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 	{
-		infantry_test.push_back((Infantry*)App->entityManager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y));
+		(Infantry*)App->entityManager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y);
 	}
 
 }
