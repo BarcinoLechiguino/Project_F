@@ -3,6 +3,7 @@
 
 #include "UI.h"
 
+
 class UI_Image : public UI
 {
 public:
@@ -16,6 +17,7 @@ public:
 	void CleanUp();
 
 private:
+
 	SDL_Texture*	tex;						//Texture of the UI_Image.
 	Entity*			attached_unit;
 };
