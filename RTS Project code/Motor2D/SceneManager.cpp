@@ -198,6 +198,8 @@ Scene* SceneManager::CreateScene(SCENES scene_name)
 
 		//item = new FirstScene();
 		
+		item = new Scene1();
+
 		break;
 
 	case SCENES::SECOND_SCENE:
@@ -213,8 +215,8 @@ Scene* SceneManager::CreateScene(SCENES scene_name)
 		break;
 
 	case SCENES::NONE:
-
-		item = new Scene1();
+		
+		break;
 	}
 
 	if (item != nullptr)
@@ -228,5 +230,5 @@ Scene* SceneManager::CreateScene(SCENES scene_name)
 void SceneManager::ScenePushbacks()
 {
 	CreateScene(SCENES::MAIN_MENU);
-	CreateScene(SCENES::NONE);
+	CreateScene(SCENES::FIRST_SCENE);
 }

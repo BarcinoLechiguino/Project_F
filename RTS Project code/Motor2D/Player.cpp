@@ -9,6 +9,7 @@
 #include "Scene1.h"
 #include "Pathfinding.h"
 #include "Map.h"
+#include "SceneManager.h"
 
 Player::Player()
 {
@@ -38,7 +39,7 @@ bool Player::Start()
 
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 
-	selecting = false;
+	is_selecting = false;
 
 	return true;
 }
@@ -58,13 +59,13 @@ bool Player::Update(float dt)
 
 	MoveToOrder();
 
-	DrawCursor();
-
 	return true;
 }
 
 bool Player::PostUpdate()
 {
+	DrawCursor();
+	
 	return true;
 }
 
@@ -79,13 +80,16 @@ void Player::MouseCalculations()
 	App->input->GetMousePosition(mouse_position.x, mouse_position.y);
 
 	iPoint mouse_camera;
-
 	mouse_camera.x = mouse_position.x - App->render->camera.x;
 	mouse_camera.y = mouse_position.y - App->render->camera.y;
 
-	mouse_tile = iPoint(App->map->WorldToMap(mouse_camera.x, mouse_camera.y + 20).x, App->map->WorldToMap(mouse_camera.x, mouse_camera.y + 20).y); //magic
+	// Get Mouse's Map Position (In Tiles)
+	iPoint to_map_mouse_pos		= App->map->WorldToMap(mouse_camera.x, mouse_camera.y + 20); //magic
+	mouse_tile					= iPoint(to_map_mouse_pos.x, to_map_mouse_pos.y);
 
-	mouse_map_position = iPoint(App->map->MapToWorld(mouse_tile.x, mouse_tile.y).x, App->map->MapToWorld(mouse_tile.x, mouse_tile.y).y);
+	// Get Mouse's World Poisition (In Pixels)
+	iPoint to_world_mouse_pos	= App->map->MapToWorld(mouse_tile.x, mouse_tile.y);
+	mouse_map_position			= iPoint(to_world_mouse_pos.x, to_world_mouse_pos.y);
 }
 
 void Player::MoveToOrder()//fix
@@ -115,25 +119,27 @@ void Player::CameraController(float dt)
 	int window_width, window_height;
 	App->win->GetWindowSize(window_width, window_height);
 	
-	//Left
-	if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)
+	if (App->scene_manager->current_scene->scene_name == SCENES::FIRST_SCENE)											// If the current scene is FIRST_SCENE (gameplay scene)
 	{
-		App->render->camera.x += camera_speed.x * dt;
-	}
-	////Right
-	if (mouse_position.x >= ( window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)
-	{
-		App->render->camera.x -= camera_speed.x * dt;
-	}
-	//Bottom
-	if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)
-	{
-		App->render->camera.y -= camera_speed.y * dt;
-	}
-	//Up
-	if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)
-	{
-		App->render->camera.y += camera_speed.y * dt;
+		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)								//Left
+		{
+			App->render->camera.x += camera_speed.x * dt;
+		}
+
+		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)			////Right
+		{
+			App->render->camera.x -= camera_speed.x * dt;
+		}
+
+		if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)			//Bottom
+		{
+			App->render->camera.y -= camera_speed.y * dt;
+		}
+
+		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)								//Up
+		{
+			App->render->camera.y += camera_speed.y * dt;
+		}
 	}
 }
 
@@ -141,14 +147,14 @@ void Player::SelectionRect()
 {
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		selecting = true;
+		is_selecting = true;
 
 		selection_start = mouse_position;
 
 		units_selected.clear();
 	}
 
-	if (selecting)
+	if (is_selecting)
 	{
 		//Cases with mouse pos
 		if (mouse_position.x > selection_start.x)
@@ -170,7 +176,7 @@ void Player::SelectionRect()
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 		{
-			selecting = false;
+			is_selecting = false;
 
 			for (std::vector<Dynamic_Object*>::iterator item = App->entityManager->dynamic_objects.begin() ; item != App->entityManager->dynamic_objects.end(); ++item)
 			{

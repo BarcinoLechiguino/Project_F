@@ -20,24 +20,13 @@ class Gui : public Module
 public:
 
 	Gui();
+	virtual ~Gui();											// Destructor
 
-	// Destructor
-	virtual ~Gui();
-
-	// Called when before render is available
-	bool Awake(pugi::xml_node&);
-
-	// Call before first frame
-	bool Start();
-
-	// Called before all Updates
-	bool PreUpdate();
-
-	// Called after all Updates
-	bool PostUpdate();
-
-	// Called before quitting
-	bool CleanUp();
+	bool Awake(pugi::xml_node&);							// Called when before render is available
+	bool Start();											// Call before first frame
+	bool PreUpdate();										// Called before all Updates
+	bool PostUpdate();										// Called after all Updates
+	bool CleanUp();											// Called before quitting
 
 public:
 	/*const*/ SDL_Texture* GetAtlas() const;

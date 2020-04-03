@@ -33,9 +33,9 @@ bool Console::Awake(pugi::xml_node& config)
 
 bool Console::Start()
 {
-	InitConsole();
+	/*InitConsole();
 	CreateConsoleElements();
-	CreateConsoleCommands();
+	CreateConsoleCommands();*/
 
 	return true;
 }
@@ -69,13 +69,13 @@ bool Console::PreUpdate()
 		App->input->ClearTextInput();
 	}
 
-	if (ConsoleIsOpen())
-	{
-		if (App->gui->focusedElement != console_input)
-		{
-			App->gui->focusedElement = console_input;
-		}
-	}
+	//if (ConsoleIsOpen())
+	//{
+	//	if (App->gui->focusedElement != console_input)
+	//	{
+	//		App->gui->focusedElement = console_input;
+	//	}
+	//}
 	
 	return true;
 }
@@ -88,7 +88,22 @@ bool Console::Update(float dt)
 
 bool Console::PostUpdate()
 {
-	//DrawBackgroundElement();
+	/*DrawBackgroundElement();
+
+	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN)
+	{
+		App->gui->SetElementsVisibility(console_background, !console_background->isVisible);
+		//SetElementsVisibility(App->scene->upper_bar, !App->scene->upper_bar->isVisible);							//As it does not currently exist it CTDs on a nullptr
+
+
+		App->input->ClearTextInput();
+
+		if (console_background->isVisible)
+		{
+			App->gui->focusedElement = console_input;
+		}
+	}*/
+
 	
 	return true;
 }
@@ -257,6 +272,8 @@ void Console::DrawBackgroundElement()
 bool Console::ConsoleIsOpen()
 {
 	return console_background->isVisible;
+
+	return false;
 }
 
 Command::Command(const char* command, Module* callback, int min_arg, int max_arg)

@@ -13,16 +13,13 @@ public:
 	~Player();
 
 	bool Awake(pugi::xml_node& conf);
-
 	bool Start();
-
 	bool PreUpdate();
-
 	bool Update(float dt);
-
 	bool PostUpdate();
-
 	bool CleanUp();
+
+public:
 
 	void MouseCalculations();
 
@@ -36,20 +33,20 @@ public:
 
 public:
 
-	iPoint scene_camera_limit;
-	iPoint mouse_position;
-	iPoint mouse_map_position;
-	iPoint mouse_tile;
-	fPoint camera_speed;
-	iPoint selection_start;
+	iPoint			scene_camera_limit;
+	iPoint			mouse_position;
+	iPoint			mouse_map_position;
+	iPoint			mouse_tile;							// The tile where the mouse is currently on.
+	fPoint			camera_speed;						// Speed at which the camera will move when moving it with the mouse.
+	iPoint			selection_start;					// Position where unit selection will start (Selection rect's anchor point).
 
-	SDL_Texture* cursor_idle;
-	SDL_Texture* mouse_tile_debug;
+	SDL_Texture*	cursor_idle;
+	SDL_Texture*	mouse_tile_debug;
 
 	//selection
-	bool selecting;
+	bool			is_selecting;
 
-	SDL_Rect selection_rect;
+	SDL_Rect		selection_rect;
 
 	std::vector<Dynamic_Object*> units_selected;
 

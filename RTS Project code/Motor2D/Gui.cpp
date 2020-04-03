@@ -36,12 +36,9 @@ bool Gui::Awake(pugi::xml_node& conf)
 // Called before the first frame
 bool Gui::Start()
 {
-	atlas = App->tex->Load(atlas_file_name.c_str());
-	
 	if (atlas == nullptr)
 	{
-		LOG("Texture could not be loaded. Reloading...");
-		atlas = App->tex->Load("gui/UI_HUD.png");			//TMP
+		atlas = App->tex->Load(atlas_file_name.c_str());
 	}
 
 	ui_debug = false;
@@ -103,20 +100,20 @@ bool Gui::PreUpdate()
 	}
 	
 
-	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN)
-	{
-		SetElementsVisibility(App->console->console_background, !App->console->console_background->isVisible);
-		//SetElementsVisibility(App->scene->upper_bar, !App->scene->upper_bar->isVisible);							//As it does not currently exist it CTDs on a nullptr
+	//if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN)			//  Bring this to console.cpp?
+	//{
+	//	SetElementsVisibility(App->console->console_background, !App->console->console_background->isVisible);
+	//	//SetElementsVisibility(App->scene->upper_bar, !App->scene->upper_bar->isVisible);							//As it does not currently exist it CTDs on a nullptr
 
-		
-		App->input->ClearTextInput();
+	//	
+	//	App->input->ClearTextInput();
 
-		if (App->console->console_background->isVisible)
-		{
-			focusedElement = App->console->console_input;
-		}
-	}
-	
+	//	if (App->console->console_background->isVisible)
+	//	{
+	//		focusedElement = App->console->console_input;
+	//	}
+	//}
+	//
 	return true;
 }
 
@@ -126,7 +123,8 @@ bool Gui::PostUpdate()
 
 	BROFILER_CATEGORY("GUI_Update", Profiler::Color::NavajoWhite);
 	//escape = true;
-	App->console->DrawBackgroundElement();		//THIS HERE
+	
+	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
 
 	for (std::list<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
 	{
@@ -169,7 +167,6 @@ bool Gui::CleanUp()
 //----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
 UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, Entity* attached_unit, UI* parent)
 {
-
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
@@ -356,7 +353,7 @@ bool Gui::ElementCanBeClicked(UI* clickedElement) const
 // --- Method that will pass the focus from focuseable UI Element to the next.
 void Gui::PassFocus()
 {
-	/*if (elements.size() != 0)
+	if (elements.size() != 0)
 	{
 		if (iteratedElement == elements.end())
 		{
@@ -395,7 +392,7 @@ void Gui::PassFocus()
 				break;																			//The loop is stopped so no element regains the focus.
 			}
 		}
-	}*/
+	}
 }
 
 // --- Method that returns true if the passed element is a visible BUTTON, INPUTBOX or a SCROLLBAR

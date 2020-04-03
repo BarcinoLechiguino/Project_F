@@ -81,6 +81,11 @@ private:
 	
 
 public:
+	// TMP TRANSITION BUTTON
+	UI_Button*	transition_button;
+	UI_Text*	button_text;
+	// ---------------------
+	
 	UI_Image*				background;
 	SDL_Rect				background_rect;
 	SDL_Texture*			background_texture;
