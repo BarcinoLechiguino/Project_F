@@ -6,7 +6,6 @@
 #include "Textures.h"
 #include "p2Log.h"
 #include "EntityManager.h"
-#include "Scene1.h"
 #include "Pathfinding.h"
 #include "Map.h"
 #include "SceneManager.h"
@@ -119,7 +118,7 @@ void Player::CameraController(float dt)
 	int window_width, window_height;
 	App->win->GetWindowSize(window_width, window_height);
 	
-	if (App->scene_manager->current_scene->scene_name == SCENES::FIRST_SCENE)											// If the current scene is FIRST_SCENE (gameplay scene)
+	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)										// If the current scene is FIRST_SCENE (gameplay scene)
 	{
 		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)								//Left
 		{

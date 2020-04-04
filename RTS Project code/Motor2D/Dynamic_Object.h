@@ -1,7 +1,7 @@
 #include "Module.h"
 #include <vector>
 
-#define MAX_HEALTH_BAR_WIDTH 230
+#define MAX_HEALTHBAR_WIDTH 230
 
 enum class pathfind_state
 {

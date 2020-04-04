@@ -10,8 +10,8 @@
 #include "Input.h"
 #include "Audio.h"
 #include "Pathfinding.h"
-#include "Scene1.h"
 #include "EntityManager.h"
+#include "Gui.h"
 #include "Console.h"
 #include "Brofiler\Brofiler.h"
 #include <math.h>

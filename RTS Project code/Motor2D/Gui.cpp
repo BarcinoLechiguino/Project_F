@@ -6,7 +6,6 @@
 #include "Fonts.h"
 #include "Input.h"
 #include "Audio.h"
-#include "Scene1.h"
 #include "Console.h"
 #include "Gui.h"
 
@@ -56,7 +55,7 @@ bool Gui::Start()
 		audioAlreadyLoaded = true;
 	}
 
-	CreateGuiCommands();
+	//CreateGuiCommands();
 
 	return true;
 }
@@ -153,7 +152,8 @@ bool Gui::CleanUp()
 
 	elements.clear();
 
-	//App->tex->UnLoad(atlas);
+	App->tex->UnLoad(atlas);
+	atlas = nullptr;
 
 	return true;
 }

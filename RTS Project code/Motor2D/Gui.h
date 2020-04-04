@@ -51,6 +51,7 @@ public:
 		, SDL_Rect* scrollMask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
 
 	
+																			// ------------------ GUI ELEMENTS MANAGEMENT ------------------
 	void OnEventCall(UI* element, UI_Event ui_event);						//This function is called whenever an new event happens, it receives the pointer of the element that caused the event and the kind of event it is.
 	void PassFocus();														//Method that passes the focus from an interactible and able to focused element to another with the same conditions.
 	bool ElementCanBeFocused(UI* focusElement) const;						//If an element fulfills all requirements (is a button or a scrollbar), then this method returns true. Used to filter which UI elements can or cannot have focus.

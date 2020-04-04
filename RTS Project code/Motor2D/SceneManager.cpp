@@ -1,9 +1,10 @@
 #include "p2Log.h"
 #include "SceneManager.h"
-//#include "FirstScene.h"
-//#include "SecondScene.h"
-#include "Main_Menu.h"
-#include "Scene1.h"
+#include "LogoScene.h"
+#include "MainScene.h"
+#include "GameplayScene.h"
+#include "WinScene.h"
+#include "LoseScene.h"
 #include "Render.h"
 #include "Input.h"
 
@@ -121,15 +122,22 @@ void SceneManager::LoadScene(SCENES scene_name)
 	{
 		if ((*item)->scene_name == scene_name)
 		{
-			if (next_scene == nullptr)
+			if (current_scene == nullptr)
 			{
-				next_scene = (*item);
+				current_scene = (*item);
 			}
 			else
 			{
-				next_scene->CleanUp();
+				if (next_scene == nullptr)
+				{
+					next_scene = (*item);
+				}
+				else
+				{
+					next_scene->CleanUp();
 
-				next_scene = (*item);
+					next_scene = (*item);
+				}
 			}
 		}
 	}
@@ -194,23 +202,33 @@ Scene* SceneManager::CreateScene(SCENES scene_name)
 
 	switch (scene_name)
 	{
-	case SCENES::FIRST_SCENE:
+	case SCENES::LOGO_SCENE:
 
-		//item = new FirstScene();
-		
-		item = new Scene1();
+		item = new LogoScene();
 
 		break;
 
-	case SCENES::SECOND_SCENE:
+	case SCENES::MAIN_SCENE:
+
+		item = new MainScene();
+
+		break;
+
+	case SCENES::GAMEPLAY_SCENE:
 		
-		//item = new SecondScene();
+		item = new GameplayScene();
 		
 	break;
 
-	case SCENES::MAIN_MENU:
+	case SCENES::WIN_SCENE:
 
-		item = new Main_Menu();
+		item = new WinScene();
+
+		break;
+
+	case SCENES::LOSE_SCENE:
+
+		item = new LoseScene();
 
 		break;
 
@@ -229,6 +247,9 @@ Scene* SceneManager::CreateScene(SCENES scene_name)
 
 void SceneManager::ScenePushbacks()
 {
-	CreateScene(SCENES::MAIN_MENU);
-	CreateScene(SCENES::FIRST_SCENE);
+	CreateScene(SCENES::LOGO_SCENE);
+	CreateScene(SCENES::MAIN_SCENE);
+	CreateScene(SCENES::GAMEPLAY_SCENE);
+	CreateScene(SCENES::WIN_SCENE);
+	CreateScene(SCENES::LOSE_SCENE);
 }
