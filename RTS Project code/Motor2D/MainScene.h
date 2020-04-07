@@ -32,13 +32,6 @@ public:
 	void ExecuteTransition();
 
 public:
-
-	UI_Button* play_button;
-	SDL_Rect   play_button_idle;
-	SDL_Rect   play_button_hover;
-	SDL_Rect   play_button_clicked;
-
-public:
 	// Main Screen
 	UI_Button* new_game_button;
 	UI_Button* continue_button;
@@ -50,4 +43,6 @@ public:
 	UI_Image*		background;
 	SDL_Rect		background_rect;
 	SDL_Texture*	background_texture;
+
+public:
 };

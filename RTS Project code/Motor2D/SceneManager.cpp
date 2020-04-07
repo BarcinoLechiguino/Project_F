@@ -69,7 +69,7 @@ bool SceneManager::PostUpdate()
 		ret = false;
 	}
 
-	return ret;
+	return current_scene->escape;
 }
 
 bool SceneManager::CleanUp()

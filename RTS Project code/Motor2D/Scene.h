@@ -52,6 +52,7 @@ public:
 
 	int				map_width;									// Width of the map loaded on the scene.
 	int				map_height;									// Height of the map loaded on the scene.
+	bool			escape;										
 };
 
 #endif // !__SCENE_H__

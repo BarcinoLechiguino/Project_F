@@ -119,6 +119,7 @@ void MainScene::OnEventCall(UI* element, UI_Event ui_event)
 
 	if (element == exit_button && ui_event == UI_Event::UNCLICKED)
 	{
+		escape = false;
 	}
 }
 
