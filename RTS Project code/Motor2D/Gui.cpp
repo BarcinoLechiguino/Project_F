@@ -3,7 +3,6 @@
 #include "Application.h"
 #include "Render.h"
 #include "Textures.h"
-#include "Fonts.h"
 #include "Input.h"
 #include "Audio.h"
 #include "Console.h"
@@ -229,13 +228,27 @@ UI* Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_
 }
 
 UI* Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
-					bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable,Module* listener, UI* parent, SDL_Rect* scrollMask, iPoint maskOffset, bool emptyElements)
+					bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, SDL_Rect* scrollMask, iPoint maskOffset, bool emptyElements)
 {
 	BROFILER_CATEGORY("GUI_ScrollBar", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
 	elem = new UI_Scrollbar(element, x, y, hitbox, thumbSize, thumbOffset, dragArea, dragFactor, dragXAxis, dragYAxis, invertedScrolling,
 					isVisible, isInteractible, isDraggable, listener, parent, scrollMask, maskOffset, emptyElements);
+
+	if (elem != nullptr)
+	{
+		elements.push_back(elem);
+	}
+
+	return elem;
+}
+
+UI* Gui::CreateLifebar(UI_Element element, int x, int y, SDL_Rect hitbox, bool is_visible, Module* listener, Entity* attached_unit, UI* parent)
+{
+	UI* elem = nullptr;
+
+	elem = new UI_Lifebar(element, x, y, hitbox, is_visible, listener, attached_unit, parent);
 
 	if (elem != nullptr)
 	{

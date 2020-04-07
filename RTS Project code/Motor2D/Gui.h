@@ -3,12 +3,14 @@
 
 #include "Module.h"
 #include "Textures.h"
+#include "Fonts.h"
 #include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
 #include "UI_InputBox.h"
 #include "UI_Scrollbar.h"
+#include "UI_Lifebar.h"
 
 //class UI;
 
@@ -49,6 +51,8 @@ public:
 	UI* CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis = false
 		, bool dragYAxis = true, bool invertedScrolling = false, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr
 		, SDL_Rect* scrollMask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
+
+	UI* CreateLifebar(UI_Element element, int x, int y, SDL_Rect hitbox, bool is_visible = true, Module* listener = nullptr, Entity* attached_unit = nullptr, UI* parent = nullptr);
 
 	
 																			// ------------------ GUI ELEMENTS MANAGEMENT ------------------

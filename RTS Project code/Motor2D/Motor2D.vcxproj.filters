@@ -160,6 +160,9 @@
     <ClCompile Include="LoseScene.cpp">
       <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="UI_Lifebar.cpp">
+      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -341,6 +344,9 @@
     </ClInclude>
     <ClInclude Include="LoseScene.h">
       <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Lifebar.h">
+      <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
