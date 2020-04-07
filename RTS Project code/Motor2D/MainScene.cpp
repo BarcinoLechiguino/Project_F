@@ -1,6 +1,7 @@
 #include "Application.h"
 #include "Window.h"
 #include "MainScene.h"
+#include "Render.h"
 
 MainScene::MainScene() : Scene(SCENES::MAIN_SCENE)
 {
@@ -35,6 +36,8 @@ bool MainScene::PreUpdate()
 
 bool MainScene::Update(float dt)
 {
+	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
+
 	return true;
 }
 
@@ -83,7 +86,8 @@ void MainScene::LoadGuiElements()
 	//button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, center_button.x + text_rect.w, center_button.y + 3, text_rect, font
 	//												, SDL_Color{ 255, 255, 255, 255 }, true, false, false, nullptr, transition_button, &button_string);
 
-
+	background_rect = { 0,0,1280,720 };
+	background_texture = App->tex->Load("maps/MainMenu_background.png");
 
 
 }
