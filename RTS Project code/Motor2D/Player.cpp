@@ -203,7 +203,10 @@ void Player::SelectionRect()
 
 void Player::DrawCursor() //fix
 {
-	App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
+	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)
+	{
+		App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
+	}
 
 	App->render->Blit(cursor_idle, mouse_position.x, mouse_position.y,nullptr,false,0.f);
 }
