@@ -59,25 +59,42 @@ bool MainScene::CleanUp()
 
 void MainScene::LoadGuiElements()
 {
-	// Temporal transition button
-	int win_width;
-	int win_height;
-	
-	iPoint window_center;
+	// Main Screen
+	// New Game Button
+	SDL_Rect new_game_button_size		= { 0, 0, 175, 28 };
+	SDL_Rect new_game_button_idle		= { 2, 24, 175, 28 };
+	SDL_Rect new_game_button_hover		= { 179, 24, 175, 28 };
+	SDL_Rect new_game_button_clicked	= { 357, 24, 175, 28 };
 
-	App->win->GetWindowSize(win_width, win_height);
+	new_game_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON,420, 274, true, true, false, this, nullptr
+													, &new_game_button_idle, &new_game_button_hover, &new_game_button_clicked);
 
-	window_center = iPoint(win_width * 0.5f, win_height * 0.5f);
+	// Continue Button
+	SDL_Rect continue_button_size = { 0, 0, 158, 23 };
+	SDL_Rect continue_button_idle = { 1, 0, 158, 23 };
+	SDL_Rect continue_button_hover = { 178, 0, 158, 23 };
+	SDL_Rect continue_button_clicked = { 356, 0, 158, 23 };
 
-	SDL_Rect button_size				= { 0, 0, 348, 51 };
-	SDL_Rect transition_button_idle		= { 4, 16, 348, 51 };
-	SDL_Rect transition_button_hover	= { 395, 16, 348, 51 };
-	SDL_Rect transition_button_clicked	= { 784, 16, 348, 51 };
-	
-	//iPoint center_button = iPoint(window_center.x - button_size.w * 0.5, window_center.y - button_size.h * 0.5f);
+	continue_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 425, 306, true, true, false, this, nullptr
+		, &continue_button_idle, &continue_button_hover, &continue_button_clicked);
 
-	transition_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON,0, 0, true, true, false, this, nullptr
-													, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
+	// Options Button
+	SDL_Rect options_button_size = { 0, 0, 133, 24 };
+	SDL_Rect options_button_idle = { 1, 52, 133, 24 };
+	SDL_Rect options_button_hover = { 178, 52, 133, 24 };
+	SDL_Rect options_button_clicked = { 356, 52, 133, 24 };
+
+	options_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 439, 336, true, true, false, this, nullptr
+		, &options_button_idle, &options_button_hover, &options_button_clicked);
+
+	// Exit Button
+	SDL_Rect exit_button_size = { 0, 0, 74, 23 };
+	SDL_Rect exit_button_idle = { 1, 77, 74, 23 };
+	SDL_Rect exit_button_hover = { 178, 77, 74, 23 };
+	SDL_Rect exit_button_clicked = { 356, 77, 74, 23 };
+
+	exit_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 465, 366, true, true, false, this, nullptr
+		, &exit_button_idle, &exit_button_hover, &exit_button_clicked);
 
 	//SDL_Rect text_rect = { 0, 0, 40, 9 };
 	//_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 12);
@@ -94,9 +111,14 @@ void MainScene::LoadGuiElements()
 
 void MainScene::OnEventCall(UI* element, UI_Event ui_event)
 {
-	if (element == transition_button && ui_event == UI_Event::UNCLICKED)
+
+	if (element == new_game_button && ui_event == UI_Event::UNCLICKED)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, true, true);
+	}
+
+	if (element == exit_button && ui_event == UI_Event::UNCLICKED)
+	{
 	}
 }
 

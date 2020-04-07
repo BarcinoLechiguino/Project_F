@@ -39,10 +39,12 @@ public:
 	SDL_Rect   play_button_clicked;
 
 public:
-	// TMP TRANSITION BUTTON
-	UI_Button* transition_button;
+	// Main Screen
+	UI_Button* new_game_button;
+	UI_Button* continue_button;
+	UI_Button* options_button;
+	UI_Button* exit_button;
 	UI_Text* button_text;
-	// ---------------------
 
 	// tmp BACKGROUND
 	UI_Image*		background;
