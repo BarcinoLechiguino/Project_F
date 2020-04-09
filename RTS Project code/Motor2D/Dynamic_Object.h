@@ -46,6 +46,7 @@ public:
 	virtual bool CleanUp();
 
 	void GiveNewTarget(iPoint new_target);
+	void ChangeOccupiedTile(iPoint new_occupied_tile);
 	void HandleMovement(float dt);
 	void Move(float dt);
 	
@@ -66,6 +67,7 @@ public:
 	iPoint next_tile;
 	iPoint next_tile_position;
 	iPoint target_tile;
+	iPoint occupied_tile;
 
 	SDL_Rect		selection_collider;
 };

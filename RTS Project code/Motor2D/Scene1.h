@@ -59,6 +59,7 @@ public:
 
 	void PathfindingDebug();
 	void DrawPathfindingDebug();
+	void DrawOccupied();
 public:
 	//std::list<std::string>	map_names;
 	
@@ -84,6 +85,7 @@ public:
 	UI_Image*				background;
 	SDL_Rect				background_rect;
 	SDL_Texture*			background_texture;
+	SDL_Texture*			occupied_debug;
 
 	// In-game menu
 	UI_Image*				main_in_menu2;
@@ -91,6 +93,7 @@ public:
 	
 	UI_Text*				in_text;
 	UI_Text*				button_in_text;
+	
 	
 	UI_Button*				in_buttons_resume;
 	UI_Button*				in_buttons_save;

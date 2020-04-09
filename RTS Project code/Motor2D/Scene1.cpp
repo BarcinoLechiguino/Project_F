@@ -15,8 +15,9 @@
 #include "Player.h"
 #include "Scene1.h"
 #include "Scene.h"
-
+#include "Pathfinding.h"
 #include "Brofiler\Brofiler.h"
+#include "Map.h"
 
 #include "EntityManager.h"
 
@@ -89,6 +90,8 @@ bool Scene1::Update(float dt)														//Receives dt as an argument.
 	{
 		DrawPathfindingDebug();														//Pathfinding Debug. Shows a debug texture on the path's tiles.
 	}
+	
+	DrawOccupied();
 
 	//LOG("Rocks %d", rock_test.size());
 
@@ -154,6 +157,8 @@ void Scene1::InitScene()
 
 	ret = App->map->Load("New_Tilesete_Map.tmx");
 
+	App->map->GetMapSize(map_width, map_height);
+
 	if (ret)
 	{
 		int w, h;
@@ -166,6 +171,8 @@ void Scene1::InitScene()
 	}
 
 	path_debug_tex = App->tex->Load("maps/path2.png");
+
+	occupied_debug = App->tex->Load("maps/occupied_tile.png");
 
 	//test background
 	background_rect = { 0,0,1280,720 };
@@ -238,27 +245,29 @@ void Scene1::ExecuteTransition()
 
 void Scene1::UnitDebugKeys()
 {
-	if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+	if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y) ) )
 	{
-		(Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y);
+		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+		{
+			(Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+		{
+			(Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+		{
+			(TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+		{
+			(Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y);
+		}
+		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+		{
+			(Infantry*)App->entityManager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y);
+		}
 	}
-	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-	{
-		(Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-	{
-		(TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-	{
-		(Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y);
-	}
-	if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-	{
-		(Infantry*)App->entityManager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y);
-	}
-
 }
 
 void Scene1::PathfindingDebug()
@@ -309,6 +318,20 @@ void Scene1::DrawPathfindingDebug()
 	}
 }
 
+void Scene1::DrawOccupied()
+{
+	for (int x = 0; x < App->map->data.width; ++x) //Magic
+	{
+		for (int y = 0; y < App->map->data.height; ++y)
+		{
+			if (App->pathfinding->IsOccupied(iPoint(x, y) ) )
+			{
+				iPoint draw_position = App->map->MapToWorld(x, y);
+				App->render->Blit(occupied_debug,draw_position.x,draw_position.y,nullptr);
+			}
+		}
+	}
+}
 
 // --------------- REVISE IF THEY ARE NEEDED ---------------
 //bool Scene1::Load(pugi::xml_node& data)

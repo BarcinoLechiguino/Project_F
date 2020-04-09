@@ -93,19 +93,28 @@ void Player::MoveToOrder()//fix
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x, mouse_tile.y)))
-		{ 
+		{
+			for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
+			{
+				App->pathfinding->ChangeWalkability((*item)->occupied_tile,WALKABLE);
+			}
+
 			std::vector<iPoint> group_positions = App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected.size() ); //Vector storing positions for units in group
 
 			std::vector<iPoint>::iterator positions = group_positions.begin();
 
 			for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
 			{
-				if (App->pathfinding->IsWalkable( (*positions) ))
-				{
-					(*item)->GiveNewTarget( (*positions) );
-				}
+				//if (App->pathfinding->IsWalkable( (*positions) ))
+				//{
+				(*item)->GiveNewTarget( (*positions) );
+				//}
 				++positions;
 			}
+		}
+		else
+		{
+			LOG("Tile is untargetable");
 		}
 	}
 }

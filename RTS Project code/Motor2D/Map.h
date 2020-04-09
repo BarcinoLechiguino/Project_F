@@ -189,6 +189,7 @@ public:
 	bool SwitchMaps(std::string new_map);										//Unloads the map and changes by another one. 
 	bool ChangeMap(const char* newMap);											//Change map with a fade time
 	void Restart_Cam();
+	void GetMapSize(int& w, int& h) const;
 
 private:
 

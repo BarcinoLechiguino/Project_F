@@ -17,7 +17,7 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, ty
 	target_tile = tile_position;
 	next_tile = tile_position;
 
-	App->pathfinding->ChangeWalkability(tile_position, OCCUPIED );
+	ChangeOccupiedTile(tile_position);
 }
 
 bool Dynamic_Object::Awake(pugi::xml_node&)
@@ -52,8 +52,6 @@ bool Dynamic_Object::CleanUp()
 
 void Dynamic_Object::GiveNewTarget(iPoint new_target)
 {
-	App->pathfinding->ChangeWalkability(target_tile, WALKABLE); //Old target tile is now walkable
-
 	//New Path using the next tile if it's going to one
 	App->pathfinding->CreatePath(next_tile, new_target);
 
@@ -66,7 +64,7 @@ void Dynamic_Object::GiveNewTarget(iPoint new_target)
 	target_tile = entity_path.back();
 	current_path_tile = entity_path.begin();
 
-	App->pathfinding->ChangeWalkability(target_tile, OCCUPIED);
+	ChangeOccupiedTile(target_tile);
 
 	//int pos = 0;
 	//for (std::vector<iPoint>::iterator item = entity_path.begin(); item != entity_path.end(); ++item)
@@ -76,6 +74,15 @@ void Dynamic_Object::GiveNewTarget(iPoint new_target)
 	//}
 
 	//LOG("target_tile %d %d", entity_path.back().x, entity_path.back().y);
+}
+
+void Dynamic_Object::ChangeOccupiedTile(iPoint new_occupied_tile)
+{
+	App->pathfinding->ChangeWalkability(occupied_tile, WALKABLE);
+
+	occupied_tile = new_occupied_tile;
+
+	App->pathfinding->ChangeWalkability(new_occupied_tile, OCCUPIED);
 }
 
 void Dynamic_Object::HandleMovement(float dt)

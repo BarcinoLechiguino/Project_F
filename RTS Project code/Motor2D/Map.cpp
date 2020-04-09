@@ -719,3 +719,9 @@ void Map::Restart_Cam() // function that resets the camera
 	App->render->camera.x = spawn_position_cam.x;
 	App->render->camera.y = spawn_position_cam.y;
 }
+
+void Map::GetMapSize(int& w, int& h) const
+{
+	w = App->map->data.width * App->map->data.tile_width;
+	h = App->map->data.height * App->map->data.tile_height;
+}
