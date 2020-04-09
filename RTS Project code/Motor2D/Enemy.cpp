@@ -5,13 +5,11 @@
 #include "Input.h"
 #include "p2Log.h"
 #include "Map.h"
-#include "Scene1.h"
 #include "Textures.h"
 #include "Collisions.h"
 #include "Audio.h"
 #include "Pathfinding.h"
 #include "SceneManager.h"
-#include "Scene1.h"
 
 #include "EntityManager.h"
 

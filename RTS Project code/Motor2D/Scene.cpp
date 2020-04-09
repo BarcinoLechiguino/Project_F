@@ -5,7 +5,7 @@
 #include "Map.h"
 #include "Gui.h"
 
-Scene::Scene(SCENES scene_name) : Module(), scene_name(scene_name)
+Scene::Scene(SCENES scene_name) : scene_name(scene_name), escape(true)		// This Here
 {
 
 }

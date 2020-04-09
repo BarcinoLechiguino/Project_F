@@ -142,14 +142,26 @@
     <ClCompile Include="SceneManager.cpp">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="Main_Menu.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene1.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameplayScene.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="LogoScene.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="WinScene.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="LoseScene.cpp">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Lifebar.cpp">
+      <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -315,14 +327,26 @@
     <ClInclude Include="SceneManager.h">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="Main_Menu.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene1.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="Scene.h">
       <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="GameplayScene.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="LogoScene.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="WinScene.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="LoseScene.h">
+      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Lifebar.h">
+      <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

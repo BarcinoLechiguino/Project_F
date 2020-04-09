@@ -58,11 +58,11 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(font);
 	AddModule(console);
 	AddModule(collisions);
-	AddModule(transition_manager);
 
 	// scene_manager last before render.
 	AddModule(gui);
 	AddModule(scene_manager);
+	AddModule(transition_manager);
 	AddModule(entityManager);
 	AddModule(player);
 

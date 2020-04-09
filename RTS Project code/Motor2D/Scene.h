@@ -7,13 +7,17 @@
 
 #include "Application.h"
 #include "Module.h"
+#include "Input.h"
+#include "Gui.h"
 #include "TransitionManager.h"
 
 enum class SCENES
 {
-	FIRST_SCENE,
-	SECOND_SCENE,
-	MAIN_MENU,
+	LOGO_SCENE,
+	MAIN_SCENE,
+	GAMEPLAY_SCENE,
+	WIN_SCENE,
+	LOSE_SCENE,
 	NONE
 };
 
@@ -48,6 +52,7 @@ public:
 
 	int				map_width;									// Width of the map loaded on the scene.
 	int				map_height;									// Height of the map loaded on the scene.
+	bool			escape;										
 };
 
 #endif // !__SCENE_H__

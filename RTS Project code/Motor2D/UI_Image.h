@@ -17,7 +17,6 @@ public:
 	void CleanUp();
 
 private:
-
 	SDL_Texture*	tex;						//Texture of the UI_Image.
 	Entity*			attached_unit;
 };

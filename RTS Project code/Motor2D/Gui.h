@@ -3,12 +3,14 @@
 
 #include "Module.h"
 #include "Textures.h"
+#include "Fonts.h"
 #include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
 #include "UI_InputBox.h"
 #include "UI_Scrollbar.h"
+#include "UI_Lifebar.h"
 
 //class UI;
 
@@ -20,24 +22,13 @@ class Gui : public Module
 public:
 
 	Gui();
+	virtual ~Gui();											// Destructor
 
-	// Destructor
-	virtual ~Gui();
-
-	// Called when before render is available
-	bool Awake(pugi::xml_node&);
-
-	// Call before first frame
-	bool Start();
-
-	// Called before all Updates
-	bool PreUpdate();
-
-	// Called after all Updates
-	bool PostUpdate();
-
-	// Called before quitting
-	bool CleanUp();
+	bool Awake(pugi::xml_node&);							// Called when before render is available
+	bool Start();											// Call before first frame
+	bool PreUpdate();										// Called before all Updates
+	bool PostUpdate();										// Called after all Updates
+	bool CleanUp();											// Called before quitting
 
 public:
 	/*const*/ SDL_Texture* GetAtlas() const;
@@ -61,7 +52,10 @@ public:
 		, bool dragYAxis = true, bool invertedScrolling = false, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr
 		, SDL_Rect* scrollMask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
 
+	UI* CreateLifebar(UI_Element element, int x, int y, SDL_Rect hitbox, bool is_visible = true, Module* listener = nullptr, Entity* attached_unit = nullptr, UI* parent = nullptr);
+
 	
+																			// ------------------ GUI ELEMENTS MANAGEMENT ------------------
 	void OnEventCall(UI* element, UI_Event ui_event);						//This function is called whenever an new event happens, it receives the pointer of the element that caused the event and the kind of event it is.
 	void PassFocus();														//Method that passes the focus from an interactible and able to focused element to another with the same conditions.
 	bool ElementCanBeFocused(UI* focusElement) const;						//If an element fulfills all requirements (is a button or a scrollbar), then this method returns true. Used to filter which UI elements can or cannot have focus.

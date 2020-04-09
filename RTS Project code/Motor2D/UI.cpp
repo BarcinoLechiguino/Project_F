@@ -3,7 +3,6 @@
 #include "Render.h"
 #include "Input.h"
 #include "Gui.h"
-#include "Scene1.h"
 #include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"

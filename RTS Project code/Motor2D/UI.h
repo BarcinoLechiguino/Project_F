@@ -17,7 +17,8 @@ enum class UI_Element
 	TEXT,
 	BUTTON,
 	SCROLLBAR,
-	INPUTBOX
+	INPUTBOX,
+	LIFEBAR
 };
 
 enum class UI_Event

@@ -1,15 +1,15 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Application.h"
-#include "Textures.h"
-#include "Map.h"
-#include "Input.h"
-#include "Scene1.h"
-#include "Audio.h"
-#include "Render.h"
 #include "Window.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Input.h"
+#include "Audio.h"
+#include "Map.h"
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Gui.h"
 
 Entity::Entity(int x, int y, ENTITY_TYPE type) : tile_position(x, y), type(type), entity_sprite(nullptr), collider(nullptr), animation(nullptr)	//Initializes the variables to the specified values when the constructor is called.
 {
@@ -89,9 +89,10 @@ void Entity::OnCollision(Collider* C1, Collider* C2)
 void Entity::ApplyDamage(Entity* target)
 {
 	target->current_health -= damage;
-	int new_width = (MAX_HEALTH_BAR_WIDTH * target->current_health) / target->max_health;
+	int new_width = (MAX_HEALTHBAR_WIDTH * target->current_health) / target->max_health;
 	target->health_rect.w = new_width;
 	target->health_bar->SetScreenRect(target->health_rect);
+
 	return;
 }
 

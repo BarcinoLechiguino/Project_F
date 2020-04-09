@@ -1,15 +1,15 @@
+#include "p2Log.h"
+#include "Point.h"
 #include "Application.h"
 #include "Module.h"
-#include "Point.h"
 #include "Render.h"
-#include "Input.h"
-#include "p2Log.h"
-#include "Map.h"
-#include "Scene1.h"
 #include "Textures.h"
-#include "Collisions.h"
+#include "Input.h"
 #include "Audio.h"
+#include "Collisions.h"
+#include "Map.h"
 #include "Pathfinding.h"
+#include "Gui.h"
 
 #include "EntityManager.h"
 
@@ -26,10 +26,10 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 	current_health = max_health;
 	damage = 30;
 
-	empty_rect = { 0,158,MAX_HEALTH_BAR_WIDTH,18 };
+	empty_rect = { 0,158,MAX_HEALTHBAR_WIDTH,18 };
 	empty_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, empty_rect, true, false, false,nullptr,this, NULL); //Magic Number
 
-	health_rect = { 0,198,MAX_HEALTH_BAR_WIDTH,18 };
+	health_rect = { 0,198,MAX_HEALTHBAR_WIDTH,18 };
 	health_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, health_rect, true, false, false, nullptr, this, NULL); //Magic Number
 };
 
