@@ -121,6 +121,16 @@ void MainScene::OnEventCall(UI* element, UI_Event ui_event)
 	{
 		escape = false;
 	}
+
+	if (element == options_button && ui_event == UI_Event::UNCLICKED)
+	{
+		LoadOptionsMenu();
+	}
+}
+
+void MainScene::LoadOptionsMenu()
+{
+	// Options Menu
 }
 
 void MainScene::ExecuteTransition()
@@ -147,3 +157,4 @@ void MainScene::ExecuteTransition()
 		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, false, true);
 	}
 }
+
