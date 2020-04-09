@@ -31,18 +31,25 @@ public:
 
 	void ExecuteTransition();
 
+	void LoadOptionsMenu();
+
 public:
 	// Main Screen
-	UI_Button* new_game_button;
-	UI_Button* continue_button;
-	UI_Button* options_button;
-	UI_Button* exit_button;
-	UI_Text* button_text;
+	UI_Button*	new_game_button;
+	UI_Button*	continue_button;
+	UI_Button*	options_button;
+	UI_Button*	exit_button;
+	UI_Text*	button_text;
 
-	// tmp BACKGROUND
+	// Main BACKGROUND
 	UI_Image*		background;
 	SDL_Rect		background_rect;
 	SDL_Texture*	background_texture;
+
+	// Options BACKGROUND
+	UI_Image*		background_opt;
+	SDL_Rect		background_rect_opt;
+	SDL_Texture*	background_texture_opt;
 
 public:
 };
