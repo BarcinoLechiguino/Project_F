@@ -64,6 +64,8 @@ public:
 	std::vector<iPoint> entity_path;
 	std::vector<iPoint>::iterator current_path_tile;
 
+	SDL_Rect entity_sprite_section;
+
 	iPoint next_tile;
 	iPoint next_tile_position;
 	iPoint target_tile;
