@@ -8,6 +8,7 @@
 
 class Animation;
 class UI_Image;
+class UI_Healthbar;
 
 struct Collider;
 struct SDL_Texture;	
@@ -62,20 +63,28 @@ public:
 
 	//Entity Variables
 	ENTITY_TYPE		type;
+
 	int				max_health;
 	int				current_health;
 	int				damage;
-	std::string		name_tag;				//Name of the entity in the xml file.
+
+	std::string		name_tag;													//Name of the entity in the xml file.
+
 	fPoint			pixel_position;			
 	iPoint			tile_position;
 
-	SDL_Rect		empty_rect;
-	SDL_Rect		health_rect;
+	SDL_Rect		healthbar_background_rect;
+	SDL_Rect		healthbar_rect;
+
 	UI_Image*		health_bar;
 	UI_Image*		empty_bar;
 
-	SDL_Texture*	entity_sprite;	
+	UI_Healthbar*	healthbar;
+
+	SDL_Texture*	entity_sprite;
+
 	Collider*		collider;
+
 	Animation*		animation;
 
 	SDL_Rect		selection_collider;

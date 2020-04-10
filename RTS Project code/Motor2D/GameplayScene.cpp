@@ -178,10 +178,10 @@ void GameplayScene::InitScene()
 void GameplayScene::LoadGuiElements()
 {
 	// Temporal transition buttons
-	SDL_Rect button_size = { 0, 0, 230, 18 };
-	SDL_Rect transition_button_idle = { 0, 202, 230, 18 };
-	SDL_Rect transition_button_hover = { 0, 224, 230, 18 };
-	SDL_Rect transition_button_clicked = { 0, 158, 230, 18 };
+	SDL_Rect button_size = { 0, 0, 115, 9 };
+	SDL_Rect transition_button_idle = { 618, 34, 115, 9 };
+	SDL_Rect transition_button_hover = { 618, 23, 115, 9 };
+	SDL_Rect transition_button_clicked = { 618, 1, 115, 9 };
 
 	transition_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 100, 680, true, true, false, this, nullptr
 															, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
@@ -190,60 +190,16 @@ void GameplayScene::LoadGuiElements()
 																, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
 
 	// Temporal transition buttons' texts
-	SDL_Rect text_rect = { 0, 0, 40, 9 };
-	_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 12);
+	SDL_Rect text_rect = { 0, 0, 15, 8 };
+	_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 9);
 	std::string win_button_string = "To Win Screen";
 	std::string lose_button_string = "To Lose Screen";
 
-	button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 150, 680, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
+	button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 121, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
 													, true, false, false, nullptr, transition_button, &win_button_string);
 
-	button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 400, 680, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
+	button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 366, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
 													, true, false, false, nullptr, transition_button, &lose_button_string);
-	
-	////In-game menu
-	//SDL_Rect main_in_rect{ 0, 388, 466, 447 };
-	//main_in_menu2 = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 280, 180, main_in_rect, false, false, false, nullptr, nullptr);
-	//
-	//SDL_Rect label1_rect_in{ 1078,242,382,61 };
-	//label_1_in = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, 323, 160, label1_rect_in, false, false, false, nullptr,nullptr, main_in_menu2);
-	//
-	//_TTF_Font* font_in_esc = App->font->Load("fonts/Minecraftia-Regular.ttf", 32);
-	//std::string string_title_in = "PAUSE MENU";
-	////in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 410, 166, textHitbox, font_in_esc, fontRgb, false, false, false, main_in_menu, &string_title_in);
-	//
-	//SDL_Rect in_rect = { 1057,30,173,45 };
-	//SDL_Rect idle_in = { 1057,30,173,45 };
-	//SDL_Rect hover_in = { 1057,76,173,45 };
-	//SDL_Rect clicked_in = { 1057,126,173,45 };
-	//in_buttons_resume = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 430, 247, false, true, false, this, main_in_menu2, &idle_in, &hover_in, &clicked_in);
-	//in_buttons_save = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 430, 317, false, true, false, this, main_in_menu2, &idle_in, &hover_in, &clicked_in);
-	//in_buttons_load = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 430, 387, false, true, false, this, main_in_menu2, &idle_in, &hover_in, &clicked_in);
-	//in_buttons_exit = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 430, 457, false, true, false, this, main_in_menu2, &idle_in, &hover_in, &clicked_in);
-	//
-	//SDL_Rect unmute_rect_in = { 512,147,57,57 };
-	//SDL_Rect idle_u_in = { 512,147,57,57 };
-	//SDL_Rect hover_u_in = { 512,267,57,57 };
-	//SDL_Rect clicked_u_in = { 1479,72,57,57 };
-	//unmute_in = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 670, 550, false, true, false, this, main_in_menu2, &idle_u_in, &hover_u_in, &clicked_u_in);
-	//SDL_Rect mute_rect_in = { 1479, 9, 57, 57 };
-	//SDL_Rect idle_m_in = { 1479, 9, 57, 57 };
-	//SDL_Rect hover_m_in = { 1544,9,57,57 };
-	//SDL_Rect clicked_m_in = { 440,214,57,57 };
-	//mute_in = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 300, 550, false, true, false, this, main_in_menu2, &idle_m_in, &hover_m_in, &clicked_m_in);
-	//
-	//_TTF_Font* font_in_button = App->font->Load("fonts/Future Now.ttf", 30);
-	//std::string string_play_in_button = "RESUME";
-	//std::string string_save_in_button = "SAVE";
-	//std::string string_load_in_button = "LOAD";
-	//std::string string_exit_in_button = "EXIT";
-	///*button_in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 470, 257, textHitbox, font_in_button, fontRgb, false, false, false, main_in_menu, &string_play_in_button);
-	//button_in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 485, 327, textHitbox, font_in_button, fontRgb, false, false, false, main_in_menu, &string_save_in_button);
-	//button_in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 485, 397, textHitbox, font_in_button, fontRgb, false, false, false, main_in_menu, &string_load_in_button);
-	//button_in_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 495, 467, textHitbox, font_in_button, fontRgb, false, false, false, main_in_menu, &string_exit_in_button);*/
-
-	//firstScrollPosCalc = false;
-	//secondScrollPosCalc = false;
 }
 
 void GameplayScene::OnEventCall(UI* element, UI_Event ui_event)

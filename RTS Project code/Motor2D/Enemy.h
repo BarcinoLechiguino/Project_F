@@ -30,6 +30,9 @@ public:
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
+	void SetTarget();		//TMP
+
+public:
 
 	const std::vector<iPoint>* entity_path;
 	Infantry* target;

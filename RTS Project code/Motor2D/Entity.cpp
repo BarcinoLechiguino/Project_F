@@ -89,9 +89,14 @@ void Entity::OnCollision(Collider* C1, Collider* C2)
 void Entity::ApplyDamage(Entity* target)
 {
 	target->current_health -= damage;
-	int new_width = (MAX_HEALTHBAR_WIDTH * target->current_health) / target->max_health;
-	target->health_rect.w = new_width;
-	target->health_bar->SetScreenRect(target->health_rect);
+	
+	target->healthbar->ModifyHealthbar();
+
+	/*int new_width = (MAX_UNIT_HEALTHBAR_WIDTH * target->current_health) / target->max_health;
+	
+	target->healthbar_rect.w = new_width;
+	
+	target->health_bar->SetScreenRect(target->healthbar_rect);*/
 
 	return;
 }

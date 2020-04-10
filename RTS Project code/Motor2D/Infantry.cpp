@@ -26,11 +26,10 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 	current_health = max_health;
 	damage = 30;
 
-	empty_rect = { 0,158,MAX_HEALTHBAR_WIDTH,18 };
-	empty_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, empty_rect, true, false, false,nullptr,this, NULL); //Magic Number
+	healthbar_background_rect = { 618, 12, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
+	healthbar_rect = { 618, 23, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 
-	health_rect = { 0,198,MAX_HEALTHBAR_WIDTH,18 };
-	health_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, health_rect, true, false, false, nullptr, this, NULL); //Magic Number
+	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_Element::HEALTHBAR, (int)pixel_position.x, (int)pixel_position.y - 30, true, &healthbar_rect, &healthbar_background_rect, this); //Magic Number
 };
 
 Infantry::~Infantry()  //Destructor. Called at the last frame.
@@ -66,7 +65,7 @@ bool Infantry::Update(float dt, bool doLogic)
 
 	if (current_health < 300)
 	{
-		LOG("Infantry health: %f", current_health );
+		LOG("Infantry health: %d", current_health);
 	}
 
 	return true;
@@ -74,11 +73,20 @@ bool Infantry::Update(float dt, bool doLogic)
 
 bool Infantry::PostUpdate()
 {
+	if (current_health <= 0)
+	{	
+		CleanUp();
+	}
+
 	return true;
 };
 
 bool Infantry::CleanUp()
-{
+{	
+	/*App->entityManager->entities;
+	App->entityManager->dynamic_objects;
+	App->entityManager->infantries;*/
+	
 	return true;
 };
 

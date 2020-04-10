@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Input.h"
 #include "SDL/include/SDL.h"
+#include "Application.h"
 #include "Entity.h"
 
 //class iPoint;			//If declared as a forward declaration instead of an include, 
@@ -18,7 +19,7 @@ enum class UI_Element
 	BUTTON,
 	SCROLLBAR,
 	INPUTBOX,
-	LIFEBAR
+	HEALTHBAR
 };
 
 enum class UI_Event
@@ -49,7 +50,7 @@ public:
 
 	virtual void CleanUp();
 
-	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float spped, float render_scale);
+	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed, float render_scale);
 
 public:
 	void SetScreenPos(iPoint position);				//Sets the position of a UI_Element with the Screen as point of reference.

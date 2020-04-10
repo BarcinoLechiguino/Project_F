@@ -133,41 +133,38 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 	switch (type)
 	{
-
 		case ENTITY_TYPE::ROCK:							
-		ret = new Rock(x, y, type);	
-		rocks.push_back((Rock*)ret);	//Allocates memory for an entity from the j1Player module.
+			ret = new Rock(x, y, type);	
+			rocks.push_back((Rock*)ret);	//Allocates memory for an entity from the j1Player module.
 	
 		break;
 
 		case ENTITY_TYPE::ENEMY:
-		ret = new Enemy(x, y, type);
-		dynamic_objects.push_back((Dynamic_Object*)ret);
-		enemies.push_back((Enemy*)ret);
-		
+			ret = new Enemy(x, y, type);
+			dynamic_objects.push_back((Dynamic_Object*)ret);
+			enemies.push_back((Enemy*)ret);
 		break;
 
 		case ENTITY_TYPE::GATHERER:
-		ret = new Gatherer(x, y, type);
-		dynamic_objects.push_back((Dynamic_Object*)ret);
-		gatherers.push_back((Gatherer*)ret);
+			ret = new Gatherer(x, y, type);
+			dynamic_objects.push_back((Dynamic_Object*)ret);
+			gatherers.push_back((Gatherer*)ret);
 		break;
 
 		case ENTITY_TYPE::INFANTRY:
-		ret = new Infantry(x, y, type);
-		dynamic_objects.push_back((Dynamic_Object*)ret);
-		infantries.push_back((Infantry*)ret);
+			ret = new Infantry(x, y, type);
+			dynamic_objects.push_back((Dynamic_Object*)ret);
+			infantries.push_back((Infantry*)ret);
 		break;
 
 		case ENTITY_TYPE::TOWNHALL:
-		ret = new TownHall(x, y, type);
-		town_hall.push_back((TownHall*)ret);
+			ret = new TownHall(x, y, type);
+			town_hall.push_back((TownHall*)ret);
 		break;
 
 		case ENTITY_TYPE::BARRACKS:
-		ret = new Barracks(x, y, type);
-		barracks.push_back((Barracks*)ret);
-
+			ret = new Barracks(x, y, type);
+			barracks.push_back((Barracks*)ret);
 		break;
 	}
 

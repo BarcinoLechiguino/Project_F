@@ -244,11 +244,11 @@ UI* Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_
 	return elem;
 }
 
-UI* Gui::CreateLifebar(UI_Element element, int x, int y, SDL_Rect hitbox, bool is_visible, Module* listener, Entity* attached_unit, UI* parent)
+UI* Gui::CreateHealthbar(UI_Element element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent)
 {
 	UI* elem = nullptr;
 
-	elem = new UI_Lifebar(element, x, y, hitbox, is_visible, listener, attached_unit, parent);
+	elem = new UI_Healthbar(element, x, y, is_visible, healthbar, background, attached_unit, listener, parent);
 
 	if (elem != nullptr)
 	{

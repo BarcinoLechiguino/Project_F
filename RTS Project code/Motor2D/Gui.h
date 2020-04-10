@@ -10,7 +10,7 @@
 #include "UI_Button.h"
 #include "UI_InputBox.h"
 #include "UI_Scrollbar.h"
-#include "UI_Lifebar.h"
+#include "UI_Healthbar.h"
 
 //class UI;
 
@@ -34,25 +34,27 @@ public:
 	/*const*/ SDL_Texture* GetAtlas() const;
 
 	UI* CreateImage(UI_Element element, int x, int y, SDL_Rect rect, bool isVisible = false, bool isInteractible = false, bool isDraggable = false
-		, Module* listener = nullptr, Entity* attached_unit = nullptr, UI* parent = nullptr);
+				, Module* listener = nullptr, Entity* attached_unit = nullptr, UI* parent = nullptr);
 
 	UI* CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible = true, bool isInteractible = false, bool isDraggable = false
-		, Module* listener = nullptr, UI* parent = nullptr, std::string* string = nullptr, std::string* hoverString = nullptr, std::string* leftClickString = nullptr, std::string* rightClickString = nullptr);
+				, Module* listener = nullptr, UI* parent = nullptr, std::string* string = nullptr
+				, std::string* hoverString = nullptr, std::string* leftClickString = nullptr, std::string* rightClickString = nullptr);
 
 	UI* CreateButton(UI_Element element, int x, int y, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr
-		, SDL_Rect* idle = nullptr, SDL_Rect* hover = nullptr, SDL_Rect* clicked = nullptr);
+				, SDL_Rect* idle = nullptr, SDL_Rect* hover = nullptr, SDL_Rect* clicked = nullptr);
 
 	UI* CreateUI_Window(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible = true, bool isInteractible = false, bool isDraggable = false, UI* parent = nullptr);
 
 	UI* CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursor, SDL_Color cursorColour, iPoint textOffset
-		, float blinkFrequency = 0.0f, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr
-		, std::string* defaultString = nullptr, bool emptyElements = false);
-
+					, float blinkFrequency = 0.0f, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr
+					, std::string* defaultString = nullptr, bool emptyElements = false);
+	
 	UI* CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis = false
-		, bool dragYAxis = true, bool invertedScrolling = false, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr
-		, SDL_Rect* scrollMask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
+					, bool dragYAxis = true, bool invertedScrolling = false, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr
+					, UI* parent = nullptr, SDL_Rect* scrollMask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
 
-	UI* CreateLifebar(UI_Element element, int x, int y, SDL_Rect hitbox, bool is_visible = true, Module* listener = nullptr, Entity* attached_unit = nullptr, UI* parent = nullptr);
+	UI* CreateHealthbar(UI_Element element, int x, int y, bool is_visible = true, SDL_Rect* healthbar = nullptr, SDL_Rect* background = nullptr
+					, Entity* attached_unit = nullptr, Module* listener = nullptr, UI* parent = nullptr);
 
 	
 																			// ------------------ GUI ELEMENTS MANAGEMENT ------------------

@@ -23,13 +23,12 @@ public:
 	bool CleanUp();
 
 	void OnCollision(Collider* C1, Collider* C2);
+	
+public:
 	void ApplyDamage(Entity* objective);
 
 public:
-
 	const std::vector<iPoint>* entity_path;
-
-
 };
 
 #endif // __ENEMY_H__
