@@ -16,7 +16,7 @@
 
 Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
-	entity_sprite = App->tex->Load("maps/debug_infantry_tile.png");
+	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/infantry_lowres.png");
 
 	selectable_unit = true;
 
@@ -59,7 +59,36 @@ bool Infantry::Update(float dt, bool doLogic)
 	selection_collider.x = pixel_position.x;
 	selection_collider.y = pixel_position.y;
 
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
+
+	//change section according to pathing. 
+	switch (this->unit_state) {
+	case entity_state::PATHING_DOWN:
+		entity_sprite_section = { 71,47,70,52 };
+		break;
+	case entity_state::PATHING_RIGHT:
+		entity_sprite_section = { 202,47,59,52 };
+		break;
+	case entity_state::PATHING_LEFT:
+		entity_sprite_section = { 142,47,59,52 };
+		break;
+	case entity_state::PATHING_UP:
+		entity_sprite_section = { 0,47,70,52 };
+		break;
+	case entity_state::PATHING_DOWN_RIGHT:
+		entity_sprite_section = { 58,0,58,47 };
+		break;
+	case entity_state::PATHING_DOWN_LEFT:
+		entity_sprite_section = { 0,0,58,47 };
+		break;
+	case entity_state::PATHING_UP_RIGHT:
+		entity_sprite_section = { 116,0,60,47 };
+		break;
+	case entity_state::PATHING_UP_LEFT:
+		entity_sprite_section = { 176,0,59,47 };
+		break;
+	}
+
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y-15, &entity_sprite_section);
 
 	App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 
