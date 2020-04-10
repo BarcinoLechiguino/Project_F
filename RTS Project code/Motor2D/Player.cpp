@@ -102,18 +102,7 @@ void Player::MoveToOrder()//fix
 				App->pathfinding->ChangeWalkability((*item)->occupied_tile,WALKABLE);
 			}
 
-			std::vector<iPoint> group_positions = App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected.size() ); //Vector storing positions for units in group
-
-			std::vector<iPoint>::iterator positions = group_positions.begin();
-
-			for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
-			{
-				//if (App->pathfinding->IsWalkable( (*positions) ))
-				//{
-				(*item)->GiveNewTarget( (*positions) );
-				//}
-				++positions;
-			}
+			App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected); //Gives units targets around main target
 		}
 		else
 		{
@@ -134,7 +123,7 @@ void Player::CameraController(float dt)
 			App->render->camera.x += camera_speed.x * dt;
 		}
 
-		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)			////Right
+		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)			//Right
 		{
 			App->render->camera.x -= camera_speed.x * dt;
 		}

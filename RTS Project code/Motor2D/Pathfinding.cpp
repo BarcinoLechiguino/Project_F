@@ -42,7 +42,7 @@ void PathFinding::SetMap(uint width, uint height, uchar* data)
 // Utility: return true if pos is inside the map boundaries
 bool PathFinding::CheckBoundaries(const iPoint& pos) const
 {
-	return (pos.x >= 0 && pos.x <= (int)width &&
+	return (pos.x >= 0 && pos.x < (int)width &&
 			pos.y >= 0 && pos.y <= (int)height);
 }
 
@@ -108,9 +108,12 @@ const std::vector<iPoint> PathFinding::GetLastPath() const
 	return last_path;
 }
 
-std::vector<iPoint> PathFinding::FindNearbyWalkable(const iPoint& pos, int quantity)
+void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected)
 {
-	std::vector<iPoint> ret;
+	std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
+
+	(*units)->GiveNewTarget(pos);
+	units++;
 
 	PathList frontier;
 	PathList visited;
@@ -118,27 +121,25 @@ std::vector<iPoint> PathFinding::FindNearbyWalkable(const iPoint& pos, int quant
 	PathNode origin_node(0, 0, pos, nullptr);
 	frontier.list.push_back(origin_node);
 
-	ret.push_back(origin_node.pos);
-	int tiles_filled = 1;
+	std::list<PathNode>::iterator current_node = frontier.list.begin();
 
-	std::list<PathNode>::iterator current_node = frontier.list.begin(); 
 	PathList neighbours;
 
-	while (frontier.list.size() != 0 && tiles_filled <= quantity)
+	while (frontier.list.size() != 0 && units != units_selected.end() )
 	{
 		current_node->FindWalkableAdjacents(neighbours); //Fill starting node
 
 		std::list<PathNode>::iterator neighbour_iterator = neighbours.list.begin();
 
-		for (neighbour_iterator; neighbour_iterator != neighbours.list.end() && tiles_filled <= quantity; ++neighbour_iterator)
+		for (neighbour_iterator; neighbour_iterator != neighbours.list.end() && units != units_selected.end(); ++neighbour_iterator)
 		{
 			if ( visited.Find((*neighbour_iterator).pos) == visited.list.end() ) //if not in visited
 			{
 				if (App->pathfinding->IsWalkable((*neighbour_iterator).pos))
 				{
-					ret.push_back((*neighbour_iterator).pos);
+					(*units)->GiveNewTarget((*neighbour_iterator).pos);
 
-					tiles_filled++;
+					units++;
 				}
 
 				if (App->pathfinding->IsWalkable((*neighbour_iterator).pos) || App->pathfinding->IsOccupied((*neighbour_iterator).pos))
@@ -146,15 +147,14 @@ std::vector<iPoint> PathFinding::FindNearbyWalkable(const iPoint& pos, int quant
 					frontier.list.push_back((*neighbour_iterator));
 				}
 			}
-
 		}
 
 		neighbours.list.clear();
 
+		visited.list.push_back((*current_node));
+
 		current_node++;
 	}
-
-	return ret;
 }
 
 // Looks for a node in this list and returns it's list node or NULL

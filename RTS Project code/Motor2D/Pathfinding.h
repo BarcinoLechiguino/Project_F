@@ -5,6 +5,7 @@
 #include "Module.h"
 #include "Point.h"
 #include <vector>
+#include "EntityManager.h"
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
@@ -43,7 +44,7 @@ public:
 
 	uchar GetTileAt(const iPoint& pos) const;								// Utility: return the walkability value of a tile
 
-	std::vector<iPoint> FindNearbyWalkable(const iPoint& pos, int quantity) ;				//Finds close tiles to send units to
+	void FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected) ;				//Finds close tiles to send units to
 
 	bool ChangeWalkability(const iPoint& pos, uchar walkability);			//Change walkability of a tile in map array
 

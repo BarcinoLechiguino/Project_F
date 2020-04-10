@@ -15,6 +15,8 @@ Rock::Rock(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 
 	tiles_occupied_x = 1;
 	tiles_occupied_y = 1;
+
+	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 }
 
 bool Rock::Awake(pugi::xml_node&)

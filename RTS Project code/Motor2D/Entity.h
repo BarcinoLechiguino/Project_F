@@ -77,6 +77,8 @@ public:
 	SDL_Texture*	entity_sprite;	
 	Collider*		collider;
 	Animation*		animation;
+
+	SDL_Rect		selection_collider;
 };
 
 #endif // __ENTITY_H__

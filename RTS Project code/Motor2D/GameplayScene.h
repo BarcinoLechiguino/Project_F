@@ -60,6 +60,7 @@ public:
 	void PathfindingDebug();
 	void DrawPathfindingDebug();
 	void DrawOccupied();
+
 public:
 	//std::list<std::string>	map_names;
 	
