@@ -240,16 +240,16 @@ void Console::CreateConsoleElements()
 
 	std::string defaultString = "DefaultString";
 
-	console_background = (UI_Image*)App->gui->CreateImage(UI_Element::EMPTY, bg_position.x, bg_position.y, bg_rect, bg_isVisible, bg_isInteractible, bg_isDraggable, nullptr, nullptr);
+	console_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, bg_position.x, bg_position.y, bg_rect, bg_isVisible, bg_isInteractible, bg_isDraggable, nullptr, nullptr);
 	
-	console_output = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, output_position.x, output_position.y, output_rect, output_font, output_font_colour
+	console_output = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, output_position.x, output_position.y, output_rect, output_font, output_font_colour
 												, output_isVisible, output_isInteractible, output_isDraggable, nullptr, console_background);
 
-	console_input = (UI_InputBox*)App->gui->CreateInputBox(UI_Element::INPUTBOX, input_position.x, (console_background->GetHitbox().h - input_rect.h), input_rect, input_font, input_font_colour
+	console_input = (UI_InputBox*)App->gui->CreateInputBox(UI_ELEMENT::INPUTBOX, input_position.x, (console_background->GetHitbox().h - input_rect.h), input_rect, input_font, input_font_colour
 												, cursor_rect, cursor_colour, input_text_offset, cursor_blinkFrequency, input_isVisible, input_isInteractible, input_isDraggable
 												, nullptr, console_background, &defaultString, true);
 
-	console_scroll = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_Element::SCROLLBAR, scroll_position.x, scroll_position.y, scrollbar_rect, thumb_rect, thumb_offset, drag_area, drag_factor
+	console_scroll = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, scroll_position.x, scroll_position.y, scrollbar_rect, thumb_rect, thumb_offset, drag_area, drag_factor
 												, drag_x_axis, drag_y_axis, inverted_scrolling, scroll_isVisible, scroll_isDraggable, scroll_isInteractible, nullptr, console_background
 												, NULL, iPoint(0, 0), true);
 
@@ -319,10 +319,6 @@ void Console::CreateConsoleCommands()
 	enable_god_mode		= "enable_god_mode";
 	disable_god_mode	= "disable_god_mode";
 	
-	// Map Commands
-	first_map			= "map Test_map.tmx";						//(Again) EVERYTHING IS A LIE. JUST SMOKE AND MIRRORS.
-	second_map			= "map Test_map_2.tmx";
-	
 	CreateCommand(command_list, this, 1, 1);
 	
 	CreateCommand(enable_pause, this, 1, 1);
@@ -336,9 +332,6 @@ void Console::CreateConsoleCommands()
 
 	CreateCommand(enable_god_mode, this, 1, 1);
 	CreateCommand(disable_god_mode, this, 1, 1);
-
-	CreateCommand(first_map, this, 1, 1);
-	CreateCommand(second_map, this, 1, 1);
 }
 
 void Console::OnCommand(const char* command, const char* subCommand)
@@ -381,15 +374,5 @@ void Console::OnCommand(const char* command, const char* subCommand)
 	if (App->input->CmpStr(command, FPS_120))							// -----------------------------------------------------------------------------------
 	{
 		App->frame_cap = CAP_AT_120;									// Cap Frames at 120
-	}
-
-	// --- MAP COMMANDS
-	if (App->input->CmpStr(command, first_map))							// -----------------------------------------------------------------------------------
-	{
-		App->map->ChangeMap("Test_map.tmx");							// Load the First Map
-	}
-	if (App->input->CmpStr(command, second_map))						// -----------------------------------------------------------------------------------
-	{
-		App->map->ChangeMap("Test_map_2.tmx");							// Load the Second Map
 	}
 }

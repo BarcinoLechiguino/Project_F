@@ -70,20 +70,20 @@ void LogoScene::LoadGuiElements()
 
 	iPoint center_button = iPoint(window_center.x - button_size.w * 0.5, window_center.y - button_size.h * 0.5f);
 
-	transition_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, center_button.x, center_button.y, true, true, false, this, nullptr
+	transition_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, center_button.x, center_button.y, true, true, false, this, nullptr
 		, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
 
 	SDL_Rect text_rect = { 0, 0, 15, 8 };
 	_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 9);
 	std::string button_string = "To Main Scene";
 
-	button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, center_button.x + text_rect.w, center_button.y - 2, text_rect, font
+	button_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, center_button.x + text_rect.w, center_button.y - 2, text_rect, font
 		, SDL_Color{ 255, 255, 255, 255 }, true, false, false, nullptr, transition_button, &button_string);
 }
 
-void LogoScene::OnEventCall(UI* element, UI_Event ui_event)
+void LogoScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
-	if (element == transition_button && ui_event == UI_Event::UNCLICKED)
+	if (element == transition_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::MAIN_SCENE, 0.5f, true, 9, false, true);
 	}

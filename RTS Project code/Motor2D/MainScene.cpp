@@ -66,7 +66,7 @@ void MainScene::LoadGuiElements()
 	SDL_Rect new_game_button_hover		= { 179, 24, 175, 28 };
 	SDL_Rect new_game_button_clicked	= { 357, 24, 175, 28 };
 
-	new_game_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON,420, 274, true, true, false, this, nullptr
+	new_game_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON,420, 274, true, true, false, this, nullptr
 													, &new_game_button_idle, &new_game_button_hover, &new_game_button_clicked);
 
 	// Continue Button
@@ -75,7 +75,7 @@ void MainScene::LoadGuiElements()
 	SDL_Rect continue_button_hover = { 178, 0, 158, 23 };
 	SDL_Rect continue_button_clicked = { 356, 0, 158, 23 };
 
-	continue_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 425, 306, true, true, false, this, nullptr
+	continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 425, 306, true, true, false, this, nullptr
 		, &continue_button_idle, &continue_button_hover, &continue_button_clicked);
 
 	// Options Button
@@ -84,7 +84,7 @@ void MainScene::LoadGuiElements()
 	SDL_Rect options_button_hover = { 178, 52, 133, 24 };
 	SDL_Rect options_button_clicked = { 356, 52, 133, 24 };
 
-	options_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 439, 336, true, true, false, this, nullptr
+	options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 439, 336, true, true, false, this, nullptr
 		, &options_button_idle, &options_button_hover, &options_button_clicked);
 
 	// Exit Button
@@ -93,7 +93,7 @@ void MainScene::LoadGuiElements()
 	SDL_Rect exit_button_hover = { 178, 77, 74, 23 };
 	SDL_Rect exit_button_clicked = { 356, 77, 74, 23 };
 
-	exit_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 465, 366, true, true, false, this, nullptr
+	exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 465, 366, true, true, false, this, nullptr
 		, &exit_button_idle, &exit_button_hover, &exit_button_clicked);
 
 	//SDL_Rect text_rect = { 0, 0, 40, 9 };
@@ -109,20 +109,20 @@ void MainScene::LoadGuiElements()
 
 }
 
-void MainScene::OnEventCall(UI* element, UI_Event ui_event)
+void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 
-	if (element == new_game_button && ui_event == UI_Event::UNCLICKED)
+	if (element == new_game_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, true, true);
 	}
 
-	if (element == exit_button && ui_event == UI_Event::UNCLICKED)
+	if (element == exit_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		escape = false;
 	}
 
-	if (element == options_button && ui_event == UI_Event::UNCLICKED)
+	if (element == options_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		LoadOptionsMenu();
 	}

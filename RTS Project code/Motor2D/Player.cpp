@@ -56,6 +56,8 @@ bool Player::Update(float dt)
 
 	SelectionRect();
 
+	SelectionShortcuts();
+
 	MoveToOrder();
 
 	return true;
@@ -203,6 +205,51 @@ void Player::SelectionRect()
 			}
 			LOG("Units selected %d", units_selected.size() );
 		}
+	}
+}
+
+void Player::SelectionShortcuts()
+{
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)													// Select All Entities
+	{
+		units_selected.clear();
+
+		std::vector<Dynamic_Object*>::iterator item = App->entityManager->dynamic_objects.begin();
+
+		for (; item != App->entityManager->dynamic_objects.end(); ++item)
+		{
+			units_selected.push_back((*item));
+		}
+
+		LOG("All units selected. Total unit amount: %d", units_selected.size());
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)													// Select All Gatherers
+	{
+		units_selected.clear();
+
+		std::vector<Gatherer*>::iterator item = App->entityManager->gatherers.begin();
+
+		for (; item != App->entityManager->gatherers.end(); ++item)
+		{
+			units_selected.push_back((*item));
+		}
+
+		LOG("All gatherers selected. Total gatherer amount: %d", units_selected.size());
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)													// Select All Infantries
+	{
+		units_selected.clear();
+
+		std::vector<Infantry*>::iterator item = App->entityManager->infantries.begin();
+
+		for (; item != App->entityManager->infantries.end(); ++item)
+		{
+			units_selected.push_back((*item));
+		}
+
+		LOG("All infantries selected. Total infantry amount: %d", units_selected.size());
 	}
 }
 

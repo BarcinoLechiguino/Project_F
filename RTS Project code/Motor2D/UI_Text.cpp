@@ -8,7 +8,7 @@
 
 //UI_Text can be interactible and draggable. Can potentially have all events.
 //This element can receive up to 5 different strings (one for each possible event).
-UI_Text::UI_Text(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent,
+UI_Text::UI_Text(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent,
 			std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString): UI(element, x, y, hitbox, listener, parent),
 			idleTex(nullptr), hoverTex(nullptr), leftClickTex(nullptr), rightClickTex(nullptr), inputTextTex (nullptr), currentTex (nullptr)
 {	
@@ -99,9 +99,9 @@ void UI_Text::CheckInput()
 		GetMousePos();																					//Gets the mouse's position on the screen.
 
 		// --- IDLE EVENT
-		if (!IsHovered() && ui_event != UI_Event::FOCUSED)												//If the mouse is not on the text.
+		if (!IsHovered() && ui_event != UI_EVENT::FOCUSED)												//If the mouse is not on the text.
 		{
-			ui_event = UI_Event::IDLE;
+			ui_event = UI_EVENT::IDLE;
 
 			if (inputTextTex == NULL)																	//This sometimes crashes the Query_texture.
 			{
@@ -123,7 +123,7 @@ void UI_Text::CheckInput()
 			// --- HOVER EVENT
 			if ((IsHovered() && IsForemostElement()) /*|| IsFocused()*/)								//If the mouse is on the text.
 			{
-				ui_event = UI_Event::HOVER;
+				ui_event = UI_EVENT::HOVER;
 
 				if (hoverTex != NULL)
 				{
@@ -146,7 +146,7 @@ void UI_Text::CheckInput()
 			{
 				if (IsForemostElement() || isDragTarget)															//If the UI Text element is the foremost element under the mouse. 
 				{
-					ui_event = UI_Event::CLICKED;
+					ui_event = UI_EVENT::CLICKED;
 
 					if (leftClickTex != NULL)
 					{
@@ -169,7 +169,7 @@ void UI_Text::CheckInput()
 			{
 				if (IsForemostElement() && ElementRemainedInPlace())									//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 				{
-					ui_event = UI_Event::UNCLICKED;
+					ui_event = UI_EVENT::UNCLICKED;
 				}
 
 				if (isDragTarget)
@@ -186,7 +186,7 @@ void UI_Text::CheckInput()
 			{
 				if (IsForemostElement())																//If the UI Text element is the foremost element under the mouse. 
 				{
-					ui_event = UI_Event::CLICKED;
+					ui_event = UI_EVENT::CLICKED;
 
 					if (rightClickTex != NULL)
 					{

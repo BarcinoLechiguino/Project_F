@@ -183,40 +183,48 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect transition_button_hover = { 618, 23, 115, 9 };
 	SDL_Rect transition_button_clicked = { 618, 1, 115, 9 };
 
-	transition_button = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 100, 680, true, true, false, this, nullptr
-															, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
+	transition_button		= (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 100, 680, true, true, false, this, nullptr
+																, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
 
-	transition_button_II = (UI_Button*)App->gui->CreateButton(UI_Element::BUTTON, 350, 680, true, true, false, this, nullptr
+	transition_button_II	= (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 350, 680, true, true, false, this, nullptr
+																, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
+
+	transition_button_III	= (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 100, 50, true, true, false, this, nullptr
 																, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
 
 	// Temporal transition buttons' texts
 	SDL_Rect text_rect = { 0, 0, 15, 8 };
 	_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 9);
-	std::string win_button_string = "To Win Screen";
-	std::string lose_button_string = "To Lose Screen";
 
-	button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 121, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
-													, true, false, false, nullptr, transition_button, &win_button_string);
+	std::string win_button_string	= "To Win Screen";
+	std::string lose_button_string	= "To Lose Screen";
+	std::string main_button_string	= "To Main Screen";
 
-	button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, 366, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
-													, true, false, false, nullptr, transition_button, &lose_button_string);
+	button_text			= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 121, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
+														, true, false, false, nullptr, transition_button, &win_button_string);
+
+	button_text_II		= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 366, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
+														, true, false, false, nullptr, transition_button_II, &lose_button_string);
+
+	button_text_III		= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 121, 48, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
+														, true, false, false, nullptr, transition_button_III, &main_button_string);
 }
 
-void GameplayScene::OnEventCall(UI* element, UI_Event ui_event)
+void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
-	/*if (element == in_buttons_resume && ui_event == UI_Event::UNCLICKED)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
-	}*/
-
-	if (element == transition_button && ui_event == UI_Event::UNCLICKED)
+	if (element == transition_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
 	}
 
-	if (element == transition_button_II && ui_event == UI_Event::UNCLICKED)
+	if (element == transition_button_II && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 5, true, true);
+	}
+
+	if (element == transition_button_III && ui_event == UI_EVENT::UNCLICKED)
+	{
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 	}
 }
 

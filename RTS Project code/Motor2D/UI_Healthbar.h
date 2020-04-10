@@ -6,7 +6,7 @@
 class UI_Healthbar : public UI
 {
 public:
-	UI_Healthbar(UI_Element element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent);
+	UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent);
 	~UI_Healthbar();
 
 	bool Draw();

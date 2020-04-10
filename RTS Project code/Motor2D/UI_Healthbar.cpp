@@ -1,7 +1,7 @@
 #include "UI_Healthbar.h"
 #include "Gui.h"
 
-UI_Healthbar::UI_Healthbar(UI_Element element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent) 
+UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent) 
 	: UI(element, x, y, *healthbar, listener, parent)
 {
 	tex = App->gui->GetAtlas();

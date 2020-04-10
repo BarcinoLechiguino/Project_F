@@ -29,7 +29,7 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 	healthbar_background_rect = { 618, 12, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 	healthbar_rect = { 618, 23, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 
-	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_Element::HEALTHBAR, (int)pixel_position.x, (int)pixel_position.y - 30, true, &healthbar_rect, &healthbar_background_rect, this); //Magic Number
+	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, (int)pixel_position.x, (int)pixel_position.y - 30, true, &healthbar_rect, &healthbar_background_rect, this); //Magic Number
 };
 
 Infantry::~Infantry()  //Destructor. Called at the last frame.

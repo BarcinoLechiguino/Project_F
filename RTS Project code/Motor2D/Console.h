@@ -130,9 +130,6 @@ private:
 
 	const char*			enable_god_mode;
 	const char*			disable_god_mode;
-
-	const char*			first_map;
-	const char*			second_map;
 };
 
 #endif // !__CONSOLE_H__

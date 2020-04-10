@@ -674,46 +674,6 @@ int Properties::Get(std::string name, int default_value)							//Revise how to b
 	return default_value;															//Default value is 0
 }
 
-bool Map::SwitchMaps(std::string new_map) // switch map function that passes the number of map defined in config.xml
-{
-	CleanUp();
-	//App->scene1->to_end = false; // we put this in false so there are no repetitions
-	Load( new_map.c_str() );
-	//App->audio->PlayMusic(App->map->data.music_File.c_str());
-
-	return true;
-}
-
-bool Map::ChangeMap(const char* newMap)
-{
-	bool ret = true;
-
-	//App->scene1->CleanUp();
-
-	App->map->Load(newMap);						
-	App->collisions->LoadColliderFromMap();		
-
-	//App->scene1->firstMap	= true;
-	//App->scene1->secondMap	= false;
-
-	//This needs to be changed somewhere else. Here it works but probably this is not it's place.
-	int w, h;
-	uchar* data = NULL;
-	if (App->map->CreateWalkabilityMap(w, h, &data))				//It means that the walkability map could be created.
-	{
-		App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
-	}
-
-	RELEASE_ARRAY(data);
-	
-	App->gui->Start();
-	App->console->Start();
-	//App->scene1->LoadGuiElements();
-	//App->scene->Start();
-
-	return ret;
-}
-
 void Map::Restart_Cam() // function that resets the camera
 {
 	App->render->camera.x = spawn_position_cam.x;

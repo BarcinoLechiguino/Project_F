@@ -11,7 +11,7 @@
 //class iPoint;			//If declared as a forward declaration instead of an include, 
 //class SDL_Rect;		//then iPoint and SDL_Rect need to be pointers.
 
-enum class UI_Element 
+enum class UI_ELEMENT 
 {
 	EMPTY,
 	IMAGE,
@@ -22,7 +22,7 @@ enum class UI_Element
 	HEALTHBAR
 };
 
-enum class UI_Event
+enum class UI_EVENT
 {
 	IDLE,
 	HOVER,
@@ -38,7 +38,7 @@ enum class UI_Event
 class UI
 {
 public:
-	UI(UI_Element element, int x, int y, SDL_Rect rect, Module* listener = nullptr, UI* parent = nullptr);
+	UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener = nullptr, UI* parent = nullptr);
 
 	UI();
 
@@ -97,8 +97,8 @@ public:
 	bool		dragXAxis;							//Keeps track of which axis an element can be dragged in, in this case the X axis. If both bools are true or false, drag will be free.
 	bool		dragYAxis;							//Keeps track of which axis an element can be dragged in, in this case the Y axis. If both bools are true or false, drag will be free.
 
-	UI_Event	ui_event;							//Defines which events will the UI_Elements send when interacted with.
-	UI_Element	element;							//Enum that defines which kind of element a UI element is.
+	UI_EVENT	ui_event;							//Defines which events will the UI_Elements send when interacted with.
+	UI_ELEMENT	element;							//Enum that defines which kind of element a UI element is.
 
 	Module*		listener;							//Callback to Module, maybe need to make a virtual event detection function. Whenever an event is triggered, this calls the right module for the event.
 

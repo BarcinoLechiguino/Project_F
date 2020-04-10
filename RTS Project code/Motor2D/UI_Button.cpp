@@ -7,7 +7,7 @@
 
 //UI_Button can be interactible (will almost always be) and draggable. Can potentially receive all events.
 //This element can receive up to 3 rects containing the coordinates of the sprites for each event (IDLE, HOVER & CLICKED).
-UI_Button::UI_Button(UI_Element element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent,
+UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent,
 				SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked) : UI(element, x, y, *idle, listener, parent)
 {
 	tex = App->gui->GetAtlas();
@@ -77,14 +77,14 @@ void UI_Button::CheckInput()
 		// --- IDLE EVENT
 		if (!IsHovered())																		//If the mouse is not on the button.
 		{
-			ui_event = UI_Event::IDLE;
+			ui_event = UI_EVENT::IDLE;
 			currentRect = idle;																	//Button Idle sprite.
 		}
 
 		// --- HOVER EVENT
 		if ((IsHovered() && IsForemostElement()) || IsFocused())								//If the mouse is on the button.
 		{
-			ui_event = UI_Event::HOVER;															//Button Hover sprite.
+			ui_event = UI_EVENT::HOVER;															//Button Hover sprite.
 			currentRect = hover;
 		}
 
@@ -103,7 +103,7 @@ void UI_Button::CheckInput()
 		{
 			if (IsForemostElement() || isDragTarget)															//If the UI Text element is the foremost element under the mouse. 
 			{
-				ui_event = UI_Event::CLICKED;
+				ui_event = UI_EVENT::CLICKED;
 				currentRect = clicked;															//Button Clicked sprite is maintained.
 
 				if (ElementCanBeDragged() && isDraggable)										//If the UI Button element is draggable and is the foremost element under the mouse.
@@ -122,7 +122,7 @@ void UI_Button::CheckInput()
 		{
 			if (IsForemostElement() && ElementRemainedInPlace())								//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 			{
-				ui_event = UI_Event::UNCLICKED;
+				ui_event = UI_EVENT::UNCLICKED;
 			}
 
 			if (isDragTarget)

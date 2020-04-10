@@ -19,7 +19,7 @@ class		Animation;
 struct		Collider;
 
 class		UI;
-enum class	UI_Event;
+enum class	UI_EVENT;
 
 class Module
 {
@@ -99,7 +99,7 @@ public:
 
 	virtual void OnCollision(Collider* C1, Collider* C2) {}							//Collision handling
 
-	virtual void OnEventCall(UI* element, UI_Event ui_event)
+	virtual void OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		return;
 	}

@@ -27,6 +27,8 @@ public:
 
 	void SelectionRect();
 
+	void SelectionShortcuts();
+
 	void MoveToOrder();
 
 	void DrawCursor();

@@ -72,7 +72,7 @@ bool Gui::PreUpdate()
 	{
 		if (focusedElement != nullptr && focusedElement->isInteractible)
 		{
-			focusedElement->ui_event = UI_Event::UNCLICKED;
+			focusedElement->ui_event = UI_EVENT::UNCLICKED;
 			OnEventCall(focusedElement, focusedElement->ui_event);
 		}
 	}
@@ -164,7 +164,7 @@ bool Gui::CleanUp()
 }
 
 //----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
-UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, Entity* attached_unit, UI* parent)
+UI* Gui::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, Entity* attached_unit, UI* parent)
 {
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
@@ -179,7 +179,7 @@ UI* Gui::CreateImage(UI_Element element, int x, int y, SDL_Rect hitbox, bool isV
 	return elem;
 }
 
-UI* Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable
+UI* Gui::CreateText(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable
 	, Module* listener, UI* parent, std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString)
 {
 	BROFILER_CATEGORY("GUI_Text", Profiler::Color::NavajoWhite);
@@ -195,7 +195,7 @@ UI* Gui::CreateText(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font
 	return elem;
 }
 
-UI* Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
+UI* Gui::CreateButton(UI_ELEMENT element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
 {
 	BROFILER_CATEGORY("GUI_Button", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
@@ -210,7 +210,7 @@ UI* Gui::CreateButton(UI_Element element, int x, int y, bool isVisible, bool isI
 	return elem;
 }
 
-UI* Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursor, SDL_Color cursorColour, iPoint textOffset, 
+UI* Gui::CreateInputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursor, SDL_Color cursorColour, iPoint textOffset, 
 					float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, std::string* defaultString, bool emptyElements)
 {
 	BROFILER_CATEGORY("GUI_InputBox", Profiler::Color::NavajoWhite);
@@ -227,7 +227,7 @@ UI* Gui::CreateInputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_
 	return elem;
 }
 
-UI* Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
+UI* Gui::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
 					bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, SDL_Rect* scrollMask, iPoint maskOffset, bool emptyElements)
 {
 	BROFILER_CATEGORY("GUI_ScrollBar", Profiler::Color::NavajoWhite);
@@ -244,7 +244,7 @@ UI* Gui::CreateScrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_
 	return elem;
 }
 
-UI* Gui::CreateHealthbar(UI_Element element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent)
+UI* Gui::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent)
 {
 	UI* elem = nullptr;
 
@@ -259,7 +259,7 @@ UI* Gui::CreateHealthbar(UI_Element element, int x, int y, bool is_visible, SDL_
 }
 
 //--------------------------------- INPUT PROCESSING METHODS ---------------------------------
-void Gui::OnEventCall(UI* element, UI_Event ui_event)
+void Gui::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	BROFILER_CATEGORY("GUI_OnEventCall", Profiler::Color::NavajoWhite);
 
@@ -415,9 +415,9 @@ bool Gui::ElementCanBeFocused(UI* focusElement) const
 
 	if (focusElement->isVisible
 		/*&& focusElement->isInteractible */
-			&& (focusElement->element == UI_Element::BUTTON
-			|| focusElement->element == UI_Element::SCROLLBAR
-			|| focusElement->element == UI_Element::INPUTBOX))
+			&& (focusElement->element == UI_ELEMENT::BUTTON
+			|| focusElement->element == UI_ELEMENT::SCROLLBAR
+			|| focusElement->element == UI_ELEMENT::INPUTBOX))
 	{
 		ret = true;
 	}
@@ -495,30 +495,30 @@ void Gui::Debug_UI()
 			{
 				switch ((*elem)->element)
 				{
-				case UI_Element::EMPTY:
+				case UI_ELEMENT::EMPTY:
 					App->render->DrawQuad((*elem)->GetHitbox(), 255, 255, 255, 255, false, false);		//UI_Empty will be WHITE.
 					break;
 
-				case UI_Element::IMAGE:
+				case UI_ELEMENT::IMAGE:
 					App->render->DrawQuad((*elem)->GetHitbox(), 0, 0, 255, 255, false, false);			//UI_Image will be BLUE.
 
 					break;
 
-				case UI_Element::TEXT:
+				case UI_ELEMENT::TEXT:
 					App->render->DrawQuad((*elem)->GetHitbox(), 0, 255, 0, 255, false, false);			//UI_Text will be GREEN.
 
 					break;
 
-				case UI_Element::BUTTON:
+				case UI_ELEMENT::BUTTON:
 					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 0, 255, false, false);			//UI_Button will be RED.
 
 					break;
 
-				case UI_Element::SCROLLBAR:
+				case UI_ELEMENT::SCROLLBAR:
 					App->render->DrawQuad((*elem)->GetHitbox(), 255, 255, 0, 255, false, false);		//UI_Scrollbar will be YELLOW.
 					break;
 
-				case UI_Element::INPUTBOX:
+				case UI_ELEMENT::INPUTBOX:
 					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 255, 255, false, false);		//UI_Input Box will be PURPLE.
 					break;
 				}

@@ -192,7 +192,9 @@ void EntityManager::DestroyEntities()
 		
 		//break;
 	}
+	
 	entities.clear();
-
 	dynamic_objects.clear();
+	gatherers.clear();
+	infantries.clear();
 }
