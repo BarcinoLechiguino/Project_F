@@ -62,28 +62,28 @@ bool Infantry::Update(float dt, bool doLogic)
 
 	//change section according to pathing. 
 	switch (this->unit_state) {
-	case entity_state::PATHING_DOWN:
+	case ENTITY_STATE::PATHING_DOWN:
 		entity_sprite_section = { 71,47,70,52 };
 		break;
-	case entity_state::PATHING_RIGHT:
+	case ENTITY_STATE::PATHING_RIGHT:
 		entity_sprite_section = { 202,47,59,52 };
 		break;
-	case entity_state::PATHING_LEFT:
+	case ENTITY_STATE::PATHING_LEFT:
 		entity_sprite_section = { 142,47,59,52 };
 		break;
-	case entity_state::PATHING_UP:
+	case ENTITY_STATE::PATHING_UP:
 		entity_sprite_section = { 0,47,70,52 };
 		break;
-	case entity_state::PATHING_DOWN_RIGHT:
+	case ENTITY_STATE::PATHING_DOWN_RIGHT:
 		entity_sprite_section = { 58,0,58,47 };
 		break;
-	case entity_state::PATHING_DOWN_LEFT:
+	case ENTITY_STATE::PATHING_DOWN_LEFT:
 		entity_sprite_section = { 0,0,58,47 };
 		break;
-	case entity_state::PATHING_UP_RIGHT:
+	case ENTITY_STATE::PATHING_UP_RIGHT:
 		entity_sprite_section = { 116,0,60,47 };
 		break;
-	case entity_state::PATHING_UP_LEFT:
+	case ENTITY_STATE::PATHING_UP_LEFT:
 		entity_sprite_section = { 176,0,59,47 };
 		break;
 	}

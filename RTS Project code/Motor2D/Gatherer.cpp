@@ -53,28 +53,28 @@ bool Gatherer::Update(float dt, bool doLogic)
 
 	//change section according to pathing. 
 	switch (this->unit_state) {
-	case entity_state::PATHING_DOWN:
+	case ENTITY_STATE::PATHING_DOWN:
 		entity_sprite_section = { 39,49,38,45 };
 		break;
-	case entity_state::PATHING_RIGHT:
+	case ENTITY_STATE::PATHING_RIGHT:
 		entity_sprite_section = { 123,49,43,42 };
 		break;
-	case entity_state::PATHING_LEFT:
+	case ENTITY_STATE::PATHING_LEFT:
 		entity_sprite_section = { 78,49,43,42 };
 		break;
-	case entity_state::PATHING_UP:
+	case ENTITY_STATE::PATHING_UP:
 		entity_sprite_section = { 0,49,39,42 };
 		break;
-	case entity_state::PATHING_DOWN_RIGHT:
+	case ENTITY_STATE::PATHING_DOWN_RIGHT:
 		entity_sprite_section = { 52,0,52,49 };
 		break;
-	case entity_state::PATHING_DOWN_LEFT:
+	case ENTITY_STATE::PATHING_DOWN_LEFT:
 		entity_sprite_section = { 0,0,52,49 };
 		break;
-	case entity_state::PATHING_UP_RIGHT:
+	case ENTITY_STATE::PATHING_UP_RIGHT:
 		entity_sprite_section = { 104,0,52,49 };
 		break;
-	case entity_state::PATHING_UP_LEFT:
+	case ENTITY_STATE::PATHING_UP_LEFT:
 		entity_sprite_section = { 156,0,52,49 };
 		break;
 	}
