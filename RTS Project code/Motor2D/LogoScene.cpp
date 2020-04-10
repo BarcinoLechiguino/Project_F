@@ -95,7 +95,7 @@ void LogoScene::ExecuteTransition()
 	
 	if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)
 	{
-		App->transition_manager->CreateExpandingBars(SCENES::LOGO_SCENE, 0.5f, true, 3, false, true);
+		App->transition_manager->CreateExpandingBars(SCENES::MAIN_SCENE, 0.5f, true, 3, false, true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
