@@ -41,6 +41,7 @@ bool Map::Awake(pugi::xml_node& config)
 void Map::Draw()
 {
 	BROFILER_CATEGORY("Draw Map", Profiler::Color::Khaki);
+
 	if (map_loaded == false)																						//If no map was loaded, return.
 	{
 		return;
@@ -52,43 +53,39 @@ void Map::Draw()
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
 	{
-		camera_pos_in_pixels_x = -App->render->camera.x ;
-		camera_pos_in_pixels_y = -App->render->camera.y ;
+		camera_pos_in_pixels.x = -App->render->camera.x;
+		camera_pos_in_pixels.y = -App->render->camera.y;
 
-		bottom_right_x = camera_pos_in_pixels_x + winWidth;
-		bottom_right_y = camera_pos_in_pixels_y + winHeight;
+		bottom_right_x = camera_pos_in_pixels.x + winWidth;
+		bottom_right_y = camera_pos_in_pixels.y + winHeight;
 
-		top_left_x_row = WorldToMap(camera_pos_in_pixels_x, camera_pos_in_pixels_y).x;
+		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;
+		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
 
-		bottom_right_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
+		min_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels.y).y; //Esquina dereche arriba
+		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y; //Esquina izquierda abajo
 
-		top_right_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels_y).y; //Esquina dereche arriba
-		bottom_left_y_row = WorldToMap(camera_pos_in_pixels_x, bottom_right_y + data.tile_height).y; //Esquina izquierda abajo
-
-		//LOG("min x row %d, max x row %d", top_left_x_row, bottom_right_x_row);
-		//LOG("min y row %d, max y row %d", top_right_y_row, bottom_left_y_row);
-		
-		if (top_left_x_row < 0)
+		if (min_x_row < 0)
 		{
-			top_left_x_row = 0;
+			min_x_row = 0;
+		}
+		if (min_y_row < 0)
+		{
+			min_y_row = 0;
 		}
 
-		if (top_right_y_row < 0)
+		for (int x = min_x_row ; x < max_x_row && x < data.width; x++)
 		{
-			top_right_y_row = 0;
-		}
-
-		for (int x = top_left_x_row ; x < bottom_right_x_row && x < data.width; x++)
-		{
-			for (int y = top_right_y_row ; y < bottom_left_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels_x - data.tile_width; y++)
+			for (int y = min_y_row ; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
 			{
-				if (MapToWorld(x, y).y > camera_pos_in_pixels_y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
+				if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
 				{
 					int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
 
 					if (tile_id > 0)																				
 					{
 						TileSet* tileset = GetTilesetFromTileId(tile_id);												//Gets the tileset corresponding with the tile_id. If tile id is 34 and the current tileset first gid is 35, that means that the current  tile belongs to the previous tileset. 
+						
 						if (tileset != nullptr)																			
 						{
 							SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 

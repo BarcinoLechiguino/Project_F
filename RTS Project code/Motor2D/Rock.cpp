@@ -17,13 +17,16 @@ Rock::Rock(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 	tiles_occupied_y = 1;
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
+
+	ore = 20;
+
+	gather_time = 1;
 }
 
 bool Rock::Awake(pugi::xml_node&)
 {
 	return true;
 }
-
 
 
 bool Rock::PreUpdate()
