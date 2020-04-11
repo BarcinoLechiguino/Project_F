@@ -18,7 +18,7 @@ EntityManager::EntityManager()	//Sets the j1Player1* pointers declared in the he
 
 EntityManager::~EntityManager()
 {
-
+	RELEASE_ARRAY(entity_map);
 }
 
 bool EntityManager::Awake(pugi::xml_node& config)
@@ -129,54 +129,54 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 {
 	//static_assert?
 
-	Entity* ret = nullptr;
+	Entity* entity = nullptr;
 
 	switch (type)
 	{
 		case ENTITY_TYPE::ROCK:							
-			ret = new Rock(x, y, type);	
-			rocks.push_back((Rock*)ret);	//Allocates memory for an entity from the j1Player module.
-	
+			entity = new Rock(x, y, type);	
+			rocks.push_back((Rock*)entity);
 		break;
 
 		case ENTITY_TYPE::ENEMY:
-			ret = new Enemy(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)ret);
-			enemies.push_back((Enemy*)ret);
+			entity = new Enemy(x, y, type);
+			dynamic_objects.push_back((Dynamic_Object*)entity);
+			enemies.push_back((Enemy*)entity);
 		break;
 
 		case ENTITY_TYPE::GATHERER:
-			ret = new Gatherer(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)ret);
-			gatherers.push_back((Gatherer*)ret);
+			entity = new Gatherer(x, y, type);
+			dynamic_objects.push_back((Dynamic_Object*)entity);
+			gatherers.push_back((Gatherer*)entity);
 		break;
 
 		case ENTITY_TYPE::INFANTRY:
-			ret = new Infantry(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)ret);
-			infantries.push_back((Infantry*)ret);
+			entity = new Infantry(x, y, type);
+			dynamic_objects.push_back((Dynamic_Object*)entity);
+			infantries.push_back((Infantry*)entity);
 		break;
 
 		case ENTITY_TYPE::TOWNHALL:
-			ret = new TownHall(x, y, type);
-			town_hall.push_back((TownHall*)ret);
+			entity = new TownHall(x, y, type);
+			town_hall.push_back((TownHall*)entity);
 		break;
 
 		case ENTITY_TYPE::BARRACKS:
-			ret = new Barracks(x, y, type);
-			barracks.push_back((Barracks*)ret);
+			entity = new Barracks(x, y, type);
+			barracks.push_back((Barracks*)entity);
 		break;
 	}
 
-	ret->type = type;
-	ret->Start();
+	entity->type = type;
+	entity->Start();
 
-	if (ret != nullptr)									
+	if (entity != nullptr)									
 	{
-		entities.push_back(ret);								//Adds the generated entity to the entities list.
+		entities.push_back(entity);								//Adds the generated entity to the entities list.
+		ChangeEntityMap(iPoint(x, y), entity);					//Adds the generated entity to entity_map.
 	}
 
-	return ret;
+	return entity;
 }
 
 void EntityManager::DestroyEntities()
@@ -197,4 +197,37 @@ void EntityManager::DestroyEntities()
 	dynamic_objects.clear();
 	gatherers.clear();
 	infantries.clear();
+}
+
+void EntityManager::SetEntityMap(int width, int height, Entity* data)
+{
+	entity_map_width = width;
+	entity_map_height = height;
+
+	RELEASE_ARRAY(entity_map);
+
+	entity_map = new Entity*[width * height];
+	//memcpy(entity_map, data, width * height);							// THIS HERE
+}
+
+void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity)
+{
+	if (entity_map != nullptr)
+	{
+		entity_map[(pos.y * entity_map_width) + pos.x] = entity;
+	}
+}
+
+bool EntityManager::CheckBoundaries(const iPoint& pos) const
+{
+	return (pos.x >= 0 && pos.x <= entity_map_width &&
+			pos.y >= 0 && pos.y <= entity_map_height);
+}
+
+Entity* EntityManager::GetEntityAt(const iPoint& pos) const
+{
+	if (CheckBoundaries(pos))
+	{
+		return entity_map[(pos.y * entity_map_width) + pos.x];
+	}
 }

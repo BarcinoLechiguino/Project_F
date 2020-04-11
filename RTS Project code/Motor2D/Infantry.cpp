@@ -61,7 +61,8 @@ bool Infantry::Update(float dt, bool doLogic)
 
 
 	//change section according to pathing. 
-	switch (this->unit_state) {
+	switch (this->unit_state) 
+	{
 	case ENTITY_STATE::PATHING_DOWN:
 		entity_sprite_section = { 71,47,70,52 };
 		break;

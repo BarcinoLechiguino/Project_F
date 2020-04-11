@@ -12,6 +12,8 @@
 class Collisions;
 struct Collider;
 
+class Entity;
+
 // Collider Types -------------------------
 enum Object_Type					//Care with enum class. If enum class-> Object_Type::HAZARD and not just HAZARD (i.e)
 {
@@ -185,6 +187,7 @@ public:
 	iPoint WorldToMap(int x, int y) const;										//This method translates the position of the tile on the screen to its equivalent position on the map.
 	
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);			//Changed to non const because of list unknown problem
+	bool CreateEntityMap(int& width, int& height, Entity** buffer);
 
 	void Restart_Cam();
 	void GetMapSize(int& w, int& h) const;

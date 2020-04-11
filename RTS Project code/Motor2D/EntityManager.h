@@ -49,6 +49,13 @@ public:
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
 	
+	void SetEntityMap(int width, int height, Entity* data);
+	void ChangeEntityMap(const iPoint& pos, Entity* entity);
+
+	bool CheckBoundaries(const iPoint& pos) const;
+
+	Entity* GetEntityAt(const iPoint& pos) const;
+
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
@@ -67,7 +74,9 @@ public:
 
 	std::vector<Dynamic_Object*>	dynamic_objects;
 
-	char* entity_map;
+	Entity**						entity_map;
+	int								entity_map_width;
+	int								entity_map_height;
 
 	float							accumulated_time;	//Accumulates dt as time goes on.
 	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 

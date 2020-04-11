@@ -54,7 +54,9 @@ bool Player::Update(float dt)
 
 	CameraController(dt);
 
-	SelectionRect();
+	//SelectionRect();
+
+	SelectionOnClick();
 
 	SelectionShortcuts();
 
@@ -204,6 +206,28 @@ void Player::SelectionRect()
 				}
 			}
 			LOG("Units selected %d", units_selected.size() );
+		}
+	}
+}
+
+void Player::SelectionOnClick()
+{
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	{
+		units_selected.clear();
+
+		Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
+		
+		if (clicked_entity != nullptr)
+		{
+			if (clicked_entity->type == ENTITY_TYPE::GATHERER || clicked_entity->type == ENTITY_TYPE::INFANTRY)
+			{
+				units_selected.push_back((Dynamic_Object*)App->entity_manager->GetEntityAt(mouse_tile));
+			}
+		}
+		else
+		{
+			LOG("There is no Dynamic_Object in tile (%d, %d)", mouse_tile.x, mouse_tile.y);
 		}
 	}
 }

@@ -659,6 +659,31 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	return ret;
 }
 
+bool Map::CreateEntityMap(int& width, int& height, Entity** buffer)
+{
+	bool ret = false;
+	
+	Entity** map = new Entity*[data.width * data.height];
+	memset(map, 1, data.width * data.height);							//THIS HERE
+
+	for (int y = 0; y < data.height; ++y)
+	{
+		for (int x = 0; x < data.width; ++x)
+		{
+			int index = (y * data.width) + x;
+
+			map[index] = nullptr;
+		}
+	}
+
+	buffer	= map;
+	width	= data.width;
+	height	= data.height;
+	ret		= true;
+
+	return ret;
+}
+
 int Properties::Get(std::string name, int default_value)							//Revise how to be able to not have a property without default value being nullptr.
 {
 	for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++)

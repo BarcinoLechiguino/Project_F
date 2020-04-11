@@ -27,6 +27,8 @@ public:
 
 	void SelectionRect();
 
+	void SelectionOnClick();
+
 	void SelectionShortcuts();
 
 	void MoveToOrder();

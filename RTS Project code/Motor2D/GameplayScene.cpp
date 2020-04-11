@@ -153,13 +153,8 @@ void GameplayScene::InitScene()
 
 	if (ret)
 	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-		{
-			App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
-		}
-		RELEASE_ARRAY(data);											//Frees all memory allocated to the data array.
+		SetWalkabilityMap();
+		SetEntitiesMap();
 	}
 
 	path_debug_tex = App->tex->Load("maps/path2.png");
@@ -173,6 +168,31 @@ void GameplayScene::InitScene()
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
+}
+
+void GameplayScene::SetWalkabilityMap()
+{
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+	{
+		App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
+	}
+
+	RELEASE_ARRAY(data);											//Frees all memory allocated to the data array.
+}
+
+void GameplayScene::SetEntitiesMap()
+{
+	int w, h;
+	Entity* entity = nullptr;
+
+	if (App->map->CreateEntityMap(w, h, &entity))
+	{
+		App->entity_manager->SetEntityMap(w, h, entity);
+	}
+	
+	RELEASE_ARRAY(entity);
 }
 
 void GameplayScene::LoadGuiElements()
