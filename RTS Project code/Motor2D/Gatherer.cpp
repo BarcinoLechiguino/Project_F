@@ -8,9 +8,9 @@
 
 Gatherer::Gatherer(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)
 {
-	entity_sprite = App->tex->Load("maps/debug_gatherer_tile.png");
+	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/gatherer2_lowres.png");
 
-	
+	entity_sprite_section = { 52,0,52,49 };
 
 	selectable_unit = true;
 	path_full = false;
@@ -51,12 +51,42 @@ bool Gatherer::Update(float dt, bool doLogic)
 
 	HandleMovement(dt);
 
+	//change section according to pathing. 
+	switch (this->unit_state) {
+	case ENTITY_STATE::PATHING_DOWN:
+		entity_sprite_section = { 39,49,38,45 };
+		break;
+	case ENTITY_STATE::PATHING_RIGHT:
+		entity_sprite_section = { 123,49,43,42 };
+		break;
+	case ENTITY_STATE::PATHING_LEFT:
+		entity_sprite_section = { 78,49,43,42 };
+		break;
+	case ENTITY_STATE::PATHING_UP:
+		entity_sprite_section = { 0,49,39,42 };
+		break;
+	case ENTITY_STATE::PATHING_DOWN_RIGHT:
+		entity_sprite_section = { 52,0,52,49 };
+		break;
+	case ENTITY_STATE::PATHING_DOWN_LEFT:
+		entity_sprite_section = { 0,0,52,49 };
+		break;
+	case ENTITY_STATE::PATHING_UP_RIGHT:
+		entity_sprite_section = { 104,0,52,49 };
+		break;
+	case ENTITY_STATE::PATHING_UP_LEFT:
+		entity_sprite_section = { 156,0,52,49 };
+		break;
+	}
+
+
 	selection_collider.x = pixel_position.x + 10;
 	selection_collider.y = pixel_position.y + 10;
 
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 14, &entity_sprite_section);
 
-	App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
+
+	//App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 
 	return true;
 }

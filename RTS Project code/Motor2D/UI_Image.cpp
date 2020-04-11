@@ -1,4 +1,3 @@
-#include "Application.h"
 #include "Render.h"
 #include "Gui.h"
 #include "UI.h"
@@ -9,7 +8,7 @@
 //UI_Image will always be uninteractible and will have 2 events: IDLE & CLICKED (CLICKED when the image is clicked and can be dragged).
 //UI_Image can be draggable and can have a parent element.
 //hitbox argument serves the purpose of both setting the UI_Image's "input collider" and locating the right sprite in the Atlas(tex).
-UI_Image::UI_Image(UI_Element element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, Entity* attached_unit, UI* parent)
+UI_Image::UI_Image(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, Entity* attached_unit, UI* parent)
 	: UI(element, x, y, hitbox, listener, parent)								//When a UI_Image's constructor is called, a UI element is initialized as a IMAGE element.
 {
 	tex = App->gui->GetAtlas();													//The atlas already has the path to the atlas spritesheet. Check how to work around the const
@@ -53,7 +52,7 @@ bool UI_Image::Draw()
 {
 	CheckInput();
 	
-	if (this->element == UI_Element::IMAGE) //???????
+	if (this->element == UI_ELEMENT::IMAGE) //???????
 	{
 		if (this->attached_unit == nullptr)
 		{
@@ -80,7 +79,7 @@ void UI_Image::CheckInput()
 
 		if (!IsHovered())																		//If the mouse is not on the image.
 		{
-			ui_event = UI_Event::IDLE;
+			ui_event = UI_EVENT::IDLE;
 		}
 
 		if (isDraggable)																		//If the image element is draggable.
@@ -99,13 +98,13 @@ void UI_Image::CheckInput()
 			{
 				if (IsForemostElement() || isDragTarget)												//If it is the first element under the mouse (in inverse order of draw) or is the drag target.
 				{
-					ui_event = UI_Event::CLICKED;
+					ui_event = UI_EVENT::CLICKED;
 					
 					if (ElementCanBeDragged())															//If the UI Image element meets all drag conditions or is the drag target.
 					{
 						if (this->parent != NULL)														//If this UI Image has a parent.
 						{
-							if (this->parent->element != UI_Element::SCROLLBAR)							//If this element is not the scrollbar's thumb.
+							if (this->parent->element != UI_ELEMENT::SCROLLBAR)							//If this element is not the scrollbar's thumb.
 							{
 								DragElement();															//The element is dragged around.
 							}

@@ -37,6 +37,10 @@
 *.app
 .vs/RTS Solution/v15/Browse.VC.opendb
 .vs/RTS Solution/v15/Browse.VC.db
+
+.vs/RTS Solution/v16/Browse.VC.opendb
+.vs/RTS Solution/v16/Browse.VC.db
+
 RTS Project code/Game/vc141.pdb
 RTS Project code/Game/vc141.idb
 .vs/RTS Solution/v15/Browse.VC.db

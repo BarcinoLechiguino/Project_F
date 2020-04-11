@@ -196,7 +196,7 @@ void Input::TextInput()
 {
 	if (App->gui->focusedElement != nullptr)											
 	{
-		if (App->gui->focusedElement->element == UI_Element::INPUTBOX && App->gui->focusedElement->isVisible)
+		if (App->gui->focusedElement->element == UI_ELEMENT::INPUTBOX && App->gui->focusedElement->isVisible)
 		{
 			SDL_StartTextInput();														
 			textInputEnabled = true;													

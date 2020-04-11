@@ -1,16 +1,14 @@
 #include "Module.h"
 #include <vector>
 
-#define MAX_HEALTHBAR_WIDTH 230
-
-enum class pathfind_state
+enum class PATHFINDING_STATE
 {
 	IDLE,
 	WALKING,
 	WAITING_NEXT_TILE
 };
 
-enum class entity_state //Maybe WALKING instead?
+enum class ENTITY_STATE //Maybe WALKING instead?
 {
 	IDLE = 0,
 	PATHING_UP,
@@ -58,11 +56,13 @@ public:
 	bool			path_full;
 	bool			selectable_unit;
 
-	entity_state	unit_state;
-	pathfind_state	path_state;
+	ENTITY_STATE	unit_state;
+	PATHFINDING_STATE	path_state;
 
 	std::vector<iPoint> entity_path;
 	std::vector<iPoint>::iterator current_path_tile;
+
+	SDL_Rect entity_sprite_section;
 
 	iPoint next_tile;
 	iPoint next_tile_position;

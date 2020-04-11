@@ -90,24 +90,24 @@ void Dynamic_Object::HandleMovement(float dt)
 
 	switch (path_state)
 	{
-	case pathfind_state::IDLE:
+	case PATHFINDING_STATE::IDLE:
 
 		if (path_full && tile_position != target_tile)
 		{
-			path_state = pathfind_state::WAITING_NEXT_TILE;
+			path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;
 
 			current_path_tile = entity_path.begin();
 		}
 
 		break;
 
-	case pathfind_state::WALKING:
+	case PATHFINDING_STATE::WALKING:
 
 		Move(dt);
 
 		break;
 
-	case pathfind_state::WAITING_NEXT_TILE:
+	case PATHFINDING_STATE::WAITING_NEXT_TILE:
 
 		//Check if unit is already in target_tile
 		if (target_tile == tile_position)
@@ -116,8 +116,8 @@ void Dynamic_Object::HandleMovement(float dt)
 
 			path_full = false;
 
-			path_state = pathfind_state::IDLE;
-			unit_state = entity_state::IDLE;
+			path_state = PATHFINDING_STATE::IDLE;
+			unit_state = ENTITY_STATE::IDLE;
 
 			break;
 		}
@@ -132,47 +132,47 @@ void Dynamic_Object::HandleMovement(float dt)
 
 		next_tile_position = App->map->MapToWorld(next_tile.x, next_tile.y);
 
-		path_state = pathfind_state::WALKING;
+		path_state = PATHFINDING_STATE::WALKING;
 
 		if (next_tile.x == tile_position.x + 1)
 		{
 			if (next_tile.y == tile_position.y + 1)
 			{
-				unit_state = entity_state::PATHING_DOWN;
+				unit_state = ENTITY_STATE::PATHING_DOWN;
 			}
 			else if (next_tile.y == tile_position.y - 1)
 			{
-				unit_state = entity_state::PATHING_RIGHT;
+				unit_state = ENTITY_STATE::PATHING_RIGHT;
 			}
 			else
 			{
-				unit_state = entity_state::PATHING_DOWN_RIGHT;
+				unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
 			}
 		}
 		else if (next_tile.x == tile_position.x - 1)
 		{
 			if (next_tile.y == tile_position.y + 1)
 			{
-				unit_state = entity_state::PATHING_LEFT;
+				unit_state = ENTITY_STATE::PATHING_LEFT;
 			}
 			else if (next_tile.y == tile_position.y - 1)
 			{
-				unit_state = entity_state::PATHING_UP;
+				unit_state = ENTITY_STATE::PATHING_UP;
 			}
 			else
 			{
-				unit_state = entity_state::PATHING_UP_LEFT;
+				unit_state = ENTITY_STATE::PATHING_UP_LEFT;
 			}
 		}
 		else
 		{
 			if (next_tile.y == tile_position.y + 1)
 			{
-				unit_state = entity_state::PATHING_DOWN_LEFT;
+				unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
 			}
 			else if (next_tile.y == tile_position.y - 1)
 			{
-				unit_state = entity_state::PATHING_UP_RIGHT;
+				unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
 			}
 		}
 
@@ -187,7 +187,7 @@ void Dynamic_Object::Move(float dt)
 
 	switch (unit_state)
 	{
-	case entity_state::PATHING_DOWN_LEFT:
+	case ENTITY_STATE::PATHING_DOWN_LEFT:
 
 		pixel_position.x -= speed * 0.58f * dt;
 		pixel_position.y += speed * 0.42f * dt;
@@ -199,7 +199,7 @@ void Dynamic_Object::Move(float dt)
 
 		break;
 
-	case entity_state::PATHING_DOWN_RIGHT:
+	case ENTITY_STATE::PATHING_DOWN_RIGHT:
 
 		pixel_position.x += speed * 0.58f * dt;
 		pixel_position.y += speed * 0.42f * dt;
@@ -211,7 +211,7 @@ void Dynamic_Object::Move(float dt)
 
 		break;
 
-	case entity_state::PATHING_UP_LEFT:
+	case ENTITY_STATE::PATHING_UP_LEFT:
 
 		pixel_position.x -= speed * 0.58f * dt;
 		pixel_position.y -= speed * 0.42f * dt;
@@ -223,7 +223,7 @@ void Dynamic_Object::Move(float dt)
 
 		break;
 
-	case entity_state::PATHING_UP_RIGHT:
+	case ENTITY_STATE::PATHING_UP_RIGHT:
 
 		pixel_position.x += speed * 0.58f * dt;
 		pixel_position.y -= speed * 0.42f * dt;
@@ -235,7 +235,7 @@ void Dynamic_Object::Move(float dt)
 
 		break;
 
-	case entity_state::PATHING_UP:
+	case ENTITY_STATE::PATHING_UP:
 
 		pixel_position.y -= speed * dt;
 
@@ -246,7 +246,7 @@ void Dynamic_Object::Move(float dt)
 
 		break;
 
-	case entity_state::PATHING_DOWN:
+	case ENTITY_STATE::PATHING_DOWN:
 
 		pixel_position.y += speed * dt;
 
@@ -257,7 +257,7 @@ void Dynamic_Object::Move(float dt)
 
 		break;
 
-	case entity_state::PATHING_RIGHT:
+	case ENTITY_STATE::PATHING_RIGHT:
 
 		pixel_position.x += speed * dt;
 
@@ -268,7 +268,7 @@ void Dynamic_Object::Move(float dt)
 
 		break;
 
-	case entity_state::PATHING_LEFT:
+	case ENTITY_STATE::PATHING_LEFT:
 
 		pixel_position.x -= speed * dt;
 
@@ -287,7 +287,7 @@ void Dynamic_Object::Move(float dt)
 		pixel_position.y = next_tile_position.y;
 
 		tile_position = next_tile;
-		unit_state = entity_state::IDLE;
-		path_state = pathfind_state::WAITING_NEXT_TILE;
+		unit_state = ENTITY_STATE::IDLE;
+		path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;
 	}
 }

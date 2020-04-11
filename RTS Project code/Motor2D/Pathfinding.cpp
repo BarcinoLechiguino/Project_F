@@ -87,7 +87,9 @@ bool PathFinding::IsNonWalkable(const iPoint& pos) const
 uchar PathFinding::GetTileAt(const iPoint& pos) const
 {
 	if (CheckBoundaries(pos))
-		return map[(pos.y*width) + pos.x];
+	{
+		return map[(pos.y * width) + pos.x];
+	}
 
 	return 0;
 }
@@ -127,24 +129,26 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 
 	while (frontier.list.size() != 0 && units != units_selected.end() )
 	{
-		current_node->FindWalkableAdjacents(neighbours); //Fill starting node
+		current_node->FindWalkableAdjacents(neighbours);																//Fill starting node
 
 		std::list<PathNode>::iterator neighbour_iterator = neighbours.list.begin();
 
-		for (neighbour_iterator; neighbour_iterator != neighbours.list.end() && units != units_selected.end(); ++neighbour_iterator)
+		for (; neighbour_iterator != neighbours.list.end() && units != units_selected.end(); ++neighbour_iterator)
 		{
-			if ( visited.Find((*neighbour_iterator).pos) == visited.list.end() ) //if not in visited
+			PathNode neighbour = *neighbour_iterator;																	// For Readability
+
+			if (visited.Find(neighbour.pos) == visited.list.end())														//if not in visited
 			{
-				if (App->pathfinding->IsWalkable((*neighbour_iterator).pos))
+				if (App->pathfinding->IsWalkable(neighbour.pos))
 				{
-					(*units)->GiveNewTarget((*neighbour_iterator).pos);
+					(*units)->GiveNewTarget(neighbour.pos);
 
 					units++;
 				}
 
-				if (App->pathfinding->IsWalkable((*neighbour_iterator).pos) || App->pathfinding->IsOccupied((*neighbour_iterator).pos))
+				if (App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos))
 				{
-					frontier.list.push_back((*neighbour_iterator));
+					frontier.list.push_back(neighbour);
 				}
 			}
 		}
@@ -276,81 +280,83 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	BROFILER_CATEGORY("CreatePath", Profiler::Color::SlateGray)
 	
-	int ret = -1;		//Revise, Should be 1?										            	//The value returned by the function. Done to improve readability.
+	int ret = -1;		//Revise, Should be 1?										            //The value returned by the function. Done to improve readability.
 																					            
-	if ( IsNonWalkable(origin)  || IsNonWalkable(destination) || IsOccupied(destination) )			            	//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
+	if ( IsNonWalkable(origin)  || IsNonWalkable(destination) || IsOccupied(destination) )		//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
 	{																				            
 		return ret;															            
 	}																				            
 																					            
-	PathList open;																	            	//Declares/Creates the open list (frontier queue).
-	PathList closed;																            	//Declares/Creates the closed list (visited list).
+	PathList open;																	            //Declares/Creates the open list (frontier queue).
+	PathList closed;																            //Declares/Creates the closed list (visited list).
 																					            
-	PathNode origin_node(0, 0, origin, nullptr);									            		//Declares/Creates a node that will store the data of the origin tile. G, H, position and parent are passed as arguments. 
+	PathNode origin_node(0, 0, origin, nullptr);									            //Declares/Creates a node that will store the data of the origin tile. G, H, position and parent are passed as arguments. 
 																					            
-	//open.list.add(origin_node);													            		//Adds the current node storing the data of the origin tile to the open (frontier) list.
-	open.list.push_back(origin_node);												            			//Adds the current node storing the data of the origin tile to the open (frontier) list.
+	//open.list.add(origin_node);													            //Adds the current node storing the data of the origin tile to the open (frontier) list.
+	open.list.push_back(origin_node);												            //Adds the current node storing the data of the origin tile to the open (frontier) list.
 																					            
 																					            
-	while (open.list.size() != 0)								            						//While the list is not empty. If the count is higher than 0 that means the list is not empty.
+	while (open.list.size() != 0)								            					//While the list is not empty. If the count is higher than 0 that means the list is not empty.
 	{																				            
 
 		std::list<PathNode>::iterator lowest_node = open.GetNodeLowestScore();
 
 		closed.list.push_back(*lowest_node);
-		std::list<PathNode>::iterator current_node = prev(closed.list.end());							//As lowest_node will be pushed to the back of the vector, it will always be at the last position.
+		std::list<PathNode>::iterator current_node = prev(closed.list.end());					//As lowest_node will be pushed to the back of the vector, it will always be at the last position.
 
-		open.list.erase(lowest_node);												            		//Deletes from the open (frontier) list the node with the lowest score, as it has been the one chosen to be moved to.
+		open.list.erase(lowest_node);												            //Deletes from the open (frontier) list the node with the lowest score, as it has been the one chosen to be moved to.
 
-		if (current_node->pos == destination)			            								//If destination is in the closed list (visited) and the position of the current node is the same as destination's.
+		if (current_node->pos == destination)			            							//If destination is in the closed list (visited) and the position of the current node is the same as destination's.
 		{																			            
-			last_path.clear();														            	//Sets the last_path dynArray count of number of elements to 0. Clears the dynArray.
-			last_path.shrink_to_fit();												            	//Frees unused allocated memory.																	            
+			last_path.clear();														            //Sets the last_path dynArray count of number of elements to 0. Clears the dynArray.
+			last_path.shrink_to_fit();												            //Frees unused allocated memory.																	            
 			
 			PathNode last_node = (*current_node);
 
-			for (const PathNode* path_node = &last_node; path_node != nullptr; path_node = path_node->parent)
+			const PathNode* path_node = &last_node;
+
+			for (; path_node != nullptr; path_node = path_node->parent)
 			{
 				last_path.push_back(path_node->pos);
 			}
 
-			std::reverse(last_path.begin(), last_path.end());						            	//Flips the vector's elements. The first element of the array will be the origin tile and the destination tile the last one.
-			ret = last_path.size();													            	//Returns the amount of steps the path has.
+			std::reverse(last_path.begin(), last_path.end());						            //Flips the vector's elements. The first element of the array will be the origin tile and the destination tile the last one.
+			ret = last_path.size();													            //Returns the amount of steps the path has.
 
 			break;
 		}
 
-		PathList neighbours;																//Declares a list that will store the Walkable Adjacent nodes of a given node (current_node).
+		PathList neighbours;																	//Declares a list that will store the Walkable Adjacent nodes of a given node (current_node).
 		
-		current_node->FindWalkableAdjacents(neighbours);												//Fills the neighbours list with the walkable adjacent nodes of current_node.
-		//std::vector<PathNode>::iterator neighbour_iterator = neighbours.list.begin();					//Declares a list item pointer that will iterate the neighbours list.
-		std::list<PathNode>::iterator neighbour_iterator = neighbours.list.begin();					//Declares a list item pointer that will iterate the neighbours list.
-
-		int i = 0;
-		for (neighbour_iterator; neighbour_iterator != neighbours.list.end(); ++neighbour_iterator)
+		current_node->FindWalkableAdjacents(neighbours);										//Fills the neighbours list with the walkable adjacent nodes of current_node.
+		//std::vector<PathNode>::iterator neighbour_iterator = neighbours.list.begin();			//Declares a list item pointer that will iterate the neighbours list.
+		
+		std::list<PathNode>::iterator neighbour_iterator = neighbours.list.begin();				//Declares a list item pointer that will iterate the neighbours list.
+		
+		for (; neighbour_iterator != neighbours.list.end(); ++neighbour_iterator)
 		{
 			PathNode neighbour = *neighbour_iterator;
 			
-			if (closed.Find(neighbour.pos) == closed.list.end())													//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
+			if (closed.Find(neighbour.pos) == closed.list.end())								//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
 			{
-				if (open.Find(neighbour.pos) != open.list.end())												//If the neighbour being iterated is already in the open list.
+				if (open.Find(neighbour.pos) != open.list.end())								//If the neighbour being iterated is already in the open list.
 				{
-					neighbour.CalculateF(destination);													//Calculates the F (F = G + H) of the neighbour being iterated. As G is recalculated (taking into account this new path), it can be compared with the same node in the open list (old path), if it's in it.
+					neighbour.CalculateF(destination);											//Calculates the F (F = G + H) of the neighbour being iterated. As G is recalculated (taking into account this new path), it can be compared with the same node in the open list (old path), if it's in it.
 
-					if ((neighbour.g) < (open.Find(neighbour.pos)->g))								//Compares Gs (total flat movement cost) between the neigbour being iterated and the same neighbour in the list.
+					if ((neighbour.g) < (open.Find(neighbour.pos)->g))							//Compares Gs (total flat movement cost) between the neigbour being iterated and the same neighbour in the list.
 					{
-						open.Find(neighbour.pos)->parent = neighbour.parent;						//Updates the parent of the neighbour in the list with the parent of the neighbour being iterated. 
+						open.Find(neighbour.pos)->parent = neighbour.parent;					//Updates the parent of the neighbour in the list with the parent of the neighbour being iterated. 
 					}
 				}
 				else
 				{
-					neighbour.CalculateF(destination);													//Calculates the F (F = G + H) of the neighbour being iterated. Sets both G and H for this tile/node for a specific path.
-					open.list.push_back(neighbour);														//Adds the neighbour being iterated to the open list.
+					neighbour.CalculateF(destination);											//Calculates the F (F = G + H) of the neighbour being iterated. Sets both G and H for this tile/node for a specific path.
+					open.list.push_back(neighbour);												//Adds the neighbour being iterated to the open list.
 				}
 			}
 		}
 
-		neighbours.list.clear();																		//Clears the neighbours list so the elements are not accumulated from node to node (tile to tile).
+		neighbours.list.clear();																//Clears the neighbours list so the elements are not accumulated from node to node (tile to tile).
 		//neighbours.list.shrink_to_fit();
 	}
 

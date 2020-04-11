@@ -160,7 +160,7 @@
     <ClCompile Include="LoseScene.cpp">
       <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Lifebar.cpp">
+    <ClCompile Include="UI_Healthbar.cpp">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -345,7 +345,7 @@
     <ClInclude Include="LoseScene.h">
       <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Lifebar.h">
+    <ClInclude Include="UI_Healthbar.h">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>

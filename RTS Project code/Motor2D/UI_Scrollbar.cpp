@@ -6,7 +6,7 @@
 
 #include "Brofiler\Brofiler.h"
 
-UI_Scrollbar::UI_Scrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
+UI_Scrollbar::UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
 				bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent , SDL_Rect* scrollMask, iPoint maskOffset,
 				bool emptyElements) : UI(element, x, y, hitbox, listener, parent)
 {
@@ -44,18 +44,18 @@ UI_Scrollbar::UI_Scrollbar(UI_Element element, int x, int y, SDL_Rect hitbox, SD
 
 	if (!emptyElements)
 	{
-		bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
-		thumb = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, isVisible, true, true, nullptr, nullptr, this);
+		bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
+		thumb = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, isVisible, true, true, nullptr, nullptr, this);
 	}
 	else
 	{
-		bar = (UI_Image*)App->gui->CreateImage(UI_Element::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
-		thumb = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, isVisible, true, true, nullptr, nullptr, this);
+		bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
+		thumb = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, isVisible, true, true, nullptr, nullptr, this);
 	}
 
 	if (scrollMask != nullptr)
 	{
-		this->scrollMask = (UI_Image*)App->gui->CreateImage(UI_Element::EMPTY, x + maskOffset.x, y + maskOffset.y, *scrollMask, false, false, false, nullptr, nullptr, this);
+		this->scrollMask = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, x + maskOffset.x, y + maskOffset.y, *scrollMask, false, false, false, nullptr, nullptr, this);
 	}
 
 	// --- Other Scrollbar Variables
@@ -101,7 +101,7 @@ void UI_Scrollbar::CheckInput()
 
 		if (!IsHovered())																		//If the mouse is not on the image.
 		{
-			ui_event = UI_Event::IDLE;
+			ui_event = UI_EVENT::IDLE;
 		}
 		
 		if (IsHovered() || LinkedElementsBeingHovered() || MouseWithinDragArea())
@@ -143,7 +143,7 @@ void UI_Scrollbar::CheckInput()
 		{
 			if (IsForemostElement() || isDragTarget);														//If it is the first element under the mouse (in inverse order of draw)
 			{
-				ui_event = UI_Event::CLICKED;
+				ui_event = UI_EVENT::CLICKED;
 
 				if (ElementCanBeDragged() && isDraggable)									//If the UI Image element is draggable and is the foremost element under the mouse.
 				{

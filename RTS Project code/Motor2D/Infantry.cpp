@@ -16,7 +16,7 @@
 
 Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
-	entity_sprite = App->tex->Load("maps/debug_infantry_tile.png");
+	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/infantry_lowres.png");
 
 	selectable_unit = true;
 
@@ -26,11 +26,10 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 	current_health = max_health;
 	damage = 30;
 
-	empty_rect = { 0,158,MAX_HEALTHBAR_WIDTH,18 };
-	empty_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, empty_rect, true, false, false,nullptr,this, NULL); //Magic Number
+	healthbar_background_rect = { 618, 12, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
+	healthbar_rect = { 618, 23, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 
-	health_rect = { 0,198,MAX_HEALTHBAR_WIDTH,18 };
-	health_bar = (UI_Image*)App->gui->CreateImage(UI_Element::IMAGE, int(pixel_position.x), int(pixel_position.y) - 30, health_rect, true, false, false, nullptr, this, NULL); //Magic Number
+	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, (int)pixel_position.x, (int)pixel_position.y - 30, true, &healthbar_rect, &healthbar_background_rect, this); //Magic Number
 };
 
 Infantry::~Infantry()  //Destructor. Called at the last frame.
@@ -60,13 +59,42 @@ bool Infantry::Update(float dt, bool doLogic)
 	selection_collider.x = pixel_position.x;
 	selection_collider.y = pixel_position.y;
 
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, nullptr);
+
+	//change section according to pathing. 
+	switch (this->unit_state) {
+	case ENTITY_STATE::PATHING_DOWN:
+		entity_sprite_section = { 71,47,70,52 };
+		break;
+	case ENTITY_STATE::PATHING_RIGHT:
+		entity_sprite_section = { 202,47,59,52 };
+		break;
+	case ENTITY_STATE::PATHING_LEFT:
+		entity_sprite_section = { 142,47,59,52 };
+		break;
+	case ENTITY_STATE::PATHING_UP:
+		entity_sprite_section = { 0,47,70,52 };
+		break;
+	case ENTITY_STATE::PATHING_DOWN_RIGHT:
+		entity_sprite_section = { 58,0,58,47 };
+		break;
+	case ENTITY_STATE::PATHING_DOWN_LEFT:
+		entity_sprite_section = { 0,0,58,47 };
+		break;
+	case ENTITY_STATE::PATHING_UP_RIGHT:
+		entity_sprite_section = { 116,0,60,47 };
+		break;
+	case ENTITY_STATE::PATHING_UP_LEFT:
+		entity_sprite_section = { 176,0,59,47 };
+		break;
+	}
+
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y-15, &entity_sprite_section);
 
 	App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 
 	if (current_health < 300)
 	{
-		LOG("Infantry health: %f", current_health );
+		LOG("Infantry health: %d", current_health);
 	}
 
 	return true;
@@ -74,11 +102,20 @@ bool Infantry::Update(float dt, bool doLogic)
 
 bool Infantry::PostUpdate()
 {
+	if (current_health <= 0)
+	{	
+		CleanUp();
+	}
+
 	return true;
 };
 
 bool Infantry::CleanUp()
-{
+{	
+	/*App->entityManager->entities;
+	App->entityManager->dynamic_objects;
+	App->entityManager->infantries;*/
+	
 	return true;
 };
 

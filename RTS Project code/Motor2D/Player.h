@@ -27,9 +27,13 @@ public:
 
 	void SelectionRect();
 
+	void SelectionShortcuts();
+
 	void MoveToOrder();
 
 	void DrawCursor();
+
+	bool CurrentlyInGameplayScene();
 
 public:
 
@@ -38,17 +42,16 @@ public:
 	iPoint			mouse_map_position;
 	iPoint			mouse_tile;							// The tile where the mouse is currently on.
 	fPoint			camera_speed;						// Speed at which the camera will move when moving it with the mouse.
+	
 	iPoint			selection_start;					// Position where unit selection will start (Selection rect's anchor point).
 
 	SDL_Texture*	cursor_idle;
 	SDL_Texture*	mouse_tile_debug;
 
+	SDL_Rect		selection_rect;
+
 	//selection
 	bool			is_selecting;
 
-	SDL_Rect		selection_rect;
-
 	std::vector<Dynamic_Object*> units_selected;
-
-
 };

@@ -7,7 +7,7 @@
 #include "UI_Image.h"
 #include "UI_Text.h"
 
-UI::UI(UI_Element element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
+UI::UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
 	element(element),										//The variables of the UI element are initialized at the constructor.
 	position(x, y),
 	rect(rect),

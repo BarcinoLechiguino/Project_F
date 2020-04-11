@@ -9,7 +9,7 @@
 
 //UI_InputBox will always be interactible (although it can be set to not be), and can be draggable. Can potentially receive all events.
 //The element receives as arguments all the requiered elements to create a UI_Image (Background), a UI_Text (input text) and another UI_Image (cursor).
-UI_InputBox::UI_InputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColour, iPoint textOffset,
+UI_InputBox::UI_InputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColour, iPoint textOffset,
 				float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, std::string* defaultString, bool emptyElements) 
 				: UI(element, x, y, hitbox, listener, parent)
 {
@@ -43,16 +43,16 @@ UI_InputBox::UI_InputBox(UI_Element element, int x, int y, SDL_Rect hitbox, _TTF
 	// --- Input Box Elements
 	if (!emptyElements)
 	{
-		this->background = UI_Image(UI_Element::IMAGE, x, y, hitbox, isVisible, false, false, nullptr,nullptr, this);
+		this->background = UI_Image(UI_ELEMENT::IMAGE, x, y, hitbox, isVisible, false, false, nullptr,nullptr, this);
 		//this->cursor = UI_Image(UI_Element::IMAGE, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, this);
 	}
 	else
 	{
-		this->background = UI_Image(UI_Element::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
+		this->background = UI_Image(UI_ELEMENT::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
 	}
 
-	this->cursor = UI_Image(UI_Element::EMPTY, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, nullptr, nullptr, this);
-	this->text = UI_Text(UI_Element::TEXT, x + textOffset.x, y + textOffset.y, hitbox, font, fontColour, isVisible, false, false, nullptr, this, defaultString);
+	this->cursor = UI_Image(UI_ELEMENT::EMPTY, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, nullptr, nullptr, this);
+	this->text = UI_Text(UI_ELEMENT::TEXT, x + textOffset.x, y + textOffset.y, hitbox, font, fontColour, isVisible, false, false, nullptr, this, defaultString);
 	
 	// --- Text Variables
 	this->font = font;																//Sets the UI input box font to the one being passed as argument.
@@ -100,7 +100,7 @@ void UI_InputBox::CheckInput()
 		// --- IDLE EVENT
 		if (!IsHovered())																			//If the mouse is not on the text.
 		{
-			ui_event = UI_Event::IDLE;
+			ui_event = UI_EVENT::IDLE;
 		}
 
 		if (isInteractible)																			//If the Text element is interactible.
@@ -108,7 +108,7 @@ void UI_InputBox::CheckInput()
 			// --- HOVER EVENT
 			if ((IsHovered() && IsForemostElement()) /*|| IsFocused()*/)							//If the mouse is on the text.
 			{
-				ui_event = UI_Event::HOVER;
+				ui_event = UI_EVENT::HOVER;
 			}
 
 			
@@ -138,7 +138,7 @@ void UI_InputBox::CheckInput()
 				{
 					if (IsForemostElement() || isDragTarget)											//If the UI Text element is the foremost element under the mouse. 
 					{
-						ui_event = UI_Event::CLICKED;
+						ui_event = UI_EVENT::CLICKED;
 
 						if (ElementCanBeDragged())														//If the UI Text element is draggable and is the foremost element under the mouse. 
 						{
@@ -157,7 +157,7 @@ void UI_InputBox::CheckInput()
 			{
 				if (IsForemostElement() && ElementRemainedInPlace())								//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 				{
-					ui_event = UI_Event::UNCLICKED;
+					ui_event = UI_EVENT::UNCLICKED;
 				}
 
 				if (isDragTarget)
@@ -267,7 +267,7 @@ void UI_InputBox::CheckFocus()																// -------------------------------
 {
 	if (IsFocused() && isVisible)															//If the input box has the focus and is visible.
 	{
-		text.ui_event = UI_Event::FOCUSED;													//The text's ui_event will be set to FOCUSED.
+		text.ui_event = UI_EVENT::FOCUSED;													//The text's ui_event will be set to FOCUSED.
 
 		if (blinkFrequency != 0.0f)															//If the cursor's blinkFrequency is different than 0;
 		{
@@ -289,7 +289,7 @@ void UI_InputBox::CheckFocus()																// -------------------------------
 	}
 	else
 	{
-		text.ui_event = UI_Event::UNFOCUSED;												//If the input box is not focused or visible, it will lose focus. (ui_event set to UNFOCUSED)
+		text.ui_event = UI_EVENT::UNFOCUSED;												//If the input box is not focused or visible, it will lose focus. (ui_event set to UNFOCUSED)
 		cursor.isVisible = false;															//Sets the cursor's isVisible bool to false. (The cursor will no longer show on screen.
 	}
 }

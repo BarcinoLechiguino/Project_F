@@ -56,6 +56,8 @@ bool Player::Update(float dt)
 
 	SelectionRect();
 
+	SelectionShortcuts();
+
 	MoveToOrder();
 
 	return true;
@@ -95,18 +97,25 @@ void Player::MoveToOrder()//fix
 {
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
-		if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x, mouse_tile.y)))
+		if (units_selected.size() != 0)																								// If there are Units being selected
 		{
-			for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
+			if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x, mouse_tile.y)))
 			{
-				App->pathfinding->ChangeWalkability((*item)->occupied_tile,WALKABLE);
-			}
+				for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
+				{
+					App->pathfinding->ChangeWalkability((*item)->occupied_tile, WALKABLE);
+				}
 
-			App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected); //Gives units targets around main target
+				App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected);							//Gives units targets around main target
+			}
+			else
+			{
+				LOG("Tile is untargetable");
+			}
 		}
 		else
 		{
-			LOG("Tile is untargetable");
+			LOG("There are no units being currently selected.");
 		}
 	}
 }
@@ -116,7 +125,7 @@ void Player::CameraController(float dt)
 	int window_width, window_height;
 	App->win->GetWindowSize(window_width, window_height);
 	
-	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)										// If the current scene is FIRST_SCENE (gameplay scene)
+	if (CurrentlyInGameplayScene())										// If the current scene is FIRST_SCENE (gameplay scene)
 	{
 		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)								//Left
 		{
@@ -199,12 +208,69 @@ void Player::SelectionRect()
 	}
 }
 
+void Player::SelectionShortcuts()
+{
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)													// Select All Entities
+	{
+		units_selected.clear();
+
+		std::vector<Dynamic_Object*>::iterator item = App->entityManager->dynamic_objects.begin();
+
+		for (; item != App->entityManager->dynamic_objects.end(); ++item)
+		{
+			units_selected.push_back((*item));
+		}
+
+		LOG("All units selected. Total unit amount: %d", units_selected.size());
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)													// Select All Gatherers
+	{
+		units_selected.clear();
+
+		std::vector<Gatherer*>::iterator item = App->entityManager->gatherers.begin();
+
+		for (; item != App->entityManager->gatherers.end(); ++item)
+		{
+			units_selected.push_back((*item));
+		}
+
+		LOG("All gatherers selected. Total gatherer amount: %d", units_selected.size());
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)													// Select All Infantries
+	{
+		units_selected.clear();
+
+		std::vector<Infantry*>::iterator item = App->entityManager->infantries.begin();
+
+		for (; item != App->entityManager->infantries.end(); ++item)
+		{
+			units_selected.push_back((*item));
+		}
+
+		LOG("All infantries selected. Total infantry amount: %d", units_selected.size());
+	}
+}
+
 void Player::DrawCursor() //fix
 {
-	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)
+	if (CurrentlyInGameplayScene())
 	{
 		App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
 	}
 
 	App->render->Blit(cursor_idle, mouse_position.x, mouse_position.y,nullptr,false,0.f);
+}
+
+bool Player::CurrentlyInGameplayScene()
+{
+	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
 }

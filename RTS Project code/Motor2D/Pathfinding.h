@@ -28,6 +28,7 @@ public:
 
 	bool CleanUp();															// Called before quitting
 
+public:
 	void SetMap(uint width, uint height, uchar* data);						// Sets up the walkability map
 
 	int CreatePath(const iPoint& origin, const iPoint& destination);		// Main function to request a path from A to B
