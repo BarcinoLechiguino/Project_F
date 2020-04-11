@@ -77,7 +77,7 @@ public:
 	Fonts*				font;
 	Map*				map;
 	PathFinding*		pathfinding;
-	EntityManager*		entityManager;
+	EntityManager*		entity_manager;
 	Collisions*			collisions;
 	Gui*				gui;
 	Console*			console;

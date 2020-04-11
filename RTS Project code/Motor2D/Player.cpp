@@ -184,7 +184,7 @@ void Player::SelectionRect()
 		{
 			is_selecting = false;
 
-			for (std::vector<Dynamic_Object*>::iterator item = App->entityManager->dynamic_objects.begin() ; item != App->entityManager->dynamic_objects.end(); ++item)
+			for (std::vector<Dynamic_Object*>::iterator item = App->entity_manager->dynamic_objects.begin() ; item != App->entity_manager->dynamic_objects.end(); ++item)
 			{
 				if ((*item)->selectable_unit)
 				{
@@ -214,9 +214,9 @@ void Player::SelectionShortcuts()
 	{
 		units_selected.clear();
 
-		std::vector<Dynamic_Object*>::iterator item = App->entityManager->dynamic_objects.begin();
+		std::vector<Dynamic_Object*>::iterator item = App->entity_manager->dynamic_objects.begin();
 
-		for (; item != App->entityManager->dynamic_objects.end(); ++item)
+		for (; item != App->entity_manager->dynamic_objects.end(); ++item)
 		{
 			units_selected.push_back((*item));
 		}
@@ -228,9 +228,9 @@ void Player::SelectionShortcuts()
 	{
 		units_selected.clear();
 
-		std::vector<Gatherer*>::iterator item = App->entityManager->gatherers.begin();
+		std::vector<Gatherer*>::iterator item = App->entity_manager->gatherers.begin();
 
-		for (; item != App->entityManager->gatherers.end(); ++item)
+		for (; item != App->entity_manager->gatherers.end(); ++item)
 		{
 			units_selected.push_back((*item));
 		}
@@ -242,9 +242,9 @@ void Player::SelectionShortcuts()
 	{
 		units_selected.clear();
 
-		std::vector<Infantry*>::iterator item = App->entityManager->infantries.begin();
+		std::vector<Infantry*>::iterator item = App->entity_manager->infantries.begin();
 
-		for (; item != App->entityManager->infantries.end(); ++item)
+		for (; item != App->entity_manager->infantries.end(); ++item)
 		{
 			units_selected.push_back((*item));
 		}

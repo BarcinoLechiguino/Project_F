@@ -39,7 +39,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	map					= new Map();
 	pathfinding			= new PathFinding();
 	collisions			= new Collisions();
-	entityManager		= new EntityManager();
+	entity_manager		= new EntityManager();
 	font				= new Fonts();
 	gui					= new Gui();
 	console				= new Console();
@@ -63,7 +63,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(gui);
 	AddModule(scene_manager);
 	AddModule(transition_manager);
-	AddModule(entityManager);
+	AddModule(entity_manager);
 	AddModule(player);
 
 	// render last to swap buffer

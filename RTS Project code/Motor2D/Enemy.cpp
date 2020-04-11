@@ -88,8 +88,8 @@ void Enemy::OnCollision(Collider* C1, Collider* C2)
 
 void Enemy::SetTarget()
 {
-	if (App->entityManager->infantries.size() != 0)
+	if (App->entity_manager->infantries.size() != 0)
 	{
-		target = *App->entityManager->infantries.begin();
+		target = *App->entity_manager->infantries.begin();
 	}
 }
