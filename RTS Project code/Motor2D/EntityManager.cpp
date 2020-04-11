@@ -1,13 +1,15 @@
+#include "EntityManager.h"
 #include "p2Log.h"
-#include "Application.h"
-#include "Window.h"
-#include "Input.h"
 #include "Render.h"
 #include "Map.h"
+#include "App.h"
 #include "Collisions.h"
+#include "Input.h"
+#include "Window.h"
 #include "Brofiler\Brofiler.h"
 
-#include "EntityManager.h"
+#include "Rock.h"
+#include "Enemy.h"
 
 //#include "mmgr/mmgr.h"
 
@@ -124,6 +126,45 @@ void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision 
 	}
 }
 
+bool EntityManager::Save(pugi::xml_node& data)
+{
+	
+
+	/*pugi::xml_node mecha = data.append_child("mecha");
+	pugi::xml_node alien = data.append_child("alien");
+
+	for (std::list<j1Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
+	{
+		if ((*entity_iterator)->type == ENTITY_TYPE::MECHA)
+			(*entity_iterator)->Save(mecha);
+		if ((*entity_iterator)->type == ENTITY_TYPE::ALIEN)
+			(*entity_iterator)->Save(alien);
+	}
+
+	for (int i = 0; i < MAX_ENEMIES; ++i)
+	{
+		if (enemies[i].type == ENTITY_TYPE::MECHA) {
+			pugi::xml_node position = mecha.append_child("position");
+			position.append_attribute("x") = enemies[i].position.x;
+			position.append_attribute("y") = enemies[i].position.y;
+		}
+		if (enemies[i].type == ENTITY_TYPE::ALIEN) {
+			pugi::xml_node position = alien.append_child("position");
+			position.append_attribute("x") = enemies[i].position.x;
+			position.append_attribute("y") = enemies[i].position.y;
+		}	
+	}*/
+
+	return true;
+}
+
+bool EntityManager::Load(pugi::xml_node& data)
+{
+
+	return true;
+}
+
+
 // -------------------------------------- ENTITY MANAGING METHODS --------------------------------------
 Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 {
@@ -133,43 +174,20 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 	switch (type)
 	{
+
 		case ENTITY_TYPE::ROCK:							
-			ret = new Rock(x, y, type);	
-			rocks.push_back((Rock*)ret);	//Allocates memory for an entity from the j1Player module.
+		ret = new Rock(x, y, type);				//Allocates memory for an entity from the j1Player module.
 	
 		break;
 
 		case ENTITY_TYPE::ENEMY:
-			ret = new Enemy(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)ret);
-			enemies.push_back((Enemy*)ret);
+		ret = new Enemy(x, y, type);
+
 		break;
 
-		case ENTITY_TYPE::GATHERER:
-			ret = new Gatherer(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)ret);
-			gatherers.push_back((Gatherer*)ret);
-		break;
-
-		case ENTITY_TYPE::INFANTRY:
-			ret = new Infantry(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)ret);
-			infantries.push_back((Infantry*)ret);
-		break;
-
-		case ENTITY_TYPE::TOWNHALL:
-			ret = new TownHall(x, y, type);
-			town_hall.push_back((TownHall*)ret);
-		break;
-
-		case ENTITY_TYPE::BARRACKS:
-			ret = new Barracks(x, y, type);
-			barracks.push_back((Barracks*)ret);
-		break;
 	}
 
 	ret->type = type;
-	ret->Start();
 
 	if (ret != nullptr)									
 	{
@@ -179,33 +197,25 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 	return ret;
 }
 
+void EntityManager::CreatePlayers()
+{
+	//player = (j1Player1*)CreateEntity(ENTITY_TYPE::PLAYER);
+	//player2 = (j1Player2*)CreateEntity(ENTITY_TYPE::PLAYER2);
+}
+
 void EntityManager::DestroyEntities()
 {
 	BROFILER_CATEGORY("EntityManager PostUpdate", Profiler::Color::FireBrick);
 	//Iterates all entities in the entities list and searches for the entity passed as argument, if it is inside the list and is found, it is then destroyed.
 	LOG("There are %d entities in the entities list.", entities.size());
 	
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); ++entity_iterator)
+	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
+		
 		(*entity_iterator)->CleanUp();			//Calls the CleanUp() method of the iterated entity (an enemy entity).
 		RELEASE((*entity_iterator));			//Deletes the data buffer
+		entities.erase(entity_iterator);		//Deletes the entity being iterated from the list.
 		
 		//break;
 	}
-	
-	entities.clear();
-	dynamic_objects.clear();
-	gatherers.clear();
-	infantries.clear();
-}
-
-void EntityManager::SetEntityMap(int width, int height, Entity* data)
-{
-	entity_map_width = width;
-	entity_map_height = height;
-
-	RELEASE_ARRAY(entity_map);
-
-	entity_map = new Entity[width * height];						// THIS HERE Entity**?
-	memcpy(entity_map, data, width * height);
 }

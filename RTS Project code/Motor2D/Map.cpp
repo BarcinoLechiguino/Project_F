@@ -1,17 +1,18 @@
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Point.h"
-#include "Application.h"
+#include "App.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Map.h"
 #include "Window.h"
 #include "Collisions.h"
+#include "FadeScene.h"
 #include "Input.h"
 #include "Audio.h"
 #include "Pathfinding.h"
+#include "Scene.h"
 #include "EntityManager.h"
-#include "Gui.h"
 #include "Console.h"
 #include "Brofiler\Brofiler.h"
 #include <math.h>
@@ -41,7 +42,6 @@ bool Map::Awake(pugi::xml_node& config)
 void Map::Draw()
 {
 	BROFILER_CATEGORY("Draw Map", Profiler::Color::Khaki);
-
 	if (map_loaded == false)																						//If no map was loaded, return.
 	{
 		return;
@@ -53,39 +53,43 @@ void Map::Draw()
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
 	{
-		camera_pos_in_pixels.x = -App->render->camera.x;
-		camera_pos_in_pixels.y = -App->render->camera.y;
+		camera_pos_in_pixels_x = -App->render->camera.x ;
+		camera_pos_in_pixels_y = -App->render->camera.y ;
 
-		bottom_right_x = camera_pos_in_pixels.x + winWidth;
-		bottom_right_y = camera_pos_in_pixels.y + winHeight;
+		bottom_right_x = camera_pos_in_pixels_x + winWidth;
+		bottom_right_y = camera_pos_in_pixels_y + winHeight;
 
-		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;
-		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
+		top_left_x_row = WorldToMap(camera_pos_in_pixels_x, camera_pos_in_pixels_y).x;
 
-		min_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels.y).y; //Esquina dereche arriba
-		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y; //Esquina izquierda abajo
+		bottom_right_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
 
-		if (min_x_row < 0)
+		top_right_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels_y).y; //Esquina dereche arriba
+		bottom_left_y_row = WorldToMap(camera_pos_in_pixels_x, bottom_right_y + data.tile_height).y; //Esquina izquierda abajo
+
+		//LOG("min x row %d, max x row %d", top_left_x_row, bottom_right_x_row);
+		//LOG("min y row %d, max y row %d", top_right_y_row, bottom_left_y_row);
+		
+		if (top_left_x_row < 0)
 		{
-			min_x_row = 0;
+			top_left_x_row = 0;
 		}
-		if (min_y_row < 0)
+
+		if (top_right_y_row < 0)
 		{
-			min_y_row = 0;
+			top_right_y_row = 0;
 		}
 
-		for (int x = min_x_row ; x < max_x_row && x < data.width; x++)
+		for (int x = top_left_x_row ; x < bottom_right_x_row && x < data.width; x++)
 		{
-			for (int y = min_y_row ; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
+			for (int y = top_right_y_row ; y < bottom_left_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels_x - data.tile_width; y++)
 			{
-				if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
+				if (MapToWorld(x, y).y > camera_pos_in_pixels_y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
 				{
 					int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
 
 					if (tile_id > 0)																				
 					{
 						TileSet* tileset = GetTilesetFromTileId(tile_id);												//Gets the tileset corresponding with the tile_id. If tile id is 34 and the current tileset first gid is 35, that means that the current  tile belongs to the previous tileset. 
-						
 						if (tileset != nullptr)																			
 						{
 							SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 
@@ -119,7 +123,7 @@ iPoint Map::MapToWorld(int x, int y) const
 	}
 	else
 	{
-		//LOG("Unknown map type");
+		LOG("Unknown map type");
 		ret.x = x; ret.y = y;
 	}
 
@@ -352,10 +356,10 @@ bool Map::LoadMap()
 
 		std::string bg_color = (map.attribute("backgroundcolor").as_string());
 
-		data.background_color.r = 126;
+		data.background_color.r = 0;
 		data.background_color.g = 0;
-		data.background_color.b = 126;
-		data.background_color.a = 255;
+		data.background_color.b = 0;
+		data.background_color.a = 0;
 
 		if (bg_color.length() > 0)
 		{
@@ -607,11 +611,16 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	for (std::list<MapLayer*>::iterator item = data.layers.begin() ; item != data.layers.end() ; ++item)
 	{
 		MapLayer* layer = (*item);
+
+		if (layer->properties.Get("Navigation", 0) == 0)							//If the value of the Navigation property of the mapLayer is 0.
+		{
+			continue;																//If the value mentioned above is 0, jump to the next iteration (of layers list).
+		}
 		
-		if ( layer->name != "walkability")
+		/*if (layer->name != "walkability_map")							
 		{
 			continue;
-		}
+		}*/
 
 		uchar* map = new uchar[layer->width * layer->height];						//Allocates memory for all the tiles in the map.
 		memset(map, 1, layer->width*layer->height);									//Sets all memory allocated for map to 1. 
@@ -654,32 +663,6 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	return ret;
 }
 
-bool Map::CreateEntityMap(int& width, int& height, Entity** buffer)
-{
-	bool ret = false;
-
-	//Entity* map = new Entity[data.width * data.height];
-	Entity** map = new Entity*[data.width * data.height];				//THIS HERE
-	memset(map, 1, data.width * data.height);							//THIS HERE
-
-	for (int y = 0; y < data.height; ++y)
-	{
-		for (int x = 0; x < data.width; ++x)
-		{
-			int index = (y * data.width) + x;
-
-			map[index] = nullptr;
-		}
-	}
-
-	buffer	= map;														//THIS HERE
-	width	= data.width;
-	height	= data.height;
-	ret		= true;
-
-	return ret;
-}
-
 int Properties::Get(std::string name, int default_value)							//Revise how to be able to not have a property without default value being nullptr.
 {
 	for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++)
@@ -692,14 +675,48 @@ int Properties::Get(std::string name, int default_value)							//Revise how to b
 	return default_value;															//Default value is 0
 }
 
+bool Map::SwitchMaps(std::string new_map) // switch map function that passes the number of map defined in config.xml
+{
+	CleanUp();
+	App->scene->to_end = false; // we put this in false so there are no repetitions
+	Load( new_map.c_str() );
+	//App->audio->PlayMusic(App->map->data.music_File.c_str());
+
+	return true;
+}
+
+bool Map::ChangeMap(const char* newMap)
+{
+	bool ret = true;
+
+	App->scene->CleanUp();
+
+	App->map->Load(newMap);						
+	App->collisions->LoadColliderFromMap();		
+
+	App->scene->firstMap	= true;
+	App->scene->secondMap	= false;
+
+	//This needs to be changed somewhere else. Here it works but probably this is not it's place.
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))				//It means that the walkability map could be created.
+	{
+		App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
+	}
+
+	RELEASE_ARRAY(data);
+	
+	App->gui->Start();
+	App->console->Start();
+	App->scene->LoadGuiElements();
+	//App->scene->Start();
+
+	return ret;
+}
+
 void Map::Restart_Cam() // function that resets the camera
 {
 	App->render->camera.x = spawn_position_cam.x;
 	App->render->camera.y = spawn_position_cam.y;
-}
-
-void Map::GetMapSize(int& w, int& h) const
-{
-	w = App->map->data.width * App->map->data.tile_width;
-	h = App->map->data.height * App->map->data.tile_height;
 }

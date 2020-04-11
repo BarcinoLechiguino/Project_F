@@ -12,11 +12,6 @@
 #include "Render.h"
 #include "Window.h"
 
-Entity::Entity() : tile_position(0, 0), type(ENTITY_TYPE::UNKNOWN_TYPE), entity_sprite(nullptr), collider(nullptr), animation(nullptr)
-{
-
-}
-
 Entity::Entity(int x, int y, ENTITY_TYPE type) : tile_position(x, y), type(type), entity_sprite(nullptr), collider(nullptr), animation(nullptr)	//Initializes the variables to the specified values when the constructor is called.
 {
 	return;
