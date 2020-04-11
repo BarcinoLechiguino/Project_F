@@ -1,14 +1,27 @@
-#ifndef __j1ENTITY_MANAGER_H__
-#define __j1ENTITY_MANAGER_H__
+#ifndef __ENTITY_MANAGER_H__
+#define __ENTITY_MANAGER_H__
 
-#include "Module.h"
-#include "Entity.h"		
 #include <list>
 #include <algorithm>
+#include "Module.h"
+#include "Textures.h"
+
+#include "Entity.h"		
+#include "Dynamic_Object.h"
+#include "Static_Object.h"
+
+#include "Rock.h"
+#include "Enemy.h"
+#include "Gatherer.h"
+#include "TownHall.h"
+#include "Barracks.h"
+#include "Infantry.h"
+
 #define MAX_ENEMIES 200
 
+
 struct SDL_Texture;
-class Enemy;
+
 
 
 struct EnemyData
@@ -22,45 +35,51 @@ class EntityManager : public Module
 public:
 
 	EntityManager();
-
 	~EntityManager();
 
 	bool Awake(pugi::xml_node&);
-
 	bool Start();
-
 	bool PreUpdate();
-
 	bool Update(float dt);
-
 	bool PostUpdate();
-
 	bool CleanUp();
 
 public:
 
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
-	void CreatePlayers();													//Creates P1 and P2. It is called in the j1Scene.cpp.
-	//void AddItems(ENTITY_TYPE type, int x, int y);
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
+
+	void SetEntityMap(int width, int height, Entity* data);
+	void CheckBoundaries(const iPoint& pos);
+	void ChangeEntityMap(const iPoint& pos, Entity* entity);
+
+	Entity* GetEntityAt(const iPoint& pos);;
+	
 	
 	void OnCollision(Collider* C1, Collider* C2);
 
-	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&);
-
 public:
 
-	pugi::xml_node			config;
+	pugi::xml_node					config;
 	
-	std::list<Entity*>	entities;	
+	std::list<Entity*>				entities;	
+	std::list<EntityData*>			entity_data_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
 
-	std::list<EntityData*>	entityData_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
+	std::vector<Rock*>				rocks;
+	std::vector<Enemy*>				enemies;
+	std::vector<Gatherer*>			gatherers;
+	std::vector<TownHall*>			town_hall;
+	std::vector<Barracks*>			barracks;
+	std::vector<Infantry*>			infantries;
 
-	float					accumulated_time;	//Accumulates dt as time goes on.
-	float					cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
-	bool					doLogic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
+	std::vector<Dynamic_Object*>	dynamic_objects;
 
-	EnemyData				enemies[MAX_ENEMIES];	//Use this if entities need to be processed in an array instead of a list.
+	Entity*							entity_map;
+	int								entity_map_width;
+	int								entity_map_height;
+
+	float							accumulated_time;	//Accumulates dt as time goes on.
+	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
+	bool							doLogic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
 };
-#endif // __j1ENTITY_MANAGER_H__
+#endif // __ENTITY_MANAGER_H__
