@@ -49,6 +49,9 @@ public:
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
 	
+	bool IsUnit(Entity* entity);
+	bool IsBuilding(Entity* entity);
+
 	void SetEntityMap(int width, int height, Entity* data);
 	void ChangeEntityMap(const iPoint& pos, Entity* entity);
 
