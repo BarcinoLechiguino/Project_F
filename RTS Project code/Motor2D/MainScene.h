@@ -52,6 +52,12 @@ public:
 
 	UI_Button*		back_button;
 
+	//Text:
+	UI_Text*		resolution_text;
+	UI_Text*		sfx_text;
+	UI_Text*		music_text;
+	UI_Text*		options_text;
+
 
 public:
 };
