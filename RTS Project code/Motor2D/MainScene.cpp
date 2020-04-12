@@ -60,53 +60,92 @@ bool MainScene::CleanUp()
 void MainScene::LoadGuiElements()
 {
 	// Main Screen
-	// New Game Button
-	SDL_Rect new_game_button_size		= { 0, 0, 175, 28 };
-	SDL_Rect new_game_button_idle		= { 2, 24, 175, 28 };
-	SDL_Rect new_game_button_hover		= { 179, 24, 175, 28 };
-	SDL_Rect new_game_button_clicked	= { 357, 24, 175, 28 };
 
-	new_game_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON,420, 274, true, true, false, this, nullptr
-													, &new_game_button_idle, &new_game_button_hover, &new_game_button_clicked);
+		// New Game Button
+		SDL_Rect new_game_button_size = { 0, 0, 175, 28 };
+		SDL_Rect new_game_button_idle = { 2, 24, 175, 28 };
+		SDL_Rect new_game_button_hover = { 179, 24, 175, 28 };
+		SDL_Rect new_game_button_clicked = { 357, 24, 175, 28 };
 
-	// Continue Button
-	SDL_Rect continue_button_size = { 0, 0, 158, 23 };
-	SDL_Rect continue_button_idle = { 1, 0, 158, 23 };
-	SDL_Rect continue_button_hover = { 178, 0, 158, 23 };
-	SDL_Rect continue_button_clicked = { 356, 0, 158, 23 };
+		new_game_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 420, 274, true, true, false, this, nullptr
+			, &new_game_button_idle, &new_game_button_hover, &new_game_button_clicked);
 
-	continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 425, 306, true, true, false, this, nullptr
-		, &continue_button_idle, &continue_button_hover, &continue_button_clicked);
+		// Continue Button
+		SDL_Rect continue_button_size = { 0, 0, 158, 23 };
+		SDL_Rect continue_button_idle = { 1, 0, 158, 23 };
+		SDL_Rect continue_button_hover = { 178, 0, 158, 23 };
+		SDL_Rect continue_button_clicked = { 356, 0, 158, 23 };
 
-	// Options Button
-	SDL_Rect options_button_size = { 0, 0, 133, 24 };
-	SDL_Rect options_button_idle = { 1, 52, 133, 24 };
-	SDL_Rect options_button_hover = { 178, 52, 133, 24 };
-	SDL_Rect options_button_clicked = { 356, 52, 133, 24 };
+		continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 425, 306, true, true, false, this, nullptr
+			, &continue_button_idle, &continue_button_hover, &continue_button_clicked);
 
-	options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 439, 336, true, true, false, this, nullptr
-		, &options_button_idle, &options_button_hover, &options_button_clicked);
+		// Options Button
+		SDL_Rect options_button_size = { 0, 0, 133, 24 };
+		SDL_Rect options_button_idle = { 1, 52, 133, 24 };
+		SDL_Rect options_button_hover = { 178, 52, 133, 24 };
+		SDL_Rect options_button_clicked = { 356, 52, 133, 24 };
 
-	// Exit Button
-	SDL_Rect exit_button_size = { 0, 0, 74, 23 };
-	SDL_Rect exit_button_idle = { 1, 77, 74, 23 };
-	SDL_Rect exit_button_hover = { 178, 77, 74, 23 };
-	SDL_Rect exit_button_clicked = { 356, 77, 74, 23 };
+		options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 439, 336, true, true, false, this, nullptr
+			, &options_button_idle, &options_button_hover, &options_button_clicked);
 
-	exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 465, 366, true, true, false, this, nullptr
-		, &exit_button_idle, &exit_button_hover, &exit_button_clicked);
+		// Exit Button
+		SDL_Rect exit_button_size = { 0, 0, 74, 23 };
+		SDL_Rect exit_button_idle = { 1, 77, 74, 23 };
+		SDL_Rect exit_button_hover = { 178, 77, 74, 23 };
+		SDL_Rect exit_button_clicked = { 356, 77, 74, 23 };
 
-	//SDL_Rect text_rect = { 0, 0, 40, 9 };
-	//_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 12);
-	//std::string button_string = "To Gameplay Scene";
-
-	//button_text = (UI_Text*)App->gui->CreateText(UI_Element::TEXT, center_button.x + text_rect.w, center_button.y + 3, text_rect, font
-	//												, SDL_Color{ 255, 255, 255, 255 }, true, false, false, nullptr, transition_button, &button_string);
-
-	background_rect = { 0,0,1280,720 };
-	background_texture = App->tex->Load("maps/MainMenu_background.png");
+		exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 465, 366, true, true, false, this, nullptr
+			, &exit_button_idle, &exit_button_hover, &exit_button_clicked);
 
 
+		background_rect = { 0,0,1280,720 };
+		background_texture = App->tex->Load("maps/MainMenu_background.png");
+
+}
+
+void MainScene::LoadOptionsMenu()
+{
+	// Deactivate Main menu
+	new_game_button->isVisible = false;	
+	exit_button->isVisible = false;
+	continue_button->isVisible = false;
+	options_button->isVisible = false;
+
+	//Options Menu
+	SDL_Rect text_rect = { 0, 0, 100, 20 };
+	_TTF_Font* font = App->font->Load("fonts/borgsquadcond.ttf", 40);
+	_TTF_Font* font2 = App->font->Load("fonts/borgsquadcond.ttf", 30);
+
+	//Options
+	std::string title_string = "Options";
+	options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 370, 150, text_rect, font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, nullptr, &title_string);
+
+	//Music
+	std::string music_string = "Music";
+	music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, nullptr, &music_string);
+
+	/*UI_Scrollbar* music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 480, 255, )*/
+
+	//SFX
+	std::string sfx_string = "SFX";
+	sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, nullptr, &sfx_string);
+
+	//Resolution
+	std::string resolution_string = "resolution";
+	resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 418, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, nullptr, &resolution_string);
+
+	//Remapping
+
+	//Back button
+	SDL_Rect back_button_size = { 0, 0, 45, 33 };
+	SDL_Rect back_button_idle = { 0, 103, 45, 33 };
+	SDL_Rect back_button_hover = { 57, 103, 45, 33 };
+	SDL_Rect back_button_clicked = { 114, 103, 45, 33 };
+
+	back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 400, 470, true, true, false, this, nullptr
+		, &back_button_idle, &back_button_hover, &back_button_clicked);
+
+	background_texture = App->tex->Load("maps/Options_background.png");
 }
 
 void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
@@ -125,13 +164,27 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == options_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		LoadOptionsMenu();
+	}	
+	
+	if (element == back_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Activate Main menu
+		new_game_button->isVisible = true;
+		exit_button->isVisible = true;
+		continue_button->isVisible = true;
+		options_button->isVisible = true;
+
+		//Deactivate Options Menu
+		back_button->isVisible = false;
+		sfx_text->isVisible = false;
+		music_text->isVisible = false;
+		resolution_text->isVisible = false;
+		options_text->isVisible = false;
+
+		background_texture = App->tex->Load("maps/MainMenu_background.png");
 	}
 }
 
-void MainScene::LoadOptionsMenu()
-{
-	// Options Menu
-}
 
 void MainScene::ExecuteTransition()
 {
