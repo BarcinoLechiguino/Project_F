@@ -1,34 +1,27 @@
 #ifndef __ENTITY_MANAGER_H__
 #define __ENTITY_MANAGER_H__
 
-#include <list>
 #include <algorithm>
 #include "Module.h"
 #include "Textures.h"
-
-#include "Entity.h"		
-#include "Dynamic_Object.h"
-#include "Static_Object.h"
-
-#include "Rock.h"
-#include "Enemy.h"
-#include "Gatherer.h"
-#include "TownHall.h"
-#include "Barracks.h"
-#include "Infantry.h"
+#include "Point.h"
 
 #define MAX_ENEMIES 200
 
 
 struct SDL_Texture;
 
+class Entity;
+enum class ENTITY_TYPE;
 
-
-struct EnemyData
-{
-	ENTITY_TYPE		type;
-	iPoint			position;
-};
+class Dynamic_Object;
+class Static_Object;
+class Gatherer;
+class Infantry;
+class Enemy;
+class Rock;
+class TownHall;
+class Barracks;
 
 class EntityManager : public Module
 {
@@ -66,7 +59,6 @@ public:
 	pugi::xml_node					config;
 	
 	std::list<Entity*>				entities;	
-	std::list<EntityData*>			entity_data_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
 
 	std::vector<Rock*>				rocks;
 	std::vector<Enemy*>				enemies;

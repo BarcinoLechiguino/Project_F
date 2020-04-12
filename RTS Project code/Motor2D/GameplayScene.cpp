@@ -16,6 +16,7 @@
 #include "Brofiler\Brofiler.h"
 
 #include "EntityManager.h"
+#include "Entity.h"
 
 //#include "mmgr/mmgr.h"
 

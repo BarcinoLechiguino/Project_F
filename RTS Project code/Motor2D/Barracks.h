@@ -1,4 +1,7 @@
-#include "Module.h"
+#ifndef __BARRACKS_H__
+#define __BARRACKS_H__
+
+#include "Static_Object.h"
 
 class Barracks : public Static_Object
 {
@@ -21,3 +24,5 @@ public:
 	SDL_Rect barracks_rect_1;
 	SDL_Rect barracks_rect_2;
 };
+
+#endif // !__BARRACKS_H__

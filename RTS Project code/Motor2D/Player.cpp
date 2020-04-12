@@ -10,6 +10,12 @@
 #include "Map.h"
 #include "SceneManager.h"
 
+#include "EntityManager.h"
+#include "Dynamic_Object.h"
+#include "Static_Object.h"
+#include "Gatherer.h"
+#include "Infantry.h"
+
 Player::Player() : building_selected(nullptr)
 {
 

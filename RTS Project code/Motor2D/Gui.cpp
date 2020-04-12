@@ -1,12 +1,14 @@
 #include "p2Defs.h"
-#include "p2Log.h"
 #include "Application.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
 #include "Audio.h"
 #include "Console.h"
+
 #include "Gui.h"
+#include "UI.h"
+#include "Entity.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -164,12 +166,12 @@ bool Gui::CleanUp()
 }
 
 //----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
-UI* Gui::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, Entity* attached_unit, UI* parent)
+UI* Gui::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent)
 {
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Image(element, x, y, hitbox, isVisible, isInteractible, isDraggable, listener,attached_unit, parent);
+	elem = new UI_Image(element, x, y, hitbox, isVisible, isInteractible, isDraggable, listener, parent);
 
 	if (elem != nullptr)
 	{
@@ -263,67 +265,7 @@ void Gui::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	BROFILER_CATEGORY("GUI_OnEventCall", Profiler::Color::NavajoWhite);
 
-	//// In-game menu
-	//if (element == App->scene1->in_buttons_resume && ui_event == UI_Event::UNCLICKED)
-	//{
-	//	Mix_HaltMusic();
-	//	SetElementsVisibility(App->scene1->main_in_menu, !App->scene1->main_in_menu->isVisible);
 
-	//	if (!App->scene1->main_in_menu->isVisible)
-	//	{
-	//		App->pause = false;
-	//	}
-
-	//	App->audio->PlayFx(play_fx, 0);
-	//	//App->audio->PlayMusic(App->scene->music_path.c_str());
-	//}
-
-	//if (element == App->scene1->in_buttons_save && ui_event == UI_Event::UNCLICKED)
-	//{
-	//	App->SaveGame("save_game.xml");
-	//	App->audio->PlayFx(save_fx, 0);
-	//}
-
-	//if (element == App->scene1->in_buttons_load && ui_event == UI_Event::UNCLICKED)
-	//{
-	//	Mix_HaltMusic();
-	//	SetElementsVisibility(App->scene1->main_in_menu, !App->scene1->main_in_menu->isVisible);
-	//	
-	//	if (!App->scene1->main_in_menu->isVisible)
-	//	{
-	//		App->pause = false;
-	//	}
-	//	
-	//	App->LoadGame("save_game.xml");
-	//	App->audio->PlayFx(play_fx, 0);
-	//	//App->audio->PlayMusic(App->scene->music_path.c_str());
-	//}
-
-	//if (element == App->scene1->in_buttons_exit && ui_event == UI_Event::UNCLICKED)
-	//{
-	//	game_started = false;
-	//	
-	//	if (!App->scene1->main_in_menu->isVisible)
-	//	{
-	//		App->pause = false;
-	//	}
-	//	
-	//	App->audio->PlayFx(exit_fx, 0);
-	//	//App->audio->PlayMusic(App->scene->music_path2.c_str());
-	//}
-
-	//if (element == App->scene1->unmute_in && ui_event == UI_Event::UNCLICKED)
-	//{
-	//	App->audio->volume = 100;
-	//	App->audio->PlayFx(nav_fx, 0);
-	//}
-
-	//if (element == App->scene1->mute_in && ui_event == UI_Event::UNCLICKED)
-	//{
-	//	App->audio->volume = 0;
-	//	App->audio->PlayFx(nav_fx, 0);
-	//}
-	//----------------------------------------------------------------------------------------------------------------------
 } 
 
 // --- Method to return the foremost element of the UI. (First in inverse order of draw)

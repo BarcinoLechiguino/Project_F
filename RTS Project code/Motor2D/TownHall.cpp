@@ -1,11 +1,6 @@
-#include "Application.h"
-#include "Render.h"
 #include "Map.h"
-#include "Textures.h"
-#include "Pathfinding.h"
-#include <vector>
-#include "Point.h"
 
+#include "TownHall.h"
 #include "EntityManager.h"
 
 TownHall::TownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)

@@ -1,11 +1,9 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#include <string>
 #include "SDL/include/SDL.h"
 #include "PugiXml\src\pugixml.hpp"
 
-#include "Application.h"
 #include "Module.h"
 #include "Input.h"
 #include "Gui.h"

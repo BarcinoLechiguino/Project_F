@@ -1,6 +1,5 @@
-#include "EntityManager.h"
-#include "Pathfinding.h"
 #include "Application.h"
+#include "Static_Object.h"
 
 Static_Object::Static_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
 {

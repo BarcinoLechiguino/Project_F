@@ -43,15 +43,15 @@ UI_InputBox::UI_InputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF
 	// --- Input Box Elements
 	if (!emptyElements)
 	{
-		this->background = UI_Image(UI_ELEMENT::IMAGE, x, y, hitbox, isVisible, false, false, nullptr,nullptr, this);
+		this->background = UI_Image(UI_ELEMENT::IMAGE, x, y, hitbox, isVisible, false, false, nullptr, this);
 		//this->cursor = UI_Image(UI_Element::IMAGE, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, this);
 	}
 	else
 	{
-		this->background = UI_Image(UI_ELEMENT::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, nullptr, this);
+		this->background = UI_Image(UI_ELEMENT::EMPTY, x, y, hitbox, isVisible, false, false, nullptr, this);
 	}
 
-	this->cursor = UI_Image(UI_ELEMENT::EMPTY, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, nullptr, nullptr, this);
+	this->cursor = UI_Image(UI_ELEMENT::EMPTY, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, nullptr, this);
 	this->text = UI_Text(UI_ELEMENT::TEXT, x + textOffset.x, y + textOffset.y, hitbox, font, fontColour, isVisible, false, false, nullptr, this, defaultString);
 	
 	// --- Text Variables

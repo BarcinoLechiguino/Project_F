@@ -3,7 +3,6 @@
 
 #include "Module.h"
 #include "SDL/include/SDL.h"
-#include <list>
 
 enum Object_Type;	//If it was enum class we would need to refer to the types with Object_Type::SOLID for examole.
 struct ObjectData;	//Declaration gives access to Object Data from here.

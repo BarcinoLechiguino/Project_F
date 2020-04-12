@@ -1,11 +1,9 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-#include <list>
 #include "PugiXml/src/pugixml.hpp"
-#include "Point.h"
-#include "p2Log.h"
 #include "Module.h"
+#include "Point.h"
 #include "Collisions.h"
 #include "SDL/include/SDL.h"
 

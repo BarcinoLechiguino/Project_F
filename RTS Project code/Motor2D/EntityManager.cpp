@@ -1,3 +1,5 @@
+#include "Brofiler\Brofiler.h"
+
 #include "p2Log.h"
 #include "Application.h"
 #include "Window.h"
@@ -5,9 +7,17 @@
 #include "Render.h"
 #include "Map.h"
 #include "Collisions.h"
-#include "Brofiler\Brofiler.h"
 
 #include "EntityManager.h"
+#include "Entity.h"
+#include "Dynamic_Object.h"
+#include "Static_Object.h"
+#include "Gatherer.h"
+#include "Infantry.h"
+#include "Enemy.h"
+#include "Rock.h"
+#include "TownHall.h"
+#include "Barracks.h"
 
 //#include "mmgr/mmgr.h"
 

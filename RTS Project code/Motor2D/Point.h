@@ -2,8 +2,8 @@
 // Point class    -----------
 // ----------------------------------------------------
 
-#ifndef __P2POINT_H__
-#define __P2POINT_H__
+#ifndef __POINT_H__
+#define __POINT_H__
 
 #include "p2Defs.h"
 #include <math.h>
@@ -131,4 +131,4 @@ public:
 typedef Point<int> iPoint;
 typedef Point<float> fPoint;
 
-#endif // __P2POINT_H__
+#endif // __POINT_H__

@@ -1,16 +1,9 @@
-#include "p2Log.h"
-#include "Point.h"
-#include "Application.h"
-#include "Module.h"
-#include "Render.h"
-#include "Textures.h"
-#include "Input.h"
 #include "Audio.h"
 #include "Collisions.h"
 #include "Map.h"
-#include "Pathfinding.h"
 #include "Gui.h"
 
+#include "Infantry.h"
 #include "EntityManager.h"
 
 

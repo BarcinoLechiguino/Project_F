@@ -1,6 +1,8 @@
 #ifndef __GATHERER_H__
 #define __GATHERER_H__
 
+#include "Dynamic_Object.h"
+
 class Gatherer : public Dynamic_Object
 {
 public:
