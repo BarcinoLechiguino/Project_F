@@ -42,15 +42,15 @@ public:
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
 	
-	bool IsUnit(Entity* entity);
-	bool IsBuilding(Entity* entity);
+	bool IsUnit(Entity* entity);											//Method that will return true if the entity passed as argument is a unit.
+	bool IsBuilding(Entity* entity);										//Method that will return true if the entity passed as argument is a building.
 
-	void SetEntityMap(int width, int height, Entity* data);
-	void ChangeEntityMap(const iPoint& pos, Entity* entity);
+	void SetEntityMap(int width, int height, Entity* data);					//Method that will allocate the necessary memory for the entity_map.
+	void ChangeEntityMap(const iPoint& pos, Entity* entity);				//Method that will modify the entity map when a unit or building is spawned.
 
-	bool CheckBoundaries(const iPoint& pos) const;
+	bool CheckBoundaries(const iPoint& pos) const;							//Method that will check whether or not the position passed as argument is inside the bounds of the entity_map.
 
-	Entity* GetEntityAt(const iPoint& pos) const;
+	Entity* GetEntityAt(const iPoint& pos) const;							//Method that will return whichever entity is at the given position.
 
 	void OnCollision(Collider* C1, Collider* C2);
 
@@ -69,9 +69,9 @@ public:
 
 	std::vector<Dynamic_Object*>	dynamic_objects;
 
-	Entity**						entity_map;
-	int								entity_map_width;
-	int								entity_map_height;
+	Entity**						entity_map;			//Array that will be used to keep track at which position are all entities at all times.
+	int								entity_map_width;	//Width of the entity_map.
+	int								entity_map_height;	//Height of the entity_map.
 
 	float							accumulated_time;	//Accumulates dt as time goes on.
 	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
