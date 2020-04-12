@@ -55,5 +55,7 @@ public:
 	//selection
 	bool			is_selecting;
 
-	std::vector<Dynamic_Object*> units_selected;
+	std::vector<Dynamic_Object*>	units_selected;
+
+	Static_Object*					building_selected;
 };

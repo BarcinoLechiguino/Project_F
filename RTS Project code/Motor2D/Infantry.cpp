@@ -18,7 +18,7 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 {
 	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/infantry_lowres.png");
 
-	selectable_unit = true;
+	is_selectable = true;
 
 	speed = 500;
 

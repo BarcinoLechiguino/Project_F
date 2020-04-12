@@ -52,9 +52,6 @@
     <ClCompile Include="Collisions.cpp">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClCompile>
-    <ClCompile Include="Input.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClCompile>
     <ClCompile Include="Console.cpp">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
@@ -62,19 +59,16 @@
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="Textures.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="Render.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="Fonts.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>Desenvolupament  ========\Modules\Map</Filter>
@@ -163,6 +157,12 @@
     <ClCompile Include="UI_Healthbar.cpp">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+    </ClCompile>
+    <ClCompile Include="Input.cpp">
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -231,9 +231,6 @@
     <ClInclude Include="Collisions.h">
       <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClInclude>
     <ClInclude Include="Console.h">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
@@ -241,19 +238,19 @@
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Textures.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Render.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Fonts.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h">
-      <Filter>Desenvolupament  ========\Modules\Multimedia</Filter>
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
       <Filter>Desenvolupament  ========\Modules\Map</Filter>
@@ -348,6 +345,9 @@
     <ClInclude Include="UI_Healthbar.h">
       <Filter>Desenvolupament  ========\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
@@ -392,9 +392,6 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Interactions">
       <UniqueIdentifier>{cf73c846-5205-46c2-b047-e3046a31911b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Multimedia">
-      <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
     </Filter>
     <Filter Include="Desenvolupament  ========\XML Files">
       <UniqueIdentifier>{a25f4839-5bf5-43fa-8c51-a0dd4ed26bb0}</UniqueIdentifier>
@@ -443,6 +440,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Modules\Scenes\In-Game Scenes">
       <UniqueIdentifier>{c255404f-2103-4ee7-af32-661d9819c021}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Core\Core Modules">
+      <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

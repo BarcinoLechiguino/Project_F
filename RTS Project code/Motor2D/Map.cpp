@@ -664,7 +664,7 @@ bool Map::CreateEntityMap(int& width, int& height, Entity** buffer)
 	bool ret = false;
 	
 	Entity** map = new Entity*[data.width * data.height];
-	memset(map, 1, data.width * data.height);							//THIS HERE
+	//memset(map, 1, data.width * data.height);							//THIS HERE
 
 	for (int y = 0; y < data.height; ++y)
 	{

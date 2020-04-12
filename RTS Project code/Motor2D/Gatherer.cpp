@@ -12,7 +12,7 @@ Gatherer::Gatherer(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)
 
 	entity_sprite_section = { 52,0,52,49 };
 
-	selectable_unit = true;
+	is_selectable = true;
 	path_full = false;
 
 	speed = 500;

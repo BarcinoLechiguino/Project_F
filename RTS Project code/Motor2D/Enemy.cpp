@@ -17,7 +17,7 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 {
 	entity_sprite = App->tex->Load("maps/debug_enemy_tile.png");
 
-	selectable_unit = false;
+	is_selectable = false;
 
 	speed = 100;
 	damage = 30;
