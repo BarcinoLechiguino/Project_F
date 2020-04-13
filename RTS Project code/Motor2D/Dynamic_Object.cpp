@@ -188,9 +188,9 @@ void Dynamic_Object::Move(float dt)
 	switch (unit_state)
 	{
 	case ENTITY_STATE::PATHING_DOWN_LEFT:
-
-		pixel_position.x -= speed * 0.58f * dt;
-		pixel_position.y += speed * 0.42f * dt;
+		
+		pixel_position.x -= speed * 0.803f * dt;
+		pixel_position.y += speed * 0.59f * dt;
 
 		if (pixel_position.x <= next_tile_position.x || pixel_position.y >= next_tile_position.y)
 		{
@@ -201,8 +201,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_DOWN_RIGHT:
 
-		pixel_position.x += speed * 0.58f * dt;
-		pixel_position.y += speed * 0.42f * dt;
+		pixel_position.x += speed * 0.803f * dt;
+		pixel_position.y += speed * 0.59f * dt;
 
 		if (pixel_position.x >= next_tile_position.x || pixel_position.y >= next_tile_position.y)
 		{
@@ -213,8 +213,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_UP_LEFT:
 
-		pixel_position.x -= speed * 0.58f * dt;
-		pixel_position.y -= speed * 0.42f * dt;
+		pixel_position.x -= speed * 0.803f * dt;
+		pixel_position.y -= speed * 0.59f * dt;
 
 		if (pixel_position.x <= next_tile_position.x || pixel_position.y <= next_tile_position.y)
 		{
@@ -225,8 +225,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_UP_RIGHT:
 
-		pixel_position.x += speed * 0.58f * dt;
-		pixel_position.y -= speed * 0.42f * dt;
+		pixel_position.x += speed * 0.803f * dt;
+		pixel_position.y -= speed * 0.59f * dt;
 
 		if (pixel_position.x >= next_tile_position.x || pixel_position.y <= next_tile_position.y)
 		{

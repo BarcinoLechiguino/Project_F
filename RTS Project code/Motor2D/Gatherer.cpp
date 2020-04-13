@@ -8,6 +8,8 @@
 
 Gatherer::Gatherer(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)
 {
+	target_to_gather = nullptr;
+
 	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/gatherer2_lowres.png");
 
 	entity_sprite_section = { 52,0,52,49 };

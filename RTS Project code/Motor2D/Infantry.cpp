@@ -26,6 +26,8 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 	current_health = max_health;
 	damage = 30;
 
+	entity_sprite_section = { 58,0,58,47 }; //Down Right
+
 	healthbar_background_rect = { 618, 12, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 	healthbar_rect = { 618, 23, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 

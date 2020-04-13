@@ -23,7 +23,9 @@ public:
 
 	void OnCollision(Collider* C1, Collider* C2);
 
+public:
 
+	Entity* target_to_gather;
 };
 
 #endif // __ENEMY_H__
