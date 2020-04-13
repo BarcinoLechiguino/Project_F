@@ -259,7 +259,10 @@ void Player::SelectionShortcuts()
 
 		for (; item != App->entity_manager->dynamic_objects.end(); ++item)
 		{
-			units_selected.push_back((*item));
+			if ((*item)->is_selectable)
+			{
+				units_selected.push_back((*item));
+			}
 		}
 
 		LOG("All units selected. Total unit amount: %d", units_selected.size());

@@ -36,9 +36,9 @@ bool EntityManager::Awake(pugi::xml_node& config)
 	this->config = config;
 
 	cycle_length = config.child("enemies").child("update_cycle_length").attribute("length").as_float(); //Fix pathfinding so it works with doLogic
-
-	//Iterates all entities and calls their Awake() methods.
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end() ; entity_iterator++)
+																										
+	
+	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end() ; entity_iterator++) //Iterates all entities and calls their Awake() methods.
 	{
 		//entity_iterator->data->Awake(config.child(entity_iterator->data->name.GetString()));
 	}
@@ -48,6 +48,8 @@ bool EntityManager::Awake(pugi::xml_node& config)
 
 bool EntityManager::Start()
 {
+	LoadEntityTextures();
+	
 	//Iterates all entities in the entities list and calls their Start() method.
 	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
@@ -112,7 +114,9 @@ bool EntityManager::CleanUp()
 		RELEASE((*entity_iterator));
 	}
 
-	entities.clear();									//Deletes all items in the entities list and frees all allocated memory.
+	ClearAllEntityVectors();
+
+	UnLoadEntityTextures();
 
 	return true;
 }
@@ -168,7 +172,7 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 		case ENTITY_TYPE::TOWNHALL:
 			entity = new TownHall(x, y, type);
-			town_hall.push_back((TownHall*)entity);
+			town_halls.push_back((TownHall*)entity);
 		break;
 
 		case ENTITY_TYPE::BARRACKS:
@@ -204,10 +208,68 @@ void EntityManager::DestroyEntities()
 		//break;
 	}
 	
-	entities.clear();
-	dynamic_objects.clear();
-	gatherers.clear();
-	infantries.clear();
+	ClearAllEntityVectors();
+}
+
+void EntityManager::LoadEntityTextures()
+{
+	config_file.load_file("config.xml");
+
+	pugi::xml_node entity_textures = config_file.child("config").child("entities").child("textures");
+	
+	gatherer_tex	= App->tex->Load(entity_textures.child("gatherer_texture").attribute("path").as_string());
+	infantry_tex	= App->tex->Load(entity_textures.child("infantry_texture").attribute("path").as_string());
+	enemy_tex		= App->tex->Load(entity_textures.child("enemy_texture").attribute("path").as_string());
+	townhall_tex	= App->tex->Load(entity_textures.child("townhall_texture").attribute("path").as_string());
+	barracks_tex	= App->tex->Load(entity_textures.child("barracks_texture").attribute("path").as_string());
+	rock_tex		= App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
+}
+
+void EntityManager::UnLoadEntityTextures()
+{
+	App->tex->UnLoad(gatherer_tex);
+	App->tex->UnLoad(infantry_tex);
+	App->tex->UnLoad(enemy_tex);
+	App->tex->UnLoad(townhall_tex);
+	App->tex->UnLoad(barracks_tex);
+	App->tex->UnLoad(rock_tex);
+
+	gatherer_tex	= nullptr;
+	infantry_tex	= nullptr;
+	enemy_tex		= nullptr;
+	townhall_tex	= nullptr;
+	barracks_tex	= nullptr;
+	rock_tex		= nullptr;
+}
+
+SDL_Texture* EntityManager::GetGathererTexture() const
+{
+	return gatherer_tex;
+}
+
+SDL_Texture* EntityManager::GetInfantryTexture() const
+{
+	return infantry_tex;
+}
+
+SDL_Texture* EntityManager::GetEnemyTexture() const
+{
+	return enemy_tex;
+}
+
+SDL_Texture* EntityManager::GetTownHallTexture() const
+{
+	return townhall_tex;
+}
+
+SDL_Texture* EntityManager::GetBarracksTexture() const
+{
+	return barracks_tex;
+}
+
+SDL_Texture* EntityManager::GetRockTexture() const
+{
+	return rock_tex;
 }
 
 bool EntityManager::IsUnit(Entity* entity)
@@ -281,4 +343,17 @@ Entity* EntityManager::GetEntityAt(const iPoint& pos) const
 	{
 		return entity_map[(pos.y * entity_map_width) + pos.x];
 	}
+}
+
+void EntityManager::ClearAllEntityVectors()
+{
+	entities.clear();
+	dynamic_objects.clear();
+	static_objects.clear();
+	gatherers.clear();
+	infantries.clear();
+	enemies.clear();
+	town_halls.clear();
+	barracks.clear();
+	rocks.clear();
 }

@@ -7,7 +7,7 @@
 
 Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
-	entity_sprite = App->tex->Load("maps/debug_enemy_tile.png");
+	entity_sprite = App->entity_manager->GetEnemyTexture();
 
 	is_selectable = false;
 

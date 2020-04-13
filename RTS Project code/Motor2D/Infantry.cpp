@@ -9,7 +9,7 @@
 
 Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
-	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/infantry_lowres.png");
+	entity_sprite = App->entity_manager->GetInfantryTexture();
 
 	is_selectable = true;
 

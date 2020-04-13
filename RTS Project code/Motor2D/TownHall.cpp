@@ -6,7 +6,7 @@
 TownHall::TownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 {
 	//entity_sprite = App->tex->Load("maps/town_hall_holder.png");
-	entity_sprite = App->tex->Load("maps/hall.png");
+	entity_sprite = App->entity_manager->GetTownHallTexture();
 	
 	hall_rect = {0,0,155,138};
 

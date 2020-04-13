@@ -41,6 +41,15 @@
   </map>
 
   <entities>
+    <textures>
+      <gatherer_texture path="textures/Spritesheets/Entities/gatherer2_lowres.png"/>
+      <infantry_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
+      <enemy_texture path="maps/debug_enemy_tile.png"/>
+      <townhall_texture path="maps/hall.png"/>
+      <barracks_texture path="maps/Barracks.png"/>
+      <rock_texture path="maps/debug_tile.png"/>
+    </textures>
+    
     <player>
     </player>
 
