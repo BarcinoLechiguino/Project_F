@@ -1,4 +1,7 @@
-#include "Module.h"
+#ifndef __TOWNHALL_H__
+#define __TOWNHALL_H__
+
+#include "Static_Object.h"
 
 class TownHall : public Static_Object
 {
@@ -20,3 +23,5 @@ public:
 
 	SDL_Rect hall_rect;
 };
+
+#endif // !__TOWNHALL_H__

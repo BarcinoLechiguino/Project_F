@@ -1,8 +1,13 @@
+#ifndef __PLAYER_H__
+#define __PLAYER_H__
+
 #include "Module.h"
 #include "Point.h"
 #include "SDL/include/SDL_rect.h"
-#include "EntityManager.h"
-#include <vector>
+
+class Pathfinding;
+class Dynamic_Object;
+class Static_Object;
 
 class Player : public Module
 {
@@ -26,6 +31,8 @@ public:
 	void CameraController(float dt);
 
 	void SelectionRect();
+
+	void SelectionOnClick();							// Method that will select whichever entity is at the mouse's position when it is right-clicked.
 
 	void SelectionShortcuts();
 
@@ -53,5 +60,9 @@ public:
 	//selection
 	bool			is_selecting;
 
-	std::vector<Dynamic_Object*> units_selected;
+	std::vector<Dynamic_Object*>	units_selected;
+
+	Static_Object*					building_selected;
 };
+
+#endif // !__PLAYER_H__

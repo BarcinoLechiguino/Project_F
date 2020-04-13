@@ -4,14 +4,15 @@
 
 #include "Module.h"
 #include "Point.h"
-#include <vector>
-#include "EntityManager.h"
 
 #define DEFAULT_PATH_LENGTH 50
 #define INVALID_WALK_CODE 255
 #define OCCUPIED 2
 #define WALKABLE 1
 #define NON_WALKABLE 0
+
+class Dynamic_Object;
+
 // --------------------------------------------------
 // Recommended reading:
 // Intro: http://www.raywenderlich.com/4946/introduction-to-a-pathfinding

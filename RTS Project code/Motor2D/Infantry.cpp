@@ -1,16 +1,9 @@
-#include "p2Log.h"
-#include "Point.h"
-#include "Application.h"
-#include "Module.h"
-#include "Render.h"
-#include "Textures.h"
-#include "Input.h"
 #include "Audio.h"
 #include "Collisions.h"
 #include "Map.h"
-#include "Pathfinding.h"
 #include "Gui.h"
 
+#include "Infantry.h"
 #include "EntityManager.h"
 
 
@@ -18,7 +11,7 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 {
 	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/infantry_lowres.png");
 
-	selectable_unit = true;
+	is_selectable = true;
 
 	speed = 500;
 
@@ -63,7 +56,8 @@ bool Infantry::Update(float dt, bool doLogic)
 
 
 	//change section according to pathing. 
-	switch (this->unit_state) {
+	switch (this->unit_state) 
+	{
 	case ENTITY_STATE::PATHING_DOWN:
 		entity_sprite_section = { 71,47,70,52 };
 		break;

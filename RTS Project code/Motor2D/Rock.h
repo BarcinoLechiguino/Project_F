@@ -1,4 +1,7 @@
-#include "Module.h"
+#ifndef __ROCK_H__
+#define __ROCK_H__
+
+#include "Static_Object.h"
 
 class Rock : public Static_Object
 {
@@ -22,3 +25,5 @@ public:
 
 	int gather_time;
 };
+
+#endif // !__ROCK_H__

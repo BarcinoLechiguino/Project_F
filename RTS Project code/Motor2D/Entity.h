@@ -1,10 +1,16 @@
 ﻿#ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "Module.h"
-#include "Point.h"
 #include "SDL/include/SDL_rect.h"
+
+#include "Application.h"
+//#include "Module.h"
+#include "Point.h"
 #include "Timer.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Pathfinding.h"
+#include "Gui.h"
 
 class Animation;
 class UI_Image;
@@ -36,6 +42,7 @@ struct EntityData
 class Entity
 {
 public:
+	Entity();
 	Entity(int x, int y, ENTITY_TYPE type);	// here we will set initial position
 
 	//Must be virtual so when an entity is executed the compiler goes to the entity's methods instead of these

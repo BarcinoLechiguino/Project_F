@@ -1,23 +1,15 @@
-#include "Application.h"
-#include "Module.h"
-#include "Point.h"
-#include "Render.h"
-#include "Input.h"
-#include "p2Log.h"
-#include "Map.h"
-#include "Textures.h"
-#include "Collisions.h"
+//#include "Map.h"
+//#include "Collisions.h"
 #include "Audio.h"
-#include "Pathfinding.h"
-#include "SceneManager.h"
 
 #include "EntityManager.h"
+#include "Enemy.h"
 
 Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
 	entity_sprite = App->tex->Load("maps/debug_enemy_tile.png");
 
-	selectable_unit = false;
+	is_selectable = false;
 
 	speed = 100;
 	damage = 30;
@@ -88,8 +80,8 @@ void Enemy::OnCollision(Collider* C1, Collider* C2)
 
 void Enemy::SetTarget()
 {
-	if (App->entityManager->infantries.size() != 0)
+	if (App->entity_manager->infantries.size() != 0)
 	{
-		target = *App->entityManager->infantries.begin();
+		target = (Entity*)*App->entity_manager->infantries.begin();
 	}
 }

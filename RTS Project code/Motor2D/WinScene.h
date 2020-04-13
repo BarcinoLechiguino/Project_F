@@ -1,7 +1,6 @@
 #ifndef __WIN_SCENE_H__
 #define __WIN_SCENE_H__
 
-#include "Module.h"
 #include "Scene.h"
 
 class WinScene : public Scene

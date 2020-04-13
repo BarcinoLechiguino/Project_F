@@ -6,10 +6,10 @@
 #include "Input.h"
 #include "SDL/include/SDL.h"
 #include "Application.h"
-#include "Entity.h"
 
 //class iPoint;			//If declared as a forward declaration instead of an include, 
 //class SDL_Rect;		//then iPoint and SDL_Rect need to be pointers.
+class Entity;
 
 enum class UI_ELEMENT 
 {

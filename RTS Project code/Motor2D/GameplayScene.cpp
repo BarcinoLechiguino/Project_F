@@ -16,6 +16,7 @@
 #include "Brofiler\Brofiler.h"
 
 #include "EntityManager.h"
+#include "Entity.h"
 
 //#include "mmgr/mmgr.h"
 
@@ -134,7 +135,7 @@ bool GameplayScene::PostUpdate()
 bool GameplayScene::CleanUp()
 {
 	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
-	App->entityManager->DestroyEntities();					//Destroys all non-player entities.
+	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui->CleanUp();
 	
@@ -153,13 +154,8 @@ void GameplayScene::InitScene()
 
 	if (ret)
 	{
-		int w, h;
-		uchar* data = NULL;
-		if (App->map->CreateWalkabilityMap(w, h, &data))
-		{
-			App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
-		}
-		RELEASE_ARRAY(data);											//Frees all memory allocated to the data array.
+		SetWalkabilityMap();
+		SetEntitiesMap();
 	}
 
 	path_debug_tex = App->tex->Load("maps/path2.png");
@@ -173,6 +169,31 @@ void GameplayScene::InitScene()
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
+}
+
+void GameplayScene::SetWalkabilityMap()
+{
+	int w, h;
+	uchar* data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &data))
+	{
+		App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
+	}
+
+	RELEASE_ARRAY(data);											//Frees all memory allocated to the data array.
+}
+
+void GameplayScene::SetEntitiesMap()
+{
+	int w, h;
+	Entity* entity = nullptr;
+
+	if (App->map->CreateEntityMap(w, h, &entity))
+	{
+		App->entity_manager->SetEntityMap(w, h, entity);
+	}
+	
+	RELEASE_ARRAY(entity);
 }
 
 void GameplayScene::LoadGuiElements()
@@ -259,27 +280,27 @@ void GameplayScene::UnitDebugKeys()
 	{
 		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
 		{
-			(Gatherer*)App->entityManager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
 		{
-			(Barracks*)App->entityManager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 		{
-			(TownHall*)App->entityManager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
 		{
-			(Enemy*)App->entityManager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
 		{
-			(Infantry*)App->entityManager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y);
 		}
 		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 		{
-			(Rock*)App->entityManager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y);
 		}
 	}
 }

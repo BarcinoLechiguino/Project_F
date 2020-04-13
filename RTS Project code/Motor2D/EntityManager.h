@@ -1,34 +1,27 @@
 #ifndef __ENTITY_MANAGER_H__
 #define __ENTITY_MANAGER_H__
 
-#include <list>
 #include <algorithm>
 #include "Module.h"
 #include "Textures.h"
-
-#include "Entity.h"		
-#include "Dynamic_Object.h"
-#include "Static_Object.h"
-
-#include "Rock.h"
-#include "Enemy.h"
-#include "Gatherer.h"
-#include "TownHall.h"
-#include "Barracks.h"
-#include "Infantry.h"
+#include "Point.h"
 
 #define MAX_ENEMIES 200
 
 
 struct SDL_Texture;
 
+class Entity;
+enum class ENTITY_TYPE;
 
-
-struct EnemyData
-{
-	ENTITY_TYPE		type;
-	iPoint			position;
-};
+class Dynamic_Object;
+class Static_Object;
+class Gatherer;
+class Infantry;
+class Enemy;
+class Rock;
+class TownHall;
+class Barracks;
 
 class EntityManager : public Module
 {
@@ -49,6 +42,16 @@ public:
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
 	
+	bool IsUnit(Entity* entity);											//Method that will return true if the entity passed as argument is a unit.
+	bool IsBuilding(Entity* entity);										//Method that will return true if the entity passed as argument is a building.
+
+	void SetEntityMap(int width, int height, Entity* data);					//Method that will allocate the necessary memory for the entity_map.
+	void ChangeEntityMap(const iPoint& pos, Entity* entity);				//Method that will modify the entity map when a unit or building is spawned.
+
+	bool CheckBoundaries(const iPoint& pos) const;							//Method that will check whether or not the position passed as argument is inside the bounds of the entity_map.
+
+	Entity* GetEntityAt(const iPoint& pos) const;							//Method that will return whichever entity is at the given position.
+
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
@@ -56,7 +59,6 @@ public:
 	pugi::xml_node					config;
 	
 	std::list<Entity*>				entities;	
-	std::list<EntityData*>			entity_data_list;	//List of the position and ENTITY_TYPE data members of enemy entities.  Change for an array, its faster.
 
 	std::vector<Rock*>				rocks;
 	std::vector<Enemy*>				enemies;
@@ -66,6 +68,10 @@ public:
 	std::vector<Infantry*>			infantries;
 
 	std::vector<Dynamic_Object*>	dynamic_objects;
+
+	Entity**						entity_map;			//Array that will be used to keep track at which position are all entities at all times.
+	int								entity_map_width;	//Width of the entity_map.
+	int								entity_map_height;	//Height of the entity_map.
 
 	float							accumulated_time;	//Accumulates dt as time goes on.
 	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 

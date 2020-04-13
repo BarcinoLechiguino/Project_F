@@ -3,6 +3,8 @@
 
 #include "UI.h"
 
+class Entity;
+
 class UI_Healthbar : public UI
 {
 public:

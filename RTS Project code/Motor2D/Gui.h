@@ -4,7 +4,7 @@
 #include "Module.h"
 #include "Textures.h"
 #include "Fonts.h"
-#include "UI.h"
+//#include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
@@ -12,7 +12,10 @@
 #include "UI_Scrollbar.h"
 #include "UI_Healthbar.h"
 
-//class UI;
+class UI;
+enum class UI_ELEMENT;
+
+class Entity;
 
 #define CURSOR_WIDTH 2
 #define DRAG_LIMIT_OFFSET 1
@@ -34,7 +37,7 @@ public:
 	/*const*/ SDL_Texture* GetAtlas() const;
 
 	UI* CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect rect, bool isVisible = false, bool isInteractible = false, bool isDraggable = false
-				, Module* listener = nullptr, Entity* attached_unit = nullptr, UI* parent = nullptr);
+				, Module* listener = nullptr, UI* parent = nullptr);
 
 	UI* CreateText(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible = true, bool isInteractible = false, bool isDraggable = false
 				, Module* listener = nullptr, UI* parent = nullptr, std::string* string = nullptr

@@ -44,6 +44,7 @@ UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool isVisible, bool isIn
 
 	if (parent != NULL)															//If a parent is passed as argument.
 	{
+
 		int localPosX = x - this->parent->GetScreenPos().x;						//Gets the local position of the Button element in the X Axis.
 		int localPosY = y - this->parent->GetScreenPos().y;						//Gets the local position of the Button element in the Y Axis.
 		

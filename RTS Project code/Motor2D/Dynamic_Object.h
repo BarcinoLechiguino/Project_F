@@ -1,5 +1,8 @@
-#include "Module.h"
-#include <vector>
+#ifndef __DYNAMIC_OBJECT_H__
+#define __DYNAMIC_OBJECT_H__
+
+#include "Input.h"				// Make the Ally parent class and put it there.
+#include "Entity.h"
 
 enum class PATHFINDING_STATE
 {
@@ -50,22 +53,23 @@ public:
 	
 public:
 
-	float			speed;
+	float							speed;
 
+	bool							path_full;
+	bool							is_selectable;
 
-	bool			path_full;
-	bool			selectable_unit;
+	ENTITY_STATE					unit_state;
+	PATHFINDING_STATE				path_state;
 
-	ENTITY_STATE	unit_state;
-	PATHFINDING_STATE	path_state;
+	std::vector<iPoint>				entity_path;
+	std::vector<iPoint>::iterator	current_path_tile;
 
-	std::vector<iPoint> entity_path;
-	std::vector<iPoint>::iterator current_path_tile;
+	SDL_Rect						entity_sprite_section;
 
-	SDL_Rect entity_sprite_section;
-
-	iPoint next_tile;
-	iPoint next_tile_position;
-	iPoint target_tile;
-	iPoint occupied_tile;
+	iPoint							next_tile;
+	iPoint							next_tile_position;
+	iPoint							target_tile;
+	iPoint							occupied_tile;
 };
+
+#endif // !__DYNAMIC_OBJECT_H__

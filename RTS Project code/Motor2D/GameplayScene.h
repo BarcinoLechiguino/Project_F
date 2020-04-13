@@ -1,13 +1,10 @@
 #ifndef __GAMEPLAY_SCENE_H__
 #define __GAMEPLAY_SCENE_H__
 
-#include "Module.h"
 #include "PerfTimer.h"
 #include "Timer.h"
 #include "Gui.h"
-#include "UI_Image.h"
 #include "Scene.h"
-#include <vector>
 
 #include "EntityManager.h"
 
@@ -46,6 +43,9 @@ public:
 
 public:
 	void InitScene();
+
+	void SetWalkabilityMap();
+	void SetEntitiesMap();
 
 	void LoadGuiElements();
 	
