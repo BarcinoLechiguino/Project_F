@@ -3,7 +3,6 @@
 
 #include "Module.h"
 #include "Render.h"
-#include "p2Defs.h"
 
 struct SDL_Texture;
 struct SDL_Surface;

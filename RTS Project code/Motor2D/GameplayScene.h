@@ -1,15 +1,12 @@
 #ifndef __GAMEPLAY_SCENE_H__
 #define __GAMEPLAY_SCENE_H__
 
-#include "PerfTimer.h"
-#include "Timer.h"
-#include "Gui.h"
 #include "Scene.h"
 
-#include "EntityManager.h"
-
-
 struct SDL_Texture;
+
+class Timer;
+class PerfTimer;
 
 class UI;
 class UI_Image;
@@ -17,12 +14,6 @@ class UI_Text;
 class UI_Button;
 class UI_InputBox;
 class UI_Scrollbar;
-
-enum ListOfMapNames
-{
-	TutorialLevel = 0,
-	FirstLevel
-};
 
 class GameplayScene : public Scene
 {

@@ -2,23 +2,35 @@
 #define __GUI_H__
 
 #include "Module.h"
-#include "Textures.h"
-#include "Fonts.h"
-//#include "UI.h"
+#include "Point.h"
+
+#define CURSOR_WIDTH 2
+#define DRAG_LIMIT_OFFSET 1
+
+/*#include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
 #include "UI_InputBox.h"
 #include "UI_Scrollbar.h"
-#include "UI_Healthbar.h"
+#include "UI_Healthbar.h"*/
 
-class UI;
-enum class UI_ELEMENT;
+struct SDL_Color;
+struct SDL_Texture;
+struct _TTF_Font;
 
 class Entity;
 
-#define CURSOR_WIDTH 2
-#define DRAG_LIMIT_OFFSET 1
+class UI;
+enum class UI_ELEMENT;
+//enum class UI_EVENT;
+
+class UI_Image;
+class UI_Text;
+class UI_Button;
+class UI_InputBox;
+class UI_Scrollbar;
+class UI_Healthbar;
 
 class Gui : public Module
 {

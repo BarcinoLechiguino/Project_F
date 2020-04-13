@@ -1,4 +1,12 @@
+#include "Application.h"
 #include "Window.h"
+#include "Fonts.h"
+#include "Input.h"
+#include "Gui.h"
+#include "UI.h"
+#include "UI_Button.h"
+#include "TransitionManager.h"
+
 #include "LogoScene.h"
 
 LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE)

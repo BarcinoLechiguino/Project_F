@@ -1,14 +1,22 @@
-#include "p2Defs.h"
+#include "p2Log.h"
+
 #include "Application.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
 #include "Audio.h"
+#include "Fonts.h"
 #include "Console.h"
+#include "Entity.h"
 
 #include "Gui.h"
 #include "UI.h"
-#include "Entity.h"
+#include "UI_Image.h"
+#include "UI_Text.h"
+#include "UI_Button.h"
+#include "UI_InputBox.h"
+#include "UI_Scrollbar.h"
+#include "UI_Healthbar.h"
 
 #include "Brofiler\Brofiler.h"
 

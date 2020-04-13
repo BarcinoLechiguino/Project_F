@@ -1,7 +1,7 @@
 #ifndef __BAR_H__
 #define __BAR_H__
 
-#include "Color.h"
+struct Color;
 
 struct Bar
 {

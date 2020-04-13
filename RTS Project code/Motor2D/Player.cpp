@@ -1,20 +1,23 @@
-#include "Player.h"
+#include "p2Log.h"
+
 #include "Input.h"
 #include "Render.h"
 #include "Application.h"
 #include "Window.h"
 #include "Textures.h"
-#include "p2Log.h"
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Map.h"
 #include "SceneManager.h"
+#include "Scene.h"
 
 #include "EntityManager.h"
 #include "Dynamic_Object.h"
 #include "Static_Object.h"
 #include "Gatherer.h"
 #include "Infantry.h"
+
+#include "Player.h"
 
 Player::Player() : building_selected(nullptr)
 {

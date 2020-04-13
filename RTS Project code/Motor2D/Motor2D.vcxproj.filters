@@ -408,9 +408,6 @@
     <Filter Include="Engine  ===========\Modules\Interactions">
       <UniqueIdentifier>{cf73c846-5205-46c2-b047-e3046a31911b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine  ===========\Modules\Multimedia">
-      <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine  ===========\Modules\UI">
       <UniqueIdentifier>{9568892c-efcc-4eec-89c1-d01ef8e2d712}</UniqueIdentifier>
     </Filter>
@@ -449,6 +446,9 @@
     </Filter>
     <Filter Include="Engine  ===========\Sources">
       <UniqueIdentifier>{2c952b81-74fb-4fef-9e28-a7299a9498f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Multimedia">
+      <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

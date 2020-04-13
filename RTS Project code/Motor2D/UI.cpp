@@ -1,11 +1,9 @@
-#include "p2Log.h"
 #include "Application.h"
 #include "Render.h"
 #include "Input.h"
 #include "Gui.h"
+
 #include "UI.h"
-#include "UI_Image.h"
-#include "UI_Text.h"
 
 UI::UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
 	element(element),										//The variables of the UI element are initialized at the constructor.

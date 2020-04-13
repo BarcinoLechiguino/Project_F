@@ -2,15 +2,7 @@
 #define __ENTITY_H__
 
 #include "SDL/include/SDL_rect.h"
-
-#include "Application.h"
-//#include "Module.h"
-#include "Point.h"
-#include "Timer.h"
-#include "Render.h"
-#include "Textures.h"
-#include "Pathfinding.h"
-#include "Gui.h"
+#include "Point.h"						//Required. For some reason the iPoint namespace does not work without it, even with a forward declaration like class iPoint.
 
 class Animation;
 class UI_Image;
@@ -19,7 +11,6 @@ class UI_Healthbar;
 struct Collider;
 struct SDL_Texture;	
 struct SDL_Rect;
-
 
 
 enum class ENTITY_TYPE

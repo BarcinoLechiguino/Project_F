@@ -1,9 +1,8 @@
 #ifndef __ENTITY_MANAGER_H__
 #define __ENTITY_MANAGER_H__
 
-#include <algorithm>
+//#include <algorithm>
 #include "Module.h"
-#include "Textures.h"
 #include "Point.h"
 
 #define MAX_ENEMIES 200

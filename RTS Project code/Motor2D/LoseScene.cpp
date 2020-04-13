@@ -1,4 +1,12 @@
+#include "Application.h"
 #include "Window.h"
+#include "Fonts.h"
+#include "Input.h"
+#include "Gui.h"
+#include "UI.h"
+#include "UI_Button.h"
+#include "TransitionManager.h"
+
 #include "LoseScene.h"
 
 LoseScene::LoseScene() : Scene(SCENES::LOSE_SCENE)

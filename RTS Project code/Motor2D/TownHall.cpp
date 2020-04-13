@@ -1,7 +1,15 @@
+#include "Application.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Input.h"
+#include "Audio.h"
 #include "Map.h"
+#include "Pathfinding.h"
+#include "Gui.h"
+#include "EntityManager.h"
 
 #include "TownHall.h"
-#include "EntityManager.h"
+
 
 TownHall::TownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 {

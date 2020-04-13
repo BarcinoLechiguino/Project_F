@@ -2,7 +2,8 @@
 #define __FADE_TO_COLOUR_H__
 
 #include "Transition.h"
-#include "Color.h"
+
+struct Color;
 
 class FadeToColour : public Transition
 {

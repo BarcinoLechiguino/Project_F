@@ -1,24 +1,34 @@
-#include "p2Defs.h"
-#include "p2Log.h"
-#include "Application.h"
-#include "Textures.h"
-#include "Audio.h"
-#include "Render.h"
-#include "Window.h"
-#include "Map.h"
-#include "Console.h"
-#include "Collisions.h"
-#include "Pathfinding.h"
-#include "Player.h"
-#include "GameplayScene.h"
-#include "Scene.h"
-
 #include "Brofiler\Brofiler.h"
+//#include "mmgr/mmgr.h"
+
+#include "p2Log.h"
+
+#include "Application.h"
+#include "Window.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Fonts.h"
+#include "Input.h"
+#include "Audio.h"
+#include "Collisions.h"
+#include "Map.h"
+#include "Pathfinding.h"
+#include "Console.h"
+#include "Player.h"
+#include "Scene.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
 
-//#include "mmgr/mmgr.h"
+#include "Gui.h"
+#include "UI.h"
+#include "UI_Text.h"
+#include "UI_Button.h"
+
+#include "TransitionManager.h"
+
+#include "GameplayScene.h"
+
 
 GameplayScene::GameplayScene() : Scene(SCENES::GAMEPLAY_SCENE)
 {

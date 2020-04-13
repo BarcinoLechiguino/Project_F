@@ -1,10 +1,13 @@
+#include "Brofiler\Brofiler.h"
+
 #include "Application.h"
+#include "Textures.h"
+#include "Input.h"
 #include "Fonts.h"
 #include "Gui.h"
-#include "UI.h"
+
 #include "UI_Text.h"
 
-#include "Brofiler\Brofiler.h"
 
 //UI_Text can be interactible and draggable. Can potentially have all events.
 //This element can receive up to 5 different strings (one for each possible event).

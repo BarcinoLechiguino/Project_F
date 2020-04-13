@@ -2,9 +2,9 @@
 #define __RENDER_H__
 
 #include "SDL/include/SDL.h"
-#include "Point.h"
 #include "Module.h"
 #include "Application.h"
+#include "Point.h"
 
 class Render : public Module
 {

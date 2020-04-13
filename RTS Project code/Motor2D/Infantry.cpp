@@ -1,10 +1,19 @@
+#include "p2Log.h"
+
+#include "Application.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Input.h"
 #include "Audio.h"
 #include "Collisions.h"
 #include "Map.h"
+#include "Pathfinding.h"
+#include "EntityManager.h"
 #include "Gui.h"
+#include "UI.h"
+#include "UI_Healthbar.h"
 
 #include "Infantry.h"
-#include "EntityManager.h"
 
 
 Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.

@@ -1,8 +1,16 @@
-#include "Map.h"
+#include "Application.h"
+#include "Render.h"
+#include "Textures.h"
 #include "Input.h"
+#include "Audio.h"
+#include "Collisions.h"
+#include "Map.h"
+#include "Pathfinding.h"
+#include "Gui.h"
+#include "EntityManager.h"
 
 #include "Gatherer.h"
-#include "EntityManager.h"
+
 
 Gatherer::Gatherer(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)
 {

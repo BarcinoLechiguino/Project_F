@@ -1,12 +1,14 @@
+#include "Brofiler\Brofiler.h"
+
 #include "p2Defs.h"
 #include "p2Log.h"
+
 #include "Application.h"
 #include "Window.h"
 #include "Render.h"
 #include "Map.h"
-#include "EntityManager.h"		
 
-#include "Brofiler\Brofiler.h"
+#include "EntityManager.h"		
 
 #define VSYNC true
 

@@ -1,8 +1,9 @@
 #ifndef __UI_TEXT_H__
 #define __UI_TEXT_H__
 
-#include "Fonts.h"
 #include "UI.h"
+
+struct _TTF_Font;
 
 class UI_Text : public UI
 {

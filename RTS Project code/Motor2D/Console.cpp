@@ -1,18 +1,22 @@
+#include "Brofiler\Brofiler.h"
+
+#include "p2Defs.h"
 #include "p2Log.h"
+
 #include "Application.h"
-#include "Input.h"
 #include "Render.h"
 #include "Fonts.h"
+#include "Input.h"
 #include "Map.h"
 #include "EntityManager.h"
 
 #include "Gui.h"
 #include "UI_Image.h"
+#include "UI_Text.h"
 #include "UI_InputBox.h"
 #include "UI_Scrollbar.h"
-#include "Console.h"
 
-#include "Brofiler\Brofiler.h"
+#include "Console.h"
 
 Console::Console() : Module(), commandWasFound(false)
 {

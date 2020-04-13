@@ -1,7 +1,7 @@
 <!-- Config file for the game -->
 
 <config>
-  <app framerate_cap="60" frame_cap_on="false">
+  <app framerate_cap="60" frame_cap_on="true">
     <title>RTS Project</title>
     <organization>UPC</organization>
   </app>

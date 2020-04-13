@@ -1,9 +1,16 @@
-//#include "Map.h"
-//#include "Collisions.h"
+#include "Application.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Input.h"
 #include "Audio.h"
-
+#include "Collisions.h"
+#include "Map.h"
+#include "Pathfinding.h"
+#include "Gui.h"
 #include "EntityManager.h"
+
 #include "Enemy.h"
+
 
 Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {

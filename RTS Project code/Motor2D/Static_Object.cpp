@@ -1,5 +1,10 @@
 #include "Application.h"
+#include "Map.h"
+#include "Pathfinding.h"
+#include "EntityManager.h"
+
 #include "Static_Object.h"
+
 
 Static_Object::Static_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
 {

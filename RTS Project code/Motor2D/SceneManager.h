@@ -2,7 +2,9 @@
 #define __SCENE_MANAGER_H__
 
 #include "Module.h"
-#include "Scene.h"
+
+class Scene;
+enum class SCENES;
 
 class SceneManager : public Module
 {

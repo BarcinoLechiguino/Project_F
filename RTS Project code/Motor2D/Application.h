@@ -1,12 +1,16 @@
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
+#include "PugiXml\src\pugixml.hpp"
 #include <list>
 #include <string>
 #include "Module.h"
 #include "PerfTimer.h"
 #include "Timer.h"
-#include "PugiXml\src\pugixml.hpp"
+
+// Utility Classes
+class Timer;
+class PerfTimer;
 
 // Modules
 class Window;

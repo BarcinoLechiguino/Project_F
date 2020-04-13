@@ -3,10 +3,11 @@
 #include "p2Log.h"
 #include "Application.h"
 #include "Window.h"
-#include "Input.h"
 #include "Render.h"
-#include "Map.h"
+#include "Textures.h"
+#include "Input.h"
 #include "Collisions.h"
+#include "Map.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -15,11 +16,12 @@
 #include "Gatherer.h"
 #include "Infantry.h"
 #include "Enemy.h"
-#include "Rock.h"
 #include "TownHall.h"
 #include "Barracks.h"
+#include "Rock.h"
 
 //#include "mmgr/mmgr.h"
+
 
 EntityManager::EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
 {

@@ -1,9 +1,11 @@
-#include "Scene.h"
+#include "Application.h"
 #include "Render.h"
 #include "Input.h"
 #include "Collisions.h"
 #include "Map.h"
 #include "Gui.h"
+
+#include "Scene.h"
 
 Scene::Scene(SCENES scene_name) : scene_name(scene_name), escape(true)		// This Here
 {

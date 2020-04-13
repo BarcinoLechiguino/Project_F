@@ -1,5 +1,12 @@
-#include "FadeToColour.h"
+#include "Application.h"
+#include "Window.h"
+#include "Render.h"
+#include "SceneManager.h"
 #include "TransitionManager.h"
+#include "Color.h"
+
+#include "FadeToColour.h"
+
 
 FadeToColour::FadeToColour(SCENES next_scene, float step_duration, Color fade_colour) : Transition(next_scene, step_duration)
 , fade_colour(fade_colour)

@@ -1,11 +1,13 @@
+#include "Brofiler\Brofiler.h"
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Application.h"
-#include "PathFinding.h"
 #include "Map.h"
-#include "Brofiler\Brofiler.h"
-
 #include "Dynamic_Object.h"
+
+#include "PathFinding.h"
+
 
 PathFinding::PathFinding() : Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {

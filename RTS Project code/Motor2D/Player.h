@@ -1,9 +1,9 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#include "SDL/include/SDL_rect.h"
 #include "Module.h"
 #include "Point.h"
-#include "SDL/include/SDL_rect.h"
 
 class Pathfinding;
 class Dynamic_Object;

@@ -1,11 +1,10 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-#include "PugiXml/src/pugixml.hpp"
 #include "Module.h"
 #include "Point.h"
 #include "Collisions.h"
-#include "SDL/include/SDL.h"
+#include "p2Log.h"					// Added due to ~Properties (#52)
 
 class Collisions;
 struct Collider;
@@ -49,13 +48,13 @@ struct Properties
 		values		value;													//Value of the property in a layer.
 		int			intValue;												//Int value of the property in a layer. Used mainly for pathfinding
 	};
-	
-	~Properties()															//Deletes every property and frees all allocated memory.
+
+	Properties::~Properties()															//Deletes every property and frees all allocated memory.
 	{
 		LOG("The Properties' destructor has been called");
 		LOG("property_list has %d elements", property_list.size());
-		 
-		for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++ )
+
+		for (std::list<Property*>::iterator prop_iterator = property_list.begin(); prop_iterator != property_list.end(); prop_iterator++)
 		{
 			RELEASE((*prop_iterator));										//Deletes all data members of a property and frees all allocated memory.
 		}

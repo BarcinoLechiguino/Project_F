@@ -1,5 +1,4 @@
 #include "p2Defs.h"
-#include "p2Log.h"
 #include "Application.h"
 #include "Window.h"
 #include "Render.h"
@@ -8,8 +7,10 @@
 #include "Audio.h"
 #include "Map.h"
 #include "EntityManager.h"
+#include "UI_Healthbar.h"
+
 #include "Entity.h"
-#include "Gui.h"
+
 
 Entity::Entity() : tile_position(0, 0), type(ENTITY_TYPE::UNKNOWN_TYPE), entity_sprite(nullptr), collider(nullptr), animation(nullptr)
 {

@@ -1,5 +1,9 @@
-#include "Cut.h"
+#include "Application.h"
+#include "SceneManager.h"
 #include "TransitionManager.h"
+
+#include "Cut.h"
+
 
 Cut::Cut(SCENES next_scene) : Transition(next_scene, 0.0f)
 {

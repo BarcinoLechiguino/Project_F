@@ -1,10 +1,15 @@
+#include "p2Log.h"
+
 #include "Application.h"
 #include "Window.h"
-#include "Input.h"
 #include "Render.h"
+#include "Textures.h"
+#include "Input.h"
+#include "Fonts.h"
 #include "Gui.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
+
 #include "UI_InputBox.h"
 
 //UI_InputBox will always be interactible (although it can be set to not be), and can be draggable. Can potentially receive all events.

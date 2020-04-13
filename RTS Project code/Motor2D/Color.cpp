@@ -1,5 +1,7 @@
-#include "Color.h"
 #include "Module.h"
+
+#include "Color.h"
+
 
 Color GetRandomColour()
 {

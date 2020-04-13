@@ -1,11 +1,11 @@
+#include "SDL_image/include/SDL_image.h"
+#pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Application.h"
-#include "Render.h"
-#include "Textures.h"
 
-#include "SDL_image/include/SDL_image.h"
-#pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
+#include "Textures.h"
 
 Textures::Textures() : Module()
 {

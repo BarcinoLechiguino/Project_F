@@ -1,7 +1,6 @@
 #ifndef __DYNAMIC_OBJECT_H__
 #define __DYNAMIC_OBJECT_H__
 
-#include "Input.h"				// Make the Ally parent class and put it there.
 #include "Entity.h"
 
 enum class PATHFINDING_STATE

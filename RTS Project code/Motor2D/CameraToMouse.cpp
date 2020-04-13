@@ -1,5 +1,10 @@
-#include "CameraToMouse.h"
+#include "Application.h"
+#include "Render.h"
+#include "Scene.h"
 #include "TransitionManager.h"
+
+#include "CameraToMouse.h"
+
 
 CameraToMouse::CameraToMouse(iPoint mouse_position, float step_duration, bool non_lerp) : Transition(SCENES::NONE, step_duration, non_lerp)
 , origin(0.0f, 0.0f)

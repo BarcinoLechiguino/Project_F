@@ -3,7 +3,6 @@
 
 #include "UI.h"
 
-
 class UI_Image : public UI
 {
 public:

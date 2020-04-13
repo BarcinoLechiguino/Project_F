@@ -1,22 +1,22 @@
+#include "Brofiler\Brofiler.h"
+//#include "mmgr/mmgr.h"
+
+#include <math.h>
 #include "p2Defs.h"
 #include "p2Log.h"
-#include "Point.h"
+
 #include "Application.h"
+#include "Window.h"
 #include "Render.h"
 #include "Textures.h"
-#include "Map.h"
-#include "Window.h"
-#include "Collisions.h"
 #include "Input.h"
 #include "Audio.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Gui.h"
 #include "Console.h"
-#include "Brofiler\Brofiler.h"
-#include <math.h>
 
-//#include "mmgr/mmgr.h"
+#include "Map.h"
 
 Map::Map() : Module(), map_loaded(false)
 {
@@ -684,18 +684,6 @@ bool Map::CreateEntityMap(int& width, int& height, Entity** buffer)
 	return ret;
 }
 
-int Properties::Get(std::string name, int default_value)							//Revise how to be able to not have a property without default value being nullptr.
-{
-	for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++)
-	{
-		if ((*prop_iterator)->name == name)															
-		{
-			return (*prop_iterator)->intValue;										
-		}
-	}
-	return default_value;															//Default value is 0
-}
-
 void Map::Restart_Cam() // function that resets the camera
 {
 	App->render->camera.x = spawn_position_cam.x;
@@ -706,4 +694,16 @@ void Map::GetMapSize(int& w, int& h) const
 {
 	w = App->map->data.width * App->map->data.tile_width;
 	h = App->map->data.height * App->map->data.tile_height;
+}
+
+int Properties::Get(std::string name, int default_value)							//Revise how to be able to not have a property without default value being nullptr.
+{
+	for (std::list<Property*>::iterator prop_iterator = property_list.begin(); prop_iterator != property_list.end(); prop_iterator++)
+	{
+		if ((*prop_iterator)->name == name)
+		{
+			return (*prop_iterator)->intValue;
+		}
+	}
+	return default_value;															//Default value is 0
 }

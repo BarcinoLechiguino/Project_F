@@ -1,7 +1,19 @@
+#include "SDL/include/SDL_rect.h"
+
 #include "Application.h"
 #include "Window.h"
-#include "MainScene.h"
 #include "Render.h"
+#include "Textures.h"
+#include "Fonts.h"
+#include "Input.h"
+#include "Gui.h"
+#include "UI.h"
+#include "UI_Text.h"
+#include "UI_Button.h"
+#include "TransitionManager.h"
+
+#include "MainScene.h"
+
 
 MainScene::MainScene() : Scene(SCENES::MAIN_SCENE)
 {

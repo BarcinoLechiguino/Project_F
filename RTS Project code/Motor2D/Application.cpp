@@ -17,8 +17,8 @@
 #include "Gui.h"
 #include "Console.h"
 #include "Player.h"
-#include "TransitionManager.h"
 #include "Minimap.h"
+#include "TransitionManager.h"
 #include "SceneManager.h"
 
 #include "Brofiler\Brofiler.h"

@@ -1,4 +1,6 @@
-#include "SDL/include/SDL_rect.h"
+#ifndef __MAIN_SCENE_H__
+#define __MAIN_SCENE_H__
+
 #include "Scene.h"
 
 class UI;
@@ -59,4 +61,7 @@ public:
 
 
 public:
+
 };
+
+#endif // !__MAIN_SCENE_H__

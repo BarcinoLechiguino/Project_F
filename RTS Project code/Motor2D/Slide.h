@@ -2,7 +2,8 @@
 #define __SLIDE_H__
 
 #include "Transition.h"
-#include "Color.h"
+
+struct Color;
 
 class Slide : public Transition
 {
