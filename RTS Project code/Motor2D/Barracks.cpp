@@ -1,11 +1,8 @@
-#include "Application.h"
-#include "Render.h"
 #include "Map.h"
-#include "Textures.h"
-#include "Pathfinding.h"
-#include "Input.h"
 
+#include "Barracks.h"
 #include "EntityManager.h"
+
 
 Barracks::Barracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
 {

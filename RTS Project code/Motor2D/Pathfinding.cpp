@@ -5,6 +5,8 @@
 #include "Map.h"
 #include "Brofiler\Brofiler.h"
 
+#include "Dynamic_Object.h"
+
 PathFinding::PathFinding() : Module(), map(NULL), last_path(DEFAULT_PATH_LENGTH), width(0), height(0)
 {
 	name = ("pathfinding");

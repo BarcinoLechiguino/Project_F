@@ -1,7 +1,6 @@
 #ifndef __LOSE_SCENE_H__
 #define __LOSE_SCENE_H__
 
-#include "Module.h"
 #include "Scene.h"
 
 class LoseScene : public Scene

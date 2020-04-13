@@ -1,18 +1,18 @@
-#include "Application.h"
-#include "Render.h"
 #include "Map.h"
 #include "Input.h"
-#include "Pathfinding.h"
 
+#include "Gatherer.h"
 #include "EntityManager.h"
 
 Gatherer::Gatherer(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)
 {
+	target_to_gather = nullptr;
+
 	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/gatherer2_lowres.png");
 
 	entity_sprite_section = { 52,0,52,49 };
 
-	selectable_unit = true;
+	is_selectable = true;
 	path_full = false;
 
 	speed = 500;

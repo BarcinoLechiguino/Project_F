@@ -1,6 +1,8 @@
 #ifndef __GATHERER_H__
 #define __GATHERER_H__
 
+#include "Dynamic_Object.h"
+
 class Gatherer : public Dynamic_Object
 {
 public:
@@ -23,7 +25,9 @@ public:
 
 	void OnCollision(Collider* C1, Collider* C2);
 
+public:
 
+	Entity* target_to_gather;
 };
 
 #endif // __ENEMY_H__

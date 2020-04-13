@@ -1,9 +1,9 @@
 #ifndef __AUDIO_H__
 #define __AUDIO_H__
 
-#include "Module.h"
 #include "SDL_mixer\include\SDL_mixer.h"
-#include <list>
+#include "p2Defs.h"
+#include "Module.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f
 
@@ -51,7 +51,7 @@ public:
 	float				volume;
 	std::string			music_folder;
 	std::string			sfx_folder;
-	uint general_volume;
+	uint				general_volume;
 };
 
 #endif // __AUDIO_H__

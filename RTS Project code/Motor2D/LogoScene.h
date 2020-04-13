@@ -1,7 +1,6 @@
 #ifndef __LOGO_SCENE_H__
 #define __LOGO_SCENE_H__
 
-#include "Module.h"
 #include "Scene.h"
 
 class UI;

@@ -1,5 +1,7 @@
-#include "Module.h"
+#ifndef __STATIC_OBJECT_H__
+#define __STATIC_OBJECT_H__
 
+#include "Entity.h"
 
 class Static_Object : public Entity
 {
@@ -28,3 +30,5 @@ public:
 	int tiles_occupied_y;
 
 };
+
+#endif // !__STATIC_OBJECT_H__

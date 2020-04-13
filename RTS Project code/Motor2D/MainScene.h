@@ -1,5 +1,4 @@
 #include "SDL/include/SDL_rect.h"
-#include "Module.h"
 #include "Scene.h"
 
 class UI;

@@ -10,11 +10,13 @@
 #include <string>
 #include <vector>
 #include <list>
+#include "p2Log.h"	// MAYBE INCLUDE IT HERE?
+//#include "p2Defs.h"
+//#include "Point.h"
 
 struct		SDL_Texture;
 struct		SDL_Rect;
 class		Application;
-class		Animation; 
 
 struct		Collider;
 

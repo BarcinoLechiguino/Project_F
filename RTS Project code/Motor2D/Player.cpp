@@ -10,7 +10,13 @@
 #include "Map.h"
 #include "SceneManager.h"
 
-Player::Player()
+#include "EntityManager.h"
+#include "Dynamic_Object.h"
+#include "Static_Object.h"
+#include "Gatherer.h"
+#include "Infantry.h"
+
+Player::Player() : building_selected(nullptr)
 {
 
 }
@@ -112,7 +118,7 @@ void Player::MoveToOrder()//fix
 			}
 			else
 			{
-				LOG("Tile is untargetable");
+				LOG("Tile cannot be targeted");
 			}
 		}
 		else
@@ -185,10 +191,10 @@ void Player::SelectionRect()
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 		{
 			is_selecting = false;
-
+			
 			for (std::vector<Dynamic_Object*>::iterator item = App->entity_manager->dynamic_objects.begin() ; item != App->entity_manager->dynamic_objects.end(); ++item)
 			{
-				if ((*item)->selectable_unit)
+				if ((*item)->is_selectable)
 				{
 					/*LOG("camera %d, %d", -App->render->camera.x, -App->render->camera.y);
 					LOG("Selection pos %d %d", selection_rect.x - App->render->camera.x , selection_rect.y - App->render->camera.y);
@@ -205,6 +211,7 @@ void Player::SelectionRect()
 					}
 				}
 			}
+
 			LOG("Units selected %d", units_selected.size() );
 		}
 	}
@@ -214,20 +221,30 @@ void Player::SelectionOnClick()
 {
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 	{
-		units_selected.clear();
-
 		Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
 		
 		if (clicked_entity != nullptr)
 		{
-			if (clicked_entity->type == ENTITY_TYPE::GATHERER || clicked_entity->type == ENTITY_TYPE::INFANTRY)
+			if (App->entity_manager->IsUnit(clicked_entity))
 			{
-				units_selected.push_back((Dynamic_Object*)App->entity_manager->GetEntityAt(mouse_tile));
+				units_selected.push_back((Dynamic_Object*)clicked_entity);
+				return;
+			}
+
+			if (App->entity_manager->IsBuilding(clicked_entity))
+			{
+				building_selected = (Static_Object*)clicked_entity;
+
+				LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", mouse_tile.x, mouse_tile.y);
+
+				return;
 			}
 		}
 		else
 		{
-			LOG("There is no Dynamic_Object in tile (%d, %d)", mouse_tile.x, mouse_tile.y);
+			units_selected.clear();
+			
+			LOG("There is no Entity at tile (%d, %d)", mouse_tile.x, mouse_tile.y);
 		}
 	}
 }
@@ -277,7 +294,7 @@ void Player::SelectionShortcuts()
 	}
 }
 
-void Player::DrawCursor() //fix
+void Player::DrawCursor() //fix (?)
 {
 	if (CurrentlyInGameplayScene())
 	{

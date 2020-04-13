@@ -1,16 +1,9 @@
-#include "p2Log.h"
-#include "Point.h"
-#include "Application.h"
-#include "Module.h"
-#include "Render.h"
-#include "Textures.h"
-#include "Input.h"
 #include "Audio.h"
 #include "Collisions.h"
 #include "Map.h"
-#include "Pathfinding.h"
 #include "Gui.h"
 
+#include "Infantry.h"
 #include "EntityManager.h"
 
 
@@ -18,13 +11,15 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 {
 	entity_sprite = App->tex->Load("textures/Spritesheets/Entities/infantry_lowres.png");
 
-	selectable_unit = true;
+	is_selectable = true;
 
 	speed = 500;
 
 	max_health = 300;
 	current_health = max_health;
 	damage = 30;
+
+	entity_sprite_section = { 58,0,58,47 }; //Down Right
 
 	healthbar_background_rect = { 618, 12, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 	healthbar_rect = { 618, 23, MAX_UNIT_HEALTHBAR_WIDTH, 9 };

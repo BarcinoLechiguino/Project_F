@@ -1,11 +1,9 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-#include <list>
 #include "PugiXml/src/pugixml.hpp"
-#include "Point.h"
-#include "p2Log.h"
 #include "Module.h"
+#include "Point.h"
 #include "Collisions.h"
 #include "SDL/include/SDL.h"
 
@@ -187,7 +185,7 @@ public:
 	iPoint WorldToMap(int x, int y) const;										//This method translates the position of the tile on the screen to its equivalent position on the map.
 	
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);			//Changed to non const because of list unknown problem
-	bool CreateEntityMap(int& width, int& height, Entity** buffer);
+	bool CreateEntityMap(int& width, int& height, Entity** buffer);				//This method will allocate the necessary memory and initialize the entities map.
 
 	void Restart_Cam();
 	void GetMapSize(int& w, int& h) const;
@@ -210,8 +208,8 @@ public:
 	MapData			data;
 	Point<float>	spawn_position_cam;
 	Collider		camera_collider;				//Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
-	int			winWidth;							//Declared to store the window's width.
-	int			winHeight;							//Declared to store the window's height.
+	int				winWidth;						//Declared to store the window's width.
+	int				winHeight;						//Declared to store the window's height.
 	
 	iPoint			cam_tilePos;					//Position of the camera in the X and Y axis in tiles.
 	int				tile_index;						//Will store the tile's index number so the correct tile is loaded.
@@ -225,17 +223,17 @@ private:
 	std::string			folder;
 	
 
-	iPoint camera_pos_in_pixels;
+	iPoint				camera_pos_in_pixels;
 	
 	
-	int bottom_right_x;
-	int bottom_right_y;
+	int					bottom_right_x;
+	int					bottom_right_y;
 
-	int min_x_row;
-	int max_x_row;
+	int					min_x_row;
+	int					max_x_row;
 
-	int min_y_row; //Esquina dereche arriba
-	int max_y_row; //Esquina izquierda abajo
+	int					min_y_row;				//Esquina dereche arriba
+	int					max_y_row;				//Esquina izquierda abajo
 
 };
 

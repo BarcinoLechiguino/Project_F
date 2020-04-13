@@ -1,3 +1,5 @@
+#include "Brofiler\Brofiler.h"
+
 #include "p2Log.h"
 #include "Application.h"
 #include "Window.h"
@@ -5,9 +7,17 @@
 #include "Render.h"
 #include "Map.h"
 #include "Collisions.h"
-#include "Brofiler\Brofiler.h"
 
 #include "EntityManager.h"
+#include "Entity.h"
+#include "Dynamic_Object.h"
+#include "Static_Object.h"
+#include "Gatherer.h"
+#include "Infantry.h"
+#include "Enemy.h"
+#include "Rock.h"
+#include "TownHall.h"
+#include "Barracks.h"
 
 //#include "mmgr/mmgr.h"
 
@@ -167,7 +177,8 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 		break;
 	}
 
-	entity->type = type;
+	//entity->type = type; //(?)
+	
 	entity->Start();
 
 	if (entity != nullptr)									
@@ -199,6 +210,26 @@ void EntityManager::DestroyEntities()
 	infantries.clear();
 }
 
+bool EntityManager::IsUnit(Entity* entity)
+{
+	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::INFANTRY)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool EntityManager::IsBuilding(Entity* entity)
+{
+	if (entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 void EntityManager::SetEntityMap(int width, int height, Entity* data)
 {
 	entity_map_width = width;
@@ -214,7 +245,27 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity)
 {
 	if (entity_map != nullptr)
 	{
-		entity_map[(pos.y * entity_map_width) + pos.x] = entity;
+		if (IsUnit(entity))
+		{
+			entity_map[(pos.y * entity_map_width) + pos.x] = entity;
+			return;
+		}
+
+		if (IsBuilding(entity))
+		{
+			Static_Object* building = (Static_Object*)entity;
+
+			for (int y = 0; y != building->tiles_occupied_y; ++y)
+			{
+				for (int x = 0; x != building->tiles_occupied_x; ++x)
+				{
+					int pos_y = pos.y + y;
+					int pos_x = pos.x + x;
+					
+					entity_map[(pos_y * entity_map_width) + pos_x] = entity;
+				}
+			}
+		}
 	}
 }
 

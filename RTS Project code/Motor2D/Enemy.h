@@ -1,10 +1,8 @@
 #ifndef __ENEMY_H__
 #define __ENEMY_H__
 
-#include "Module.h"
-#include "Animation.h"
-#include "Point.h"
-#include <vector>
+#include "Dynamic_Object.h"
+
 class Infantry;
 
 class Enemy : public Dynamic_Object
@@ -35,7 +33,7 @@ public:
 public:
 
 	const std::vector<iPoint>* entity_path;
-	Infantry* target;
+	Entity* target;
 
 };
 
