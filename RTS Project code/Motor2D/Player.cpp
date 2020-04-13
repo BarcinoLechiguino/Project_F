@@ -54,7 +54,7 @@ bool Player::Update(float dt)
 
 	CameraController(dt);
 
-	//SelectionRect();
+	SelectionRect();
 
 	SelectionOnClick();
 

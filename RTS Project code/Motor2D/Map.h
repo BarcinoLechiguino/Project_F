@@ -192,6 +192,8 @@ public:
 	void Restart_Cam();
 	void GetMapSize(int& w, int& h) const;
 
+	TileSet* GetTilesetFromTileId(int id); //Changed to non const because of list unknown problem
+
 private:
 
 	bool LoadMap();
@@ -201,7 +203,7 @@ private:
 	bool LoadObjectLayers(pugi::xml_node& node, ObjectGroup* group);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	TileSet* GetTilesetFromTileId(int id); //Changed to non const because of list unknown problem
+
 
 public:
 
@@ -216,10 +218,12 @@ public:
 	
 	bool			pathfindingMetaDebug = false;	//Keeps track of whether to load the PathfindingCollisions layer. Temporally declared here.
 
+	bool				map_loaded;
+
 private:
 	pugi::xml_document	map_file;
 	std::string			folder;
-	bool				map_loaded;
+	
 
 	iPoint camera_pos_in_pixels;
 	

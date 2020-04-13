@@ -24,6 +24,7 @@ class Console;
 class Player;
 class TransitionManager;
 class SceneManager;
+class Minimap;
 
 class Application
 {
@@ -84,6 +85,7 @@ public:
 	Player*				player;
 	TransitionManager*	transition_manager;
 	SceneManager*		scene_manager;
+	Minimap*			minimap;
 
 	uint				frame_cap;								//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;						//Stores the original frame cap at application start.
