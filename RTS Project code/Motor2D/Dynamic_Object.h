@@ -52,17 +52,10 @@ public:
 	void Move(float dt);
 	
 public:
-
 	float							speed;
 
 	bool							path_full;
 	bool							is_selectable;
-
-	ENTITY_STATE					unit_state;
-	PATHFINDING_STATE				path_state;
-
-	std::vector<iPoint>				entity_path;
-	std::vector<iPoint>::iterator	current_path_tile;
 
 	SDL_Rect						entity_sprite_section;
 
@@ -70,6 +63,8 @@ public:
 	iPoint							next_tile_position;
 	iPoint							target_tile;
 	iPoint							occupied_tile;
+
+
 };
 
 #endif // !__DYNAMIC_OBJECT_H__
