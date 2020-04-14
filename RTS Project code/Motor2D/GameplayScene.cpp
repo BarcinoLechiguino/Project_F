@@ -23,6 +23,7 @@
 #include "UI.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
+#include "UI_Image.h"
 
 #include "SceneManager.h"
 #include "TransitionManager.h"
@@ -138,6 +139,11 @@ bool GameplayScene::PostUpdate()
 	//	}
 	//}
 	
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	{
+		App->gui->SetElementsVisibility(in_game_background, !in_game_background->isVisible);
+	}
+
 	return ret;
 }
 
@@ -239,6 +245,47 @@ void GameplayScene::LoadGuiElements()
 
 	button_text_III		= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 121, 48, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
 														, true, false, false, nullptr, transition_button_III, &main_button_string);
+
+
+	// In-game menu
+
+	// Back
+	SDL_Rect background = { 780, 451, 514, 403 };
+	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 350, 180, background, false, false, false, this, nullptr);
+
+	// Continue Button
+	SDL_Rect in_game_continue_button_size = { 0, 0, 158, 23 };
+	SDL_Rect in_game_continue_button_idle = { 1, 0, 158, 23 };
+	SDL_Rect in_game_continue_button_hover = { 178, 0, 158, 23 };
+	SDL_Rect in_game_continue_button_clicked = { 356, 0, 158, 23 };
+
+	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 525, 286, false, true, false, this, in_game_background
+		, &in_game_continue_button_idle, &in_game_continue_button_hover, &in_game_continue_button_clicked);
+
+	// Options Button
+	SDL_Rect in_game_options_button_size = { 0, 0, 133, 24 };
+	SDL_Rect in_game_options_button_idle = { 1, 52, 133, 24 };
+	SDL_Rect in_game_options_button_hover = { 178, 52, 133, 24 };
+	SDL_Rect in_game_options_button_clicked = { 356, 52, 133, 24 };
+
+	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 537, 326, false, true, false, this, in_game_background
+		, &in_game_options_button_idle, &in_game_options_button_hover, &in_game_options_button_clicked);
+
+	// Exit Button
+	SDL_Rect in_game_exit_button_size = { 0, 0, 74, 23 };
+	SDL_Rect in_game_exit_button_idle = { 1, 77, 74, 23 };
+	SDL_Rect in_game_exit_button_hover = { 178, 77, 74, 23 };
+	SDL_Rect in_game_exit_button_clicked = { 356, 77, 74, 23 };
+
+	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 366, false, true, false, this, in_game_background
+		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
+
+	// Title
+	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
+	_TTF_Font* in_game_font = App->font->Load("fonts/borgsquadcond.ttf", 50);
+	std::string in_game_title_string = "Pause Menu";
+	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 440, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
+
 }
 
 void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
@@ -257,6 +304,26 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 	}
+
+	// In_game menu
+
+	if (element == in_game_continue_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Continue
+		App->gui->SetElementsVisibility(in_game_background, false);
+	}
+
+	if (element == in_game_options_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Options
+	}
+
+	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Exit
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
+	}
+
 }
 
 void GameplayScene::ExecuteTransition()
