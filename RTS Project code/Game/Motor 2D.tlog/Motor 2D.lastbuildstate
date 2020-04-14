@@ -1,2 +1,6 @@
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v142:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=10.0
+<<<<<<< HEAD
 Debug|Win32|C:\Users\grome\OneDrive\Documents\GitHub\Project-RTS\|
+=======
+Debug|Win32|F:\Documentos\GitHub\Project-RTS\|
+>>>>>>> 1cee87e42ae1c5e73439c6d577b3bf790218c20b
