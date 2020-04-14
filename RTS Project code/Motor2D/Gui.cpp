@@ -56,10 +56,10 @@ bool Gui::Start()
 	if (!audioAlreadyLoaded)
 	{
 		new_game_fx = App->audio->LoadFx("audio/fx/UI/New Game_Continue.wav");
-		play_fx = App->audio->LoadFx("audio/fx/play_ui.wav");
-		save_fx = App->audio->LoadFx("audio/fx/save_fx.wav");
-		exit_fx = App->audio->LoadFx("audio/fx/exit_ui.wav");
-		nav_fx = App->audio->LoadFx("audio/fx/navegate_ui.wav");
+		options_fx = App->audio->LoadFx("audio/fx/UI/Options.wav");
+		back_fx = App->audio->LoadFx("audio/fx/UI/Back.wav");
+		exit_fx = App->audio->LoadFx("audio/fx/UI/Exit 002.wav");
+		appear_menu_fx = App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
 
 		audioAlreadyLoaded = true;
 	}
@@ -72,11 +72,11 @@ bool Gui::Start()
 // Update all guis
 bool Gui::PreUpdate()
 {
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
 	{
 		PassFocus();
 		App->audio->PlayFx(new_game_fx, 0);
-	}
+	}*/
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{

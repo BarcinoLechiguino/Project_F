@@ -103,10 +103,10 @@ public:
 
 public:
 	uint						new_game_fx;
-	uint						play_fx;
-	uint						save_fx;
+	uint						options_fx;
+	uint						back_fx;
+	uint						appear_menu_fx;
 	uint						exit_fx;
-	uint						nav_fx;
 
 private:
 	SDL_Texture*				atlas;										//Texture of the atlas (UI Spritesheet)

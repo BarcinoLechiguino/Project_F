@@ -142,6 +142,7 @@ bool GameplayScene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		App->gui->SetElementsVisibility(in_game_background, !in_game_background->isVisible);
+		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
 	}
 
 	return ret;
@@ -311,17 +312,20 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Continue
 		App->gui->SetElementsVisibility(in_game_background, false);
+		App->audio->PlayFx(App->gui->new_game_fx, 0);
 	}
 
 	if (element == in_game_options_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Options
+		App->audio->PlayFx(App->gui->options_fx, 0);
 	}
 
 	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Exit
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
+		App->audio->PlayFx(App->gui->exit_fx, 0);
 	}
 
 }

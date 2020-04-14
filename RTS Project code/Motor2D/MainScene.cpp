@@ -174,7 +174,7 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == new_game_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, true, true);
-		App->audio->PlayFx(1,0);
+		App->audio->PlayFx(App->gui->new_game_fx,0);
 	}
 
 	if (element == exit_button && ui_event == UI_EVENT::UNCLICKED)
@@ -184,6 +184,8 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == options_button && ui_event == UI_EVENT::UNCLICKED)
 	{
+		App->audio->PlayFx(App->gui->options_fx, 0);
+
 		App->gui->SetElementsVisibility(main_parent, false);							// Deactivate Main menu
 
 		if (options_created == false)
@@ -198,6 +200,8 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	
 	if (element == back_button && ui_event == UI_EVENT::UNCLICKED)
 	{
+		App->audio->PlayFx(App->gui->back_fx, 0);
+
 		App->gui->SetElementsVisibility(main_parent, true);							// Activate Main menu
 
 		App->gui->SetElementsVisibility(options_parent, false);							//Deactivate Options Menu
