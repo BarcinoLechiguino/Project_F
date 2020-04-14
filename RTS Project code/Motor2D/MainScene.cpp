@@ -8,8 +8,10 @@
 #include "Input.h"
 #include "Gui.h"
 #include "UI.h"
+#include "UI_Image.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
+#include "UI_Scrollbar.h"
 #include "TransitionManager.h"
 
 #include "MainScene.h"
@@ -35,6 +37,8 @@ bool MainScene::Start()
 	App->gui->Start();
 	
 	LoadGuiElements();
+
+	options_created = false;
 
 	return true;
 }
@@ -72,6 +76,7 @@ bool MainScene::CleanUp()
 void MainScene::LoadGuiElements()
 {
 	// Main Screen
+	main_parent = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 		// New Game Button
 		SDL_Rect new_game_button_size = { 0, 0, 175, 28 };
@@ -79,7 +84,7 @@ void MainScene::LoadGuiElements()
 		SDL_Rect new_game_button_hover = { 179, 24, 175, 28 };
 		SDL_Rect new_game_button_clicked = { 357, 24, 175, 28 };
 
-		new_game_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 420, 274, true, true, false, this, nullptr
+		new_game_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 420, 274, true, true, false, this, main_parent
 			, &new_game_button_idle, &new_game_button_hover, &new_game_button_clicked);
 
 		// Continue Button
@@ -88,7 +93,7 @@ void MainScene::LoadGuiElements()
 		SDL_Rect continue_button_hover = { 178, 0, 158, 23 };
 		SDL_Rect continue_button_clicked = { 356, 0, 158, 23 };
 
-		continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 425, 306, true, true, false, this, nullptr
+		continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 425, 306, true, true, false, this, main_parent
 			, &continue_button_idle, &continue_button_hover, &continue_button_clicked);
 
 		// Options Button
@@ -97,7 +102,7 @@ void MainScene::LoadGuiElements()
 		SDL_Rect options_button_hover = { 178, 52, 133, 24 };
 		SDL_Rect options_button_clicked = { 356, 52, 133, 24 };
 
-		options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 439, 336, true, true, false, this, nullptr
+		options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 439, 336, true, true, false, this, main_parent
 			, &options_button_idle, &options_button_hover, &options_button_clicked);
 
 		// Exit Button
@@ -106,7 +111,7 @@ void MainScene::LoadGuiElements()
 		SDL_Rect exit_button_hover = { 178, 77, 74, 23 };
 		SDL_Rect exit_button_clicked = { 356, 77, 74, 23 };
 
-		exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 465, 366, true, true, false, this, nullptr
+		exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 465, 366, true, true, false, this, main_parent
 			, &exit_button_idle, &exit_button_hover, &exit_button_clicked);
 
 
@@ -117,34 +122,36 @@ void MainScene::LoadGuiElements()
 
 void MainScene::LoadOptionsMenu()
 {
-	// Deactivate Main menu
-	new_game_button->isVisible = false;	
-	exit_button->isVisible = false;
-	continue_button->isVisible = false;
-	options_button->isVisible = false;
 
 	//Options Menu
 	SDL_Rect text_rect = { 0, 0, 100, 20 };
 	_TTF_Font* font = App->font->Load("fonts/borgsquadcond.ttf", 40);
 	_TTF_Font* font2 = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	options_parent = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{0,0,1,1});
 
 	//Options
 	std::string title_string = "Options";
-	options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 370, 150, text_rect, font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, nullptr, &title_string);
+	options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 370, 150, text_rect, font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &title_string);
 
 	//Music
 	std::string music_string = "Music";
-	music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, nullptr, &music_string);
+	music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &music_string);
+	
+	SDL_Rect thumb_rect = {930,2,18,31};
+	SDL_Rect scrollbar_rect = {743,3,180,15};
 
-	/*UI_Scrollbar* music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 480, 255, )*/
+	music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 260, scrollbar_rect, thumb_rect, iPoint(20, -7), scrollbar_rect, 20.0f, true, false);
+	music_scrollbar->parent = options_parent;
 
 	//SFX
 	std::string sfx_string = "SFX";
-	sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, nullptr, &sfx_string);
+	sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &sfx_string);
+	sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 300, scrollbar_rect, thumb_rect, iPoint(20, -7), scrollbar_rect, 20.0f, true, false, false, true);
+	sfx_scrollbar->parent = options_parent;
 
-	//Resolution
-	std::string resolution_string = "resolution";
-	resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 418, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, nullptr, &resolution_string);
+	//screen size
+	std::string resolution_string = "screen";
+	resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 418, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
 
 	//Remapping
 
@@ -154,7 +161,7 @@ void MainScene::LoadOptionsMenu()
 	SDL_Rect back_button_hover = { 57, 103, 45, 33 };
 	SDL_Rect back_button_clicked = { 114, 103, 45, 33 };
 
-	back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 400, 470, true, true, false, this, nullptr
+	back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 400, 470, true, true, false, this, options_parent
 		, &back_button_idle, &back_button_hover, &back_button_clicked);
 
 	background_texture = App->tex->Load("maps/Options_background.png");
@@ -175,23 +182,23 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == options_button && ui_event == UI_EVENT::UNCLICKED)
 	{
-		LoadOptionsMenu();
+		App->gui->SetElementsVisibility(main_parent, false);							// Deactivate Main menu
+
+		if (options_created == false)
+		{
+			LoadOptionsMenu();
+		}
+		else
+		{
+			App->gui->SetElementsVisibility(options_parent, true);						//Activate Options Menu
+		}
 	}	
 	
 	if (element == back_button && ui_event == UI_EVENT::UNCLICKED)
 	{
-		// Activate Main menu
-		new_game_button->isVisible = true;
-		exit_button->isVisible = true;
-		continue_button->isVisible = true;
-		options_button->isVisible = true;
+		App->gui->SetElementsVisibility(main_parent, true);							// Activate Main menu
 
-		//Deactivate Options Menu
-		back_button->isVisible = false;
-		sfx_text->isVisible = false;
-		music_text->isVisible = false;
-		resolution_text->isVisible = false;
-		options_text->isVisible = false;
+		App->gui->SetElementsVisibility(options_parent, false);							//Deactivate Options Menu
 
 		background_texture = App->tex->Load("maps/MainMenu_background.png");
 	}
