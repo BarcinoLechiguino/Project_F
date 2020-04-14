@@ -102,11 +102,11 @@ public:
 	const char*					disable_ui_debug;
 
 public:
-	uint						tab_fx;
-	uint						play_fx;
-	uint						save_fx;
+	uint						new_game_fx;
+	uint						options_fx;
+	uint						back_fx;
+	uint						appear_menu_fx;
 	uint						exit_fx;
-	uint						nav_fx;
 
 private:
 	SDL_Texture*				atlas;										//Texture of the atlas (UI Spritesheet)
@@ -117,6 +117,7 @@ private:
 public:
 	bool						game_started = false;						//To know if the user has enter the game
 	bool						audioAlreadyLoaded;
+
 };
 
 #endif // __GUI_H__
