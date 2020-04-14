@@ -4,6 +4,7 @@
 #include "Window.h"
 #include "Render.h"
 #include "Textures.h"
+#include "Audio.h"
 #include "Fonts.h"
 #include "Input.h"
 #include "Gui.h"
@@ -173,6 +174,7 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == new_game_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, true, true);
+		App->audio->PlayFx(1,0);
 	}
 
 	if (element == exit_button && ui_event == UI_EVENT::UNCLICKED)

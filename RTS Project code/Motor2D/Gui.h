@@ -102,7 +102,7 @@ public:
 	const char*					disable_ui_debug;
 
 public:
-	uint						tab_fx;
+	uint						new_game_fx;
 	uint						play_fx;
 	uint						save_fx;
 	uint						exit_fx;
@@ -117,6 +117,7 @@ private:
 public:
 	bool						game_started = false;						//To know if the user has enter the game
 	bool						audioAlreadyLoaded;
+
 };
 
 #endif // __GUI_H__
