@@ -26,7 +26,7 @@ bool Dynamic_Object::Awake(pugi::xml_node&)
 }
 
 bool Dynamic_Object::Start()
-{
+{	
 	return true;
 }
 
@@ -197,7 +197,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_DOWN_RIGHT:
 
@@ -209,7 +209,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_UP_LEFT:
 
@@ -221,7 +221,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_UP_RIGHT:
 
@@ -233,7 +233,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_UP:
 
@@ -244,7 +244,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_DOWN:
 
@@ -255,7 +255,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_RIGHT:
 
@@ -266,7 +266,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_LEFT:
 
@@ -277,8 +277,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
-
+	break;
 	}
 
 	if (next_reached)
@@ -290,7 +289,7 @@ void Dynamic_Object::Move(float dt)
 
 		tile_position = next_tile;
 
-		App->entity_manager->ChangeEntityMap(tile_position, this);
+		App->entity_manager->ChangeEntityMap(tile_position, this);				// ENTITY MAP UPDATE
 		App->entity_manager->ChangeEntityMap(tmp, this, true);
 
 		unit_state = ENTITY_STATE::IDLE;
