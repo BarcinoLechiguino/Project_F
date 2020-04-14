@@ -45,6 +45,7 @@ public:
 
 	virtual bool CleanUp();
 
+public:
 	void GiveNewTarget(iPoint new_target);
 	void ChangeOccupiedTile(iPoint new_occupied_tile);
 	void HandleMovement(float dt);
