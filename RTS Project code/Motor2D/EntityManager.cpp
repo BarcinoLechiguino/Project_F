@@ -149,48 +149,106 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 	switch (type)
 	{
-		case ENTITY_TYPE::ROCK:							
-			entity = new Rock(x, y, type);	
-			rocks.push_back((Rock*)entity);
-		break;
-
-		case ENTITY_TYPE::ENEMY:
-			entity = new Enemy(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)entity);
-			enemies.push_back((Enemy*)entity);
-		break;
-
 		case ENTITY_TYPE::GATHERER:
 			entity = new Gatherer(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)entity);
-			gatherers.push_back((Gatherer*)entity);
+			
+			if (CheckTileAvailability(iPoint(x, y), entity))
+			{
+				dynamic_objects.push_back((Dynamic_Object*)entity);
+				gatherers.push_back((Gatherer*)entity);
+			}
+			else
+			{
+				delete entity;
+				entity = nullptr;
+			}
+			
 		break;
 
 		case ENTITY_TYPE::INFANTRY:
 			entity = new Infantry(x, y, type);
-			dynamic_objects.push_back((Dynamic_Object*)entity);
-			infantries.push_back((Infantry*)entity);
+			
+			if (CheckTileAvailability(iPoint(x, y), entity))
+			{
+				dynamic_objects.push_back((Dynamic_Object*)entity);
+				infantries.push_back((Infantry*)entity);
+			}
+			else
+			{
+				delete entity;
+				entity = nullptr;
+			}
+			
+		break;
+
+		case ENTITY_TYPE::ENEMY:
+			entity = new Enemy(x, y, type);
+
+			if (CheckTileAvailability(iPoint(x, y), entity))
+			{
+				dynamic_objects.push_back((Dynamic_Object*)entity);
+				enemies.push_back((Enemy*)entity);
+			}
+			else
+			{
+				delete entity;
+				entity = nullptr;
+			}
+
 		break;
 
 		case ENTITY_TYPE::TOWNHALL:
 			entity = new TownHall(x, y, type);
-			town_halls.push_back((TownHall*)entity);
+			
+			if (CheckTileAvailability(iPoint(x, y), entity))
+			{
+				town_halls.push_back((TownHall*)entity);
+			}
+			else
+			{
+				delete entity;
+				entity = nullptr;
+			}
+			
 		break;
 
 		case ENTITY_TYPE::BARRACKS:
 			entity = new Barracks(x, y, type);
-			barracks.push_back((Barracks*)entity);
+
+			if (CheckTileAvailability(iPoint(x, y), entity))
+			{
+				barracks.push_back((Barracks*)entity);
+			}
+			else
+			{
+				delete entity;
+				entity = nullptr;
+			}
+
+		break;
+
+		case ENTITY_TYPE::ROCK:
+			entity = new Rock(x, y, type);
+
+			if (CheckTileAvailability(iPoint(x, y), entity))
+			{
+				rocks.push_back((Rock*)entity);
+			}
+			else
+			{
+				delete entity;
+				entity = nullptr;
+			}
+
 		break;
 	}
-
-	//entity->type = type; //(?)
-	
-	entity->Start();
 
 	if (entity != nullptr)									
 	{
 		entities.push_back(entity);								//Adds the generated entity to the entities list.
 		ChangeEntityMap(iPoint(x, y), entity);					//Adds the generated entity to entity_map.
+
+		entity->Start();
 	}
 
 	return entity;
@@ -199,7 +257,7 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 void EntityManager::DestroyEntities()
 {
 	BROFILER_CATEGORY("EntityManager PostUpdate", Profiler::Color::FireBrick);
-	//Iterates all entities in the entities list and searches for the entity passed as argument, if it is inside the list and is found, it is then destroyed.
+
 	LOG("There are %d entities in the entities list.", entities.size());
 	
 	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); ++entity_iterator)
@@ -276,7 +334,7 @@ SDL_Texture* EntityManager::GetRockTexture() const
 
 bool EntityManager::IsUnit(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::INFANTRY)
+	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::INFANTRY || entity->type == ENTITY_TYPE::ENEMY)
 	{
 		return true;
 	}
@@ -286,7 +344,7 @@ bool EntityManager::IsUnit(Entity* entity)
 
 bool EntityManager::IsBuilding(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS)
+	if (entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS || entity->type == ENTITY_TYPE::ROCK)
 	{
 		return true;
 	}
@@ -305,28 +363,55 @@ void EntityManager::SetEntityMap(int width, int height, Entity* data)
 	//memcpy(entity_map, data, width * height);							// THIS HERE
 }
 
-void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity)
+void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null)
 {
 	if (entity_map != nullptr)
 	{
-		if (IsUnit(entity))
+		if (!set_to_null)
 		{
-			entity_map[(pos.y * entity_map_width) + pos.x] = entity;
-			return;
-		}
-
-		if (IsBuilding(entity))
-		{
-			Static_Object* building = (Static_Object*)entity;
-
-			for (int y = 0; y != building->tiles_occupied_y; ++y)
+			if (IsUnit(entity))
 			{
-				for (int x = 0; x != building->tiles_occupied_x; ++x)
+				entity_map[(pos.y * entity_map_width) + pos.x] = entity;
+				return;
+			}
+
+			if (IsBuilding(entity))
+			{
+				Static_Object* building = (Static_Object*)entity;
+
+				for (int y = 0; y != building->tiles_occupied_y; ++y)
 				{
-					int pos_y = pos.y + y;
-					int pos_x = pos.x + x;
-					
-					entity_map[(pos_y * entity_map_width) + pos_x] = entity;
+					for (int x = 0; x != building->tiles_occupied_x; ++x)
+					{
+						int pos_y = pos.y + y;
+						int pos_x = pos.x + x;
+
+						entity_map[(pos_y * entity_map_width) + pos_x] = entity;
+					}
+				}
+			}
+		}
+		else
+		{
+			if (IsUnit(entity))
+			{
+				entity_map[(pos.y * entity_map_width) + pos.x] = nullptr;
+				return;
+			}
+
+			if (IsBuilding(entity))
+			{
+				Static_Object* building = (Static_Object*)entity;
+
+				for (int y = 0; y != building->tiles_occupied_y; ++y)
+				{
+					for (int x = 0; x != building->tiles_occupied_x; ++x)
+					{
+						int pos_y = pos.y + y;
+						int pos_x = pos.x + x;
+
+						entity_map[(pos_y * entity_map_width) + pos_x] = nullptr;
+					}
 				}
 			}
 		}
@@ -345,6 +430,41 @@ Entity* EntityManager::GetEntityAt(const iPoint& pos) const
 	{
 		return entity_map[(pos.y * entity_map_width) + pos.x];
 	}
+}
+
+bool EntityManager::CheckTileAvailability(const iPoint& pos, Entity* entity)
+{	
+	if (entity_map != nullptr)
+	{
+		if (IsUnit(entity))
+		{
+			if (entity_map[(pos.y * entity_map_width) + pos.x] != nullptr)
+			{
+				return false;
+			}
+		}
+
+		if (IsBuilding(entity))
+		{
+			Static_Object* building = (Static_Object*)entity;
+
+			for (int y = 0; y != building->tiles_occupied_y; ++y)
+			{
+				for (int x = 0; x != building->tiles_occupied_x; ++x)
+				{
+					int pos_y = pos.y + y;
+					int pos_x = pos.x + x;
+
+					if (entity_map[(pos_y * entity_map_width) + pos_x] != nullptr)
+					{
+						return false;
+					}
+				}
+			}
+		}
+	}
+
+	return true;
 }
 
 void EntityManager::ClearAllEntityVectors()

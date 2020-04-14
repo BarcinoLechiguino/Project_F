@@ -13,7 +13,7 @@
 #include "LoseScene.h"
 
 
-SceneManager::SceneManager() : current_scene(nullptr)
+SceneManager::SceneManager() : current_scene(nullptr), god_mode(false)
 {
 	name = "scene_manager";
 }

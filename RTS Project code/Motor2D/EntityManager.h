@@ -51,15 +51,17 @@ public:
 	SDL_Texture* GetBarracksTexture() const;
 	SDL_Texture* GetRockTexture() const;
 
-	bool IsUnit(Entity* entity);											//Method that will return true if the entity passed as argument is a unit.
-	bool IsBuilding(Entity* entity);										//Method that will return true if the entity passed as argument is a building.
+	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit.
+	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
 
-	void SetEntityMap(int width, int height, Entity* data);					//Method that will allocate the necessary memory for the entity_map.
-	void ChangeEntityMap(const iPoint& pos, Entity* entity);				//Method that will modify the entity map when a unit or building is spawned.
+	void SetEntityMap(int width, int height, Entity* data);								//Method that will allocate the necessary memory for the entity_map.
+	void ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null = false);	//Method that will modify the entity map when a unit or building is spawned.
 
-	bool CheckBoundaries(const iPoint& pos) const;							//Method that will check whether or not the position passed as argument is inside the bounds of the entity_map.
+	bool CheckBoundaries(const iPoint& pos) const;										//Method that will check whether or not the position passed as argument is inside the entity_map's bounds.
 
-	Entity* GetEntityAt(const iPoint& pos) const;							//Method that will return whichever entity is at the given position.
+	Entity* GetEntityAt(const iPoint& pos) const;										//Method that will return whichever entity is at the given position.
+
+	bool CheckTileAvailability(const iPoint& pos, Entity* entity);						//Method that will return true whenever the space required by an entity to spawn is available.
 
 	void ClearAllEntityVectors();
 

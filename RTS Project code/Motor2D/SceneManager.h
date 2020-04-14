@@ -36,6 +36,8 @@ public:
 	Scene*					current_scene;							// The scene that is being currently loaded.
 	Scene*					next_scene;								// Buffer for the scene that will be loaded next.
 
+	bool					god_mode;
+
 private:
 	std::vector<Scene*>		scenes;									// All the scenes of the game.
 

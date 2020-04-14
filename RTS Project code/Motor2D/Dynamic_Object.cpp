@@ -286,9 +286,12 @@ void Dynamic_Object::Move(float dt)
 		pixel_position.x = next_tile_position.x;
 		pixel_position.y = next_tile_position.y;
 
+		iPoint tmp = tile_position;
+
 		tile_position = next_tile;
 
 		App->entity_manager->ChangeEntityMap(tile_position, this);
+		App->entity_manager->ChangeEntityMap(tmp, this, true);
 
 		unit_state = ENTITY_STATE::IDLE;
 		path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;
