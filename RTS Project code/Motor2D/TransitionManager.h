@@ -5,7 +5,7 @@
 #include "Color.h"
 #include "Point.h"
 
-class		Transition;
+class Transition;
 enum class	SCENES;
 
 class TransitionManager :  public Module

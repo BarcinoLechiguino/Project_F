@@ -1,12 +1,16 @@
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
+#include "PugiXml\src\pugixml.hpp"
 #include <list>
 #include <string>
 #include "Module.h"
 #include "PerfTimer.h"
 #include "Timer.h"
-#include "PugiXml\src\pugixml.hpp"
+
+// Utility Classes
+class Timer;
+class PerfTimer;
 
 // Modules
 class Window;
@@ -24,6 +28,7 @@ class Console;
 class Player;
 class TransitionManager;
 class SceneManager;
+class Minimap;
 
 class Application
 {
@@ -84,6 +89,7 @@ public:
 	Player*				player;
 	TransitionManager*	transition_manager;
 	SceneManager*		scene_manager;
+	Minimap*			minimap;
 
 	uint				frame_cap;								//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;						//Stores the original frame cap at application start.

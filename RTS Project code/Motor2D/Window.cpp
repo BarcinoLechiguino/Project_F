@@ -1,9 +1,9 @@
+#include "SDL/include/SDL.h"
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Application.h"
 #include "Window.h"
-
-#include "SDL/include/SDL.h"
 
 Window::Window() : Module()
 {

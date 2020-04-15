@@ -2,9 +2,8 @@
 #define __UI_SCROLLBAR_H__
 
 #include "UI.h"
-#include "UI_Image.h"
 
-//class UI_Image;
+class UI_Image;
 
 class UI_Scrollbar : public UI
 {

@@ -1,9 +1,11 @@
+#include "Brofiler\Brofiler.h"
+
 #include "Application.h"
+#include "Textures.h"
 #include "Input.h"
 #include "Gui.h"
-#include "UI_Button.h"
 
-#include "Brofiler\Brofiler.h"
+#include "UI_Button.h"
 
 //UI_Button can be interactible (will almost always be) and draggable. Can potentially receive all events.
 //This element can receive up to 3 rects containing the coordinates of the sprites for each event (IDLE, HOVER & CLICKED).
@@ -144,5 +146,5 @@ void UI_Button::CheckInput()
 
 void UI_Button::CleanUp()
 {
-	App->tex->UnLoad(tex);
+	tex = nullptr;
 }

@@ -1,11 +1,11 @@
 #include "TransitionManager.h"
-#include "CameraToMouse.h"
 #include "Cut.h"
 #include "FadeToColour.h"
 #include "Slide.h"
 #include "Wipe.h"
 #include "AlternatingBars.h"
 #include "ExpandingBars.h"
+#include "CameraToMouse.h"
 #include "ZoomToMouse.h"
 
 TransitionManager::TransitionManager() : active_transition(nullptr), is_transitioning(false)

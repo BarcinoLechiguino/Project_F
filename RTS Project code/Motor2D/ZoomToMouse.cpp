@@ -1,6 +1,11 @@
-#include "ZoomToMouse.h"
+#include "Application.h"
+#include "Window.h"
+#include "Render.h"
+#include "SceneManager.h"
 #include "TransitionManager.h"
-#include "Map.h"
+
+#include "ZoomToMouse.h"
+
 
 ZoomToMouse::ZoomToMouse(SCENES next_scene, iPoint mouse_position, float step_duration, bool non_lerp, float zoom_scale) : Transition(next_scene, step_duration, non_lerp)
 , zoom_scale(zoom_scale)

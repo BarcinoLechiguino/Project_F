@@ -1,15 +1,12 @@
 #ifndef __GAMEPLAY_SCENE_H__
 #define __GAMEPLAY_SCENE_H__
 
-#include "PerfTimer.h"
-#include "Timer.h"
-#include "Gui.h"
 #include "Scene.h"
 
-#include "EntityManager.h"
-
-
 struct SDL_Texture;
+
+class Timer;
+class PerfTimer;
 
 class UI;
 class UI_Image;
@@ -17,12 +14,6 @@ class UI_Text;
 class UI_Button;
 class UI_InputBox;
 class UI_Scrollbar;
-
-enum ListOfMapNames
-{
-	TutorialLevel = 0,
-	FirstLevel
-};
 
 class GameplayScene : public Scene
 {
@@ -60,6 +51,7 @@ public:
 	void PathfindingDebug();
 	void DrawPathfindingDebug();
 	void DrawOccupied();
+	void DrawEntityMapDebug();
 
 public:
 	//std::list<std::string>	map_names;
@@ -97,6 +89,7 @@ public:
 	SDL_Rect				background_rect;
 	SDL_Texture*			background_texture;
 	SDL_Texture*			occupied_debug;
+	SDL_Texture*			occupied_by_entity_debug;
 
 	// In-game menu
 	UI_Image*				main_in_menu2;
@@ -120,5 +113,14 @@ public:
 	
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
+
+	// In-game menu
+
+	UI_Image*				in_game_background;
+	UI_Button*				in_game_continue_button;
+	UI_Button*				in_game_options_button;
+	UI_Button*				in_game_exit_button;
+	UI_Button*				in_game_back_to_menu;
+	UI_Text*				in_game_title_text;
 };
 #endif // !__GAMEPLAY_SCENE_H__

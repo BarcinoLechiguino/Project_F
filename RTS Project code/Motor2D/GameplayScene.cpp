@@ -1,24 +1,35 @@
-#include "p2Defs.h"
+#include "Brofiler\Brofiler.h"
+//#include "mmgr/mmgr.h"
+
 #include "p2Log.h"
 #include "Application.h"
-#include "Textures.h"
-#include "Audio.h"
-#include "Render.h"
 #include "Window.h"
-#include "Map.h"
-#include "Console.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Fonts.h"
+#include "Input.h"
+#include "Audio.h"
 #include "Collisions.h"
+#include "Map.h"
 #include "Pathfinding.h"
+#include "Console.h"
 #include "Player.h"
-#include "GameplayScene.h"
 #include "Scene.h"
-
-#include "Brofiler\Brofiler.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
 
-//#include "mmgr/mmgr.h"
+#include "Gui.h"
+#include "UI.h"
+#include "UI_Text.h"
+#include "UI_Button.h"
+#include "UI_Image.h"
+
+#include "SceneManager.h"
+#include "TransitionManager.h"
+
+#include "GameplayScene.h"
+
 
 GameplayScene::GameplayScene() : Scene(SCENES::GAMEPLAY_SCENE)
 {
@@ -86,6 +97,8 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	
 	DrawOccupied();
 
+	DrawEntityMapDebug();
+
 	if (App->map->pathfindingMetaDebug == true)
 	{
 		DrawPathfindingDebug();														//Pathfinding Debug. Shows a debug texture on the path's tiles.
@@ -110,24 +123,13 @@ bool GameplayScene::PostUpdate()
 
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
 	ExecuteTransition();
-
+	
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
-		//ret = false;
+		App->gui->SetElementsVisibility(in_game_background, !in_game_background->isVisible);
+		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
 	}
 
-	//if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-	//{
-	//	Mix_HaltMusic();
-	//	App->gui->SetElementsVisibility(main_in_menu2, !main_in_menu2->isVisible);
-	//	//App->audio->PlayMusic(App->scene->music_path3.c_str());
-	//	if (!main_in_menu2->isVisible)
-	//	{
-	//		App->pause = false;
-	//		
-	//	}
-	//}
-	
 	return ret;
 }
 
@@ -167,6 +169,7 @@ void GameplayScene::InitScene()
 	LoadGuiElements();
 
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
+	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 }
@@ -229,6 +232,61 @@ void GameplayScene::LoadGuiElements()
 
 	button_text_III		= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 121, 48, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
 														, true, false, false, nullptr, transition_button_III, &main_button_string);
+
+
+	// In-game menu
+
+	// Back
+	SDL_Rect background = { 780, 451, 514, 403 };
+	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 350, 180, background, false, false, false, this, nullptr);
+
+
+	// Continue Button
+	SDL_Rect in_game_continue_button_size = { 0, 0, 158, 23 };
+	SDL_Rect in_game_continue_button_idle = { 1, 0, 158, 23 };
+	SDL_Rect in_game_continue_button_hover = { 178, 0, 158, 23 };
+	SDL_Rect in_game_continue_button_clicked = { 356, 0, 158, 23 };
+
+	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 525, 286, false, true, false, this, in_game_background
+		, &in_game_continue_button_idle, &in_game_continue_button_hover, &in_game_continue_button_clicked);
+
+
+	// Options Button
+	SDL_Rect in_game_options_button_size = { 0, 0, 133, 24 };
+	SDL_Rect in_game_options_button_idle = { 1, 52, 133, 24 };
+	SDL_Rect in_game_options_button_hover = { 178, 52, 133, 24 };
+	SDL_Rect in_game_options_button_clicked = { 356, 52, 133, 24 };
+
+	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 537, 326, false, true, false, this, in_game_background
+		, &in_game_options_button_idle, &in_game_options_button_hover, &in_game_options_button_clicked);
+
+
+	// Back to menu Button
+	SDL_Rect in_game_back_to_menu_size = { 0, 0, 74, 23 };
+	SDL_Rect in_game_back_to_menu_idle = { 1, 77, 74, 23 };
+	SDL_Rect in_game_back_to_menu_hover = { 178, 77, 74, 23 };
+	SDL_Rect in_game_back_to_menu_clicked = { 356, 77, 74, 23 };
+
+	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 366, false, true, false, this, in_game_background
+		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
+
+
+	// Exit Button
+	SDL_Rect in_game_exit_button_size = { 0, 0, 74, 23 };
+	SDL_Rect in_game_exit_button_idle = { 1, 77, 74, 23 };
+	SDL_Rect in_game_exit_button_hover = { 178, 77, 74, 23 };
+	SDL_Rect in_game_exit_button_clicked = { 356, 77, 74, 23 };
+
+	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 366, false, true, false, this, in_game_background
+		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
+
+	
+	// Title
+	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
+	_TTF_Font* in_game_font = App->font->Load("fonts/borgsquadcond.ttf", 50);
+	std::string in_game_title_string = "Pause Menu";
+	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 440, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
+
 }
 
 void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
@@ -247,6 +305,29 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 	}
+
+	// In_game menu
+
+	if (element == in_game_continue_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Continue
+		App->gui->SetElementsVisibility(in_game_background, false);
+		App->audio->PlayFx(App->gui->new_game_fx, 0);
+	}
+
+	if (element == in_game_options_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Options
+		App->audio->PlayFx(App->gui->options_fx, 0);
+	}
+
+	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Exit
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
+		App->audio->PlayFx(App->gui->exit_fx, 0);
+	}
+
 }
 
 void GameplayScene::ExecuteTransition()
@@ -276,31 +357,34 @@ void GameplayScene::ExecuteTransition()
 
 void GameplayScene::UnitDebugKeys()
 {
-	if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
+	if (App->scene_manager->god_mode)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+		if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
 		{
-			(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
-		{
-			(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
-		{
-			(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
-		{
-			(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
-		{
-			(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y);
-		}
-		if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
-		{
-			(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+			{
+				(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+			{
+				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+			{
+				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			{
+				(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+			{
+				(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			}
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+			{
+				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			}
 		}
 	}
 }
@@ -363,6 +447,21 @@ void GameplayScene::DrawOccupied()
 			{
 				iPoint draw_position = App->map->MapToWorld(x, y);
 				App->render->Blit(occupied_debug, draw_position.x, draw_position.y, nullptr);
+			}
+		}
+	}
+}
+
+void GameplayScene::DrawEntityMapDebug()
+{
+	for (int x = 0; x < App->map->data.width; ++x) //Magic
+	{
+		for (int y = 0; y < App->map->data.height; ++y)
+		{
+			if (App->entity_manager->entity_map[(y * App->map->data.width) + x] != nullptr)
+			{
+				iPoint draw_position = App->map->MapToWorld(x, y);
+				App->render->Blit(occupied_by_entity_debug, draw_position.x, draw_position.y, nullptr);
 			}
 		}
 	}

@@ -1,13 +1,20 @@
+#include "Application.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Input.h"
+#include "Audio.h"
 #include "Map.h"
+#include "Pathfinding.h"
+#include "Gui.h"
+#include "EntityManager.h"
 
 #include "Barracks.h"
-#include "EntityManager.h"
 
 
 Barracks::Barracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
 {
-	entity_sprite = App->tex->Load("maps/debug_barracks_tile.png");
-	entity_sprite = App->tex->Load("maps/Barracks.png");
+	//entity_sprite = App->tex->Load("maps/debug_barracks_tile.png");
+	entity_sprite = App->entity_manager->GetBarracksTexture();
 
 	barracks_rect_1 = {0,0,106,95};
 	barracks_rect_2 = {108,0,106,95};

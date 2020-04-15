@@ -1,9 +1,12 @@
-#include "Scene.h"
+#include "Application.h"
 #include "Render.h"
 #include "Input.h"
 #include "Collisions.h"
 #include "Map.h"
 #include "Gui.h"
+#include "SceneManager.h"
+
+#include "Scene.h"
 
 Scene::Scene(SCENES scene_name) : scene_name(scene_name), escape(true)		// This Here
 {
@@ -90,12 +93,12 @@ void Scene::CameraDebugMovement(float dt)
 
 void Scene::DebugKeys()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)			//Load First Level Key
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)						// Enable/Disable God Mode Key
 	{
-		//App->fadescene->FadeToBlack("Test_map.tmx");
+		App->scene_manager->god_mode = !App->scene_manager->god_mode;
 	}
 
-	//if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)			//Load Second Level Key
+	//if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)						//Load Second Level Key
 	//{
 	//	App->fadescene->FadeToBlack("Test_map_2.tmx");
 	//}
@@ -105,33 +108,33 @@ void Scene::DebugKeys()
 		App->pause = !App->pause;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)			//Save Game Key
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)						//Save Game Key
 	{
 		App->SaveGame("save_game.xml");
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)			//Load Game Key
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)						//Load Game Key
 	{
 		App->LoadGame("save_game.xml");
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)			//Enable / Diable free camera movement Key
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)						//Enable / Disable free camera movement Key
 	{
 		//App->render->cam.camera_debug = !App->render->cam.camera_debug;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)			//PathfindingCollisions meta layer Debug Key
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)						//PathfindingCollisions meta layer Debug Key
 	{
 		App->gui->ui_debug = !App->gui->ui_debug;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)			//Collider Debug Key
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)						//Collider Debug Key
 	{
 		App->collisions->collider_debug = !App->collisions->collider_debug;
 		App->map->pathfindingMetaDebug = !App->map->pathfindingMetaDebug;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)		//Enabling / Disabling frame cap
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)						//Enabling / Disabling frame cap
 	{
 		//App->framesAreCapped = !App->framesAreCapped;
 		if (App->frame_cap == CAP_AT_60)

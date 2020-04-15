@@ -1,8 +1,10 @@
 #ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
+#include "PugiXml\src\pugixml.hpp"
 #include "SDL/include/SDL_rect.h"
 #include "p2Log.h"
+
 #define MAX_FRAMES 60
 
 class Animation

@@ -1,14 +1,19 @@
 #include "p2Log.h"
+
+#include "Application.h"
+#include "Render.h"
+#include "Input.h"
+
 #include "SceneManager.h"
+#include "Scene.h"
 #include "LogoScene.h"
 #include "MainScene.h"
 #include "GameplayScene.h"
 #include "WinScene.h"
 #include "LoseScene.h"
-#include "Render.h"
-#include "Input.h"
 
-SceneManager::SceneManager() : current_scene(nullptr)
+
+SceneManager::SceneManager() : current_scene(nullptr), god_mode(false)
 {
 	name = "scene_manager";
 }

@@ -1,4 +1,6 @@
-#include "SDL/include/SDL_rect.h"
+#ifndef __MAIN_SCENE_H__
+#define __MAIN_SCENE_H__
+
 #include "Scene.h"
 
 class UI;
@@ -34,22 +36,24 @@ public:
 
 public:
 	// Main Screen
+	UI_Image*	main_parent;
 	UI_Button*	new_game_button;
 	UI_Button*	continue_button;
 	UI_Button*	options_button;
 	UI_Button*	exit_button;
 
-	// Main BACKGROUND
-	UI_Image*		background;
+	//BACKGROUND
 	SDL_Rect		background_rect;
 	SDL_Texture*	background_texture;
 
-	// Options BACKGROUND
-	UI_Image*		background_opt;
-	SDL_Rect		background_rect_opt;
-	SDL_Texture*	background_texture_opt;
+	// Options
+	
+	UI_Image*		options_parent;
+	//bool			options_created;
 
 	UI_Button*		back_button;
+	UI_Scrollbar*	music_scrollbar;
+	UI_Scrollbar*	sfx_scrollbar;
 
 	//Text:
 	UI_Text*		resolution_text;
@@ -59,4 +63,7 @@ public:
 
 
 public:
+
 };
+
+#endif // !__MAIN_SCENE_H__

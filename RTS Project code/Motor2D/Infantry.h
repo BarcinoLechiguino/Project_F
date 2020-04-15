@@ -22,13 +22,23 @@ public:
 	bool PostUpdate();
 
 	bool CleanUp();
-
-	void OnCollision(Collider* C1, Collider* C2);
 	
 public:
+	void AssignEntityIndex();
+	
+	void InitUnitSpriteSections();
+	void UpdateUnitSpriteSection();
+	
 	void ApplyDamage(Entity* objective);
 
+	void OnCollision(Collider* C1, Collider* C2);
+
 public:
+	int							infantry_index;
+
+	int							attack_range;							// A unit's attack range in tiles.
+	float						attack_speed;							// A unit's attack speed in attacks/second.
+
 	const std::vector<iPoint>* entity_path;
 };
 

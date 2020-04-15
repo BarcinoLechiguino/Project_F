@@ -1,9 +1,15 @@
+#include "Brofiler\Brofiler.h"
+
+#include "p2Log.h"
+
+#include "Application.h"
 #include "Render.h"
+#include "Textures.h"
+#include "Input.h"
 #include "Gui.h"
-#include "UI.h"
+
 #include "UI_Image.h"
 
-#include "Brofiler\Brofiler.h"
 
 //UI_Image will always be uninteractible and will have 2 events: IDLE & CLICKED (CLICKED when the image is clicked and can be dragged).
 //UI_Image can be draggable and can have a parent element.
@@ -139,5 +145,6 @@ void UI_Image::CheckInput()
 void UI_Image::CleanUp()
 {
 	LOG("Unloading UI_Image Textures");
-	App->tex->UnLoad(tex);
+	
+	tex = nullptr;
 }

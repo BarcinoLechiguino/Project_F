@@ -1,5 +1,12 @@
-#include "Slide.h"
+#include "Application.h"
+#include "Window.h"
+#include "Render.h"
+#include "SceneManager.h"
 #include "TransitionManager.h"
+#include "Color.h"
+
+#include "Slide.h"
+
 
 Slide::Slide(SCENES next_scene, float step_duration, bool non_lerp, bool vertical, bool slide_from_right, bool slide_from_bottom, Color slide_colour)
 	: Transition(next_scene, step_duration, non_lerp)

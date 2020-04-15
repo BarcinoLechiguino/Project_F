@@ -1,7 +1,11 @@
-#include "UI_Healthbar.h"
+#include "Application.h"
+#include "Entity.h"
 #include "Gui.h"
 
-#include "Entity.h"
+#include "UI_Healthbar.h"
+
+#include "Textures.h"
+
 
 UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent) 
 	: UI(element, x, y, *healthbar, listener, parent)
@@ -58,11 +62,11 @@ void UI_Healthbar::CheckInput()
 }
 
 void UI_Healthbar::CleanUp()
-{
-
+{	
+	tex = nullptr;
 }
 
-void UI_Healthbar::ModifyHealthbar()
+void UI_Healthbar::UpdateHealthbar()
 {
 	int new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
 

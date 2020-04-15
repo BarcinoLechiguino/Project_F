@@ -1,12 +1,14 @@
+#include "Brofiler\Brofiler.h"
+
 #include "p2Defs.h"
 #include "p2Log.h"
+
 #include "Application.h"
 #include "Window.h"
 #include "Render.h"
 #include "Map.h"
-#include "EntityManager.h"		
 
-#include "Brofiler\Brofiler.h"
+#include "EntityManager.h"		
 
 #define VSYNC true
 
@@ -221,7 +223,7 @@ iPoint Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool flip, float speed, float render_scale, double angle, int pivot_x, int pivot_y) const
+bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool flip, float speed, float render_scale, double angle, int pivot_x, int pivot_y, SDL_Renderer* renderer) const
 {
 	bool ret = true;
 	float scale = App->win->GetScale();

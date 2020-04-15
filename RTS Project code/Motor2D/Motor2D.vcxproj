@@ -98,6 +98,7 @@
     <ClCompile Include="Gatherer.cpp" />
     <ClCompile Include="Gui.cpp" />
     <ClCompile Include="Infantry.cpp" />
+    <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="LogoScene.cpp" />
     <ClCompile Include="LoseScene.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -158,6 +159,7 @@
     <ClInclude Include="Gatherer.h" />
     <ClInclude Include="Gui.h" />
     <ClInclude Include="Infantry.h" />
+    <ClInclude Include="Minimap.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="LoseScene.h" />
     <ClInclude Include="Map.h" />

@@ -1,6 +1,6 @@
 // ----------------------------------------------------
 // Timer.cpp
-// Fast timer with milisecons precision
+// Fast timer with milisecond precision
 // ----------------------------------------------------
 
 #include "Timer.h"

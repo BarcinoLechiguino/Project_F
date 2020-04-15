@@ -1,10 +1,12 @@
+#include "Brofiler\Brofiler.h"
+
 #include "Application.h"
 #include "Input.h"
 #include "Gui.h"
 #include "UI_Image.h"
+
 #include "UI_Scrollbar.h"
 
-#include "Brofiler\Brofiler.h"
 
 UI_Scrollbar::UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
 				bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent , SDL_Rect* scrollMask, iPoint maskOffset,

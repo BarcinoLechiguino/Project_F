@@ -23,11 +23,18 @@ public:
 
 	bool CleanUp();
 
+public:
+	void AssignEntityIndex();
+
+	void InitUnitSpriteSections();
+	void UpdateUnitSpriteSection();
+
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
-
-	Entity* target_to_gather;
+	int		gatherer_index;
+	
+	float	gathering_speed;
 };
 
 #endif // __ENEMY_H__

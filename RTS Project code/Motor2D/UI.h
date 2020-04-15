@@ -1,14 +1,10 @@
 #ifndef __UI_H__
 #define __UI_H__
 
-#include "p2Log.h"
-#include "Point.h"
-#include "Input.h"
 #include "SDL/include/SDL.h"
-#include "Application.h"
+#include "Module.h"
+#include "Point.h"
 
-//class iPoint;			//If declared as a forward declaration instead of an include, 
-//class SDL_Rect;		//then iPoint and SDL_Rect need to be pointers.
 class Entity;
 
 enum class UI_ELEMENT 

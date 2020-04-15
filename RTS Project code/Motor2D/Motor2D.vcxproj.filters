@@ -5,163 +5,166 @@
       <Filter>Programacio 2 ===========</Filter>
     </ClCompile>
     <ClCompile Include="PugiXml\src\pugixml.cpp">
-      <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
+      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
     </ClCompile>
     <ClCompile Include="mmgr\mmgr.cpp">
-      <Filter>Desenvolupament  ========\Sources</Filter>
+      <Filter>Engine  ===========\Sources</Filter>
     </ClCompile>
     <ClCompile Include="UI.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_Button.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_Image.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_InputBox.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_Scrollbar.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="UI_Text.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="Main.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
+      <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Enemies</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="Dynamic_Object.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
     </ClCompile>
     <ClCompile Include="Static_Object.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
     </ClCompile>
     <ClCompile Include="Rock.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static\Resources</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
     </ClCompile>
     <ClCompile Include="Entity.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Engine  ===========\Modules\Entities</Filter>
     </ClCompile>
     <ClCompile Include="EntityManager.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Engine  ===========\Modules\Entities</Filter>
     </ClCompile>
     <ClCompile Include="Collisions.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="Console.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Gui.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Window.cpp">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Textures.cpp">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Render.cpp">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Fonts.cpp">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
-    </ClCompile>
-    <ClCompile Include="Map.cpp">
-      <Filter>Desenvolupament  ========\Modules\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="PerfTimer.cpp">
-      <Filter>Desenvolupament  ========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Desenvolupament  ========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Pathfinding.cpp">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Desenvolupament  ========\Modules\Player</Filter>
-    </ClCompile>
-    <ClCompile Include="Application.cpp">
-      <Filter>Desenvolupament  ========\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Gatherer.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
-    </ClCompile>
-    <ClCompile Include="TownHall.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static\Buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Barracks.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static\Buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Infantry.cpp">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
-    </ClCompile>
-    <ClCompile Include="Transition.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="TransitionManager.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>Desenvolupament  ========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="AlternatingBars.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraToMouse.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
-    </ClCompile>
-    <ClCompile Include="Cut.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
-    </ClCompile>
-    <ClCompile Include="ExpandingBars.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="FadeToColour.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
-    </ClCompile>
-    <ClCompile Include="Slide.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
-    </ClCompile>
-    <ClCompile Include="Wipe.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
-    </ClCompile>
-    <ClCompile Include="ZoomToMouse.cpp">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
-    </ClCompile>
-    <ClCompile Include="SceneManager.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="GameplayScene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="MainScene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="LogoScene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="WinScene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="LoseScene.cpp">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Healthbar.cpp">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="Audio.cpp">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
     <ClCompile Include="Input.cpp">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Window.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Textures.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Render.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Fonts.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Audio.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>Engine  ===========\Modules\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="PerfTimer.cpp">
+      <Filter>Engine  ===========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Engine  ===========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Pathfinding.cpp">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>Engine  ===========\Modules\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Application.cpp">
+      <Filter>Engine  ===========\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Gatherer.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClCompile>
+    <ClCompile Include="TownHall.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Infantry.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClCompile>
+    <ClCompile Include="Transition.cpp">
+      <Filter>Engine  ===========\Modules\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="TransitionManager.cpp">
+      <Filter>Engine  ===========\Modules\Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Engine  ===========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="AlternatingBars.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="CameraToMouse.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Cut.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpandingBars.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+    </ClCompile>
+    <ClCompile Include="FadeToColour.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Slide.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Wipe.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="ZoomToMouse.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>Engine  ===========\Modules\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>Engine  ===========\Modules\Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="GameplayScene.cpp">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="LogoScene.cpp">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="WinScene.cpp">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="LoseScene.cpp">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Healthbar.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Minimap.cpp">
+      <Filter>Engine  ===========\Modules\Map</Filter>
     </ClCompile>
     <ClCompile Include="Quadtree.cpp">
       <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
@@ -187,172 +190,175 @@
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
-      <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
+      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
     </ClInclude>
     <ClInclude Include="PugiXml\src\pugixml.hpp">
-      <Filter>Desenvolupament  ========\Tools\PuguiXML</Filter>
+      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
     </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI_Button.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI_Image.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI_InputBox.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI_Scrollbar.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="UI_Text.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Module.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
+      <Filter>Engine  ===========\Core</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Enemies</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Dynamic_Object.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
     </ClInclude>
     <ClInclude Include="Static_Object.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
     </ClInclude>
     <ClInclude Include="Rock.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static\Resources</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Engine  ===========\Modules\Entities</Filter>
     </ClInclude>
     <ClInclude Include="EntityManager.h">
-      <Filter>Desenvolupament  ========\Modules\Entities</Filter>
+      <Filter>Engine  ===========\Modules\Entities</Filter>
     </ClInclude>
     <ClInclude Include="Collisions.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="Input.h">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Gui.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
     <ClInclude Include="Textures.h">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
     <ClInclude Include="Render.h">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
     <ClInclude Include="Fonts.h">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
     <ClInclude Include="Audio.h">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
     <ClInclude Include="Map.h">
-      <Filter>Desenvolupament  ========\Modules\Map</Filter>
+      <Filter>Engine  ===========\Modules\Map</Filter>
     </ClInclude>
     <ClInclude Include="PerfTimer.h">
-      <Filter>Desenvolupament  ========\Tools</Filter>
+      <Filter>Engine  ===========\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>Desenvolupament  ========\Tools</Filter>
+      <Filter>Engine  ===========\Tools</Filter>
     </ClInclude>
     <ClInclude Include="Pathfinding.h">
-      <Filter>Desenvolupament  ========\Modules\Interactions</Filter>
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
-      <Filter>Desenvolupament  ========\Modules\Player</Filter>
+      <Filter>Engine  ===========\Modules\Player</Filter>
     </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
-      <Filter>Desenvolupament  ========\Core</Filter>
+      <Filter>Engine  ===========\Core</Filter>
     </ClInclude>
     <ClInclude Include="Gatherer.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
     </ClInclude>
     <ClInclude Include="TownHall.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static\Buildings</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="Barracks.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Static\Buildings</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
     </ClInclude>
     <ClInclude Include="Infantry.h">
-      <Filter>Desenvolupament  ========\Modules\Entities\Dynamic\Allied</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
     </ClInclude>
     <ClInclude Include="Transition.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions</Filter>
+      <Filter>Engine  ===========\Modules\Transitions</Filter>
     </ClInclude>
     <ClInclude Include="TransitionManager.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions</Filter>
+      <Filter>Engine  ===========\Modules\Transitions</Filter>
     </ClInclude>
     <ClInclude Include="Color.h">
-      <Filter>Desenvolupament  ========\Tools</Filter>
+      <Filter>Engine  ===========\Tools</Filter>
     </ClInclude>
     <ClInclude Include="AlternatingBars.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
     </ClInclude>
     <ClInclude Include="Bar.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
     </ClInclude>
     <ClInclude Include="CameraToMouse.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
     <ClInclude Include="ExpandingBars.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
     </ClInclude>
     <ClInclude Include="Cut.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
     <ClInclude Include="FadeToColour.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
     <ClInclude Include="Slide.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
     <ClInclude Include="Wipe.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
     <ClInclude Include="ZoomToMouse.h">
-      <Filter>Desenvolupament  ========\Modules\Transitions\Transition Types</Filter>
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
+      <Filter>Engine  ===========\Modules\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="Scene.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes</Filter>
+      <Filter>Engine  ===========\Modules\Scenes</Filter>
     </ClInclude>
     <ClInclude Include="GameplayScene.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
     <ClInclude Include="MainScene.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
     <ClInclude Include="LogoScene.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
     <ClInclude Include="WinScene.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
     <ClInclude Include="LoseScene.h">
-      <Filter>Desenvolupament  ========\Modules\Scenes\In-Game Scenes</Filter>
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
     <ClInclude Include="UI_Healthbar.h">
-      <Filter>Desenvolupament  ========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Input.h">
-      <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
+    <ClInclude Include="Minimap.h">
+      <Filter>Engine  ===========\Modules\Map</Filter>
     </ClInclude>
     <ClInclude Include="Quadtree.h">
       <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
@@ -363,97 +369,97 @@
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
-      <Filter>Desenvolupament  ========\XML Files</Filter>
+      <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
     <Xml Include="..\Game\config.xml">
-      <Filter>Desenvolupament  ========\XML Files</Filter>
+      <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
     <Xml Include="..\Game\save_game.xml">
-      <Filter>Desenvolupament  ========\XML Files</Filter>
+      <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
-      <Filter>Desenvolupament  ========\XML Files</Filter>
+      <Filter>Engine  ===========\XML Files</Filter>
     </None>
     <None Include="..\Game\maps\Test_Map.tmx">
-      <Filter>Desenvolupament  ========\XML Files</Filter>
+      <Filter>Engine  ===========\XML Files</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Desenvolupament  ========">
-      <UniqueIdentifier>{c4e3aa4e-9b07-4230-801a-bf8770816ac9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Programacio 2 ===========">
       <UniqueIdentifier>{ace2c9ad-ad53-4824-a230-881f6dcabce3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules">
+    <Filter Include="Engine  ===========">
+      <UniqueIdentifier>{c4e3aa4e-9b07-4230-801a-bf8770816ac9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules">
       <UniqueIdentifier>{0160d731-a168-43fe-9d33-17cfe14ded4b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Tools">
-      <UniqueIdentifier>{ce22a53a-7afa-459b-9195-af412d2213cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities">
+    <Filter Include="Engine  ===========\Modules\Entities">
       <UniqueIdentifier>{44d2af4a-f01e-4adb-851a-562cb452e1d9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Tools\PuguiXML">
-      <UniqueIdentifier>{edcc3690-592f-4bb9-b993-23146d742d79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Core">
-      <UniqueIdentifier>{e68a18a2-401d-4e88-9500-c1f805354ef4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Interactions">
-      <UniqueIdentifier>{cf73c846-5205-46c2-b047-e3046a31911b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\XML Files">
-      <UniqueIdentifier>{a25f4839-5bf5-43fa-8c51-a0dd4ed26bb0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\UI">
-      <UniqueIdentifier>{9568892c-efcc-4eec-89c1-d01ef8e2d712}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Scenes">
-      <UniqueIdentifier>{cfefb632-29cd-4a89-a8bf-15893c12df0a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Map">
-      <UniqueIdentifier>{3027b9ed-12dc-442e-ab2f-05fb2dcc84f8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Sources">
-      <UniqueIdentifier>{2c952b81-74fb-4fef-9e28-a7299a9498f7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Static">
+    <Filter Include="Engine  ===========\Modules\Entities\Static">
       <UniqueIdentifier>{36e35673-638c-4c24-9dad-f5d06c9b884b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Dynamic">
-      <UniqueIdentifier>{e96a4ccf-5996-4da6-8d54-7d5fcc7477e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Dynamic\Enemies">
-      <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Player">
-      <UniqueIdentifier>{50d6b2ae-2ffa-49d0-af6e-b9c7d32974a6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Dynamic\Allied">
-      <UniqueIdentifier>{a7300310-4fa0-4b46-8cbe-f69324b1c8b4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Static\Buildings">
+    <Filter Include="Engine  ===========\Modules\Entities\Static\Buildings">
       <UniqueIdentifier>{d8af655e-522b-40ee-b083-1548d8a7be61}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Entities\Static\Resources">
+    <Filter Include="Engine  ===========\Modules\Entities\Static\Resources">
       <UniqueIdentifier>{15ffcaff-8973-48e6-b92f-ec6be2c7d83a}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Transitions">
-      <UniqueIdentifier>{1b8b96ad-5b6e-440e-a7ff-3cfc3fce3594}</UniqueIdentifier>
+    <Filter Include="Engine  ===========\Modules\Entities\Dynamic">
+      <UniqueIdentifier>{e96a4ccf-5996-4da6-8d54-7d5fcc7477e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Transitions\Transition Types">
-      <UniqueIdentifier>{3ee19206-a459-43a5-b779-94765ed7ab60}</UniqueIdentifier>
+    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Enemies">
+      <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Transitions\Transition Types\Bar Transitions">
-      <UniqueIdentifier>{8df65860-39a7-4b0f-a322-a03c897b25b2}</UniqueIdentifier>
+    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Allied">
+      <UniqueIdentifier>{a7300310-4fa0-4b46-8cbe-f69324b1c8b4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Modules\Scenes\In-Game Scenes">
+    <Filter Include="Engine  ===========\Modules\Interactions">
+      <UniqueIdentifier>{cf73c846-5205-46c2-b047-e3046a31911b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\UI">
+      <UniqueIdentifier>{9568892c-efcc-4eec-89c1-d01ef8e2d712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Scenes">
+      <UniqueIdentifier>{cfefb632-29cd-4a89-a8bf-15893c12df0a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Scenes\In-Game Scenes">
       <UniqueIdentifier>{c255404f-2103-4ee7-af32-661d9819c021}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Desenvolupament  ========\Core\Core Modules">
+    <Filter Include="Engine  ===========\Modules\Map">
+      <UniqueIdentifier>{3027b9ed-12dc-442e-ab2f-05fb2dcc84f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Player">
+      <UniqueIdentifier>{50d6b2ae-2ffa-49d0-af6e-b9c7d32974a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Transitions">
+      <UniqueIdentifier>{1b8b96ad-5b6e-440e-a7ff-3cfc3fce3594}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Transitions\Transition Types">
+      <UniqueIdentifier>{3ee19206-a459-43a5-b779-94765ed7ab60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Transitions\Transition Types\Bar Transitions">
+      <UniqueIdentifier>{8df65860-39a7-4b0f-a322-a03c897b25b2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Tools">
+      <UniqueIdentifier>{ce22a53a-7afa-459b-9195-af412d2213cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Tools\PuguiXML">
+      <UniqueIdentifier>{edcc3690-592f-4bb9-b993-23146d742d79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Core">
+      <UniqueIdentifier>{e68a18a2-401d-4e88-9500-c1f805354ef4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\XML Files">
+      <UniqueIdentifier>{a25f4839-5bf5-43fa-8c51-a0dd4ed26bb0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Sources">
+      <UniqueIdentifier>{2c952b81-74fb-4fef-9e28-a7299a9498f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Multimedia">
       <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
     </Filter>
     <Filter Include="Desenvolupament  ========\Tools\Quadtree">

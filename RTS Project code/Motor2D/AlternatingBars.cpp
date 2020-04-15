@@ -1,5 +1,13 @@
-#include "AlternatingBars.h"
+#include "Application.h"
+#include "Window.h"
+#include "Render.h"
+#include "SceneManager.h"
 #include "TransitionManager.h"
+#include "Color.h"
+#include "Bar.h"
+
+#include "AlternatingBars.h"
+
 
 AlternatingBars::AlternatingBars(SCENES next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_colour, Color odd_colour) 
 	: Transition(next_scene, step_duration, non_lerp)

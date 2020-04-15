@@ -2,7 +2,9 @@
 #define __EXPANDING_BARS_H__
 
 #include "Transition.h"
-#include "Bar.h"
+
+struct Color;
+struct Bar;
 
 class ExpandingBars : public Transition
 {

@@ -2,7 +2,6 @@
 #define __AUDIO_H__
 
 #include "SDL_mixer\include\SDL_mixer.h"
-#include "p2Defs.h"
 #include "Module.h"
 
 #define DEFAULT_MUSIC_FADE_TIME 2.0f

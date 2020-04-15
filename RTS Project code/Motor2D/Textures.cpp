@@ -1,11 +1,11 @@
+#include "SDL_image/include/SDL_image.h"
+#pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
+
 #include "p2Defs.h"
 #include "p2Log.h"
 #include "Application.h"
-#include "Render.h"
-#include "Textures.h"
 
-#include "SDL_image/include/SDL_image.h"
-#pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
+#include "Textures.h"
 
 Textures::Textures() : Module()
 {
@@ -58,18 +58,18 @@ bool Textures::CleanUp()
 }
 
 // Load new texture from file path
-SDL_Texture* const Textures::Load(const char* path)
+SDL_Texture* const Textures::Load(const char* path, SDL_Renderer* renderer)
 {
 	SDL_Texture* texture = NULL;
 	SDL_Surface* surface = IMG_Load(path);
 
-	if(surface == NULL)
+	if (surface == NULL)
 	{
 		LOG("Could not load surface with path: %s. IMG_Load: %s", path, IMG_GetError());
 	}
 	else
 	{
-		texture = LoadSurface(surface);
+		texture = LoadSurface(surface, renderer);
 		SDL_FreeSurface(surface);
 	}
 
@@ -94,11 +94,11 @@ bool Textures::UnLoad(SDL_Texture* texture)
 }
 
 // Translate a surface into a texture
-SDL_Texture* const Textures::LoadSurface(SDL_Surface* surface)
+SDL_Texture* const Textures::LoadSurface(SDL_Surface* surface, SDL_Renderer* renderer)
 {
-	SDL_Texture* texture = SDL_CreateTextureFromSurface(App->render->renderer, surface);
+	SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
 
-	if(texture == NULL)
+	if (texture == NULL)
 	{
 		LOG("Unable to create texture from surface! SDL Error: %s\n", SDL_GetError());
 	}

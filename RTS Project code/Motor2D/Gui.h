@@ -2,23 +2,35 @@
 #define __GUI_H__
 
 #include "Module.h"
-#include "Textures.h"
-#include "Fonts.h"
-//#include "UI.h"
+#include "Point.h"
+
+#define CURSOR_WIDTH 2
+#define DRAG_LIMIT_OFFSET 1
+
+/*#include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
 #include "UI_InputBox.h"
 #include "UI_Scrollbar.h"
-#include "UI_Healthbar.h"
+#include "UI_Healthbar.h"*/
 
-class UI;
-enum class UI_ELEMENT;
+struct SDL_Color;
+struct SDL_Texture;
+struct _TTF_Font;
 
 class Entity;
 
-#define CURSOR_WIDTH 2
-#define DRAG_LIMIT_OFFSET 1
+class UI;
+enum class UI_ELEMENT;
+//enum class UI_EVENT;
+
+class UI_Image;
+class UI_Text;
+class UI_Button;
+class UI_InputBox;
+class UI_Scrollbar;
+class UI_Healthbar;
 
 class Gui : public Module
 {
@@ -60,6 +72,8 @@ public:
 					, Entity* attached_unit = nullptr, Module* listener = nullptr, UI* parent = nullptr);
 
 	
+	void DeleteGuiElement(UI* element_to_delete);
+
 																			// ------------------ GUI ELEMENTS MANAGEMENT ------------------
 	void OnEventCall(UI* element, UI_EVENT ui_event);						//This function is called whenever an new event happens, it receives the pointer of the element that caused the event and the kind of event it is.
 	void PassFocus();														//Method that passes the focus from an interactible and able to focused element to another with the same conditions.
@@ -79,7 +93,7 @@ public:
 
 public:
 	UI*							focusedElement;								//Change to list item
-	std::list<UI*>::iterator	iteratedElement;
+	std::vector<UI*>::iterator	iteratedElement;
 
 	bool						escape;										//When this bool is true the game is exited.
 	bool						ui_debug;									//When this bool is true, debug mode is activated.
@@ -90,21 +104,22 @@ public:
 	const char*					disable_ui_debug;
 
 public:
-	uint						tab_fx;
-	uint						play_fx;
-	uint						save_fx;
+	uint						new_game_fx;
+	uint						options_fx;
+	uint						back_fx;
+	uint						appear_menu_fx;
 	uint						exit_fx;
-	uint						nav_fx;
 
 private:
 	SDL_Texture*				atlas;										//Texture of the atlas (UI Spritesheet)
 	std::string					atlas_file_name;							//Name of the atlas in the xml file.
 
-	std::list<UI*>				elements;									//List where all the UI elements in a scene will be stored at.
+	std::vector<UI*>			elements;									//List where all the UI elements in a scene will be stored at.
 
 public:
 	bool						game_started = false;						//To know if the user has enter the game
 	bool						audioAlreadyLoaded;
+
 };
 
 #endif // __GUI_H__

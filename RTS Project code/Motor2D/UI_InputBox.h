@@ -2,8 +2,8 @@
 #define __UI_INPUTBOX_H__
 
 #include "UI.h"
-//#include "UI_Image.h"
-//#include "UI_Text.h"
+
+struct _TTF_Font;
 
 class UI_Image;
 class UI_Text;

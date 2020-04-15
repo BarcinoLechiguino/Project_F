@@ -17,6 +17,7 @@
 #include "Gui.h"
 #include "Console.h"
 #include "Player.h"
+#include "Minimap.h"
 #include "TransitionManager.h"
 #include "SceneManager.h"
 
@@ -40,6 +41,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	pathfinding			= new PathFinding();
 	collisions			= new Collisions();
 	entity_manager		= new EntityManager();
+	minimap				= new Minimap();
 	font				= new Fonts();
 	gui					= new Gui();
 	console				= new Console();
@@ -59,7 +61,9 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(console);
 	AddModule(collisions);
 
+
 	// scene_manager last before render.
+	AddModule(minimap);
 	AddModule(gui);
 	AddModule(scene_manager);
 	AddModule(transition_manager);

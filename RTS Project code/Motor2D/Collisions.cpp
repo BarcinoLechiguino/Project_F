@@ -1,12 +1,12 @@
+#include "Brofiler\Brofiler.h"
+//#include "mmgr/mmgr.h"
+
+#include "p2Log.h"
 #include "Application.h"
 #include "Collisions.h"
 #include "Map.h"
 #include "Render.h"
-#include "p2Log.h"
 #include "EntityManager.h"
-#include "Brofiler\Brofiler.h"
-
-//#include "mmgr/mmgr.h"
 
 //With the constructor call collider_debug (draw colliders on screen) is set to true or false.
 Collisions::Collisions() : Module()

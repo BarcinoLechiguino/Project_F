@@ -1,13 +1,9 @@
 #ifndef __SCENE_H__
 #define __SCENE_H__
 
-#include "SDL/include/SDL.h"
-#include "PugiXml\src\pugixml.hpp"
-
-#include "Module.h"
-#include "Input.h"
-#include "Gui.h"
-#include "TransitionManager.h"
+#include "SDL/include/SDL_rect.h"
+#include "Module.h"												// Scene inherits from Module to allow the use of the "this" keyword in the OnEventCall of each Scene. 
+#include "Point.h"
 
 enum class SCENES
 {

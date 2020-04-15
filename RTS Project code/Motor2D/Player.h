@@ -1,9 +1,9 @@
 #ifndef __PLAYER_H__
 #define __PLAYER_H__
 
+#include "SDL/include/SDL_rect.h"
 #include "Module.h"
 #include "Point.h"
-#include "SDL/include/SDL_rect.h"
 
 class Pathfinding;
 class Dynamic_Object;
@@ -33,6 +33,7 @@ public:
 	void SelectionRect();
 
 	void SelectionOnClick();							// Method that will select whichever entity is at the mouse's position when it is right-clicked.
+	void DeleteOnInput();
 
 	void SelectionShortcuts();
 

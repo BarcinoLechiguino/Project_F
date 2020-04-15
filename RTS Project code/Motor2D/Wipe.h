@@ -2,7 +2,8 @@
 #define __WIPE_H__
 
 #include "Transition.h"
-#include "Color.h"
+
+struct Color;
 
 class Wipe : public Transition
 {

@@ -1,7 +1,7 @@
 <!-- Config file for the game -->
 
 <config>
-  <app framerate_cap="60" frame_cap_on="false">
+  <app framerate_cap="60" frame_cap_on="true">
     <title>RTS Project</title>
     <organization>UPC</organization>
   </app>
@@ -41,41 +41,111 @@
   </map>
 
   <entities>
+    <textures>
+      <gatherer_texture path="textures/Spritesheets/Entities/gatherer2_lowres.png"/>
+      <infantry_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
+      <enemy_texture path="textures/Spritesheets/Entities/Enemy_placeholder.png"/>
+      <townhall_texture path="maps/hall.png"/>
+      <barracks_texture path="maps/Barracks.png"/>
+      <rock_texture path="maps/debug_tile.png"/>
+    </textures>
+    
     <player>
     </player>
 
-    <enemies>
-      <update_cycle_length length="0.1f"/>
-      <mecha>
-        <position x="199" y="400"/>
-        <speed x="125.0f" y="0"/>
-        <max_speed x="240.0f" y="500.0f"/>
-        <acceleration x="60.0f" y="450.0f"/>
-        <gravity value="40.0f"/>
-        <sprite_size w="56" h="78"/>
-        <points value ="100"/>
-        <lives lives="1"/>
-        <detection_radius radius="125"/>
-      </mecha>
+    <units>
+      <allies>
+        <gatherer>
+          <sprite_size w="58" h="45"/>
+          <max_health health="150"/>
+          <damage damage="0"/>
+          <healthbar_background_section x="618" y="12" w="115" h="9"/>
+          <healthbar_section x="618" y="23" w="115" h="9"/>
+          <speed speed="500.0f"/>
+          <path_full value="false"/>
+          <is_selectable value="true"/>
+          <gathering_speed speed="5.0f"/>
+        </gatherer>
 
-      <alien>
-        <position x="212" y="400"/>
-        <speed x="200.0f" y="125.0f"/>
-        <sprite_size w="38" h="52"/>
-        <points value ="75"/>
-        <lives lives="1"/>
-        <detection_radius radius="125"/>
+        <infantry>
+          <sprite_size w="58" h="45"/>
+          <max_health health="300"/>
+          <damage damage="30"/>
+          <healthbar_background_section x="618" y="12" w="115" h="9"/>
+          <healthbar_section x="618" y="23" w="115" h="9"/>
+          <speed speed="500.0f"/>
+          <path_full value="false"/>
+          <is_selectable value="true"/>
+          <attack_range range="10"/>
+          <attack_speed speed="5.0f"/>
+        </infantry>
+      </allies>
+
+      <enemies>
         <update_cycle_length length="0.1f"/>
-      </alien>
-    </enemies>
 
-    <items>
-      <coin>
-        <position x ="0" y ="0"/>
-        <sprite_size w="32" h="32"/>
-        <points value ="10"/>
-      </coin>
-    </items>
+        <enemy>
+          <sprite_size w="58" h="45"/>
+          <max_health health="300"/>
+          <damage damage="30"/>
+          <healthbar_background_section x="618" y="12" w="115" h="9"/>
+          <healthbar_section x="618" y="23" w="115" h="9"/>
+          <speed speed="500.0f"/>
+          <path_full value="false"/>
+          <is_selectable value="false"/>
+          <attack_range range="10"/>
+          <attack_speed speed="5.0f"/>
+        </enemy>
+        
+        <mecha>
+          <position x="199" y="400"/>
+          <speed x="125.0f" y="0"/>
+          <max_speed x="240.0f" y="500.0f"/>
+          <acceleration x="60.0f" y="450.0f"/>
+          <gravity value="40.0f"/>
+          <sprite_size w="56" h="78"/>
+          <points value ="100"/>
+          <lives lives="1"/>
+          <detection_radius radius="125"/>
+        </mecha>
+
+        <alien>
+          <position x="212" y="400"/>
+          <speed x="200.0f" y="125.0f"/>
+          <sprite_size w="38" h="52"/>
+          <points value ="75"/>
+          <lives lives="1"/>
+          <detection_radius radius="125"/>
+          <update_cycle_length length="0.1f"/>
+        </alien>
+      </enemies>
+    </units>
+
+    <buildings>
+      <allied>
+        <townhall>
+          
+        </townhall>
+
+        <barracks>
+          
+        </barracks>
+      </allied>
+
+      <enemy>
+        <townhall>
+
+        </townhall>
+
+        <barracks>
+
+        </barracks>
+      </enemy>
+    </buildings>
+
+    <resources>
+      
+    </resources>
   </entities>
 
   <gui>

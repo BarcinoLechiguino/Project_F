@@ -1,20 +1,23 @@
-#include "Player.h"
+#include "p2Log.h"
+
 #include "Input.h"
 #include "Render.h"
 #include "Application.h"
 #include "Window.h"
 #include "Textures.h"
-#include "p2Log.h"
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Map.h"
 #include "SceneManager.h"
+#include "Scene.h"
 
 #include "EntityManager.h"
 #include "Dynamic_Object.h"
 #include "Static_Object.h"
 #include "Gatherer.h"
 #include "Infantry.h"
+
+#include "Player.h"
 
 Player::Player() : building_selected(nullptr)
 {
@@ -63,6 +66,7 @@ bool Player::Update(float dt)
 	SelectionRect();
 
 	SelectionOnClick();
+	DeleteOnInput();
 
 	SelectionShortcuts();
 
@@ -159,92 +163,136 @@ void Player::CameraController(float dt)
 
 void Player::SelectionRect()
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (CurrentlyInGameplayScene())
 	{
-		is_selecting = true;
-
-		selection_start = mouse_position;
-
-		units_selected.clear();
-	}
-
-	if (is_selecting)
-	{
-		//Cases with mouse pos
-		if (mouse_position.x > selection_start.x)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
-			selection_rect = { selection_start.x ,selection_start.y, mouse_position.x - selection_start.x, mouse_position.y - selection_start.y };
-		}
-		else
-		{
-			selection_rect = { mouse_position.x ,selection_start.y, selection_start.x - mouse_position.x , mouse_position.y - selection_start.y };
+			is_selecting = true;
+
+			selection_start = mouse_position;
+
+			units_selected.clear();
 		}
 
-		if (mouse_position.y < selection_start.y)
+		if (is_selecting)
 		{
-			selection_rect.y = mouse_position.y;
-			selection_rect.h = selection_start.y - mouse_position.y;
-		}
-
-		App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
-
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
-		{
-			is_selecting = false;
-			
-			for (std::vector<Dynamic_Object*>::iterator item = App->entity_manager->dynamic_objects.begin() ; item != App->entity_manager->dynamic_objects.end(); ++item)
+			//Cases with mouse pos
+			if (mouse_position.x > selection_start.x)
 			{
-				if ((*item)->is_selectable)
-				{
-					/*LOG("camera %d, %d", -App->render->camera.x, -App->render->camera.y);
-					LOG("Selection pos %d %d", selection_rect.x - App->render->camera.x , selection_rect.y - App->render->camera.y);
-					LOG("gatherer rect %d %d", (*item)->selection_collider.x, (*item)->selection_collider.y);*/
-
-					//Collision allied units rectangles
-					if (((*item)->selection_collider.x + (*item)->selection_collider.w > selection_rect.x - App->render->camera.x) &&
-						((*item)->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&
-						((*item)->selection_collider.y + (*item)->selection_collider.h > selection_rect.y - App->render->camera.y) &&
-						((*item)->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h))
-					{
-						units_selected.push_back((*item));
-						
-					}
-				}
+				selection_rect = { selection_start.x ,selection_start.y, mouse_position.x - selection_start.x, mouse_position.y - selection_start.y };
+			}
+			else
+			{
+				selection_rect = { mouse_position.x ,selection_start.y, selection_start.x - mouse_position.x , mouse_position.y - selection_start.y };
 			}
 
-			LOG("Units selected %d", units_selected.size() );
+			if (mouse_position.y < selection_start.y)
+			{
+				selection_rect.y = mouse_position.y;
+				selection_rect.h = selection_start.y - mouse_position.y;
+			}
+
+			App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
+
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+			{
+				is_selecting = false;
+
+				for (std::vector<Dynamic_Object*>::iterator item = App->entity_manager->dynamic_objects.begin(); item != App->entity_manager->dynamic_objects.end(); ++item)
+				{
+					if ((*item)->is_selectable)
+					{
+						/*LOG("camera %d, %d", -App->render->camera.x, -App->render->camera.y);
+						LOG("Selection pos %d %d", selection_rect.x - App->render->camera.x , selection_rect.y - App->render->camera.y);
+						LOG("gatherer rect %d %d", (*item)->selection_collider.x, (*item)->selection_collider.y);*/
+
+						//Collision allied units rectangles
+						if (((*item)->selection_collider.x + (*item)->selection_collider.w > selection_rect.x - App->render->camera.x) &&
+							((*item)->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&
+							((*item)->selection_collider.y + (*item)->selection_collider.h > selection_rect.y - App->render->camera.y) &&
+							((*item)->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h))
+						{
+							units_selected.push_back((*item));
+
+						}
+					}
+				}
+
+				LOG("Units selected %d", units_selected.size());
+			}
 		}
 	}
 }
 
 void Player::SelectionOnClick()
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (CurrentlyInGameplayScene())
 	{
-		Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
-		
-		if (clicked_entity != nullptr)
+		if (!App->scene_manager->god_mode)
 		{
-			if (App->entity_manager->IsUnit(clicked_entity))
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				units_selected.push_back((Dynamic_Object*)clicked_entity);
-				return;
-			}
+				if (App->entity_manager->entity_map != nullptr)
+				{
+					Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);					//clicked_entity will be assigned the entity in the entity_map at the given position.
 
-			if (App->entity_manager->IsBuilding(clicked_entity))
-			{
-				building_selected = (Static_Object*)clicked_entity;
+					if (clicked_entity != nullptr)
+					{
+						if (App->entity_manager->IsUnit(clicked_entity))
+						{
+							units_selected.push_back((Dynamic_Object*)clicked_entity);
+							return;
+						}
 
-				LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", mouse_tile.x, mouse_tile.y);
+						if (App->entity_manager->IsBuilding(clicked_entity))
+						{
+							building_selected = (Static_Object*)clicked_entity;
 
-				return;
+							LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", mouse_tile.x, mouse_tile.y);
+
+							return;
+						}
+					}
+					else
+					{
+						units_selected.clear();
+
+						LOG("There is no Entity at tile (%d, %d)", mouse_tile.x, mouse_tile.y);
+					}
+				}
 			}
 		}
-		else
+	}
+}
+
+void Player::DeleteOnInput()
+{
+	if (CurrentlyInGameplayScene())
+	{
+		if (App->scene_manager->god_mode)
 		{
-			units_selected.clear();
-			
-			LOG("There is no Entity at tile (%d, %d)", mouse_tile.x, mouse_tile.y);
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			{
+				if (App->entity_manager->entity_map != nullptr)
+				{
+					Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
+
+					if (clicked_entity != nullptr)
+					{
+						std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+
+						for (; item != units_selected.end(); ++item)
+						{
+							if ((*item) == clicked_entity)
+							{
+								units_selected.erase(item);
+							}
+						}
+						
+						App->entity_manager->DeleteEntity(clicked_entity);
+					}
+				}
+			}
 		}
 	}
 }
@@ -259,7 +307,10 @@ void Player::SelectionShortcuts()
 
 		for (; item != App->entity_manager->dynamic_objects.end(); ++item)
 		{
-			units_selected.push_back((*item));
+			if ((*item)->is_selectable)
+			{
+				units_selected.push_back((*item));
+			}
 		}
 
 		LOG("All units selected. Total unit amount: %d", units_selected.size());

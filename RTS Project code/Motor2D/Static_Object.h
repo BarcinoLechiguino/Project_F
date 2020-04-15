@@ -22,7 +22,6 @@ public:
 	virtual bool CleanUp();
 
 public:
- 
 	int tile_width;
 	int tile_height;
 

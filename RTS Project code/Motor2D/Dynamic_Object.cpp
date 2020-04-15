@@ -1,11 +1,13 @@
+#include "Application.h"
 #include "Map.h"
+#include "Pathfinding.h"
+#include "EntityManager.h"
 
 #include "Dynamic_Object.h"
-#include "EntityManager.h"
+
 
 Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
 {
-
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
 
@@ -23,7 +25,7 @@ bool Dynamic_Object::Awake(pugi::xml_node&)
 }
 
 bool Dynamic_Object::Start()
-{
+{	
 	return true;
 }
 
@@ -45,6 +47,16 @@ bool Dynamic_Object::PostUpdate()
 bool Dynamic_Object::CleanUp()
 {
 	return true;
+}
+
+void Dynamic_Object::InitUnitSpriteSections()
+{
+	return;
+}
+
+void Dynamic_Object::UpdateUnitSpriteSection()
+{
+	return;
 }
 
 void Dynamic_Object::GiveNewTarget(iPoint new_target)
@@ -194,7 +206,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_DOWN_RIGHT:
 
@@ -206,7 +218,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_UP_LEFT:
 
@@ -218,7 +230,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_UP_RIGHT:
 
@@ -230,7 +242,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_UP:
 
@@ -241,7 +253,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_DOWN:
 
@@ -252,7 +264,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_RIGHT:
 
@@ -263,7 +275,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
+	break;
 
 	case ENTITY_STATE::PATHING_LEFT:
 
@@ -274,8 +286,7 @@ void Dynamic_Object::Move(float dt)
 			next_reached = true;
 		}
 
-		break;
-
+	break;
 	}
 
 	if (next_reached)
@@ -283,9 +294,12 @@ void Dynamic_Object::Move(float dt)
 		pixel_position.x = next_tile_position.x;
 		pixel_position.y = next_tile_position.y;
 
+		iPoint tmp = tile_position;
+
 		tile_position = next_tile;
 
-		App->entity_manager->ChangeEntityMap(tile_position, this);
+		App->entity_manager->ChangeEntityMap(tile_position, this);				// ENTITY MAP UPDATE
+		App->entity_manager->ChangeEntityMap(tmp, this, true);
 
 		unit_state = ENTITY_STATE::IDLE;
 		path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;

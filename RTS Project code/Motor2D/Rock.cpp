@@ -1,11 +1,19 @@
+#include "Application.h"
+#include "Render.h"
+#include "Textures.h"
+#include "Input.h"
+#include "Audio.h"
 #include "Map.h"
+#include "Pathfinding.h"
+#include "Gui.h"
+#include "EntityManager.h"
 
 #include "Rock.h"
-#include "EntityManager.h"
+
 
 Rock::Rock(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 {
-	entity_sprite = App->tex->Load("maps/debug_tile.png");
+	entity_sprite = App->entity_manager->GetRockTexture();
 	
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;

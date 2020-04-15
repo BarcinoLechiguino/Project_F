@@ -1,3 +1,5 @@
+#include "Application.h"
+
 #include "Transition.h"
 
 Transition::Transition(SCENES next_scene, float step_duration, bool non_lerp) : 
@@ -69,9 +71,9 @@ float Transition::N_Lerp(float start, float end, float rate, bool smash_in)				/
 	return start + increment;
 }
 
-float Transition::GetCutoffRate(float step_duration, float dt)
+float Transition::GetCutoffRate(float step_duration)
 {
-	cutoff_rate = dt / step_duration;
+	cutoff_rate = App->GetDt() / step_duration;
 
 	return cutoff_rate;
 }

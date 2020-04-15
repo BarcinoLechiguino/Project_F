@@ -1,12 +1,10 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
-#include "PugiXml/src/pugixml.hpp"
 #include "Module.h"
 #include "Point.h"
 #include "Collisions.h"
-#include "SDL/include/SDL.h"
-#include "TileQuadTree.h"
+#include "p2Log.h"					// Added due to ~Properties (#52)
 
 class Collisions;
 struct Collider;
@@ -50,13 +48,13 @@ struct Properties
 		values		value;													//Value of the property in a layer.
 		int			intValue;												//Int value of the property in a layer. Used mainly for pathfinding
 	};
-	
-	~Properties()															//Deletes every property and frees all allocated memory.
+
+	Properties::~Properties()															//Deletes every property and frees all allocated memory.
 	{
 		LOG("The Properties' destructor has been called");
 		LOG("property_list has %d elements", property_list.size());
-		 
-		for (std::list<Property*>::iterator prop_iterator = property_list.begin() ; prop_iterator != property_list.end() ; prop_iterator++ )
+
+		for (std::list<Property*>::iterator prop_iterator = property_list.begin(); prop_iterator != property_list.end(); prop_iterator++)
 		{
 			RELEASE((*prop_iterator));										//Deletes all data members of a property and frees all allocated memory.
 		}
@@ -192,6 +190,8 @@ public:
 	void Restart_Cam();
 	void GetMapSize(int& w, int& h) const;
 
+	TileSet* GetTilesetFromTileId(int id); //Changed to non const because of list unknown problem
+
 private:
 
 	bool LoadMap();
@@ -201,7 +201,7 @@ private:
 	bool LoadObjectLayers(pugi::xml_node& node, ObjectGroup* group);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
 
-	TileSet* GetTilesetFromTileId(int id); //Changed to non const because of list unknown problem
+
 
 public:
 
@@ -216,10 +216,12 @@ public:
 	
 	bool			pathfindingMetaDebug = false;	//Keeps track of whether to load the PathfindingCollisions layer. Temporally declared here.
 
+	bool				map_loaded;
+
 private:
 	pugi::xml_document	map_file;
 	std::string			folder;
-	bool				map_loaded;
+	
 
 	iPoint				camera_pos_in_pixels;
 	

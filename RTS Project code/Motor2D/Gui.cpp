@@ -1,14 +1,22 @@
-#include "p2Defs.h"
+#include "p2Log.h"
+
 #include "Application.h"
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
 #include "Audio.h"
+#include "Fonts.h"
 #include "Console.h"
+#include "Entity.h"
 
 #include "Gui.h"
 #include "UI.h"
-#include "Entity.h"
+#include "UI_Image.h"
+#include "UI_Text.h"
+#include "UI_Button.h"
+#include "UI_InputBox.h"
+#include "UI_Scrollbar.h"
+#include "UI_Healthbar.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -47,11 +55,11 @@ bool Gui::Start()
 	
 	if (!audioAlreadyLoaded)
 	{
-		tab_fx = App->audio->LoadFx("audio/fx/tab_ui.wav");
-		play_fx = App->audio->LoadFx("audio/fx/play_ui.wav");
-		save_fx = App->audio->LoadFx("audio/fx/save_fx.wav");
-		exit_fx = App->audio->LoadFx("audio/fx/exit_ui.wav");
-		nav_fx = App->audio->LoadFx("audio/fx/navegate_ui.wav");
+		new_game_fx = App->audio->LoadFx("audio/fx/UI/New Game_Continue.wav");
+		options_fx = App->audio->LoadFx("audio/fx/UI/Options.wav");
+		back_fx = App->audio->LoadFx("audio/fx/UI/Back.wav");
+		exit_fx = App->audio->LoadFx("audio/fx/UI/Back to menu.wav");
+		appear_menu_fx = App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
 
 		audioAlreadyLoaded = true;
 	}
@@ -64,11 +72,11 @@ bool Gui::Start()
 // Update all guis
 bool Gui::PreUpdate()
 {
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
 	{
 		PassFocus();
-		App->audio->PlayFx(tab_fx, 0);
-	}
+		App->audio->PlayFx(new_game_fx, 0);
+	}*/
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
@@ -126,7 +134,7 @@ bool Gui::PostUpdate()
 	
 	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
 
-	for (std::list<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
+	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
 	{
 		if ((*element_iterator)->isVisible)
 		{
@@ -145,7 +153,7 @@ bool Gui::CleanUp()
 	LOG("Freeing GUI");
 	
 	//Iterate the elements list and frees all allocated memory.
-	for (std::list<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
+	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
 	{
 		(*element_iterator)->CleanUp();
 		RELEASE((*element_iterator));
@@ -260,6 +268,22 @@ UI* Gui::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_
 	return elem;
 }
 
+void Gui::DeleteGuiElement(UI* element_to_delete)
+{
+	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
+	{
+		if ((*element_iterator) == element_to_delete)
+		{
+			(*element_iterator)->CleanUp();
+			RELEASE((*element_iterator));
+
+			elements.erase(element_iterator);
+
+			return;
+		}
+	}
+}
+
 //--------------------------------- INPUT PROCESSING METHODS ---------------------------------
 void Gui::OnEventCall(UI* element, UI_EVENT ui_event)
 {
@@ -273,7 +297,7 @@ UI* Gui::FirstElementUnderMouse() const
 {
 	UI* firstElement = nullptr;
 
-	std::list<UI*>::const_iterator iterator = elements.cbegin();
+	std::vector<UI*>::const_iterator iterator = elements.cbegin();
 
 	for (; iterator != elements.cend(); iterator++)
 	{
@@ -373,7 +397,7 @@ bool Gui::ElementHasChilds(UI* parentElement) const
 {
 	bool ret = false;
 
-	std::list<UI*>::const_iterator elem = elements.cbegin();
+	std::vector<UI*>::const_iterator elem = elements.cbegin();
 
 	for (; elem != elements.cend(); ++elem)
 	{
@@ -389,7 +413,7 @@ bool Gui::ElementHasChilds(UI* parentElement) const
 
 void Gui::UpdateChilds(UI* parentElement)
 {
-	std::list<UI*>::iterator child = elements.begin();
+	std::vector<UI*>::iterator child = elements.begin();
 
 	for (; child != elements.end(); ++child)
 	{
@@ -408,7 +432,7 @@ void Gui::UpdateChilds(UI* parentElement)
 
 void Gui::SetElementsVisibility(UI* parentElement, bool state)
 {
-	std::list<UI*>::iterator child = elements.begin();
+	std::vector<UI*>::iterator child = elements.begin();
 
 	for (; child != elements.end(); ++child)
 	{
@@ -431,7 +455,7 @@ void Gui::Debug_UI()
 {
 	if (ui_debug == true)
 	{
-		for (std::list<UI*>::iterator elem = elements.begin(); elem != elements.end(); ++elem)
+		for (std::vector<UI*>::iterator elem = elements.begin(); elem != elements.end(); ++elem)
 		{
 			if ((*elem)->isVisible)
 			{
