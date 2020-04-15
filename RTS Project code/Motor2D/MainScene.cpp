@@ -39,8 +39,6 @@ bool MainScene::Start()
 	
 	LoadGuiElements();
 
-	options_created = false;
-
 	return true;
 }
 
@@ -62,7 +60,6 @@ bool MainScene::PostUpdate()
 {
 	//Load Scene / Unload MainScene
 	ExecuteTransition();
-
 	
 	return true;
 }
@@ -79,7 +76,7 @@ bool MainScene::CleanUp()
 void MainScene::LoadGuiElements()
 {	
 	// Main Screen
-	main_parent = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+		main_parent = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 		// New Game Button
 		SDL_Rect new_game_button_size = { 0, 0, 175, 28 };
@@ -120,6 +117,11 @@ void MainScene::LoadGuiElements()
 
 		background_rect = { 0,0,1280,720 };
 		background_texture = App->tex->Load("maps/MainMenu_background.png");
+
+	// Options Menu
+		LoadOptionsMenu();
+		App->gui->SetElementsVisibility(options_parent, false);
+
 }
 
 void MainScene::LoadOptionsMenu()
@@ -165,8 +167,6 @@ void MainScene::LoadOptionsMenu()
 
 	back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 400, 470, true, true, false, this, options_parent
 		, &back_button_idle, &back_button_hover, &back_button_clicked);
-
-	background_texture = App->tex->Load("maps/Options_background.png");
 }
 
 void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
@@ -189,14 +189,9 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 		App->gui->SetElementsVisibility(main_parent, false);							// Deactivate Main menu
 
-		if (options_created == false)
-		{
-			LoadOptionsMenu();
-		}
-		else
-		{
-			App->gui->SetElementsVisibility(options_parent, true);						//Activate Options Menu
-		}
+		App->gui->SetElementsVisibility(options_parent, true);							//Activate Options Menu
+
+		background_texture = App->tex->Load("maps/Options_background.png");
 	}	
 	
 	if (element == back_button && ui_event == UI_EVENT::UNCLICKED)
@@ -205,7 +200,7 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 		App->gui->SetElementsVisibility(main_parent, true);							// Activate Main menu
 
-		App->gui->SetElementsVisibility(options_parent, false);							//Deactivate Options Menu
+		App->gui->SetElementsVisibility(options_parent, false);						//Deactivate Options Menu
 
 		background_texture = App->tex->Load("maps/MainMenu_background.png");
 	}

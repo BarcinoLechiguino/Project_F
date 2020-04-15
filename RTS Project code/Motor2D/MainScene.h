@@ -49,7 +49,7 @@ public:
 	// Options
 	
 	UI_Image*		options_parent;
-	bool			options_created;
+	//bool			options_created;
 
 	UI_Button*		back_button;
 	UI_Scrollbar*	music_scrollbar;
