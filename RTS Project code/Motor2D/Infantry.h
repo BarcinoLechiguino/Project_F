@@ -26,7 +26,7 @@ public:
 public:
 	void AssignEntityIndex();
 	
-	void InitUnitSpriteSection();
+	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 	
 	void ApplyDamage(Entity* objective);

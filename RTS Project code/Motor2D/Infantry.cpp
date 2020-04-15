@@ -141,7 +141,7 @@ void Infantry::AssignEntityIndex()
 	infantry_index = App->entity_manager->infantries.size();
 }
 
-void Infantry::InitUnitSpriteSection()
+void Infantry::InitUnitSpriteSections()
 {
 	entity_sprite_section = { 58, 0, 58, 47 }; //Down Right
 }

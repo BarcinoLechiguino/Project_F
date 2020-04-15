@@ -71,6 +71,8 @@ bool MainScene::CleanUp()
 {
 	App->gui->CleanUp();
 	
+	App->tex->UnLoad(background_texture);
+
 	return true;
 }
 
