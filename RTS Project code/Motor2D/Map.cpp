@@ -53,11 +53,11 @@ void Map::Draw()
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
 	{
-		camera_pos_in_pixels.x = -App->render->camera.x;
-		camera_pos_in_pixels.y = -App->render->camera.y;
+		camera_pos_in_pixels.x = -App->render->camera.x + winWidth *0.25;
+		camera_pos_in_pixels.y = -App->render->camera.y + winHeight * 0.25;
 
-		bottom_right_x = camera_pos_in_pixels.x + winWidth;
-		bottom_right_y = camera_pos_in_pixels.y + winHeight;
+		bottom_right_x = -App->render->camera.x + winWidth * 0.75;
+		bottom_right_y = -App->render->camera.y + winHeight * 0.75;
 
 		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;
 		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
@@ -100,6 +100,7 @@ void Map::Draw()
 			}
 		}
 	}
+	(*data.layers.begin())->tiles_tree->DrawQuadtree();
 	//LOG("Tiles drawn: %d", tiles_drawn);
 }
 
@@ -470,8 +471,30 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	layer->height		= node.attribute("height").as_int();
 	layer->speed		= node.child("properties").child("property").attribute("value").as_float();		
 	LoadProperties(node, layer->properties);															
-	
 	pugi::xml_node layer_data = node.child("data");
+
+	SDL_Rect quad_tile_rect;
+
+	switch (data.type)
+	{
+	case(MAPTYPE_ORTHOGONAL):
+
+		break;
+
+	case(MAPTYPE_ISOMETRIC):
+
+		quad_tile_rect.x = MapToWorld(0, data.height).x;
+		quad_tile_rect.y = 0;
+
+		quad_tile_rect.w = MapToWorld(data.width, 0).x - MapToWorld(0, data.height).x;
+		quad_tile_rect.h = MapToWorld(data.width, data.height).y;
+
+		break;
+	}
+
+	BROFILER_CATEGORY("Create Tile QuadTree", Profiler::Color::Khaki);
+
+	layer->tiles_tree = new TileQuadTree(quad_tile_rect, 1, 6);
 
 	if (layer_data == NULL)
 	{
@@ -485,11 +508,29 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		memset(layer->gid, 0, layer->width*layer->height);
 
 		int i = 0;
-		for (pugi::xml_node tile = layer_data.child("tile") ; tile; tile = tile.next_sibling("tile"), i++)
+		int j = 0;
+		if (layer->name == "map")
 		{
-			layer->gid[i] = tile.attribute("gid").as_int(0);
+			for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"), i++)
+			{
+				layer->gid[i] = tile.attribute("gid").as_int(0);
+
+				//Insert tiles into TileQuadTree TODO
+				//iPoint tile_position(MapToWorld(i - int(i / layer->width) * layer->width, int(i / layer->width)));
+				//layer->tiles_tree->InsertTile(tile_position, tile.attribute("gid").as_int(0));
+				/*LOG("Got here %d", j);
+				j++;*/
+			}
+		}
+		else
+		{
+			for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"), i++)
+			{
+				layer->gid[i] = tile.attribute("gid").as_int(0);
+			}
 		}
 	}
+
 
 	return ret;
 }

@@ -163,6 +163,12 @@
     <ClCompile Include="Input.cpp">
       <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
+    </ClCompile>
+    <ClCompile Include="TileQuadTree.cpp">
+      <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -348,6 +354,12 @@
     <ClInclude Include="Input.h">
       <Filter>Desenvolupament  ========\Core\Core Modules</Filter>
     </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
+    </ClInclude>
+    <ClInclude Include="TileQuadTree.h">
+      <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
@@ -443,6 +455,9 @@
     </Filter>
     <Filter Include="Desenvolupament  ========\Core\Core Modules">
       <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Desenvolupament  ========\Tools\Quadtree">
+      <UniqueIdentifier>{e869669b-bd70-4535-827c-90ae50fb71c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

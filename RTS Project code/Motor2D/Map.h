@@ -6,6 +6,7 @@
 #include "Point.h"
 #include "Collisions.h"
 #include "SDL/include/SDL.h"
+#include "TileQuadTree.h"
 
 class Collisions;
 struct Collider;
@@ -95,6 +96,7 @@ struct ObjectGroup
 struct MapLayer
 {
 	std::string			name;			//Map name.
+	TileQuadTree*		tiles_tree;
 	uint*				gid;			//Tile Id.
 	uint				width;			//Layer width in tiles.
 	uint				height;			//Layer height in tiles.
