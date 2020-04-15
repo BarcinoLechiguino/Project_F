@@ -262,12 +262,12 @@ void GameplayScene::LoadGuiElements()
 
 
 	// Back to menu Button
-	SDL_Rect in_game_back_to_menu_size = { 0, 0, 74, 23 };
-	SDL_Rect in_game_back_to_menu_idle = { 1, 77, 74, 23 };
-	SDL_Rect in_game_back_to_menu_hover = { 178, 77, 74, 23 };
-	SDL_Rect in_game_back_to_menu_clicked = { 356, 77, 74, 23 };
+	SDL_Rect in_game_back_to_menu_size = { 0, 0, 189, 23 };
+	SDL_Rect in_game_back_to_menu_idle = { 0, 137, 189, 23 };
+	SDL_Rect in_game_back_to_menu_hover = { 204, 137, 189, 23 };
+	SDL_Rect in_game_back_to_menu_clicked = { 408, 137, 189, 23 };
 
-	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 366, false, true, false, this, in_game_background
+	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 511, 366, false, true, false, this, in_game_background
 		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
 
 
@@ -277,7 +277,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_exit_button_hover = { 178, 77, 74, 23 };
 	SDL_Rect in_game_exit_button_clicked = { 356, 77, 74, 23 };
 
-	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 366, false, true, false, this, in_game_background
+	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 406, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
 
 	
@@ -321,11 +321,17 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->audio->PlayFx(App->gui->options_fx, 0);
 	}
 
+	if (element == in_game_back_to_menu && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Back to menu
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
+		App->audio->PlayFx(App->gui->exit_fx, 0);
+	}
+
 	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Exit
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
-		App->audio->PlayFx(App->gui->exit_fx, 0);
+		escape = false;
 	}
 
 }
