@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Collisions.h"
 #include "p2Log.h"					// Added due to ~Properties (#52)
+#include "TileQuadTree.h"
 
 class Collisions;
 struct Collider;
@@ -94,6 +95,7 @@ struct ObjectGroup
 struct MapLayer
 {
 	std::string			name;			//Map name.
+	TileQuadTree*		tiles_tree;
 	uint*				gid;			//Tile Id.
 	uint				width;			//Layer width in tiles.
 	uint				height;			//Layer height in tiles.

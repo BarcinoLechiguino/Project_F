@@ -58,7 +58,7 @@ bool Gui::Start()
 		new_game_fx = App->audio->LoadFx("audio/fx/UI/New Game_Continue.wav");
 		options_fx = App->audio->LoadFx("audio/fx/UI/Options.wav");
 		back_fx = App->audio->LoadFx("audio/fx/UI/Back.wav");
-		exit_fx = App->audio->LoadFx("audio/fx/UI/Exit 002.wav");
+		exit_fx = App->audio->LoadFx("audio/fx/UI/Back to menu.wav");
 		appear_menu_fx = App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
 
 		audioAlreadyLoaded = true;
