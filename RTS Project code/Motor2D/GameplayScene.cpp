@@ -240,6 +240,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect background = { 780, 451, 514, 403 };
 	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 350, 180, background, false, false, false, this, nullptr);
 
+
 	// Continue Button
 	SDL_Rect in_game_continue_button_size = { 0, 0, 158, 23 };
 	SDL_Rect in_game_continue_button_idle = { 1, 0, 158, 23 };
@@ -248,6 +249,7 @@ void GameplayScene::LoadGuiElements()
 
 	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 525, 286, false, true, false, this, in_game_background
 		, &in_game_continue_button_idle, &in_game_continue_button_hover, &in_game_continue_button_clicked);
+
 
 	// Options Button
 	SDL_Rect in_game_options_button_size = { 0, 0, 133, 24 };
@@ -258,6 +260,17 @@ void GameplayScene::LoadGuiElements()
 	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 537, 326, false, true, false, this, in_game_background
 		, &in_game_options_button_idle, &in_game_options_button_hover, &in_game_options_button_clicked);
 
+
+	// Back to menu Button
+	SDL_Rect in_game_back_to_menu_size = { 0, 0, 74, 23 };
+	SDL_Rect in_game_back_to_menu_idle = { 1, 77, 74, 23 };
+	SDL_Rect in_game_back_to_menu_hover = { 178, 77, 74, 23 };
+	SDL_Rect in_game_back_to_menu_clicked = { 356, 77, 74, 23 };
+
+	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 366, false, true, false, this, in_game_background
+		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
+
+
 	// Exit Button
 	SDL_Rect in_game_exit_button_size = { 0, 0, 74, 23 };
 	SDL_Rect in_game_exit_button_idle = { 1, 77, 74, 23 };
@@ -267,6 +280,7 @@ void GameplayScene::LoadGuiElements()
 	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 366, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
 
+	
 	// Title
 	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
 	_TTF_Font* in_game_font = App->font->Load("fonts/borgsquadcond.ttf", 50);

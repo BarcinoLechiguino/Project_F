@@ -120,6 +120,7 @@ public:
 	UI_Button*				in_game_continue_button;
 	UI_Button*				in_game_options_button;
 	UI_Button*				in_game_exit_button;
+	UI_Button*				in_game_back_to_menu;
 	UI_Text*				in_game_title_text;
 };
 #endif // !__GAMEPLAY_SCENE_H__
