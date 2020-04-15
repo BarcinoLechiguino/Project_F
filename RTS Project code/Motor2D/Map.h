@@ -5,6 +5,7 @@
 #include "Point.h"
 #include "Collisions.h"
 #include "p2Log.h"					// Added due to ~Properties (#52)
+#include "TileQuadTree.h"
 
 class Collisions;
 struct Collider;

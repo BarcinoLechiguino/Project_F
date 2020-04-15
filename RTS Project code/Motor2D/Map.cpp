@@ -53,11 +53,11 @@ void Map::Draw()
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
 	{
-		camera_pos_in_pixels.x = -App->render->camera.x + winWidth *0.25;
-		camera_pos_in_pixels.y = -App->render->camera.y + winHeight * 0.25;
+		camera_pos_in_pixels.x = -App->render->camera.x ;
+		camera_pos_in_pixels.y = -App->render->camera.y ;
 
-		bottom_right_x = -App->render->camera.x + winWidth * 0.75;
-		bottom_right_y = -App->render->camera.y + winHeight * 0.75;
+		bottom_right_x = -App->render->camera.x + winWidth ;
+		bottom_right_y = -App->render->camera.y + winHeight ;
 
 		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;
 		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
@@ -100,7 +100,7 @@ void Map::Draw()
 			}
 		}
 	}
-	(*data.layers.begin())->tiles_tree->DrawQuadtree();
+	//(*data.layers.begin())->tiles_tree->DrawQuadtree();
 	//LOG("Tiles drawn: %d", tiles_drawn);
 }
 
