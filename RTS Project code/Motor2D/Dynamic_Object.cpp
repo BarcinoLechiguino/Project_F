@@ -8,7 +8,6 @@
 
 Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
 {
-
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
 
@@ -48,6 +47,16 @@ bool Dynamic_Object::PostUpdate()
 bool Dynamic_Object::CleanUp()
 {
 	return true;
+}
+
+void Dynamic_Object::InitUnitSpriteSections()
+{
+	return;
+}
+
+void Dynamic_Object::UpdateUnitSpriteSection()
+{
+	return;
 }
 
 void Dynamic_Object::GiveNewTarget(iPoint new_target)

@@ -51,16 +51,23 @@ public:
 
 public:
 	//Entity Methods
-	virtual bool Save(pugi::xml_node&) const;
+	/*virtual bool Save(pugi::xml_node&) const;
 	virtual bool Load(pugi::xml_node&);
-	virtual void Restart();								//Maybe not needed THIS HERE REVISE, CHANGE
+	virtual void Restart();*/							//Maybe not needed THIS HERE REVISE, CHANGE
 	
+	virtual void AssignEntityIndex();
+
 	virtual void BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip);
-	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
+
 	virtual void ApplyDamage(Entity* target);									//Applies the current unit damage to the referenced target, also handles the target health bar.
 
+	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
+
+public:
 	//Entity Variables
 	ENTITY_TYPE		type;
+
+	int				entity_index;
 
 	int				max_health;
 	int				current_health;

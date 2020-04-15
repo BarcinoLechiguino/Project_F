@@ -66,6 +66,7 @@ bool Player::Update(float dt)
 	SelectionRect();
 
 	SelectionOnClick();
+	DeleteOnInput();
 
 	SelectionShortcuts();
 
@@ -227,34 +228,69 @@ void Player::SelectionOnClick()
 {
 	if (CurrentlyInGameplayScene())
 	{
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		if (!App->scene_manager->god_mode)
 		{
-			if (App->entity_manager->entity_map != nullptr)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
-
-				if (clicked_entity != nullptr)
+				if (App->entity_manager->entity_map != nullptr)
 				{
-					if (App->entity_manager->IsUnit(clicked_entity))
+					Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);					//clicked_entity will be assigned the entity in the entity_map at the given position.
+
+					if (clicked_entity != nullptr)
 					{
-						units_selected.push_back((Dynamic_Object*)clicked_entity);
-						return;
+						if (App->entity_manager->IsUnit(clicked_entity))
+						{
+							units_selected.push_back((Dynamic_Object*)clicked_entity);
+							return;
+						}
+
+						if (App->entity_manager->IsBuilding(clicked_entity))
+						{
+							building_selected = (Static_Object*)clicked_entity;
+
+							LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", mouse_tile.x, mouse_tile.y);
+
+							return;
+						}
 					}
-
-					if (App->entity_manager->IsBuilding(clicked_entity))
+					else
 					{
-						building_selected = (Static_Object*)clicked_entity;
+						units_selected.clear();
 
-						LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", mouse_tile.x, mouse_tile.y);
-
-						return;
+						LOG("There is no Entity at tile (%d, %d)", mouse_tile.x, mouse_tile.y);
 					}
 				}
-				else
-				{
-					units_selected.clear();
+			}
+		}
+	}
+}
 
-					LOG("There is no Entity at tile (%d, %d)", mouse_tile.x, mouse_tile.y);
+void Player::DeleteOnInput()
+{
+	if (CurrentlyInGameplayScene())
+	{
+		if (App->scene_manager->god_mode)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
+			{
+				if (App->entity_manager->entity_map != nullptr)
+				{
+					Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
+
+					if (clicked_entity != nullptr)
+					{
+						std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+
+						for (; item != units_selected.end(); ++item)
+						{
+							if ((*item) == clicked_entity)
+							{
+								units_selected.erase(item);
+							}
+						}
+						
+						App->entity_manager->DeleteEntity(clicked_entity);
+					}
 				}
 			}
 		}

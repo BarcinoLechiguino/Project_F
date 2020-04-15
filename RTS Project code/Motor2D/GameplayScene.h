@@ -51,6 +51,7 @@ public:
 	void PathfindingDebug();
 	void DrawPathfindingDebug();
 	void DrawOccupied();
+	void DrawEntityMapDebug();
 
 public:
 	//std::list<std::string>	map_names;
@@ -88,6 +89,7 @@ public:
 	SDL_Rect				background_rect;
 	SDL_Texture*			background_texture;
 	SDL_Texture*			occupied_debug;
+	SDL_Texture*			occupied_by_entity_debug;
 
 	// In-game menu
 	UI_Image*				main_in_menu2;

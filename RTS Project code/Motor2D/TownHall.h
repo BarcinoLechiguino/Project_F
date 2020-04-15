@@ -20,8 +20,7 @@ public:
 	virtual bool CleanUp();
 
 public:
-
-	SDL_Rect hall_rect;
+	SDL_Rect	hall_rect;
 };
 
 #endif // !__TOWNHALL_H__

@@ -20,7 +20,6 @@ public:
 	virtual bool CleanUp();
 
 public:
-
 	int ore;
 
 	int gather_time;

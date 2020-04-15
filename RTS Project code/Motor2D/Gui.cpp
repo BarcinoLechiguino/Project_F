@@ -134,7 +134,7 @@ bool Gui::PostUpdate()
 	
 	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
 
-	for (std::list<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
+	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
 	{
 		if ((*element_iterator)->isVisible)
 		{
@@ -153,7 +153,7 @@ bool Gui::CleanUp()
 	LOG("Freeing GUI");
 	
 	//Iterate the elements list and frees all allocated memory.
-	for (std::list<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
+	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
 	{
 		(*element_iterator)->CleanUp();
 		RELEASE((*element_iterator));
@@ -268,6 +268,22 @@ UI* Gui::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_
 	return elem;
 }
 
+void Gui::DeleteGuiElement(UI* element_to_delete)
+{
+	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
+	{
+		if ((*element_iterator) == element_to_delete)
+		{
+			(*element_iterator)->CleanUp();
+			RELEASE((*element_iterator));
+
+			elements.erase(element_iterator);
+
+			return;
+		}
+	}
+}
+
 //--------------------------------- INPUT PROCESSING METHODS ---------------------------------
 void Gui::OnEventCall(UI* element, UI_EVENT ui_event)
 {
@@ -281,7 +297,7 @@ UI* Gui::FirstElementUnderMouse() const
 {
 	UI* firstElement = nullptr;
 
-	std::list<UI*>::const_iterator iterator = elements.cbegin();
+	std::vector<UI*>::const_iterator iterator = elements.cbegin();
 
 	for (; iterator != elements.cend(); iterator++)
 	{
@@ -381,7 +397,7 @@ bool Gui::ElementHasChilds(UI* parentElement) const
 {
 	bool ret = false;
 
-	std::list<UI*>::const_iterator elem = elements.cbegin();
+	std::vector<UI*>::const_iterator elem = elements.cbegin();
 
 	for (; elem != elements.cend(); ++elem)
 	{
@@ -397,7 +413,7 @@ bool Gui::ElementHasChilds(UI* parentElement) const
 
 void Gui::UpdateChilds(UI* parentElement)
 {
-	std::list<UI*>::iterator child = elements.begin();
+	std::vector<UI*>::iterator child = elements.begin();
 
 	for (; child != elements.end(); ++child)
 	{
@@ -416,7 +432,7 @@ void Gui::UpdateChilds(UI* parentElement)
 
 void Gui::SetElementsVisibility(UI* parentElement, bool state)
 {
-	std::list<UI*>::iterator child = elements.begin();
+	std::vector<UI*>::iterator child = elements.begin();
 
 	for (; child != elements.end(); ++child)
 	{
@@ -439,7 +455,7 @@ void Gui::Debug_UI()
 {
 	if (ui_debug == true)
 	{
-		for (std::list<UI*>::iterator elem = elements.begin(); elem != elements.end(); ++elem)
+		for (std::vector<UI*>::iterator elem = elements.begin(); elem != elements.end(); ++elem)
 		{
 			if ((*elem)->isVisible)
 			{

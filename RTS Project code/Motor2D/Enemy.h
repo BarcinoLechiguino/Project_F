@@ -25,16 +25,23 @@ public:
 
 	bool CleanUp();
 
+public:
+	void AssignEntityIndex();
+	
+	void InitUnitSpriteSections();
+	void UpdateUnitSpriteSection();
+
+	void SetTarget();		//TMP
+
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
-	void SetTarget();		//TMP
+	int							enemy_index;
 
-public:
+	int							attack_range;							// A unit's attack range in tiles.
+	float						attack_speed;							// A unit's attack speed in attacks/second.
 
 	const std::vector<iPoint>* entity_path;
-	Entity* target;
-
 };
 
 #endif // __ENEMY_H__

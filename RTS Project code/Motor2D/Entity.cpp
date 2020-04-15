@@ -64,7 +64,7 @@ bool Entity::CleanUp()
 }
 
 //-------------------- LOAD AND SAVE --------------------
-bool Entity::Load(pugi::xml_node&)
+/*bool Entity::Load(pugi::xml_node&)
 {
 	return true;
 }
@@ -76,6 +76,11 @@ bool Entity::Save(pugi::xml_node&) const
 
 //------------------- ENTITY METHODS -------------------
 void Entity::Restart()
+{
+	return;
+}*/
+
+void Entity::AssignEntityIndex()
 {
 	return;
 }
@@ -96,13 +101,12 @@ void Entity::ApplyDamage(Entity* target)
 {
 	target->current_health -= damage;
 	
-	target->healthbar->ModifyHealthbar();
+	target->healthbar->UpdateHealthbar();
 
-	/*int new_width = (MAX_UNIT_HEALTHBAR_WIDTH * target->current_health) / target->max_health;
-	
-	target->healthbar_rect.w = new_width;
-	
-	target->health_bar->SetScreenRect(target->healthbar_rect);*/
+	if (target->current_health < target->max_health)		//Debug, remove later.
+	{
+		LOG("Target health: %d", current_health);
+	}
 
 	return;
 }

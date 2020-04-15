@@ -75,7 +75,7 @@ bool MainScene::CleanUp()
 }
 
 void MainScene::LoadGuiElements()
-{
+{	
 	// Main Screen
 	main_parent = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
@@ -118,7 +118,6 @@ void MainScene::LoadGuiElements()
 
 		background_rect = { 0,0,1280,720 };
 		background_texture = App->tex->Load("maps/MainMenu_background.png");
-
 }
 
 void MainScene::LoadOptionsMenu()

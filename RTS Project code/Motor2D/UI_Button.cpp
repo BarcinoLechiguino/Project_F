@@ -146,5 +146,5 @@ void UI_Button::CheckInput()
 
 void UI_Button::CleanUp()
 {
-	App->tex->UnLoad(tex);
+	tex = nullptr;
 }

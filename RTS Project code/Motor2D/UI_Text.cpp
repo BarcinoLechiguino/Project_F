@@ -26,22 +26,22 @@ UI_Text::UI_Text(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* f
 	// ---------------------------------------------------------------
 
 	//Loading all strings. Print() generates a texture with the given string with the a font and a colour.
-	if (string != NULL)
+	if (string != nullptr)
 	{
 		idleTex = App->font->Print(string->c_str(), fontColour, font);					//Creates the texture for the idle state.
 	}
 
-	if (hoverString != NULL)
+	if (hoverString != nullptr)
 	{
 		hoverTex = App->font->Print(hoverString->c_str(), fontColour, font);			//Creates the texture for the hover state.
 	}
 	
-	if (leftClickString != NULL)
+	if (leftClickString != nullptr)
 	{
 		leftClickTex = App->font->Print(leftClickString->c_str(), fontColour, font);	//Creates the texture for the left-clicked state.
 	}
 
-	if (rightClickString != NULL)
+	if (rightClickString != nullptr)
 	{
 		rightClickTex = App->font->Print(rightClickString->c_str(), fontColour, font);	//Crates the texture for the right_clicked state.
 	}
@@ -52,7 +52,7 @@ UI_Text::UI_Text(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* f
 		this->listener = nullptr;											//This Text element's listener is set to the App->gui module (For OnCallEvent()).
 	}
 
-	if (parent != NULL)														//If a parent is passed as argument.
+	if (parent != nullptr)														//If a parent is passed as argument.
 	{
 		int localPosX = x - parent->GetScreenPos().x;						//Gets the local position of the Text element in the X Axis.
 		int localPosY = y - parent->GetScreenPos().y;						//Gets the local position of the Text element in the Y Axis.
@@ -77,11 +77,11 @@ bool UI_Text::Draw()
 
 	if (currentTex != nullptr)
 	{
-		SDL_QueryTexture(currentTex, NULL, NULL, &textRect.w, &textRect.h);			//REVISE  THIS  LATER
+		SDL_QueryTexture(currentTex, nullptr, nullptr, &textRect.w, &textRect.h);			//REVISE  THIS  LATER
 
 		SetHitbox({ GetHitbox().x, GetHitbox().y, textRect.w, textRect.h });
 
-		BlitElement(currentTex, GetScreenPos().x, GetScreenPos().y, NULL, 0.0f, 1.0f);
+		BlitElement(currentTex, GetScreenPos().x, GetScreenPos().y, nullptr, 0.0f, 1.0f);
 	}
 
 	return true;
@@ -208,14 +208,34 @@ void UI_Text::CheckInput()
 
 void UI_Text::CleanUp()
 {
-	if (idleTex != NULL)
+	if (idleTex != nullptr)
 	{
 		App->tex->UnLoad(idleTex);
 	}
 
-	if (inputTextTex != NULL)
+	if (hoverTex != nullptr)
+	{
+		App->tex->UnLoad(hoverTex);
+	}
+
+	if (leftClickTex != nullptr)
+	{
+		App->tex->UnLoad(leftClickTex);
+	}
+
+	if (rightClickTex != nullptr)
+	{
+		App->tex->UnLoad(rightClickTex);
+	}
+
+	if (inputTextTex != nullptr)
 	{
 		App->tex->UnLoad(inputTextTex);
+	}
+
+	if (currentTex != nullptr)
+	{
+		App->tex->UnLoad(currentTex);
 	}
 }
 
@@ -243,9 +263,4 @@ void UI_Text::RefreshTextInput(const char* newString)
 	}
 
 	currentTex = inputTextTex;
-
-	if (currentTex != NULL)
-	{
-		//LOG("CurrentTex is %s", newString);
-	}
 }

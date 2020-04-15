@@ -97,6 +97,8 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	
 	DrawOccupied();
 
+	DrawEntityMapDebug();
+
 	if (App->map->pathfindingMetaDebug == true)
 	{
 		DrawPathfindingDebug();														//Pathfinding Debug. Shows a debug texture on the path's tiles.
@@ -121,23 +123,6 @@ bool GameplayScene::PostUpdate()
 
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
 	ExecuteTransition();
-
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
-	{
-		//ret = false;
-	}
-
-	//if (App->input->GetKey(SDL_SCANCODE_O) == KEY_DOWN)
-	//{
-	//	Mix_HaltMusic();
-	//	App->gui->SetElementsVisibility(main_in_menu2, !main_in_menu2->isVisible);
-	//	//App->audio->PlayMusic(App->scene->music_path3.c_str());
-	//	if (!main_in_menu2->isVisible)
-	//	{
-	//		App->pause = false;
-	//		
-	//	}
-	//}
 	
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
@@ -184,6 +169,7 @@ void GameplayScene::InitScene()
 	LoadGuiElements();
 
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
+	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 }
@@ -447,6 +433,21 @@ void GameplayScene::DrawOccupied()
 			{
 				iPoint draw_position = App->map->MapToWorld(x, y);
 				App->render->Blit(occupied_debug, draw_position.x, draw_position.y, nullptr);
+			}
+		}
+	}
+}
+
+void GameplayScene::DrawEntityMapDebug()
+{
+	for (int x = 0; x < App->map->data.width; ++x) //Magic
+	{
+		for (int y = 0; y < App->map->data.height; ++y)
+		{
+			if (App->entity_manager->entity_map[(y * App->map->data.width) + x] != nullptr)
+			{
+				iPoint draw_position = App->map->MapToWorld(x, y);
+				App->render->Blit(occupied_by_entity_debug, draw_position.x, draw_position.y, nullptr);
 			}
 		}
 	}

@@ -40,7 +40,7 @@ bool EntityManager::Awake(pugi::xml_node& config)
 	cycle_length = config.child("enemies").child("update_cycle_length").attribute("length").as_float(); //Fix pathfinding so it works with doLogic
 																										
 	
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end() ; entity_iterator++) //Iterates all entities and calls their Awake() methods.
+	for (std::vector<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end() ; entity_iterator++) //Iterates all entities and calls their Awake() methods.
 	{
 		//entity_iterator->data->Awake(config.child(entity_iterator->data->name.GetString()));
 	}
@@ -53,7 +53,7 @@ bool EntityManager::Start()
 	LoadEntityTextures();
 	
 	//Iterates all entities in the entities list and calls their Start() method.
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
+	for (std::vector<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
 		(*entity_iterator)->Start();
 	}
@@ -63,7 +63,7 @@ bool EntityManager::Start()
 
 bool EntityManager::PreUpdate()
 {
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
+	for (std::vector<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
 		(*entity_iterator)->PreUpdate();
 	}
@@ -82,7 +82,7 @@ bool EntityManager::Update(float dt)
 	}
 
 	//Calls the Update method of all entities. Passes dt and doLogic as arguments (mainly for pathfinding enemies).
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
+	for (std::vector<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
 		(*entity_iterator)->Update(dt, doLogic);
 	}
@@ -99,7 +99,7 @@ bool EntityManager::Update(float dt)
 bool EntityManager::PostUpdate()
 {
 	//Iterates all entities and calls their PostUpdate() methods.
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
+	for (std::vector<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
 		(*entity_iterator)->PostUpdate();
 	}
@@ -110,7 +110,7 @@ bool EntityManager::PostUpdate()
 bool EntityManager::CleanUp()
 {
 	//Iterates all entities in the entities list and calls their CleanUp() method.
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
+	for (std::vector<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
 		(*entity_iterator)->CleanUp();
 		RELEASE((*entity_iterator));
@@ -125,7 +125,7 @@ bool EntityManager::CleanUp()
 
 void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision will manage the collisions of all entities and derive them to their respective OnCollision methods()
 {
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
+	for (std::vector<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); entity_iterator++)
 	{
 		if (C1 == (*entity_iterator)->collider)					//Will be run if there is a collision and any of the colliders are of the type PLAYER.
 		{
@@ -257,19 +257,86 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 void EntityManager::DestroyEntities()
 {
 	BROFILER_CATEGORY("EntityManager PostUpdate", Profiler::Color::FireBrick);
+	
+	std::vector<Entity*> tmp;
+	
+	std::vector<Entity*>::iterator entity_iterator = entities.begin();
 
-	LOG("There are %d entities in the entities list.", entities.size());
-	
-	for (std::list<Entity*>::iterator entity_iterator = entities.begin(); entity_iterator != entities.end(); ++entity_iterator)
+	for (; entity_iterator != entities.end(); ++entity_iterator)
 	{
-		(*entity_iterator)->CleanUp();			//Calls the CleanUp() method of the iterated entity (an enemy entity).
-		RELEASE((*entity_iterator));			//Deletes the data buffer
-		
-		//break;
+		tmp.push_back((*entity_iterator));
 	}
+
+	std::vector<Entity*>::iterator item = tmp.begin();
+
+	for (; item != tmp.end(); ++item)
+	{
+		(*item)->CleanUp();
+		RELEASE((*item));
+	}
+
+	//std::vector<Entity*>::iterator entity_iterator = entities.begin();
+
+	//for (; entity_iterator != entities.end(); ++entity_iterator)
+	//{
+	//	(*entity_iterator)->CleanUp();			//Calls the CleanUp() method of the iterated entity (an enemy entity).
+	//	RELEASE((*entity_iterator));			//Deletes the data buffer
+
+	//	//break;
+	//}
 	
+	tmp.clear();
+
 	ClearAllEntityVectors();
 }
+
+void EntityManager::DeleteEntity(Entity* entity)
+{
+	entity->CleanUp();
+	RELEASE(entity);
+}
+
+//void EntityManager::AssignEntityIndex(Entity* entity)
+//{
+//	int entity_index = 0;
+//	
+//	switch (entity->type)
+//	{
+//	case ENTITY_TYPE::GATHERER:
+//		Gatherer* gatherer = (Gatherer*)entity;
+//		
+//		int dynamic_object_index = dyn.size();
+//
+//	return;
+//
+//	case ENTITY_TYPE::INFANTRY:
+//
+//		int dynamic_object_index = 0;
+//
+//	return;
+//
+//	case ENTITY_TYPE::ENEMY:
+//
+//		int dynamic_object_index = 0;
+//
+//	return;
+//
+//	case ENTITY_TYPE::TOWNHALL:
+//		int static_object_index = 0;
+//
+//	return;
+//
+//	case ENTITY_TYPE::BARRACKS:
+//		int static_object_index = 0;
+//
+//	return;
+//
+//	case ENTITY_TYPE::ROCK:
+//		int static_object_index = 0;
+//
+//	return;
+//	}
+//}
 
 void EntityManager::LoadEntityTextures()
 {
@@ -360,6 +427,17 @@ void EntityManager::SetEntityMap(int width, int height, Entity* data)
 	RELEASE_ARRAY(entity_map);
 
 	entity_map = new Entity*[width * height];
+
+	for (int y = 0; y < height; ++y)
+	{
+		for (int x = 0; x < height; ++x)
+		{
+			int index = (y * width) + x;
+
+			entity_map[index] = nullptr;
+		}
+	}
+
 	//memcpy(entity_map, data, width * height);							// THIS HERE
 }
 

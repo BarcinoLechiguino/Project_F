@@ -20,7 +20,7 @@ public:
 public:
 	//void ModifyHealthbar(bool damage, int amount);
 	
-	void ModifyHealthbar();
+	void UpdateHealthbar();
 
 private:
 	SDL_Texture* tex;						//Texture of the UI_Image.

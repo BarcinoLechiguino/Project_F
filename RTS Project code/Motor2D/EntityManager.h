@@ -40,7 +40,10 @@ public:
 
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
+	void DeleteEntity(Entity* entity_to_delete);
 	
+	//void AssignEntityIndex(Entity* entity);
+
 	void LoadEntityTextures();
 	void UnLoadEntityTextures();
 
@@ -78,7 +81,7 @@ public:
 	SDL_Texture*					barracks_tex;
 	SDL_Texture*					rock_tex;
 
-	std::list<Entity*>				entities;	
+	std::vector<Entity*>			entities;	
 
 	std::vector<Gatherer*>			gatherers;
 	std::vector<Infantry*>			infantries;
