@@ -21,10 +21,8 @@ enum class ENTITY_STATE //Maybe WALKING instead?
 	PATHING_UP_LEFT,
 	PATHING_DOWN_RIGHT,
 	PATHING_DOWN_LEFT,
-	JUMPING,
-	FALLING,
+	DAMAGED,
 	DEAD,
-	HURT
 };
 
 class Dynamic_Object : public Entity
@@ -55,9 +53,9 @@ public:
 	void Move(float dt);
 	
 public:
-	int								dynamic_object_index;
-	
 	float							speed;
+	float							speed_x_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
+	float							speed_y_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
 
 	bool							path_full;
 	bool							is_selectable;

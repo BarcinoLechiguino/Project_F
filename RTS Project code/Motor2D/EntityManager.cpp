@@ -116,7 +116,7 @@ bool EntityManager::CleanUp()
 		RELEASE((*entity_iterator));
 	}
 
-	ClearAllEntityVectors();
+	entities.clear();
 
 	UnLoadEntityTextures();
 
@@ -150,105 +150,44 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 	switch (type)
 	{
 		case ENTITY_TYPE::GATHERER:
-			entity = new Gatherer(x, y, type);
-			
-			if (CheckTileAvailability(iPoint(x, y), entity))
-			{
-				dynamic_objects.push_back((Dynamic_Object*)entity);
-				gatherers.push_back((Gatherer*)entity);
-			}
-			else
-			{
-				delete entity;
-				entity = nullptr;
-			}
-			
+			entity = new Gatherer(x, y, type);		
 		break;
 
 		case ENTITY_TYPE::INFANTRY:
 			entity = new Infantry(x, y, type);
-			
-			if (CheckTileAvailability(iPoint(x, y), entity))
-			{
-				dynamic_objects.push_back((Dynamic_Object*)entity);
-				infantries.push_back((Infantry*)entity);
-			}
-			else
-			{
-				delete entity;
-				entity = nullptr;
-			}
-			
 		break;
 
 		case ENTITY_TYPE::ENEMY:
 			entity = new Enemy(x, y, type);
-
-			if (CheckTileAvailability(iPoint(x, y), entity))
-			{
-				dynamic_objects.push_back((Dynamic_Object*)entity);
-				enemies.push_back((Enemy*)entity);
-			}
-			else
-			{
-				delete entity;
-				entity = nullptr;
-			}
-
 		break;
 
 		case ENTITY_TYPE::TOWNHALL:
 			entity = new TownHall(x, y, type);
-			
-			if (CheckTileAvailability(iPoint(x, y), entity))
-			{
-				town_halls.push_back((TownHall*)entity);
-			}
-			else
-			{
-				delete entity;
-				entity = nullptr;
-			}
-			
 		break;
 
 		case ENTITY_TYPE::BARRACKS:
 			entity = new Barracks(x, y, type);
-
-			if (CheckTileAvailability(iPoint(x, y), entity))
-			{
-				barracks.push_back((Barracks*)entity);
-			}
-			else
-			{
-				delete entity;
-				entity = nullptr;
-			}
-
 		break;
 
 		case ENTITY_TYPE::ROCK:
 			entity = new Rock(x, y, type);
-
-			if (CheckTileAvailability(iPoint(x, y), entity))
-			{
-				rocks.push_back((Rock*)entity);
-			}
-			else
-			{
-				delete entity;
-				entity = nullptr;
-			}
-
 		break;
 	}
 
 	if (entity != nullptr)									
 	{
-		entities.push_back(entity);								//Adds the generated entity to the entities list.
-		ChangeEntityMap(iPoint(x, y), entity);					//Adds the generated entity to entity_map.
+		if (CheckTileAvailability(iPoint(x, y), entity))
+		{
+			entities.push_back(entity);								//Adds the generated entity to the entities list.
+			ChangeEntityMap(iPoint(x, y), entity);					//Adds the generated entity to entity_map.
 
-		entity->Start();
+			entity->Start();
+		}
+		else
+		{
+			delete entity;
+			entity = nullptr;
+		}
 	}
 
 	return entity;
@@ -287,56 +226,26 @@ void EntityManager::DestroyEntities()
 	
 	tmp.clear();
 
-	ClearAllEntityVectors();
+	entities.clear();
 }
 
 void EntityManager::DeleteEntity(Entity* entity)
 {
-	entity->CleanUp();
-	RELEASE(entity);
-}
+	std::vector<Entity*>::iterator item = entities.begin();
+	
+	for (; item != entities.end(); ++item)
+	{
+		if ((*item) == entity)
+		{
+			(*item)->CleanUp();
+			RELEASE((*item));
 
-//void EntityManager::AssignEntityIndex(Entity* entity)
-//{
-//	int entity_index = 0;
-//	
-//	switch (entity->type)
-//	{
-//	case ENTITY_TYPE::GATHERER:
-//		Gatherer* gatherer = (Gatherer*)entity;
-//		
-//		int dynamic_object_index = dyn.size();
-//
-//	return;
-//
-//	case ENTITY_TYPE::INFANTRY:
-//
-//		int dynamic_object_index = 0;
-//
-//	return;
-//
-//	case ENTITY_TYPE::ENEMY:
-//
-//		int dynamic_object_index = 0;
-//
-//	return;
-//
-//	case ENTITY_TYPE::TOWNHALL:
-//		int static_object_index = 0;
-//
-//	return;
-//
-//	case ENTITY_TYPE::BARRACKS:
-//		int static_object_index = 0;
-//
-//	return;
-//
-//	case ENTITY_TYPE::ROCK:
-//		int static_object_index = 0;
-//
-//	return;
-//	}
-//}
+			entities.erase(item);
+
+			break;
+		}
+	}
+}
 
 void EntityManager::LoadEntityTextures()
 {
@@ -419,7 +328,7 @@ bool EntityManager::IsBuilding(Entity* entity)
 	return false;
 }
 
-void EntityManager::SetEntityMap(int width, int height, Entity* data)
+void EntityManager::SetEntityMap(int width, int height)
 {
 	entity_map_width = width;
 	entity_map_height = height;
@@ -543,17 +452,4 @@ bool EntityManager::CheckTileAvailability(const iPoint& pos, Entity* entity)
 	}
 
 	return true;
-}
-
-void EntityManager::ClearAllEntityVectors()
-{
-	entities.clear();
-	dynamic_objects.clear();
-	static_objects.clear();
-	gatherers.clear();
-	infantries.clear();
-	enemies.clear();
-	town_halls.clear();
-	barracks.clear();
-	rocks.clear();
 }

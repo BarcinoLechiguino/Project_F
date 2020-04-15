@@ -24,16 +24,12 @@ public:
 	bool CleanUp();
 
 public:
-	void AssignEntityIndex();
-
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
-	int		gatherer_index;
-	
 	float	gathering_speed;
 };
 

@@ -20,8 +20,6 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 
 	is_selectable = false;
 
-	AssignEntityIndex();
-
 	speed = 500.0f;
 	
 	max_health = 300;
@@ -32,10 +30,16 @@ Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Con
 
 	target = nullptr;
 
+	healthbar_position_offset.x = -6;
+	healthbar_position_offset.y = -6;
+
 	healthbar_background_rect = { 618, 12, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 	healthbar_rect = { 618, 23, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
 
-	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, (int)pixel_position.x, (int)pixel_position.y - 30, true, &healthbar_rect, &healthbar_background_rect, this);
+	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+
+	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 };
 
 Enemy::~Enemy()  //Destructor. Called at the last frame.
@@ -69,7 +73,7 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	UpdateUnitSpriteSection();
 
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
 		if (target != nullptr)
 		{
@@ -91,37 +95,8 @@ bool Enemy::PostUpdate()
 
 bool Enemy::CleanUp()
 {
-	App->pathfinding->ChangeWalkability(occupied_tile, WALKABLE);																	//The entity is cleared from the walkability map.
-	App->entity_manager->ChangeEntityMap(tile_position, this, true);																//The entity is cleared from the entity_map.
-
-	std::vector<Entity*>::iterator entity = App->entity_manager->entities.begin() + entity_index;
-
-	App->entity_manager->entities.erase(entity);																					//The entity is erased from the entities vector.
-
-	for (; entity != App->entity_manager->entities.end(); ++entity)
-	{
-		(*entity)->entity_index--;
-	}
-
-
-	std::vector<Dynamic_Object*>::iterator dynamic_object = App->entity_manager->dynamic_objects.begin() + dynamic_object_index;
-
-	App->entity_manager->dynamic_objects.erase(dynamic_object);																		//The entity is erased from the dynamic_object vector.
-
-	for (; dynamic_object != App->entity_manager->dynamic_objects.end(); ++dynamic_object)
-	{
-		(*dynamic_object)->dynamic_object_index--;
-	}
-
-
-	std::vector<Enemy*>::iterator enemy = App->entity_manager->enemies.begin() + enemy_index;
-
-	App->entity_manager->enemies.erase(enemy);																					//The entity is erased from the gatherers vector.
-
-	for (; enemy != App->entity_manager->enemies.end(); ++enemy)
-	{
-		(*enemy)->enemy_index--;
-	}
+	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);		//The entity is cleared from the walkability map.
+	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
 
 	entity_sprite = nullptr;
 
@@ -135,57 +110,63 @@ bool Enemy::CleanUp()
 	return true;
 };
 
-void Enemy::AssignEntityIndex()
-{
-	entity_index = App->entity_manager->entities.size();
-	dynamic_object_index = App->entity_manager->dynamic_objects.size();
-	enemy_index = App->entity_manager->enemies.size();
-}
-
 void Enemy::InitUnitSpriteSections()
 {
-	entity_sprite_section = { 58, 0, 58, 47 };
+	entity_sprite_section		= { 58, 0, 58, 47 };
 
-
+	pathing_up_section			= { 0, 47, 70, 52 };
+	pathing_down_section		= { 71, 47, 70, 52 };
+	pathing_rigth_section		= { 202, 47, 59, 52 };
+	pathing_left_section		= { 142, 47, 59, 52 };
+	pathing_up_right_section	= { 116, 0, 60, 47 };
+	pathing_up_left_section		= { 176, 0, 59, 47 };
+	pathing_down_right_section	= { 58, 0, 58, 47 };
+	pathing_down_left_section	= { 0, 0, 58, 47 };
 }
 
 void Enemy::UpdateUnitSpriteSection()
 {
 	//change section according to pathing. 
-	switch (this->unit_state)
+	switch (unit_state)
 	{
+	case ENTITY_STATE::PATHING_UP:
+		entity_sprite_section = pathing_up_section;
+		break;
 	case ENTITY_STATE::PATHING_DOWN:
-		entity_sprite_section = { 71, 47, 70, 52 };
+		entity_sprite_section = pathing_down_section;
 		break;
 	case ENTITY_STATE::PATHING_RIGHT:
-		entity_sprite_section = { 202, 47, 59, 52 };
+		entity_sprite_section = pathing_rigth_section;
 		break;
 	case ENTITY_STATE::PATHING_LEFT:
-		entity_sprite_section = { 142, 47, 59, 52 };
-		break;
-	case ENTITY_STATE::PATHING_UP:
-		entity_sprite_section = { 0, 47, 70, 52 };
-		break;
-	case ENTITY_STATE::PATHING_DOWN_RIGHT:
-		entity_sprite_section = { 58, 0, 58, 47 };
-		break;
-	case ENTITY_STATE::PATHING_DOWN_LEFT:
-		entity_sprite_section = { 0, 0, 58, 47 };
+		entity_sprite_section = pathing_left_section;
 		break;
 	case ENTITY_STATE::PATHING_UP_RIGHT:
-		entity_sprite_section = { 116, 0, 60, 47 };
+		entity_sprite_section = pathing_up_right_section;
 		break;
 	case ENTITY_STATE::PATHING_UP_LEFT:
-		entity_sprite_section = { 176, 0, 59, 47 };
+		entity_sprite_section = pathing_up_left_section;
+		break;
+	case ENTITY_STATE::PATHING_DOWN_RIGHT:
+		entity_sprite_section = pathing_down_right_section;
+		break;
+	case ENTITY_STATE::PATHING_DOWN_LEFT:
+		entity_sprite_section = pathing_down_left_section;
 		break;
 	}
 }
 
 void Enemy::SetTarget()
 {
-	if (App->entity_manager->infantries.size() != 0)
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+	
+	for (; item != App->entity_manager->entities.end(); ++item)
 	{
-		target = (Entity*)*App->entity_manager->infantries.begin();
+		if ((*item)->type == ENTITY_TYPE::INFANTRY)
+		{
+			target = (*item);
+			break;
+		}
 	}
 }
 

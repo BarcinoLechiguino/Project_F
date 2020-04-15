@@ -101,7 +101,7 @@ void Entity::ApplyDamage(Entity* target)
 {
 	target->current_health -= damage;
 	
-	target->healthbar->UpdateHealthbar();
+	target->healthbar->UpdateHealthbarValue();
 
 	if (target->current_health < target->max_health)		//Debug, remove later.
 	{

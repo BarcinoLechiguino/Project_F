@@ -13,6 +13,9 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, ty
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
+	speed_x_factor = 0.803f;							// Get from config.xml
+	speed_y_factor = 0.59f;								// Get from config.xml
+
 	target_tile = tile_position;
 	next_tile = tile_position;
 
@@ -87,11 +90,11 @@ void Dynamic_Object::GiveNewTarget(iPoint new_target)
 
 void Dynamic_Object::ChangeOccupiedTile(iPoint new_occupied_tile)
 {
-	App->pathfinding->ChangeWalkability(occupied_tile, WALKABLE);
+	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	occupied_tile = new_occupied_tile;
 
-	App->pathfinding->ChangeWalkability(new_occupied_tile, OCCUPIED);
+	App->pathfinding->ChangeWalkability(new_occupied_tile, this, OCCUPIED);
 }
 
 void Dynamic_Object::HandleMovement(float dt)
@@ -198,8 +201,8 @@ void Dynamic_Object::Move(float dt)
 	{
 	case ENTITY_STATE::PATHING_DOWN_LEFT:
 		
-		pixel_position.x -= speed * 0.803f * dt;
-		pixel_position.y += speed * 0.59f * dt;
+		pixel_position.x -= speed * speed_x_factor * dt;
+		pixel_position.y += speed * speed_y_factor * dt;
 
 		if (pixel_position.x <= next_tile_position.x || pixel_position.y >= next_tile_position.y)
 		{
@@ -210,8 +213,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_DOWN_RIGHT:
 
-		pixel_position.x += speed * 0.803f * dt;
-		pixel_position.y += speed * 0.59f * dt;
+		pixel_position.x += speed * speed_x_factor * dt;
+		pixel_position.y += speed * speed_y_factor * dt;
 
 		if (pixel_position.x >= next_tile_position.x || pixel_position.y >= next_tile_position.y)
 		{
@@ -222,8 +225,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_UP_LEFT:
 
-		pixel_position.x -= speed * 0.803f * dt;
-		pixel_position.y -= speed * 0.59f * dt;
+		pixel_position.x -= speed * speed_x_factor * dt;
+		pixel_position.y -= speed * speed_y_factor * dt;
 
 		if (pixel_position.x <= next_tile_position.x || pixel_position.y <= next_tile_position.y)
 		{
@@ -234,8 +237,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_UP_RIGHT:
 
-		pixel_position.x += speed * 0.803f * dt;
-		pixel_position.y -= speed * 0.59f * dt;
+		pixel_position.x += speed * speed_x_factor * dt;
+		pixel_position.y -= speed * speed_y_factor * dt;
 
 		if (pixel_position.x >= next_tile_position.x || pixel_position.y <= next_tile_position.y)
 		{

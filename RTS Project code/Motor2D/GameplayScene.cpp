@@ -67,8 +67,6 @@ bool GameplayScene::Start()
 {
 	bool ret = false;
 
-	App->gui->Start();
-
 	InitScene();
 	
 	return ret;
@@ -150,6 +148,8 @@ void GameplayScene::InitScene()
 	
 	//cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
 
+	App->gui->Start();
+
 	to_end = false;
 
 	ret = App->map->Load("New_Tilesete_Map.tmx");
@@ -188,15 +188,7 @@ void GameplayScene::SetWalkabilityMap()
 
 void GameplayScene::SetEntitiesMap()
 {
-	int w, h;
-	Entity* entity = nullptr;
-
-	if (App->map->CreateEntityMap(w, h, &entity))
-	{
-		App->entity_manager->SetEntityMap(w, h, entity);
-	}
-	
-	RELEASE_ARRAY(entity);
+	App->entity_manager->SetEntityMap(App->map->data.width, App->map->data.height);
 }
 
 void GameplayScene::LoadGuiElements()

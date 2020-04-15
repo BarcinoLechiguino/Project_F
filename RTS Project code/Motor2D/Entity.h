@@ -67,8 +67,6 @@ public:
 	//Entity Variables
 	ENTITY_TYPE		type;
 
-	int				entity_index;
-
 	int				max_health;
 	int				current_health;
 	int				damage;
@@ -80,9 +78,7 @@ public:
 
 	SDL_Rect		healthbar_background_rect;
 	SDL_Rect		healthbar_rect;
-
-	UI_Image*		health_bar;
-	UI_Image*		empty_bar;
+	iPoint			healthbar_position_offset;
 
 	UI_Healthbar*	healthbar;
 

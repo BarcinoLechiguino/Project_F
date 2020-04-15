@@ -11,6 +11,7 @@
 #define WALKABLE 1
 #define NON_WALKABLE 0
 
+class Entity;
 class Dynamic_Object;
 
 // --------------------------------------------------
@@ -46,9 +47,9 @@ public:
 
 	uchar GetTileAt(const iPoint& pos) const;								// Utility: return the walkability value of a tile
 
-	void FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected) ;				//Finds close tiles to send units to
+	void FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected) ;	//Finds close tiles to send units to
 
-	bool ChangeWalkability(const iPoint& pos, uchar walkability);			//Change walkability of a tile in map array
+	bool ChangeWalkability(const iPoint& pos, Entity* entity, uchar walkability);				//Change walkability of a tile in map array
 
 private:
 

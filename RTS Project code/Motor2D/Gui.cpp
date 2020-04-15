@@ -480,12 +480,16 @@ void Gui::Debug_UI()
 
 					break;
 
+				case UI_ELEMENT::INPUTBOX:
+					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 255, 255, false, false);		//UI_Input Box will be PURPLE.
+					break;
+
 				case UI_ELEMENT::SCROLLBAR:
 					App->render->DrawQuad((*elem)->GetHitbox(), 255, 255, 0, 255, false, false);		//UI_Scrollbar will be YELLOW.
 					break;
 
-				case UI_ELEMENT::INPUTBOX:
-					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 255, 255, false, false);		//UI_Input Box will be PURPLE.
+				case UI_ELEMENT::HEALTHBAR:
+					App->render->DrawQuad((*elem)->GetHitbox(), 0, 255, 255, 255, false, true);			//UI_Healthbar will be CYAN.
 					break;
 				}
 			}

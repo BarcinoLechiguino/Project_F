@@ -18,14 +18,16 @@ bool Static_Object::Awake(pugi::xml_node&)
 
 bool Static_Object::Start()
 {
-	for (int x_tile = tile_position.x; x_tile < tile_position.x + tiles_occupied_x; ++x_tile)
-	{
-		for (int y_tile = tile_position.y; y_tile < tile_position.y + tiles_occupied_y; ++y_tile)
-		{
-			App->pathfinding->ChangeWalkability(iPoint(x_tile, y_tile), 0);
-			//App->entity_manager->ChangeEntityMap(iPoint(x_tile, y_tile), this);						//Adds the generated entity to entity_map.
-		}
-	}
+	App->pathfinding->ChangeWalkability(iPoint(tile_position.x, tile_position.y), this, NON_WALKABLE);
+	
+	//for (int x_tile = tile_position.x; x_tile < tile_position.x + tiles_occupied_x; ++x_tile)
+	//{
+	//	for (int y_tile = tile_position.y; y_tile < tile_position.y + tiles_occupied_y; ++y_tile)
+	//	{
+	//		
+	//		//App->entity_manager->ChangeEntityMap(iPoint(x_tile, y_tile), this);						//Adds the generated entity to entity_map.
+	//	}
+	//}
 
 	return true;
 }

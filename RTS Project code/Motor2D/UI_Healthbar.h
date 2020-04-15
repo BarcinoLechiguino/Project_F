@@ -18,9 +18,9 @@ public:
 	void CleanUp();
 
 public:
-	//void ModifyHealthbar(bool damage, int amount);
-	
-	void UpdateHealthbar();
+	void UpdateHealthbarPosition();			// Will update the healthbar's position and hitbox rect according to the position of the entity the healthbar is attached to.
+
+	void UpdateHealthbarValue();			// Will update the healthbar's health value according to the attached unit's current health.
 
 private:
 	SDL_Texture* tex;						//Texture of the UI_Image.
@@ -28,7 +28,7 @@ private:
 	SDL_Rect healthbar;						// Sprite and size of the lifebar.
 	SDL_Rect background;					// Sprite and size of the lifebar background. Can be nullptr.
 
-	Entity* attached_unit;
+	Entity* attached_unit;					// Entity to which the healthbar will be attached to.
 };
 
 #endif // !__UI_HEALTHGBAR_H__
