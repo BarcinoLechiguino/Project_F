@@ -140,7 +140,7 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 {
 	std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
 
-	(*units)->GiveNewTarget(pos);
+	(*units)->GiveNewTargetTile(pos);
 	units++;
 
 	PathList frontier;
@@ -167,7 +167,7 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 			{
 				if (App->pathfinding->IsWalkable(neighbour.pos))
 				{
-					(*units)->GiveNewTarget(neighbour.pos);
+					(*units)->GiveNewTargetTile(neighbour.pos);
 
 					units++;
 				}

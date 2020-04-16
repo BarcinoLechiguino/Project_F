@@ -79,10 +79,10 @@ void Dynamic_Object::DataMapSafetyCheck()
 	}
 }
 
-void Dynamic_Object::GiveNewTarget(iPoint new_target)
+void Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 {
 	//New Path using the next tile if it's going to one
-	App->pathfinding->CreatePath(next_tile, new_target);
+	App->pathfinding->CreatePath(next_tile, new_target_tile);
 
 	entity_path.clear();
 	entity_path = App->pathfinding->GetLastPath();
@@ -105,7 +105,7 @@ void Dynamic_Object::GiveNewTarget(iPoint new_target)
 	//LOG("target_tile %d %d", entity_path.back().x, entity_path.back().y);
 }
 
-void Dynamic_Object::ChangeOccupiedTile(iPoint new_occupied_tile)
+void Dynamic_Object::ChangeOccupiedTile(const iPoint& new_occupied_tile)
 {
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 

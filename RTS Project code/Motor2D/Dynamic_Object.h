@@ -47,11 +47,13 @@ public:
 	virtual void InitUnitSpriteSections();								// Initializes all sprite sections of a given unit.
 	virtual void UpdateUnitSpriteSection();								// Updates all sprite sections of a given unit.
 
-	void GiveNewTarget(iPoint new_target);
-	void ChangeOccupiedTile(iPoint new_occupied_tile);
+	void GiveNewTargetTile(const iPoint& new_target_tile);
+	void ChangeOccupiedTile(const iPoint& new_occupied_tile);
 	void HandleMovement(float dt);
 	void Move(float dt);
 	
+	void SetEntityTarget(const iPoint& target_position);
+
 	void DataMapSafetyCheck();											// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
 
 public:

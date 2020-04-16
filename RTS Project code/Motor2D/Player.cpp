@@ -65,7 +65,7 @@ bool Player::Update(float dt)
 
 	CameraController(dt);
 
-	SelectionRect();
+	DragSelection();
 
 	SelectionOnClick();
 	DeleteOnInput();
@@ -88,9 +88,15 @@ bool Player::PostUpdate()
 
 bool Player::CleanUp()
 {
+	App->tex->UnLoad(cursor_idle);
+	App->tex->UnLoad(mouse_tile_debug);
+	
+	ClearEntityBuffers();
+	
 	return true;
 }
 
+// ------------------- CAMERA AND MOUSE METHODS -------------------
 void Player::MouseCalculations()
 {
 	//Get Mouse Position
@@ -107,33 +113,6 @@ void Player::MouseCalculations()
 	// Get Mouse's World Poisition (In Pixels)
 	iPoint to_world_mouse_pos	= App->map->MapToWorld(mouse_tile.x, mouse_tile.y);
 	mouse_map_position			= iPoint(to_world_mouse_pos.x, to_world_mouse_pos.y);
-}
-
-void Player::MoveToOrder()//fix
-{
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
-	{
-		if (units_selected.size() != 0)																								// If there are Units being selected
-		{
-			if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x, mouse_tile.y)))
-			{
-				for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
-				{
-					App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
-				}
-
-				App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected);							//Gives units targets around main target
-			}
-			else
-			{
-				LOG("Tile cannot be targeted");
-			}
-		}
-		else
-		{
-			LOG("There are no units being currently selected.");
-		}
-	}
 }
 
 void Player::CameraController(float dt)
@@ -165,7 +144,45 @@ void Player::CameraController(float dt)
 	}
 }
 
-void Player::SelectionRect()
+void Player::MoveToOrder()//fix
+{
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	{
+		if (units_selected.size() != 0)																								// If there are Units being selected
+		{
+			if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x, mouse_tile.y)))
+			{
+				for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
+				{
+					App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
+				}
+
+				App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected);							//Gives units targets around main target
+			}
+			else
+			{
+				LOG("Tile cannot be targeted");
+			}
+		}
+		else
+		{
+			LOG("There are no units being currently selected.");
+		}
+	}
+}
+
+void Player::DrawCursor()
+{
+	if (CurrentlyInGameplayScene())
+	{
+		App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
+	}
+
+	App->render->Blit(cursor_idle, mouse_position.x, mouse_position.y, nullptr, false, 0.f);
+}
+
+// ------------------- ENTITY SELECTION METHODS -------------------
+void Player::DragSelection()
 {
 	if (CurrentlyInGameplayScene())
 	{
@@ -180,62 +197,60 @@ void Player::SelectionRect()
 
 		if (is_selecting)
 		{
-			//Cases with mouse pos
-			if (mouse_position.x > selection_start.x)
-			{
-				selection_rect = { selection_start.x ,selection_start.y, mouse_position.x - selection_start.x, mouse_position.y - selection_start.y };
-			}
-			else
-			{
-				selection_rect = { mouse_position.x ,selection_start.y, selection_start.x - mouse_position.x , mouse_position.y - selection_start.y };
-			}
-
-			if (mouse_position.y < selection_start.y)
-			{
-				selection_rect.y = mouse_position.y;
-				selection_rect.h = selection_start.y - mouse_position.y;
-			}
-
-			App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
+			UpdateSelectionRect();
 
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
 			{
 				is_selecting = false;
 
-				for (std::vector<Entity*>::iterator item = App->entity_manager->entities.begin(); item != App->entity_manager->entities.end(); ++item)
-				{
-					if (App->entity_manager->IsUnit((*item)))
-					{
-						Dynamic_Object* unit = (Dynamic_Object*)(*item);
-						
-						if (unit->is_selectable)
-						{
-							/*LOG("camera %d, %d", -App->render->camera.x, -App->render->camera.y);
-							LOG("Selection pos %d %d", selection_rect.x - App->render->camera.x , selection_rect.y - App->render->camera.y);
-							LOG("gatherer rect %d %d", (*item)->selection_collider.x, (*item)->selection_collider.y);*/
-
-							//Collision allied units rectangles
-							if (CheckSelectionRectBorders(unit))
-							{
-								units_selected.push_back(unit);
-
-							}
-						}
-					}
-				}
-
-				LOG("Units selected %d", units_selected.size());
+				SelectEntitiesInSelectionRect();
 			}
 		}
 	}
 }
 
-bool Player::CheckSelectionRectBorders(Dynamic_Object* unit)
+void Player::UpdateSelectionRect()
 {
-	return (unit->selection_collider.x + unit->selection_collider.w > selection_rect.x - App->render->camera.x) &&			// Unit is inside the left border.
-			(unit->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&					// Unit is inside the right border.
-			(unit->selection_collider.y + unit->selection_collider.h > selection_rect.y - App->render->camera.y) &&			// Unit is inside the top border.
-			(unit->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h);						// Unit is inside the bottom border.
+	//Cases with mouse pos
+	if (mouse_position.x > selection_start.x)
+	{
+		selection_rect = { selection_start.x , selection_start.y, mouse_position.x - selection_start.x, mouse_position.y - selection_start.y };
+	}
+	else
+	{
+		selection_rect = { mouse_position.x ,selection_start.y, selection_start.x - mouse_position.x , mouse_position.y - selection_start.y };
+	}
+
+	if (mouse_position.y < selection_start.y)
+	{
+		selection_rect.y = mouse_position.y;
+		selection_rect.h = selection_start.y - mouse_position.y;
+	}
+
+	App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
+}
+
+void Player::SelectEntitiesInSelectionRect()
+{
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if (App->entity_manager->IsUnit((*item)))
+		{
+			Dynamic_Object* unit = (Dynamic_Object*)(*item);
+
+			if (unit->is_selectable)
+			{
+				if (CheckSelectionRectBorders(unit))				//Collision ally units rectangles
+				{
+					units_selected.push_back(unit);
+				}
+			}
+		}
+	}
+
+	LOG("Units selected %d", units_selected.size());
 }
 
 void Player::SelectionOnClick()
@@ -246,67 +261,7 @@ void Player::SelectionOnClick()
 		{
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
-				if (App->entity_manager->entity_map != nullptr)
-				{
-					Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);					//clicked_entity will be assigned the entity in the entity_map at the given position.
-
-					if (clicked_entity != nullptr)
-					{
-						if (App->entity_manager->IsUnit(clicked_entity))
-						{
-							units_selected.push_back((Dynamic_Object*)clicked_entity);
-							return;
-						}
-
-						if (App->entity_manager->IsBuilding(clicked_entity))
-						{
-							building_selected = (Static_Object*)clicked_entity;
-
-							LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", mouse_tile.x, mouse_tile.y);
-
-							return;
-						}
-					}
-					else
-					{
-						units_selected.clear();
-
-						LOG("There is no Entity at tile (%d, %d)", mouse_tile.x, mouse_tile.y);
-					}
-				}
-			}
-		}
-	}
-}
-
-void Player::DeleteOnInput()
-{
-	if (CurrentlyInGameplayScene())
-	{
-		if (App->scene_manager->god_mode)
-		{
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)
-			{
-				if (App->entity_manager->entity_map != nullptr)
-				{
-					Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
-
- 					if (clicked_entity != nullptr)
-					{
-						std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
-
-						for (; item != units_selected.end(); ++item)
-						{
-							if ((*item) == clicked_entity)
-							{
-								units_selected.erase(item);
-								break;
-							}
-						}
-						
-						App->entity_manager->DeleteEntity(clicked_entity);
-					}
-				}
+				SelectEntityAt(mouse_tile);
 			}
 		}
 	}
@@ -316,103 +271,201 @@ void Player::SelectionShortcuts()
 {
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)													// Select All Entities
 	{
-		units_selected.clear();
-
-		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
-
-		for (; item != App->entity_manager->entities.end(); ++item)
-		{
-			if (App->entity_manager->IsUnit((*item)))
-			{
-				Dynamic_Object* unit = (Dynamic_Object*)(*item);
-				
-				if (unit->is_selectable)
-				{
-					units_selected.push_back(unit);
-				}
-			}
-		}
-
-		LOG("All units selected. Total unit amount: %d", units_selected.size());
+		SelectAllEntities();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)													// Select All Gatherers
 	{
-		units_selected.clear();
-
-		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
-
-		for (; item != App->entity_manager->entities.end(); ++item)
-		{
-			if ((*item)->type == ENTITY_TYPE::GATHERER)
-			{
-				units_selected.push_back((Dynamic_Object*)(*item));
-			}
-		}
-
-		LOG("All gatherers selected. Total gatherer amount: %d", units_selected.size());
+		SelectGatherers();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)													// Select All Infantries
 	{
+		SelectInfatries();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	{
+		SelectEnemies();																				// Select All Enemies
+	}
+}
+
+void Player::SelectAllEntities()
+{
+	units_selected.clear();
+
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if (App->entity_manager->IsUnit((*item)))
+		{
+			Dynamic_Object* unit = (Dynamic_Object*)(*item);
+
+			if (unit->is_selectable)
+			{
+				units_selected.push_back(unit);
+			}
+		}
+	}
+
+	LOG("All units selected. Total unit amount: %d", units_selected.size());
+}
+
+void Player::SelectGatherers()
+{
+	units_selected.clear();
+
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if ((*item)->type == ENTITY_TYPE::GATHERER)
+		{
+			units_selected.push_back((Dynamic_Object*)(*item));
+		}
+	}
+
+	LOG("All gatherers selected. Total gatherer amount: %d", units_selected.size());
+}
+
+void Player::SelectInfatries()
+{
+	units_selected.clear();
+
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if ((*item)->type == ENTITY_TYPE::INFANTRY)
+		{
+			units_selected.push_back((Dynamic_Object*)(*item));
+		}
+	}
+
+	LOG("All infantries selected. Total infantry amount: %d", units_selected.size());
+}
+
+void Player::SelectEnemies()
+{
+	if (App->scene_manager->god_mode)
+	{
 		units_selected.clear();
 
 		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
 		for (; item != App->entity_manager->entities.end(); ++item)
 		{
-			if ((*item)->type == ENTITY_TYPE::INFANTRY)
+			if ((*item)->type == ENTITY_TYPE::ENEMY)
 			{
 				units_selected.push_back((Dynamic_Object*)(*item));
 			}
 		}
 
-		LOG("All infantries selected. Total infantry amount: %d", units_selected.size());
+		LOG("All enemies selected. Total enemy amount: %d", units_selected.size());
 	}
+}
 
-	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+void Player::SelectEntityAt(const iPoint& tile_position)
+{
+	if (App->entity_manager->entity_map != nullptr)
 	{
-		if (App->scene_manager->god_mode)
+		Entity* clicked_entity = App->entity_manager->GetEntityAt(tile_position);						//clicked_entity will be assigned the entity in the entity_map at the given position.
+
+		if (clicked_entity != nullptr)
+		{
+			if (App->entity_manager->IsUnit(clicked_entity))
+			{
+				units_selected.push_back((Dynamic_Object*)clicked_entity);
+				return;
+			}
+
+			if (App->entity_manager->IsBuilding(clicked_entity))
+			{
+				building_selected = (Static_Object*)clicked_entity;
+
+				LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", tile_position.x, tile_position.y);
+
+				return;
+			}
+		}
+		else
 		{
 			units_selected.clear();
 
-			std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
-
-			for (; item != App->entity_manager->entities.end(); ++item)
-			{
-				if ((*item)->type == ENTITY_TYPE::ENEMY)
-				{
-					units_selected.push_back((Dynamic_Object*)(*item));
-				}
-			}
-
-			LOG("All enemies selected. Total enemy amount: %d", units_selected.size());
+			LOG("There is no Entity at tile (%d, %d)", tile_position.x, tile_position.y);
 		}
 	}
 }
 
-void Player::DrawCursor()
+// ------------------- ENTITY DELETION METHODS -------------------
+void Player::DeleteOnInput()
 {
 	if (CurrentlyInGameplayScene())
 	{
-		App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
-	}
+		if (App->scene_manager->god_mode)
+		{
+			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)											// Delete entity at mouse position.
+			{
+				DeleteEntityAt(mouse_tile);
+			}
 
-	App->render->Blit(cursor_idle, mouse_position.x, mouse_position.y,nullptr,false,0.f);
+			if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)											// Delete all entities.
+			{
+				ClearEntityBuffers();
+				App->entity_manager->DestroyEntities();
+			}
+		}
+	}
 }
 
-bool Player::CurrentlyInGameplayScene()
+void Player::DeleteEntityAt(const iPoint& tile_position)
 {
-	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)
+	if (App->entity_manager->entity_map != nullptr)
 	{
-		return true;
-	}
-	else
-	{
-		return false;
+		Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
+
+		if (clicked_entity != nullptr)
+		{
+			DeleteEntityFromBuffers(clicked_entity);
+			App->entity_manager->DeleteEntity(clicked_entity);
+		}
 	}
 }
 
+void Player::DeleteEntityFromBuffers(Entity* entity_to_delete)
+{
+	if (App->entity_manager->IsUnit(entity_to_delete))										// If the entity selected to be deleted is a unit.
+	{
+		std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+
+		for (; item != units_selected.end(); ++item)
+		{
+			if ((*item) == entity_to_delete)												// If the entity selected to be deleted is in the units_selected vector.
+			{
+				units_selected.erase(item);
+				break;
+			}
+		}
+	}
+
+	if (App->entity_manager->IsBuilding(entity_to_delete))
+	{
+		if (entity_to_delete == building_selected)
+		{
+			building_selected = nullptr;
+		}
+	}
+}
+
+void Player::ClearEntityBuffers()
+{
+	units_selected.clear();
+
+	building_selected = nullptr;
+}
+
+// ------------------- ENTITY SPAWN METHODS -------------------
 void Player::DebugUnitSpawn()
 {
 	if (building_selected != nullptr)
@@ -431,4 +484,25 @@ void Player::DebugUnitSpawn()
 			}
 		}
 	}
+}
+
+// ------------------- CONDITIONAL CHECKS -------------------
+bool Player::CurrentlyInGameplayScene()
+{
+	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)
+	{
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+bool Player::CheckSelectionRectBorders(Dynamic_Object* unit)
+{
+	return (unit->selection_collider.x + unit->selection_collider.w > selection_rect.x - App->render->camera.x) &&		// Unit is inside the left border.
+		(unit->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&					// Unit is inside the right border.
+		(unit->selection_collider.y + unit->selection_collider.h > selection_rect.y - App->render->camera.y) &&			// Unit is inside the top border.
+		(unit->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h);						// Unit is inside the bottom border.
 }
