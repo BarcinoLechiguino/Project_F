@@ -44,14 +44,16 @@ public:
 	virtual bool CleanUp();
 
 public:
-	virtual void InitUnitSpriteSections();
-	virtual void UpdateUnitSpriteSection();
+	virtual void InitUnitSpriteSections();								// Initializes all sprite sections of a given unit.
+	virtual void UpdateUnitSpriteSection();								// Updates all sprite sections of a given unit.
 
 	void GiveNewTarget(iPoint new_target);
 	void ChangeOccupiedTile(iPoint new_occupied_tile);
 	void HandleMovement(float dt);
 	void Move(float dt);
 	
+	void DataMapSafetyCheck();											// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
+
 public:
 	float							speed;
 	float							speed_x_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.

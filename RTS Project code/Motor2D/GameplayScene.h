@@ -64,17 +64,9 @@ public:
 
 	bool					to_end;
 
-
-
-private:
-
-	float					cam_debug_speed;	//Will store the movement speed for the camera while in debug mode. Done for readability.
-	
-	//SDL_Texture*			mouse_debug_tex;	//Texture that will appear at mouse position when pathfinding is being debugged.
-	SDL_Texture*			path_debug_tex;								//Texture that will appear at the path tiles when pathfinding is being debugged.
-	
-
 public:
+	//float					cam_debug_speed;							//Will store the movement speed for the camera while in debug mode. Done for readability.
+	
 	// TMP TRANSITION BUTTONS
 	UI_Button*	transition_button;
 	UI_Button*	transition_button_II;
@@ -87,6 +79,9 @@ public:
 	
 	UI_Image*				background;
 	SDL_Rect				background_rect;
+
+	//SDL_Texture*			mouse_debug_tex;							//Texture that will appear at mouse position when pathfinding is being debugged.
+	SDL_Texture*			path_debug_tex;								//Texture that will appear at the path tiles when pathfinding is being debugged.
 	SDL_Texture*			background_texture;
 	SDL_Texture*			occupied_debug;
 	SDL_Texture*			occupied_by_entity_debug;

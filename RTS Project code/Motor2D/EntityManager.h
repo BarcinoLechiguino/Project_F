@@ -58,7 +58,7 @@ public:
 	void SetEntityMap(int width, int height);											//Method that will allocate the necessary memory for the entity_map.
 	void ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null = false);	//Method that will modify the entity map when a unit or building is spawned.
 
-	bool CheckBoundaries(const iPoint& pos) const;										//Method that will check whether or not the position passed as argument is inside the entity_map's bounds.
+	bool CheckEntityMapBoundaries(const iPoint& pos) const;								//Method that will check whether or not the position passed as argument is inside the entity_map's bounds.
 
 	Entity* GetEntityAt(const iPoint& pos) const;										//Method that will return whichever entity is at the given position.
 

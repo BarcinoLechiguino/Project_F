@@ -339,7 +339,7 @@ void EntityManager::SetEntityMap(int width, int height)
 
 	for (int y = 0; y < height; ++y)
 	{
-		for (int x = 0; x < height; ++x)
+		for (int x = 0; x < width; ++x)
 		{
 			int index = (y * width) + x;
 
@@ -352,6 +352,7 @@ void EntityManager::SetEntityMap(int width, int height)
 
 void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null)
 {
+	
 	if (entity_map != nullptr)
 	{
 		if (!set_to_null)
@@ -405,7 +406,7 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 	}
 }
 
-bool EntityManager::CheckBoundaries(const iPoint& pos) const
+bool EntityManager::CheckEntityMapBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x <= entity_map_width &&
 			pos.y >= 0 && pos.y <= entity_map_height);
@@ -413,7 +414,7 @@ bool EntityManager::CheckBoundaries(const iPoint& pos) const
 
 Entity* EntityManager::GetEntityAt(const iPoint& pos) const
 {
-	if (CheckBoundaries(pos))
+	if (CheckEntityMapBoundaries(pos))
 	{
 		return entity_map[(pos.y * entity_map_width) + pos.x];
 	}

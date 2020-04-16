@@ -2,6 +2,7 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
+#include "Entity.h"
 
 #include "Dynamic_Object.h"
 
@@ -60,6 +61,22 @@ void Dynamic_Object::InitUnitSpriteSections()
 void Dynamic_Object::UpdateUnitSpriteSection()
 {
 	return;
+}
+
+void Dynamic_Object::DataMapSafetyCheck()
+{
+	if (!path_full)
+	{
+		if (App->pathfinding->GetTileAt(tile_position) != OCCUPIED)
+		{
+			App->pathfinding->ChangeWalkability(tile_position, this, OCCUPIED);
+		}
+
+		if (App->entity_manager->GetEntityAt(tile_position) != this)
+		{
+			App->entity_manager->ChangeEntityMap(tile_position, this);
+		}
+	}
 }
 
 void Dynamic_Object::GiveNewTarget(iPoint new_target)
@@ -130,6 +147,8 @@ void Dynamic_Object::HandleMovement(float dt)
 
 			path_state = PATHFINDING_STATE::IDLE;
 			unit_state = ENTITY_STATE::IDLE;
+
+			App->entity_manager->ChangeEntityMap(tile_position, this);
 
 			break;
 		}
@@ -297,12 +316,12 @@ void Dynamic_Object::Move(float dt)
 		pixel_position.x = next_tile_position.x;
 		pixel_position.y = next_tile_position.y;
 
-		iPoint tmp = tile_position;
 
+		App->entity_manager->ChangeEntityMap(tile_position, this, true);		// ENTITY MAP UPDATE
+		
 		tile_position = next_tile;
 
 		App->entity_manager->ChangeEntityMap(tile_position, this);				// ENTITY MAP UPDATE
-		App->entity_manager->ChangeEntityMap(tmp, this, true);
 
 		unit_state = ENTITY_STATE::IDLE;
 		path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;
