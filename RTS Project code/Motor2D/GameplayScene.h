@@ -117,5 +117,11 @@ public:
 	UI_Button*				in_game_exit_button;
 	UI_Button*				in_game_back_to_menu;
 	UI_Text*				in_game_title_text;
+
+	// HUD
+	UI_Button*				 HUD_group_button;
+	UI_Button*				 HUD_home_button;
+	UI_Button*				 HUD_pause_button;
+	UI_Image*				 HUD_main_down_bar;
 };
 #endif // !__GAMEPLAY_SCENE_H__

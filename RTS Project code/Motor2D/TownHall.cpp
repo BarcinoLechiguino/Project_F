@@ -75,3 +75,19 @@ bool TownHall::CleanUp()
 
 	return true;
 }
+
+void TownHall::GenerateUnit(ENTITY_TYPE type)
+{
+	switch (type)
+	{
+	case ENTITY_TYPE::ENEMY:
+
+		break;
+	case ENTITY_TYPE::GATHERER:
+		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x + 1, tile_position.y + 3);
+		break;
+	case ENTITY_TYPE::INFANTRY:
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3);
+		break;
+	}
+}

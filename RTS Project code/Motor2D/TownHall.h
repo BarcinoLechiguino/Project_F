@@ -20,6 +20,10 @@ public:
 	virtual bool CleanUp();
 
 public:
+
+	void GenerateUnit(ENTITY_TYPE type);
+
+public:
 	SDL_Rect	hall_rect;
 };
 
