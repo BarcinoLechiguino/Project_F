@@ -26,8 +26,6 @@ public:
 	bool CleanUp();
 
 public:
-	void AssignEntityIndex();
-	
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 
@@ -36,8 +34,6 @@ public:
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
-	int							enemy_index;
-
 	int							attack_range;							// A unit's attack range in tiles.
 	float						attack_speed;							// A unit's attack speed in attacks/second.
 

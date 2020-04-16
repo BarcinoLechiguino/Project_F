@@ -67,8 +67,6 @@ bool GameplayScene::Start()
 {
 	bool ret = false;
 
-	App->gui->Start();
-
 	InitScene();
 	
 	return ret;
@@ -136,6 +134,11 @@ bool GameplayScene::PostUpdate()
 // Called before quitting
 bool GameplayScene::CleanUp()
 {
+	App->tex->UnLoad(background_texture);
+	App->tex->UnLoad(occupied_debug);
+	App->tex->UnLoad(occupied_by_entity_debug);
+	App->tex->UnLoad(path_debug_tex);
+
 	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
@@ -149,6 +152,8 @@ void GameplayScene::InitScene()
 	bool ret = true;
 	
 	//cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
+
+	App->gui->Start();
 
 	to_end = false;
 
@@ -188,15 +193,7 @@ void GameplayScene::SetWalkabilityMap()
 
 void GameplayScene::SetEntitiesMap()
 {
-	int w, h;
-	Entity* entity = nullptr;
-
-	if (App->map->CreateEntityMap(w, h, &entity))
-	{
-		App->entity_manager->SetEntityMap(w, h, entity);
-	}
-	
-	RELEASE_ARRAY(entity);
+	App->entity_manager->SetEntityMap(App->map->data.width, App->map->data.height);
 }
 
 void GameplayScene::LoadGuiElements()

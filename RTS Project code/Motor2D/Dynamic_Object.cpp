@@ -2,6 +2,7 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
+#include "Entity.h"
 
 #include "Dynamic_Object.h"
 
@@ -12,6 +13,9 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, ty
 	pixel_position.y = App->map->MapToWorld(x, y).y;
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
+
+	speed_x_factor = 0.803f;							// Get from config.xml
+	speed_y_factor = 0.59f;								// Get from config.xml
 
 	target_tile = tile_position;
 	next_tile = tile_position;
@@ -59,6 +63,22 @@ void Dynamic_Object::UpdateUnitSpriteSection()
 	return;
 }
 
+void Dynamic_Object::DataMapSafetyCheck()
+{
+	if (!path_full)
+	{
+		if (App->pathfinding->GetTileAt(tile_position) != OCCUPIED)
+		{
+			App->pathfinding->ChangeWalkability(tile_position, this, OCCUPIED);
+		}
+
+		if (App->entity_manager->GetEntityAt(tile_position) != this)
+		{
+			App->entity_manager->ChangeEntityMap(tile_position, this);
+		}
+	}
+}
+
 void Dynamic_Object::GiveNewTarget(iPoint new_target)
 {
 	//New Path using the next tile if it's going to one
@@ -87,11 +107,11 @@ void Dynamic_Object::GiveNewTarget(iPoint new_target)
 
 void Dynamic_Object::ChangeOccupiedTile(iPoint new_occupied_tile)
 {
-	App->pathfinding->ChangeWalkability(occupied_tile, WALKABLE);
+	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	occupied_tile = new_occupied_tile;
 
-	App->pathfinding->ChangeWalkability(new_occupied_tile, OCCUPIED);
+	App->pathfinding->ChangeWalkability(new_occupied_tile, this, OCCUPIED);
 }
 
 void Dynamic_Object::HandleMovement(float dt)
@@ -127,6 +147,8 @@ void Dynamic_Object::HandleMovement(float dt)
 
 			path_state = PATHFINDING_STATE::IDLE;
 			unit_state = ENTITY_STATE::IDLE;
+
+			App->entity_manager->ChangeEntityMap(tile_position, this);
 
 			break;
 		}
@@ -198,8 +220,8 @@ void Dynamic_Object::Move(float dt)
 	{
 	case ENTITY_STATE::PATHING_DOWN_LEFT:
 		
-		pixel_position.x -= speed * 0.803f * dt;
-		pixel_position.y += speed * 0.59f * dt;
+		pixel_position.x -= speed * speed_x_factor * dt;
+		pixel_position.y += speed * speed_y_factor * dt;
 
 		if (pixel_position.x <= next_tile_position.x || pixel_position.y >= next_tile_position.y)
 		{
@@ -210,8 +232,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_DOWN_RIGHT:
 
-		pixel_position.x += speed * 0.803f * dt;
-		pixel_position.y += speed * 0.59f * dt;
+		pixel_position.x += speed * speed_x_factor * dt;
+		pixel_position.y += speed * speed_y_factor * dt;
 
 		if (pixel_position.x >= next_tile_position.x || pixel_position.y >= next_tile_position.y)
 		{
@@ -222,8 +244,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_UP_LEFT:
 
-		pixel_position.x -= speed * 0.803f * dt;
-		pixel_position.y -= speed * 0.59f * dt;
+		pixel_position.x -= speed * speed_x_factor * dt;
+		pixel_position.y -= speed * speed_y_factor * dt;
 
 		if (pixel_position.x <= next_tile_position.x || pixel_position.y <= next_tile_position.y)
 		{
@@ -234,8 +256,8 @@ void Dynamic_Object::Move(float dt)
 
 	case ENTITY_STATE::PATHING_UP_RIGHT:
 
-		pixel_position.x += speed * 0.803f * dt;
-		pixel_position.y -= speed * 0.59f * dt;
+		pixel_position.x += speed * speed_x_factor * dt;
+		pixel_position.y -= speed * speed_y_factor * dt;
 
 		if (pixel_position.x >= next_tile_position.x || pixel_position.y <= next_tile_position.y)
 		{
@@ -294,12 +316,12 @@ void Dynamic_Object::Move(float dt)
 		pixel_position.x = next_tile_position.x;
 		pixel_position.y = next_tile_position.y;
 
-		iPoint tmp = tile_position;
 
+		App->entity_manager->ChangeEntityMap(tile_position, this, true);		// ENTITY MAP UPDATE
+		
 		tile_position = next_tile;
 
 		App->entity_manager->ChangeEntityMap(tile_position, this);				// ENTITY MAP UPDATE
-		App->entity_manager->ChangeEntityMap(tmp, this, true);
 
 		unit_state = ENTITY_STATE::IDLE;
 		path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;

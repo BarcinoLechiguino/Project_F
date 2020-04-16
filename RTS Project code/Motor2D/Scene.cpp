@@ -98,10 +98,15 @@ void Scene::DebugKeys()
 		App->scene_manager->god_mode = !App->scene_manager->god_mode;
 	}
 
-	//if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)						//Load Second Level Key
-	//{
-	//	App->fadescene->FadeToBlack("Test_map_2.tmx");
-	//}
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)						//Enable/Disable UI_Debug Key
+	{
+		App->gui->ui_debug = !App->gui->ui_debug;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)						//Enable/Disable Pathfinding Debug Key
+	{
+		App->map->pathfindingMetaDebug = !App->map->pathfindingMetaDebug;
+	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
 	{
@@ -131,7 +136,6 @@ void Scene::DebugKeys()
 	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)						//Collider Debug Key
 	{
 		App->collisions->collider_debug = !App->collisions->collider_debug;
-		App->map->pathfindingMetaDebug = !App->map->pathfindingMetaDebug;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)						//Enabling / Disabling frame cap

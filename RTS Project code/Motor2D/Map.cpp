@@ -18,7 +18,7 @@
 
 #include "Map.h"
 
-Map::Map() : Module(), map_loaded(false)
+Map::Map() : Module(), map_loaded(false), pathfindingMetaDebug(false)
 {
 	name = ("map");
 }
@@ -700,7 +700,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 	return ret;
 }
 
-bool Map::CreateEntityMap(int& width, int& height, Entity** buffer)
+bool Map::CreateEntityMap(int& width, int& height)
 {
 	bool ret = false;
 	
@@ -717,7 +717,8 @@ bool Map::CreateEntityMap(int& width, int& height, Entity** buffer)
 		}
 	}
 
-	buffer	= map;
+	RELEASE_ARRAY(map);
+
 	width	= data.width;
 	height	= data.height;
 	ret		= true;

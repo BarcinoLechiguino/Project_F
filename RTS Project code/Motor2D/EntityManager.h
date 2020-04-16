@@ -41,8 +41,6 @@ public:
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0);			//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
 	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
 	void DeleteEntity(Entity* entity_to_delete);
-	
-	//void AssignEntityIndex(Entity* entity);
 
 	void LoadEntityTextures();
 	void UnLoadEntityTextures();
@@ -54,19 +52,17 @@ public:
 	SDL_Texture* GetBarracksTexture() const;
 	SDL_Texture* GetRockTexture() const;
 
-	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit.
+	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
 	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
 
-	void SetEntityMap(int width, int height, Entity* data);								//Method that will allocate the necessary memory for the entity_map.
+	void SetEntityMap(int width, int height);											//Method that will allocate the necessary memory for the entity_map.
 	void ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null = false);	//Method that will modify the entity map when a unit or building is spawned.
 
-	bool CheckBoundaries(const iPoint& pos) const;										//Method that will check whether or not the position passed as argument is inside the entity_map's bounds.
+	bool CheckEntityMapBoundaries(const iPoint& pos) const;								//Method that will check whether or not the position passed as argument is inside the entity_map's bounds.
 
 	Entity* GetEntityAt(const iPoint& pos) const;										//Method that will return whichever entity is at the given position.
 
 	bool CheckTileAvailability(const iPoint& pos, Entity* entity);						//Method that will return true whenever the space required by an entity to spawn is available.
-
-	void ClearAllEntityVectors();
 
 	void OnCollision(Collider* C1, Collider* C2);
 
@@ -82,16 +78,6 @@ public:
 	SDL_Texture*					rock_tex;
 
 	std::vector<Entity*>			entities;	
-
-	std::vector<Gatherer*>			gatherers;
-	std::vector<Infantry*>			infantries;
-	std::vector<Enemy*>				enemies;
-	std::vector<TownHall*>			town_halls;
-	std::vector<Barracks*>			barracks;
-	std::vector<Rock*>				rocks;
-
-	std::vector<Dynamic_Object*>	dynamic_objects;
-	std::vector<Static_Object*>		static_objects;
 
 	Entity**						entity_map;			//Array that will be used to keep track at which position are all entities at all times.
 	int								entity_map_width;	//Width of the entity_map.

@@ -80,7 +80,7 @@ void Entity::Restart()
 	return;
 }*/
 
-void Entity::AssignEntityIndex()
+void Entity::InitEntity()
 {
 	return;
 }
@@ -92,22 +92,22 @@ void Entity::BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip)
 	//App->render->Blit(entity_sprite, x, y, &entity_rect, flip, SDL_FLIP_HORIZONTAL);	//Check out how to use the flip already integrated in the Blit.
 }
 
-void Entity::OnCollision(Collider* C1, Collider* C2)
-{
-	return;
-}
-
 void Entity::ApplyDamage(Entity* target)
 {
 	target->current_health -= damage;
-	
-	target->healthbar->UpdateHealthbar();
+
+	target->healthbar->UpdateHealthbarValue();
 
 	if (target->current_health < target->max_health)		//Debug, remove later.
 	{
 		LOG("Target health: %d", current_health);
 	}
 
+	return;
+}
+
+void Entity::OnCollision(Collider* C1, Collider* C2)
+{
 	return;
 }
 

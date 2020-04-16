@@ -4,7 +4,10 @@
 #include "p2Log.h"
 #include "Application.h"
 #include "Map.h"
+#include "EntityManager.h"
+#include "Entity.h"
 #include "Dynamic_Object.h"
+#include "Static_Object.h"
 
 #include "PathFinding.h"
 
@@ -98,11 +101,30 @@ uchar PathFinding::GetTileAt(const iPoint& pos) const
 	return 0;
 }
 
-bool PathFinding::ChangeWalkability(const iPoint& pos, uchar walkability)
+bool PathFinding::ChangeWalkability(const iPoint& pos, Entity* entity, uchar walkability)
 {
-	if (map != NULL)
+	if (map != nullptr)
 	{
-		map[(pos.y * App->map->data.width) + pos.x] = walkability;
+		if (App->entity_manager->IsUnit(entity))
+		{
+			map[(pos.y * App->map->data.width) + pos.x] = walkability;
+		}
+
+		if (App->entity_manager->IsBuilding(entity))
+		{
+			Static_Object* building = (Static_Object*)entity;
+
+			for (int y = 0; y != building->tiles_occupied_y; ++y)
+			{
+				for (int x = 0; x != building->tiles_occupied_x; ++x)
+				{
+					int pos_y = pos.y + y;
+					int pos_x = pos.x + x;
+
+					map[(pos_y * App->map->data.width) + pos_x] = walkability;
+				}
+			}
+		}
 	}
 
 	return true;

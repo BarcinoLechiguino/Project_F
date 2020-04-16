@@ -54,8 +54,21 @@
     </player>
 
     <units>
+      <speed_factor x="0.803f" y="0.59f"/>
+      
       <allies>
         <gatherer>
+          <sprite_sections>
+            <pathing_up x="0" y="0" w="0" h="0"/>
+            <pathing_down x="0" y="0" w="0" h="0"/>
+            <pathing_right x="0" y="0" w="0" h="0"/>
+            <pathing_left x="0" y="0" w="0" h="0"/>
+            <pathing_up_right x="0" y="0" w="0" h="0"/>
+            <pathing_up_left x="0" y="0" w="0" h="0"/>
+            <pathing_down_right x="0" y="0" w="0" h="0"/>
+            <pathing_down_left x="0" y="0" w="0" h="0"/>
+          </sprite_sections>
+          
           <sprite_size w="58" h="45"/>
           <max_health health="150"/>
           <damage damage="0"/>
@@ -68,6 +81,17 @@
         </gatherer>
 
         <infantry>
+          <sprite_sections>
+            <pathing_up x="0" y="0" w="0" h="0"/>
+            <pathing_down x="0" y="0" w="0" h="0"/>
+            <pathing_right x="0" y="0" w="0" h="0"/>
+            <pathing_left x="0" y="0" w="0" h="0"/>
+            <pathing_up_right x="0" y="0" w="0" h="0"/>
+            <pathing_up_left x="0" y="0" w="0" h="0"/>
+            <pathing_down_right x="0" y="0" w="0" h="0"/>
+            <pathing_down_left x="0" y="0" w="0" h="0"/>
+          </sprite_sections>
+
           <sprite_size w="58" h="45"/>
           <max_health health="300"/>
           <damage damage="30"/>
@@ -85,6 +109,17 @@
         <update_cycle_length length="0.1f"/>
 
         <enemy>
+          <sprite_sections>
+            <pathing_up x="0" y="0" w="0" h="0"/>
+            <pathing_down x="0" y="0" w="0" h="0"/>
+            <pathing_right x="0" y="0" w="0" h="0"/>
+            <pathing_left x="0" y="0" w="0" h="0"/>
+            <pathing_up_right x="0" y="0" w="0" h="0"/>
+            <pathing_up_left x="0" y="0" w="0" h="0"/>
+            <pathing_down_right x="0" y="0" w="0" h="0"/>
+            <pathing_down_left x="0" y="0" w="0" h="0"/>
+          </sprite_sections>
+
           <sprite_size w="58" h="45"/>
           <max_health health="300"/>
           <damage damage="30"/>
@@ -124,11 +159,13 @@
     <buildings>
       <allied>
         <townhall>
-          
+          <sprite_section x="0" y="0" w="0" h="0"/>
+          <tiles_occupied x="3" y="3"/>
         </townhall>
 
         <barracks>
-          
+          <sprite_section x="0" y="0" w="0" h="0"/>
+          <tiles_occupied x="2" y="2"/>
         </barracks>
       </allied>
 
@@ -144,7 +181,8 @@
     </buildings>
 
     <resources>
-      
+      <sprite_section x="" y="" w="" h=""/>
+      <tiles_occupied x="1" y="1"/>
     </resources>
   </entities>
 

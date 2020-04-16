@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Window.h"
 #include "Entity.h"
 #include "Gui.h"
 
@@ -50,8 +51,10 @@ bool UI_Healthbar::Draw()
 {
 	CheckInput();
 	
-	BlitElement(tex, attached_unit->pixel_position.x, attached_unit->pixel_position.y - 6, &background, 1.0f, 1.0f);	//Magic Number
-	BlitElement(tex, attached_unit->pixel_position.x, attached_unit->pixel_position.y - 6, &healthbar, 1.0f, 1.0f);		//Magic Number
+	UpdateHealthbarPosition();
+
+	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
+	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &healthbar, 1.0f, 1.0f);
 	
 	return true;
 }
@@ -66,7 +69,17 @@ void UI_Healthbar::CleanUp()
 	tex = nullptr;
 }
 
-void UI_Healthbar::UpdateHealthbar()
+void UI_Healthbar::UpdateHealthbarPosition()
+{
+	int position_x = attached_unit->pixel_position.x + attached_unit->healthbar_position_offset.x;
+	int position_y = attached_unit->pixel_position.y + attached_unit->healthbar_position_offset.y;
+
+	SetScreenPos({ position_x, position_y });
+
+	SetHitbox({ position_x, position_y, GetHitbox().w, GetHitbox().h });
+}
+
+void UI_Healthbar::UpdateHealthbarValue()
 {
 	int new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
 
