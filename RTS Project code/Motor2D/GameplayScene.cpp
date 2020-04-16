@@ -288,7 +288,6 @@ void GameplayScene::LoadGuiElements()
 	// HUD
 
 	// Up Bar
-
 	// Group Up
 	SDL_Rect HUD_group_button_size = { 0, 0, 63, 38 };
 	SDL_Rect HUD_group_button_idle = { 759, 48, 63, 38 };
@@ -315,6 +314,16 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_home_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 602, -4, true, true, false, this, nullptr
 		, &HUD_home_button_idle, &HUD_home_button_hover, &HUD_home_button_clicked);
+
+
+	//Down Bar
+	//Main Bar
+	SDL_Rect HUD_main_down_bar_size = { 685, 226, 707, 211 };
+
+	HUD_main_down_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 230, 514, HUD_main_down_bar_size, true, true, false, this, nullptr);
+
+	//Resource Bar
+
 }
 
 void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
