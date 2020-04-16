@@ -31,16 +31,19 @@ Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type) 
 
 	InitUnitSpriteSections();
 
-	healthbar_position_offset.x = -6;
-	healthbar_position_offset.y = -6;
+	if (App->entity_manager->CheckTileAvailability(iPoint(x, y), this))
+	{
+		healthbar_position_offset.x = -6;
+		healthbar_position_offset.y = -6;
 
-	healthbar_background_rect = { 618, 12, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
-	healthbar_rect = { 618, 23, MAX_UNIT_HEALTHBAR_WIDTH, 9 };
+		healthbar_background_rect = { 967, 1, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
+		healthbar_rect = { 967, 13, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
 
-	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+		int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
+		int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
 
-	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+		healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+	}
 };
 
 Infantry::~Infantry()  //Destructor. Called at the last frame.
@@ -67,10 +70,12 @@ bool Infantry::Update(float dt, bool doLogic)
 {
 	HandleMovement(dt);
 
-	selection_collider.x = pixel_position.x;
-	selection_collider.y = pixel_position.y;
+	DataMapSafetyCheck();
 
 	UpdateUnitSpriteSection();
+
+	selection_collider.x = pixel_position.x;
+	selection_collider.y = pixel_position.y;
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y-15, &entity_sprite_section);
 

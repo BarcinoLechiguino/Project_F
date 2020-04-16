@@ -134,6 +134,11 @@ bool GameplayScene::PostUpdate()
 // Called before quitting
 bool GameplayScene::CleanUp()
 {
+	App->tex->UnLoad(background_texture);
+	App->tex->UnLoad(occupied_debug);
+	App->tex->UnLoad(occupied_by_entity_debug);
+	App->tex->UnLoad(path_debug_tex);
+
 	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)

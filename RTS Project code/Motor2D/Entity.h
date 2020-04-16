@@ -55,7 +55,7 @@ public:
 	virtual bool Load(pugi::xml_node&);
 	virtual void Restart();*/							//Maybe not needed THIS HERE REVISE, CHANGE
 	
-	virtual void AssignEntityIndex();
+	virtual void InitEntity();
 
 	virtual void BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip);
 

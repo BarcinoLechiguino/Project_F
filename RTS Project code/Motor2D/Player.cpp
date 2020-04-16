@@ -287,7 +287,7 @@ void Player::DeleteOnInput()
 				{
 					Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
 
-					if (clicked_entity != nullptr)
+ 					if (clicked_entity != nullptr)
 					{
 						std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
 
