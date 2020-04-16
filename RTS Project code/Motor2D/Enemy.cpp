@@ -95,6 +95,11 @@ bool Enemy::Update(float dt, bool doLogic)
 
 bool Enemy::PostUpdate()
 {
+	if (current_health <= 0)
+	{
+		CleanUp();
+	}
+	
 	return true;
 };
 
@@ -167,7 +172,7 @@ void Enemy::SetTarget()
 	
 	for (; item != App->entity_manager->entities.end(); ++item)
 	{
-		if ((*item)->type == ENTITY_TYPE::INFANTRY)
+		if ((*item)->type == ENTITY_TYPE::GATHERER || (*item)->type == ENTITY_TYPE::INFANTRY)
 		{
 			target = (*item);
 			break;

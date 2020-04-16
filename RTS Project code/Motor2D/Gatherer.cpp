@@ -167,6 +167,11 @@ void Gatherer::UpdateUnitSpriteSection()
 	}
 }
 
+void Gatherer::InitEntity()
+{
+
+}
+
 void Gatherer::OnCollision(Collider* C1, Collider* C2)
 {
 
