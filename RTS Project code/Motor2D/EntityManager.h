@@ -49,11 +49,14 @@ public:
 	SDL_Texture* GetInfantryTexture() const;
 	SDL_Texture* GetEnemyTexture() const;
 	SDL_Texture* GetTownHallTexture() const;
+	SDL_Texture* GetEnemyTownHallTexture() const;
 	SDL_Texture* GetBarracksTexture() const;
+	SDL_Texture* GetEnemyBarracksTexture() const;
 	SDL_Texture* GetRockTexture() const;
 
 	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
 	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
+	bool IsResource(Entity* entity);													//Method that will return true if the entity passed as argument is a resource.
 
 	void SetEntityMap(int width, int height);											//Method that will allocate the necessary memory for the entity_map.
 	void ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null = false);	//Method that will modify the entity map when a unit or building is spawned.
@@ -74,7 +77,9 @@ public:
 	SDL_Texture*					infantry_tex;
 	SDL_Texture*					enemy_tex;
 	SDL_Texture*					townhall_tex;
+	SDL_Texture*					enemy_townhall_tex;
 	SDL_Texture*					barracks_tex;
+	SDL_Texture*					enemy_barracks_tex;
 	SDL_Texture*					rock_tex;
 
 	std::vector<Entity*>			entities;	

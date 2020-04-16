@@ -15,7 +15,6 @@
 
 Barracks::Barracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
 {
-	//entity_sprite = App->tex->Load("maps/debug_barracks_tile.png");
 	entity_sprite = App->entity_manager->GetBarracksTexture();
 
 	barracks_rect_1 = {0,0,106,95};

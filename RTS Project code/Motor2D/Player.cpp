@@ -21,7 +21,7 @@
 
 #include "Player.h"
 
-Player::Player() : building_selected(nullptr)
+Player::Player() : building_selected(nullptr), resource_selected(nullptr)
 {
 
 }
@@ -62,12 +62,13 @@ bool Player::PreUpdate()
 bool Player::Update(float dt)
 {
 	MouseCalculations();
-
+	
 	CameraController(dt);
 
 	DragSelection();
 
-	SelectionOnClick();
+	SelectOnClick();
+	
 	DeleteOnInput();
 
 	SelectionShortcuts();
@@ -253,7 +254,7 @@ void Player::SelectEntitiesInSelectionRect()
 	LOG("Units selected %d", units_selected.size());
 }
 
-void Player::SelectionOnClick()
+void Player::SelectOnClick()
 {
 	if (CurrentlyInGameplayScene())
 	{
@@ -388,6 +389,11 @@ void Player::SelectEntityAt(const iPoint& tile_position)
 
 				return;
 			}
+
+			if (App->entity_manager->IsResource(clicked_entity))
+			{
+				resource_selected = (Static_Object*)clicked_entity;
+			}
 		}
 		else
 		{
@@ -454,6 +460,14 @@ void Player::DeleteEntityFromBuffers(Entity* entity_to_delete)
 		if (entity_to_delete == building_selected)
 		{
 			building_selected = nullptr;
+		}
+	}
+
+	if (App->entity_manager->IsResource(entity_to_delete))
+	{
+		if (entity_to_delete == resource_selected)
+		{
+			resource_selected = nullptr;
 		}
 	}
 }

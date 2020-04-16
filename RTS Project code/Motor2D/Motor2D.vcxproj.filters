@@ -166,11 +166,13 @@
     <ClCompile Include="Minimap.cpp">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Quadtree.cpp">
-      <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
+    <ClCompile Include="Quadtree.cpp" />
+    <ClCompile Include="TileQuadTree.cpp" />
+    <ClCompile Include="EnemyTownHall.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
     </ClCompile>
-    <ClCompile Include="TileQuadTree.cpp">
-      <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
+    <ClCompile Include="EnemyBarracks.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -360,11 +362,13 @@
     <ClInclude Include="Minimap.h">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Quadtree.h">
-      <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
+    <ClInclude Include="Quadtree.h" />
+    <ClInclude Include="TileQuadTree.h" />
+    <ClInclude Include="EnemyTownHall.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
     </ClInclude>
-    <ClInclude Include="TileQuadTree.h">
-      <Filter>Desenvolupament  ========\Tools\Quadtree</Filter>
+    <ClInclude Include="EnemyBarracks.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -461,9 +465,6 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Multimedia">
       <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Desenvolupament  ========\Tools\Quadtree">
-      <UniqueIdentifier>{e869669b-bd70-4535-827c-90ae50fb71c7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

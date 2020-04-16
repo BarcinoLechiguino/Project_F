@@ -10,14 +10,14 @@
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
 
-#include "TownHall.h"
+#include "EnemyTownHall.h"
 
 
-TownHall::TownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
+EnemyTownHall::EnemyTownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
 {
-	entity_sprite = App->entity_manager->GetTownHallTexture();
-	
-	hall_rect = {0, 0, 155, 138};
+	entity_sprite = App->entity_manager->GetEnemyTownHallTexture();
+
+	hall_rect = { 0, 0, 155, 138 };
 
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
@@ -40,30 +40,30 @@ TownHall::TownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
 	}
 }
 
-bool TownHall::Awake(pugi::xml_node&)
+bool EnemyTownHall::Awake(pugi::xml_node&)
 {
 	return true;
 }
 
-bool TownHall::PreUpdate()
+bool EnemyTownHall::PreUpdate()
 {
 
 	return true;
 }
 
-bool TownHall::Update(float dt, bool doLogic)
+bool EnemyTownHall::Update(float dt, bool doLogic)
 {
 	App->render->Blit(entity_sprite, pixel_position.x - 51, pixel_position.y - 20, &hall_rect);
 
 	return true;
 }
 
-bool TownHall::PostUpdate()
+bool EnemyTownHall::PostUpdate()
 {
 	return true;
 }
 
-bool TownHall::CleanUp()
+bool EnemyTownHall::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
@@ -75,7 +75,7 @@ bool TownHall::CleanUp()
 	return true;
 }
 
-void TownHall::GenerateUnit(ENTITY_TYPE type)
+void EnemyTownHall::GenerateUnit(ENTITY_TYPE type)
 {
 	switch (type)
 	{

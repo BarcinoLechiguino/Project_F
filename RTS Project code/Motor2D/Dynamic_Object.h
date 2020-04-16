@@ -52,17 +52,21 @@ public:
 	void HandleMovement(float dt);
 	void Move(float dt);
 	
-	void SetEntityTarget(const iPoint& target_position);
+	void SetEntityTarget(const iPoint& target_position);				// Method that will give an entity a combat target.
+	void PathToEntityTarget();
 
 	void DataMapSafetyCheck();											// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
 
 public:
+	bool							path_full;
+	bool							is_selectable;
+
 	float							speed;
 	float							speed_x_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
 	float							speed_y_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
 
-	bool							path_full;
-	bool							is_selectable;
+	float							attack_speed;						// Attacks per second that a given unit will perform.
+	int								attack_range;						// Attack range of a given unit. In Tiles.
 
 	Entity*							target;
 

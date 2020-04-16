@@ -29,6 +29,9 @@ public:
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 
+	void SetGatheringTarget(const iPoint& tile_position);
+	void PathToGatheringTarget();
+
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:

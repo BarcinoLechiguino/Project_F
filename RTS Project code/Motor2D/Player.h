@@ -32,12 +32,12 @@ public:
 	void DrawCursor();
 
 	// --- Entity Selection Methods.
-	void DragSelection();
-	void UpdateSelectionRect();
+	void DragSelection();								// Method that, by clicking and dragging the mouse, generates a selection rect that will select all units that are inside its bounds.
+	void UpdateSelectionRect();							// Method that will update the selection rect's size by taking into account the current mouse position.
 	void SelectEntitiesInSelectionRect();
 
 	void SelectionShortcuts();							// Unit selection shortcuts. Currently Z (All), X (Gatherers), C (Infantries), V (Enemies).
-	void SelectionOnClick();							// Method that will select whichever entity is at the mouse's position when it is right-clicked.
+	void SelectOnClick();								// Method that will select whichever entity is at the mouse's position when it is right-clicked.
 
 	void SelectAllEntities();
 	void SelectGatherers();
@@ -88,6 +88,7 @@ public:
 	std::vector<Dynamic_Object*>	units_selected;
 
 	Static_Object*					building_selected;
+	Static_Object*					resource_selected;
 };
 
 #endif // !__PLAYER_H__
