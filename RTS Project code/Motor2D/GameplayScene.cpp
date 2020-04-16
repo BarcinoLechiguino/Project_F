@@ -318,9 +318,9 @@ void GameplayScene::LoadGuiElements()
 
 	//Down Bar
 	//Main Bar
-	SDL_Rect HUD_main_down_bar_size = { 685, 226, 707, 211 };
+	SDL_Rect HUD_main_down_bar_size = { 0, 200, 1280, 150 };
 
-	HUD_main_down_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 230, 514, HUD_main_down_bar_size, true, true, false, this, nullptr);
+	HUD_main_down_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, -3, 580, HUD_main_down_bar_size, true, true, false, this, nullptr);
 
 	//Resource Bar
 
