@@ -31,6 +31,7 @@ public:
 	void CameraController(float dt);
 
 	void SelectionRect();
+	bool CheckSelectionRectBorders(Dynamic_Object* unit);
 
 	void SelectionOnClick();							// Method that will select whichever entity is at the mouse's position when it is right-clicked.
 	void DeleteOnInput();
@@ -42,6 +43,8 @@ public:
 	void DrawCursor();
 
 	bool CurrentlyInGameplayScene();
+
+	void DebugUnitSpawn();
 
 public:
 

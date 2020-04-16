@@ -60,6 +60,7 @@ bool Gui::Start()
 		back_fx = App->audio->LoadFx("audio/fx/UI/Back.wav");
 		exit_fx = App->audio->LoadFx("audio/fx/UI/Back to menu.wav");
 		appear_menu_fx = App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
+		standard_fx = App->audio->LoadFx("audio/fx/UI/Standard.wav");
 
 		audioAlreadyLoaded = true;
 	}
@@ -480,12 +481,16 @@ void Gui::Debug_UI()
 
 					break;
 
+				case UI_ELEMENT::INPUTBOX:
+					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 255, 255, false, false);		//UI_Input Box will be PURPLE.
+					break;
+
 				case UI_ELEMENT::SCROLLBAR:
 					App->render->DrawQuad((*elem)->GetHitbox(), 255, 255, 0, 255, false, false);		//UI_Scrollbar will be YELLOW.
 					break;
 
-				case UI_ELEMENT::INPUTBOX:
-					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 255, 255, false, false);		//UI_Input Box will be PURPLE.
+				case UI_ELEMENT::HEALTHBAR:
+					App->render->DrawQuad((*elem)->GetHitbox(), 0, 255, 255, 255, false, true);			//UI_Healthbar will be CYAN.
 					break;
 				}
 			}

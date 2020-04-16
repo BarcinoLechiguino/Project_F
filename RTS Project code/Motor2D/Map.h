@@ -182,16 +182,16 @@ public:
 	// Load new map
 	bool Load(std::string path);
 
-	iPoint MapToWorld(int x, int y) const;										//This method translates the position of the tile on the map to its equivalent position on screen.
-	iPoint WorldToMap(int x, int y) const;										//This method translates the position of the tile on the screen to its equivalent position on the map.
+	iPoint MapToWorld(int x, int y) const;									//This method translates the position of the tile on the map to its equivalent position on screen.
+	iPoint WorldToMap(int x, int y) const;									//This method translates the position of the tile on the screen to its equivalent position on the map.
 	
-	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);			//Changed to non const because of list unknown problem
-	bool CreateEntityMap(int& width, int& height, Entity** buffer);				//This method will allocate the necessary memory and initialize the entities map.
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);		//Changed to non const because of list unknown problem
+	bool CreateEntityMap(int& width, int& height);							//This method will allocate the necessary memory and initialize the entities map. Not necessary in this case(?).
 
 	void Restart_Cam();
 	void GetMapSize(int& w, int& h) const;
 
-	TileSet* GetTilesetFromTileId(int id); //Changed to non const because of list unknown problem
+	TileSet* GetTilesetFromTileId(int id);									//Changed to non const because of list unknown problem
 
 private:
 
@@ -206,16 +206,16 @@ private:
 
 public:
 
-	MapData			data;
-	Point<float>	spawn_position_cam;
-	Collider		camera_collider;				//Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
-	int				winWidth;						//Declared to store the window's width.
-	int				winHeight;						//Declared to store the window's height.
+	MapData				data;
+	Point<float>		spawn_position_cam;
+	Collider			camera_collider;				//Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
+	int					winWidth;						//Declared to store the window's width.
+	int					winHeight;						//Declared to store the window's height.
 	
-	iPoint			cam_tilePos;					//Position of the camera in the X and Y axis in tiles.
-	int				tile_index;						//Will store the tile's index number so the correct tile is loaded.
+	iPoint				cam_tilePos;					//Position of the camera in the X and Y axis in tiles.
+	int					tile_index;						//Will store the tile's index number so the correct tile is loaded.
 	
-	bool			pathfindingMetaDebug = false;	//Keeps track of whether to load the PathfindingCollisions layer. Temporally declared here.
+	bool				pathfindingMetaDebug;			//Keeps track of whether to load the PathfindingCollisions layer. Temporally declared here.
 
 	bool				map_loaded;
 

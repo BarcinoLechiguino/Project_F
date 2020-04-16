@@ -14,6 +14,8 @@
 #include "EntityManager.h"
 #include "Dynamic_Object.h"
 #include "Static_Object.h"
+#include "TownHall.h"
+#include "Barracks.h"
 #include "Gatherer.h"
 #include "Infantry.h"
 
@@ -72,6 +74,8 @@ bool Player::Update(float dt)
 
 	MoveToOrder();
 
+	DebugUnitSpawn();
+
 	return true;
 }
 
@@ -115,7 +119,7 @@ void Player::MoveToOrder()//fix
 			{
 				for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
 				{
-					App->pathfinding->ChangeWalkability((*item)->occupied_tile, WALKABLE);
+					App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
 				}
 
 				App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected);							//Gives units targets around main target
@@ -198,22 +202,24 @@ void Player::SelectionRect()
 			{
 				is_selecting = false;
 
-				for (std::vector<Dynamic_Object*>::iterator item = App->entity_manager->dynamic_objects.begin(); item != App->entity_manager->dynamic_objects.end(); ++item)
+				for (std::vector<Entity*>::iterator item = App->entity_manager->entities.begin(); item != App->entity_manager->entities.end(); ++item)
 				{
-					if ((*item)->is_selectable)
+					if (App->entity_manager->IsUnit((*item)))
 					{
-						/*LOG("camera %d, %d", -App->render->camera.x, -App->render->camera.y);
-						LOG("Selection pos %d %d", selection_rect.x - App->render->camera.x , selection_rect.y - App->render->camera.y);
-						LOG("gatherer rect %d %d", (*item)->selection_collider.x, (*item)->selection_collider.y);*/
-
-						//Collision allied units rectangles
-						if (((*item)->selection_collider.x + (*item)->selection_collider.w > selection_rect.x - App->render->camera.x) &&
-							((*item)->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&
-							((*item)->selection_collider.y + (*item)->selection_collider.h > selection_rect.y - App->render->camera.y) &&
-							((*item)->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h))
+						Dynamic_Object* unit = (Dynamic_Object*)(*item);
+						
+						if (unit->is_selectable)
 						{
-							units_selected.push_back((*item));
+							/*LOG("camera %d, %d", -App->render->camera.x, -App->render->camera.y);
+							LOG("Selection pos %d %d", selection_rect.x - App->render->camera.x , selection_rect.y - App->render->camera.y);
+							LOG("gatherer rect %d %d", (*item)->selection_collider.x, (*item)->selection_collider.y);*/
 
+							//Collision allied units rectangles
+							if (CheckSelectionRectBorders(unit))
+							{
+								units_selected.push_back(unit);
+
+							}
 						}
 					}
 				}
@@ -222,6 +228,14 @@ void Player::SelectionRect()
 			}
 		}
 	}
+}
+
+bool Player::CheckSelectionRectBorders(Dynamic_Object* unit)
+{
+	return (unit->selection_collider.x + unit->selection_collider.w > selection_rect.x - App->render->camera.x) &&			// Unit is inside the left border.
+			(unit->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&					// Unit is inside the right border.
+			(unit->selection_collider.y + unit->selection_collider.h > selection_rect.y - App->render->camera.y) &&			// Unit is inside the top border.
+			(unit->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h);						// Unit is inside the bottom border.
 }
 
 void Player::SelectionOnClick()
@@ -277,7 +291,7 @@ void Player::DeleteOnInput()
 				{
 					Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
 
-					if (clicked_entity != nullptr)
+ 					if (clicked_entity != nullptr)
 					{
 						std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
 
@@ -286,6 +300,7 @@ void Player::DeleteOnInput()
 							if ((*item) == clicked_entity)
 							{
 								units_selected.erase(item);
+								break;
 							}
 						}
 						
@@ -299,53 +314,84 @@ void Player::DeleteOnInput()
 
 void Player::SelectionShortcuts()
 {
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)													// Select All Entities
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)													// Select All Entities
 	{
 		units_selected.clear();
 
-		std::vector<Dynamic_Object*>::iterator item = App->entity_manager->dynamic_objects.begin();
+		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
-		for (; item != App->entity_manager->dynamic_objects.end(); ++item)
+		for (; item != App->entity_manager->entities.end(); ++item)
 		{
-			if ((*item)->is_selectable)
+			if (App->entity_manager->IsUnit((*item)))
 			{
-				units_selected.push_back((*item));
+				Dynamic_Object* unit = (Dynamic_Object*)(*item);
+				
+				if (unit->is_selectable)
+				{
+					units_selected.push_back(unit);
+				}
 			}
 		}
 
 		LOG("All units selected. Total unit amount: %d", units_selected.size());
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)													// Select All Gatherers
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)													// Select All Gatherers
 	{
 		units_selected.clear();
 
-		std::vector<Gatherer*>::iterator item = App->entity_manager->gatherers.begin();
+		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
-		for (; item != App->entity_manager->gatherers.end(); ++item)
+		for (; item != App->entity_manager->entities.end(); ++item)
 		{
-			units_selected.push_back((*item));
+			if ((*item)->type == ENTITY_TYPE::GATHERER)
+			{
+				units_selected.push_back((Dynamic_Object*)(*item));
+			}
 		}
 
 		LOG("All gatherers selected. Total gatherer amount: %d", units_selected.size());
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)													// Select All Infantries
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)													// Select All Infantries
 	{
 		units_selected.clear();
 
-		std::vector<Infantry*>::iterator item = App->entity_manager->infantries.begin();
+		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
-		for (; item != App->entity_manager->infantries.end(); ++item)
+		for (; item != App->entity_manager->entities.end(); ++item)
 		{
-			units_selected.push_back((*item));
+			if ((*item)->type == ENTITY_TYPE::INFANTRY)
+			{
+				units_selected.push_back((Dynamic_Object*)(*item));
+			}
 		}
 
 		LOG("All infantries selected. Total infantry amount: %d", units_selected.size());
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	{
+		if (App->scene_manager->god_mode)
+		{
+			units_selected.clear();
+
+			std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+			for (; item != App->entity_manager->entities.end(); ++item)
+			{
+				if ((*item)->type == ENTITY_TYPE::ENEMY)
+				{
+					units_selected.push_back((Dynamic_Object*)(*item));
+				}
+			}
+
+			LOG("All enemies selected. Total enemy amount: %d", units_selected.size());
+		}
+	}
 }
 
-void Player::DrawCursor() //fix (?)
+void Player::DrawCursor()
 {
 	if (CurrentlyInGameplayScene())
 	{
@@ -364,5 +410,25 @@ bool Player::CurrentlyInGameplayScene()
 	else
 	{
 		return false;
+	}
+}
+
+void Player::DebugUnitSpawn()
+{
+	if (building_selected != nullptr)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		{
+			if (building_selected->type == ENTITY_TYPE::TOWNHALL)
+			{
+				TownHall* townhall = (TownHall*)building_selected;
+				townhall->GenerateUnit(ENTITY_TYPE::GATHERER);
+			}
+			if (building_selected->type == ENTITY_TYPE::BARRACKS)
+			{
+				Barracks* barrack = (Barracks*)building_selected;
+				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY);
+			}
+		}
 	}
 }

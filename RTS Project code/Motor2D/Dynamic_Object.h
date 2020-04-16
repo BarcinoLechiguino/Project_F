@@ -21,10 +21,8 @@ enum class ENTITY_STATE //Maybe WALKING instead?
 	PATHING_UP_LEFT,
 	PATHING_DOWN_RIGHT,
 	PATHING_DOWN_LEFT,
-	JUMPING,
-	FALLING,
+	DAMAGED,
 	DEAD,
-	HURT
 };
 
 class Dynamic_Object : public Entity
@@ -46,18 +44,20 @@ public:
 	virtual bool CleanUp();
 
 public:
-	virtual void InitUnitSpriteSections();
-	virtual void UpdateUnitSpriteSection();
+	virtual void InitUnitSpriteSections();								// Initializes all sprite sections of a given unit.
+	virtual void UpdateUnitSpriteSection();								// Updates all sprite sections of a given unit.
 
 	void GiveNewTarget(iPoint new_target);
 	void ChangeOccupiedTile(iPoint new_occupied_tile);
 	void HandleMovement(float dt);
 	void Move(float dt);
 	
+	void DataMapSafetyCheck();											// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
+
 public:
-	int								dynamic_object_index;
-	
 	float							speed;
+	float							speed_x_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
+	float							speed_y_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
 
 	bool							path_full;
 	bool							is_selectable;

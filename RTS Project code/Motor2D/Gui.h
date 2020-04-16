@@ -109,6 +109,7 @@ public:
 	uint						back_fx;
 	uint						appear_menu_fx;
 	uint						exit_fx;
+	uint						standard_fx;
 
 private:
 	SDL_Texture*				atlas;										//Texture of the atlas (UI Spritesheet)

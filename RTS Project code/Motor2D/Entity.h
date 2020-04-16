@@ -55,7 +55,7 @@ public:
 	virtual bool Load(pugi::xml_node&);
 	virtual void Restart();*/							//Maybe not needed THIS HERE REVISE, CHANGE
 	
-	virtual void AssignEntityIndex();
+	virtual void InitEntity();
 
 	virtual void BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip);
 
@@ -67,11 +67,10 @@ public:
 	//Entity Variables
 	ENTITY_TYPE		type;
 
-	int				entity_index;
-
 	int				max_health;
 	int				current_health;
 	int				damage;
+	int				level;
 
 	std::string		name_tag;													//Name of the entity in the xml file.
 
@@ -80,9 +79,7 @@ public:
 
 	SDL_Rect		healthbar_background_rect;
 	SDL_Rect		healthbar_rect;
-
-	UI_Image*		health_bar;
-	UI_Image*		empty_bar;
+	iPoint			healthbar_position_offset;
 
 	UI_Healthbar*	healthbar;
 
