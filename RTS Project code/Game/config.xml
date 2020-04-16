@@ -24,7 +24,8 @@
   <audio>
       <folder>audio/music/</folder>
       <volume value = "70"/>
-    <volume_fx value="26"/>
+      <volume_fx value="26"/>
+      <distance scale="425"/>
   </audio>
 
   <file_system>
