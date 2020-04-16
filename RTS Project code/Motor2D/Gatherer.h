@@ -24,6 +24,8 @@ public:
 	bool CleanUp();
 
 public:
+	void InitEntity();
+	
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 
