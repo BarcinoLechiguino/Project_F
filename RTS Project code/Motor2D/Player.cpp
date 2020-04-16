@@ -14,6 +14,8 @@
 #include "EntityManager.h"
 #include "Dynamic_Object.h"
 #include "Static_Object.h"
+#include "TownHall.h"
+#include "Barracks.h"
 #include "Gatherer.h"
 #include "Infantry.h"
 
@@ -71,6 +73,8 @@ bool Player::Update(float dt)
 	SelectionShortcuts();
 
 	MoveToOrder();
+
+	DebugUnitSpawn();
 
 	return true;
 }
@@ -406,5 +410,25 @@ bool Player::CurrentlyInGameplayScene()
 	else
 	{
 		return false;
+	}
+}
+
+void Player::DebugUnitSpawn()
+{
+	if (building_selected != nullptr)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		{
+			if (building_selected->type == ENTITY_TYPE::TOWNHALL)
+			{
+				TownHall* townhall = (TownHall*)building_selected;
+				townhall->GenerateUnit(ENTITY_TYPE::GATHERER);
+			}
+			if (building_selected->type == ENTITY_TYPE::BARRACKS)
+			{
+				Barracks* barrack = (Barracks*)building_selected;
+				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY);
+			}
+		}
 	}
 }

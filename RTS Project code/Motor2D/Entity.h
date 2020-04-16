@@ -70,6 +70,7 @@ public:
 	int				max_health;
 	int				current_health;
 	int				damage;
+	int				level;
 
 	std::string		name_tag;													//Name of the entity in the xml file.
 

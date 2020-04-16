@@ -20,6 +20,10 @@ public:
 	virtual bool CleanUp();
 
 public:
+
+	void GenerateUnit(ENTITY_TYPE type);
+
+public:
 	SDL_Rect	barracks_rect_1;
 	SDL_Rect	barracks_rect_2;
 };

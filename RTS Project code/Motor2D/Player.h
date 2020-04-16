@@ -44,6 +44,8 @@ public:
 
 	bool CurrentlyInGameplayScene();
 
+	void DebugUnitSpawn();
+
 public:
 
 	iPoint			scene_camera_limit;
