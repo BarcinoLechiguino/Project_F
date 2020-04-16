@@ -60,6 +60,7 @@ bool Gui::Start()
 		back_fx = App->audio->LoadFx("audio/fx/UI/Back.wav");
 		exit_fx = App->audio->LoadFx("audio/fx/UI/Back to menu.wav");
 		appear_menu_fx = App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
+		standard_fx = App->audio->LoadFx("audio/fx/UI/Standard.wav");
 
 		audioAlreadyLoaded = true;
 	}
