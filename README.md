@@ -11,6 +11,19 @@
  - {Feature04}
 
 ## Controls
+### Debug Keys
+
+- God Mode: F1
+- UI Debug: F2
+- Pathfinding Debug: F3
+- Pause game: F4
+- Spawn Enemy: E
+- Spawn Gatherer: G
+- Spawn Infantry: I
+- Spawn TownHall: H
+- Spawn Rock: R
+- Spawn Enemy TownHall: J
+- Spawn Enemy Barracks: N
 
  - {ControlsScheme}
 
