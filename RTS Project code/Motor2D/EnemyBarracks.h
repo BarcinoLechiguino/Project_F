@@ -7,7 +7,7 @@ class EnemyBarracks : public Static_Object
 {
 public:
 
-	EnemyBarracks(int x, int y, ENTITY_TYPE type);
+	EnemyBarracks(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 

@@ -13,7 +13,7 @@
 #include "EnemyBarracks.h"
 
 
-EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
+EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
 {
 	entity_sprite = App->entity_manager->GetEnemyBarracksTexture();
 

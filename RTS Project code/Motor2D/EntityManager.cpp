@@ -172,11 +172,11 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		entity = new Barracks(x, y, type, level);
 
 	case ENTITY_TYPE::ENEMY_TOWNHALL:
-		entity = new EnemyTownHall(x, y, type);
+		entity = new EnemyTownHall(x, y, type, level);
 		break;
 
 	case ENTITY_TYPE::ENEMY_BARRACKS:
-		entity = new EnemyBarracks(x, y, type);
+		entity = new EnemyBarracks(x, y, type, level);
 		break;
 
 	case ENTITY_TYPE::ROCK:
