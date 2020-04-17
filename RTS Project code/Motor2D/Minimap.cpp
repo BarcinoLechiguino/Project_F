@@ -8,6 +8,8 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
+#include "Brofiler/Brofiler.h"
+
 #include "Map.h"
 
 #include "p2Log.h"
@@ -40,7 +42,10 @@ bool Minimap::Start()
 	return true;
 }
 
-void Minimap::CreateTexture() {
+void Minimap::CreateTexture() 
+{
+
+	BROFILER_CATEGORY("Load MiniMap", Profiler::Color::Khaki);
 
 	// Initialize the variable "map_width" to obtain the width of the map in pixels
 	// Initialize the variable "minimap_scale" to get the relation between the map width and
