@@ -38,7 +38,7 @@ if (ENABLE_MSAN AND ENABLE_ASAN)
     MESSAGE(WARNING "Compiling with both AddressSanitizer and MemorySanitizer is not recommended")
 endif()
 
-add_subdirectory(RTS Project code/Motor2D)
+add_subdirectory(RTS-Project-code/Motor2D)
 
 
 enable_testing()
