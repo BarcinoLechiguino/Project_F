@@ -1,0 +1,38 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI - Windows
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+    - uses: actions/checkout@master
+
+    - name: Setup Environment
+      run: | 
+        mkdir build
+        cd build
+   
+   # Setup MSBuild.exe path if required
+    - uses: warrenbuckley/Setup-MSBuild@v1
+
+    - name: Setup CMake Project
+      run: cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DSTATIC=ON -DSHARED=ON -DBUILD_EXAMPLES=ON -DBUILD_GAMES=OFF -DINCLUDE_EVERYTHING=ON ../Project-RTS
+
+
+    - name: Build Project F
+      run: cmake --build . --target install
