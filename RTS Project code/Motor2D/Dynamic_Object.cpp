@@ -157,7 +157,7 @@ void Dynamic_Object::HandleMovement(float dt)
 
 void Dynamic_Object::SetEntityState()
 {
-	/*if (next_tile.x == tile_position.x + 1)
+	if (next_tile.x == tile_position.x + 1)
 	{
 		if (next_tile.y == tile_position.y + 1)
 		{
@@ -197,9 +197,9 @@ void Dynamic_Object::SetEntityState()
 		{
 			unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
 		}
-	}*/
+	}
 
-	if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)
+	/*if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)
 	{
 		unit_state = ENTITY_STATE::PATHING_UP;
 	}
@@ -237,7 +237,7 @@ void Dynamic_Object::SetEntityState()
 	if (tile_position.x == next_tile.x && tile_position.y > next_tile.y)
 	{
 		unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
-	}
+	}*/
 }
 
 void Dynamic_Object::Move(float dt)
