@@ -59,11 +59,13 @@ public:
 	
 	virtual void InitEntity();
 
+	virtual void AttachHealthbarToEntity();
+	
 	virtual void BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip);
 
-	virtual void ApplyDamage(Entity* target);									//Applies the current unit damage to the referenced target, also handles the target health bar.
-
 	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
+
+	void ApplyDamage(Entity* target);											//Applies the current unit damage to the referenced target, also handles the target health bar.
 
 public:
 	//Entity Variables
@@ -71,7 +73,7 @@ public:
 
 	int				max_health;
 	int				current_health;
-	int				damage;
+	int				attack_damage;
 	int				level;
 
 	std::string		name_tag;													//Name of the entity in the xml file.

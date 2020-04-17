@@ -79,14 +79,14 @@ void Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 
 	ChangeOccupiedTile(target_tile);
 
-	//int pos = 0;
-	//for (std::vector<iPoint>::iterator item = entity_path.begin(); item != entity_path.end(); ++item)
-	//{
-	//	pos++;
-	//	LOG("Path tile: %d pos: %d %d", pos, (*item).x, (*item).y);
-	//}
+	/*int pos = 0;
+	for (std::vector<iPoint>::iterator item = entity_path.begin(); item != entity_path.end(); ++item)
+	{
+		pos++;
+		LOG("Path tile: %d pos: %d %d", pos, (*item).x, (*item).y);
+	}
 
-	//LOG("target_tile %d %d", entity_path.back().x, entity_path.back().y);
+	LOG("target_tile %d %d", entity_path.back().x, entity_path.back().y);*/
 }
 
 void Dynamic_Object::ChangeOccupiedTile(const iPoint& new_occupied_tile)
@@ -100,7 +100,6 @@ void Dynamic_Object::ChangeOccupiedTile(const iPoint& new_occupied_tile)
 
 void Dynamic_Object::HandleMovement(float dt)
 {
-
 	switch (path_state)
 	{
 	case PATHFINDING_STATE::IDLE:
@@ -112,13 +111,13 @@ void Dynamic_Object::HandleMovement(float dt)
 			current_path_tile = entity_path.begin();
 		}
 
-		break;
+	break;
 
 	case PATHFINDING_STATE::WALKING:
 
 		Move(dt);
 
-		break;
+	break;
 
 	case PATHFINDING_STATE::WAITING_NEXT_TILE:
 
@@ -149,51 +148,96 @@ void Dynamic_Object::HandleMovement(float dt)
 
 		path_state = PATHFINDING_STATE::WALKING;
 
-		if (next_tile.x == tile_position.x + 1)
-		{
-			if (next_tile.y == tile_position.y + 1)
-			{
-				unit_state = ENTITY_STATE::PATHING_DOWN;
-			}
-			else if (next_tile.y == tile_position.y - 1)
-			{
-				unit_state = ENTITY_STATE::PATHING_RIGHT;
-			}
-			else
-			{
-				unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
-			}
-		}
-		else if (next_tile.x == tile_position.x - 1)
-		{
-			if (next_tile.y == tile_position.y + 1)
-			{
-				unit_state = ENTITY_STATE::PATHING_LEFT;
-			}
-			else if (next_tile.y == tile_position.y - 1)
-			{
-				unit_state = ENTITY_STATE::PATHING_UP;
-			}
-			else
-			{
-				unit_state = ENTITY_STATE::PATHING_UP_LEFT;
-			}
-		}
-		else
-		{
-			if (next_tile.y == tile_position.y + 1)
-			{
-				unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
-			}
-			else if (next_tile.y == tile_position.y - 1)
-			{
-				unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
-			}
-		}
+		SetEntityState();
 
 		break;
 	}
 
+}
+
+void Dynamic_Object::SetEntityState()
+{
+	/*if (next_tile.x == tile_position.x + 1)
+	{
+		if (next_tile.y == tile_position.y + 1)
+		{
+			unit_state = ENTITY_STATE::PATHING_DOWN;
+		}
+		else if (next_tile.y == tile_position.y - 1)
+		{
+			unit_state = ENTITY_STATE::PATHING_RIGHT;
+		}
+		else
+		{
+			unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
+		}
+	}
+	else if (next_tile.x == tile_position.x - 1)
+	{
+		if (next_tile.y == tile_position.y + 1)
+		{
+			unit_state = ENTITY_STATE::PATHING_LEFT;
+		}
+		else if (next_tile.y == tile_position.y - 1)
+		{
+			unit_state = ENTITY_STATE::PATHING_UP;
+		}
+		else
+		{
+			unit_state = ENTITY_STATE::PATHING_UP_LEFT;
+		}
+	}
+	else
+	{
+		if (next_tile.y == tile_position.y + 1)
+		{
+			unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
+		}
+		else if (next_tile.y == tile_position.y - 1)
+		{
+			unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
+		}
+	}*/
+
+	if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)
+	{
+		unit_state = ENTITY_STATE::PATHING_UP;
+	}
+
+	if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)
+	{
+		unit_state = ENTITY_STATE::PATHING_DOWN;
+	}
+
+	if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)
+	{
+		unit_state = ENTITY_STATE::PATHING_RIGHT;
+	}
+
+	if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)
+	{
+		unit_state = ENTITY_STATE::PATHING_LEFT;
+	}
+
+	if (tile_position.x == next_tile.x && tile_position.y < next_tile.y)
+	{
+		unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
+	}
+
+	if (tile_position.x < next_tile.x && tile_position.y == next_tile.y)
+	{
+		unit_state = ENTITY_STATE::PATHING_UP_LEFT;
+	}
+
+	if (tile_position.x > next_tile.x && tile_position.y == next_tile.y)
+	{
+		unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
+	}
+
+	if (tile_position.x == next_tile.x && tile_position.y > next_tile.y)
+	{
+		unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
+	}
 }
 
 void Dynamic_Object::Move(float dt)
@@ -314,10 +358,19 @@ void Dynamic_Object::Move(float dt)
 
 void Dynamic_Object::SetEntityTarget(const iPoint& target_position)
 {
+	
+	
 	return;
 }
 
 void Dynamic_Object::PathToEntityTarget()
+{
+	
+	
+	return;
+}
+
+void Dynamic_Object::DealDamage()
 {
 	return;
 }

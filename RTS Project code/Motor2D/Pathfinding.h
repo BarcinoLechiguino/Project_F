@@ -101,7 +101,7 @@ struct PathList
 	// -----------
 	// The list itself, note they are not pointers!
 	std::list<PathNode> list;
-	//std::vector<PathNode> list;
+	//std::vector<PathNode> list;					// Try to make the vector work by iterating it like a normal array ( for(int i = 0; i < list.size; ++i)).
 };
 
 

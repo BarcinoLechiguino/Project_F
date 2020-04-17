@@ -5,8 +5,8 @@
 #include "Module.h"
 #include "Point.h"
 
+#define MAX_ENTITIES 400
 #define MAX_ENEMIES 200
-
 
 struct SDL_Texture;
 
@@ -20,7 +20,9 @@ class Infantry;
 class Enemy;
 class Rock;
 class TownHall;
+class EnemyTownHall;
 class Barracks;
+class EnemyBarracks;
 
 class EntityManager : public Module
 {
@@ -57,6 +59,7 @@ public:
 	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
 	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
 	bool IsResource(Entity* entity);													//Method that will return true if the entity passed as argument is a resource.
+	bool IsEnemyEntity(Entity* entity);													//Method that will return true if the entity passed as argument is a enemy entity.
 
 	void SetEntityMap(int width, int height);											//Method that will allocate the necessary memory for the entity_map.
 	void ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null = false);	//Method that will modify the entity map when a unit or building is spawned.

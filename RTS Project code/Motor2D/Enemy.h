@@ -26,6 +26,10 @@ public:
 	bool CleanUp();
 
 public:
+	void InitEntity();
+
+	void AttachHealthbarToEntity();
+	
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 

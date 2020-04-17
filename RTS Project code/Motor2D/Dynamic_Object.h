@@ -50,10 +50,13 @@ public:
 	void GiveNewTargetTile(const iPoint& new_target_tile);
 	void ChangeOccupiedTile(const iPoint& new_occupied_tile);
 	void HandleMovement(float dt);
+	void SetEntityState();
 	void Move(float dt);
-	
+
 	void SetEntityTarget(const iPoint& target_position);				// Method that will give an entity a combat target.
 	void PathToEntityTarget();
+
+	void DealDamage();
 
 	void DataMapSafetyCheck();											// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
 
@@ -65,8 +68,11 @@ public:
 	float							speed_x_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
 	float							speed_y_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
 
-	float							attack_speed;						// Attacks per second that a given unit will perform.
 	int								attack_range;						// Attack range of a given unit. In Tiles.
+	float							attack_speed;						// Attacks per second that a given unit will perform.
+
+	float							accumulated_cooldown;				// Total amount of time that has been accumulated since the unit's attack entered cooldown.
+	bool							attack_in_cooldown;					// Will keep track whether or not the attack of a unit is in cooldown or not.
 
 	Entity*							target;
 

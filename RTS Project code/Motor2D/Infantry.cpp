@@ -19,31 +19,7 @@
 
 Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
 {
-	entity_sprite = App->entity_manager->GetInfantryTexture();
-	
-	is_selectable = true;
-
-	speed = 500.0f;
-
-	max_health = 300;
-	current_health = max_health;
-	damage = 30;
-
-	InitUnitSpriteSections();
-
-	if (App->entity_manager->CheckTileAvailability(iPoint(x, y), this))
-	{
-		healthbar_position_offset.x = -6;
-		healthbar_position_offset.y = -6;
-
-		healthbar_background_rect = { 967, 1, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
-		healthbar_rect = { 967, 13, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
-
-		int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-		int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
-
-		healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
-	}
+	InitEntity();
 };
 
 Infantry::~Infantry()  //Destructor. Called at the last frame.
@@ -77,11 +53,23 @@ bool Infantry::Update(float dt, bool doLogic)
 	selection_collider.x = pixel_position.x;
 	selection_collider.y = pixel_position.y;
 
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y-15, &entity_sprite_section);
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 15, &entity_sprite_section);
 
 	if (App->scene_manager->god_mode)
 	{
 		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
+	}
+
+	if (target != nullptr)
+	{
+		if (tile_position.DistanceManhattan(target->tile_position) < attack_range)
+		{	
+			DealDamage();
+		}
+		else
+		{
+			PathToEntityTarget();
+		}
 	}
 
 	return true;
@@ -91,7 +79,7 @@ bool Infantry::PostUpdate()
 {
 	if (current_health <= 0)
 	{	
-		CleanUp();
+		App->entity_manager->DeleteEntity(this);
 	}
 
 	return true;
@@ -113,6 +101,48 @@ bool Infantry::CleanUp()
 
 	return true;
 };
+
+void Infantry::InitEntity()
+{
+	entity_sprite = App->entity_manager->GetInfantryTexture();
+
+	InitUnitSpriteSections();
+
+	is_selectable = true;
+	path_full = true;
+
+	target = nullptr;
+	attack_in_cooldown = false;
+	accumulated_cooldown = 0.0f;
+
+	speed = 500.0f;
+
+	max_health = 300;
+	current_health = max_health;
+	attack_damage = 30;
+
+	attack_speed = 0.1f;
+	attack_range = 5;
+
+	if (App->entity_manager->CheckTileAvailability(tile_position, this))
+	{
+		AttachHealthbarToEntity();
+	}
+}
+
+void Infantry::AttachHealthbarToEntity()
+{
+	healthbar_position_offset.x = -6;			// Magic
+	healthbar_position_offset.y = -6;
+
+	healthbar_background_rect = { 967, 1, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
+	healthbar_rect = { 967, 13, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
+
+	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+
+	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+}
 
 void Infantry::InitUnitSpriteSections()
 {
@@ -160,9 +190,28 @@ void Infantry::UpdateUnitSpriteSection()
 	}
 }
 
-void Infantry::ApplyDamage(Entity* objective)
+void Infantry::DealDamage()
 {
-	return;
+	if (!attack_in_cooldown)
+	{
+		ApplyDamage(target);
+		attack_in_cooldown = true;
+
+		if (target->current_health <= 0)
+		{
+			target = nullptr;
+		}
+	}
+	else
+	{
+		accumulated_cooldown += App->GetDt();
+		
+		if (accumulated_cooldown >= attack_speed)
+		{
+			attack_in_cooldown = false;
+			accumulated_cooldown = 0.0f;
+		}
+	}
 }
 
 // Collision Handling ---------------------------------------

@@ -31,8 +31,8 @@ EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, 
 		healthbar_position_offset.x = -6;
 		healthbar_position_offset.y = -6;
 
-		healthbar_background_rect = { 618, 12, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
-		healthbar_rect = { 618, 23, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
+		healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
+		healthbar_rect = { 618, 12, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
 
 		int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
 		int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
