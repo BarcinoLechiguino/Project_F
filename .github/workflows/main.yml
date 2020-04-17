@@ -30,8 +30,8 @@ jobs:
    # Setup MSBuild.exe path if required
     - uses: warrenbuckley/Setup-MSBuild@v1
 
-   # - name: Setup CMake Project
-  #  run: cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DSTATIC=ON -DSHARED=ON -DBUILD_EXAMPLES=ON -DBUILD_GAMES=OFF -DINCLUDE_EVERYTHING=ON ../Project-RTS
+    - name: Setup CMake Project
+      run: cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DSTATIC=ON -DSHARED=ON -DBUILD_EXAMPLES=ON -DBUILD_GAMES=OFF -DINCLUDE_EVERYTHING=ON ../Project-RTS
 
 
     - name: Build Project F
