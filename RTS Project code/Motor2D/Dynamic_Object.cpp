@@ -63,10 +63,13 @@ void Dynamic_Object::UpdateUnitSpriteSection()
 	return;
 }
 
-void Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
+bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 {
 	//New Path using the next tile if it's going to one
-	App->pathfinding->CreatePath(next_tile, new_target_tile);
+	if (App->pathfinding->CreatePath(next_tile, new_target_tile) == -1)
+	{
+		return false;
+	}
 
 	entity_path.clear();
 	entity_path = App->pathfinding->GetLastPath();
@@ -79,14 +82,7 @@ void Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 
 	ChangeOccupiedTile(target_tile);
 
-	/*int pos = 0;
-	for (std::vector<iPoint>::iterator item = entity_path.begin(); item != entity_path.end(); ++item)
-	{
-		pos++;
-		LOG("Path tile: %d pos: %d %d", pos, (*item).x, (*item).y);
-	}
-
-	LOG("target_tile %d %d", entity_path.back().x, entity_path.back().y);*/
+	return true;
 }
 
 void Dynamic_Object::ChangeOccupiedTile(const iPoint& new_occupied_tile)
@@ -141,6 +137,10 @@ void Dynamic_Object::HandleMovement(float dt)
 		advance(current_path_tile, 1);
 
 		next_tile = (*current_path_tile);
+
+		App->entity_manager->ChangeEntityMap(tile_position, this,true);
+
+		App->entity_manager->ChangeEntityMap(next_tile, this);
 
 		//LOG("Next tile %d %d", next_tile.x, next_tile.y);
 
@@ -199,54 +199,7 @@ void Dynamic_Object::SetEntityState()
 		}
 	}
 
-	// --- ALTERNATIVE VERSION
-	//if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , --y)
-	//{
-	//	unit_state = ENTITY_STATE::PATHING_UP;
-	//	return;
-	//}
 
-	//if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x , ++y)
-	//{
-	//	unit_state = ENTITY_STATE::PATHING_DOWN;
-	//	return;
-	//}
-
-	//if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , ++y)
-	//{
-	//	unit_state = ENTITY_STATE::PATHING_RIGHT;
-	//	return;
-	//}
-
-	//if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x, --y)
-	//{
-	//	unit_state = ENTITY_STATE::PATHING_LEFT;
-	//	return;
-	//}
-
-	//if (tile_position.x == next_tile.x && tile_position.y > next_tile.y)					// next_tile is (== , --y)
-	//{
-	//	unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
-	//	return;
-	//}
-
-	//if (tile_position.x > next_tile.x && tile_position.y == next_tile.y)					// next tile is (--x, ==)
-	//{
-	//	unit_state = ENTITY_STATE::PATHING_UP_LEFT;
-	//	return;
-	//}
-
-	//if (tile_position.x < next_tile.x && tile_position.y == next_tile.y)					// next tile is (++x, ==)
-	//{
-	//	unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
-	//	return;
-	//}
-
-	//if (tile_position.x == next_tile.x && tile_position.y < next_tile.y)					// next tile is (==, ++y)
-	//{
-	//	unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
-	//	return;
-	//}
 }
 
 void Dynamic_Object::Move(float dt)
@@ -400,3 +353,52 @@ void Dynamic_Object::DataMapSafetyCheck()
 		}
 	}
 }
+
+// --- ALTERNATIVE VERSION
+//if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , --y)
+//{
+//	unit_state = ENTITY_STATE::PATHING_UP;
+//	return;
+//}
+
+//if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x , ++y)
+//{
+//	unit_state = ENTITY_STATE::PATHING_DOWN;
+//	return;
+//}
+
+//if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , ++y)
+//{
+//	unit_state = ENTITY_STATE::PATHING_RIGHT;
+//	return;
+//}
+
+//if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x, --y)
+//{
+//	unit_state = ENTITY_STATE::PATHING_LEFT;
+//	return;
+//}
+
+//if (tile_position.x == next_tile.x && tile_position.y > next_tile.y)					// next_tile is (== , --y)
+//{
+//	unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
+//	return;
+//}
+
+//if (tile_position.x > next_tile.x && tile_position.y == next_tile.y)					// next tile is (--x, ==)
+//{
+//	unit_state = ENTITY_STATE::PATHING_UP_LEFT;
+//	return;
+//}
+
+//if (tile_position.x < next_tile.x && tile_position.y == next_tile.y)					// next tile is (++x, ==)
+//{
+//	unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
+//	return;
+//}
+
+//if (tile_position.x == next_tile.x && tile_position.y < next_tile.y)					// next tile is (==, ++y)
+//{
+//	unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
+//	return;
+//}
