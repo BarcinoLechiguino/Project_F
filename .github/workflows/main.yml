@@ -7,8 +7,14 @@ name: CI - Windows
 on:
   push:
     branches: [ master ]
+    paths-ignore: 
+      - 'Docs/**'
+      - 'Wiki/**'
   pull_request:
     branches: [ master ]
+    paths-ignore: 
+      - 'Docs/**'
+      - 'Wiki/**'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -22,17 +28,9 @@ jobs:
     # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
     - uses: actions/checkout@master
 
+  # Setup MSBuild.exe path if required
     - name: Setup Environment
-      run: | 
-        mkdir build
-        cd build
-   
-   # Setup MSBuild.exe path if required
-    - uses: warrenbuckley/Setup-MSBuild@v1
-
-    - name: Setup CMake Project
-      run: cmake -G "Visual Studio 16 2019" -A x64 -DCMAKE_SH="CMAKE_SH-NOTFOUND" -DSTATIC=ON -DSHARED=ON -DBUILD_EXAMPLES=ON -DBUILD_GAMES=OFF -DINCLUDE_EVERYTHING=ON ../Project-RTS
-
+      uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Build Project F
-      run: cmake --build . --target install
+      run: msbuild Game_Solution.sln
