@@ -17,7 +17,9 @@ TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x,
 {
 	entity_sprite = App->entity_manager->GetTownHallTexture();
 	
-	hall_rect = {0, 0, 155, 138};
+	hall_rect_1 = { 0, 0, 155, 138 };
+	hall_rect_2 = { 155, 0, 155, 138 };
+	hall_rect = hall_rect_1;
 
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
@@ -87,6 +89,22 @@ void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 		break;
 	case ENTITY_TYPE::INFANTRY:
 		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3, level);
+		break;
+	}
+}
+
+void TownHall::LevelChanges()
+{
+	switch (level)
+	{
+	case 1:
+		hall_rect = hall_rect_1;
+		break;
+	case 2:
+		hall_rect = hall_rect_2;
+		break;
+	default:
+		hall_rect = hall_rect_2;
 		break;
 	}
 }

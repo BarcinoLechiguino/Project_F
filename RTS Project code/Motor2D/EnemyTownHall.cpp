@@ -17,7 +17,9 @@ EnemyTownHall::EnemyTownHall(int x, int y, ENTITY_TYPE type, int level) : Static
 {
 	entity_sprite = App->entity_manager->GetEnemyTownHallTexture();
 
-	hall_rect = { 0, 0, 155, 138 };
+	hall_rect_1 = { 0, 0, 155, 138 };
+	hall_rect_2 = { 155, 0, 155, 138 };
+	hall_rect = hall_rect_1;
 
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
@@ -75,7 +77,7 @@ bool EnemyTownHall::CleanUp()
 	return true;
 }
 
-void EnemyTownHall::GenerateUnit(ENTITY_TYPE type)
+void EnemyTownHall::GenerateUnit(ENTITY_TYPE type, int level)
 {
 	switch (type)
 	{
@@ -83,10 +85,26 @@ void EnemyTownHall::GenerateUnit(ENTITY_TYPE type)
 
 		break;
 	case ENTITY_TYPE::GATHERER:
-		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x + 1, tile_position.y + 3);
+		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x + 1, tile_position.y + 3, level);
 		break;
 	case ENTITY_TYPE::INFANTRY:
-		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3);
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3, level);
+		break;
+	}
+}
+
+void EnemyTownHall::LevelChanges()
+{
+	switch (level)
+	{
+	case 1:
+		hall_rect = hall_rect_1;
+		break;
+	case 2:
+		hall_rect = hall_rect_2;
+		break;
+	default:
+		hall_rect = hall_rect_2;
 		break;
 	}
 }

@@ -15,7 +15,9 @@
 #include "Dynamic_Object.h"
 #include "Static_Object.h"
 #include "TownHall.h"
+#include "EnemyTownHall.h"
 #include "Barracks.h"
+#include "EnemyBarracks.h"
 #include "Gatherer.h"
 #include "Infantry.h"
 
@@ -76,6 +78,8 @@ bool Player::Update(float dt)
 	GiveOrder();
 
 	DebugUnitSpawn();
+
+	DebugUnitUpgrade();
 
 	return true;
 }
@@ -525,15 +529,32 @@ void Player::DebugUnitSpawn()
 	{
 		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
 		{
-			if (building_selected->type == ENTITY_TYPE::TOWNHALL)
+			TownHall* townhall = nullptr;
+			EnemyTownHall* enemy_townhall = nullptr;
+			Barracks* barrack = nullptr;
+			EnemyBarracks* enemy_barrack;
+
+			switch (building_selected->type)
 			{
-				TownHall* townhall = (TownHall*)building_selected;
+			case ENTITY_TYPE::TOWNHALL:
+				townhall = (TownHall*)building_selected;
 				townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->level);
-			}
-			if (building_selected->type == ENTITY_TYPE::BARRACKS)
-			{
-				Barracks* barrack = (Barracks*)building_selected;
+				break;
+
+			case ENTITY_TYPE::ENEMY_TOWNHALL:
+				enemy_townhall = (EnemyTownHall*)building_selected;
+				enemy_townhall->GenerateUnit(ENTITY_TYPE::GATHERER, enemy_townhall->level);
+				break;
+				
+			case ENTITY_TYPE::BARRACKS:
+				barrack = (Barracks*)building_selected;
 				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->level);
+				break;
+
+			case ENTITY_TYPE::ENEMY_BARRACKS:
+				enemy_barrack = (EnemyBarracks*)building_selected;
+				enemy_barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, enemy_barrack->level);
+				break;
 			}
 		}
 	}
@@ -545,16 +566,36 @@ void Player::DebugUnitUpgrade()
 	{
 		if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
 		{
-			if (building_selected->type == ENTITY_TYPE::TOWNHALL)
+			TownHall* townhall = nullptr;
+			EnemyTownHall* enemy_townhall = nullptr;
+			Barracks* barrack = nullptr;
+			EnemyBarracks* enemy_barrack;
+
+			switch (building_selected->type)	
 			{
-				TownHall* townhall = (TownHall*)building_selected;
+			case ENTITY_TYPE::TOWNHALL:
+				townhall = (TownHall*)building_selected;
 				townhall->level++;
-			}
-			if (building_selected->type == ENTITY_TYPE::BARRACKS)
-			{
-				Barracks* barrack = (Barracks*)building_selected;
+				townhall->LevelChanges();
+				break;
+			
+			case ENTITY_TYPE::ENEMY_TOWNHALL:
+				enemy_townhall = (EnemyTownHall*)building_selected;
+				enemy_townhall->level++;
+				enemy_townhall->LevelChanges();
+				break;
+
+			case ENTITY_TYPE::BARRACKS:
+				barrack = (Barracks*)building_selected;
 				barrack->level++;
 				barrack->LevelChanges();
+				break;
+
+			case ENTITY_TYPE::ENEMY_BARRACKS:
+				enemy_barrack = (EnemyBarracks*)building_selected;
+				enemy_barrack->level++;
+				enemy_barrack->LevelChanges();
+				break;
 			}
 		}
 	}

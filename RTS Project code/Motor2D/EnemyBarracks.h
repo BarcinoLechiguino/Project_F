@@ -21,11 +21,14 @@ public:
 
 public:
 
-	void GenerateUnit(ENTITY_TYPE type);
+	void GenerateUnit(ENTITY_TYPE type, int level);
+
+	void LevelChanges();
 
 public:
 	SDL_Rect	barracks_rect_1;
 	SDL_Rect	barracks_rect_2;
+	SDL_Rect	barracks_rect;
 };
 
 #endif // !__ENEMY_BARRACKS_H__
