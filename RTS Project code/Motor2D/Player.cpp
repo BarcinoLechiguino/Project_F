@@ -8,8 +8,11 @@
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Map.h"
+#include "Minimap.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "Gui.h"
+#include "UI.h"
 
 #include "EntityManager.h"
 #include "Dynamic_Object.h"
@@ -222,7 +225,7 @@ void Player::OrderUnitsToAttack()
 
 void Player::DrawCursor()
 {
-	if (CurrentlyInGameplayScene())
+	if (CurrentlyInGameplayScene() /*&& !App->gui->FirstElementUnderMouse()->isVisible*/)
 	{
 		App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
 	}

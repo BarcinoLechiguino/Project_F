@@ -34,6 +34,8 @@ public:
 	void SetGatheringTarget(const iPoint& tile_position);
 	void PathToGatheringTarget();
 
+	bool TargetIsInRange();
+
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:

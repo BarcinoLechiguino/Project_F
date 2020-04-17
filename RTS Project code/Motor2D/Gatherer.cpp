@@ -177,6 +177,21 @@ void Gatherer::UpdateUnitSpriteSection()
 	}
 }
 
+bool Gatherer::TargetIsInRange()
+{
+	if (target != nullptr)
+	{
+		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
+
+		if (distance <= attack_range)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void Gatherer::OnCollision(Collider* C1, Collider* C2)
 {
 

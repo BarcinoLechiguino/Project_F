@@ -32,9 +32,11 @@ public:
 	void UpdateUnitSpriteSection();
 	
 	void SetEntityTargetByProximity();
+	void GetShortestPathWithinAttackRange();
 	void UpdateUnitOrientation();
 
 	bool TargetIsInRange();
+	void PathToTarget();
 	void DealDamage();
 
 	void OnCollision(Collider* C1, Collider* C2);
@@ -43,7 +45,7 @@ public:
 	int							attack_range;							// A unit's attack range in tiles.
 	float						attack_speed;							// A unit's attack speed in attacks/second.
 
-	const std::vector<iPoint>*	entity_path;
+	//const std::vector<iPoint>*	entity_path;
 };
 
 #endif // __ENEMY_H__

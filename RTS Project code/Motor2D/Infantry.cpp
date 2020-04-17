@@ -52,6 +52,10 @@ bool Infantry::Update(float dt, bool doLogic)
 	{
 		UpdateUnitSpriteSection();
 	}
+	else
+	{
+		UpdateUnitOrientation();
+	}
 
 	selection_collider.x = pixel_position.x;
 	selection_collider.y = pixel_position.y;
@@ -68,16 +72,22 @@ bool Infantry::Update(float dt, bool doLogic)
 		if (target == nullptr && !path_full)
 		{
 			SetEntityTargetByProximity();
-			UpdateUnitOrientation();
 		}
 	}
 
 	if (target != nullptr)
 	{
 		//path_full = false;
-		if (target != nullptr && tile_position.DistanceNoSqrt(target->tile_position) * 0.1f <= attack_range)
+		if (target != nullptr)
 		{
-			DealDamage();
+			if (TargetIsInRange())
+			{
+				DealDamage();
+			}
+			else
+			{
+
+			}
 		}
 	}
 
@@ -216,56 +226,83 @@ void Infantry::SetEntityTargetByProximity()
 	}
 }
 
+void Infantry::GetShortestPathWithinAttackRange()
+{
+	std::vector<iPoint> tmp;
+
+	for (int i = 0; i < entity_path.size(); ++i)
+	{
+		tmp.push_back(entity_path[i]);
+
+		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+		{
+			entity_path.clear();
+
+			entity_path = tmp;
+
+			target_tile = entity_path.back();
+			current_path_tile = entity_path.begin();
+
+			tmp.clear();
+
+			break;
+		}
+	}
+}
+
 void Infantry::UpdateUnitOrientation()
 {
-	if (target != nullptr)
+	if (unit_state == ENTITY_STATE::IDLE)
 	{
-		if (tile_position.x > target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , --y)
+		if (target != nullptr)
 		{
-			entity_sprite_section = pathing_up_section;
-			return;
-		}
+			if (tile_position.x > target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , --y)
+			{
+				entity_sprite_section = pathing_up_section;
+				return;
+			}
 
-		if (tile_position.x < target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x , ++y)
-		{
-			entity_sprite_section = pathing_down_section;
-			return;
-		}
+			if (tile_position.x < target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x , ++y)
+			{
+				entity_sprite_section = pathing_down_section;
+				return;
+			}
 
-		if (tile_position.x < target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , ++y)
-		{
-			entity_sprite_section = pathing_rigth_section;
-			return;
-		}
+			if (tile_position.x < target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , ++y)
+			{
+				entity_sprite_section = pathing_rigth_section;
+				return;
+			}
 
-		if (tile_position.x > target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x, --y)
-		{
-			entity_sprite_section = pathing_left_section;
-			return;
-		}
+			if (tile_position.x > target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x, --y)
+			{
+				entity_sprite_section = pathing_left_section;
+				return;
+			}
 
-		if (tile_position.x == target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (== , --y)
-		{
-			entity_sprite_section = pathing_up_right_section;
-			return;
-		}
+			if (tile_position.x == target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (== , --y)
+			{
+				entity_sprite_section = pathing_up_right_section;
+				return;
+			}
 
-		if (tile_position.x > target->tile_position.x && tile_position.y == target->tile_position.y)					// next tile is (--x, ==)
-		{
-			entity_sprite_section = pathing_up_left_section;
-			return;
-		}
+			if (tile_position.x > target->tile_position.x && tile_position.y == target->tile_position.y)					// next tile is (--x, ==)
+			{
+				entity_sprite_section = pathing_up_left_section;
+				return;
+			}
 
-		if (tile_position.x < target->tile_position.x && tile_position.y == target->tile_position.y)					// next tile is (++x, ==)
-		{
-			entity_sprite_section = pathing_down_right_section;
-			return;
-		}
+			if (tile_position.x < target->tile_position.x && tile_position.y == target->tile_position.y)					// next tile is (++x, ==)
+			{
+				entity_sprite_section = pathing_down_right_section;
+				return;
+			}
 
-		if (tile_position.x == target->tile_position.x && tile_position.y < target->tile_position.y)					// next tile is (==, ++y)
-		{
-			entity_sprite_section = pathing_down_left_section;
-			return;
+			if (tile_position.x == target->tile_position.x && tile_position.y < target->tile_position.y)					// next tile is (==, ++y)
+			{
+				entity_sprite_section = pathing_down_left_section;
+				return;
+			}
 		}
 	}
 }
@@ -283,6 +320,11 @@ bool Infantry::TargetIsInRange()
 	}
 
 	return false;
+}
+
+void Infantry::PathToTarget()
+{
+
 }
 
 void Infantry::DealDamage()

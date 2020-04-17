@@ -101,7 +101,7 @@ bool PathFinding::IsOccupied(const iPoint& pos) const
 	return false;
 }
 
-bool PathFinding::IsOccupiedByEnemy(const iPoint& pos) const
+bool PathFinding::IsOccupiedByEnemyEntity(const iPoint& pos) const
 {
 	bool ret = false;
 	
@@ -120,7 +120,7 @@ bool PathFinding::IsOccupiedByEnemy(const iPoint& pos) const
 
 bool PathFinding::PathIsAccessible(const iPoint& origin, const iPoint& destination) const
 {
-	return (!IsOccupiedByEnemy(destination) && (IsNonWalkable(origin) || IsNonWalkable(destination) || IsOccupied(destination)));
+	return (!IsOccupiedByEnemyEntity(destination) && (IsNonWalkable(origin) || IsNonWalkable(destination) || IsOccupied(destination)));
 }
 
 bool PathFinding::ChangeWalkability(const iPoint& pos, Entity* entity, uchar walkability)

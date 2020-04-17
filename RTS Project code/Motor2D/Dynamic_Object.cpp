@@ -63,6 +63,36 @@ void Dynamic_Object::UpdateUnitSpriteSection()
 	return;
 }
 
+void Dynamic_Object::UpdateUnitOrientation()
+{
+	return;
+}
+
+void Dynamic_Object::SetEntityTargetByProximity(const iPoint& target_position)
+{
+	return;
+}
+
+void Dynamic_Object::GetShortestPathWithinAttackRange()
+{
+	return;
+}
+
+bool Dynamic_Object::TargetIsInRange()
+{
+	return true;
+}
+
+void Dynamic_Object::PathToTarget()
+{
+	return;
+}
+
+void Dynamic_Object::DealDamage()
+{
+	return;
+}
+
 bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 {
 	//New Path using the next tile if it's going to one
@@ -77,8 +107,15 @@ bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 	path_full = true;
 
 	//Change target and current tile to get next
-	target_tile = entity_path.back();
-	current_path_tile = entity_path.begin();
+	if (target == nullptr)
+	{
+		target_tile = entity_path.back();
+		current_path_tile = entity_path.begin();
+	}
+	else
+	{
+		GetShortestPathWithinAttackRange();
+	}
 
 	ChangeOccupiedTile(target_tile);
 
@@ -318,31 +355,6 @@ void Dynamic_Object::Move(float dt)
 		unit_state = ENTITY_STATE::IDLE;
 		path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;
 	}
-}
-
-void Dynamic_Object::SetEntityTargetByProximity(const iPoint& target_position)
-{	
-	return;
-}
-
-void Dynamic_Object::PathToEntityTarget()
-{
-	return;
-}
-
-void Dynamic_Object::UpdateUnitOrientation()
-{
-	return;
-}
-
-void Dynamic_Object::DealDamage()
-{
-	return;
-}
-
-bool Dynamic_Object::TargetIsInRange()
-{	
-	return true;
 }
 
 void Dynamic_Object::DataMapSafetyCheck()

@@ -44,7 +44,7 @@ public:
 	bool IsWalkable(const iPoint& pos) const;													// Utility: Returns true if the tile is walkable.
 	bool IsNonWalkable(const iPoint& pos) const;												// Utility: Returns true if the tile is non-walkable.
 	bool IsOccupied(const iPoint& pos) const;													// Utility: Returns true if the tile is occupied.
-	bool IsOccupiedByEnemy(const iPoint& pos) const;											// Utility: Returns true if the tile is occupied by an enemy entity.
+	bool IsOccupiedByEnemyEntity(const iPoint& pos) const;										// Utility: Returns true if the tile is occupied by an enemy entity.
 
 	bool PathIsAccessible(const iPoint& origin, const iPoint& destination) const;				// Utility: Returns true if the given position is accessible.
 

@@ -45,18 +45,17 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	DataMapSafetyCheck();
 
-	UpdateUnitSpriteSection();
+	if (path_full)
+	{
+		UpdateUnitSpriteSection();
+	}
+	else
+	{
+		UpdateUnitOrientation();
+	}
 
 	selection_collider.x = pixel_position.x;
 	selection_collider.y = pixel_position.y;
-
-	/*if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
-	{
-		if (target != nullptr)
-		{
-			ApplyDamage(target);
-		}
-	}*/
 
 	if (doLogic)
 	{
@@ -68,7 +67,14 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	if (target != nullptr)
 	{
-		DealDamage();
+		if (TargetIsInRange())
+		{
+			DealDamage();
+		}
+		else
+		{
+			PathToTarget();
+		}
 	}
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, &entity_sprite_section);
@@ -210,9 +216,117 @@ void Enemy::SetEntityTargetByProximity()
 	}
 }
 
+void Enemy::GetShortestPathWithinAttackRange()
+{
+	std::vector<iPoint> tmp;
+
+	for (int i = 0; i < entity_path.size(); ++i)
+	{
+		tmp.push_back(entity_path[i]);
+
+		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+		{
+			entity_path.clear();
+
+			entity_path = tmp;
+
+			target_tile = entity_path.back();
+			current_path_tile = entity_path.begin();
+
+			tmp.clear();
+
+			break;
+		}
+	}
+}
+
 void Enemy::UpdateUnitOrientation()
 {
+	if (target != nullptr)
+	{
+		if (tile_position.x > target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , --y)
+		{
+			entity_sprite_section = pathing_up_section;
+			return;
+		}
 
+		if (tile_position.x < target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x , ++y)
+		{
+			entity_sprite_section = pathing_down_section;
+			return;
+		}
+
+		if (tile_position.x < target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , ++y)
+		{
+			entity_sprite_section = pathing_rigth_section;
+			return;
+		}
+
+		if (tile_position.x > target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x, --y)
+		{
+			entity_sprite_section = pathing_left_section;
+			return;
+		}
+
+		if (tile_position.x == target->tile_position.x && tile_position.y > target->tile_position.y)				// next_tile is (== , --y)
+		{
+			entity_sprite_section = pathing_up_right_section;
+			return;
+		}
+
+		if (tile_position.x > target->tile_position.x && tile_position.y == target->tile_position.y)				// next tile is (--x, ==)
+		{
+			entity_sprite_section = pathing_up_left_section;
+			return;
+		}
+
+		if (tile_position.x < target->tile_position.x && tile_position.y == target->tile_position.y)				// next tile is (++x, ==)
+		{
+			entity_sprite_section = pathing_down_right_section;
+			return;
+		}
+
+		if (tile_position.x == target->tile_position.x && tile_position.y < target->tile_position.y)				// next tile is (==, ++y)
+		{
+			entity_sprite_section = pathing_down_left_section;
+			return;
+		}
+	}
+}
+
+bool Enemy::TargetIsInRange()
+{
+	if (target != nullptr)
+	{
+		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
+
+		if (distance <= attack_range)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
+void Enemy::PathToTarget()
+{
+	std::vector<Dynamic_Object*> tmp;
+	tmp.push_back(this);
+
+	/*std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if ((*item)->type == ENTITY_TYPE::ENEMY)
+		{
+			tmp.push_back((Dynamic_Object*)(*item));
+		}
+	}*/
+
+	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
+	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);							//Gives units targets around main target
+	//GiveNewTargetTile(target->tile_position);
 }
 
 void Enemy::DealDamage()

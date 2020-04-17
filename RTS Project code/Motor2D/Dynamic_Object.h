@@ -44,37 +44,39 @@ public:
 	virtual bool CleanUp();
 
 public:
-	virtual void InitUnitSpriteSections();								// Initializes all sprite sections of a given unit.
-	virtual void UpdateUnitSpriteSection();								// Updates all sprite sections of a given unit.
-	virtual bool TargetIsInRange();
+	virtual void InitUnitSpriteSections();										// Initializes all sprite sections of a given unit.
+	virtual void UpdateUnitSpriteSection();										// Updates all sprite sections of a given unit.
+	virtual void UpdateUnitOrientation();										// Method that wil orient the entity towards the target it's attacking. unit_state should be IDLE.
+	
+	virtual void SetEntityTargetByProximity(const iPoint& target_position);		// Method that will give an entity a combat target.
+	virtual void GetShortestPathWithinAttackRange();							// 
+	virtual bool TargetIsInRange();												// Method that will check whether or not a unit's target is within it's attack_range.
+	virtual void PathToTarget();
+	virtual void DealDamage();													// Method that will deal damage to the target entity. Damage ticks are limited by attack_speed.
+
 
 	bool GiveNewTargetTile(const iPoint& new_target_tile);
 	void ChangeOccupiedTile(const iPoint& new_occupied_tile);
+	
 	void HandleMovement(float dt);
 	void SetEntityState();
 	void Move(float dt);
 
-	void SetEntityTargetByProximity(const iPoint& target_position);		// Method that will give an entity a combat target.
-	void PathToEntityTarget();
-	void UpdateUnitOrientation();										// Method that wil orient the entity towards the target it's attacking.
-
-	void DealDamage();
-
-	void DataMapSafetyCheck();											// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
+	void DataMapSafetyCheck();													// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
 
 public:
 	bool							path_full;
 	bool							is_selectable;
 
 	float							speed;
-	float							speed_x_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
-	float							speed_y_factor;						// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
+	float							speed_x_factor;								// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
+	float							speed_y_factor;								// Factor applied to the speed so the speed is constant regardless of horizontal-vertical-diagonal movement.
 
-	int								attack_range;						// Attack range of a given unit. In Tiles.
-	float							attack_speed;						// Attacks per second that a given unit will perform.
+	int								attack_range;								// Attack range of a given unit. In Tiles.
+	float							attack_speed;								// Attacks per second that a given unit will perform.
 
-	float							accumulated_cooldown;				// Total amount of time that has been accumulated since the unit's attack entered cooldown.
-	bool							attack_in_cooldown;					// Will keep track whether or not the attack of a unit is in cooldown or not.
+	float							accumulated_cooldown;						// Total amount of time that has been accumulated since the unit's attack entered cooldown.
+	bool							attack_in_cooldown;							// Will keep track whether or not the attack of a unit is in cooldown or not.
 
 	Entity*							target;
 
