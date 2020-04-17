@@ -8,6 +8,7 @@
 #include "Map.h"
 #include "EntityManager.h"
 #include "UI_Healthbar.h"
+#include "SceneManager.h"
 
 #include "Entity.h"
 
@@ -85,6 +86,11 @@ void Entity::InitEntity()
 	return;
 }
 
+void Entity::AttachHealthbarToEntity()
+{
+	return;
+}
+
 void Entity::BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip)
 {
 	//App->render->Blit(entity_sprite, x, y, &entity_rect, flip);
@@ -94,16 +100,21 @@ void Entity::BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip)
 
 void Entity::ApplyDamage(Entity* target)
 {
-	target->current_health -= damage;
-
-	target->healthbar->UpdateHealthbarValue();
-
-	if (target->current_health < target->max_health)		//Debug, remove later.
+	if (!App->scene_manager->god_mode)
 	{
-		LOG("Target health: %d", current_health);
-	}
+		target->current_health -= attack_damage;
 
-	return;
+		target->healthbar->UpdateHealthbarValue();
+	}
+	else
+	{
+		if (App->entity_manager->IsEnemyEntity(target))
+		{
+			target->current_health -= attack_damage;
+
+			target->healthbar->UpdateHealthbarValue();
+		}
+	}
 }
 
 void Entity::OnCollision(Collider* C1, Collider* C2)

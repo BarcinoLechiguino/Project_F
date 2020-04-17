@@ -24,10 +24,14 @@ public:
 	bool CleanUp();
 	
 public:
+	void InitEntity();
+	
+	void AttachHealthbarToEntity();
+
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 	
-	void ApplyDamage(Entity* objective);
+	void DealDamage();
 
 	void OnCollision(Collider* C1, Collider* C2);
 

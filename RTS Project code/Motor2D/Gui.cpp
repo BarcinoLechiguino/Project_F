@@ -73,20 +73,20 @@ bool Gui::Start()
 // Update all guis
 bool Gui::PreUpdate()
 {
-	/*if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)						// Does not work, for now.
 	{
 		PassFocus();
-		App->audio->PlayFx(new_game_fx, 0);
-	}*/
+		//App->audio->PlayFx(new_game_fx, 0);
+	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)					// Does not work, for now.
 	{
 		if (focusedElement != nullptr && focusedElement->isInteractible)
 		{
 			focusedElement->ui_event = UI_EVENT::UNCLICKED;
-			OnEventCall(focusedElement, focusedElement->ui_event);
+			focusedElement->listener->OnEventCall(focusedElement, focusedElement->ui_event);
 		}
-	}
+	}*/
 	
 	/*if(App->scene->main_in_menu->isVisible)
 	{

@@ -26,6 +26,8 @@ public:
 public:
 	void InitEntity();
 	
+	void AttachHealthbarToEntity();
+
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 
@@ -36,6 +38,7 @@ public:
 
 public:
 	float	gathering_speed;
+	int		gathering_amount;
 };
 
 #endif // __ENEMY_H__

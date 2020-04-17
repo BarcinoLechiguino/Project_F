@@ -28,16 +28,20 @@ public:
 	// --- Camera and mouse methods.
 	void MouseCalculations();
 	void CameraController(float dt);
-	void MoveToOrder();
+	
+	void GiveOrder();
+	void OrderUnitsToMove();									// Will order all units in the units_selected vector to move towards a target tile (mouse tile position).
+	void OrderUnitsToAttack();									// Will give all units in the units_selected vector a target entity to attack.
+
 	void DrawCursor();
 
 	// --- Entity Selection Methods.
-	void DragSelection();								// Method that, by clicking and dragging the mouse, generates a selection rect that will select all units that are inside its bounds.
-	void UpdateSelectionRect();							// Method that will update the selection rect's size by taking into account the current mouse position.
+	void DragSelection();										// Method that generates a selection rect that will select all units that are inside its bounds.
+	void UpdateSelectionRect();									// Method that will update the selection rect's size by taking into account the current mouse position.
 	void SelectEntitiesInSelectionRect();
 
-	void SelectionShortcuts();							// Unit selection shortcuts. Currently Z (All), X (Gatherers), C (Infantries), V (Enemies).
-	void SelectOnClick();								// Method that will select whichever entity is at the mouse's position when it is right-clicked.
+	void SelectionShortcuts();									// Unit selection shortcuts. Currently Z (All), X (Gatherers), C (Infantries), V (Enemies).
+	void SelectOnClick();										// Method that will select whichever entity is at the mouse's position when it is right-clicked.
 
 	void SelectAllEntities();
 	void SelectGatherers();
@@ -47,11 +51,11 @@ public:
 	void SelectEntityAt(const iPoint& tile_position);
 
 	// --- Entity Deletion Methods.
-	void DeleteOnInput();
+	void DeleteOnInput();										// Method that will delete the entities depending on the input. Currently D (Delete entity at position) and F (Delete All).
 	void DeleteEntityAt(const iPoint& tile_position);
 
-	void DeleteEntityFromBuffers(Entity* entity_to_delete);
-	void ClearEntityBuffers();
+	void DeleteEntityFromBuffers(Entity* entity_to_delete);		// Method that will delete a given entity from units_selected, set to null building_selected set to null resource_selected.
+	void ClearEntityBuffers();									// Method that will clear all 3 entity buffers (units_selected, building_selected and resource_selected).
 
 	// --- Entity Spawn Methods.
 	void DebugUnitSpawn();
@@ -69,10 +73,10 @@ public:
 	iPoint			scene_camera_limit;
 	iPoint			mouse_position;
 	iPoint			mouse_map_position;
-	iPoint			mouse_tile;							// The tile where the mouse is currently on.
-	fPoint			camera_speed;						// Speed at which the camera will move when moving it with the mouse.
+	iPoint			mouse_tile;									// The tile where the mouse is currently on.
+	fPoint			camera_speed;								// Speed at which the camera will move when moving it with the mouse.
 	
-	iPoint			selection_start;					// Position where unit selection will start (Selection rect's anchor point).
+	iPoint			selection_start;							// Position where unit selection will start (Selection rect's anchor point).
 
 	SDL_Texture*	cursor_idle;
 	SDL_Texture*	cursor_hover_ally;

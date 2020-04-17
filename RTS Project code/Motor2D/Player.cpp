@@ -73,7 +73,7 @@ bool Player::Update(float dt)
 
 	SelectionShortcuts();
 
-	MoveToOrder();
+	GiveOrder();
 
 	DebugUnitSpawn();
 
@@ -145,29 +145,65 @@ void Player::CameraController(float dt)
 	}
 }
 
-void Player::MoveToOrder()//fix
+void Player::GiveOrder()//fix
 {
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (units_selected.size() != 0)																								// If there are Units being selected
-		{
-			if (App->pathfinding->IsWalkable(iPoint(mouse_tile.x, mouse_tile.y)))
+		{	
+			if (App->entity_manager->GetEntityAt(mouse_tile) == nullptr)
 			{
-				for (std::vector<Dynamic_Object*>::iterator item = units_selected.begin(); item != units_selected.end(); item++)
-				{
-					App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
-				}
-
-				App->pathfinding->FindNearbyWalkable(iPoint(mouse_tile.x, mouse_tile.y), units_selected);							//Gives units targets around main target
+				OrderUnitsToMove();
 			}
 			else
 			{
-				LOG("Tile cannot be targeted");
+				OrderUnitsToAttack();
 			}
 		}
 		else
 		{
 			LOG("There are no units being currently selected.");
+		}
+	}
+}
+
+void Player::OrderUnitsToMove()
+{
+	if (App->pathfinding->IsWalkable(mouse_tile))
+	{
+		std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+		
+		for (; item != units_selected.end(); item++)
+		{
+			App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
+		}
+
+		App->pathfinding->FindNearbyWalkable(mouse_tile, units_selected);							//Gives units targets around main target
+	}
+	else
+	{
+		LOG("Tile cannot be targeted");
+	}
+}
+
+void Player::OrderUnitsToAttack()
+{
+	Entity* target = App->entity_manager->GetEntityAt(mouse_tile);
+
+	if (target != nullptr)
+	{
+		if (App->entity_manager->IsEnemyEntity(target))
+		{
+			std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+
+			for (; item != units_selected.end(); ++item)
+			{
+				(*item)->target = target;
+			}
+		}
+		else
+		{
+			LOG("Target entity is not an enemy entity.");
 		}
 	}
 }
@@ -475,8 +511,8 @@ void Player::DeleteEntityFromBuffers(Entity* entity_to_delete)
 void Player::ClearEntityBuffers()
 {
 	units_selected.clear();
-
 	building_selected = nullptr;
+	resource_selected = nullptr;
 }
 
 // ------------------- ENTITY SPAWN METHODS -------------------
@@ -536,8 +572,8 @@ bool Player::CurrentlyInGameplayScene()
 
 bool Player::CheckSelectionRectBorders(Dynamic_Object* unit)
 {
-	return (unit->selection_collider.x + unit->selection_collider.w > selection_rect.x - App->render->camera.x) &&		// Unit is inside the left border.
-		(unit->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&					// Unit is inside the right border.
-		(unit->selection_collider.y + unit->selection_collider.h > selection_rect.y - App->render->camera.y) &&			// Unit is inside the top border.
-		(unit->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h);						// Unit is inside the bottom border.
+	return (unit->selection_collider.x + unit->selection_collider.w > selection_rect.x - App->render->camera.x) &&			// Unit is inside the left border.
+			(unit->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&					// Unit is inside the right border.
+			(unit->selection_collider.y + unit->selection_collider.h > selection_rect.y - App->render->camera.y) &&			// Unit is inside the top border.
+			(unit->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h);						// Unit is inside the bottom border.
 }

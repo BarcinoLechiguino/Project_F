@@ -19,30 +19,7 @@
 
 Gatherer::Gatherer(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)
 {
-	target = nullptr;
-
-	entity_sprite = App->entity_manager->GetGathererTexture();
-
-	InitUnitSpriteSections();
-
-	is_selectable = true;
-	path_full = false;
-
-	speed = 500.0f;
-
-	if (App->entity_manager->CheckTileAvailability(iPoint(x, y), this))
-	{
-		healthbar_position_offset.x = -6;
-		healthbar_position_offset.y = -6;
-
-		healthbar_background_rect = { 967, 1, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
-		healthbar_rect = { 967, 13, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
-
-		int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-		int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
-
-		healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
-	}
+	InitEntity();
 }
 
 Gatherer::~Gatherer()
@@ -68,15 +45,6 @@ bool Gatherer::PreUpdate()
 bool Gatherer::Update(float dt, bool doLogic)
 {
 	BROFILER_CATEGORY("Gatherer Update", Profiler::Color::Black);
-	
-	//MoveInput();
-
-	/*if ( path_full )
-	{
-		target_tile = entity_path.back();
-	}*/
-
-	//LOG("target_tile %d %d", target_tile.x, target_tile.y);
 
 	HandleMovement(dt);
 
@@ -84,12 +52,10 @@ bool Gatherer::Update(float dt, bool doLogic)
 
 	UpdateUnitSpriteSection();
 
-
 	selection_collider.x = pixel_position.x + 10;
 	selection_collider.y = pixel_position.y + 10;
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 14, &entity_sprite_section);
-
 
 	if (App->scene_manager->god_mode)
 	{
@@ -101,6 +67,11 @@ bool Gatherer::Update(float dt, bool doLogic)
 
 bool Gatherer::PostUpdate()
 {
+	if (current_health <= 0)
+	{
+		App->entity_manager->DeleteEntity(this);
+	}
+	
 	return true;
 }
 
@@ -119,6 +90,45 @@ bool Gatherer::CleanUp()
 	App->gui->DeleteGuiElement(healthbar);
 
 	return true;
+}
+
+void Gatherer::InitEntity()
+{
+	entity_sprite = App->entity_manager->GetGathererTexture();
+
+	InitUnitSpriteSections();
+
+	target = nullptr;
+
+	is_selectable = true;
+	path_full = false;
+
+	speed = 400.0f;
+
+	max_health = 150;
+	current_health = max_health;
+
+	gathering_speed = 1.0f;
+	gathering_amount = 5;
+
+	if (App->entity_manager->CheckTileAvailability(tile_position, this))
+	{
+		AttachHealthbarToEntity();
+	}
+}
+
+void Gatherer::AttachHealthbarToEntity()
+{
+	healthbar_position_offset.x = -6;										// Magic
+	healthbar_position_offset.y = -6;
+
+	healthbar_background_rect = { 967, 1, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
+	healthbar_rect = { 967, 13, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
+
+	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+
+	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }
 
 void Gatherer::InitUnitSpriteSections()
@@ -165,11 +175,6 @@ void Gatherer::UpdateUnitSpriteSection()
 		entity_sprite_section = pathing_down_left_section;
 		break;
 	}
-}
-
-void Gatherer::InitEntity()
-{
-
 }
 
 void Gatherer::OnCollision(Collider* C1, Collider* C2)
