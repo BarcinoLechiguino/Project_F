@@ -20,6 +20,8 @@ EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type, int level) : Static
 	barracks_rect_1 = { 0, 0, 106, 95 };
 	barracks_rect_2 = { 108, 0, 106, 95 };
 
+	barracks_rect = barracks_rect_1;
+
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
 
@@ -54,7 +56,7 @@ bool EnemyBarracks::PreUpdate()
 
 bool EnemyBarracks::Update(float dt, bool doLogic)
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y - 18, &barracks_rect_1);
+	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y - 18, &barracks_rect);
 
 	return true;
 }
@@ -76,7 +78,7 @@ bool EnemyBarracks::CleanUp()
 	return true;
 }
 
-void EnemyBarracks::GenerateUnit(ENTITY_TYPE type)
+void EnemyBarracks::GenerateUnit(ENTITY_TYPE type, int level)
 {
 	switch (type)
 	{
@@ -84,10 +86,26 @@ void EnemyBarracks::GenerateUnit(ENTITY_TYPE type)
 
 		break;
 	case ENTITY_TYPE::GATHERER:
-		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x, tile_position.y + 2);
+		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x, tile_position.y + 2, level);
 		break;
 	case ENTITY_TYPE::INFANTRY:
-		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x, tile_position.y + 2);
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x, tile_position.y + 2, level);
+		break;
+	}
+}
+
+void EnemyBarracks::LevelChanges()
+{
+	switch (level)
+	{
+	case 1:
+		barracks_rect = barracks_rect_1;
+		break;
+	case 2:
+		barracks_rect = barracks_rect_2;
+		break;
+	default:
+		barracks_rect = barracks_rect_2;
 		break;
 	}
 }

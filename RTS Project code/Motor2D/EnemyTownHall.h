@@ -21,10 +21,14 @@ public:
 
 public:
 
-	void GenerateUnit(ENTITY_TYPE type);
+	void GenerateUnit(ENTITY_TYPE type, int level);
+
+	void LevelChanges();
 
 public:
 	SDL_Rect	hall_rect;
+	SDL_Rect	hall_rect_1;
+	SDL_Rect	hall_rect_2;
 };
 
 #endif // !__ENEMY_TOWNHALL_H__
