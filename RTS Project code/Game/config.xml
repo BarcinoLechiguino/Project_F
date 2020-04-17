@@ -45,7 +45,7 @@
     <textures>
       <gatherer_texture path="textures/Spritesheets/Entities/gatherer2_lowres.png"/>
       <infantry_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
-      <enemy_texture path="textures/Spritesheets/Entities/Enemy_placeholder.png"/>
+      <enemy_texture path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
       <townhall_texture path="maps/hall.png"/>
       <enemy_townhall_texture path="maps/Enemy_Hall_Placeholder.png"/>
       <barracks_texture path="maps/Barracks.png"/>
