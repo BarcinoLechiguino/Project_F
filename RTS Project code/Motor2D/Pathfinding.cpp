@@ -140,7 +140,11 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 {
 	std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
 
-	(*units)->GiveNewTargetTile(pos);
+	if (!(*units)->GiveNewTargetTile(pos))
+	{
+		return;
+	}
+
 	units++;
 
 	PathList frontier;
@@ -384,6 +388,12 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		neighbours.list.clear();																//Clears the neighbours list so the elements are not accumulated from node to node (tile to tile).
 		//neighbours.list.shrink_to_fit();
+
+		if (closed.list.size() > 500)
+		{
+			ret = -2;
+			return ret;
+		}
 	}
 
 	return ret;

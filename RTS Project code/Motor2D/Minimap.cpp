@@ -8,6 +8,8 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
+#include "Brofiler/Brofiler.h"
+
 #include "Map.h"
 
 #include "p2Log.h"
@@ -40,7 +42,10 @@ bool Minimap::Start()
 	return true;
 }
 
-void Minimap::CreateTexture() {
+void Minimap::CreateTexture() 
+{
+
+	BROFILER_CATEGORY("Load MiniMap", Profiler::Color::Khaki);
 
 	// Initialize the variable "map_width" to obtain the width of the map in pixels
 	// Initialize the variable "minimap_scale" to get the relation between the map width and
@@ -96,7 +101,6 @@ bool Minimap::Update(float dt)
 		}
 	}
 
-
 	return true;
 }
 
@@ -133,13 +137,13 @@ bool Minimap::MinimapCoords(int& map_x, int& map_y)
 	int mouse_x, mouse_y;
 	App->input->GetMousePosition(mouse_x, mouse_y);
 
-	if (mouse_x >= 0 && mouse_x <= minimap_width	&&	mouse_y >= 0 && mouse_y <= minimap_height)
+	if (mouse_x >= minimap_position.x && mouse_x <= (minimap_width + minimap_position.x) &&	mouse_y >= minimap_position.y && mouse_y <= (minimap_height + minimap_position.y))
 	{
 		// Assign to "map_x" and "map_y" the mouse position respect the minimap, to the
 		// position that corresponds to the map
 		// Take into account that it is an isometric map
-		map_x = (mouse_x - minimap_width / 2) / minimap_scale;
-		map_y = mouse_y / minimap_scale;
+		map_x = (mouse_x - minimap_position.x - minimap_width/2) / minimap_scale;
+		map_y = (mouse_y - minimap_position.y) / minimap_scale;
 	}
 
 	else
@@ -171,7 +175,7 @@ void Minimap::DrawMinimap()
 
 					// Blit the minimap. You need to pass all the parameters until renderer included.
 					// As it is an isometric map, keep in mind that x == 0 is in the middle of the map.
-					App->render->Blit(tex, (pos.x + minimap_width / 2 ), pos.y, &r, false, 0.0f, minimap_scale, 0.0f, 0, 0,map_renderer);
+					App->render->Blit(tex, (pos.x + minimap_width / 2), pos.y, &r, false, 0.0f, minimap_scale, 0.0f, 0, 0,map_renderer);
 				}
 			}
 		}
@@ -181,7 +185,7 @@ void Minimap::DrawMinimap()
 void Minimap::DrawCamera()
 {
 
-	SDL_Rect map_camera = { ((-App->render->camera.x)) * minimap_scale + minimap_width / 2 + minimap_position.x, -App->render->camera.y * minimap_scale + minimap_position.y,
+	SDL_Rect map_camera = { ((-App->render->camera.x)) * minimap_scale + minimap_width * 0.5f + minimap_position.x, -App->render->camera.y * minimap_scale + minimap_position.y,
 							App->render->camera.w * minimap_scale, App->render->camera.h * minimap_scale };
 
 	App->render->DrawQuad(map_camera, 255, 255, 0, 255, false, false);
@@ -190,7 +194,7 @@ void Minimap::DrawCamera()
 void Minimap::MinimapBorders()
 {
 	App->render->DrawLine(x_offset + minimap_position.x, minimap_height / 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, y_offset + minimap_position.y, 255, 255, 255, 255, false);
-	App->render->DrawLine(minimap_width + x_offset + minimap_position.x, minimap_height/ 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, y_offset + minimap_position.y, 255, 255, 255, 255, false);
+	App->render->DrawLine(minimap_width + x_offset + minimap_position.x, minimap_height / 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, y_offset + minimap_position.y, 255, 255, 255, 255, false);
 	App->render->DrawLine(minimap_width + x_offset + minimap_position.x, minimap_height / 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, minimap_height + y_offset + minimap_position.y, 255, 255, 255, 255, false);
 	App->render->DrawLine(x_offset + minimap_position.x, minimap_height / 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, minimap_height + y_offset + minimap_position.y, 255, 255, 255, 255, false);
 }
@@ -227,7 +231,7 @@ void Minimap::DrawEntities()
 				App->render->DrawQuad({(pos_x + minimap_width / 2) + 1 + minimap_position.x, pos_y - y_offset + minimap_position.y +1, 2, 2 }, 153, 204, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ENEMY:
-				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 0, 204, 204, 255, true, false);
+				App->render->DrawQuad({ pos_x + minimap_width / 2+ minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 0, 204, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ROCK:
 				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 255, 255, 255, 255, true, false);

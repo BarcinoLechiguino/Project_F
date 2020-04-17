@@ -47,7 +47,7 @@ public:
 	virtual void InitUnitSpriteSections();								// Initializes all sprite sections of a given unit.
 	virtual void UpdateUnitSpriteSection();								// Updates all sprite sections of a given unit.
 
-	void GiveNewTargetTile(const iPoint& new_target_tile);
+	bool GiveNewTargetTile(const iPoint& new_target_tile);
 	void ChangeOccupiedTile(const iPoint& new_occupied_tile);
 	void HandleMovement(float dt);
 	void SetEntityState();
