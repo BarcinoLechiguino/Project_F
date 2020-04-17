@@ -14,7 +14,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
+Enemy::Enemy(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	entity_sprite = App->entity_manager->GetEnemyTexture();
 

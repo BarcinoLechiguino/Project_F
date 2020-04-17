@@ -7,7 +7,7 @@ class Barracks : public Static_Object
 {
 public:
 
-	Barracks(int x, int y, ENTITY_TYPE type);
+	Barracks(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 
@@ -21,9 +21,12 @@ public:
 
 public:
 
-	void GenerateUnit(ENTITY_TYPE type);
+	void GenerateUnit(ENTITY_TYPE type, int level);
+
+	void LevelChanges();
 
 public:
+	SDL_Rect	barracks_rect;
 	SDL_Rect	barracks_rect_1;
 	SDL_Rect	barracks_rect_2;
 };

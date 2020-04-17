@@ -9,7 +9,7 @@ class Enemy : public Dynamic_Object
 {
 public:
 
-	Enemy(int x, int y, ENTITY_TYPE type);
+	Enemy(int x, int y, ENTITY_TYPE type, int level);
 
 	~Enemy();
 

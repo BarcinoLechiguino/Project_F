@@ -7,7 +7,7 @@ class Static_Object : public Entity
 {
 public:
 
-	Static_Object(int x, int y, ENTITY_TYPE type);
+	Static_Object(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 
@@ -20,6 +20,8 @@ public:
 	virtual bool PostUpdate();
 
 	virtual bool CleanUp();
+
+	//virtual void LevelChanges();
 
 public:
 	int tile_width;

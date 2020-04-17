@@ -6,7 +6,7 @@
 #include "Static_Object.h"
 
 
-Static_Object::Static_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
+Static_Object::Static_Object(int x, int y, ENTITY_TYPE type, int level) : Entity(x, y, type, level)
 {
 	
 }
@@ -53,3 +53,4 @@ bool Static_Object::CleanUp()
 {
 	return true;
 }
+

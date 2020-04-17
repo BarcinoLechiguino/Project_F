@@ -7,7 +7,7 @@ class Rock : public Static_Object
 {
 public:
 
-	Rock(int x, int y, ENTITY_TYPE type);
+	Rock(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 

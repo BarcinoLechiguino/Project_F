@@ -46,6 +46,8 @@ public:
 
 	void DebugUnitSpawn();
 
+	void DebugUnitUpgrade();
+
 public:
 
 	iPoint			scene_camera_limit;

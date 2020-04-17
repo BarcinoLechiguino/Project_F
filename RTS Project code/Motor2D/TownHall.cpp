@@ -13,7 +13,7 @@
 #include "TownHall.h"
 
 
-TownHall::TownHall(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
+TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
 {
 	//entity_sprite = App->tex->Load("maps/town_hall_holder.png");
 	entity_sprite = App->entity_manager->GetTownHallTexture();
@@ -76,7 +76,7 @@ bool TownHall::CleanUp()
 	return true;
 }
 
-void TownHall::GenerateUnit(ENTITY_TYPE type)
+void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 {
 	switch (type)
 	{
@@ -84,10 +84,10 @@ void TownHall::GenerateUnit(ENTITY_TYPE type)
 
 		break;
 	case ENTITY_TYPE::GATHERER:
-		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x + 1, tile_position.y + 3);
+		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x + 1, tile_position.y + 3, level);
 		break;
 	case ENTITY_TYPE::INFANTRY:
-		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3);
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3, level);
 		break;
 	}
 }

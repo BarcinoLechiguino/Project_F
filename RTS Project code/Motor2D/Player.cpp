@@ -422,12 +422,33 @@ void Player::DebugUnitSpawn()
 			if (building_selected->type == ENTITY_TYPE::TOWNHALL)
 			{
 				TownHall* townhall = (TownHall*)building_selected;
-				townhall->GenerateUnit(ENTITY_TYPE::GATHERER);
+				townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->level);
 			}
 			if (building_selected->type == ENTITY_TYPE::BARRACKS)
 			{
 				Barracks* barrack = (Barracks*)building_selected;
-				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY);
+				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->level);
+			}
+		}
+	}
+}
+
+void Player::DebugUnitUpgrade()
+{
+	if (building_selected != nullptr)
+	{
+		if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+		{
+			if (building_selected->type == ENTITY_TYPE::TOWNHALL)
+			{
+				TownHall* townhall = (TownHall*)building_selected;
+				townhall->level++;
+			}
+			if (building_selected->type == ENTITY_TYPE::BARRACKS)
+			{
+				Barracks* barrack = (Barracks*)building_selected;
+				barrack->level++;
+				barrack->LevelChanges();
 			}
 		}
 	}

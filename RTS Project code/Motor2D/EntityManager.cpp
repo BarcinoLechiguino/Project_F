@@ -141,7 +141,8 @@ void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision 
 }
 
 // -------------------------------------- ENTITY MANAGING METHODS --------------------------------------
-Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
+
+Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 {
 	//static_assert?
 
@@ -149,32 +150,32 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y)
 
 	switch (type)
 	{
-		case ENTITY_TYPE::GATHERER:
-			entity = new Gatherer(x, y, type);		
+	case ENTITY_TYPE::GATHERER:
+		entity = new Gatherer(x, y, type, level);
 		break;
 
-		case ENTITY_TYPE::INFANTRY:
-			entity = new Infantry(x, y, type);
+	case ENTITY_TYPE::INFANTRY:
+		entity = new Infantry(x, y, type, level);
 		break;
 
-		case ENTITY_TYPE::ENEMY:
-			entity = new Enemy(x, y, type);
+	case ENTITY_TYPE::ENEMY:
+		entity = new Enemy(x, y, type, level);
 		break;
 
-		case ENTITY_TYPE::TOWNHALL:
-			entity = new TownHall(x, y, type);
+	case ENTITY_TYPE::TOWNHALL:
+		entity = new TownHall(x, y, type, level);
 		break;
 
-		case ENTITY_TYPE::BARRACKS:
-			entity = new Barracks(x, y, type);
+	case ENTITY_TYPE::BARRACKS:
+		entity = new Barracks(x, y, type, level);
 		break;
 
-		case ENTITY_TYPE::ROCK:
-			entity = new Rock(x, y, type);
+	case ENTITY_TYPE::ROCK:
+		entity = new Rock(x, y, type, level);
 		break;
 	}
 
-	if (entity != nullptr)									
+	if (entity != nullptr)
 	{
 		if (CheckTileAvailability(iPoint(x, y), entity))
 		{
