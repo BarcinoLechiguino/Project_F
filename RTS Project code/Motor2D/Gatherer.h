@@ -7,7 +7,7 @@ class Gatherer : public Dynamic_Object
 {
 public:
 
-	Gatherer(int x, int y, ENTITY_TYPE type);
+	Gatherer(int x, int y, ENTITY_TYPE type, int level);
 
 	~Gatherer();
 

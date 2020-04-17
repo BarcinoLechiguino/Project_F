@@ -7,7 +7,7 @@
 #include "Dynamic_Object.h"
 
 
-Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type) : Entity(x, y, type)
+Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Entity(x, y, type, level)
 {
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;

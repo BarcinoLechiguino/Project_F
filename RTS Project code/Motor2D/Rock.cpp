@@ -13,7 +13,7 @@
 #include "Rock.h"
 
 
-Rock::Rock(int x, int y, ENTITY_TYPE type) : Static_Object(x,y,type)
+Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
 {
 	entity_sprite = App->entity_manager->GetRockTexture();
 	

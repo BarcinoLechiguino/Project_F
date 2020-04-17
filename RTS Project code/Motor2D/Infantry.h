@@ -7,7 +7,7 @@ class Infantry : public Dynamic_Object
 {
 public:
 
-	Infantry(int x, int y, ENTITY_TYPE type);
+	Infantry(int x, int y, ENTITY_TYPE type, int level);
 
 	~Infantry();
 

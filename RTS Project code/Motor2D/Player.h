@@ -60,9 +60,13 @@ public:
 	// --- Entity Spawn Methods.
 	void DebugUnitSpawn();
 
+
+	void DebugUnitUpgrade();
+
 	// --- Conditional Checks
 	bool CurrentlyInGameplayScene();
 	bool CheckSelectionRectBorders(Dynamic_Object* unit);
+
 
 public:
 

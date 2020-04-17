@@ -13,10 +13,11 @@
 #include "Barracks.h"
 
 
-Barracks::Barracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
+Barracks::Barracks(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
 {
 	entity_sprite = App->entity_manager->GetBarracksTexture();
 
+	barracks_rect = { 0,0,106,95 };
 	barracks_rect_1 = {0,0,106,95};
 	barracks_rect_2 = {108,0,106,95};
 
@@ -25,6 +26,8 @@ Barracks::Barracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
 
 	tiles_occupied_x = 2;
 	tiles_occupied_y = 2;
+
+
 
 	if (App->entity_manager->CheckTileAvailability(iPoint(x, y), this))
 	{
@@ -54,7 +57,7 @@ bool Barracks::PreUpdate()
 
 bool Barracks::Update(float dt, bool doLogic)
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y -18, &barracks_rect_1);
+	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y -18, &barracks_rect);
 
 	return true;
 }
@@ -76,7 +79,8 @@ bool Barracks::CleanUp()
 	return true;
 }
 
-void Barracks::GenerateUnit(ENTITY_TYPE type)
+
+void Barracks::GenerateUnit(ENTITY_TYPE type, int level)
 {
 	switch (type)
 	{
@@ -84,10 +88,26 @@ void Barracks::GenerateUnit(ENTITY_TYPE type)
 		
 		break;
 	case ENTITY_TYPE::GATHERER:
-		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x, tile_position.y + 2);
+		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x, tile_position.y + 2, level);
 		break;
 	case ENTITY_TYPE::INFANTRY:
-		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x, tile_position.y + 2);
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x, tile_position.y + 2, level);
+		break;
+	}
+}
+
+void Barracks::LevelChanges()
+{
+	switch (level)
+	{
+	case 1:
+		barracks_rect = barracks_rect_1;
+		break;
+	case 2:
+		barracks_rect = barracks_rect_2;
+		break;
+	default:
+		barracks_rect = barracks_rect_1;
 		break;
 	}
 }

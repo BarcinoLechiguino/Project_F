@@ -36,7 +36,7 @@ class Entity
 {
 public:
 	Entity();
-	Entity(int x, int y, ENTITY_TYPE type);	// here we will set initial position
+	Entity(int x, int y, ENTITY_TYPE type, int level);	// here we will set initial position
 
 	//Must be virtual so when an entity is executed the compiler goes to the entity's methods instead of these
 	virtual bool Awake(pugi::xml_node&);

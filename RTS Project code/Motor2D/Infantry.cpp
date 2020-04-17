@@ -17,7 +17,7 @@
 #include "Infantry.h"
 
 
-Infantry::Infantry(int x, int y, ENTITY_TYPE type) : Dynamic_Object(x, y, type)  //Constructor. Called at the first frame.
+Infantry::Infantry(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	InitEntity();
 };

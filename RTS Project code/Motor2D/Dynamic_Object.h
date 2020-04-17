@@ -29,7 +29,7 @@ class Dynamic_Object : public Entity
 {
 public:
 
-	Dynamic_Object(int x, int y, ENTITY_TYPE type);
+	Dynamic_Object(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 

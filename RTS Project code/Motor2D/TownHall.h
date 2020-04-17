@@ -7,7 +7,7 @@ class TownHall : public Static_Object
 {
 public:
 
-	TownHall(int x, int y, ENTITY_TYPE type);
+	TownHall(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 
@@ -21,7 +21,7 @@ public:
 
 public:
 
-	void GenerateUnit(ENTITY_TYPE type);
+	void GenerateUnit(ENTITY_TYPE type, int level);
 
 public:
 	SDL_Rect	hall_rect;
