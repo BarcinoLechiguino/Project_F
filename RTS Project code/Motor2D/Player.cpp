@@ -553,7 +553,7 @@ void Player::DebugUnitSpawn()
 
 			case ENTITY_TYPE::ENEMY_BARRACKS:
 				enemy_barrack = (EnemyBarracks*)building_selected;
-				enemy_barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, enemy_barrack->level);
+				enemy_barrack->GenerateUnit(ENTITY_TYPE::ENEMY, enemy_barrack->level);
 				break;
 			}
 		}
