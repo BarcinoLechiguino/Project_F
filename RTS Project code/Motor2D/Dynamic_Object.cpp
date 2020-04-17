@@ -199,45 +199,53 @@ void Dynamic_Object::SetEntityState()
 		}
 	}
 
-	/*if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)
-	{
-		unit_state = ENTITY_STATE::PATHING_UP;
-	}
+	//if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)						// next_tile is (--x , --y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_UP;
+	//	return;
+	//}
 
-	if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)
-	{
-		unit_state = ENTITY_STATE::PATHING_DOWN;
-	}
+	//if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)						// next_tile is (++x , ++y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_DOWN;
+	//	return;
+	//}
 
-	if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)
-	{
-		unit_state = ENTITY_STATE::PATHING_RIGHT;
-	}
+	//if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)						// next_tile is (--x , ++y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_RIGHT;
+	//	return;
+	//}
 
-	if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)
-	{
-		unit_state = ENTITY_STATE::PATHING_LEFT;
-	}
+	//if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)						// next_tile is (++x, --y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_LEFT;
+	//	return;
+	//}
 
-	if (tile_position.x == next_tile.x && tile_position.y < next_tile.y)
-	{
-		unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
-	}
+	//if (tile_position.x == next_tile.x && tile_position.y > next_tile.y)					// next_tile is (== , --y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
+	//	return;
+	//}
 
-	if (tile_position.x < next_tile.x && tile_position.y == next_tile.y)
-	{
-		unit_state = ENTITY_STATE::PATHING_UP_LEFT;
-	}
+	//if (tile_position.x > next_tile.x && tile_position.y == next_tile.y)					// next tile is (--x, ==)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_UP_LEFT;
+	//	return;
+	//}
 
-	if (tile_position.x > next_tile.x && tile_position.y == next_tile.y)
-	{
-		unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
-	}
+	//if (tile_position.x < next_tile.x && tile_position.y == next_tile.y)					// next tile is (++x, ==)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
+	//	return;
+	//}
 
-	if (tile_position.x == next_tile.x && tile_position.y > next_tile.y)
-	{
-		unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
-	}*/
+	//if (tile_position.x == next_tile.x && tile_position.y < next_tile.y)					// next tile is (==, ++y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
+	//	return;
+	//}
 }
 
 void Dynamic_Object::Move(float dt)

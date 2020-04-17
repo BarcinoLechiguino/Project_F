@@ -177,11 +177,12 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		entity = new TownHall(x, y, type, level);
 		break;
 
-	case ENTITY_TYPE::BARRACKS:
-		entity = new Barracks(x, y, type, level);
-
 	case ENTITY_TYPE::ENEMY_TOWNHALL:
 		entity = new EnemyTownHall(x, y, type, level);
+		break;
+
+	case ENTITY_TYPE::BARRACKS:
+		entity = new Barracks(x, y, type, level);
 		break;
 
 	case ENTITY_TYPE::ENEMY_BARRACKS:
@@ -253,14 +254,14 @@ void EntityManager::LoadEntityTextures()
 
 	pugi::xml_node entity_textures = config_file.child("config").child("entities").child("textures");
 
-	gatherer_tex = App->tex->Load(entity_textures.child("gatherer_texture").attribute("path").as_string());
-	infantry_tex = App->tex->Load(entity_textures.child("infantry_texture").attribute("path").as_string());
-	enemy_tex = App->tex->Load(entity_textures.child("enemy_texture").attribute("path").as_string());
-	townhall_tex = App->tex->Load(entity_textures.child("townhall_texture").attribute("path").as_string());
-	enemy_townhall_tex = App->tex->Load(entity_textures.child("enemy_townhall_texture").attribute("path").as_string());
-	barracks_tex = App->tex->Load(entity_textures.child("barracks_texture").attribute("path").as_string());
-	enemy_barracks_tex = App->tex->Load(entity_textures.child("enemy_barracks_texture").attribute("path").as_string());
-	rock_tex = App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
+	gatherer_tex		= App->tex->Load(entity_textures.child("gatherer_texture").attribute("path").as_string());
+	infantry_tex		= App->tex->Load(entity_textures.child("infantry_texture").attribute("path").as_string());
+	enemy_tex			= App->tex->Load(entity_textures.child("enemy_texture").attribute("path").as_string());
+	townhall_tex		= App->tex->Load(entity_textures.child("townhall_texture").attribute("path").as_string());
+	enemy_townhall_tex	= App->tex->Load(entity_textures.child("enemy_townhall_texture").attribute("path").as_string());
+	barracks_tex		= App->tex->Load(entity_textures.child("barracks_texture").attribute("path").as_string());
+	enemy_barracks_tex	= App->tex->Load(entity_textures.child("enemy_barracks_texture").attribute("path").as_string());
+	rock_tex			= App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
 }
 
 void EntityManager::UnLoadEntityTextures()
@@ -274,14 +275,14 @@ void EntityManager::UnLoadEntityTextures()
 	App->tex->UnLoad(enemy_barracks_tex);
 	App->tex->UnLoad(rock_tex);
 
-	gatherer_tex = nullptr;
-	infantry_tex = nullptr;
-	enemy_tex = nullptr;
-	townhall_tex = nullptr;
-	enemy_townhall_tex = nullptr;
-	barracks_tex = nullptr;
-	enemy_barracks_tex = nullptr;
-	rock_tex = nullptr;
+	gatherer_tex		= nullptr;
+	infantry_tex		= nullptr;
+	enemy_tex			= nullptr;
+	townhall_tex		= nullptr;
+	enemy_townhall_tex	= nullptr;
+	barracks_tex		= nullptr;
+	enemy_barracks_tex	= nullptr;
+	rock_tex			= nullptr;
 }
 
 SDL_Texture* EntityManager::GetGathererTexture() const

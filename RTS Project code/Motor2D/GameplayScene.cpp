@@ -459,6 +459,7 @@ void GameplayScene::UnitDebugKeys()
 				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
 			}
 
+
 			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 			{
 				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
