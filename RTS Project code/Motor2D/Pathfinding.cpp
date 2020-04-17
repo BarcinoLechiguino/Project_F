@@ -144,6 +144,7 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 	{
 		return;
 	}
+
 	units++;
 
 	PathList frontier;
@@ -390,7 +391,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 
 		if (closed.list.size() > 500)
 		{
-			ret = -1;
+			ret = -2;
 			return ret;
 		}
 	}

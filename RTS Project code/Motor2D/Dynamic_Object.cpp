@@ -66,7 +66,7 @@ void Dynamic_Object::UpdateUnitSpriteSection()
 bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 {
 	//New Path using the next tile if it's going to one
-	if (App->pathfinding->CreatePath(next_tile, new_target_tile) == -1)
+	if (App->pathfinding->CreatePath(next_tile, new_target_tile) == -2)
 	{
 		return false;
 	}
