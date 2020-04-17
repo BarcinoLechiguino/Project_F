@@ -30,7 +30,7 @@ jobs:
 
   # Setup MSBuild.exe path if required
     - name: Setup Environment
-    - uses: warrenbuckley/Setup-MSBuild@v1
+      uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Build Project F
       run: msbuild Game_Solution.sln
