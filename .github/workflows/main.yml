@@ -9,12 +9,10 @@ on:
     branches: [ master ]
     paths-ignore: 
       - 'Docs/**'
-      - 'Wiki/**'
   pull_request:
     branches: [ master ]
     paths-ignore: 
       - 'Docs/**'
-      - 'Wiki/**'
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -33,4 +31,4 @@ jobs:
       uses: warrenbuckley/Setup-MSBuild@v1
 
     - name: Build Project F
-      run: msbuild Game_Solution.sln
+      run: msbuild RTS-Solution.sln
