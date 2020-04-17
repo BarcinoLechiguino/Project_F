@@ -63,26 +63,10 @@ void Dynamic_Object::UpdateUnitSpriteSection()
 	return;
 }
 
-void Dynamic_Object::DataMapSafetyCheck()
-{
-	if (!path_full)
-	{
-		if (App->pathfinding->GetTileAt(tile_position) != OCCUPIED)
-		{
-			App->pathfinding->ChangeWalkability(tile_position, this, OCCUPIED);
-		}
-
-		if (App->entity_manager->GetEntityAt(tile_position) != this)
-		{
-			App->entity_manager->ChangeEntityMap(tile_position, this);
-		}
-	}
-}
-
-void Dynamic_Object::GiveNewTarget(iPoint new_target)
+void Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 {
 	//New Path using the next tile if it's going to one
-	App->pathfinding->CreatePath(next_tile, new_target);
+	App->pathfinding->CreatePath(next_tile, new_target_tile);
 
 	entity_path.clear();
 	entity_path = App->pathfinding->GetLastPath();
@@ -105,7 +89,7 @@ void Dynamic_Object::GiveNewTarget(iPoint new_target)
 	//LOG("target_tile %d %d", entity_path.back().x, entity_path.back().y);
 }
 
-void Dynamic_Object::ChangeOccupiedTile(iPoint new_occupied_tile)
+void Dynamic_Object::ChangeOccupiedTile(const iPoint& new_occupied_tile)
 {
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
@@ -325,5 +309,31 @@ void Dynamic_Object::Move(float dt)
 
 		unit_state = ENTITY_STATE::IDLE;
 		path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;
+	}
+}
+
+void Dynamic_Object::SetEntityTarget(const iPoint& target_position)
+{
+	return;
+}
+
+void Dynamic_Object::PathToEntityTarget()
+{
+	return;
+}
+
+void Dynamic_Object::DataMapSafetyCheck()
+{
+	if (!path_full)
+	{
+		if (App->pathfinding->GetTileAt(tile_position) != OCCUPIED)
+		{
+			App->pathfinding->ChangeWalkability(tile_position, this, OCCUPIED);
+		}
+
+		if (App->entity_manager->GetEntityAt(tile_position) != this)
+		{
+			App->entity_manager->ChangeEntityMap(tile_position, this);
+		}
 	}
 }

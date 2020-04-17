@@ -12,7 +12,7 @@
 
 Audio::Audio() : Module()
 {
-	music = NULL;
+	//music = NULL;
 	name = ("audio");
 }
 
@@ -41,6 +41,7 @@ bool Audio::Awake(pugi::xml_node& config)
 
 	volume = config.child("volume").attribute("value").as_int(96);
 	volume_fx = config.child("volume_fx").attribute("value").as_int(26);
+	scale = config.child("distance").attribute("scale").as_int();	// Load the distance scale if you want to change it
 
 	if((init & flags) != flags)
 	{
@@ -57,7 +58,9 @@ bool Audio::Awake(pugi::xml_node& config)
 		ret = true;
 	}
 
-	music_folder = (config.child("folder").child_value());
+	//music_folder = (config.child("folder").child_value());
+
+	Mix_AllocateChannels(360);
 
 	return ret;
 }
@@ -94,19 +97,20 @@ bool Audio::CleanUp()
 		return true;
 
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
-
-	if(music != NULL)
+	std::list<Mix_Music*>::iterator stl_item = music.begin(); //Release music list
+	for (; stl_item != music.end(); stl_item++)
 	{
-		Mix_FreeMusic(music);
+		Mix_FreeMusic(*stl_item);
 	}
 
-	for (std::list<Mix_Chunk*>::iterator chunk_item = fx.begin(); chunk_item != fx.end(); ++chunk_item)
+	std::list<Mix_Chunk*>::iterator stl_item2 = fx.begin(); //Release fx list
+	for (; stl_item2 != fx.end(); stl_item2++)
 	{
-		Mix_FreeChunk((*chunk_item));
+		Mix_FreeChunk(*stl_item2);
 	}
 
 	fx.clear();
-
+	music.clear();
 	Mix_CloseAudio();
 	Mix_Quit();
 	SDL_QuitSubSystem(SDL_INIT_AUDIO);
@@ -114,58 +118,84 @@ bool Audio::CleanUp()
 	return true;
 }
 
-// Play a music file
-bool Audio::PlayMusic(std::string path, float fade_time)
+
+unsigned int Audio::LoadMusic(std::string path) // Loads the audio on the Mix_Music* 
 {
-	bool ret = true;
-	std::string tmp = music_folder + path;
-	if(!is_active)
-		return false;
+	unsigned int ret = 0;
 
-	if(music != NULL)
+	if (!is_active)
+		return 0;
+
+	Mix_Music* music_chunk = Mix_LoadMUS(path.c_str());
+
+	if (music_chunk == NULL)
 	{
-		if(fade_time > 0.0f)
-		{
-			Mix_FadeOutMusic(int(fade_time * 1000.0f));
-		}
-		else
-		{
-			Mix_HaltMusic();
-		}
-
-		// this call blocks until fade out is done
-		Mix_FreeMusic(music);
-	}
-
-	music = Mix_LoadMUS(tmp.c_str());
-
-	if(music == NULL)
-	{
-		LOG("Cannot load music %s. Mix_GetError(): %s\n", path, Mix_GetError());
-		ret = false;
+		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
 	}
 	else
 	{
-		if(fade_time > 0.0f)
+		//TODO 5.1 Add the previous audio into the list
+		music.push_back(music_chunk);
+		ret = music.size();
+	}
+
+	return ret;
+}
+
+// Play a music file
+bool Audio::PlayMusic(uint id, float fade_time)
+{
+	//std::string tmp = music_folder + path;
+
+	bool ret = true;
+
+	if (!is_active)
+		return false;
+
+	if (id > 0 && id <= music.size())
+	{
+		//TODO 6 Iterate all the music audios stored in the list
+		std::list <Mix_Music*>::const_iterator it;
+		it = std::next(music.begin(), id - 1);
+
+		//TODO 7 Given the fade_time implement a fade in and fade out using Mix_Fade(Out/In)Music
+		if (*it != NULL)
 		{
-			if(Mix_FadeInMusic(music, -1, (int) (fade_time * 1000.0f)) < 0)
+			if (fade_time > 0.0f)
 			{
-				LOG("Cannot fade in music %s. Mix_GetError(): %s", path, Mix_GetError());
-				ret = false;
+				Mix_FadeOutMusic(int(fade_time * 1000.0f));
+			}
+			else
+			{
+				Mix_HaltMusic();
 			}
 		}
-		else
+		if (fade_time > 0.0f)
 		{
-			if(Mix_PlayMusic(music, -1) < 0)
+			Mix_FadeInMusic(*it, -1, (int)(fade_time * 1000.0f));
+		}
+
+	}
+
+	return ret;
+}
+
+void Audio::PauseMusic(float fade_time)
+{
+	if (is_active)
+	{
+		if (Mix_PlayingMusic() == 1)	// Sees if there is music playing
+		{
+			if (Mix_PausedMusic() == 1)	// If there is resume it
 			{
-				LOG("Cannot play in music %s. Mix_GetError(): %s", path, Mix_GetError());
-				ret = false;
+				Mix_ResumeMusic();
+			}
+			else
+			{
+				Mix_PauseMusic();
 			}
 		}
 	}
-
-	LOG("Successfully playing %s", path);
-	return ret;
 }
 
 // Load WAV
@@ -173,7 +203,7 @@ unsigned int Audio::LoadFx(std::string path)
 {
 	unsigned int ret = 0;
 
-	std::string tmp = sfx_folder + path;
+	//std::string tmp = sfx_folder + path;
 
 	if(!is_active)
 		return 0;
@@ -212,6 +242,73 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 	}
 
 	return ret;
+}
+
+bool Audio::PlaySpatialFx(uint id, uint channel_angle, uint distance, int repeat)
+{
+	bool ret = false;
+
+	if (!is_active)
+		return false;
+
+	Mix_Chunk* chunk = NULL;
+
+	if (id > 0 && id <= fx.size())
+	{
+		std::list <Mix_Chunk*>::const_iterator it;
+		it = std::next(fx.begin(), id - 1);
+		chunk = *it;
+	}
+	if (chunk != nullptr)
+	{
+		while (Mix_Playing(channel_angle) == 1)	// If the channel is already playing, choose the next channel that we already allocated with Mix_AllocateChannels()
+		{
+			channel_angle++;
+
+			if (channel_angle > 360)
+				channel_angle = 0;
+		}
+
+		// TODO 2 Set a channel in a position given a channel, an angle and a distance, There is SDL_Mixer function already explained 
+		// Play the channel that we already placed with Mix_SetPosition()
+		Mix_SetPosition(channel_angle, channel_angle, distance);	// Set a channel in a position given a channel, an angle and a distance
+
+		Mix_PlayChannel(channel_angle, chunk, repeat);				// Play the channel that we already placed with Mix_SetPosition()
+
+		ret = true;
+	}
+
+	return ret;
+}
+
+uint Audio::GetAngle(iPoint player_pos, iPoint enemy_pos)
+{
+	iPoint vector_pos = player_pos - enemy_pos;				// The vector of the player and enemy positions
+	iPoint vector_axis = { 0, 1 };							// We use the this vector because we want the angle that is formed with the Y axis
+
+	double dot_x = vector_axis.y * vector_pos.y;			// Product of the two vectors to get the X position
+	double det_y = -(vector_axis.y * vector_pos.x);			// Determinant of the two vectors to get the Y position
+
+	float f_angle = (atan2(det_y, dot_x)) * RAD_TO_DEG;		// Arc tangent of the previous X and Y, multiply the result with RAD_TO_DEG to get the result in degrees instead of radiants
+
+	if (f_angle < 0)										// If the angle is negative we add +360 because in PlaySpatialFx() we need the channel to be positive
+		f_angle += 360;
+
+	return uint(f_angle);
+}
+
+uint Audio::GetDistance(iPoint player_pos, iPoint enemy_pos)
+{
+
+	// TODO 3 Calculate the distance between the player and the enemy passed by reference using pythagoras
+	uint distance = sqrt(pow(player_pos.x - enemy_pos.x, 2) + pow(player_pos.y - enemy_pos.y, 2));	// Calculate the distance with Pythagoras
+
+	uint distance_scaled = (distance * MAX_DISTANCE) / scale;										// We can scale the maximum hear distance by modifying scale in the config XML
+
+	if (distance_scaled > MAX_DISTANCE)																// If the distance is greater than the MAX_DISTANCE(255), keep it in 255
+		distance_scaled = MAX_DISTANCE;
+
+	return distance_scaled;
 }
 
 bool Audio::Load(pugi::xml_node & data)

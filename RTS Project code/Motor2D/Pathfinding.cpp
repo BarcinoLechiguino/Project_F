@@ -110,13 +110,13 @@ bool PathFinding::ChangeWalkability(const iPoint& pos, Entity* entity, uchar wal
 			map[(pos.y * App->map->data.width) + pos.x] = walkability;
 		}
 
-		if (App->entity_manager->IsBuilding(entity))
+		if (App->entity_manager->IsBuilding(entity) || App->entity_manager->IsResource(entity))
 		{
-			Static_Object* building = (Static_Object*)entity;
+			Static_Object* item = (Static_Object*)entity;
 
-			for (int y = 0; y != building->tiles_occupied_y; ++y)
+			for (int y = 0; y != item->tiles_occupied_y; ++y)
 			{
-				for (int x = 0; x != building->tiles_occupied_x; ++x)
+				for (int x = 0; x != item->tiles_occupied_x; ++x)
 				{
 					int pos_y = pos.y + y;
 					int pos_x = pos.x + x;
@@ -140,7 +140,7 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 {
 	std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
 
-	(*units)->GiveNewTarget(pos);
+	(*units)->GiveNewTargetTile(pos);
 	units++;
 
 	PathList frontier;
@@ -167,7 +167,7 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 			{
 				if (App->pathfinding->IsWalkable(neighbour.pos))
 				{
-					(*units)->GiveNewTarget(neighbour.pos);
+					(*units)->GiveNewTargetTile(neighbour.pos);
 
 					units++;
 				}

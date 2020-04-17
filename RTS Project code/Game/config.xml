@@ -24,7 +24,8 @@
   <audio>
       <folder>audio/music/</folder>
       <volume value = "70"/>
-    <volume_fx value="26"/>
+      <volume_fx value="26"/>
+      <distance scale="425"/>
   </audio>
 
   <file_system>
@@ -46,7 +47,9 @@
       <infantry_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
       <enemy_texture path="textures/Spritesheets/Entities/Enemy_placeholder.png"/>
       <townhall_texture path="maps/hall.png"/>
+      <enemy_townhall_texture path="maps/Enemy_Hall_Placeholder.png"/>
       <barracks_texture path="maps/Barracks.png"/>
+      <enemy_barracks_texture path="maps/Enemy_Barracks_Placeholder.png"/>
       <rock_texture path="maps/debug_tile.png"/>
     </textures>
     
@@ -54,6 +57,7 @@
     </player>
 
     <units>
+      <update_cycle_length length="0.1f"/>
       <speed_factor x="0.803f" y="0.59f"/>
       
       <allies>
@@ -106,8 +110,6 @@
       </allies>
 
       <enemies>
-        <update_cycle_length length="0.1f"/>
-
         <enemy>
           <sprite_sections>
             <pathing_up x="0" y="0" w="0" h="0"/>

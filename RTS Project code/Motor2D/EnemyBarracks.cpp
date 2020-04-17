@@ -10,20 +10,21 @@
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
 
-#include "TownHall.h"
+#include "EnemyBarracks.h"
 
 
-TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type) : Static_Object(x, y, type)
 {
-	entity_sprite = App->entity_manager->GetTownHallTexture();
-	
-	hall_rect = {0, 0, 155, 138};
+	entity_sprite = App->entity_manager->GetEnemyBarracksTexture();
+
+	barracks_rect_1 = { 0, 0, 106, 95 };
+	barracks_rect_2 = { 108, 0, 106, 95 };
 
 	pixel_position.x = App->map->MapToWorld(x, y).x;
 	pixel_position.y = App->map->MapToWorld(x, y).y;
 
-	tiles_occupied_x = 3;
-	tiles_occupied_y = 3;
+	tiles_occupied_x = 2;
+	tiles_occupied_y = 2;
 
 	if (App->entity_manager->CheckTileAvailability(iPoint(x, y), this))
 	{
@@ -40,30 +41,30 @@ TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x,
 	}
 }
 
-bool TownHall::Awake(pugi::xml_node&)
+bool EnemyBarracks::Awake(pugi::xml_node&)
 {
 	return true;
 }
 
-bool TownHall::PreUpdate()
+bool EnemyBarracks::PreUpdate()
 {
 
 	return true;
 }
 
-bool TownHall::Update(float dt, bool doLogic)
+bool EnemyBarracks::Update(float dt, bool doLogic)
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 51, pixel_position.y - 20, &hall_rect);
+	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y - 18, &barracks_rect_1);
 
 	return true;
 }
 
-bool TownHall::PostUpdate()
+bool EnemyBarracks::PostUpdate()
 {
 	return true;
 }
 
-bool TownHall::CleanUp()
+bool EnemyBarracks::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
@@ -75,7 +76,7 @@ bool TownHall::CleanUp()
 	return true;
 }
 
-void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
+void EnemyBarracks::GenerateUnit(ENTITY_TYPE type)
 {
 	switch (type)
 	{
@@ -83,10 +84,10 @@ void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 
 		break;
 	case ENTITY_TYPE::GATHERER:
-		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x + 1, tile_position.y + 3, level);
+		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x, tile_position.y + 2);
 		break;
 	case ENTITY_TYPE::INFANTRY:
-		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3, level);
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x, tile_position.y + 2);
 		break;
 	}
 }
