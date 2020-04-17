@@ -53,24 +53,23 @@ bool PathFinding::CheckBoundaries(const iPoint& pos) const
 			pos.y >= 0 && pos.y <= (int)height);
 }
 
+// Utility: return the walkability value of a tile
+uchar PathFinding::GetTileAt(const iPoint& pos) const
+{
+	if (CheckBoundaries(pos))
+	{
+		return map[(pos.y * width) + pos.x];
+	}
+
+	return 0;
+}
+
 // Utility: returns true is the tile is walkable
 bool PathFinding::IsWalkable(const iPoint& pos) const
 {
 	uchar t = GetTileAt(pos);
 
 	if (t == WALKABLE)
-	{
-		return true;
-	}
-
-	return false;
-}
-
-bool PathFinding::IsOccupied(const iPoint& pos) const
-{
-	uchar t = GetTileAt(pos);
-
-	if (t == OCCUPIED)
 	{
 		return true;
 	}
@@ -90,15 +89,38 @@ bool PathFinding::IsNonWalkable(const iPoint& pos) const
 	return false;
 }
 
-// Utility: return the walkability value of a tile
-uchar PathFinding::GetTileAt(const iPoint& pos) const
+bool PathFinding::IsOccupied(const iPoint& pos) const
 {
-	if (CheckBoundaries(pos))
+	uchar t = GetTileAt(pos);
+
+	if (t == OCCUPIED)
 	{
-		return map[(pos.y * width) + pos.x];
+		return true;
 	}
 
-	return 0;
+	return false;
+}
+
+bool PathFinding::IsOccupiedByEnemy(const iPoint& pos) const
+{
+	bool ret = false;
+	
+	Entity* entity = App->entity_manager->GetEntityAt(pos);
+
+	if (entity != nullptr)
+	{
+		if (App->entity_manager->IsEnemyEntity(entity))
+		{
+			ret = true;
+		}
+	}
+
+	return ret;
+}
+
+bool PathFinding::PathIsAccessible(const iPoint& origin, const iPoint& destination) const
+{
+	return (!IsOccupiedByEnemy(destination) && (IsNonWalkable(origin) || IsNonWalkable(destination) || IsOccupied(destination)));
 }
 
 bool PathFinding::ChangeWalkability(const iPoint& pos, Entity* entity, uchar walkability)
@@ -245,45 +267,66 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 
 	// north
 	cell.create(pos.x, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
+	if (NodeIsAccessible(cell))
+	{
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	}
 
 	// south
 	cell.create(pos.x, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
+	if (NodeIsAccessible(cell))
+	{
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	}
 
 	// east
 	cell.create(pos.x + 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
+	if (NodeIsAccessible(cell))
+	{
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	}
 
 	// west
 	cell.create(pos.x - 1, pos.y);
-	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
+	if (NodeIsAccessible(cell))
+	{
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	}
 
 	// North east
 	cell.create(pos.x + 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
+	if (NodeIsAccessible(cell))
+	{
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	}
 
 	// North west
 	cell.create(pos.x - 1, pos.y - 1);
-	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
+	if (NodeIsAccessible(cell))
+	{
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	}
 
 	// South east
 	cell.create(pos.x + 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
+	if (NodeIsAccessible(cell))
+	{
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	}
 
 	// South west
 	cell.create(pos.x - 1, pos.y + 1);
-	if (App->pathfinding->IsWalkable(cell) || App->pathfinding->IsOccupied(cell))
+	if (NodeIsAccessible(cell))
+	{
 		list_to_fill.list.push_back(PathNode(-1, -1, cell, this));
+	}
 
 	return list_to_fill.list.size();
+}
+
+bool PathNode::NodeIsAccessible(const iPoint& pos) const
+{
+	return (App->pathfinding->IsWalkable(pos) || App->pathfinding->IsOccupied(pos));
 }
 
 // Calculates this tile score
@@ -312,7 +355,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	
 	int ret = -1;		//Revise, Should be 1?										            //The value returned by the function. Done to improve readability.
 																					            
-	if ( IsNonWalkable(origin)  || IsNonWalkable(destination) || IsOccupied(destination) )		//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
+	if (PathIsAccessible(origin, destination))													//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
 	{																				            
 		return ret;															            
 	}																				            

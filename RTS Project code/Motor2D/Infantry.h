@@ -34,6 +34,7 @@ public:
 	void SetEntityTargetByProximity();
 	void UpdateUnitOrientation();
 
+	bool TargetIsInRange();
 	void DealDamage();
 
 	void OnCollision(Collider* C1, Collider* C2);

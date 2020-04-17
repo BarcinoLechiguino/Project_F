@@ -26,26 +26,27 @@ public:
 
 	PathFinding();
 
-	~PathFinding();															// Destructor
+	~PathFinding();																				// Destructor
 
-	bool CleanUp();															// Called before quitting
+	bool CleanUp();																				// Called before quitting
 
 public:
-	void SetMap(uint width, uint height, uchar* data);						// Sets up the walkability map
+	void SetMap(uint width, uint height, uchar* data);											// Sets up the walkability map
 
-	int CreatePath(const iPoint& origin, const iPoint& destination);		// Main function to request a path from A to B
+	int CreatePath(const iPoint& origin, const iPoint& destination);							// Main function to request a path from A to B
 
-	const std::vector<iPoint> GetLastPath() const;							// To request all tiles involved in the last generated path
+	const std::vector<iPoint> GetLastPath() const;												// To request all tiles involved in the last generated path
 
-	bool CheckBoundaries(const iPoint& pos) const;							// Utility: return true if pos is inside the map boundaries
+	bool CheckBoundaries(const iPoint& pos) const;												// Utility: return true if pos is inside the map boundaries
 
-	bool IsWalkable(const iPoint& pos) const;								// Utility: returns true is the tile is walkable
+	uchar GetTileAt(const iPoint& pos) const;													// Utility: return the walkability value of a tile
 
-	bool IsOccupied(const iPoint& pos) const;								// Utility: returns true is the tile is walkable
+	bool IsWalkable(const iPoint& pos) const;													// Utility: Returns true if the tile is walkable.
+	bool IsNonWalkable(const iPoint& pos) const;												// Utility: Returns true if the tile is non-walkable.
+	bool IsOccupied(const iPoint& pos) const;													// Utility: Returns true if the tile is occupied.
+	bool IsOccupiedByEnemy(const iPoint& pos) const;											// Utility: Returns true if the tile is occupied by an enemy entity.
 
-	bool IsNonWalkable(const iPoint& pos) const;
-
-	uchar GetTileAt(const iPoint& pos) const;								// Utility: return the walkability value of a tile
+	bool PathIsAccessible(const iPoint& origin, const iPoint& destination) const;				// Utility: Returns true if the given position is accessible.
 
 	void FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected) ;	//Finds close tiles to send units to
 
@@ -54,15 +55,15 @@ public:
 private:
 
 	
-	uint width;																// Width of the map.
-	uint height;															// Height of the map.
+	uint width;																					// Width of the map.
+	uint height;																				// Height of the map.
 
-	uchar* map;																// All map walkability values [0..255]
+	uchar* map;																					// All map walkability values [0..255]
 
 	std::vector<iPoint> last_path;
 };
 
-struct PathList;															// forward declaration
+struct PathList;																				// forward declaration
 
 // ---------------------------------------------------------------------
 // Pathnode: Helper struct to represent a node in the path creation
@@ -75,6 +76,7 @@ struct PathNode
 	PathNode(const PathNode& node);
 
 	uint FindWalkableAdjacents(PathList& list_to_fill) const;				// Fills a list (PathList) of all valid adjacent pathnodes
+	bool NodeIsAccessible(const iPoint& pos) const;							// Utility: Returns true if the given node position is accessible.
 
 	int Score() const;														// Calculates this tile score
 	

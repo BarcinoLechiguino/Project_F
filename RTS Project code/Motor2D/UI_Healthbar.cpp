@@ -1,5 +1,6 @@
 #include "Application.h"
 #include "Window.h"
+#include "EntityManager.h"
 #include "Entity.h"
 #include "Gui.h"
 
@@ -81,9 +82,22 @@ void UI_Healthbar::UpdateHealthbarPosition()
 
 void UI_Healthbar::UpdateHealthbarValue()
 {
-	int new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+	int new_width = 0;
+	
+	if (App->entity_manager->IsUnit(attached_unit))
+	{
+		new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+	}
 
-	//attached_unit->healthbar_rect.w = new_width;
+	if (App->entity_manager->IsBuilding(attached_unit))
+	{
+		new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+	}
+
+	if (App->entity_manager->IsResource(attached_unit))
+	{
+		new_width = (MAX_RESOURCE_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+	}
 
 	healthbar.w = new_width;
 }

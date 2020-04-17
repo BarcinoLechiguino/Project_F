@@ -179,6 +179,11 @@ void Player::OrderUnitsToMove()
 		
 		for (; item != units_selected.end(); item++)
 		{
+			if ((*item)->target != nullptr)
+			{
+				(*item)->target = nullptr;
+			}
+
 			App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
 		}
 

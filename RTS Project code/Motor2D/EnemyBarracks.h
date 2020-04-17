@@ -20,6 +20,8 @@ public:
 	virtual bool CleanUp();
 
 public:
+	void InitEntity();
+	void AttachHealthbarToEntity();
 
 	void GenerateUnit(ENTITY_TYPE type, int level);
 

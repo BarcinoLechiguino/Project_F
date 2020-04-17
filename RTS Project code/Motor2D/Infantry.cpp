@@ -270,6 +270,21 @@ void Infantry::UpdateUnitOrientation()
 	}
 }
 
+bool Infantry::TargetIsInRange()
+{
+	if (target != nullptr)
+	{
+		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
+
+		if (distance <= attack_range)
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
+
 void Infantry::DealDamage()
 {
 	if (!attack_in_cooldown)

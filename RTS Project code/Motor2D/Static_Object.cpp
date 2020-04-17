@@ -18,7 +18,7 @@ bool Static_Object::Awake(pugi::xml_node&)
 
 bool Static_Object::Start()
 {
-	App->pathfinding->ChangeWalkability(iPoint(tile_position.x, tile_position.y), this, NON_WALKABLE);
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
 	
 	//for (int x_tile = tile_position.x; x_tile < tile_position.x + tiles_occupied_x; ++x_tile)
 	//{

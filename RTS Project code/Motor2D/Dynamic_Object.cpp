@@ -116,9 +116,8 @@ void Dynamic_Object::HandleMovement(float dt)
 	break;
 
 	case PATHFINDING_STATE::WAITING_NEXT_TILE:
-
 		//Check if unit is already in target_tile
-		if (target_tile == tile_position || target != nullptr && tile_position.DistanceNoSqrt(target->tile_position) * 0.1f <= attack_range)
+		if (target_tile == tile_position || TargetIsInRange())
 		{
 			entity_path.clear();
 
@@ -128,6 +127,11 @@ void Dynamic_Object::HandleMovement(float dt)
 			unit_state = ENTITY_STATE::IDLE;
 
 			App->entity_manager->ChangeEntityMap(tile_position, this);
+
+			if (occupied_tile != tile_position)							// In case target enters attack_range and the unit ends the pathfinding.
+			{
+				ChangeOccupiedTile(tile_position);
+			}
 
 			break;
 		}
@@ -198,8 +202,6 @@ void Dynamic_Object::SetEntityState()
 			unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
 		}
 	}
-
-
 }
 
 void Dynamic_Object::Move(float dt)
@@ -338,6 +340,11 @@ void Dynamic_Object::DealDamage()
 	return;
 }
 
+bool Dynamic_Object::TargetIsInRange()
+{	
+	return true;
+}
+
 void Dynamic_Object::DataMapSafetyCheck()
 {
 	if (!path_full)
@@ -354,49 +361,49 @@ void Dynamic_Object::DataMapSafetyCheck()
 	}
 }
 
-// --- ALTERNATIVE VERSION
+////--- ALTERNATIVE VERSION
 //if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , --y)
 //{
 //	unit_state = ENTITY_STATE::PATHING_UP;
 //	return;
 //}
-
+//
 //if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x , ++y)
 //{
 //	unit_state = ENTITY_STATE::PATHING_DOWN;
 //	return;
 //}
-
+//
 //if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , ++y)
 //{
 //	unit_state = ENTITY_STATE::PATHING_RIGHT;
 //	return;
 //}
-
+//
 //if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x, --y)
 //{
 //	unit_state = ENTITY_STATE::PATHING_LEFT;
 //	return;
 //}
-
+//
 //if (tile_position.x == next_tile.x && tile_position.y > next_tile.y)					// next_tile is (== , --y)
 //{
 //	unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
 //	return;
 //}
-
+//
 //if (tile_position.x > next_tile.x && tile_position.y == next_tile.y)					// next tile is (--x, ==)
 //{
 //	unit_state = ENTITY_STATE::PATHING_UP_LEFT;
 //	return;
 //}
-
+//
 //if (tile_position.x < next_tile.x && tile_position.y == next_tile.y)					// next tile is (++x, ==)
 //{
 //	unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
 //	return;
 //}
-
+//
 //if (tile_position.x == next_tile.x && tile_position.y < next_tile.y)					// next tile is (==, ++y)
 //{
 //	unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
