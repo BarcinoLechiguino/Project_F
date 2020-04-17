@@ -7,7 +7,7 @@ class EnemyTownHall : public Static_Object
 {
 public:
 
-	EnemyTownHall(int x, int y, ENTITY_TYPE type);
+	EnemyTownHall(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 
