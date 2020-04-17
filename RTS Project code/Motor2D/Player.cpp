@@ -203,10 +203,10 @@ void Player::OrderUnitsToAttack()
 			for (; item != units_selected.end(); ++item)
 			{
 				(*item)->target = target;
-				//App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
+				App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
 			}
 
-			//App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);							//Gives units targets around main target
+			App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);							//Gives units targets around main target
 		}
 		else
 		{

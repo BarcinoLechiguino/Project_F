@@ -75,7 +75,10 @@ bool Infantry::Update(float dt, bool doLogic)
 	if (target != nullptr)
 	{
 		//path_full = false;
-		DealDamage();
+		if (target != nullptr && tile_position.DistanceNoSqrt(target->tile_position) * 0.1f <= attack_range)
+		{
+			DealDamage();
+		}
 	}
 
 	return true;
@@ -205,9 +208,10 @@ void Infantry::SetEntityTargetByProximity()
 		if (App->entity_manager->IsEnemyEntity((*item)))
 		{
 			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
-			
-			target = (*item);
-			break;
+			{
+				target = (*item);
+				break;
+			}
 		}
 	}
 }

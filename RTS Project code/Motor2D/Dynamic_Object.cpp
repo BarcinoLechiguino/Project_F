@@ -122,7 +122,7 @@ void Dynamic_Object::HandleMovement(float dt)
 	case PATHFINDING_STATE::WAITING_NEXT_TILE:
 
 		//Check if unit is already in target_tile
-		if (target_tile == tile_position)
+		if (target_tile == tile_position || target != nullptr && tile_position.DistanceNoSqrt(target->tile_position) * 0.1f <= attack_range)
 		{
 			entity_path.clear();
 
