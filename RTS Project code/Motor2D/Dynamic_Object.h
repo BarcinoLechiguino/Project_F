@@ -53,8 +53,9 @@ public:
 	void SetEntityState();
 	void Move(float dt);
 
-	void SetEntityTarget(const iPoint& target_position);				// Method that will give an entity a combat target.
+	void SetEntityTargetByProximity(const iPoint& target_position);		// Method that will give an entity a combat target.
 	void PathToEntityTarget();
+	void UpdateUnitOrientation();										// Method that wil orient the entity towards the target it's attacking.
 
 	void DealDamage();
 

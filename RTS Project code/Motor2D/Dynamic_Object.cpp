@@ -199,25 +199,26 @@ void Dynamic_Object::SetEntityState()
 		}
 	}
 
-	//if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)						// next_tile is (--x , --y)
+	// --- ALTERNATIVE VERSION
+	//if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , --y)
 	//{
 	//	unit_state = ENTITY_STATE::PATHING_UP;
 	//	return;
 	//}
 
-	//if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)						// next_tile is (++x , ++y)
+	//if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x , ++y)
 	//{
 	//	unit_state = ENTITY_STATE::PATHING_DOWN;
 	//	return;
 	//}
 
-	//if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)						// next_tile is (--x , ++y)
+	//if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , ++y)
 	//{
 	//	unit_state = ENTITY_STATE::PATHING_RIGHT;
 	//	return;
 	//}
 
-	//if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)						// next_tile is (++x, --y)
+	//if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x, --y)
 	//{
 	//	unit_state = ENTITY_STATE::PATHING_LEFT;
 	//	return;
@@ -364,17 +365,18 @@ void Dynamic_Object::Move(float dt)
 	}
 }
 
-void Dynamic_Object::SetEntityTarget(const iPoint& target_position)
-{
-	
-	
+void Dynamic_Object::SetEntityTargetByProximity(const iPoint& target_position)
+{	
 	return;
 }
 
 void Dynamic_Object::PathToEntityTarget()
 {
-	
-	
+	return;
+}
+
+void Dynamic_Object::UpdateUnitOrientation()
+{
 	return;
 }
 

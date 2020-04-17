@@ -48,7 +48,10 @@ bool Infantry::Update(float dt, bool doLogic)
 
 	DataMapSafetyCheck();
 
-	UpdateUnitSpriteSection();
+	if (path_full)
+	{
+		UpdateUnitSpriteSection();
+	}
 
 	selection_collider.x = pixel_position.x;
 	selection_collider.y = pixel_position.y;
@@ -60,16 +63,19 @@ bool Infantry::Update(float dt, bool doLogic)
 		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 	}
 
+	if (doLogic)
+	{
+		if (target == nullptr && !path_full)
+		{
+			SetEntityTargetByProximity();
+			UpdateUnitOrientation();
+		}
+	}
+
 	if (target != nullptr)
 	{
-		if (tile_position.DistanceManhattan(target->tile_position) < attack_range)
-		{	
-			DealDamage();
-		}
-		else
-		{
-			PathToEntityTarget();
-		}
+		//path_full = false;
+		DealDamage();
 	}
 
 	return true;
@@ -121,7 +127,7 @@ void Infantry::InitEntity()
 	current_health = max_health;
 	attack_damage = 30;
 
-	attack_speed = 0.1f;
+	attack_speed = 0.5f;
 	attack_range = 5;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
@@ -187,6 +193,76 @@ void Infantry::UpdateUnitSpriteSection()
 	case ENTITY_STATE::PATHING_DOWN_LEFT:
 		entity_sprite_section = pathing_down_left_section;
 		break;
+	}
+}
+
+void Infantry::SetEntityTargetByProximity()
+{
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if (App->entity_manager->IsEnemyEntity((*item)))
+		{
+			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
+			
+			target = (*item);
+			break;
+		}
+	}
+}
+
+void Infantry::UpdateUnitOrientation()
+{
+	if (target != nullptr)
+	{
+		if (tile_position.x > target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , --y)
+		{
+			entity_sprite_section = pathing_up_section;
+			return;
+		}
+
+		if (tile_position.x < target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x , ++y)
+		{
+			entity_sprite_section = pathing_down_section;
+			return;
+		}
+
+		if (tile_position.x < target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , ++y)
+		{
+			entity_sprite_section = pathing_rigth_section;
+			return;
+		}
+
+		if (tile_position.x > target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x, --y)
+		{
+			entity_sprite_section = pathing_left_section;
+			return;
+		}
+
+		if (tile_position.x == target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (== , --y)
+		{
+			entity_sprite_section = pathing_up_right_section;
+			return;
+		}
+
+		if (tile_position.x > target->tile_position.x && tile_position.y == target->tile_position.y)					// next tile is (--x, ==)
+		{
+			entity_sprite_section = pathing_up_left_section;
+			return;
+		}
+
+		if (tile_position.x < target->tile_position.x && tile_position.y == target->tile_position.y)					// next tile is (++x, ==)
+		{
+			entity_sprite_section = pathing_down_right_section;
+			return;
+		}
+
+		if (tile_position.x == target->tile_position.x && tile_position.y < target->tile_position.y)					// next tile is (==, ++y)
+		{
+			entity_sprite_section = pathing_down_left_section;
+			return;
+		}
 	}
 }
 

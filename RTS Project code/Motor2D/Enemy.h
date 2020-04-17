@@ -33,7 +33,10 @@ public:
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 
-	void SetTarget();		//TMP
+	void SetEntityTargetByProximity();
+	void UpdateUnitOrientation();
+
+	void DealDamage();
 
 	void OnCollision(Collider* C1, Collider* C2);
 

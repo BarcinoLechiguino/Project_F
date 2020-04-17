@@ -60,7 +60,15 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	if (doLogic)
 	{
-		SetTarget();
+		if (target == nullptr && !path_full)
+		{
+			SetEntityTargetByProximity();
+		}
+	}
+
+	if (target != nullptr)
+	{
+		DealDamage();
 	}
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, &entity_sprite_section);
@@ -185,16 +193,48 @@ void Enemy::UpdateUnitSpriteSection()
 	}
 }
 
-void Enemy::SetTarget()
+void Enemy::SetEntityTargetByProximity()
 {
 	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
-	
+
 	for (; item != App->entity_manager->entities.end(); ++item)
 	{
-		if ((*item)->type == ENTITY_TYPE::GATHERER || (*item)->type == ENTITY_TYPE::INFANTRY)
+		if (!App->entity_manager->IsEnemyEntity((*item)) && !App->entity_manager->IsResource((*item)))
 		{
-			target = (*item);
-			break;
+			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
+			{
+				target = (*item);
+				break;
+			}
+		}
+	}
+}
+
+void Enemy::UpdateUnitOrientation()
+{
+
+}
+
+void Enemy::DealDamage()
+{
+	if (!attack_in_cooldown)
+	{
+		ApplyDamage(target);
+		attack_in_cooldown = true;
+
+		if (target->current_health <= 0)
+		{
+			target = nullptr;
+		}
+	}
+	else
+	{
+		accumulated_cooldown += App->GetDt();
+
+		if (accumulated_cooldown >= attack_speed)
+		{
+			attack_in_cooldown = false;
+			accumulated_cooldown = 0.0f;
 		}
 	}
 }
