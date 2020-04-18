@@ -166,7 +166,7 @@ void Dynamic_Object::HandleMovement(float dt)
 
 	case PATHFINDING_STATE::WAITING_NEXT_TILE:
 		//Check if unit is already in target_tile
-		if (target_tile == tile_position || TargetIsInRange())
+		if (target_tile == tile_position)
 		{
 			entity_path.clear();
 

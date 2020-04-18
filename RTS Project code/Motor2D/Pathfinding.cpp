@@ -201,7 +201,7 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 					units++;
 				}
 
-				if (!App->pathfinding->IsNonWalkable(neighbour.pos)/*App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos)*/)
+				if (/*!App->pathfinding->IsNonWalkable(neighbour.pos)*/App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos))													// App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos)
 				{
 					frontier.list.push_back(neighbour);
 				}

@@ -77,16 +77,16 @@ bool Infantry::Update(float dt, bool doLogic)
 
 	if (target != nullptr)
 	{
-		//path_full = false;
-		if (target != nullptr)
+		if (TargetIsInRange())
 		{
-			if (TargetIsInRange())
+			DealDamage();
+		}
+		else
+		{
+			if (!path_full)
 			{
-				DealDamage();
-			}
-			else
-			{
-
+				App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
+				GiveNewTargetTile(target->tile_position);
 			}
 		}
 	}
@@ -234,9 +234,9 @@ void Infantry::GetShortestPathWithinAttackRange()
 	{
 		tmp.push_back(entity_path[i]);
 
-		if (!App->pathfinding->IsOccupied(entity_path[i]))
+		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
 		{
-			if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+			if (!App->pathfinding->IsOccupied(entity_path[i]))
 			{
 				entity_path.clear();
 
