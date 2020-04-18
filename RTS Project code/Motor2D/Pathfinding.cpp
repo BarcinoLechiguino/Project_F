@@ -120,7 +120,7 @@ bool PathFinding::IsOccupiedByEnemyEntity(const iPoint& pos) const
 
 bool PathFinding::PathIsAccessible(const iPoint& origin, const iPoint& destination) const
 {
-	return (!IsOccupiedByEnemyEntity(destination) && (IsNonWalkable(origin) || IsNonWalkable(destination) || IsOccupied(destination)));
+	return (/*!IsOccupiedByEnemyEntity(destination) &&*/ (IsNonWalkable(origin) || IsNonWalkable(destination) || IsOccupied(destination)));
 }
 
 bool PathFinding::ChangeWalkability(const iPoint& pos, Entity* entity, uchar walkability)
@@ -162,12 +162,15 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 {
 	std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
 
-	if (!(*units)->GiveNewTargetTile(pos))
+	if ((*units)->target == nullptr)
 	{
-		return;
-	}
+		if (!(*units)->GiveNewTargetTile(pos))
+		{
+			return;
+		}
 
-	units++;
+		units++;
+	}
 
 	PathList frontier;
 	PathList visited;
@@ -187,13 +190,13 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 
 		for (; item != neighbours.list.end() && units != units_selected.end(); ++item)
 		{
-			PathNode neighbour = *item;																	// For Readability
+			PathNode neighbour = *item;																					// For Readability
 
 			if (visited.Find(neighbour.pos) == visited.list.end())														//if not in visited
 			{
 				if (App->pathfinding->IsWalkable(neighbour.pos))
 				{
-					(*units)->GiveNewTargetTile(neighbour.pos);
+					(*units)->GiveNewTargetTile(neighbour.pos);															// Fix targeting.
 
 					units++;
 				}
@@ -355,7 +358,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	
 	int ret = -1;		//Revise, Should be 1?										            //The value returned by the function. Done to improve readability.
 																					            
-	if (PathIsAccessible(origin, destination))													//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
+	if (/*PathIsAccessible(origin, destination)*/ IsNonWalkable(origin) || IsNonWalkable(destination) || IsOccupied(destination))													//IsWalkable() checks if origin and destination are walkable tiles. IsWalkable calls GetTile(), which returns the walkability value only if the given tile is inside the map's boundaries.
 	{																				            
 		return ret;															            
 	}																				            

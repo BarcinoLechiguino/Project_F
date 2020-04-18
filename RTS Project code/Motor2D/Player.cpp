@@ -222,61 +222,7 @@ void Player::OrderUnitsToAttack()
 				}
 			}
 
-			if (App->entity_manager->IsUnit(target))
-			{
-				App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);							//Gives units targets around main target
-			}
-			else
-			{
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y - 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y - 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);							//Gives units targets around main target
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y + 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y + 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y + 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y + 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y - 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y - 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x, target->tile_position.y - 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x, target->tile_position.y - 1);
-					App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x, target->tile_position.y + 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x, target->tile_position.y + 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-			}
+			App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);
 		}
 		if (App->entity_manager->IsResource(target))
 		{
@@ -297,61 +243,7 @@ void Player::OrderUnitsToAttack()
 
 			}
 
-			if (App->entity_manager->IsUnit(target))
-			{
-				App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);							//Gives units targets around main target
-			}
-			else
-			{
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y - 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y - 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);							//Gives units targets around main target
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y + 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y + 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y + 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y + 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y - 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y - 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x, target->tile_position.y - 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x, target->tile_position.y - 1);
-					App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x, target->tile_position.y + 1)))
-				{
-					iPoint neighbour = iPoint(target->tile_position.x, target->tile_position.y + 1);
-					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
-					return;
-				}
-			}
+			App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);							//Gives units targets around main target
 		}
 		else
 		{
