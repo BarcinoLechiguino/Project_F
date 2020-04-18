@@ -226,9 +226,6 @@ private:
 	
 	iPoint				camera_pos_in_pixels;
 	
-	SDL_Texture*		occupied_debug;
-	SDL_Texture*		occupied_by_entity_debug;
-	
 	int					bottom_right_x;
 	int					bottom_right_y;
 

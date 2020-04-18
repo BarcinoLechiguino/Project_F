@@ -15,7 +15,8 @@
 #include "EntityManager.h"
 #include "Gui.h"
 #include "Console.h"
-
+#include "SceneManager.h"
+#include "Scene.h"
 
 #include "Map.h"
 
@@ -116,13 +117,13 @@ void Map::DataMapDebug()
 				if (App->pathfinding->IsOccupied(iPoint(x, y)))
 				{
 					iPoint draw_position = App->map->MapToWorld(x, y);
-					App->render->Blit(occupied_debug, draw_position.x, draw_position.y, nullptr);
+					App->render->Blit(App->scene_manager->current_scene->occupied_debug, draw_position.x, draw_position.y, nullptr);
 				}
 
 				if (App->entity_manager->entity_map[(y * App->map->data.width) + x] != nullptr)
 				{
 					iPoint draw_position = App->map->MapToWorld(x, y);
-					App->render->Blit(occupied_by_entity_debug, draw_position.x, draw_position.y, nullptr);
+					App->render->Blit(App->scene_manager->current_scene->occupied_by_entity_debug, draw_position.x, draw_position.y, nullptr);
 				}
 			}
 		}

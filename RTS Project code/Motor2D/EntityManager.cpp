@@ -112,14 +112,6 @@ bool EntityManager::PostUpdate()
 bool EntityManager::CleanUp()
 {
 	//Iterates all entities in the entities list and calls their CleanUp() method.
-	/*std::vector<Entity*>::iterator item = entities.begin();
-	
-	for (; item != entities.end(); ++item)
-	{
-		(*item)->CleanUp();
-		RELEASE((*item));
-	}*/
-
 	for (int i = 0; i < entities.size(); ++i)
 	{
 		entities[i]->CleanUp();
