@@ -136,7 +136,7 @@ void Gatherer::InitEntity()
 	current_health = max_health;
 
 	gathering_speed = 1.0f;
-	gathering_amount = 5;
+	gathering_amount = 15;
 
 	attack_damage = gathering_amount; //temporary use of these variables to check if it works
 	attack_speed = gathering_speed;

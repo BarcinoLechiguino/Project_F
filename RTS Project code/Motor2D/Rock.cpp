@@ -29,6 +29,9 @@ Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type
 
 	gather_time = 1;
 
+	max_health = 300;
+	current_health = max_health;
+
 	if (App->entity_manager->CheckTileAvailability(iPoint(x, y), this))
 	{
 		healthbar_position_offset.x = -6;
@@ -64,6 +67,10 @@ bool Rock::Update(float dt, bool doLogic)
 
 bool Rock::PostUpdate()
 {
+	if (current_health <= 0)
+	{
+		App->entity_manager->DeleteEntity(this);
+	}
 	return true;
 }
 
@@ -74,6 +81,10 @@ bool Rock::CleanUp()
 
 	entity_sprite = nullptr;
 
+	if (collider != nullptr)
+	{
+		collider->to_delete = true;
+	}
 	App->gui->DeleteGuiElement(healthbar);
 	
 	return true;
