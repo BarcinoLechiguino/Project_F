@@ -70,6 +70,7 @@ bool Rock::PostUpdate()
 	if (current_health <= 0)
 	{
 		App->entity_manager->DeleteEntity(this);
+		App->audio->PlayFx(App->entity_manager->finished_gather_fx);
 	}
 	return true;
 }

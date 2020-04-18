@@ -43,8 +43,9 @@ public:
 public:
 	float	gathering_speed;
 	int		gathering_amount;
-
 	bool	gather_in_cooldown;
+
+
 };
 
 #endif // __ENEMY_H__

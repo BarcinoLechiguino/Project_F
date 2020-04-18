@@ -120,7 +120,6 @@ bool Gatherer::CleanUp()
 void Gatherer::InitEntity()
 {
 	entity_sprite = App->entity_manager->GetGathererTexture();
-
 	InitUnitSpriteSections();
 
 	target = nullptr;
@@ -275,6 +274,7 @@ void Gatherer::Gather()
 		if (App->entity_manager->IsResource(target))
 		{
 			ApplyDamage(target);
+			App->audio->PlayFx(App->entity_manager->gather_fx);
 			gather_in_cooldown = true;
 		}
 

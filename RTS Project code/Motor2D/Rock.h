@@ -23,6 +23,7 @@ public:
 	int ore;
 
 	int gather_time;
+
 };
 
 #endif // !__ROCK_H__

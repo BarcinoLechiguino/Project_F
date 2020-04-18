@@ -46,6 +46,7 @@ public:
 
 	void LoadEntityTextures();
 	void UnLoadEntityTextures();
+	void LoadEntityAudios();
 
 	SDL_Texture* GetGathererTexture() const;
 	SDL_Texture* GetInfantryTexture() const;
@@ -88,6 +89,19 @@ public:
 	SDL_Texture*					barracks_tex;
 	SDL_Texture*					enemy_barracks_tex;
 	SDL_Texture*					rock_tex;
+
+	uint							gatherer_movement_fx;
+	uint							gather_fx;
+	uint							finished_gather_fx;
+	uint							infantry_movement_fx;
+	uint							infantry_shot_fx;
+	uint							click_barracks_fx;
+	uint							building_fx;
+	uint							finished_building_fx;
+	uint							finished_recruiting;
+	uint							finished_upgrading;
+
+	uint							heavy_shot_fx;
 
 	std::vector<Entity*>			entities;	
 

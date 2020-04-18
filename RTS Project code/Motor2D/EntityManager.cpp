@@ -8,6 +8,7 @@
 #include "Input.h"
 #include "Collisions.h"
 #include "Map.h"
+#include "Audio.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -52,6 +53,7 @@ bool EntityManager::Awake(pugi::xml_node& config)
 bool EntityManager::Start()
 {
 	LoadEntityTextures();
+	LoadEntityAudios();
 
 	//Iterates all entities in the entities list and calls their Start() method.
 	for (int i = 0; i < entities.size(); ++i)
@@ -262,6 +264,21 @@ void EntityManager::LoadEntityTextures()
 	barracks_tex		= App->tex->Load(entity_textures.child("barracks_texture").attribute("path").as_string());
 	enemy_barracks_tex	= App->tex->Load(entity_textures.child("enemy_barracks_texture").attribute("path").as_string());
 	rock_tex			= App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
+}
+
+void EntityManager::LoadEntityAudios()
+{
+	gatherer_movement_fx = App->audio->LoadFx("audio/fx/Gatherer_movement.wav");
+	gather_fx = App->audio->LoadFx("audio/fx/Gathering.wav");
+	finished_gather_fx = App->audio->LoadFx("audio/fx/Finnished_gathering.wav");
+	infantry_movement_fx = App->audio->LoadFx("audio/fx/Infantry_movement.wav");
+	infantry_shot_fx = App->audio->LoadFx("audio/fx/Infantry_shot.wav");
+	click_barracks_fx = App->audio->LoadFx("audio/fx/Click Barracks.wav");
+	building_fx = App->audio->LoadFx("audio/fx/Building.wav");
+	finished_building_fx = App->audio->LoadFx("audio/fx/Finished_building.wav");
+	finished_recruiting = App->audio->LoadFx("audio/fx/Finished_recruiting.wav");
+	finished_upgrading = App->audio->LoadFx("audio/fx/Finished_Upgrading.wav");
+	
 }
 
 void EntityManager::UnLoadEntityTextures()
