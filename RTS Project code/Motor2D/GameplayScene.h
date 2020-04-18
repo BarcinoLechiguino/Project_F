@@ -73,11 +73,9 @@ public:
 	// TMP TRANSITION BUTTONS
 	UI_Button*	transition_button;
 	UI_Button*	transition_button_II;
-	UI_Button*	transition_button_III;
 
 	UI_Text*	button_text;
 	UI_Text*	button_text_II;
-	UI_Text*	button_text_III;
 	// ---------------------
 	
 	UI_Image*				background;
@@ -111,6 +109,8 @@ public:
 	
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
+
+
 
 	// In-game menu
 

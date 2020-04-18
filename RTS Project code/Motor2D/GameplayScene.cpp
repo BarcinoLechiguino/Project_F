@@ -215,9 +215,6 @@ void GameplayScene::LoadGuiElements()
 	transition_button_II	= (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 350, 680, true, true, false, this, nullptr
 																, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
 
-	transition_button_III	= (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 100, 50, true, true, false, this, nullptr
-																, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
-
 	// Temporal transition buttons' texts
 	SDL_Rect text_rect = { 0, 0, 15, 8 };
 	_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 9);
@@ -232,15 +229,13 @@ void GameplayScene::LoadGuiElements()
 	button_text_II		= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 366, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
 														, true, false, false, nullptr, transition_button_II, &lose_button_string);
 
-	button_text_III		= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 121, 48, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
-														, true, false, false, nullptr, transition_button_III, &main_button_string);
 
 
 	// In-game menu
 
 	// Back
 	SDL_Rect background = { 780, 451, 514, 403 };
-	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 350, 180, background, false, false, false, this, nullptr);
+	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 325, 180, background, false, false, false, this, nullptr);
 
 
 	// Continue Button
@@ -249,7 +244,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_continue_button_hover = { 178, 0, 158, 23 };
 	SDL_Rect in_game_continue_button_clicked = { 356, 0, 158, 23 };
 
-	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 525, 286, false, true, false, this, in_game_background
+	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 500, 286, false, true, false, this, in_game_background
 		, &in_game_continue_button_idle, &in_game_continue_button_hover, &in_game_continue_button_clicked);
 
 
@@ -259,7 +254,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_options_button_hover = { 178, 52, 133, 24 };
 	SDL_Rect in_game_options_button_clicked = { 356, 52, 133, 24 };
 
-	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 537, 326, false, true, false, this, in_game_background
+	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 512, 326, false, true, false, this, in_game_background
 		, &in_game_options_button_idle, &in_game_options_button_hover, &in_game_options_button_clicked);
 
 
@@ -269,7 +264,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_back_to_menu_hover = { 204, 137, 189, 23 };
 	SDL_Rect in_game_back_to_menu_clicked = { 408, 137, 189, 23 };
 
-	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 511, 366, false, true, false, this, in_game_background
+	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 486, 366, false, true, false, this, in_game_background
 		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
 
 
@@ -279,7 +274,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_exit_button_hover = { 178, 77, 74, 23 };
 	SDL_Rect in_game_exit_button_clicked = { 356, 77, 74, 23 };
 
-	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 566, 406, false, true, false, this, in_game_background
+	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 541, 406, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
 
 	
@@ -287,7 +282,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
 	_TTF_Font* in_game_font = App->font->Load("fonts/borgsquadcond.ttf", 50);
 	std::string in_game_title_string = "Pause Menu";
-	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 439, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
+	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 414, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
 
 	// Options Menu
 	LoadInGameOptionsMenu();
@@ -344,27 +339,27 @@ void GameplayScene::LoadInGameOptionsMenu()
 
 	// Options
 	std::string in_game_title_string = "Options Menu";
-	in_game_options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 415, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_title_string);
+	in_game_options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 390, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_title_string);
 
 	//Music
 	std::string in_game_music_string = "Music";
-	in_game_music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 457, 275, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_music_string);
+	in_game_music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 432, 275, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_music_string);
 
 	SDL_Rect in_game_thumb_rect = { 930,2,18,31 };
 	SDL_Rect in_game_scrollbar_rect = { 743,3,180,15 };
 
-	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 280, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false);
+	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 545, 280, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false);
 	in_game_music_scrollbar->parent = in_game_options_parent;
 
 	//SFX
 	std::string sfx_string = "SFX";
-	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 486, 309, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
-	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 320, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, true);
+	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 461, 309, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
+	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 545, 320, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, true);
 	in_game_sfx_scrollbar->parent = in_game_options_parent;
 
 	//screen size
 	std::string in_game_resolution_string = "screen";
-	in_game_resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 418, 346, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_resolution_string);
+	in_game_resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 393, 346, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_resolution_string);
 
 	//Remapping
 
@@ -374,7 +369,7 @@ void GameplayScene::LoadInGameOptionsMenu()
 	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
 	SDL_Rect in_game_back_button_clicked = { 114, 103, 45, 33 };
 
-	in_game_back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 400, 490, true, true, false, this, in_game_options_parent
+	in_game_back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 375, 490, true, true, false, this, in_game_options_parent
 		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
 }
 
@@ -388,11 +383,6 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == transition_button_II && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 5, true, true);
-	}
-
-	if (element == transition_button_III && ui_event == UI_EVENT::UNCLICKED)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 	}
 
 	// In_game menu
