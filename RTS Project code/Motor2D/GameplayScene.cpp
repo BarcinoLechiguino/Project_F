@@ -19,6 +19,7 @@
 
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Static_Object.h"
 
 #include "Gui.h"
 #include "UI.h"
@@ -103,6 +104,8 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	{
 		DrawPathfindingDebug();														//Pathfinding Debug. Shows a debug texture on the path's tiles.
 	}
+
+	DebugHUDSpawn();
 
 	//LOG("Rocks %d", rock_test.size());
 
@@ -300,7 +303,7 @@ void GameplayScene::LoadGuiElements()
 	//Main Bar
 	SDL_Rect HUD_main_down_bar_size = { 0, 200, 1280, 150 };
 
-	HUD_main_down_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, -3, 580, HUD_main_down_bar_size, true, true, false, this, nullptr);
+	HUD_main_down_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, -3, 580, HUD_main_down_bar_size, false, true, false, this, nullptr);
 
 	//Resource Bar
 
@@ -554,6 +557,48 @@ void GameplayScene::DrawPathfindingDebug()
 
 		App->render->Blit(path_debug_tex, pos.x, pos.y);
 	}
+}
+
+// ------------------- ENTITY HUD METHODS -------------------
+
+void GameplayScene::DebugHUDSpawn()
+{
+		if (App->player->building_selected != nullptr)
+		{
+
+			switch (App->player->building_selected->type)
+			{
+			case ENTITY_TYPE::TOWNHALL:
+				if (!HUD_main_down_bar->isVisible)
+				{
+					App->gui->SetElementsVisibility(HUD_main_down_bar, true);
+				}
+				
+				break;
+
+			case ENTITY_TYPE::ENEMY_TOWNHALL:
+
+				break;
+
+			case ENTITY_TYPE::BARRACKS:
+
+				break;
+
+			case ENTITY_TYPE::ENEMY_BARRACKS:
+
+				break;
+			}
+
+		}
+
+		else
+		{
+			if (HUD_main_down_bar->isVisible)
+			{
+				App->gui->SetElementsVisibility(HUD_main_down_bar, false);
+			}
+		}
+
 }
 
 // --------------- REVISE IF THEY ARE NEEDED ---------------

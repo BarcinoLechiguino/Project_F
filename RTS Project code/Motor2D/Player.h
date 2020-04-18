@@ -60,7 +60,6 @@ public:
 	// --- Entity Spawn Methods.
 	void DebugUnitSpawn();
 
-
 	void DebugUnitUpgrade();
 
 	// --- Conditional Checks

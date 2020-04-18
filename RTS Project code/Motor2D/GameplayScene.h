@@ -51,6 +51,9 @@ public:
 	void PathfindingDebug();
 	void DrawPathfindingDebug();
 
+	// --- Entity Spawn HUD
+	void DebugHUDSpawn();
+
 
 public:
 	//std::list<std::string>	map_names;
@@ -105,7 +108,7 @@ public:
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
 
-
+	bool					already_clicked;
 
 	// In-game menu
 

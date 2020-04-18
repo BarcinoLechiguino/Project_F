@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Application.h"
 #include "Window.h"
+#include "Audio.h"
 #include "Textures.h"
 #include "EntityManager.h"
 #include "Pathfinding.h"
@@ -11,6 +12,7 @@
 #include "Minimap.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "GameplayScene.h"
 #include "Gui.h"
 #include "UI.h"
 
@@ -23,6 +25,8 @@
 #include "EnemyBarracks.h"
 #include "Gatherer.h"
 #include "Infantry.h"
+
+
 
 #include "Player.h"
 
@@ -479,6 +483,9 @@ void Player::SelectEntityAt(const iPoint& tile_position)
 		{
 			units_selected.clear();
 
+			building_selected = nullptr;
+			resource_selected = nullptr;
+
 			LOG("There is no Entity at tile (%d, %d)", tile_position.x, tile_position.y);
 		}
 	}
@@ -596,6 +603,8 @@ void Player::DebugUnitSpawn()
 		}
 	}
 }
+
+// ------------------- ENTITY SPAWN METHODS -------------------
 
 void Player::DebugUnitUpgrade()
 {
