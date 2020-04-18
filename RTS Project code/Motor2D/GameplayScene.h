@@ -53,8 +53,7 @@ public:
 
 	void PathfindingDebug();
 	void DrawPathfindingDebug();
-	void DrawOccupied();
-	void DrawEntityMapDebug();
+
 
 public:
 	//std::list<std::string>	map_names;
@@ -84,8 +83,7 @@ public:
 	//SDL_Texture*			mouse_debug_tex;							//Texture that will appear at mouse position when pathfinding is being debugged.
 	SDL_Texture*			path_debug_tex;								//Texture that will appear at the path tiles when pathfinding is being debugged.
 	SDL_Texture*			background_texture;
-	SDL_Texture*			occupied_debug;
-	SDL_Texture*			occupied_by_entity_debug;
+	
 
 	// In-game menu
 	UI_Image*				main_in_menu2;

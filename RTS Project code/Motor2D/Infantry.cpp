@@ -234,18 +234,21 @@ void Infantry::GetShortestPathWithinAttackRange()
 	{
 		tmp.push_back(entity_path[i]);
 
-		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+		if (!App->pathfinding->IsOccupied(entity_path[i]))
 		{
-			entity_path.clear();
+			if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+			{
+				entity_path.clear();
 
-			entity_path = tmp;
+				entity_path = tmp;
 
-			target_tile = entity_path.back();
-			current_path_tile = entity_path.begin();
+				target_tile = entity_path.back();
+				current_path_tile = entity_path.begin();
 
-			tmp.clear();
+				tmp.clear();
 
-			break;
+				break;
+			}
 		}
 	}
 }

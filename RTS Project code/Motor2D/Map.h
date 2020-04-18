@@ -185,6 +185,7 @@ public:
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);		//Changed to non const because of list unknown problem
 	bool CreateEntityMap(int& width, int& height);							//This method will allocate the necessary memory and initialize the entities map. Not necessary in this case(?).
 
+	void DataMapDebug();
 	void Restart_Cam();
 	void GetMapSize(int& w, int& h) const;
 
@@ -220,9 +221,7 @@ private:
 	pugi::xml_document	map_file;
 	std::string			folder;
 	
-
 	iPoint				camera_pos_in_pixels;
-	
 	
 	int					bottom_right_x;
 	int					bottom_right_y;
