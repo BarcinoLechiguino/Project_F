@@ -164,12 +164,6 @@ void GameplayScene::InitScene()
 
 	ret = App->map->Load("New_Tilesete_Map.tmx");
 
-	if (ret)
-	{
-		SetWalkabilityMap();
-		SetEntitiesMap();
-	}
-
 	path_debug_tex = App->tex->Load("maps/path2.png");
 
 	//test background
