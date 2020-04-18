@@ -8,9 +8,9 @@
 
 #include "Scene.h"
 
-Scene::Scene(SCENES scene_name) : scene_name(scene_name), escape(true)		// This Here
+Scene::Scene(SCENES scene_name) : scene_name(scene_name), escape(true), occupied_debug(nullptr), occupied_by_entity_debug(nullptr)	// This Here
 {
-
+	
 }
 
 Scene::~Scene()

@@ -94,12 +94,10 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
 	App->map->Draw();																//Map Draw
+
 	App->minimap->BlitMinimap();
 
-
-	DrawOccupied();
-
-	DrawEntityMapDebug();
+	App->map->DataMapDebug();
 
 	if (App->map->pathfindingMetaDebug == true)
 	{
@@ -576,36 +574,6 @@ void GameplayScene::DrawPathfindingDebug()
 		//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
 
 		App->render->Blit(path_debug_tex, pos.x, pos.y);
-	}
-}
-
-void GameplayScene::DrawOccupied()
-{
-	for (int x = 0; x < App->map->data.width; ++x) //Magic
-	{
-		for (int y = 0; y < App->map->data.height; ++y)
-		{
-			if (App->pathfinding->IsOccupied(iPoint(x, y)))
-			{
-				iPoint draw_position = App->map->MapToWorld(x, y);
-				App->render->Blit(occupied_debug, draw_position.x, draw_position.y, nullptr);
-			}
-		}
-	}
-}
-
-void GameplayScene::DrawEntityMapDebug()
-{
-	for (int x = 0; x < App->map->data.width; ++x) //Magic
-	{
-		for (int y = 0; y < App->map->data.height; ++y)
-		{
-			if (App->entity_manager->entity_map[(y * App->map->data.width) + x] != nullptr)
-			{
-				iPoint draw_position = App->map->MapToWorld(x, y);
-				App->render->Blit(occupied_by_entity_debug, draw_position.x, draw_position.y, nullptr);
-			}
-		}
 	}
 }
 

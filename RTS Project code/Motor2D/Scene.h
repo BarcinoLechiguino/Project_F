@@ -44,6 +44,9 @@ public:
 
 	SCENES			scene_name;									// SCENE will be both the name and the index of the scene.
 
+	SDL_Texture* occupied_debug;
+	SDL_Texture* occupied_by_entity_debug;
+
 	int				map_width;									// Width of the map loaded on the scene.
 	int				map_height;									// Height of the map loaded on the scene.
 	bool			escape;										
