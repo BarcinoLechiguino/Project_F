@@ -44,6 +44,9 @@ public:
 
 	void ExecuteTransition();
 
+	void LoadInGameOptionsMenu();
+
+
 	//void DebugKeys();
 
 	void UnitDebugKeys();
@@ -117,6 +120,19 @@ public:
 	UI_Button*				in_game_exit_button;
 	UI_Button*				in_game_back_to_menu;
 	UI_Text*				in_game_title_text;
+
+	// In-game options
+	UI_Image*				in_game_options_parent;
+	
+	UI_Button*				in_game_back_button;
+	UI_Scrollbar*			in_game_music_scrollbar;
+	UI_Scrollbar*			in_game_sfx_scrollbar;
+
+	// Text:
+	UI_Text*				in_game_resolution_text;
+	UI_Text*				in_game_sfx_text;
+	UI_Text*				in_game_music_text;
+	UI_Text*				in_game_options_text;
 
 	// HUD
 	UI_Button*				 HUD_group_button;

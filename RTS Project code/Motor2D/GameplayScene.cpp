@@ -24,6 +24,7 @@
 #include "UI.h"
 #include "UI_Text.h"
 #include "UI_Button.h"
+#include "UI_Scrollbar.h"
 #include "UI_Image.h"
 
 #include "SceneManager.h"
@@ -128,6 +129,7 @@ bool GameplayScene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		App->gui->SetElementsVisibility(in_game_background, !in_game_background->isVisible);
+		App->gui->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
 		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
 	}
 
@@ -287,6 +289,9 @@ void GameplayScene::LoadGuiElements()
 	std::string in_game_title_string = "Pause Menu";
 	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 439, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
 
+	// Options Menu
+	LoadInGameOptionsMenu();
+	App->gui->SetElementsVisibility(in_game_options_parent, false);
 
 	// HUD
 
@@ -329,6 +334,50 @@ void GameplayScene::LoadGuiElements()
 
 }
 
+void GameplayScene::LoadInGameOptionsMenu()
+{
+	// Options Menu
+	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
+	_TTF_Font* in_game_font = App->font->Load("fonts/borgsquadcond.ttf", 50);
+	_TTF_Font* in_game_font2 = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	in_game_options_parent = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	// Options
+	std::string in_game_title_string = "Options Menu";
+	in_game_options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 415, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_title_string);
+
+	//Music
+	std::string in_game_music_string = "Music";
+	in_game_music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 457, 275, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_music_string);
+
+	SDL_Rect in_game_thumb_rect = { 930,2,18,31 };
+	SDL_Rect in_game_scrollbar_rect = { 743,3,180,15 };
+
+	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 280, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false);
+	in_game_music_scrollbar->parent = in_game_options_parent;
+
+	//SFX
+	std::string sfx_string = "SFX";
+	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 486, 309, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
+	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 320, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, true);
+	in_game_sfx_scrollbar->parent = in_game_options_parent;
+
+	//screen size
+	std::string in_game_resolution_string = "screen";
+	in_game_resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 418, 346, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_resolution_string);
+
+	//Remapping
+
+	//Back button
+	SDL_Rect in_game_back_button_size = { 0, 0, 45, 33 };
+	SDL_Rect in_game_back_button_idle = { 0, 103, 45, 33 };
+	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
+	SDL_Rect in_game_back_button_clicked = { 114, 103, 45, 33 };
+
+	in_game_back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 400, 490, true, true, false, this, in_game_options_parent
+		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
+}
+
 void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	if (element == transition_button && ui_event == UI_EVENT::UNCLICKED)
@@ -359,6 +408,27 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Options
 		App->audio->PlayFx(App->gui->options_fx, 0);
+
+		App->gui->SetElementsVisibility(in_game_continue_button, false);							// Deactivate Pause Menu
+		App->gui->SetElementsVisibility(in_game_options_button, false);
+		App->gui->SetElementsVisibility(in_game_exit_button, false);
+		App->gui->SetElementsVisibility(in_game_back_to_menu, false);
+		App->gui->SetElementsVisibility(in_game_title_text, false);
+
+		App->gui->SetElementsVisibility(in_game_options_parent, true);
+	}
+
+	if (element == in_game_back_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		App->audio->PlayFx(App->gui->back_fx, 0);
+
+		App->gui->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu
+		App->gui->SetElementsVisibility(in_game_options_button, true);
+		App->gui->SetElementsVisibility(in_game_exit_button, true);
+		App->gui->SetElementsVisibility(in_game_back_to_menu, true);
+		App->gui->SetElementsVisibility(in_game_title_text, true);
+
+		App->gui->SetElementsVisibility(in_game_options_parent, false);
 	}
 
 	if (element == in_game_back_to_menu && ui_event == UI_EVENT::UNCLICKED)
