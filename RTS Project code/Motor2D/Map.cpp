@@ -16,6 +16,7 @@
 #include "Gui.h"
 #include "Console.h"
 
+
 #include "Map.h"
 
 Map::Map() : Module(), map_loaded(false), pathfindingMetaDebug(false)
@@ -103,6 +104,31 @@ void Map::Draw()
 	//(*data.layers.begin())->tiles_tree->DrawQuadtree();
 	//LOG("Tiles drawn: %d", tiles_drawn);
 }
+
+void Map::DataMapDebug()
+{
+	for (int x = min_x_row; x < max_x_row && x < data.width; x++)
+	{
+		for (int y = min_y_row; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
+		{
+			if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
+			{
+				if (App->pathfinding->IsOccupied(iPoint(x, y)))
+				{
+					iPoint draw_position = App->map->MapToWorld(x, y);
+					App->render->Blit(occupied_debug, draw_position.x, draw_position.y, nullptr);
+				}
+
+				if (App->entity_manager->entity_map[(y * App->map->data.width) + x] != nullptr)
+				{
+					iPoint draw_position = App->map->MapToWorld(x, y);
+					App->render->Blit(occupied_by_entity_debug, draw_position.x, draw_position.y, nullptr);
+				}
+			}
+		}
+	}
+}
+
 
 iPoint Map::MapToWorld(int x, int y) const 
 {
