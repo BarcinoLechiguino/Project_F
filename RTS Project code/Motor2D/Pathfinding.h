@@ -94,8 +94,11 @@ struct PathNode
 // ---------------------------------------------------------------------
 struct PathList
 {
-	//std::vector<PathNode>::iterator Find(const iPoint& point);
-	//std::vector<PathNode>::iterator GetNodeLowestScore();
+	/*std::vector<PathNode>::iterator Find(const iPoint& point);
+	std::vector<PathNode>::iterator GetNodeLowestScore();*/
+
+	/*PathNode* Find(const iPoint& point);
+	PathNode* GetNodeLowestScore();*/
 
 	std::list<PathNode>::iterator Find(const iPoint& point);
 	std::list<PathNode>::iterator GetNodeLowestScore();

@@ -183,11 +183,11 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 	{
 		current_node->FindWalkableAdjacents(neighbours);																//Fill starting node
 
-		std::list<PathNode>::iterator neighbour_iterator = neighbours.list.begin();
+		std::list<PathNode>::iterator item = neighbours.list.begin();
 
-		for (; neighbour_iterator != neighbours.list.end() && units != units_selected.end(); ++neighbour_iterator)
+		for (; item != neighbours.list.end() && units != units_selected.end(); ++item)
 		{
-			PathNode neighbour = *neighbour_iterator;																	// For Readability
+			PathNode neighbour = *item;																	// For Readability
 
 			if (visited.Find(neighbour.pos) == visited.list.end())														//if not in visited
 			{
@@ -364,8 +364,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	PathList closed;																            //Declares/Creates the closed list (visited list).
 																					            
 	PathNode origin_node(0, 0, origin, nullptr);									            //Declares/Creates a node that will store the data of the origin tile. G, H, position and parent are passed as arguments. 
-																					            
-	//open.list.add(origin_node);													            //Adds the current node storing the data of the origin tile to the open (frontier) list.
+
 	open.list.push_back(origin_node);												            //Adds the current node storing the data of the origin tile to the open (frontier) list.
 																					            
 																					            
@@ -403,7 +402,7 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		
 		current_node->FindWalkableAdjacents(neighbours);										//Fills the neighbours list with the walkable adjacent nodes of current_node.
 		//std::vector<PathNode>::iterator neighbour_iterator = neighbours.list.begin();			//Declares a list item pointer that will iterate the neighbours list.
-		
+
 		std::list<PathNode>::iterator neighbour_iterator = neighbours.list.begin();				//Declares a list item pointer that will iterate the neighbours list.
 		
 		for (; neighbour_iterator != neighbours.list.end(); ++neighbour_iterator)
@@ -430,7 +429,6 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		}
 
 		neighbours.list.clear();																//Clears the neighbours list so the elements are not accumulated from node to node (tile to tile).
-		//neighbours.list.shrink_to_fit();
 
 		if (closed.list.size() > 500)
 		{
