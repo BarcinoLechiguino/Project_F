@@ -12,22 +12,18 @@ struct Collider;
 
 class Entity;
 
+
 // Collider Types -------------------------
 enum Object_Type					//Care with enum class. If enum class-> Object_Type::HAZARD and not just HAZARD (i.e)
 {
-	PLAYER,
-	PLAYER2,
-	ATTACK,
+	ENEMY_BARRACKS,
+	BARRACKS,
 	ENEMY,
-	SOLID,
-	PLATFORM,
-	HAZARD,
-	SWITCH,
-	DEACTIVABLE,
-	ITEM,
-	RESPAWN,
-	CHECKPOINT,
-	GOAL,
+	INFANTRY,
+	GATHERER,
+	HALL,
+	ENEMY_HALL,
+	ROCK,
 	NONE,
 	UNKNOWN = -1
 };
@@ -184,6 +180,7 @@ public:
 
 	iPoint MapToWorld(int x, int y) const;									//This method translates the position of the tile on the map to its equivalent position on screen.
 	iPoint WorldToMap(int x, int y) const;									//This method translates the position of the tile on the screen to its equivalent position on the map.
+	iPoint TiledIsoCoordsToMap(int x, int y) const;
 	
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);		//Changed to non const because of list unknown problem
 	bool CreateEntityMap(int& width, int& height);							//This method will allocate the necessary memory and initialize the entities map. Not necessary in this case(?).

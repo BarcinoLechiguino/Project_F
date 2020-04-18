@@ -94,7 +94,7 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
 	App->map->Draw();																//Map Draw
-	App->minimap->BlitMinimap();
+
 
 
 	DrawOccupied();
@@ -132,6 +132,8 @@ bool GameplayScene::PostUpdate()
 		App->gui->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
 		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
 	}
+
+	App->minimap->BlitMinimap();
 
 	return ret;
 }
