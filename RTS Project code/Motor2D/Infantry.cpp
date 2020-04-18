@@ -332,6 +332,7 @@ void Infantry::DealDamage()
 	if (!attack_in_cooldown)
 	{
 		ApplyDamage(target);
+		App->audio->PlayFx(App->entity_manager->infantry_shot_fx);
 		attack_in_cooldown = true;
 
 		if (target->current_health <= 0)

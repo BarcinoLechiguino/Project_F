@@ -3,6 +3,7 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Audio.h"
 
 #include "Dynamic_Object.h"
 
@@ -202,6 +203,23 @@ void Dynamic_Object::HandleMovement(float dt)
 
 		SetEntityState();
 
+		//Handle movement fx
+		switch (type)
+		{
+		case ENTITY_TYPE::UNKNOWN_TYPE:
+			break;
+		case ENTITY_TYPE::ENEMY:
+			App->audio->PlayFx(App->entity_manager->infantry_movement_fx);
+			break;
+		case ENTITY_TYPE::GATHERER:
+			App->audio->PlayFx(App->entity_manager->gatherer_movement_fx);
+			break;
+		case ENTITY_TYPE::INFANTRY:
+			App->audio->PlayFx(App->entity_manager->infantry_movement_fx);
+			break;
+		default:
+			break;
+		}
 		break;
 	}
 
