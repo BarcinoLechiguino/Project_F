@@ -317,6 +317,9 @@ bool Map::Load(std::string file_name)
 		data.layers.push_back(set_layer);
 	}
 
+	//Entity and Walkability maps are loaded here. Previously in GameScene.
+	LoadEntityAndWalkabilityMap();
+
 	//Load Object / ObjectGroup / Collider Info ------------------------------------------
 	pugi::xml_node objectgroup;
 	for (objectgroup = map_file.child("map").child("objectgroup"); objectgroup && ret; objectgroup = objectgroup.next_sibling("objectgroup"))
@@ -574,6 +577,21 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 
 	return ret;
+}
+
+void Map::LoadEntityAndWalkabilityMap() 
+{
+	//Walkability map here.
+	int w, h;
+	uchar* walkability_data = NULL;
+	if (App->map->CreateWalkabilityMap(w, h, &walkability_data))
+	{
+		App->pathfinding->SetMap(w, h, walkability_data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
+	}
+
+	RELEASE_ARRAY(walkability_data);											//Frees all memory allocated to the data array.
+
+	App->entity_manager->SetEntityMap(App->map->data.width, App->map->data.height);
 }
 
 //Loads the object layers (colliders) from the xml map. It iterates through  a specific object layer (in the load() it is iterated through to get all the object info).

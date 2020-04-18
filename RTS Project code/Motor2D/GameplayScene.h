@@ -35,9 +35,6 @@ public:
 public:
 	void InitScene();
 
-	void SetWalkabilityMap();
-	void SetEntitiesMap();
-
 	void LoadGuiElements();
 	
 	void OnEventCall(UI* element, UI_EVENT ui_event);

@@ -184,23 +184,6 @@ void GameplayScene::InitScene()
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 }
 
-void GameplayScene::SetWalkabilityMap()
-{
-	int w, h;
-	uchar* data = NULL;
-	if (App->map->CreateWalkabilityMap(w, h, &data))
-	{
-		App->pathfinding->SetMap(w, h, data);						//Sets a new walkability map with the map passed by CreateWalkabilityMap().
-	}
-
-	RELEASE_ARRAY(data);											//Frees all memory allocated to the data array.
-}
-
-void GameplayScene::SetEntitiesMap()
-{
-	App->entity_manager->SetEntityMap(App->map->data.width, App->map->data.height);
-}
-
 void GameplayScene::LoadGuiElements()
 {
 	// Temporal transition buttons
