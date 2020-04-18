@@ -13,6 +13,7 @@
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
+#include "Player.h"
 
 #include "Gatherer.h"
 
@@ -62,6 +63,30 @@ bool Gatherer::Update(float dt, bool doLogic)
 		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 	}
 
+	if (doLogic)
+	{
+		if (target == nullptr && !path_full)
+		{
+			SetGatheringTarget(App->player->mouse_tile);
+		}
+	}
+
+	if (target != nullptr)
+	{
+		//path_full = false;
+		if (target != nullptr)
+		{
+			if (TargetIsInRange())
+			{
+				Gather();
+			}
+			else
+			{
+
+			}
+		}
+	}
+
 	return true;
 }
 
@@ -99,6 +124,8 @@ void Gatherer::InitEntity()
 	InitUnitSpriteSections();
 
 	target = nullptr;
+	gather_in_cooldown = false;
+	accumulated_cooldown = 0.0f;
 
 	is_selectable = true;
 	path_full = false;
@@ -110,6 +137,11 @@ void Gatherer::InitEntity()
 
 	gathering_speed = 1.0f;
 	gathering_amount = 5;
+
+	attack_damage = gathering_amount; //temporary use of these variables to check if it works
+	attack_speed = gathering_speed;
+
+	attack_range = 1;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
@@ -190,6 +222,78 @@ bool Gatherer::TargetIsInRange()
 	}
 
 	return false;
+}
+
+
+void Gatherer::SetGatheringTarget(const iPoint& tile_position)
+{
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if (App->entity_manager->IsResource((*item)))
+		{
+			if (App->entity_manager->GetEntityPos(*item) == tile_position)
+			{
+				target = (*item);
+				break;
+			}
+		}
+	}
+}
+
+void Gatherer::PathToGatheringTarget()
+{
+	std::vector<iPoint> tmp;
+
+	for (int i = 0; i < entity_path.size(); ++i)
+	{
+		tmp.push_back(entity_path[i]);
+
+		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+		{
+			entity_path.clear();
+
+			entity_path = tmp;
+
+			target_tile = entity_path.back();
+			current_path_tile = entity_path.begin();
+
+			tmp.clear();
+
+			break;
+		}
+	}
+}
+
+
+
+void Gatherer::Gather()
+{
+	if (!gather_in_cooldown)
+	{
+		if (App->entity_manager->IsResource(target))
+		{
+			ApplyDamage(target);
+			gather_in_cooldown = true;
+		}
+
+
+		if (target->current_health <= 0)
+		{
+			target = nullptr;
+		}
+	}
+	else
+	{
+		accumulated_cooldown += App->GetDt();
+
+		if (accumulated_cooldown >= attack_speed)
+		{
+			gather_in_cooldown = false;
+			accumulated_cooldown = 0.0f;
+		}
+	}
 }
 
 void Gatherer::OnCollision(Collider* C1, Collider* C2)

@@ -334,6 +334,24 @@ bool EntityManager::IsUnit(Entity* entity)
 
 	return false;
 }
+bool EntityManager::IsInfantry(Entity* entity)
+{
+	if (entity->type == ENTITY_TYPE::INFANTRY )
+	{
+		return true;
+	}
+
+	return false;
+}
+bool EntityManager::IsGatherer(Entity* entity)
+{
+	if (entity->type == ENTITY_TYPE::GATHERER)
+	{
+		return true;
+	}
+
+	return false;
+}
 
 bool EntityManager::IsBuilding(Entity* entity)
 {
@@ -388,6 +406,11 @@ void EntityManager::SetEntityMap(int width, int height)
 	}
 
 	//memcpy(entity_map, data, width * height);							// THIS HERE
+}
+
+iPoint EntityManager::GetEntityPos(Entity* entity)
+{
+	return entity->tile_position;
 }
 
 void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null)

@@ -57,6 +57,9 @@ public:
 	SDL_Texture* GetRockTexture() const;
 
 	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
+	bool IsInfantry(Entity* entity);
+	bool IsGatherer(Entity* enitity);
+	
 	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
 	bool IsResource(Entity* entity);													//Method that will return true if the entity passed as argument is a resource.
 	bool IsEnemyEntity(Entity* entity);													//Method that will return true if the entity passed as argument is a enemy entity.
@@ -67,6 +70,7 @@ public:
 	bool CheckEntityMapBoundaries(const iPoint& pos) const;								//Method that will check whether or not the position passed as argument is inside the entity_map's bounds.
 
 	Entity* GetEntityAt(const iPoint& pos) const;										//Method that will return whichever entity is at the given position.
+	iPoint GetEntityPos(Entity* entity);
 
 	bool CheckTileAvailability(const iPoint& pos, Entity* entity);						//Method that will return true whenever the space required by an entity to spawn is available.
 
