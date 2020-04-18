@@ -19,14 +19,16 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
+	void BlitMinimap(); //Prints all elements of the minimap; Analogous to map->Draw() in practical uses
+
 private:
 
-	void CreateTexture();
+	void CreateTexture(); 
 	bool MinimapCoords(int& map_x, int& map_y);
 	void DrawCamera();
 	void MinimapBorders();
 	void DrawEntities();
-	void DrawMinimap();
+	void DrawMinimap(); //Blits onto the alternate renderer, not on screen
 
 private:
 	SDL_Texture*		minimap_tex = nullptr;
