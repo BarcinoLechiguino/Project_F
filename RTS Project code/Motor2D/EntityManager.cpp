@@ -101,13 +101,6 @@ bool EntityManager::Update(float dt)
 bool EntityManager::PostUpdate()
 {
 	//Iterates all entities and calls their PostUpdate() methods.
-	//std::vector<Entity*>::iterator item = entities.begin();
-
-	//for (; item != entities.end(); ++item)
-	//{	
-	//	(*item)->PostUpdate();
-	//}
-
 	for (int i = 0; i < entities.size(); ++i)
 	{
 		entities[i]->PostUpdate();
@@ -119,12 +112,18 @@ bool EntityManager::PostUpdate()
 bool EntityManager::CleanUp()
 {
 	//Iterates all entities in the entities list and calls their CleanUp() method.
-	std::vector<Entity*>::iterator item = entities.begin();
+	/*std::vector<Entity*>::iterator item = entities.begin();
 	
 	for (; item != entities.end(); ++item)
 	{
 		(*item)->CleanUp();
 		RELEASE((*item));
+	}*/
+
+	for (int i = 0; i < entities.size(); ++i)
+	{
+		entities[i]->CleanUp();
+		RELEASE(entities[i]);
 	}
 
 	entities.clear();
