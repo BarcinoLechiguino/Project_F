@@ -204,7 +204,7 @@ void Player::OrderUnitsToAttack()
 
 	if (target != nullptr)
 	{
-		if (App->entity_manager->IsEnemyEntity(target) )
+		if (App->entity_manager->IsEnemyEntity(target))
 		{
 			std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
 

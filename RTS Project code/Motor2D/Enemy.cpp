@@ -326,7 +326,7 @@ void Enemy::PathToTarget()
 
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);							//Gives units targets around main target
-	//GiveNewTargetTile(target->tile_position);
+	GiveNewTargetTile(target->tile_position);
 }
 
 void Enemy::DealDamage()

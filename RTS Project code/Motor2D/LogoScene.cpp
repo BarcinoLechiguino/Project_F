@@ -101,22 +101,22 @@ void LogoScene::ExecuteTransition()
 {
 	// No KP_1 because we are in the 1rst scene.
 	
-	if (App->input->GetKey(SDL_SCANCODE_KP_2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::MAIN_SCENE, 0.5f, true, 3, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_KP_3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_KP_4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_KP_5) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, true, true);
 	}
