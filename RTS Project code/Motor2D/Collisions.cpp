@@ -50,7 +50,7 @@ bool Collisions::PreUpdate()
 		
 		if ((*collider_iterator)->type == Object_Type::UNKNOWN)	//If the delete_collider is set to true this will be run. //Second part breaks with mmgr
 		{
-			(*collider_iterator)->type = Object_Type::SOLID;
+		//	(*collider_iterator)->type = Object_Type::SOLID;
 		}
 		
 		if ((*collider_iterator)->to_delete == true || (*collider_iterator)->type == Object_Type::NONE)	//If the delete_collider is set to true this will be run. //Second part breaks with mmgr
@@ -136,7 +136,7 @@ void Collisions::Collider_Debug()
 	{
 		return;
 	}
-
+	/*
 	else
 	{
 		//LOG("Elements in the collider_list: %d", collider_list.size());	//Used to count how many items there are in a list
@@ -208,6 +208,8 @@ void Collisions::Collider_Debug()
 			}
 		}
 	}
+	*/
+	
 }
 
 //Loads all the objects that are in the tmx map file and iterates through them generating a new collider for each one of them.

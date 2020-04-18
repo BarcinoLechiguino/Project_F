@@ -13,12 +13,15 @@
 #include "Audio.h"
 #include "Pathfinding.h"
 #include "EntityManager.h"
+#include "Entity.h"
 #include "Gui.h"
 #include "Console.h"
 #include "SceneManager.h"
 #include "Scene.h"
 
 #include "Map.h"
+
+
 
 Map::Map() : Module(), map_loaded(false), pathfindingMetaDebug(false)
 {
@@ -175,6 +178,17 @@ iPoint Map::WorldToMap(int x, int y) const
 		LOG("Unknown map type");
 		ret.x = x; ret.y = y;
 	}
+
+	return ret;
+}
+
+iPoint Map::TiledIsoCoordsToMap(int x, int y) const 
+{
+	iPoint ret(0, 0);
+
+	//Yup. Is that dumb. Tiled Iso maps have their coords along the tile's axis, not aligned to the screen.
+	ret.x = x / 40;
+	ret.y = y / 40;
 
 	return ret;
 }
@@ -600,42 +614,49 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 
 		std::string object_type = (object_iterator.attribute("type").as_string());	
 
+
+		iPoint tile_coords = TiledIsoCoordsToMap(collider->x = object_iterator.attribute("x").as_int(), collider->x = object_iterator.attribute("y").as_int());
+
 		//Checking the object type string being loaded from the tmx file. It's a string that's abitrarily set on Tiled
-		if (object_type == "solid")
+		if (object_type == "enemy")
 		{
-			objectgroup->object[index].type = SOLID;
+			objectgroup->object[index].type = ENEMY;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, tile_coords.x, tile_coords.y);
 		}
-		else if (object_type == "platform")
+		else if (object_type == "enemy_barracks")
 		{
-			objectgroup->object[index].type = PLATFORM;
+			objectgroup->object[index].type = ENEMY_BARRACKS;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, tile_coords.x, tile_coords.y);
 		}
-		else if (object_type == "hazard")
+		else if (object_type == "enemy_hall")
 		{
-			objectgroup->object[index].type = HAZARD;
+			objectgroup->object[index].type = ENEMY_HALL;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, tile_coords.x, tile_coords.y);
 		}
-		else if (object_type == "item")
+		else if (object_type == "infantry")
 		{
-			objectgroup->object[index].type = SWITCH;
+			objectgroup->object[index].type = INFANTRY;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_coords.x, tile_coords.y);
 		}
-		else if (object_type == "desactivable")
+		else if (object_type == "gatherer")
 		{
-			objectgroup->object[index].type = DEACTIVABLE;
+			objectgroup->object[index].type = GATHERER;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_coords.x, tile_coords.y);
 		}
-		else if (object_type == "respawn")
+		else if (object_type == "hall")
 		{
-			objectgroup->object[index].type = RESPAWN;
+			objectgroup->object[index].type = HALL;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, tile_coords.x, tile_coords.y);
 		}
-		else if (object_type == "checkpoint")
+		else if (object_type == "barracks")
 		{
-			objectgroup->object[index].type = CHECKPOINT;
+			objectgroup->object[index].type = BARRACKS;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, tile_coords.x, tile_coords.y);
 		}
-		else if (object_type == "goal")
+		else if (object_type == "rock")
 		{
-			objectgroup->object[index].type = GOAL;
-		}
-		else
-		{
-			objectgroup->object[index].type = SOLID;				
+			objectgroup->object[index].type = ROCK;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, tile_coords.x, tile_coords.y);
 		}
 
 		index++;

@@ -131,6 +131,8 @@ bool GameplayScene::PostUpdate()
 		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
 	}
 
+	App->minimap->BlitMinimap();
+
 	return ret;
 }
 
