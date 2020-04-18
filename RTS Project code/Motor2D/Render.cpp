@@ -88,61 +88,7 @@ bool Render::PreUpdate()
 bool Render::Update(float dt)
 {
 	BROFILER_CATEGORY("Render Update", Profiler::Color::DeepSkyBlue);
-	//App->win->GetWindowSize(cam.WinWidth, cam.WinHeight);		//Last pixel of window is the 0,0 of the window we see. So we need to add + cam.WinWidth or + cam.WinHeight to set it where we want it to be.
-
-	//fPoint p1Pos = App->entityManager->player->position;													//Sets an fPoint with the position data members of the player1 player entity. Done for readability.
-	//iPoint p1Size( App->entityManager->player->sprite_width , App->entityManager->player->sprite_height);	//Sets an iPoint with the size data members of the player1 player entity. Done for readability.	
-	//fPoint p2Pos = App->entityManager->player2->position;													//Sets an fPoint with the position data members of the player2 player entity. Done for readability.
-	//iPoint p2Size(App->entityManager->player->sprite_width , App->entityManager->player->sprite_height);	//Sets an iPoint with the size data members of the player2 player entity. Done for readability.	
-
-
-	////Positions of the camera if it was centered around only one player. Used a p2Point<float> to translate all those long and convoluted expressions to a much more readable state.
-	//cam.p1.x = -p1Pos.x + cam.WinWidth / 2 - p1Size.x;				//Sets the camera p1 point X axis position with the position data members of player 1.
-	//cam.p1.y = -p1Pos.y + (cam.WinHeight / 2) - p1Size.y / 2;		//Sets the camera p2 point Y axis position with the position data members of player 2.
-	//cam.p2.x = -p2Pos.x + cam.WinWidth / 2 - p2Size.x;				//Sets the camera p1 point X axis position with the position data members of player 1.	
-	//cam.p2.y = -p2Pos.y + (cam.WinHeight / 2) - p2Size.y / 2;		//Sets the camera p2 point Y axis position with the position data members of player 2.
-
-	////Calculating the central position. 
-	//if (p2Pos.x > p1Pos.x)											//THIS HERE. Change when the player 2 player subclass is created.
-	//{
-	//	cam.MidPos.x = cam.p2.x - ((cam.p2.x - cam.p1.x) / 2);
-	//	cam.MidPos.y = cam.p2.y - ((cam.p2.y - cam.p1.y) / 2);
-	//}
-	//else
-	//{
-	//	cam.MidPos.x = cam.p1.x - ((cam.p1.x - cam.p2.x) / 2);
-	//	cam.MidPos.y = cam.p1.y - ((cam.p1.y - cam.p2.y) / 2);
-	//}
-
-	////We calculate the delimitations of the map making use of the map data we already have.
-	//cam.mapLimit.x = -(App->map->data.tile_width * App->map->data.width) + cam.WinWidth;		//data.tile_width refers to the tile's width in pixels and data.width refers to the map's total width in tiles
-	//cam.mapLimit.y = -(App->map->data.tile_height * App->map->data.height) + cam.WinHeight;		//data.tile_height refers to the tile's height in pixels and data.height refers to the map's total height in tiles.
 	
-	//if (cam.camera_debug == false)									//If camera_debug is true then the camera is freed and can be operated to be moved wherever on the world.
-	//{
-		//We set the camera position according to the mid positions.
-		//camera.x = cam.MidPos.x;
-		//camera.y = cam.MidPos.y; //Commented
-
-		//Camera limits
-		//if (camera.x >= 0)											//Camera is at the leftmost part of the map in the x axis.
-		//{
-		//	camera.x = 0;
-		//}
-		//else if (camera.x <= cam.mapLimit.x)						//Camera is at the rightmost part of the map in the x axis.
-		//{
-		//	camera.x = cam.mapLimit.x;
-		//}
-
-		//if (camera.y > 0)											//Camera is at the highest part of the map in the y axis.
-		//{
-		//	camera.y = 0;
-		//}
-		//else if (camera.y < cam.mapLimit.y)							//Camera is at the lowest part of the map.
-		//{
-		//	camera.y = cam.mapLimit.y;
-		//}
-	//}
 	
 	return true;
 }
@@ -150,17 +96,6 @@ bool Render::Update(float dt)
 bool Render::PostUpdate()
 {
 	BROFILER_CATEGORY("Render PostUpdate", Profiler::Color::DeepSkyBlue);
-	//Trying to implement lerping on the y axis of the camera.
-	/*if (App->player2->p2.position.x > App->player1->p1.position.x)
-	{
-		cam.MidPosPostMovement.y = cam.p2.y - ((cam.p2.y - cam.p1.y) / 2);
-	}
-	else
-	{
-		cam.MidPosPostMovement.y = cam.p1.y - ((cam.p1.y - cam.p2.y) / 2);
-	}
-
-	camera.y = cam.lerp(cam.MidPos.y, cam.MidPosPostMovement.y, cam.smoothingSpeed);*/
 	
 	SDL_SetRenderDrawColor(renderer, background.r, background.g, background.g, background.a);
 	SDL_RenderPresent(renderer);
