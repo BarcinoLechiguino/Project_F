@@ -11,6 +11,7 @@
 #include "Audio.h"
 #include "Collisions.h"
 #include "Map.h"
+#include "Minimap.h"
 #include "Pathfinding.h"
 #include "Console.h"
 #include "Player.h"
@@ -93,7 +94,9 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
 	App->map->Draw();																//Map Draw
-	
+	App->minimap->BlitMinimap();
+
+
 	DrawOccupied();
 
 	DrawEntityMapDebug();

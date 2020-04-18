@@ -106,17 +106,23 @@ bool Minimap::Update(float dt)
 
 bool Minimap::PostUpdate()
 {	
-	if (App->map->map_loaded == true) {
-		
-		App->render->Blit(minimap_bg, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
-		
-		App->render->Blit(minimap_tex, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
-		MinimapBorders();
-		DrawEntities();
-		DrawCamera();
-	}
+
+
 	return true;
 }
+
+void Minimap::BlitMinimap() {
+
+
+	App->render->Blit(minimap_bg, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
+
+	App->render->Blit(minimap_tex, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
+	MinimapBorders();
+	DrawEntities();
+	DrawCamera();
+
+}
+
 
 bool Minimap::CleanUp()
 {

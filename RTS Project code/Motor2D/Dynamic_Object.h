@@ -54,6 +54,8 @@ public:
 	virtual void PathToTarget();
 	virtual void DealDamage();													// Method that will deal damage to the target entity. Damage ticks are limited by attack_speed.
 
+	virtual void SetGatheringTarget(const iPoint& tile_position);
+	virtual void PathToGatheringTarget();
 
 	bool GiveNewTargetTile(const iPoint& new_target_tile);
 	void ChangeOccupiedTile(const iPoint& new_occupied_tile);
@@ -77,6 +79,7 @@ public:
 
 	float							accumulated_cooldown;						// Total amount of time that has been accumulated since the unit's attack entered cooldown.
 	bool							attack_in_cooldown;							// Will keep track whether or not the attack of a unit is in cooldown or not.
+
 
 	Entity*							target;
 

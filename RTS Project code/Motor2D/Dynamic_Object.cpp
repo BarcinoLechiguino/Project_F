@@ -78,6 +78,16 @@ void Dynamic_Object::GetShortestPathWithinAttackRange()
 	return;
 }
 
+void Dynamic_Object::SetGatheringTarget(const iPoint& tile_position)
+{
+	return;
+}
+
+void Dynamic_Object::PathToGatheringTarget()
+{
+	return;
+}
+
 bool Dynamic_Object::TargetIsInRange()
 {
 	return true;
@@ -115,6 +125,7 @@ bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 	else
 	{
 		GetShortestPathWithinAttackRange();
+		PathToGatheringTarget();
 	}
 
 	ChangeOccupiedTile(target_tile);

@@ -204,14 +204,97 @@ void Player::OrderUnitsToAttack()
 
 	if (target != nullptr)
 	{
-		if (App->entity_manager->IsEnemyEntity(target))
+		if (App->entity_manager->IsEnemyEntity(target) )
 		{
 			std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
 
 			for (; item != units_selected.end(); ++item)
 			{
-				(*item)->target = target;
-				App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
+				if (App->entity_manager->IsInfantry(*item))
+				{
+					(*item)->target = target;
+					App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
+				}
+				else
+				{
+					LOG("Selected unit is not an Infantry");
+					return;
+				}
+			}
+
+			if (App->entity_manager->IsUnit(target))
+			{
+				App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);							//Gives units targets around main target
+			}
+			else
+			{
+				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y - 1)))
+				{
+					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y - 1);
+					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);							//Gives units targets around main target
+					return;
+				}
+				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y + 1)))
+				{
+					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y + 1);
+					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
+					return;
+				}
+				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y + 1)))
+				{
+					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y + 1);
+					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
+					return;
+				}
+				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y - 1)))
+				{
+					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y - 1);
+					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
+					return;
+				}
+				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x, target->tile_position.y - 1)))
+				{
+					iPoint neighbour = iPoint(target->tile_position.x, target->tile_position.y - 1);
+					App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);
+					return;
+				}
+				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x - 1, target->tile_position.y)))
+				{
+					iPoint neighbour = iPoint(target->tile_position.x - 1, target->tile_position.y);
+					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
+					return;
+				}
+				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x + 1, target->tile_position.y)))
+				{
+					iPoint neighbour = iPoint(target->tile_position.x + 1, target->tile_position.y);
+					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
+					return;
+				}
+				if (App->pathfinding->IsWalkable(iPoint(target->tile_position.x, target->tile_position.y + 1)))
+				{
+					iPoint neighbour = iPoint(target->tile_position.x, target->tile_position.y + 1);
+					App->pathfinding->FindNearbyWalkable(neighbour, units_selected);
+					return;
+				}
+			}
+		}
+		if (App->entity_manager->IsResource(target))
+		{
+			std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+
+			for (; item != units_selected.end(); ++item)
+			{
+				if (App->entity_manager->IsGatherer(*item))
+				{
+					(*item)->target = target;
+					App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
+				}
+				else
+				{
+					LOG("Selected unit is not a Gatherer");
+					return;
+				}
+
 			}
 
 			if (App->entity_manager->IsUnit(target))
