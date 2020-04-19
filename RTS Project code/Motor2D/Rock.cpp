@@ -16,6 +16,11 @@
 Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
 {
 	InitEntity();
+
+	int rock_version = (rand() % 4) * 54;
+
+	blit_section = new SDL_Rect{rock_version,0,54,35};
+
 }
 
 bool Rock::Awake(pugi::xml_node&)
@@ -31,7 +36,8 @@ bool Rock::PreUpdate()
 
 bool Rock::Update(float dt, bool doLogic)
 {
-	App->render->Blit(entity_sprite, pixel_position.x, pixel_position.y, nullptr);
+	
+	App->render->Blit(entity_sprite, pixel_position.x, pixel_position.y, blit_section);
 
 	return true;
 }
@@ -59,6 +65,8 @@ bool Rock::CleanUp()
 	}
 	App->gui->DeleteGuiElement(healthbar);
 	
+	delete blit_section;
+
 	return true;
 }
 

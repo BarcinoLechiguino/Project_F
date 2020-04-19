@@ -27,6 +27,9 @@ public:
 
 	int gather_time;
 
+private:
+	SDL_Rect* blit_section;
+
 };
 
 #endif // !__ROCK_H__
