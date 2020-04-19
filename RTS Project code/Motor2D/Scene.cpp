@@ -4,6 +4,7 @@
 #include "Collisions.h"
 #include "Map.h"
 #include "Gui.h"
+#include "Player.h"
 #include "SceneManager.h"
 
 #include "Scene.h"
@@ -93,52 +94,12 @@ void Scene::CameraDebugMovement(float dt)
 
 void Scene::DebugKeys()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)						// Enable/Disable God Mode Key
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)						// Enable/Disable God Mode.
 	{
-		App->scene_manager->god_mode = !App->scene_manager->god_mode;
+		App->player->god_mode = !App->player->god_mode;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)						//Enable/Disable UI_Debug Key
-	{
-		App->gui->ui_debug = !App->gui->ui_debug;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)						//Enable/Disable Pathfinding Debug Key
-	{
-		App->map->pathfindingMetaDebug = !App->map->pathfindingMetaDebug;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)
-	{
-		App->pause = !App->pause;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)						//Save Game Key
-	{
-		App->SaveGame("save_game.xml");
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)						//Load Game Key
-	{
-		App->LoadGame("save_game.xml");
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)						//Enable / Disable free camera movement Key
-	{
-		//App->render->cam.camera_debug = !App->render->cam.camera_debug;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)						//PathfindingCollisions meta layer Debug Key
-	{
-		App->gui->ui_debug = !App->gui->ui_debug;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)						//Collider Debug Key
-	{
-		App->collisions->collider_debug = !App->collisions->collider_debug;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)						//Enabling / Disabling frame cap
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_DOWN)						// Switch the frame cap between 60 and 30 FPS.
 	{
 		//App->framesAreCapped = !App->framesAreCapped;
 		if (App->frame_cap == CAP_AT_60)
@@ -149,5 +110,45 @@ void Scene::DebugKeys()
 		{
 			App->frame_cap = CAP_AT_60;
 		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_DOWN)						//Enable/Disable Pause Mode.
+	{
+		App->pause = !App->pause;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_DOWN)						//Enable/Disable UI_Debug Key. (Display all UI elements hitboxes)
+	{
+		App->gui->ui_debug = !App->gui->ui_debug;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_DOWN)						//Save Game Key
+	{
+		//App->SaveGame("save_game.xml");
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_DOWN)						//Load Game Key
+	{
+		//App->LoadGame("save_game.xml");
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_DOWN)						//Enable/Disable pathfinding meta debug. (Display pathfinding meta tiles)
+	{
+		App->map->pathfinding_meta_debug = !App->map->pathfinding_meta_debug;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_DOWN)						//Enable/Disable walkability map debug. (Display walkability map tiles)
+	{
+		App->map->walkability_debug = !App->map->walkability_debug;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_DOWN)						//Enable/Dasable entity map debug. (Display entity map tiles)
+	{
+		App->map->entity_map_debug = !App->map->entity_map_debug;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_DOWN)						//Enable/Disable collider debug. (Display all colliders.)
+	{
+		App->collisions->collider_debug = !App->collisions->collider_debug;
 	}
 }

@@ -8,12 +8,12 @@
 #include "Collisions.h"
 #include "Map.h"
 #include "Pathfinding.h"
+#include "Player.h"
 #include "Gui.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
-#include "Player.h"
 
 #include "Gatherer.h"
 
@@ -58,7 +58,7 @@ bool Gatherer::Update(float dt, bool doLogic)
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 14, &entity_sprite_section);
 
-	if (App->scene_manager->god_mode)
+	if (App->player->god_mode)
 	{
 		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 	}
@@ -127,6 +127,7 @@ void Gatherer::InitEntity()
 	accumulated_cooldown = 0.0f;
 
 	is_selectable = true;
+	is_selected = false;
 	path_full = false;
 
 	speed = 400.0f;

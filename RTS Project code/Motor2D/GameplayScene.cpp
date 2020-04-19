@@ -58,9 +58,9 @@ bool GameplayScene::Awake(pugi::xml_node& config)
 		map_names.push_back(data);
 	}*/
 
-	music_path = (config.child("audio").attribute("path").as_string());
-	music_path2=(config.child("audio2").attribute("path").as_string());
-	music_path3=(config.child("audio3").attribute("path").as_string());
+	music_path	= (config.child("audio").attribute("path").as_string());
+	music_path2	= (config.child("audio2").attribute("path").as_string());
+	music_path3	= (config.child("audio3").attribute("path").as_string());
 	
 	return ret;
 }
@@ -79,7 +79,7 @@ bool GameplayScene::Start()
 bool GameplayScene::PreUpdate()
 {
 	// debug pathfing ------------------
-	if (App->map->pathfindingMetaDebug == true)
+	if (App->map->pathfinding_meta_debug)
 	{
 		PathfindingDebug();
 	}
@@ -94,20 +94,21 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
-	App->map->Draw();																//Map Draw
+	App->map->Draw();																		//Map Draw
 
 	App->minimap->BlitMinimap();
 
-	App->map->DataMapDebug();
-
-	if (App->map->pathfindingMetaDebug == true)
+	if (App->map->walkability_debug || App->map->entity_map_debug)
 	{
-		DrawPathfindingDebug();														//Pathfinding Debug. Shows a debug texture on the path's tiles.
+		App->map->DataMapDebug();																// Will print on screen the debug tiles of the walkability map and the entity map.
+	}
+
+	if (App->map->pathfinding_meta_debug)
+	{
+		DrawPathfindingDebug();																//Pathfinding Debug. Shows a debug texture on the path's tiles.
 	}
 
 	DebugHUDSpawn();
-
-	//LOG("Rocks %d", rock_test.size());
 
 	return true;
 }
@@ -120,15 +121,20 @@ bool GameplayScene::PostUpdate()
 	bool ret = true;
 
 	DebugKeys();																	//Debug Keys
-	UnitDebugKeys();
 
-	CameraDebugMovement(App->GetDt());
-
+	if (App->player->god_mode)
+	{
+		CameraDebugMovement(App->GetDt());
+		UnitDebugKeys();
+	}
+	
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
 	ExecuteTransition();
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
+		App->pause = !App->pause;
+		
 		App->gui->SetElementsVisibility(in_game_background, !in_game_background->isVisible);
 		App->gui->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
 		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
@@ -167,14 +173,13 @@ void GameplayScene::InitScene()
 
 	ret = App->map->Load("New_Tilesete_Map.tmx");
 
-	path_debug_tex = App->tex->Load("maps/path2.png");
-
 	//test background
 	background_rect = { 0,0,1280,720 };
 	background_texture = App->tex->Load("maps/hacker_background.png");
 
 	LoadGuiElements();
 
+	path_debug_tex = App->tex->Load("maps/path_tile.png");
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
 	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
 
@@ -403,13 +408,20 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == in_game_back_to_menu && ui_event == UI_EVENT::UNCLICKED)
 	{
+		if (App->pause)
+		{
+			App->pause = false;
+		}
+		
 		// Back to menu
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 		App->audio->PlayFx(App->gui->exit_fx, 0);
 	}
 
 	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
-	{
+	{		
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
+		
 		// Exit
 		escape = false;
 	}
@@ -464,7 +476,7 @@ void GameplayScene::ExecuteTransition()
 
 void GameplayScene::UnitDebugKeys()
 {
-	if (App->scene_manager->god_mode)
+	if (App->player->god_mode)
 	{
 		if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
 		{
@@ -513,49 +525,55 @@ void GameplayScene::UnitDebugKeys()
 
 void GameplayScene::PathfindingDebug()
 {
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (App->map->pathfinding_meta_debug)
 	{
-		if (origin_selected == true)
+		static iPoint origin;
+		static bool origin_selected = false;
+
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
-			App->pathfinding->CreatePath(origin, p);
-			LOG("Tiles selected: (%d, %d) and (%d, %d)", origin.x, origin.y, p.x, p.y);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
+			if (origin_selected == true)
+			{
+				App->pathfinding->CreatePath(origin, p);
+				LOG("Tiles selected: (%d, %d) and (%d, %d)", origin.x, origin.y, p.x, p.y);
+				origin_selected = false;
+			}
+			else
+			{
+				origin = p;
+				origin_selected = true;
+			}
 		}
 	}
 }
 
 void GameplayScene::DrawPathfindingDebug()
 {
-	// Draw pathfinding debug tiles ------------------------------
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-
-	App->render->Blit(path_debug_tex, p.x, p.y);								//Should we want it, we could make a separate texture called mouse_debug_tex so the tex at mouse pos and the tex at path tile are different.
-
-	const std::vector<iPoint> path = App->pathfinding->GetLastPath();
-
-	for (uint i = 0; i < path.size(); ++i)
+	if (App->map->pathfinding_meta_debug)
 	{
-		iPoint pos = App->map->MapToWorld(path.at(i).x, path.at(i).y);		//Both work, reach a consensus on which to use.
-		//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
+		// Draw pathfinding debug tiles ------------------------------
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
+		p = App->map->MapToWorld(p.x, p.y);
 
-		App->render->Blit(path_debug_tex, pos.x, pos.y);
+		App->render->Blit(path_debug_tex, p.x, p.y);								//Should we want it, we could make a separate texture called mouse_debug_tex so the tex at mouse pos and the tex at path tile are different.
+
+		const std::vector<iPoint> path = App->pathfinding->GetLastPath();
+
+		for (uint i = 0; i < path.size(); ++i)
+		{
+			iPoint pos = App->map->MapToWorld(path.at(i).x, path.at(i).y);		//Both work, reach a consensus on which to use.
+			//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
+
+			App->render->Blit(path_debug_tex, pos.x, pos.y);
+		}
 	}
 }
 

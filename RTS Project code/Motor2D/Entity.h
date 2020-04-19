@@ -71,6 +71,8 @@ public:
 	//Entity Variables
 	ENTITY_TYPE		type;
 
+	bool			is_selected;
+
 	int				max_health;
 	int				current_health;
 	int				attack_damage;
