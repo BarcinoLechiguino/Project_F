@@ -108,8 +108,6 @@ public:
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
 
-	bool					already_clicked;
-
 	// In-game menu
 
 	UI_Image*				in_game_background;
@@ -136,6 +134,21 @@ public:
 	UI_Button*				 HUD_group_button;
 	UI_Button*				 HUD_home_button;
 	UI_Button*				 HUD_pause_button;
-	UI_Image*				 HUD_main_down_bar;
+	UI_Image*				 HUD_resource_bar;
+	UI_Image*				 HUD_data_resource;
+	UI_Image*				 HUD_electricity_resource;
+	UI_Image*				 HUD_townhall_bar;
+	UI_Text*				 HUD_title_townhall;
+	UI_Button*				 HUD_back_townhall;
+	UI_Button*				 HUD_unit_townhall;
+	UI_Button*				 HUD_unit_upgrade_townhall;
+	UI_Button*				 HUD_upgrade_townhall;
+	UI_Image*				 HUD_barracks_bar;
+	UI_Text*				 HUD_title_barracks;
+	UI_Button*				 HUD_back_barracks;
+	UI_Button*				 HUD_unit_barracks;
+	UI_Button*				 HUD_unit_upgrade_barracks;
+	UI_Button*				 HUD_upgrade_barracks;
+
 };
 #endif // !__GAMEPLAY_SCENE_H__
