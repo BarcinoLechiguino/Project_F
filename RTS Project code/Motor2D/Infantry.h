@@ -36,7 +36,7 @@ public:
 	void UpdateUnitOrientation();
 
 	bool TargetIsInRange();
-	void PathToTarget();
+	void ChaseTarget();
 	void DealDamage();
 
 	void OnCollision(Collider* C1, Collider* C2);

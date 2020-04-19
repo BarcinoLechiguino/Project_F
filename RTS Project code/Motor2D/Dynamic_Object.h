@@ -51,7 +51,7 @@ public:
 	virtual void SetEntityTargetByProximity(const iPoint& target_position);		// Method that will give an entity a combat target.
 	virtual void GetShortestPathWithinAttackRange();							// 
 	virtual bool TargetIsInRange();												// Method that will check whether or not a unit's target is within it's attack_range.
-	virtual void PathToTarget();
+	virtual void ChaseTarget();
 	virtual void DealDamage();													// Method that will deal damage to the target entity. Damage ticks are limited by attack_speed.
 
 	virtual void SetGatheringTarget(const iPoint& tile_position);				// Method that will set as a target the selected Resource
@@ -63,6 +63,8 @@ public:
 	void HandleMovement(float dt);
 	void SetEntityState();
 	void Move(float dt);
+
+	void HandleFx();
 
 	void DataMapSafetyCheck();													// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
 
@@ -103,6 +105,12 @@ public:
 
 	std::vector<iPoint>				entity_path;
 	std::vector<iPoint>::iterator	current_path_tile;
+
+private:
+
+	uint channel;
+
+	bool fx_playing;
 };
 
 #endif // !__DYNAMIC_OBJECT_H__

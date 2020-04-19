@@ -55,7 +55,7 @@ bool UI_Healthbar::Draw()
 	
 	UpdateHealthbarPosition();
 
-	if (attached_unit->current_health != attached_unit->max_health /*|| attached_unit->is_selected*/ || App->player->god_mode)
+	if (attached_unit->current_health != attached_unit->max_health || attached_unit->is_selected || App->player->god_mode)
 	{
 		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
 		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &healthbar, 1.0f, 1.0f);

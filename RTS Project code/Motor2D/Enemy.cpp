@@ -74,7 +74,10 @@ bool Enemy::Update(float dt, bool doLogic)
 		}
 		else
 		{
-			PathToTarget();
+			if (!path_full)
+			{
+				ChaseTarget();
+			}
 		}
 	}
 
@@ -225,22 +228,25 @@ void Enemy::GetShortestPathWithinAttackRange()
 {
 	std::vector<iPoint> tmp;
 
-	for (int i = 0; i < entity_path.size(); ++i)
+	if (target != nullptr)
 	{
-		tmp.push_back(entity_path[i]);
-
-		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+		for (int i = 0; i < entity_path.size(); ++i)
 		{
-			entity_path.clear();
+			tmp.push_back(entity_path[i]);
 
-			entity_path = tmp;
+			if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+			{
+				entity_path.clear();
 
-			target_tile = entity_path.back();
-			current_path_tile = entity_path.begin();
+				entity_path = tmp;
 
-			tmp.clear();
+				target_tile = entity_path.back();
+				current_path_tile = entity_path.begin();
 
-			break;
+				tmp.clear();
+
+				break;
+			}
 		}
 	}
 }
@@ -314,10 +320,15 @@ bool Enemy::TargetIsInRange()
 	return false;
 }
 
-void Enemy::PathToTarget()
+void Enemy::ChaseTarget()
 {
+	std::vector<Dynamic_Object*> tmp;
+	tmp.push_back(this);
+
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
-	GiveNewTargetTile(target->tile_position);
+
+	//GiveNewTargetTile(target->tile_position);
+	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);
 }
 
 void Enemy::DealDamage()
@@ -326,11 +337,6 @@ void Enemy::DealDamage()
 	{
 		ApplyDamage(target);
 		attack_in_cooldown = true;
-
-		if (target->current_health <= 0)
-		{
-			target = nullptr;
-		}
 	}
 	else
 	{
@@ -341,6 +347,11 @@ void Enemy::DealDamage()
 			attack_in_cooldown = false;
 			accumulated_cooldown = 0.0f;
 		}
+	}
+
+	if (target->current_health <= 0)
+	{
+		target = nullptr;
 	}
 }
 

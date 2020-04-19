@@ -103,6 +103,13 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 		App->map->DataMapDebug();																// Will print on screen the debug tiles of the walkability map and the entity map.
 	}
 
+
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		App->win->ToggleFullscreen();
+	}
+
+
 	if (App->map->pathfinding_meta_debug)
 	{
 		DrawPathfindingDebug();																//Pathfinding Debug. Shows a debug texture on the path's tiles.

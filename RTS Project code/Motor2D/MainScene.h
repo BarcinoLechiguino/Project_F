@@ -25,6 +25,7 @@ public:
 	bool CleanUp();						// Called before quitting
 
 public:
+	void InitScene();
 
 	void LoadGuiElements();
 

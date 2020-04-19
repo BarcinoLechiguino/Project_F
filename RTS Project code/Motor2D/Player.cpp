@@ -281,7 +281,7 @@ void Player::DragSelection()
 
 			selection_start = mouse_position;
 
-			units_selected.clear();
+			ClearEntityBuffers();
 		}
 
 		if (is_selecting)
@@ -382,7 +382,7 @@ void Player::SelectionShortcuts()
 
 void Player::SelectAllEntities()
 {
-	units_selected.clear();
+	ClearEntityBuffers();
 
 	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
@@ -394,6 +394,7 @@ void Player::SelectAllEntities()
 
 			if (unit->is_selectable)
 			{
+				(*item)->is_selected = true;
 				units_selected.push_back(unit);
 			}
 		}
@@ -404,7 +405,7 @@ void Player::SelectAllEntities()
 
 void Player::SelectGatherers()
 {
-	units_selected.clear();
+	ClearEntityBuffers();
 
 	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
@@ -412,6 +413,7 @@ void Player::SelectGatherers()
 	{
 		if ((*item)->type == ENTITY_TYPE::GATHERER)
 		{
+			(*item)->is_selected = true;
 			units_selected.push_back((Dynamic_Object*)(*item));
 		}
 	}
@@ -421,7 +423,7 @@ void Player::SelectGatherers()
 
 void Player::SelectInfantries()
 {
-	units_selected.clear();
+	ClearEntityBuffers();
 
 	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
@@ -429,6 +431,7 @@ void Player::SelectInfantries()
 	{
 		if ((*item)->type == ENTITY_TYPE::INFANTRY)
 		{
+			(*item)->is_selected = true;
 			units_selected.push_back((Dynamic_Object*)(*item));
 		}
 	}
@@ -440,7 +443,7 @@ void Player::SelectEnemies()
 {
 	if (god_mode)
 	{
-		units_selected.clear();
+		ClearEntityBuffers();
 
 		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
@@ -448,7 +451,7 @@ void Player::SelectEnemies()
 		{
 			if ((*item)->type == ENTITY_TYPE::ENEMY)
 			{
-				//(*item)->is_selected = true;
+				(*item)->is_selected = true;
 				units_selected.push_back((Dynamic_Object*)(*item));
 			}
 		}
@@ -469,8 +472,14 @@ void Player::SelectEntityAt(const iPoint& tile_position)
 			{
 				ClearEntityBuffers();
 				
-				clicked_entity->is_selected = true;
-				units_selected.push_back((Dynamic_Object*)clicked_entity);
+				Dynamic_Object* unit = (Dynamic_Object*)clicked_entity;
+
+				if (unit->is_selectable)
+				{
+					unit->is_selected = true;
+					units_selected.push_back((Dynamic_Object*)clicked_entity);
+				}
+
 				return;
 			}
 
@@ -481,7 +490,7 @@ void Player::SelectEntityAt(const iPoint& tile_position)
 				clicked_entity->is_selected = true;
 				building_selected = (Static_Object*)clicked_entity;
 
-				LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", tile_position.x, tile_position.y);
+				//LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", tile_position.x, tile_position.y);
 
 				return;
 			}

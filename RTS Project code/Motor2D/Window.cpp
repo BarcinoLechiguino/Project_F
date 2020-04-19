@@ -112,6 +112,13 @@ void Window::GetWindowRect(SDL_Rect& rect) const
 	rect = { 0, 0, width, height };
 }
 
+void Window::ToggleFullscreen()
+{
+	Uint32 FullscreenFlag = SDL_WINDOW_FULLSCREEN;
+	bool IsFullscreen = SDL_GetWindowFlags(window) & FullscreenFlag;
+	SDL_SetWindowFullscreen(window, IsFullscreen ? 0 : FullscreenFlag);
+}
+
 float Window::GetScale() const
 {
 	return scale;
