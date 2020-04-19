@@ -56,6 +56,7 @@ UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool isVisible, bool isIn
 	}
 
 	ui_event = UI_EVENT::IDLE;
+	currentRect = this->idle;
 }
 
 UI_Button::UI_Button() : UI()
@@ -80,7 +81,7 @@ void UI_Button::CheckInput()
 		GetMousePos();																			//Gets the mouse's position on the screen.
 
 		// --- IDLE EVENT
-		if (!IsHovered() && (ui_event == UI_EVENT::UNHOVER))																		//If the mouse is not on the button.
+		if (!IsHovered() && (ui_event != UI_EVENT::HOVER))										//If the mouse is not on the button and event is not HOVER. TMP fix to have UNHOVER event.
 		{
 			ui_event = UI_EVENT::IDLE;
 			currentRect = idle;																	//Button Idle sprite.
@@ -136,14 +137,16 @@ void UI_Button::CheckInput()
 			{
 				ui_event = UI_EVENT::UNCLICKED;
 			}
+			else
+			{
+				ui_event = UI_EVENT::UNHOVER;
+			}
 
 			if (isDragTarget)
 			{
 				isDragTarget = false;
 				initialPosition = GetScreenPos();
 			}
-			
-			//currentRect = clicked;															//Button Clicked sprite.
 		}
 
 		if (listener != nullptr)
