@@ -376,6 +376,14 @@ void GameplayScene::LoadGuiElements()
 	// HP Townhall
 
 	// Description Townhall
+	SDL_Rect HUD_text_townhall_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_townhall_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_townhall_descp_string = "The main building of your base.";
+	std::string HUD_townhall_descp_string2 = "If It gets destroyed,";
+	std::string HUD_townhall_descp_string3 = "the game ends.";
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 335, 635, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string);
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 362, 649, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string2);
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 379, 662, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string3);
 
 	// Unit Townhall
 	SDL_Rect HUD_unit_townhall_size = { 0, 0, 53, 50 };
@@ -430,6 +438,14 @@ void GameplayScene::LoadGuiElements()
 	// HP Barracks
 
 	// Description Barracks
+	SDL_Rect HUD_text_barracks_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_barracks_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_barracks_descp_string = "Trains different military units";
+	std::string HUD_barracks_descp_string2 = "depending on the number of";
+	std::string HUD_barracks_descp_string3 = "resources you acquire.";
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 329, 635, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string);
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 341, 649, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string2);
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 359, 662, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string3);
 
 	// Unit Barracks
 	SDL_Rect HUD_unit_barracks_size = { 0, 0, 53, 50 };
