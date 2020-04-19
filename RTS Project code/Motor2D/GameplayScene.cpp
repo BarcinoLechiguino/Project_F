@@ -128,6 +128,8 @@ bool GameplayScene::PostUpdate()
 		UnitDebugKeys();
 	}
 	
+	CheckForWinLose();
+
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
 	ExecuteTransition();
 
@@ -143,6 +145,37 @@ bool GameplayScene::PostUpdate()
 	App->minimap->BlitMinimap();
 
 	return ret;
+}
+
+void GameplayScene::CheckForWinLose() {
+
+	//Check for an enemy townhall alive. If none is found the player has won, thus we call the transition to win scene
+	bool exists_enemytownhall = false;
+	for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+	{
+		if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL) {
+			exists_enemytownhall = true;
+			break;
+		}
+	}
+	if (exists_enemytownhall == false)
+	{
+		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+	}
+
+	//Same but for allied town halls. We put it second so in case they break at the same frame (not gonna happen) the player wins.
+	bool exists_townhall = false;
+	for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+	{
+		if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL) {
+			exists_townhall = true;
+			break;
+		}
+	}
+	if (exists_townhall == false)
+	{
+		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+	}
 }
 
 // Called before quitting
