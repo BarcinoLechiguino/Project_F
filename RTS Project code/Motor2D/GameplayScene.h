@@ -140,22 +140,22 @@ public:
 	UI_Text*				 HUD_description_townhall;
 	UI_Button*				 HUD_unit_townhall;
 
-	UI_Image*				 HUD_parent_resources_unit_townhall;
-	UI_Image*				 HUD_resources_unit_townhall;
-	UI_Image*				 HUD_resources2_unit_townhall;
+	UI_Image*				 HUD_parent_resources_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources2_unit_townhall_gatherer;
 
 	UI_Text*				 HUD_title_gatherer;
 	UI_Text*				 HUD_description_gatherer;
 
-	UI_Image*				 HUD_parent_resources_upgrade_unit_townhall;
-	UI_Image*				 HUD_resources_upgrade_unit_townhall;
-	UI_Image*				 HUD_resources2_upgrade_unit_townhall;
+	UI_Image*				 HUD_parent_resources_upgrade_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources_upgrade_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources2_upgrade_unit_townhall_gatherer;
 
 	UI_Image*				 HUD_parent_resources_upgrade_townhall;
 	UI_Image*				 HUD_resources_upgrade_townhall;
 	UI_Image*				 HUD_resources2_upgrade_townhall;
 
-	UI_Button*				 HUD_unit_upgrade_townhall;
+	UI_Button*				 HUD_unit_upgrade_townhall_gatherer;
 	UI_Button*				 HUD_upgrade_townhall;
 
 	// HUD Barracks
@@ -165,22 +165,22 @@ public:
 	UI_Text*				 HUD_description_barracks;
 	UI_Button*				 HUD_unit_barracks;
 
-	UI_Image*				 HUD_parent_resources_unit_barracks;
-	UI_Image*				 HUD_resources_unit_barracks;
-	UI_Image*				 HUD_resources2_unit_barracks;
+	UI_Image*				 HUD_parent_resources_unit_barracks_infantry;
+	UI_Image*				 HUD_resources_unit_barracks_infantry;
+	UI_Image*				 HUD_resources2_unit_barracks_infantry;
 
 	UI_Text*				 HUD_title_infantry;
 	UI_Text*				 HUD_description_infantry;
 							 
-	UI_Image*				 HUD_parent_resources_upgrade_unit_barracks;
-	UI_Image*				 HUD_resources_upgrade_unit_barracks;
-	UI_Image*				 HUD_resources2_upgrade_unit_barracks;
+	UI_Image*				 HUD_parent_resources_upgrade_unit_barracks_infantry;
+	UI_Image*				 HUD_resources_upgrade_unit_barracks_infantry;
+	UI_Image*				 HUD_resources2_upgrade_unit_barracks_infantry;
 							 
 	UI_Image*				 HUD_parent_resources_upgrade_barracks;
 	UI_Image*				 HUD_resources_upgrade_barracks;
 	UI_Image*				 HUD_resources2_upgrade_barracks;
 
-	UI_Button*				 HUD_unit_upgrade_barracks;
+	UI_Button*				 HUD_unit_upgrade_barracks_infantry;
 	UI_Button*				 HUD_upgrade_barracks;
 
 };

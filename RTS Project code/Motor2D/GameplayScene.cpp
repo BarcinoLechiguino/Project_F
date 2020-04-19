@@ -400,26 +400,26 @@ void GameplayScene::LoadGuiElements()
 		, &HUD_unit_townhall_idle, &HUD_unit_townhall_hover, &HUD_unit_townhall_clicked);
 
 	// Resources1
-	HUD_parent_resources_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+	HUD_parent_resources_unit_townhall_gatherer = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	SDL_Rect HUD_townhall_res_unit_size = { 707, 54, 13, 25 };
 
-	HUD_resources_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall);
+	HUD_resources_unit_townhall_gatherer = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
 
 	SDL_Rect HUD_townhall_res2_unit_size = { 687, 54, 16, 25 };
 
-	HUD_resources2_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall);
+	HUD_resources2_unit_townhall_gatherer = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
 
 	// Resources2
-	HUD_parent_resources_upgrade_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+	HUD_parent_resources_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	SDL_Rect HUD_townhall_res_upg_unit_size = { 707, 54, 13, 25 };
 
-	HUD_resources_upgrade_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall);
+	HUD_resources_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
 
 	SDL_Rect HUD_townhall_res2_upg_unit_size = { 687, 54, 16, 25 };
 
-	HUD_resources2_upgrade_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall);
+	HUD_resources2_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
 
 	// Resources3
 	HUD_parent_resources_upgrade_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
@@ -438,7 +438,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_unit_upgrade_townhall_hover = { 899, 148, 50, 16 };
 	SDL_Rect HUD_unit_upgrade_townhall_clicked = { 899, 167, 50, 16 };
 
-	HUD_unit_upgrade_townhall = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_townhall_bar
+	HUD_unit_upgrade_townhall_gatherer = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_townhall_bar
 		, &HUD_unit_upgrade_townhall_idle, &HUD_unit_upgrade_townhall_hover, &HUD_unit_upgrade_townhall_clicked);
 
 	// Upgrade Building
@@ -512,26 +512,26 @@ void GameplayScene::LoadGuiElements()
 
 
 	// Resources1
-	HUD_parent_resources_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+	HUD_parent_resources_unit_barracks_infantry = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	SDL_Rect HUD_barracks_res_unit_size = { 707, 54, 13, 25 };
 
-	HUD_resources_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks);
+	HUD_resources_unit_barracks_infantry = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
 
 	SDL_Rect HUD_barracks_res2_unit_size = { 687, 54, 16, 25 };
 
-	HUD_resources2_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks);
+	HUD_resources2_unit_barracks_infantry = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
 
 	// Resources2
-	HUD_parent_resources_upgrade_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+	HUD_parent_resources_upgrade_unit_barracks_infantry = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	SDL_Rect HUD_barracks_res_upg_unit_size = { 707, 54, 13, 25 };
 
-	HUD_resources_upgrade_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks);
+	HUD_resources_upgrade_unit_barracks_infantry = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
 
 	SDL_Rect HUD_barracks_res2_upg_unit_size = { 687, 54, 16, 25 };
 
-	HUD_resources2_upgrade_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks);
+	HUD_resources2_upgrade_unit_barracks_infantry = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
 
 	// Resources3
 	HUD_parent_resources_upgrade_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
@@ -550,7 +550,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_unit_upgrade_barracks_hover = { 899, 148, 50, 16 };
 	SDL_Rect HUD_unit_upgrade_barracks_clicked = { 899, 167, 50, 16 };
 
-	HUD_unit_upgrade_barracks = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_barracks_bar
+	HUD_unit_upgrade_barracks_infantry = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_barracks_bar
 		, &HUD_unit_upgrade_barracks_idle, &HUD_unit_upgrade_barracks_hover, &HUD_unit_upgrade_barracks_clicked);
 
 	// Upgrade Building
@@ -711,32 +711,32 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_unit_townhall && ui_event == UI_EVENT::HOVER)
 	{
 		// Price to recruit
-		App->gui->SetElementsVisibility(HUD_parent_resources_unit_townhall, true);
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, true);
 		App->gui->SetElementsVisibility(HUD_title_townhall, false);
 		App->gui->SetElementsVisibility(HUD_title_gatherer, true);
 	}
 	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNHOVER)
 	{
-		App->gui->SetElementsVisibility(HUD_parent_resources_unit_townhall, false);
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, false);
 		App->gui->SetElementsVisibility(HUD_title_townhall, true);
 		App->gui->SetElementsVisibility(HUD_title_gatherer, false);
 	}
 
-	if (element == HUD_unit_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
+	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
 		// Code to upgrade unit
 		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
-	if (element == HUD_unit_upgrade_townhall && ui_event == UI_EVENT::HOVER)
+	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::HOVER)
 	{
 		// Price to upgrade unit
-		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall, true);
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall_gatherer, true);
 	}
-	if (element == HUD_unit_upgrade_townhall && ui_event == UI_EVENT::UNHOVER)
+	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::UNHOVER)
 	{
-		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall, false);
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall_gatherer, false);
 	}
 
 	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
@@ -777,33 +777,33 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_unit_barracks && ui_event == UI_EVENT::HOVER)
 	{
 		// Price to recruit
-		App->gui->SetElementsVisibility(HUD_parent_resources_unit_barracks, true);
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, true);
 		App->gui->SetElementsVisibility(HUD_title_barracks, false);
 		App->gui->SetElementsVisibility(HUD_title_infantry, true);
 	}
 	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNHOVER)
 	{
-		App->gui->SetElementsVisibility(HUD_parent_resources_unit_barracks, false);
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, false);
 		App->gui->SetElementsVisibility(HUD_title_barracks, true);
 		App->gui->SetElementsVisibility(HUD_title_infantry, false);
 	}
 
 
-	if (element == HUD_unit_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
+	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
 		// Code to upgrade unit
 		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
-	if (element == HUD_unit_upgrade_barracks && ui_event == UI_EVENT::HOVER)
+	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::HOVER)
 	{
 		// Price to upgrade unit
-		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks, true);
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks_infantry, true);
 	}
-	if (element == HUD_unit_upgrade_barracks && ui_event == UI_EVENT::UNHOVER)
+	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::UNHOVER)
 	{
-		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks, false);
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks_infantry, false);
 	}
 
 	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
