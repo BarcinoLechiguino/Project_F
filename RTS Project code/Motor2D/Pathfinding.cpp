@@ -158,6 +158,56 @@ const std::vector<iPoint> PathFinding::GetLastPath() const
 	return last_path;
 }
 
+iPoint PathFinding::FindNearbyPoint(iPoint pos)
+{
+	iPoint ret(0, 0);
+	
+
+	PathList frontier;
+	PathList visited;
+
+	PathNode origin_node(0, 0, pos, nullptr);
+	frontier.list.push_back(origin_node);
+
+	std::list<PathNode>::iterator current_node = frontier.list.begin();
+
+	PathList neighbours;
+
+	while (frontier.list.size())
+	{
+		current_node->FindWalkableAdjacents(neighbours);																//Fill starting node
+
+		std::list<PathNode>::iterator item = neighbours.list.begin();
+
+		for (; item != neighbours.list.end(); ++item)
+		{
+			PathNode neighbour = *item;																					// For Readability
+
+			if (visited.Find(neighbour.pos) == visited.list.end())														//if not in visited
+			{
+				if (App->pathfinding->IsWalkable(neighbour.pos))
+				{
+					ret = neighbour.pos;
+					return ret;
+				}
+
+				if (App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos))													// App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos)
+				{
+					frontier.list.push_back(neighbour);
+				}
+			}
+		}
+
+		neighbours.list.clear();
+
+		visited.list.push_back((*current_node));
+
+		current_node++;
+	}
+
+	return ret;
+}
+
 void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected)
 {
 	std::vector<Dynamic_Object*>::iterator units = units_selected.begin();

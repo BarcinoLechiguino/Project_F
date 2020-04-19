@@ -48,6 +48,8 @@ public:
 
 	bool PathIsAccessible(const iPoint& origin, const iPoint& destination) const;				// Utility: Returns true if the given position is accessible.
 
+	iPoint FindNearbyPoint(iPoint pos);
+
 	void FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected) ;	//Finds close tiles to send units to
 
 	bool ChangeWalkability(const iPoint& pos, Entity* entity, uchar walkability);				//Change walkability of a tile in map array

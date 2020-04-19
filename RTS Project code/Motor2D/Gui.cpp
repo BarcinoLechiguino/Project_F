@@ -137,11 +137,11 @@ bool Gui::PostUpdate()
 	
 	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
 
-	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
+	for (int i=0; i < elements.size(); i++)
 	{
-		if ((*element_iterator)->isVisible)
+		if (elements[i]->isVisible)
 		{
-			(*element_iterator)->Draw();
+			elements[i]->Draw();
 		}
 	}
 
