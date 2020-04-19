@@ -161,32 +161,37 @@ bool GameplayScene::PostUpdate()
 
 void GameplayScene::CheckForWinLose() {
 
-	//Check for an enemy townhall alive. If none is found the player has won, thus we call the transition to win scene
-	bool exists_enemytownhall = false;
-	for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+	if (!App->player->god_mode)
 	{
-		if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL) {
-			exists_enemytownhall = true;
-			break;
+		//Check for an enemy townhall alive. If none is found the player has won, thus we call the transition to win scene
+		bool exists_enemytownhall = false;
+		for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+		{
+			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL)
+			{
+				exists_enemytownhall = true;
+				break;
+			}
 		}
-	}
-	if (exists_enemytownhall == false)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
-	}
+		if (exists_enemytownhall == false)
+		{
+			App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+		}
 
-	//Same but for allied town halls. We put it second so in case they break at the same frame (not gonna happen) the player wins.
-	bool exists_townhall = false;
-	for (int i = 0; i < App->entity_manager->entities.size(); ++i)
-	{
-		if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL) {
-			exists_townhall = true;
-			break;
+		//Same but for allied town halls. We put it second so in case they break at the same frame (not gonna happen) the player wins.
+		bool exists_townhall = false;
+		for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+		{
+			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::TOWNHALL)
+			{
+				exists_townhall = true;
+				break;
+			}
 		}
-	}
-	if (exists_townhall == false)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+		if (exists_townhall == false)
+		{
+			App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+		}
 	}
 }
 
@@ -678,12 +683,14 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_pause_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Pause
+		App->pause = !App->pause;
 		App->audio->PlayFx(App->gui->standard_fx, 0);
 	}
 
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Home
+
 		App->audio->PlayFx(App->gui->standard_fx, 0);
 	}
 

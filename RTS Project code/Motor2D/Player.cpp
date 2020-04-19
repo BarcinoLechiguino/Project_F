@@ -74,15 +74,18 @@ bool Player::Update(float dt)
 	
 	CameraController(dt);
 
-	DragSelection();
+	if (!App->gui->FirstElementUnderMouse()->CheckMousePos() && !App->pause)			//TMP. Dirty Fix(?)
+	{
+		DragSelection();
 
-	SelectOnClick();
-	
-	DeleteOnInput();
+		SelectOnClick();
+
+		DeleteOnInput();
+
+		GiveOrder();
+	}
 
 	SelectionShortcuts();
-
-	GiveOrder();
 
 	DebugUnitSpawn();
 
@@ -262,7 +265,7 @@ void Player::OrderUnitsToAttack()
 
 void Player::DrawCursor()
 {
-	if (CurrentlyInGameplayScene() /*&& !App->gui->FirstElementUnderMouse()->isVisible*/)
+	if (CurrentlyInGameplayScene() && !App->gui->FirstElementUnderMouse()->CheckMousePos() && !App->pause)			//TMP. Dirty Fix(?)
 	{
 		App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
 	}
