@@ -127,10 +127,12 @@ void UI_Scrollbar::CheckInput()
 				App->gui->focusedElement = this;											//Set the focus on the Input Box element when it is clicked.
 			}
 
-			if (IsFocused())
+			PlaceThumbOnMousePos();															//TMP FIX, FIX FOCUS LATER.
+
+			/*if (IsFocused())
 			{
 				PlaceThumbOnMousePos();
-			}
+			}*/
 		}
 
 		if (!IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)		//Unfocus when the mouse clicks outside the input box.
@@ -193,7 +195,7 @@ void UI_Scrollbar::UpdateLinkedElements()
 {
 	BROFILER_CATEGORY("Scrollbar_UpdateLinkedElements", Profiler::Color::LightGoldenRodYellow);
 
-	for (std::list<UI*>::iterator element = linkedElements.begin(); element != linkedElements.end(); element++)
+	for (std::vector<UI*>::iterator element = linkedElements.begin(); element != linkedElements.end(); element++)
 	{
 		UI* elem = (*element);
 
@@ -239,7 +241,7 @@ void UI_Scrollbar::UpdateLinkedElements()
 
 bool UI_Scrollbar::LinkedElementsBeingHovered()
 {	
-	for (std::list<UI*>::iterator element = linkedElements.begin(); element != linkedElements.end(); element++)
+	for (std::vector<UI*>::iterator element = linkedElements.begin(); element != linkedElements.end(); element++)
 	{
 		if ((*element)->IsHovered())
 		{
@@ -267,15 +269,15 @@ float UI_Scrollbar::GetDragFactor(UI* element)
 	
 	if (dragXAxis)
 	{
-		float elemWidth = element->GetHitbox().w;
-		float dragAreaWidth = dragArea.w;
-		dragFactor = (elemWidth / dragAreaWidth);
+		float elem_width = element->GetHitbox().w;
+		float drag_area_width = dragArea.w;
+		dragFactor = (elem_width / drag_area_width);
 	}
 	if (dragYAxis)
 	{
-		float elemHeight = element->GetHitbox().h;
-		float dragAreaHeight = dragArea.h;
-		dragFactor = (elemHeight / dragAreaHeight);
+		float elem_height = element->GetHitbox().h;
+		float drag_area_height = dragArea.h;
+		dragFactor = (elem_height / drag_area_height);
 	}
 
 	return dragFactor;

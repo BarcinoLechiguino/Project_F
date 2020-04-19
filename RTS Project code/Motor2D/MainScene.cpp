@@ -57,6 +57,8 @@ bool MainScene::Update(float dt)
 
 bool MainScene::PostUpdate()
 {
+	DebugKeys();
+	
 	//Load Scene / Unload MainScene
 	ExecuteTransition();
 	
@@ -143,6 +145,7 @@ void MainScene::LoadOptionsMenu()
 	SDL_Rect thumb_rect = {930,2,18,31};
 	SDL_Rect scrollbar_rect = {743,3,180,15};
 
+	//MUSIC
 	music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 260, scrollbar_rect, thumb_rect, iPoint(20, -7), scrollbar_rect, 20.0f, true, false);
 	music_scrollbar->parent = options_parent;
 
