@@ -145,8 +145,9 @@ public:
 	UI_Button*				 HUD_back_townhall;
 	UI_Text*				 HUD_description_townhall;
 	UI_Button*				 HUD_unit_townhall;
-	UI_Image*				 HUD_resources_townhall;
-	UI_Image*				 HUD_resources2_townhall;
+	UI_Image*				 HUD_parent_resources_unit;
+	UI_Image*				 HUD_resources_unit_townhall;
+	UI_Image*				 HUD_resources2_unit_townhall;
 	UI_Button*				 HUD_unit_upgrade_townhall;
 	UI_Button*				 HUD_upgrade_townhall;
 

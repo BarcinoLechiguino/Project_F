@@ -54,6 +54,8 @@ UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool isVisible, bool isIn
 
 		SetLocalPos(localPos);													//Sets the local poisition of this Button element to the given localPos.
 	}
+
+	ui_event = UI_EVENT::IDLE;
 }
 
 UI_Button::UI_Button() : UI()
@@ -78,7 +80,7 @@ void UI_Button::CheckInput()
 		GetMousePos();																			//Gets the mouse's position on the screen.
 
 		// --- IDLE EVENT
-		if (!IsHovered())																		//If the mouse is not on the button.
+		if (!IsHovered() && (ui_event == UI_EVENT::UNHOVER))																		//If the mouse is not on the button.
 		{
 			ui_event = UI_EVENT::IDLE;
 			currentRect = idle;																	//Button Idle sprite.
@@ -89,6 +91,13 @@ void UI_Button::CheckInput()
 		{
 			ui_event = UI_EVENT::HOVER;															//Button Hover sprite.
 			currentRect = hover;
+		}
+
+		// --- UNHOVER EVENT
+		if ((!IsHovered() && (ui_event == UI_EVENT::HOVER)))									//If the mouse is on the button.
+		{		
+			ui_event = UI_EVENT::UNHOVER;
+			currentRect = idle;
 		}
 
 		// --- CLICKED EVENT (Left Click)

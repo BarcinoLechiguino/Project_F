@@ -396,13 +396,15 @@ void GameplayScene::LoadGuiElements()
 		, &HUD_unit_townhall_idle, &HUD_unit_townhall_hover, &HUD_unit_townhall_clicked);
 
 	// Resources
-	SDL_Rect HUD_townhall_res_size = { 688, 86, 9, 13 };
+	HUD_parent_resources_unit = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
-	HUD_resources_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 610, 615, HUD_townhall_res_size, false, true, false, this, HUD_townhall_bar);
+	SDL_Rect HUD_townhall_res_unit_size = { 707, 54, 13, 25 };
 
-	SDL_Rect HUD_townhall_res2_size = { 698, 86, 8, 13 };
+	HUD_resources_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 610, 615, HUD_townhall_res_unit_size, false, true, false, this, HUD_parent_resources_unit);
 
-	HUD_resources2_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 610, 635, HUD_townhall_res2_size, false, true, false, this, HUD_townhall_bar);
+	SDL_Rect HUD_townhall_res2_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources2_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 610, 635, HUD_townhall_res2_unit_size, false, true, false, this, HUD_parent_resources_unit);
 
 	// Upgrade Unit
 	SDL_Rect HUD_unit_upgrade_townhall_size = { 0, 0, 50, 16 };
@@ -635,6 +637,18 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->audio->PlayFx(App->gui->back_fx, 0);
 	}
 
+	if (element == HUD_unit_townhall && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to recruit
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit, true);
+	}
+
+	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit, false);
+	}
+	
+
 	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Recruit Unit
@@ -656,6 +670,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
+	
 
 	// Barracks Bar
 
