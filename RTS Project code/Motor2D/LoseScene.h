@@ -26,8 +26,9 @@ public:
 
 public:
 	// TMP TRANSITION BUTTON
-	UI_Button* transition_button;
-	UI_Text* button_text;
+	UI_Button*		transition_button;
+	UI_Text*		button_text;
+
 	// ---------------------
 
 private:
