@@ -44,7 +44,7 @@ public:
 	unsigned int LoadFx(std::string path);
 
 	// Play a previously loaded WAV
-	bool PlayFx(uint id, int repeat = 0);
+	uint PlayFx(uint id, int repeat = 0);
 	
 	// Play a WAV like a 3D audio reciving an fx, a channel, an angle and a distance
 	bool PlaySpatialFx(uint id, uint channel_angle = 1, uint distance = 1, int repeat = 0);

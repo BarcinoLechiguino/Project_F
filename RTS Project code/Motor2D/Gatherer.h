@@ -36,6 +36,8 @@ public:
 
 	bool TargetIsInRange();
 	void Gather();
+
+	//void HandleFx();
 	//void SubstractResource();
 
 	void OnCollision(Collider* C1, Collider* C2);
@@ -44,7 +46,6 @@ public:
 	float	gathering_speed;
 	int		gathering_amount;
 	bool	gather_in_cooldown;
-
 
 };
 

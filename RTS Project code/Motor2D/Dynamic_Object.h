@@ -64,6 +64,8 @@ public:
 	void SetEntityState();
 	void Move(float dt);
 
+	void HandleFx();
+
 	void DataMapSafetyCheck();													// Method that makes sure that when a unit is idle the walkability and entity maps are correctly updated. (Dirty Fix)
 
 public:
@@ -103,6 +105,12 @@ public:
 
 	std::vector<iPoint>				entity_path;
 	std::vector<iPoint>::iterator	current_path_tile;
+
+private:
+
+	uint channel;
+
+	bool fx_playing;
 };
 
 #endif // !__DYNAMIC_OBJECT_H__

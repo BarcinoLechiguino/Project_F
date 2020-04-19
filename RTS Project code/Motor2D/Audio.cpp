@@ -154,11 +154,9 @@ bool Audio::PlayMusic(uint id, float fade_time)
 
 	if (id > 0 && id <= music.size())
 	{
-		//TODO 6 Iterate all the music audios stored in the list
 		std::list <Mix_Music*>::const_iterator it;
 		it = std::next(music.begin(), id - 1);
 
-		//TODO 7 Given the fade_time implement a fade in and fade out using Mix_Fade(Out/In)Music
 		if (*it != NULL)
 		{
 			if (fade_time > 0.0f)
@@ -203,13 +201,10 @@ unsigned int Audio::LoadFx(std::string path)
 {
 	unsigned int ret = 0;
 
-	//std::string tmp = sfx_folder + path;
-
 	if(!is_active)
 		return 0;
 
 	Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
-
 
 	if(chunk == NULL)
 	{
@@ -225,9 +220,9 @@ unsigned int Audio::LoadFx(std::string path)
 }
 
 // Play WAV
-bool Audio::PlayFx(unsigned int id, int repeat)
+uint Audio::PlayFx(unsigned int id, int repeat)
 {
-	bool ret = false;
+	uint channel;
 
 	if(!is_active)
 		return false;
@@ -238,10 +233,10 @@ bool Audio::PlayFx(unsigned int id, int repeat)
 
 		std::advance(fx_item, id - 1);
 
-		Mix_PlayChannel(-1, (*fx_item) , repeat);
+		channel = Mix_PlayChannel(-1, (*fx_item) , repeat);
 	}
 
-	return ret;
+	return channel;
 }
 
 bool Audio::PlaySpatialFx(uint id, uint channel_angle, uint distance, int repeat)
