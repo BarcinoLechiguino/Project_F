@@ -24,6 +24,7 @@ public:
 	bool CleanUp();										// Called before quitting
 
 public:
+	void InitScene();
 
 	void LoadGuiElements();
 
@@ -41,6 +42,7 @@ public:
 	// ---------------------
 
 private:
-		
+	float				logo_scene_duration;
+	float				accumulated_time;
 };
 #endif // !_LOGO_SCENE_H

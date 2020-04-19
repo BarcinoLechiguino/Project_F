@@ -36,9 +36,7 @@ bool MainScene::Awake(pugi::xml_node&)
 
 bool MainScene::Start()
 {	
-	App->gui->Start();
-	
-	LoadGuiElements();
+	InitScene();
 
 	return true;
 }
@@ -233,3 +231,9 @@ void MainScene::ExecuteTransition()
 	}
 }
 
+void MainScene::InitScene()
+{
+	App->gui->Start();
+
+	LoadGuiElements();
+}

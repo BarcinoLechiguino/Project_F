@@ -28,9 +28,7 @@ bool LogoScene::Awake(pugi::xml_node&)
 
 bool LogoScene::Start()
 {
-	App->gui->Start();
-	
-	LoadGuiElements();
+	InitScene();
 
 	return true;
 }
@@ -96,6 +94,14 @@ void LogoScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 void LogoScene::ExecuteTransition()
 {
+	accumulated_time += App->GetDt();
+
+	if (accumulated_time >= logo_scene_duration)
+	{
+		//App->transition_manager->CreateFadeToColour(SCENES::MAIN_SCENE);
+		accumulated_time = 0.0f;
+	}
+	
 	// No KP_1 because we are in the 1rst scene.
 
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
@@ -117,4 +123,14 @@ void LogoScene::ExecuteTransition()
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, true, true);
 	}
+}
+
+void LogoScene::InitScene()
+{
+	logo_scene_duration = 5.0f;
+	accumulated_time	= 0.0f;
+
+	App->gui->Start();
+
+	LoadGuiElements();
 }
