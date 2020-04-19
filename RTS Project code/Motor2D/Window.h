@@ -16,10 +16,11 @@ public:
 	bool Awake(pugi::xml_node&);											// Called before render is available
 	bool CleanUp();															// Called before quitting
 
-
 	void SetTitle(const char* new_title);									// Change title
 	void GetWindowSize(int& width, int& height) const;						// Retrive window size
 	void GetWindowRect(SDL_Rect& rect) const;								// Method that will get the current dimensions of the screen and assign them to a given rect.
+
+	void ToggleFullscreen();
 
 	float GetScale() const;													// Retrieve window scale
 	void SetScale(float new_scale);											// Modify window scale.

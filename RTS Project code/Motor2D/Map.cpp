@@ -65,10 +65,10 @@ void Map::Draw()
 		bottom_right_y = -App->render->camera.y + winHeight ;
 
 		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;
-		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x;
+		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x + 1;
 
 		min_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels.y).y; //Esquina dereche arriba
-		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y; //Esquina izquierda abajo
+		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y + 1 ; //Esquina izquierda abajo
 
 		if (min_x_row < 0)
 		{
@@ -106,7 +106,7 @@ void Map::Draw()
 		}
 	}
 	//(*data.layers.begin())->tiles_tree->DrawQuadtree();
-	//LOG("Tiles drawn: %d", tiles_drawn);
+	LOG("Tiles drawn: %d", tiles_drawn);
 }
 
 void Map::DataMapDebug()

@@ -99,6 +99,11 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 
 	App->map->DataMapDebug();
 
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	{
+		App->win->ToggleFullscreen();
+	}
+
 	if (App->map->pathfindingMetaDebug == true)
 	{
 		DrawPathfindingDebug();														//Pathfinding Debug. Shows a debug texture on the path's tiles.
