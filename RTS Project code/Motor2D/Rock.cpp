@@ -21,6 +21,7 @@ Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type
 
 	blit_section = new SDL_Rect{rock_version,0,54,35};
 
+	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 }
 
 bool Rock::Awake(pugi::xml_node&)
@@ -37,8 +38,6 @@ bool Rock::PreUpdate()
 bool Rock::Update(float dt, bool doLogic)
 {
 	
-	App->render->Blit(entity_sprite, pixel_position.x, pixel_position.y, blit_section);
-
 	return true;
 }
 
@@ -68,6 +67,11 @@ bool Rock::CleanUp()
 	delete blit_section;
 
 	return true;
+}
+
+void Rock::Draw()
+{
+	App->render->Blit(entity_sprite, pixel_position.x, pixel_position.y, blit_section);
 }
 
 void Rock::InitEntity()

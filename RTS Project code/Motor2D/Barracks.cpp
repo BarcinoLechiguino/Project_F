@@ -35,7 +35,7 @@ bool Barracks::PreUpdate()
 
 bool Barracks::Update(float dt, bool doLogic)
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y -18, &barracks_rect);
+
 
 	return true;
 }
@@ -55,6 +55,11 @@ bool Barracks::CleanUp()
 	App->gui->DeleteGuiElement(healthbar);
 	
 	return true;
+}
+
+void Barracks::Draw()
+{
+	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y - 18, &barracks_rect);
 }
 
 void Barracks::InitEntity()
@@ -83,6 +88,8 @@ void Barracks::InitEntity()
 	{
 		AttachHealthbarToEntity();
 	}
+
+	center_point = iPoint(pixel_position.x, pixel_position.y + (((tiles_occupied_x - 1) * App->map->data.tile_height / 2) + ((tiles_occupied_y - 1) * App->map->data.tile_height / 2)) / 2);
 }
 
 void Barracks::AttachHealthbarToEntity()

@@ -43,6 +43,8 @@ public:
 
 	virtual bool CleanUp();
 
+	virtual void Draw();
+
 public:
 	virtual void InitUnitSpriteSections();										// Initializes all sprite sections of a given unit.
 	virtual void UpdateUnitSpriteSection();										// Updates all sprite sections of a given unit.

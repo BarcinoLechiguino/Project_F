@@ -19,6 +19,8 @@ public:
 
 	virtual bool CleanUp();
 
+	virtual void Draw();
+
 public:
 	void InitEntity();
 

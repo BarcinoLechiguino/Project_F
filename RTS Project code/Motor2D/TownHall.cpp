@@ -16,6 +16,8 @@
 TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
 {
 	InitEntity();
+
+	center_point = iPoint(pixel_position.x, pixel_position.y + (((tiles_occupied_x -1) * App->map->data.tile_height/2) + ((tiles_occupied_y - 1) * App->map->data.tile_height / 2)) / 2 );
 }
 
 bool TownHall::Awake(pugi::xml_node&)
@@ -31,8 +33,6 @@ bool TownHall::PreUpdate()
 
 bool TownHall::Update(float dt, bool doLogic)
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 51, pixel_position.y - 20, &hall_rect);
-
 	return true;
 }
 
@@ -56,6 +56,11 @@ bool TownHall::CleanUp()
 	App->gui->DeleteGuiElement(healthbar);
 
 	return true;
+}
+
+void TownHall::Draw()
+{
+	App->render->Blit(entity_sprite, pixel_position.x - 51, pixel_position.y - 20, &hall_rect);
 }
 
 void TownHall::InitEntity()

@@ -22,9 +22,16 @@
 #include "Barracks.h"
 #include "EnemyBarracks.h"
 #include "Rock.h"
+#include <algorithm>
 
 //#include "mmgr/mmgr.h"
 
+struct {
+	bool operator()(Entity* a, Entity* b) const
+	{
+		return a->center_point.y < b->center_point.y;
+	}
+} customLess;
 
 EntityManager::EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
 {
@@ -95,6 +102,8 @@ bool EntityManager::Update(float dt)
 		accumulated_time = 0.0f;
 	}
 
+	OrderEntities();
+
 	return true;
 }
 
@@ -123,6 +132,25 @@ bool EntityManager::CleanUp()
 	UnLoadEntityTextures();
 
 	return true;
+}
+
+void EntityManager::OrderEntities()
+{
+	BROFILER_CATEGORY("OrderEntities", Profiler::Color::FireBrick);
+
+	entities_in_screen = entities;
+
+	std::sort(entities_in_screen.begin(), entities_in_screen.end(), customLess);
+
+	DrawEntities();
+}
+
+void EntityManager::DrawEntities()
+{
+	for (int i = 0; i < entities_in_screen.size(); ++i)
+	{
+		entities_in_screen[i]->Draw();
+	}
 }
 
 void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision will manage the collisions of all entities and derive them to their respective OnCollision methods()

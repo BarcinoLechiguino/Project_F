@@ -42,6 +42,8 @@ bool Enemy::PreUpdate()
 
 bool Enemy::Update(float dt, bool doLogic)
 {
+	
+
 	HandleMovement(dt);
 
 	DataMapSafetyCheck();
@@ -81,12 +83,9 @@ bool Enemy::Update(float dt, bool doLogic)
 		}
 	}
 
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, &entity_sprite_section);
+	
 
-	if (App->player->god_mode)
-	{
-		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
-	}
+	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 
 	return true;
 };
@@ -118,6 +117,16 @@ bool Enemy::CleanUp()
 	return true;
 };
 
+void Enemy::Draw()
+{
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, &entity_sprite_section);
+
+	if (App->player->god_mode)
+	{
+		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
+	}
+}
+
 void Enemy::InitEntity()
 {
 	entity_sprite = App->entity_manager->GetEnemyTexture();
@@ -145,6 +154,8 @@ void Enemy::InitEntity()
 	{
 		AttachHealthbarToEntity();
 	}
+
+	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 }
 
 void Enemy::AttachHealthbarToEntity()
