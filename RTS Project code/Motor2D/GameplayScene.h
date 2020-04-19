@@ -70,14 +70,7 @@ public:
 
 public:
 	//float					cam_debug_speed;							//Will store the movement speed for the camera while in debug mode. Done for readability.
-	
-	// TMP TRANSITION BUTTONS
-	UI_Button*	transition_button;
-	UI_Button*	transition_button_II;
 
-	UI_Text*	button_text;
-	UI_Text*	button_text_II;
-	// ---------------------
 	
 	UI_Image*				background;
 	SDL_Rect				background_rect;
@@ -151,6 +144,9 @@ public:
 	UI_Image*				 HUD_resources_unit_townhall;
 	UI_Image*				 HUD_resources2_unit_townhall;
 
+	UI_Text*				 HUD_title_gatherer;
+	UI_Text*				 HUD_description_gatherer;
+
 	UI_Image*				 HUD_parent_resources_upgrade_unit_townhall;
 	UI_Image*				 HUD_resources_upgrade_unit_townhall;
 	UI_Image*				 HUD_resources2_upgrade_unit_townhall;
@@ -172,6 +168,9 @@ public:
 	UI_Image*				 HUD_parent_resources_unit_barracks;
 	UI_Image*				 HUD_resources_unit_barracks;
 	UI_Image*				 HUD_resources2_unit_barracks;
+
+	UI_Text*				 HUD_title_infantry;
+	UI_Text*				 HUD_description_infantry;
 							 
 	UI_Image*				 HUD_parent_resources_upgrade_unit_barracks;
 	UI_Image*				 HUD_resources_upgrade_unit_barracks;

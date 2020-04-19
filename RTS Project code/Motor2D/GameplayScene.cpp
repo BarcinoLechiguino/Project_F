@@ -221,34 +221,6 @@ void GameplayScene::InitScene()
 
 void GameplayScene::LoadGuiElements()
 {
-	// Temporal transition buttons
-	SDL_Rect button_size = { 0, 0, 115, 9 };
-	SDL_Rect transition_button_idle = { 618, 34, 115, 9 };
-	SDL_Rect transition_button_hover = { 618, 23, 115, 9 };
-	SDL_Rect transition_button_clicked = { 618, 1, 115, 9 };
-
-	transition_button		= (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 100, 680, true, true, false, this, nullptr
-																, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
-
-	transition_button_II	= (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 350, 680, true, true, false, this, nullptr
-																, &transition_button_idle, &transition_button_hover, &transition_button_clicked);
-
-	// Temporal transition buttons' texts
-	SDL_Rect text_rect = { 0, 0, 15, 8 };
-	_TTF_Font* font = App->font->Load("fonts/Minecraftia-Regular.ttf", 9);
-
-	std::string win_button_string	= "To Win Screen";
-	std::string lose_button_string	= "To Lose Screen";
-	std::string main_button_string	= "To Main Screen";
-
-	button_text			= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 121, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
-														, true, false, false, nullptr, transition_button, &win_button_string);
-
-	button_text_II		= (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 366, 678, text_rect, font, SDL_Color{ 255, 255, 255, 255 }
-														, true, false, false, nullptr, transition_button_II, &lose_button_string);
-
-
-
 	// In-game menu
 
 	// Back
@@ -368,6 +340,12 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_title_townhall_string = "TOWNHALL";
 	HUD_title_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 360, 582, HUD_text_townhall_rect, HUD_townhall_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_title_townhall_string);
 
+	// Title Gatherer
+	SDL_Rect HUD_text_gatherer_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_gatherer_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_title_gatherer_string = "GATHERER";
+	HUD_title_gatherer = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_gatherer_rect, HUD_gatherer_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_gatherer_string);
+
 	// Back townhall
 	SDL_Rect HUD_back_townhall_size = { 0, 0, 31, 84 };
 	SDL_Rect HUD_back_townhall_idle = { 782, 118, 31, 84 };
@@ -386,9 +364,19 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_townhall_descp_string = "The main building of your base.";
 	std::string HUD_townhall_descp_string2 = "If It gets destroyed,";
 	std::string HUD_townhall_descp_string3 = "the game ends.";
-	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 335, 635, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string);
-	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 362, 649, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string2);
-	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 379, 662, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string3);
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 335, 635, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_townhall, &HUD_townhall_descp_string);
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 362, 649, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_townhall, &HUD_townhall_descp_string2);
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 379, 662, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_townhall, &HUD_townhall_descp_string3);
+
+	// Description Gatherer
+	SDL_Rect HUD_text_getherer_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_gatherer_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_gatherer_descp_string = "Primary resource unit.";
+	std::string HUD_gatherer_descp_string2 = "It doesn't attack. It is useful";
+	std::string HUD_gatherer_descp_string3 = "for gathering resources.";
+	HUD_description_gatherer = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 360, 635, HUD_text_getherer_descp_rect, HUD_gatherer_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string);
+	HUD_description_gatherer = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 337, 649, HUD_text_getherer_descp_rect, HUD_gatherer_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string2);
+	HUD_description_gatherer = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 355, 662, HUD_text_getherer_descp_rect, HUD_gatherer_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string3);
 
 	// Unit Townhall
 	SDL_Rect HUD_unit_townhall_size = { 0, 0, 53, 50 };
@@ -464,6 +452,12 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_title_barracks_string = "BARRACKS";
 	HUD_title_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 362, 582, HUD_text_barracks_rect, HUD_barracks_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_title_barracks_string);
 
+	// Title Infantry
+	SDL_Rect HUD_text_infantry_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_infantry_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_title_infantry_string = "INFANTRY";
+	HUD_title_infantry = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_infantry_rect, HUD_infantry_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_infantry_string);
+
 	// Back Barracks
 	SDL_Rect HUD_back_barracks_size = { 0, 0, 31, 84 };
 	SDL_Rect HUD_back_barracks_idle = { 782, 118, 31, 84 };
@@ -481,9 +475,19 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_barracks_descp_string = "Trains different military units";
 	std::string HUD_barracks_descp_string2 = "depending on the number of";
 	std::string HUD_barracks_descp_string3 = "resources you acquire.";
-	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 329, 635, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string);
-	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 341, 649, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string2);
-	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 359, 662, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string3);
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 329, 635, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_barracks, &HUD_barracks_descp_string);
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 341, 649, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_barracks, &HUD_barracks_descp_string2);
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 359, 662, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_barracks, &HUD_barracks_descp_string3);
+
+	// Description Infantry
+	SDL_Rect HUD_text_infranty_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_infantry_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_infantry_descp_string = "Primary combat unit.";
+	std::string HUD_infantry_descp_string2 = "It has a standard attck.";
+	std::string HUD_infantry_descp_string3 = "Fight your enemies with these!";
+	HUD_description_infantry = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 365, 635, HUD_text_infranty_descp_rect, HUD_infantry_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_infantry, &HUD_infantry_descp_string);
+	HUD_description_infantry = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 347, 649, HUD_text_infranty_descp_rect, HUD_infantry_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_infantry, &HUD_infantry_descp_string2);
+	HUD_description_infantry = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 329, 662, HUD_text_infranty_descp_rect, HUD_infantry_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_infantry, &HUD_infantry_descp_string3);
 
 	// Unit Barracks
 	SDL_Rect HUD_unit_barracks_size = { 0, 0, 53, 50 };
@@ -593,16 +597,6 @@ void GameplayScene::LoadInGameOptionsMenu()
 
 void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
-	if (element == transition_button && ui_event == UI_EVENT::UNCLICKED)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
-	}
-
-	if (element == transition_button_II && ui_event == UI_EVENT::UNCLICKED)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 5, true, true);
-	}
-
 	// In_game menu
 
 	if (element == in_game_continue_button && ui_event == UI_EVENT::UNCLICKED)
@@ -704,10 +698,14 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Price to recruit
 		App->gui->SetElementsVisibility(HUD_parent_resources_unit_townhall, true);
+		App->gui->SetElementsVisibility(HUD_title_townhall, false);
+		App->gui->SetElementsVisibility(HUD_title_gatherer, true);
 	}
 	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNHOVER)
 	{
 		App->gui->SetElementsVisibility(HUD_parent_resources_unit_townhall, false);
+		App->gui->SetElementsVisibility(HUD_title_townhall, true);
+		App->gui->SetElementsVisibility(HUD_title_gatherer, false);
 	}
 
 	if (element == HUD_unit_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
@@ -766,10 +764,14 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Price to recruit
 		App->gui->SetElementsVisibility(HUD_parent_resources_unit_barracks, true);
+		App->gui->SetElementsVisibility(HUD_title_barracks, false);
+		App->gui->SetElementsVisibility(HUD_title_infantry, true);
 	}
 	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNHOVER)
 	{
 		App->gui->SetElementsVisibility(HUD_parent_resources_unit_barracks, false);
+		App->gui->SetElementsVisibility(HUD_title_barracks, true);
+		App->gui->SetElementsVisibility(HUD_title_infantry, false);
 	}
 
 
