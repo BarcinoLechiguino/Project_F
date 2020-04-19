@@ -61,6 +61,8 @@ void Barracks::InitEntity()
 {
 	entity_sprite = App->entity_manager->GetBarracksTexture();
 
+	is_selected = false;
+
 	barracks_rect_1 = { 0, 0, 106, 95 };
 	barracks_rect_2 = { 108, 0, 106, 95 };
 

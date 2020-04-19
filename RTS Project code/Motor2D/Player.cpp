@@ -4,6 +4,7 @@
 #include "Render.h"
 #include "Application.h"
 #include "Window.h"
+#include "Audio.h"
 #include "Textures.h"
 #include "EntityManager.h"
 #include "Pathfinding.h"
@@ -11,6 +12,7 @@
 #include "Minimap.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "GameplayScene.h"
 #include "Gui.h"
 #include "UI.h"
 
@@ -24,9 +26,11 @@
 #include "Gatherer.h"
 #include "Infantry.h"
 
+
+
 #include "Player.h"
 
-Player::Player() : building_selected(nullptr), resource_selected(nullptr)
+Player::Player() : god_mode(nullptr), is_selecting(nullptr), building_selected(nullptr), resource_selected(nullptr)
 {
 
 }
@@ -206,44 +210,48 @@ void Player::OrderUnitsToAttack()
 	{
 		if (App->entity_manager->IsEnemyEntity(target))
 		{
-			std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+			std::vector<Dynamic_Object*> infantries;																		//Temporal fix. For now we only have infantries as combat units.
 
-			for (; item != units_selected.end(); ++item)
+			for(int i = 0; i < units_selected.size(); ++i)
 			{
-				if (App->entity_manager->IsInfantry(*item))
+				if (App->entity_manager->IsInfantry(units_selected[i]))
 				{
-					(*item)->target = target;
-					App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
-				}
-				else
-				{
-					LOG("Selected unit is not an Infantry");
-					return;
+					infantries.push_back(units_selected[i]);
 				}
 			}
 
-			App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);
+			for (int i = 0; i < infantries.size(); ++i)
+			{
+				infantries[i]->target = target;
+				App->pathfinding->ChangeWalkability(infantries[i]->occupied_tile, infantries[i], WALKABLE);
+			}
+
+			App->pathfinding->FindNearbyWalkable(target->tile_position, infantries);
+
+			infantries.clear();
 		}
+
 		if (App->entity_manager->IsResource(target))
 		{
-			std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+			std::vector<Dynamic_Object*> gatherers;
 
-			for (; item != units_selected.end(); ++item)
+			for (int i = 0; i < units_selected.size(); ++i)
 			{
-				if (App->entity_manager->IsGatherer(*item))
+				if (App->entity_manager->IsGatherer(units_selected[i]))
 				{
-					(*item)->target = target;
-					App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
+					gatherers.push_back(units_selected[i]);
 				}
-				else
-				{
-					LOG("Selected unit is not a Gatherer");
-					return;
-				}
-
 			}
 
-			App->pathfinding->FindNearbyWalkable(target->tile_position, units_selected);							//Gives units targets around main target
+			for (int i = 0; i < gatherers.size(); ++i)
+			{
+				gatherers[i]->target = target;
+				App->pathfinding->ChangeWalkability(gatherers[i]->occupied_tile, gatherers[i], WALKABLE);
+			}
+
+			App->pathfinding->FindNearbyWalkable(target->tile_position, gatherers);							//Gives units targets around main target
+
+			gatherers.clear();
 		}
 		else
 		{
@@ -325,6 +333,7 @@ void Player::SelectEntitiesInSelectionRect()
 			{
 				if (CheckSelectionRectBorders(unit))				//Collision ally units rectangles
 				{
+					unit->is_selected = true;
 					units_selected.push_back(unit);
 				}
 			}
@@ -338,7 +347,7 @@ void Player::SelectOnClick()
 {
 	if (CurrentlyInGameplayScene())
 	{
-		if (!App->scene_manager->god_mode)
+		if (!god_mode)
 		{
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 			{
@@ -362,7 +371,7 @@ void Player::SelectionShortcuts()
 
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)													// Select All Infantries
 	{
-		SelectInfatries();
+		SelectInfantries();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
@@ -410,7 +419,7 @@ void Player::SelectGatherers()
 	LOG("All gatherers selected. Total gatherer amount: %d", units_selected.size());
 }
 
-void Player::SelectInfatries()
+void Player::SelectInfantries()
 {
 	units_selected.clear();
 
@@ -429,7 +438,7 @@ void Player::SelectInfatries()
 
 void Player::SelectEnemies()
 {
-	if (App->scene_manager->god_mode)
+	if (god_mode)
 	{
 		units_selected.clear();
 
@@ -439,6 +448,7 @@ void Player::SelectEnemies()
 		{
 			if ((*item)->type == ENTITY_TYPE::ENEMY)
 			{
+				//(*item)->is_selected = true;
 				units_selected.push_back((Dynamic_Object*)(*item));
 			}
 		}
@@ -457,12 +467,18 @@ void Player::SelectEntityAt(const iPoint& tile_position)
 		{
 			if (App->entity_manager->IsUnit(clicked_entity))
 			{
+				ClearEntityBuffers();
+				
+				clicked_entity->is_selected = true;
 				units_selected.push_back((Dynamic_Object*)clicked_entity);
 				return;
 			}
 
 			if (App->entity_manager->IsBuilding(clicked_entity))
 			{
+				ClearEntityBuffers();
+				
+				clicked_entity->is_selected = true;
 				building_selected = (Static_Object*)clicked_entity;
 
 				LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", tile_position.x, tile_position.y);
@@ -472,12 +488,15 @@ void Player::SelectEntityAt(const iPoint& tile_position)
 
 			if (App->entity_manager->IsResource(clicked_entity))
 			{
+				ClearEntityBuffers();
+				
+				clicked_entity->is_selected = true;
 				resource_selected = (Static_Object*)clicked_entity;
 			}
 		}
 		else
 		{
-			units_selected.clear();
+			ClearEntityBuffers();
 
 			LOG("There is no Entity at tile (%d, %d)", tile_position.x, tile_position.y);
 		}
@@ -489,7 +508,7 @@ void Player::DeleteOnInput()
 {
 	if (CurrentlyInGameplayScene())
 	{
-		if (App->scene_manager->god_mode)
+		if (god_mode)
 		{
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)											// Delete entity at mouse position.
 			{
@@ -554,9 +573,27 @@ void Player::DeleteEntityFromBuffers(Entity* entity_to_delete)
 
 void Player::ClearEntityBuffers()
 {
-	units_selected.clear();
-	building_selected = nullptr;
-	resource_selected = nullptr;
+	if (units_selected.size() != 0)
+	{
+		for (int i = 0; i < units_selected.size(); ++i)
+		{
+			units_selected[i]->is_selected = false;
+		}
+
+		units_selected.clear();
+	}
+
+	if (building_selected != nullptr)
+	{
+		building_selected->is_selected = false;
+		building_selected = nullptr;
+	}
+
+	if (resource_selected != nullptr)
+	{
+		resource_selected->is_selected = false;
+		resource_selected = nullptr;
+	}
 }
 
 // ------------------- ENTITY SPAWN METHODS -------------------
@@ -596,6 +633,8 @@ void Player::DebugUnitSpawn()
 		}
 	}
 }
+
+// ------------------- ENTITY SPAWN METHODS -------------------
 
 void Player::DebugUnitUpgrade()
 {

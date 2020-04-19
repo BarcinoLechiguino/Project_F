@@ -267,9 +267,9 @@ void EntityManager::LoadEntityAudios()
 	click_barracks_fx = App->audio->LoadFx("audio/fx/Click Barracks.wav");
 	building_fx = App->audio->LoadFx("audio/fx/Building.wav");
 	finished_building_fx = App->audio->LoadFx("audio/fx/Finished_building.wav");
-	finished_recruiting = App->audio->LoadFx("audio/fx/Finished_recruiting.wav");
-	finished_upgrading = App->audio->LoadFx("audio/fx/Finished_Upgrading.wav");
-	
+	finished_recruiting_fx = App->audio->LoadFx("audio/fx/Finished_recruiting.wav");
+	finished_upgrading_fx = App->audio->LoadFx("audio/fx/Finished_Upgrading.wav");
+	click_townhall_fx = App->audio->LoadFx("audio/fx/Click_Townhall.wav");
 }
 
 void EntityManager::UnLoadEntityTextures()

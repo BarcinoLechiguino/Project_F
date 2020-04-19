@@ -19,6 +19,7 @@
 
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Static_Object.h"
 
 #include "Gui.h"
 #include "UI.h"
@@ -57,9 +58,9 @@ bool GameplayScene::Awake(pugi::xml_node& config)
 		map_names.push_back(data);
 	}*/
 
-	music_path = (config.child("audio").attribute("path").as_string());
-	music_path2=(config.child("audio2").attribute("path").as_string());
-	music_path3=(config.child("audio3").attribute("path").as_string());
+	music_path	= (config.child("audio").attribute("path").as_string());
+	music_path2	= (config.child("audio2").attribute("path").as_string());
+	music_path3	= (config.child("audio3").attribute("path").as_string());
 	
 	return ret;
 }
@@ -78,7 +79,7 @@ bool GameplayScene::Start()
 bool GameplayScene::PreUpdate()
 {
 	// debug pathfing ------------------
-	if (App->map->pathfindingMetaDebug == true)
+	if (App->map->pathfinding_meta_debug)
 	{
 		PathfindingDebug();
 	}
@@ -93,23 +94,28 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
-	App->map->Draw();																//Map Draw
+	App->map->Draw();																		//Map Draw
 
 	App->minimap->BlitMinimap();
 
-	App->map->DataMapDebug();
+	if (App->map->walkability_debug || App->map->entity_map_debug)
+	{
+		App->map->DataMapDebug();																// Will print on screen the debug tiles of the walkability map and the entity map.
+	}
+
 
 	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 	{
 		App->win->ToggleFullscreen();
 	}
 
-	if (App->map->pathfindingMetaDebug == true)
+
+	if (App->map->pathfinding_meta_debug)
 	{
-		DrawPathfindingDebug();														//Pathfinding Debug. Shows a debug texture on the path's tiles.
+		DrawPathfindingDebug();																//Pathfinding Debug. Shows a debug texture on the path's tiles.
 	}
 
-	//LOG("Rocks %d", rock_test.size());
+	DebugHUDSpawn();
 
 	return true;
 }
@@ -122,15 +128,22 @@ bool GameplayScene::PostUpdate()
 	bool ret = true;
 
 	DebugKeys();																	//Debug Keys
-	UnitDebugKeys();
 
-	CameraDebugMovement(App->GetDt());
+	if (App->player->god_mode)
+	{
+		CameraDebugMovement(App->GetDt());
+		UnitDebugKeys();
+	}
+	
+	CheckForWinLose();
 
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
 	ExecuteTransition();
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
+		App->pause = !App->pause;
+		
 		App->gui->SetElementsVisibility(in_game_background, !in_game_background->isVisible);
 		App->gui->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
 		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
@@ -139,6 +152,37 @@ bool GameplayScene::PostUpdate()
 	App->minimap->BlitMinimap();
 
 	return ret;
+}
+
+void GameplayScene::CheckForWinLose() {
+
+	//Check for an enemy townhall alive. If none is found the player has won, thus we call the transition to win scene
+	bool exists_enemytownhall = false;
+	for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+	{
+		if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL) {
+			exists_enemytownhall = true;
+			break;
+		}
+	}
+	if (exists_enemytownhall == false)
+	{
+		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+	}
+
+	//Same but for allied town halls. We put it second so in case they break at the same frame (not gonna happen) the player wins.
+	bool exists_townhall = false;
+	for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+	{
+		if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL) {
+			exists_townhall = true;
+			break;
+		}
+	}
+	if (exists_townhall == false)
+	{
+		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+	}
 }
 
 // Called before quitting
@@ -169,14 +213,13 @@ void GameplayScene::InitScene()
 
 	ret = App->map->Load("New_Tilesete_Map.tmx");
 
-	path_debug_tex = App->tex->Load("maps/path2.png");
-
 	//test background
 	background_rect = { 0,0,1280,720 };
 	background_texture = App->tex->Load("maps/hacker_background.png");
 
 	LoadGuiElements();
 
+	path_debug_tex = App->tex->Load("maps/path_tile.png");
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
 	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
 
@@ -217,7 +260,7 @@ void GameplayScene::LoadGuiElements()
 
 	// Back
 	SDL_Rect background = { 780, 451, 514, 403 };
-	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 380, 180, background, false, false, false, this, nullptr);
+	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 380, 135, background, false, false, false, this, nullptr);
 
 
 	// Continue Button
@@ -226,7 +269,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_continue_button_hover = { 178, 0, 158, 23 };
 	SDL_Rect in_game_continue_button_clicked = { 356, 0, 158, 23 };
 
-	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 555, 286, false, true, false, this, in_game_background
+	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 555, 241, false, true, false, this, in_game_background
 		, &in_game_continue_button_idle, &in_game_continue_button_hover, &in_game_continue_button_clicked);
 
 
@@ -236,7 +279,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_options_button_hover = { 178, 52, 133, 24 };
 	SDL_Rect in_game_options_button_clicked = { 356, 52, 133, 24 };
 
-	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 567, 326, false, true, false, this, in_game_background
+	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 567, 281, false, true, false, this, in_game_background
 		, &in_game_options_button_idle, &in_game_options_button_hover, &in_game_options_button_clicked);
 
 
@@ -246,7 +289,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_back_to_menu_hover = { 204, 137, 189, 23 };
 	SDL_Rect in_game_back_to_menu_clicked = { 408, 137, 189, 23 };
 
-	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 541, 366, false, true, false, this, in_game_background
+	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 541, 321, false, true, false, this, in_game_background
 		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
 
 
@@ -256,7 +299,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_exit_button_hover = { 178, 77, 74, 23 };
 	SDL_Rect in_game_exit_button_clicked = { 356, 77, 74, 23 };
 
-	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 596, 406, false, true, false, this, in_game_background
+	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 596, 361, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
 
 	
@@ -264,11 +307,13 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
 	_TTF_Font* in_game_font = App->font->Load("fonts/borgsquadcond.ttf", 50);
 	std::string in_game_title_string = "Pause Menu";
-	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 469, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
+	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 469, 165, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
 
 	// Options Menu
 	LoadInGameOptionsMenu();
 	App->gui->SetElementsVisibility(in_game_options_parent, false);
+
+
 
 	// HUD
 
@@ -301,14 +346,212 @@ void GameplayScene::LoadGuiElements()
 		, &HUD_home_button_idle, &HUD_home_button_hover, &HUD_home_button_clicked);
 
 
-	//Down Bar
-	//Main Bar
-	SDL_Rect HUD_main_down_bar_size = { 0, 200, 1280, 150 };
 
-	HUD_main_down_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, -3, 580, HUD_main_down_bar_size, true, true, false, this, nullptr);
+
+	//Down Bar
 
 	//Resource Bar
+	SDL_Rect HUD_resource_bar_size = { 884, 223, 188, 150 };
 
+	HUD_resource_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1095, 574, HUD_resource_bar_size, true, true, false, this, nullptr);
+
+	//Resources
+	SDL_Rect HUD_electricity_resource_size = { 707, 54, 13, 25 };
+
+	HUD_electricity_resource = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1115, 604, HUD_electricity_resource_size, true, true, false, this, HUD_resource_bar);
+
+	SDL_Rect HUD_data_resource_size = { 687, 54, 16, 25 };
+
+	HUD_data_resource = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1115, 634, HUD_data_resource_size, true, true, false, this, HUD_resource_bar);
+
+	//Townhall Bar
+	SDL_Rect HUD_townhall_bar_size = { 20, 209, 798, 160 };
+
+	HUD_townhall_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 309, 560, HUD_townhall_bar_size, false, true, false, this, nullptr);
+
+	// Title Townhall
+	SDL_Rect HUD_text_townhall_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_townhall_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_title_townhall_string = "TOWNHALL";
+	HUD_title_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 360, 582, HUD_text_townhall_rect, HUD_townhall_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_title_townhall_string);
+
+	// Back townhall
+	SDL_Rect HUD_back_townhall_size = { 0, 0, 31, 84 };
+	SDL_Rect HUD_back_townhall_idle = { 782, 118, 31, 84 };
+	SDL_Rect HUD_back_townhall_hover = { 815, 118, 31, 84 };
+	SDL_Rect HUD_back_townhall_clicked = { 848, 118, 31, 84 };
+
+	HUD_back_townhall = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 1072, 632, false, true, false, this, HUD_townhall_bar
+		, &HUD_back_townhall_idle, &HUD_back_townhall_hover, &HUD_back_townhall_clicked);
+
+	// HP Townhall
+	
+
+	// Description Townhall
+	SDL_Rect HUD_text_townhall_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_townhall_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_townhall_descp_string = "The main building of your base.";
+	std::string HUD_townhall_descp_string2 = "If It gets destroyed,";
+	std::string HUD_townhall_descp_string3 = "the game ends.";
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 335, 635, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string);
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 362, 649, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string2);
+	HUD_description_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 379, 662, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string3);
+
+	// Unit Townhall
+	SDL_Rect HUD_unit_townhall_size = { 0, 0, 53, 50 };
+	SDL_Rect HUD_unit_townhall_idle = { 1095, 140, 53, 50 };
+	SDL_Rect HUD_unit_townhall_hover = { 1152, 140, 53, 50 };
+	SDL_Rect HUD_unit_townhall_clicked = { 1207, 140, 53, 50 };
+
+	HUD_unit_townhall = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 556, 610, false, true, false, this, HUD_townhall_bar
+		, &HUD_unit_townhall_idle, &HUD_unit_townhall_hover, &HUD_unit_townhall_clicked);
+
+	// Resources1
+	HUD_parent_resources_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	SDL_Rect HUD_townhall_res_unit_size = { 707, 54, 13, 25 };
+
+	HUD_resources_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall);
+
+	SDL_Rect HUD_townhall_res2_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources2_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall);
+
+	// Resources2
+	HUD_parent_resources_upgrade_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	SDL_Rect HUD_townhall_res_upg_unit_size = { 707, 54, 13, 25 };
+
+	HUD_resources_upgrade_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall);
+
+	SDL_Rect HUD_townhall_res2_upg_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources2_upgrade_unit_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall);
+
+	// Resources3
+	HUD_parent_resources_upgrade_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	SDL_Rect HUD_townhall_res_upg_townhall_size = { 707, 54, 13, 25 };
+
+	HUD_resources_upgrade_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
+
+	SDL_Rect HUD_townhall_res2_upg_townhall_size = { 687, 54, 16, 25 };
+
+	HUD_resources2_upgrade_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
+
+	// Upgrade Unit
+	SDL_Rect HUD_unit_upgrade_townhall_size = { 0, 0, 50, 16 };
+	SDL_Rect HUD_unit_upgrade_townhall_idle = { 899, 129, 50, 16 };
+	SDL_Rect HUD_unit_upgrade_townhall_hover = { 899, 148, 50, 16 };
+	SDL_Rect HUD_unit_upgrade_townhall_clicked = { 899, 167, 50, 16 };
+
+	HUD_unit_upgrade_townhall = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_townhall_bar
+		, &HUD_unit_upgrade_townhall_idle, &HUD_unit_upgrade_townhall_hover, &HUD_unit_upgrade_townhall_clicked);
+
+	// Upgrade Building
+	SDL_Rect HUD_upgrade_townhall_size = { 0, 0, 117, 24 };
+	SDL_Rect HUD_upgrade_townhall_idle = { 960, 99, 117, 24 };
+	SDL_Rect HUD_upgrade_townhall_hover = { 960, 125, 117, 24 };
+	SDL_Rect HUD_upgrade_townhall_clicked = { 960, 154, 117, 24 };
+
+	HUD_upgrade_townhall = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 975, 577, false, true, false, this, HUD_townhall_bar
+		, &HUD_upgrade_townhall_idle, &HUD_upgrade_townhall_hover, &HUD_upgrade_townhall_clicked);
+
+
+
+
+	//Barracks Bar
+	SDL_Rect HUD_barracks_bar_size = { 20, 209, 798, 160 };
+
+	HUD_barracks_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 309, 560, HUD_barracks_bar_size, false, true, false, this, nullptr);
+
+	// Title Barracks
+	SDL_Rect HUD_text_barracks_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_barracks_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_title_barracks_string = "BARRACKS";
+	HUD_title_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 362, 582, HUD_text_barracks_rect, HUD_barracks_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_title_barracks_string);
+
+	// Back Barracks
+	SDL_Rect HUD_back_barracks_size = { 0, 0, 31, 84 };
+	SDL_Rect HUD_back_barracks_idle = { 782, 118, 31, 84 };
+	SDL_Rect HUD_back_barracks_hover = { 815, 118, 31, 84 };
+	SDL_Rect HUD_back_barracks_clicked = { 848, 118, 31, 84 };
+
+	HUD_back_barracks = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 1072, 632, false, true, false, this, HUD_barracks_bar
+		, &HUD_back_barracks_idle, &HUD_back_barracks_hover, &HUD_back_barracks_clicked);
+
+	// HP Barracks
+
+	// Description Barracks
+	SDL_Rect HUD_text_barracks_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_barracks_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_barracks_descp_string = "Trains different military units";
+	std::string HUD_barracks_descp_string2 = "depending on the number of";
+	std::string HUD_barracks_descp_string3 = "resources you acquire.";
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 329, 635, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string);
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 341, 649, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string2);
+	HUD_description_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 359, 662, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string3);
+
+	// Unit Barracks
+	SDL_Rect HUD_unit_barracks_size = { 0, 0, 53, 50 };
+	SDL_Rect HUD_unit_barracks_idle = { 1095, 90, 53, 50 };
+	SDL_Rect HUD_unit_barracks_hover = { 1152, 90, 53, 50 };
+	SDL_Rect HUD_unit_barracks_clicked = { 1207, 90, 53, 50 };
+
+	HUD_unit_barracks = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 556, 610, false, true, false, this, HUD_barracks_bar
+		, &HUD_unit_barracks_idle, &HUD_unit_barracks_hover, &HUD_unit_barracks_clicked);
+
+
+	// Resources1
+	HUD_parent_resources_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	SDL_Rect HUD_barracks_res_unit_size = { 707, 54, 13, 25 };
+
+	HUD_resources_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks);
+
+	SDL_Rect HUD_barracks_res2_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources2_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks);
+
+	// Resources2
+	HUD_parent_resources_upgrade_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	SDL_Rect HUD_barracks_res_upg_unit_size = { 707, 54, 13, 25 };
+
+	HUD_resources_upgrade_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks);
+
+	SDL_Rect HUD_barracks_res2_upg_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources2_upgrade_unit_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks);
+
+	// Resources3
+	HUD_parent_resources_upgrade_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	SDL_Rect HUD_res_upg_barracks_size = { 707, 54, 13, 25 };
+
+	HUD_resources_upgrade_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_res_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
+
+	SDL_Rect HUD_res2_upg_barracks_size = { 687, 54, 16, 25 };
+
+	HUD_resources2_upgrade_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_res2_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
+
+	// Upgrade Unit
+	SDL_Rect HUD_unit_upgrade_barracks_size = { 0, 0, 50, 16 };
+	SDL_Rect HUD_unit_upgrade_barracks_idle = { 899, 129, 50, 16 };
+	SDL_Rect HUD_unit_upgrade_barracks_hover = { 899, 148, 50, 16 };
+	SDL_Rect HUD_unit_upgrade_barracks_clicked = { 899, 167, 50, 16 };
+
+	HUD_unit_upgrade_barracks = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_barracks_bar
+		, &HUD_unit_upgrade_barracks_idle, &HUD_unit_upgrade_barracks_hover, &HUD_unit_upgrade_barracks_clicked);
+
+	// Upgrade Building
+	SDL_Rect HUD_upgrade_barracks_size = { 0, 0, 117, 24 };
+	SDL_Rect HUD_upgrade_barracks_idle = { 960, 99, 117, 24 };
+	SDL_Rect HUD_upgrade_barracks_hover = { 960, 125, 117, 24 };
+	SDL_Rect HUD_upgrade_barracks_clicked = { 960, 154, 117, 24 };
+
+	HUD_upgrade_barracks = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 975, 577, false, true, false, this, HUD_barracks_bar
+		, &HUD_upgrade_barracks_idle, &HUD_upgrade_barracks_hover, &HUD_upgrade_barracks_clicked);
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -321,27 +564,27 @@ void GameplayScene::LoadInGameOptionsMenu()
 
 	// Options
 	std::string in_game_title_string = "Options Menu";
-	in_game_options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 445, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_title_string);
+	in_game_options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 445, 165, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_title_string);
 
 	//Music
 	std::string in_game_music_string = "Music";
-	in_game_music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 487, 275, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_music_string);
+	in_game_music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 487, 230, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_music_string);
 
 	SDL_Rect in_game_thumb_rect = { 930,2,18,31 };
 	SDL_Rect in_game_scrollbar_rect = { 743,3,180,15 };
 
-	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 280, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false);
+	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 235, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false);
 	in_game_music_scrollbar->parent = in_game_options_parent;
 
 	//SFX
 	std::string sfx_string = "SFX";
-	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 461, 309, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
-	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 320, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, true);
+	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 491, 264, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
+	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 275, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, true);
 	in_game_sfx_scrollbar->parent = in_game_options_parent;
 
 	//screen size
 	std::string in_game_resolution_string = "screen";
-	in_game_resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 448, 346, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_resolution_string);
+	in_game_resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 448, 301, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_resolution_string);
 
 	//Remapping
 
@@ -351,7 +594,7 @@ void GameplayScene::LoadInGameOptionsMenu()
 	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
 	SDL_Rect in_game_back_button_clicked = { 114, 103, 45, 33 };
 
-	in_game_back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 430, 490, true, true, false, this, in_game_options_parent
+	in_game_back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 430, 445, true, true, false, this, in_game_options_parent
 		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
 }
 
@@ -405,13 +648,20 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == in_game_back_to_menu && ui_event == UI_EVENT::UNCLICKED)
 	{
+		if (App->pause)
+		{
+			App->pause = false;
+		}
+		
 		// Back to menu
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 		App->audio->PlayFx(App->gui->exit_fx, 0);
 	}
 
 	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
-	{
+	{		
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
+		
 		// Exit
 		escape = false;
 	}
@@ -422,6 +672,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_group_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Group
+		App->player->SelectAllEntities();
 		App->audio->PlayFx(App->gui->standard_fx, 0);
 	}
 
@@ -437,6 +688,131 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->audio->PlayFx(App->gui->standard_fx, 0);
 	}
 
+
+
+
+	// Townhall bar
+
+	if (element == HUD_back_townhall && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Back
+		App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+		App->audio->PlayFx(App->gui->back_fx, 0);
+	}
+
+	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Recruit Unit
+		// Code to recruit unit
+		App->audio->PlayFx(App->gui->recruit_fx, 0);
+	}
+
+	if (element == HUD_unit_townhall && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to recruit
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit_townhall, true);
+	}
+	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit_townhall, false);
+	}
+
+	if (element == HUD_unit_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Upgrade Unit
+		// Code to upgrade unit
+		App->audio->PlayFx(App->gui->upgrade_fx, 0);
+	}
+
+	if (element == HUD_unit_upgrade_townhall && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to upgrade unit
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall, true);
+	}
+	if (element == HUD_unit_upgrade_townhall && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall, false);
+	}
+
+	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Upgrade Townhall
+		// Code to upgrade townhall
+		App->audio->PlayFx(App->gui->upgrade_fx, 0);
+	}
+
+	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to upgrade townhall
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_townhall, true);
+	}
+	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_townhall, false);
+	}
+
+
+
+	// Barracks Bar
+
+	if (element == HUD_back_barracks && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Back
+		App->gui->SetElementsVisibility(HUD_barracks_bar, false);
+		App->audio->PlayFx(App->gui->back_fx, 0);
+	}
+
+	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Recruit Unit
+		// Code to recruit unit
+		App->audio->PlayFx(App->gui->recruit_fx, 0);
+	}
+
+	if (element == HUD_unit_barracks && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to recruit
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit_barracks, true);
+	}
+	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui->SetElementsVisibility(HUD_parent_resources_unit_barracks, false);
+	}
+
+
+	if (element == HUD_unit_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Upgrade Unit
+		// Code to upgrade unit
+		App->audio->PlayFx(App->gui->upgrade_fx, 0);
+	}
+
+	if (element == HUD_unit_upgrade_barracks && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to upgrade unit
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks, true);
+	}
+	if (element == HUD_unit_upgrade_barracks && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks, false);
+	}
+
+	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Upgrade Townhall
+		// Code to upgrade barracks
+		App->audio->PlayFx(App->gui->upgrade_fx, 0);
+	}
+
+	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to upgrade townhall
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_barracks, true);
+	}
+	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_barracks, false);
+	}
 }
 
 void GameplayScene::ExecuteTransition()
@@ -466,7 +842,7 @@ void GameplayScene::ExecuteTransition()
 
 void GameplayScene::UnitDebugKeys()
 {
-	if (App->scene_manager->god_mode)
+	if (App->player->god_mode)
 	{
 		if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
 		{
@@ -515,50 +891,115 @@ void GameplayScene::UnitDebugKeys()
 
 void GameplayScene::PathfindingDebug()
 {
-	static iPoint origin;
-	static bool origin_selected = false;
-
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+	if (App->map->pathfinding_meta_debug)
 	{
-		if (origin_selected == true)
+		static iPoint origin;
+		static bool origin_selected = false;
+
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
 		{
-			App->pathfinding->CreatePath(origin, p);
-			LOG("Tiles selected: (%d, %d) and (%d, %d)", origin.x, origin.y, p.x, p.y);
-			origin_selected = false;
-		}
-		else
-		{
-			origin = p;
-			origin_selected = true;
+			if (origin_selected == true)
+			{
+				App->pathfinding->CreatePath(origin, p);
+				LOG("Tiles selected: (%d, %d) and (%d, %d)", origin.x, origin.y, p.x, p.y);
+				origin_selected = false;
+			}
+			else
+			{
+				origin = p;
+				origin_selected = true;
+			}
 		}
 	}
 }
 
 void GameplayScene::DrawPathfindingDebug()
 {
-	// Draw pathfinding debug tiles ------------------------------
-	int x, y;
-	App->input->GetMousePosition(x, y);
-	iPoint p = App->render->ScreenToWorld(x, y);
-	p = App->map->WorldToMap(p.x, p.y);
-	p = App->map->MapToWorld(p.x, p.y);
-
-	App->render->Blit(path_debug_tex, p.x, p.y);								//Should we want it, we could make a separate texture called mouse_debug_tex so the tex at mouse pos and the tex at path tile are different.
-
-	const std::vector<iPoint> path = App->pathfinding->GetLastPath();
-
-	for (uint i = 0; i < path.size(); ++i)
+	if (App->map->pathfinding_meta_debug)
 	{
-		iPoint pos = App->map->MapToWorld(path.at(i).x, path.at(i).y);		//Both work, reach a consensus on which to use.
-		//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
+		// Draw pathfinding debug tiles ------------------------------
+		int x, y;
+		App->input->GetMousePosition(x, y);
+		iPoint p = App->render->ScreenToWorld(x, y);
+		p = App->map->WorldToMap(p.x, p.y);
+		p = App->map->MapToWorld(p.x, p.y);
 
-		App->render->Blit(path_debug_tex, pos.x, pos.y);
+		App->render->Blit(path_debug_tex, p.x, p.y);								//Should we want it, we could make a separate texture called mouse_debug_tex so the tex at mouse pos and the tex at path tile are different.
+
+		const std::vector<iPoint> path = App->pathfinding->GetLastPath();
+
+		for (uint i = 0; i < path.size(); ++i)
+		{
+			iPoint pos = App->map->MapToWorld(path.at(i).x, path.at(i).y);		//Both work, reach a consensus on which to use.
+			//iPoint pos = App->map->MapToWorld((*path)[i].x, (*path)[i].y);
+
+			App->render->Blit(path_debug_tex, pos.x, pos.y);
+		}
 	}
+}
+
+// ------------------- ENTITY HUD METHODS -------------------
+
+void GameplayScene::DebugHUDSpawn()
+{
+		if (App->player->building_selected != nullptr)
+		{
+			switch (App->player->building_selected->type)
+			{
+			case ENTITY_TYPE::TOWNHALL:
+				App->gui->SetElementsVisibility(HUD_barracks_bar, false);
+				if (!HUD_townhall_bar->isVisible)
+				{
+					App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
+					App->gui->SetElementsVisibility(HUD_townhall_bar, true);
+				}
+				
+				break;
+
+			case ENTITY_TYPE::ENEMY_TOWNHALL:
+
+				break;
+
+			case ENTITY_TYPE::BARRACKS:
+				App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+				if (!HUD_barracks_bar->isVisible)
+				{
+					App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
+					App->gui->SetElementsVisibility(HUD_barracks_bar, true);
+
+					if (HUD_townhall_bar->isVisible)
+					{
+						!HUD_barracks_bar->isVisible;
+					}
+				}
+
+				break;
+
+			case ENTITY_TYPE::ENEMY_BARRACKS:
+
+				break;
+			}
+
+		}
+
+		/*else
+		{
+			if (HUD_townhall_bar->isVisible)
+			{
+				App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+			}
+
+			if (HUD_barracks_bar->isVisible)
+			{
+				App->gui->SetElementsVisibility(HUD_barracks_bar, false);
+			}
+		}*/
+
 }
 
 // --------------- REVISE IF THEY ARE NEEDED ---------------

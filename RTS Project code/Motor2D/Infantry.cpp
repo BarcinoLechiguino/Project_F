@@ -8,6 +8,7 @@
 #include "Collisions.h"
 #include "Map.h"
 #include "Pathfinding.h"
+#include "Player.h"
 #include "EntityManager.h"
 #include "Gui.h"
 #include "UI.h"
@@ -62,7 +63,7 @@ bool Infantry::Update(float dt, bool doLogic)
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 15, &entity_sprite_section);
 
-	if (App->scene_manager->god_mode)
+	if (App->player->god_mode)
 	{
 		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
 	}
@@ -85,7 +86,10 @@ bool Infantry::Update(float dt, bool doLogic)
 		{
 			if (!path_full)
 			{
+				std::vector<Dynamic_Object*> tmp;
+				
 				App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
+				
 				GiveNewTargetTile(target->tile_position);
 			}
 		}
@@ -128,7 +132,8 @@ void Infantry::InitEntity()
 	InitUnitSpriteSections();
 
 	is_selectable = true;
-	path_full = true;
+	is_selected = false;
+	path_full = false;
 
 	target = nullptr;
 	attack_in_cooldown = false;

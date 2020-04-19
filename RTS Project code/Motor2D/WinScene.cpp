@@ -5,6 +5,7 @@
 #include "Gui.h"
 #include "UI.h"
 #include "UI_Button.h"
+#include "SceneManager.h"
 #include "TransitionManager.h"
 
 #include "WinScene.h"

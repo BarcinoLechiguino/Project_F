@@ -20,9 +20,15 @@ public:
 	virtual bool CleanUp();
 
 public:
+	void InitEntity();
+
+public:
 	int ore;
 
 	int gather_time;
+
+private:
+	SDL_Rect* blit_section;
 
 };
 

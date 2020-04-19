@@ -23,7 +23,7 @@
 
 
 
-Map::Map() : Module(), map_loaded(false), pathfindingMetaDebug(false)
+Map::Map() : Module(), map_loaded(false), pathfinding_meta_debug(false), walkability_debug(false), entity_map_debug(false)
 {
 	name = ("map");
 }
@@ -111,22 +111,31 @@ void Map::Draw()
 
 void Map::DataMapDebug()
 {
-	for (int x = min_x_row; x < max_x_row && x < data.width; x++)
+	if (walkability_debug || entity_map_debug)
 	{
-		for (int y = min_y_row; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
+		for (int x = min_x_row; x < max_x_row && x < data.width; x++)
 		{
-			if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
+			for (int y = min_y_row; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
 			{
-				if (App->pathfinding->IsOccupied(iPoint(x, y)))
+				if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
 				{
-					iPoint draw_position = App->map->MapToWorld(x, y);
-					App->render->Blit(App->scene_manager->current_scene->occupied_debug, draw_position.x, draw_position.y, nullptr);
-				}
+					if (walkability_debug)
+					{
+						if (App->pathfinding->IsOccupied(iPoint(x, y)))
+						{
+							iPoint draw_position = App->map->MapToWorld(x, y);
+							App->render->Blit(App->scene_manager->current_scene->occupied_debug, draw_position.x, draw_position.y, nullptr);
+						}
+					}
 
-				if (App->entity_manager->entity_map[(y * App->map->data.width) + x] != nullptr)
-				{
-					iPoint draw_position = App->map->MapToWorld(x, y);
-					App->render->Blit(App->scene_manager->current_scene->occupied_by_entity_debug, draw_position.x, draw_position.y, nullptr);
+					if (entity_map_debug)
+					{
+						if (App->entity_manager->entity_map[(y * App->map->data.width) + x] != nullptr)
+						{
+							iPoint draw_position = App->map->MapToWorld(x, y);
+							App->render->Blit(App->scene_manager->current_scene->occupied_by_entity_debug, draw_position.x, draw_position.y, nullptr);
+						}
+					}
 				}
 			}
 		}

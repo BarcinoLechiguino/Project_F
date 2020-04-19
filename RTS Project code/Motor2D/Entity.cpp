@@ -6,6 +6,7 @@
 #include "Input.h"
 #include "Audio.h"
 #include "Map.h"
+#include "Player.h"
 #include "EntityManager.h"
 #include "UI_Healthbar.h"
 #include "SceneManager.h"
@@ -100,7 +101,7 @@ void Entity::BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip)
 
 void Entity::ApplyDamage(Entity* target)
 {
-	if (!App->scene_manager->god_mode)
+	if (!App->player->god_mode)
 	{
 		target->current_health -= attack_damage;
 

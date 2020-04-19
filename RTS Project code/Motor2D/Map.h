@@ -206,14 +206,16 @@ public:
 
 	MapData				data;
 	Point<float>		spawn_position_cam;
-	Collider			camera_collider;				//Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
-	int					winWidth;						//Declared to store the window's width.
-	int					winHeight;						//Declared to store the window's height.
-	
-	iPoint				cam_tilePos;					//Position of the camera in the X and Y axis in tiles.
-	int					tile_index;						//Will store the tile's index number so the correct tile is loaded.
-	
-	bool				pathfindingMetaDebug;			//Keeps track of whether to load the PathfindingCollisions layer. Temporally declared here.
+	Collider			camera_collider;				// Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
+	int					winWidth;						// Declared to store the window's width.
+	int					winHeight;						// Declared to store the window's height.
+														   
+	iPoint				cam_tilePos;					// Position of the camera in the X and Y axis in tiles.
+	int					tile_index;						// Will store the tile's index number so the correct tile is loaded.
+														   
+	bool				pathfinding_meta_debug;			// Keeps track of whether to load the PathfindingCollisions layer. Temporally declared here.
+	bool				walkability_debug;				// Will track whether or not the walkability map debug is active or not.
+	bool				entity_map_debug;				// Will track whether or not the entity map debug is active or not.
 
 	bool				map_loaded;
 
@@ -229,9 +231,8 @@ private:
 	int					min_x_row;
 	int					max_x_row;
 
-	int					min_y_row;				//Esquina dereche arriba
-	int					max_y_row;				//Esquina izquierda abajo
-
+	int					min_y_row;						// Top right corner
+	int					max_y_row;						// Bottom left corner
 };
 
 #endif // __MAP_H__
