@@ -618,7 +618,7 @@ void Player::DebugUnitSpawn()
 			TownHall* townhall = nullptr;
 			EnemyTownHall* enemy_townhall = nullptr;
 			Barracks* barrack = nullptr;
-			EnemyBarracks* enemy_barrack;
+			EnemyBarracks* enemy_barrack = nullptr;
 
 			switch (building_selected->type)
 			{
@@ -657,7 +657,7 @@ void Player::DebugUnitUpgrade()
 			TownHall* townhall = nullptr;
 			EnemyTownHall* enemy_townhall = nullptr;
 			Barracks* barrack = nullptr;
-			EnemyBarracks* enemy_barrack;
+			EnemyBarracks* enemy_barrack = nullptr;
 
 			switch (building_selected->type)	
 			{
