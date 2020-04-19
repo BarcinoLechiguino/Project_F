@@ -363,15 +363,6 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_title_gatherer_string = "GATHERER";
 	HUD_title_gatherer = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_gatherer_rect, HUD_gatherer_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_gatherer_string);
 
-	// Back townhall
-	SDL_Rect HUD_back_townhall_size = { 0, 0, 31, 84 };
-	SDL_Rect HUD_back_townhall_idle = { 782, 118, 31, 84 };
-	SDL_Rect HUD_back_townhall_hover = { 815, 118, 31, 84 };
-	SDL_Rect HUD_back_townhall_clicked = { 848, 118, 31, 84 };
-
-	HUD_back_townhall = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 1072, 632, false, true, false, this, HUD_townhall_bar
-		, &HUD_back_townhall_idle, &HUD_back_townhall_hover, &HUD_back_townhall_clicked);
-
 	// HP Townhall
 
 
@@ -474,15 +465,6 @@ void GameplayScene::LoadGuiElements()
 	_TTF_Font* HUD_infantry_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
 	std::string HUD_title_infantry_string = "INFANTRY";
 	HUD_title_infantry = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_infantry_rect, HUD_infantry_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_infantry_string);
-
-	// Back Barracks
-	SDL_Rect HUD_back_barracks_size = { 0, 0, 31, 84 };
-	SDL_Rect HUD_back_barracks_idle = { 782, 118, 31, 84 };
-	SDL_Rect HUD_back_barracks_hover = { 815, 118, 31, 84 };
-	SDL_Rect HUD_back_barracks_clicked = { 848, 118, 31, 84 };
-
-	HUD_back_barracks = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 1072, 632, false, true, false, this, HUD_barracks_bar
-		, &HUD_back_barracks_idle, &HUD_back_barracks_hover, &HUD_back_barracks_clicked);
 
 	// HP Barracks
 
@@ -695,16 +677,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	}
 
 
-
-
 	// Townhall bar
-
-	if (element == HUD_back_townhall && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Back
-		App->gui->SetElementsVisibility(HUD_townhall_bar, false);
-		App->audio->PlayFx(App->gui->back_fx, 0);
-	}
 
 	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNCLICKED)
 	{
@@ -765,17 +738,10 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	// Barracks Bar
 
-	if (element == HUD_back_barracks && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Back
-		App->gui->SetElementsVisibility(HUD_barracks_bar, false);
-		App->audio->PlayFx(App->gui->back_fx, 0);
-	}
-
 	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Recruit Unit
-		// Code to recruit unit
+		UnitSpawn();
 		App->audio->PlayFx(App->gui->recruit_fx, 0);
 	}
 
@@ -813,8 +779,9 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
 	{
-		// Upgrade Townhall
+		// Upgrade Barracks
 		// Code to upgrade barracks
+		BuildingUpgrade();
 		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
@@ -1000,21 +967,24 @@ void GameplayScene::DebugHUDSpawn()
 		}
 
 	}
-
-	/*else
+	else
 	{
 		if (HUD_townhall_bar->isVisible)
 		{
 			App->gui->SetElementsVisibility(HUD_townhall_bar, false);
 		}
-
 		if (HUD_barracks_bar->isVisible)
 		{
 			App->gui->SetElementsVisibility(HUD_barracks_bar, false);
 		}
-	}*/
+	}
+
 
 }
+		
+
+
+
 
 void GameplayScene::UnitSpawn()
 {

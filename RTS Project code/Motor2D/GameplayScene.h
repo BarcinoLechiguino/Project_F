@@ -141,7 +141,6 @@ public:
 	// HUD townhall
 	UI_Image*				 HUD_townhall_bar;
 	UI_Text*				 HUD_title_townhall;
-	UI_Button*				 HUD_back_townhall;
 	UI_Text*				 HUD_description_townhall;
 	UI_Button*				 HUD_unit_townhall;
 
@@ -166,7 +165,6 @@ public:
 	// HUD Barracks
 	UI_Image*				 HUD_barracks_bar;
 	UI_Text*				 HUD_title_barracks;
-	UI_Button*				 HUD_back_barracks;
 	UI_Text*				 HUD_description_barracks;
 	UI_Button*				 HUD_unit_barracks;
 

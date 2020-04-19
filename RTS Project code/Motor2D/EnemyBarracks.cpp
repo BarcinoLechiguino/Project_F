@@ -119,6 +119,8 @@ void EnemyBarracks::LevelChanges()
 		break;
 	case 2:
 		barracks_rect = barracks_rect_2;
+		max_health = 800;
+		current_health = max_health;
 		break;
 	default:
 		barracks_rect = barracks_rect_2;
