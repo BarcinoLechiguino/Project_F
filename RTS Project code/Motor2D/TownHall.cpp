@@ -124,6 +124,8 @@ void TownHall::LevelChanges()
 		break;
 	case 2:
 		hall_rect = hall_rect_2;
+		max_health = 1200;
+		current_health = max_health;
 		break;
 	default:
 		hall_rect = hall_rect_2;

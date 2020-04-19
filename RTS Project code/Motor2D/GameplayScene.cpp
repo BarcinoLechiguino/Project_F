@@ -677,8 +677,6 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	}
 
 
-
-
 	// Townhall bar
 
 	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNCLICKED)
@@ -743,7 +741,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Recruit Unit
-		// Code to recruit unit
+		UnitSpawn();
 		App->audio->PlayFx(App->gui->recruit_fx, 0);
 	}
 
@@ -781,8 +779,9 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
 	{
-		// Upgrade Townhall
+		// Upgrade Barracks
 		// Code to upgrade barracks
+		BuildingUpgrade();
 		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
@@ -970,6 +969,10 @@ void GameplayScene::DebugHUDSpawn()
 	}
 	else
 	{
+		if (HUD_townhall_bar->isVisible)
+		{
+			App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+		}
 		if (HUD_barracks_bar->isVisible)
 		{
 			App->gui->SetElementsVisibility(HUD_barracks_bar, false);
