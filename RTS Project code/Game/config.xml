@@ -50,7 +50,7 @@
       <enemy_townhall_texture path="maps/Hall_enemy.png"/>
       <barracks_texture path="maps/Barracks.png"/>
       <enemy_barracks_texture path="maps/Barracks_enemy.png"/>
-      <rock_texture path="maps/debug_tile.png"/>
+      <rock_texture path="maps/rocks.png"/>
     </textures>
     
     <player>
