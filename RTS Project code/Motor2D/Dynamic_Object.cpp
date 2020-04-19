@@ -5,6 +5,8 @@
 #include "Entity.h"
 #include "Audio.h"
 
+#include "Player.h"
+
 #include "Dynamic_Object.h"
 
 
@@ -156,13 +158,13 @@ void Dynamic_Object::HandleMovement(float dt)
 			current_path_tile = entity_path.begin();
 		}
 
-	break;
+		break;
 
 	case PATHFINDING_STATE::WALKING:
 
 		Move(dt);
 
-	break;
+		break;
 
 	case PATHFINDING_STATE::WAITING_NEXT_TILE:
 		//Check if unit is already in target_tile
@@ -191,7 +193,7 @@ void Dynamic_Object::HandleMovement(float dt)
 
 		next_tile = (*current_path_tile);
 
-		App->entity_manager->ChangeEntityMap(tile_position, this,true);
+		App->entity_manager->ChangeEntityMap(tile_position, this, true);
 
 		App->entity_manager->ChangeEntityMap(next_tile, this);
 
@@ -202,27 +204,24 @@ void Dynamic_Object::HandleMovement(float dt)
 		path_state = PATHFINDING_STATE::WALKING;
 
 		SetEntityState();
-
-		//Handle movement fx
-		switch (type)
-		{
-		case ENTITY_TYPE::UNKNOWN_TYPE:
-			break;
-		case ENTITY_TYPE::ENEMY:
-			App->audio->PlayFx(App->entity_manager->infantry_movement_fx);
-			break;
-		case ENTITY_TYPE::GATHERER:
-			App->audio->PlayFx(App->entity_manager->gatherer_movement_fx);
-			break;
-		case ENTITY_TYPE::INFANTRY:
-			App->audio->PlayFx(App->entity_manager->infantry_movement_fx);
-			break;
-		default:
-			break;
-		}
-		break;
 	}
+}
 
+void Dynamic_Object::HandleFx()
+{
+	if (path_full && type == ENTITY_TYPE::GATHERER)
+	{
+		if (!fx_playing)
+		{
+			channel = App->audio->PlayFx(App->entity_manager->gatherer_movement_fx, -1);
+			fx_playing = true;
+		}
+	}
+	else
+	{
+		fx_playing = false;
+		Mix_FadeOutChannel(channel, 400);
+	}
 }
 
 void Dynamic_Object::SetEntityState()
