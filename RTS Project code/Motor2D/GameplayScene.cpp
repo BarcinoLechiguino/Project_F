@@ -20,6 +20,11 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Static_Object.h"
+#include "TownHall.h"
+#include "Barracks.h"
+#include "Barracks.h"
+#include "Gatherer.h"
+#include "Infantry.h"
 
 #include "Gui.h"
 #include "UI.h"
@@ -49,19 +54,19 @@ bool GameplayScene::Awake(pugi::xml_node& config)
 	LOG("Loading Scene");
 
 	bool ret = true;
-	
+
 	/*for (pugi::xml_node map = config.child("map_name"); map; map = map.next_sibling("map_name"))
 	{
-		std::string data;							
-	
+		std::string data;
+
 		data = (map.attribute("name").as_string());
 		map_names.push_back(data);
 	}*/
 
-	music_path	= (config.child("audio").attribute("path").as_string());
-	music_path2	= (config.child("audio2").attribute("path").as_string());
-	music_path3	= (config.child("audio3").attribute("path").as_string());
-	
+	music_path = (config.child("audio").attribute("path").as_string());
+	music_path2 = (config.child("audio2").attribute("path").as_string());
+	music_path3 = (config.child("audio3").attribute("path").as_string());
+
 	return ret;
 }
 
@@ -71,7 +76,7 @@ bool GameplayScene::Start()
 	bool ret = false;
 
 	InitScene();
-	
+
 	return ret;
 }
 
@@ -83,7 +88,7 @@ bool GameplayScene::PreUpdate()
 	{
 		PathfindingDebug();
 	}
-	
+
 	return true;
 }
 
@@ -91,7 +96,7 @@ bool GameplayScene::PreUpdate()
 bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
-	
+
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
 	App->map->Draw();																		//Map Draw
@@ -134,7 +139,7 @@ bool GameplayScene::PostUpdate()
 		CameraDebugMovement(App->GetDt());
 		UnitDebugKeys();
 	}
-	
+
 	CheckForWinLose();
 
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
@@ -143,7 +148,7 @@ bool GameplayScene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
 	{
 		App->pause = !App->pause;
-		
+
 		App->gui->SetElementsVisibility(in_game_background, !in_game_background->isVisible);
 		App->gui->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
 		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
@@ -197,14 +202,14 @@ bool GameplayScene::CleanUp()
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui->CleanUp();
-	
+
 	return true;
 }
 
 void GameplayScene::InitScene()
 {
 	bool ret = true;
-	
+
 	//cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
 
 	App->gui->Start();
@@ -274,7 +279,7 @@ void GameplayScene::LoadGuiElements()
 	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 596, 361, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
 
-	
+
 	// Title
 	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
 	_TTF_Font* in_game_font = App->font->Load("fonts/borgsquadcond.ttf", 50);
@@ -363,7 +368,7 @@ void GameplayScene::LoadGuiElements()
 		, &HUD_back_townhall_idle, &HUD_back_townhall_hover, &HUD_back_townhall_clicked);
 
 	// HP Townhall
-	
+
 
 	// Description Townhall
 	SDL_Rect HUD_text_townhall_descp_rect = { 0, 0, 100, 20 };
@@ -646,21 +651,21 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		{
 			App->pause = false;
 		}
-		
+
 		// Back to menu
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 		App->audio->PlayFx(App->gui->exit_fx, 0);
 	}
 
 	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
-	{		
+	{
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
-		
+
 		// Exit
 		escape = false;
 	}
 
-	
+
 	// HUD
 
 	if (element == HUD_group_button && ui_event == UI_EVENT::UNCLICKED)
@@ -697,7 +702,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Recruit Unit
-		// Code to recruit unit
+		UnitSpawn();
 		App->audio->PlayFx(App->gui->recruit_fx, 0);
 	}
 
@@ -735,7 +740,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Townhall
-		// Code to upgrade townhall
+		BuildingUpgrade();
 		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
@@ -861,7 +866,7 @@ void GameplayScene::UnitDebugKeys()
 				(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
-			
+
 			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
 			{
 				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
@@ -949,80 +954,128 @@ void GameplayScene::DrawPathfindingDebug()
 
 void GameplayScene::DebugHUDSpawn()
 {
-		if (App->player->building_selected != nullptr)
+	if (App->player->building_selected != nullptr)
+	{
+		switch (App->player->building_selected->type)
 		{
-			switch (App->player->building_selected->type)
+		case ENTITY_TYPE::TOWNHALL:
+			App->gui->SetElementsVisibility(HUD_barracks_bar, false);
+			if (!HUD_townhall_bar->isVisible)
 			{
-			case ENTITY_TYPE::TOWNHALL:
-				App->gui->SetElementsVisibility(HUD_barracks_bar, false);
-				if (!HUD_townhall_bar->isVisible)
-				{
-					App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
-					App->gui->SetElementsVisibility(HUD_townhall_bar, true);
-				}
-				
-				break;
-
-			case ENTITY_TYPE::ENEMY_TOWNHALL:
-
-				break;
-
-			case ENTITY_TYPE::BARRACKS:
-				App->gui->SetElementsVisibility(HUD_townhall_bar, false);
-				if (!HUD_barracks_bar->isVisible)
-				{
-					App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
-					App->gui->SetElementsVisibility(HUD_barracks_bar, true);
-
-					if (HUD_townhall_bar->isVisible)
-					{
-						!HUD_barracks_bar->isVisible;
-					}
-				}
-
-				break;
-
-			case ENTITY_TYPE::ENEMY_BARRACKS:
-
-				break;
+				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
+				App->gui->SetElementsVisibility(HUD_townhall_bar, true);
 			}
 
+			break;
+
+		case ENTITY_TYPE::ENEMY_TOWNHALL:
+
+			break;
+
+		case ENTITY_TYPE::BARRACKS:
+			App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+			if (!HUD_barracks_bar->isVisible)
+			{
+				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
+				App->gui->SetElementsVisibility(HUD_barracks_bar, true);
+
+				if (HUD_townhall_bar->isVisible)
+				{
+					!HUD_barracks_bar->isVisible;
+				}
+			}
+
+			break;
+
+		case ENTITY_TYPE::ENEMY_BARRACKS:
+
+			break;
 		}
 
-		/*else
-		{
-			if (HUD_townhall_bar->isVisible)
-			{
-				App->gui->SetElementsVisibility(HUD_townhall_bar, false);
-			}
+	}
 
-			if (HUD_barracks_bar->isVisible)
-			{
-				App->gui->SetElementsVisibility(HUD_barracks_bar, false);
-			}
-		}*/
+	/*else
+	{
+		if (HUD_townhall_bar->isVisible)
+		{
+			App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+		}
+
+		if (HUD_barracks_bar->isVisible)
+		{
+			App->gui->SetElementsVisibility(HUD_barracks_bar, false);
+		}
+	}*/
 
 }
 
-// --------------- REVISE IF THEY ARE NEEDED ---------------
-//bool Scene1::Load(pugi::xml_node& data)
-//{
-//	if (currentMap != data.child("currentMap").attribute("num").as_int())
-//	{
-//		LOG("Calling switch maps");
-//		currentMap = data.child("currentMap").attribute("num").as_int();
-//
-//		//std::list<std::string>::iterator map_iterator = map_names.begin();
-//
-//		//std::advance(map_iterator, data.child("currentMap").attribute("num").as_int() );
-//
-//		//App->map->SwitchMaps( (*map_iterator) );
-//	}
-//	return true;
-//}
+void GameplayScene::UnitSpawn()
+{
+	if (App->player->building_selected != nullptr)
+	{
+		TownHall* townhall = nullptr;
+		Barracks* barrack = nullptr;
 
-//bool Scene1::Save(pugi::xml_node& data) const
-//{
-//	data.append_child("currentMap").append_attribute("num") = currentMap;
-//	return true;
-//}
+		switch (App->player->building_selected->type)
+		{
+		case ENTITY_TYPE::TOWNHALL:
+			townhall = (TownHall*)App->player->building_selected;
+			townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->level);
+			break;
+
+		case ENTITY_TYPE::BARRACKS:
+			barrack = (Barracks*)App->player->building_selected;
+			barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->level);
+			break;
+		}
+	}
+}
+
+// ------------------- ENTITY SPAWN METHODS -------------------
+
+void GameplayScene::BuildingUpgrade()
+{
+	if (App->player->building_selected != nullptr)
+	{
+		TownHall* townhall = nullptr;
+		Barracks* barrack = nullptr;
+
+		switch (App->player->building_selected->type)
+		{
+		case ENTITY_TYPE::TOWNHALL:
+			townhall = (TownHall*)App->player->building_selected;
+			townhall->level++;
+			townhall->LevelChanges();
+			break;
+
+		case ENTITY_TYPE::BARRACKS:
+			barrack = (Barracks*)App->player->building_selected;
+			barrack->level++;
+			barrack->LevelChanges();
+			break;
+		}
+	}
+
+}
+	// --------------- REVISE IF THEY ARE NEEDED ---------------
+	//bool Scene1::Load(pugi::xml_node& data)
+	//{
+	//	if (currentMap != data.child("currentMap").attribute("num").as_int())
+	//	{
+	//		LOG("Calling switch maps");
+	//		currentMap = data.child("currentMap").attribute("num").as_int();
+	//
+	//		//std::list<std::string>::iterator map_iterator = map_names.begin();
+	//
+	//		//std::advance(map_iterator, data.child("currentMap").attribute("num").as_int() );
+	//
+	//		//App->map->SwitchMaps( (*map_iterator) );
+	//	}
+	//	return true;
+	//}
+
+	//bool Scene1::Save(pugi::xml_node& data) const
+	//{
+	//	data.append_child("currentMap").append_attribute("num") = currentMap;
+	//	return true;
+	//}

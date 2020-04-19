@@ -56,6 +56,11 @@ public:
 	// --- Entity Spawn HUD
 	void DebugHUDSpawn();
 
+	// --- Entity Spawn Methods.
+	void UnitSpawn();
+
+	void BuildingUpgrade();
+
 
 public:
 	//std::list<std::string>	map_names;
