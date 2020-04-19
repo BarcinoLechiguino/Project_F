@@ -6,6 +6,7 @@
 #include "Point.h"
 
 class Pathfinding;
+class Entity;
 class Dynamic_Object;
 class Static_Object;
 
@@ -45,7 +46,7 @@ public:
 
 	void SelectAllEntities();
 	void SelectGatherers();
-	void SelectInfatries();
+	void SelectInfantries();
 	void SelectEnemies();
 
 	void SelectEntityAt(const iPoint& tile_position);
@@ -68,6 +69,8 @@ public:
 
 
 public:
+	bool			god_mode;
+	bool			is_selecting;
 
 	iPoint			scene_camera_limit;
 	iPoint			mouse_position;
@@ -89,8 +92,6 @@ public:
 
 	SDL_Rect		selection_rect;
 
-	//selection
-	bool			is_selecting;
 
 	std::vector<Dynamic_Object*>	units_selected;
 

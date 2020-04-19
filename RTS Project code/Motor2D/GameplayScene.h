@@ -31,6 +31,8 @@ public:
 
 	//bool Load(pugi::xml_node& data);
 	//bool Save(pugi::xml_node& data) const;
+	void CheckForWinLose();
+
 
 public:
 	void InitScene();

@@ -62,6 +62,8 @@ void TownHall::InitEntity()
 {
 	entity_sprite = App->entity_manager->GetTownHallTexture();
 
+	is_selected = false;
+
 	hall_rect_1 = { 0, 0, 155, 138 };
 	hall_rect_2 = { 155, 0, 155, 138 };
 	hall_rect = hall_rect_1;

@@ -6,6 +6,7 @@
 #include "Collisions.h"
 #include "Map.h"
 #include "Pathfinding.h"
+#include "Player.h"
 #include "Gui.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
@@ -79,7 +80,10 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, &entity_sprite_section);
 
-	App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
+	if (App->player->god_mode)
+	{
+		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
+	}
 
 	return true;
 };
@@ -118,6 +122,7 @@ void Enemy::InitEntity()
 	InitUnitSpriteSections();
 
 	is_selectable = false;
+	is_selected = false;
 	path_full = false;
 
 	target = nullptr;
@@ -311,21 +316,7 @@ bool Enemy::TargetIsInRange()
 
 void Enemy::PathToTarget()
 {
-	std::vector<Dynamic_Object*> tmp;
-	tmp.push_back(this);
-
-	/*std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
-
-	for (; item != App->entity_manager->entities.end(); ++item)
-	{
-		if ((*item)->type == ENTITY_TYPE::ENEMY)
-		{
-			tmp.push_back((Dynamic_Object*)(*item));
-		}
-	}*/
-
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
-	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);							//Gives units targets around main target
 	GiveNewTargetTile(target->tile_position);
 }
 

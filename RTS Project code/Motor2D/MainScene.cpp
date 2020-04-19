@@ -13,6 +13,7 @@
 #include "UI_Text.h"
 #include "UI_Button.h"
 #include "UI_Scrollbar.h"
+#include "SceneManager.h"
 #include "TransitionManager.h"
 
 #include "MainScene.h"

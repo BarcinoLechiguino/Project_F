@@ -20,6 +20,9 @@ public:
 	virtual bool CleanUp();
 
 public:
+	void InitEntity();
+
+public:
 	int ore;
 
 	int gather_time;

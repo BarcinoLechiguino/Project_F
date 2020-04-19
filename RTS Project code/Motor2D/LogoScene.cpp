@@ -5,6 +5,7 @@
 #include "Gui.h"
 #include "UI.h"
 #include "UI_Button.h"
+#include "SceneManager.h"
 #include "TransitionManager.h"
 #include "Textures.h"
 
@@ -96,7 +97,7 @@ void LogoScene::OnEventCall(UI* element, UI_EVENT ui_event)
 void LogoScene::ExecuteTransition()
 {
 	// No KP_1 because we are in the 1rst scene.
-	
+
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::MAIN_SCENE, 0.5f, true, 3, false, true);
