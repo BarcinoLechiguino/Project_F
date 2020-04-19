@@ -61,7 +61,7 @@ public:
 
 	virtual void AttachHealthbarToEntity();
 	
-	virtual void BlitEntity(int x, int y, SDL_Rect entity_rect, bool flip);
+	virtual void Draw();
 
 	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
 
@@ -82,6 +82,7 @@ public:
 
 	fPoint			pixel_position;			
 	iPoint			tile_position;
+	iPoint			center_point;												//Used for sprite ordering
 
 	SDL_Rect		healthbar_background_rect;
 	SDL_Rect		healthbar_rect;

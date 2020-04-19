@@ -61,13 +61,6 @@ bool Infantry::Update(float dt, bool doLogic)
 	selection_collider.x = pixel_position.x;
 	selection_collider.y = pixel_position.y;
 
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 15, &entity_sprite_section);
-
-	if (App->player->god_mode)
-	{
-		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
-	}
-
 	if (doLogic)
 	{
 		if (target == nullptr && !path_full)
@@ -90,6 +83,8 @@ bool Infantry::Update(float dt, bool doLogic)
 			}
 		}
 	}
+
+	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 
 	return true;
 };
@@ -120,6 +115,16 @@ bool Infantry::CleanUp()
 
 	return true;
 };
+
+void Infantry::Draw()
+{
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 15, &entity_sprite_section);
+
+	if (App->player->god_mode)
+	{
+		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
+	}
+}
 
 void Infantry::InitEntity()
 {

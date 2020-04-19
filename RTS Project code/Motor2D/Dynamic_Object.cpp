@@ -56,6 +56,11 @@ bool Dynamic_Object::CleanUp()
 	return true;
 }
 
+void Dynamic_Object::Draw()
+{
+	return;
+}
+
 void Dynamic_Object::InitUnitSpriteSections()
 {
 	return;

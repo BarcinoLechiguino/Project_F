@@ -24,6 +24,8 @@ class EnemyTownHall;
 class Barracks;
 class EnemyBarracks;
 
+
+
 class EntityManager : public Module
 {
 public:
@@ -37,6 +39,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+	void DrawEntities();
 
 public:
 
@@ -67,6 +70,7 @@ public:
 
 	void SetEntityMap(int width, int height);											//Method that will allocate the necessary memory for the entity_map.
 	void ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null = false);	//Method that will modify the entity map when a unit or building is spawned.
+	void OrderEntities();
 
 	bool CheckEntityMapBoundaries(const iPoint& pos) const;								//Method that will check whether or not the position passed as argument is inside the entity_map's bounds.
 
@@ -105,6 +109,7 @@ public:
 	uint							heavy_shot_fx;
 
 	std::vector<Entity*>			entities;	
+	std::vector<Entity*>			entities_in_screen;
 
 	Entity**						entity_map;			//Array that will be used to keep track at which position are all entities at all times.
 	int								entity_map_width;	//Width of the entity_map.

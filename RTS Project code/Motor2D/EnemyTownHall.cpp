@@ -31,7 +31,7 @@ bool EnemyTownHall::PreUpdate()
 
 bool EnemyTownHall::Update(float dt, bool doLogic)
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 51, pixel_position.y - 20, &hall_rect);
+	
 
 	return true;
 }
@@ -56,6 +56,11 @@ bool EnemyTownHall::CleanUp()
 	App->gui->DeleteGuiElement(healthbar);
 
 	return true;
+}
+
+void EnemyTownHall::Draw()
+{
+	App->render->Blit(entity_sprite, pixel_position.x - 51, pixel_position.y - 20, &hall_rect);
 }
 
 void EnemyTownHall::InitEntity()
@@ -83,6 +88,8 @@ void EnemyTownHall::InitEntity()
 	{
 		AttachHealthbarToEntity();
 	}
+
+	center_point = iPoint(pixel_position.x, pixel_position.y + (((tiles_occupied_x - 1) * App->map->data.tile_height / 2) + ((tiles_occupied_y - 1) * App->map->data.tile_height / 2)) / 2);
 }
 
 void EnemyTownHall::AttachHealthbarToEntity()

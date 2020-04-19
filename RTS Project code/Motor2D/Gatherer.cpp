@@ -56,12 +56,7 @@ bool Gatherer::Update(float dt, bool doLogic)
 	selection_collider.x = pixel_position.x + 10;
 	selection_collider.y = pixel_position.y + 10;
 
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 14, &entity_sprite_section);
-
-	if (App->player->god_mode)
-	{
-		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
-	}
+	
 
 	if (doLogic)
 	{
@@ -86,6 +81,8 @@ bool Gatherer::Update(float dt, bool doLogic)
 			}
 		}
 	}
+
+	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 
 	return true;
 }
@@ -115,6 +112,16 @@ bool Gatherer::CleanUp()
 	App->gui->DeleteGuiElement(healthbar);
 
 	return true;
+}
+
+void Gatherer::Draw()
+{
+	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 14, &entity_sprite_section);
+
+	if (App->player->god_mode)
+	{
+		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
+	}
 }
 
 void Gatherer::InitEntity()

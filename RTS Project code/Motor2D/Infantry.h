@@ -22,6 +22,8 @@ public:
 	bool PostUpdate();
 
 	bool CleanUp();
+
+	void Draw();
 	
 public:
 	void InitEntity();

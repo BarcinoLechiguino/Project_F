@@ -54,3 +54,7 @@ bool Static_Object::CleanUp()
 	return true;
 }
 
+void Static_Object::Draw()
+{
+	return;
+}

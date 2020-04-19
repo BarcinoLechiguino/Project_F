@@ -23,6 +23,8 @@ public:
 
 	bool CleanUp();
 
+	void Draw();
+
 public:
 	void InitEntity();
 	
