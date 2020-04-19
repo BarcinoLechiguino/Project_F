@@ -86,11 +86,7 @@ bool Infantry::Update(float dt, bool doLogic)
 		{
 			if (!path_full)
 			{
-				std::vector<Dynamic_Object*> tmp;
-				
-				App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
-				
-				GiveNewTargetTile(target->tile_position);
+				ChaseTarget();
 			}
 		}
 	}
@@ -235,13 +231,13 @@ void Infantry::GetShortestPathWithinAttackRange()
 {
 	std::vector<iPoint> tmp;
 
-	for (int i = 0; i < entity_path.size(); ++i)
+	if (target != nullptr)
 	{
-		tmp.push_back(entity_path[i]);
-
-		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+		for (int i = 0; i < entity_path.size(); ++i)
 		{
-			if (!App->pathfinding->IsOccupied(entity_path[i]))
+			tmp.push_back(entity_path[i]);
+
+			if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
 			{
 				entity_path.clear();
 
@@ -330,9 +326,15 @@ bool Infantry::TargetIsInRange()
 	return false;
 }
 
-void Infantry::PathToTarget()
+void Infantry::ChaseTarget()
 {
+	std::vector<Dynamic_Object*> tmp;
+	tmp.push_back(this);
 
+	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
+
+	//GiveNewTargetTile(target->tile_position);
+	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);
 }
 
 void Infantry::DealDamage()
@@ -342,11 +344,6 @@ void Infantry::DealDamage()
 		ApplyDamage(target);
 		App->audio->PlayFx(App->entity_manager->infantry_shot_fx);
 		attack_in_cooldown = true;
-
-		if (target->current_health <= 0)
-		{
-			target = nullptr;
-		}
 	}
 	else
 	{
@@ -357,6 +354,11 @@ void Infantry::DealDamage()
 			attack_in_cooldown = false;
 			accumulated_cooldown = 0.0f;
 		}
+	}
+
+	if (target->current_health <= 0)
+	{
+		target = nullptr;
 	}
 }
 

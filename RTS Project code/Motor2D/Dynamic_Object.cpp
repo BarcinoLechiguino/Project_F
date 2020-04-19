@@ -94,7 +94,7 @@ bool Dynamic_Object::TargetIsInRange()
 	return true;
 }
 
-void Dynamic_Object::PathToTarget()
+void Dynamic_Object::ChaseTarget()
 {
 	return;
 }
