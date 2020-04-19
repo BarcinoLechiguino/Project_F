@@ -98,8 +98,9 @@ public:
 	uint							click_barracks_fx;
 	uint							building_fx;
 	uint							finished_building_fx;
-	uint							finished_recruiting;
-	uint							finished_upgrading;
+	uint							finished_recruiting_fx;
+	uint							finished_upgrading_fx;
+	uint							click_townhall_fx;
 
 	uint							heavy_shot_fx;
 

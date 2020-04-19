@@ -608,21 +608,21 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Recruit Unit
 		// Code to recruit unit
-		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->audio->PlayFx(App->gui->recruit_fx, 0);
 	}
 
 	if (element == HUD_unit_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
 		// Code to upgrade unit
-		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
 	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Townhall
 		// Code to upgrade townhall
-		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
 
@@ -639,21 +639,21 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Recruit Unit
 		// Code to recruit unit
-		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->audio->PlayFx(App->gui->recruit_fx, 0);
 	}
 
 	if (element == HUD_unit_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
 		// Code to upgrade unit
-		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
 	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Townhall
 		// Code to upgrade barracks
-		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 }
 
@@ -797,6 +797,7 @@ void GameplayScene::DebugHUDSpawn()
 				App->gui->SetElementsVisibility(HUD_barracks_bar, false);
 				if (!HUD_townhall_bar->isVisible)
 				{
+					App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
 					App->gui->SetElementsVisibility(HUD_townhall_bar, true);
 				}
 				
