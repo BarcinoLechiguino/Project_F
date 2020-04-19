@@ -61,6 +61,8 @@ bool Gui::Start()
 		exit_fx = App->audio->LoadFx("audio/fx/UI/Back to menu.wav");
 		appear_menu_fx = App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
 		standard_fx = App->audio->LoadFx("audio/fx/UI/Standard.wav");
+		upgrade_fx = App->audio->LoadFx("audio/fx/UI/Upgrade Button.wav");
+		recruit_fx = App->audio->LoadFx("audio/fx/UI/Recruit_Unit.wav");
 
 		audioAlreadyLoaded = true;
 	}
