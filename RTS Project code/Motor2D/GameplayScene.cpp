@@ -215,7 +215,7 @@ void GameplayScene::LoadGuiElements()
 
 	// Back
 	SDL_Rect background = { 780, 451, 514, 403 };
-	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 380, 180, background, false, false, false, this, nullptr);
+	in_game_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 380, 165, background, false, false, false, this, nullptr);
 
 
 	// Continue Button
@@ -224,7 +224,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_continue_button_hover = { 178, 0, 158, 23 };
 	SDL_Rect in_game_continue_button_clicked = { 356, 0, 158, 23 };
 
-	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 555, 286, false, true, false, this, in_game_background
+	in_game_continue_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 555, 271, false, true, false, this, in_game_background
 		, &in_game_continue_button_idle, &in_game_continue_button_hover, &in_game_continue_button_clicked);
 
 
@@ -234,7 +234,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_options_button_hover = { 178, 52, 133, 24 };
 	SDL_Rect in_game_options_button_clicked = { 356, 52, 133, 24 };
 
-	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 567, 326, false, true, false, this, in_game_background
+	in_game_options_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 567, 311, false, true, false, this, in_game_background
 		, &in_game_options_button_idle, &in_game_options_button_hover, &in_game_options_button_clicked);
 
 
@@ -244,7 +244,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_back_to_menu_hover = { 204, 137, 189, 23 };
 	SDL_Rect in_game_back_to_menu_clicked = { 408, 137, 189, 23 };
 
-	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 541, 366, false, true, false, this, in_game_background
+	in_game_back_to_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 541, 351, false, true, false, this, in_game_background
 		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
 
 
@@ -254,7 +254,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_exit_button_hover = { 178, 77, 74, 23 };
 	SDL_Rect in_game_exit_button_clicked = { 356, 77, 74, 23 };
 
-	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 596, 406, false, true, false, this, in_game_background
+	in_game_exit_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 596, 391, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
 
 	
@@ -262,7 +262,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
 	_TTF_Font* in_game_font = App->font->Load("fonts/borgsquadcond.ttf", 50);
 	std::string in_game_title_string = "Pause Menu";
-	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 469, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
+	in_game_title_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 469, 195, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, in_game_background, &in_game_title_string);
 
 	// Options Menu
 	LoadInGameOptionsMenu();
@@ -300,12 +300,32 @@ void GameplayScene::LoadGuiElements()
 
 
 	//Down Bar
-	//Main Bar
-	SDL_Rect HUD_main_down_bar_size = { 0, 200, 1280, 150 };
-
-	HUD_main_down_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, -3, 580, HUD_main_down_bar_size, false, true, false, this, nullptr);
-
 	//Resource Bar
+
+	SDL_Rect HUD_resource_bar_size = { 884, 223, 188, 150 };
+
+	HUD_resource_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1095, 574, HUD_resource_bar_size, true, true, false, this, nullptr);
+
+	//Resources
+
+	SDL_Rect HUD_electricity_resource_size = { 707, 54, 13, 25 };
+
+	HUD_electricity_resource = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1115, 604, HUD_electricity_resource_size, true, true, false, this, HUD_resource_bar);
+
+	SDL_Rect HUD_data_resource_size = { 687, 54, 16, 25 };
+
+	HUD_data_resource = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1115, 634, HUD_data_resource_size, true, true, false, this, HUD_resource_bar);
+	
+
+	//Townhall Bar
+	SDL_Rect HUD_townhall_bar_size = { 20, 209, 799, 160 };
+
+	HUD_townhall_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 309, 574, HUD_townhall_bar_size, false, true, false, this, nullptr);
+
+	//Barracks Bar
+	SDL_Rect HUD_barracks_bar_size = { 20, 209, 799, 160 };
+
+	HUD_barracks_bar = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 309, 574, HUD_barracks_bar_size, false, true, false, this, nullptr);
 
 }
 
@@ -319,27 +339,27 @@ void GameplayScene::LoadInGameOptionsMenu()
 
 	// Options
 	std::string in_game_title_string = "Options Menu";
-	in_game_options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 445, 210, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_title_string);
+	in_game_options_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 445, 195, in_game_text_rect, in_game_font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_title_string);
 
 	//Music
 	std::string in_game_music_string = "Music";
-	in_game_music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 487, 275, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_music_string);
+	in_game_music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 487, 260, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_music_string);
 
 	SDL_Rect in_game_thumb_rect = { 930,2,18,31 };
 	SDL_Rect in_game_scrollbar_rect = { 743,3,180,15 };
 
-	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 280, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false);
+	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 265, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false);
 	in_game_music_scrollbar->parent = in_game_options_parent;
 
 	//SFX
 	std::string sfx_string = "SFX";
-	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 461, 309, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
-	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 320, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, true);
+	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 461, 294, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
+	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 305, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, true);
 	in_game_sfx_scrollbar->parent = in_game_options_parent;
 
 	//screen size
 	std::string in_game_resolution_string = "screen";
-	in_game_resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 448, 346, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_resolution_string);
+	in_game_resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 448, 331, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_resolution_string);
 
 	//Remapping
 
@@ -349,7 +369,7 @@ void GameplayScene::LoadInGameOptionsMenu()
 	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
 	SDL_Rect in_game_back_button_clicked = { 114, 103, 45, 33 };
 
-	in_game_back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 430, 490, true, true, false, this, in_game_options_parent
+	in_game_back_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 430, 475, true, true, false, this, in_game_options_parent
 		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
 }
 
@@ -565,13 +585,13 @@ void GameplayScene::DebugHUDSpawn()
 {
 		if (App->player->building_selected != nullptr)
 		{
-
 			switch (App->player->building_selected->type)
 			{
 			case ENTITY_TYPE::TOWNHALL:
-				if (!HUD_main_down_bar->isVisible)
+				App->gui->SetElementsVisibility(HUD_barracks_bar, false);
+				if (!HUD_townhall_bar->isVisible)
 				{
-					App->gui->SetElementsVisibility(HUD_main_down_bar, true);
+					App->gui->SetElementsVisibility(HUD_townhall_bar, true);
 				}
 				
 				break;
@@ -581,6 +601,16 @@ void GameplayScene::DebugHUDSpawn()
 				break;
 
 			case ENTITY_TYPE::BARRACKS:
+				App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+				if (!HUD_barracks_bar->isVisible)
+				{
+					App->gui->SetElementsVisibility(HUD_barracks_bar, true);
+
+					if (HUD_townhall_bar->isVisible)
+					{
+						!HUD_barracks_bar->isVisible;
+					}
+				}
 
 				break;
 
@@ -593,9 +623,14 @@ void GameplayScene::DebugHUDSpawn()
 
 		else
 		{
-			if (HUD_main_down_bar->isVisible)
+			if (HUD_townhall_bar->isVisible)
 			{
-				App->gui->SetElementsVisibility(HUD_main_down_bar, false);
+				App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+			}
+
+			if (HUD_barracks_bar->isVisible)
+			{
+				App->gui->SetElementsVisibility(HUD_barracks_bar, false);
 			}
 		}
 
