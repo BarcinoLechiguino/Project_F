@@ -198,5 +198,7 @@ public:
 	UI_Button*				 HUD_unit_upgrade_barracks_infantry;
 	UI_Button*				 HUD_upgrade_barracks;
 
+	UI_Text*				 God_Mode_Activated;
+
 };
 #endif // !__GAMEPLAY_SCENE_H__

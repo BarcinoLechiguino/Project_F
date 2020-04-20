@@ -162,6 +162,15 @@ bool GameplayScene::PostUpdate()
 		App->audio->PlayFx(App->gui->appear_menu_fx, 0);
 	}
 
+	if (App->player->god_mode)
+	{
+		App->gui->SetElementsVisibility(God_Mode_Activated, true);
+	}
+	if (App->player->god_mode == false)
+	{
+		App->gui->SetElementsVisibility(God_Mode_Activated, false);
+	}
+
 	App->minimap->BlitMinimap();
 
 	return ret;
@@ -636,6 +645,13 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_upgrade_barracks = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 975, 577, false, true, false, this, HUD_barracks_bar
 		, &HUD_upgrade_barracks_idle, &HUD_upgrade_barracks_hover, &HUD_upgrade_barracks_clicked);
+
+
+	// God_Mode
+	SDL_Rect HUD_text_God = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_God_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_God_string = "God Mode Activated";
+	God_Mode_Activated = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 950, 2, HUD_text_God, HUD_God_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_God_string);
 }
 
 void GameplayScene::LoadInGameOptionsMenu()

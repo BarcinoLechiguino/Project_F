@@ -96,6 +96,7 @@ void Scene::DebugKeys()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_DOWN)						// Enable/Disable God Mode.
 	{
+
 		if (App->player->CurrentlyInGameplayScene())
 		{
 			App->player->god_mode = !App->player->god_mode;
