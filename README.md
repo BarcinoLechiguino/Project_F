@@ -122,11 +122,17 @@ No previous installation is required to play the game, just download the latest 
 
 * **Camera Movement:**
   * **Cursor:** If the cursor is brought to any of the edges of the screen, the camera will move in the direction the cursor is at.
+  
   * **UP Arrow Key:** Move camera upwards.
+  
   * **DOWN Arrow Key:** Move camera downwards.
+  
   * **RIGHT Arrow Key:**  Move the camera to the right.
+  
   * **LEFT Arrow Key:** Move the camera to the left.
+  
   * **Space Key:** The camera will be centered around your Town-hall.
+  
     
   
 * **Q Key:**  Toggle Fullscreen Mode.
