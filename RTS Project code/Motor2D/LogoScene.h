@@ -39,10 +39,13 @@ public:
 	//BACKGROUND
 	SDL_Rect		background_rect;
 	SDL_Texture* background_texture;
-	// ---------------------
 
 private:
 	float				logo_scene_duration;
 	float				accumulated_time;
+	//Audio
+	uint				logo_fx;
+	uint				logo_channel;
+
 };
 #endif // !_LOGO_SCENE_H

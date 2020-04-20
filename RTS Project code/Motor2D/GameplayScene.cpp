@@ -221,6 +221,7 @@ bool GameplayScene::CleanUp()
 	App->tex->UnLoad(path_debug_tex);
 
 	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
+	App->player->ClearEntityBuffers();
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui->CleanUp();
@@ -369,6 +370,10 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_data_resource_size = { 687, 54, 16, 25 };
 
 	HUD_data_resource = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1115, 634, HUD_data_resource_size, true, true, false, this, HUD_resource_bar);
+
+	//Data Store
+
+	//Electricity Store
 
 	//Townhall Bar
 	SDL_Rect HUD_townhall_bar_size = { 20, 209, 798, 160 };
