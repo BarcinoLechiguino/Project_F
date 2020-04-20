@@ -258,6 +258,8 @@ void GameplayScene::InitScene()
 	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
+	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
+	inGame_channel = App->audio->PlayMusic(inGame_song, 1);
 }
 
 void GameplayScene::LoadGuiElements()

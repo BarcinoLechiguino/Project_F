@@ -24,6 +24,7 @@ public:
 
 	void ExecuteTransition();
 
+	void InitScene();
 public:
 	
 
@@ -32,6 +33,9 @@ public:
 private:
 	SDL_Rect		background_rect;
 	SDL_Texture* background_texture;
+	//Audio
+	uint				win_song;
+	uint				win_channel;
 
 };
 

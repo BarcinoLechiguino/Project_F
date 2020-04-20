@@ -200,5 +200,10 @@ public:
 
 	UI_Text*				 God_Mode_Activated;
 
+private:
+	//Audio
+	uint				inGame_song;
+	uint				inGame_channel;
+
 };
 #endif // !__GAMEPLAY_SCENE_H__
