@@ -22,10 +22,9 @@
 #include "Static_Object.h"
 #include "TownHall.h"
 #include "Barracks.h"
+#include "Barracks.h"
 #include "Gatherer.h"
 #include "Infantry.h"
-#include "Rock.h"
-#include "Tree.h"
 
 #include "Gui.h"
 #include "UI.h"
@@ -110,7 +109,7 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
 	{
 		App->win->ToggleFullscreen();
 	}
@@ -160,8 +159,8 @@ bool GameplayScene::PostUpdate()
 	return ret;
 }
 
-void GameplayScene::CheckForWinLose() 
-{
+void GameplayScene::CheckForWinLose() {
+
 	if (!App->player->god_mode)
 	{
 		//Check for an enemy townhall alive. If none is found the player has won, thus we call the transition to win scene
@@ -866,11 +865,6 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 			{
 				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
-			{
-				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 		}
 	}
