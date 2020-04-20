@@ -118,7 +118,7 @@ void EnemyBarracks::GenerateUnit(ENTITY_TYPE type, int level)
 
 void EnemyBarracks::LevelChanges()
 {
-	switch (level)
+	switch (level)								//Updates the building stats when leveling up	
 	{
 	case 1:
 		barracks_rect = barracks_rect_1;
