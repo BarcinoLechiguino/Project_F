@@ -270,7 +270,7 @@ void GameplayScene::InitScene()
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
-	App->audio->PlayMusic(inGame_song, 0);
+	App->audio->PlayMusic(inGame_song, 0.0f);
 }
 
 void GameplayScene::LoadGuiElements()
