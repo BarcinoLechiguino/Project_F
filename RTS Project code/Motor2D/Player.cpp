@@ -51,7 +51,8 @@ bool Player::Start()
 
 	mouse_tile_debug = App->tex->Load("maps/mouse_tile_debug.png");
 
-	scene_camera_limit = iPoint(0, 1000);
+	scene_camera_x_limit = iPoint(1700, -600);										//Magic Numbers
+	scene_camera_y_limit = iPoint(-1430, 200);										//(Nice)
 
 	camera_speed.x = 700.0f;
 	camera_speed.y = 700.0f;
@@ -139,22 +140,34 @@ void Player::CameraController(float dt)
 	{
 		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)								//Left
 		{
-			App->render->camera.x += camera_speed.x * dt;
+			if (App->render->camera.x < scene_camera_x_limit.x)
+			{
+				App->render->camera.x += camera_speed.x * dt;
+			}
 		}
 
 		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)			//Right
 		{
-			App->render->camera.x -= camera_speed.x * dt;
+			if (App->render->camera.x > scene_camera_x_limit.y)
+			{
+				App->render->camera.x -= camera_speed.x * dt;
+			}
 		}
 
 		if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)			//Bottom
 		{
-			App->render->camera.y -= camera_speed.y * dt;
+			if (App->render->camera.y > scene_camera_y_limit.x)
+			{
+				App->render->camera.y -= camera_speed.y * dt;
+			}
 		}
 
 		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)								//Up
 		{
-			App->render->camera.y += camera_speed.y * dt;
+			if (App->render->camera.y < scene_camera_y_limit.y)
+			{
+				App->render->camera.y += camera_speed.y * dt;
+			}
 		}
 	}
 }

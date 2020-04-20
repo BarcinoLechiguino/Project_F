@@ -72,7 +72,8 @@ public:
 	bool			god_mode;
 	bool			is_selecting;
 
-	iPoint			scene_camera_limit;
+	iPoint			scene_camera_x_limit;
+	iPoint			scene_camera_y_limit;
 	iPoint			mouse_position;
 	iPoint			mouse_map_position;
 	iPoint			mouse_tile;									// The tile where the mouse is currently on.
