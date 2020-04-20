@@ -63,6 +63,10 @@ public:
 
 	void BuildingUpgrade();
 
+	void UnitUpgrade();
+
+	bool CheckResources(uint required_data, uint required_electricity);
+
 
 public:
 	//std::list<std::string>	map_names;
@@ -137,6 +141,7 @@ public:
 	UI_Button*				 HUD_group_button;
 	UI_Button*				 HUD_home_button;
 	UI_Button*				 HUD_pause_button;
+	UI_Button*				 HUD_play_button;
 	UI_Image*				 HUD_resource_bar;
 
 
@@ -212,10 +217,14 @@ public:
 
 	std::string				HUD_data_resource_string;
 	std::string				HUD_electricity_resource_string;
+
+<<<<<<< HEAD
 private:
+=======
+>>>>>>> e399f7fbbdb52cb0ad1daf2bc32064f1389f162f
 	//Audio
-	uint				inGame_song;
-	uint				inGame_channel;
+
+	uint					inGame_song;
 
 };
 #endif // !__GAMEPLAY_SCENE_H__

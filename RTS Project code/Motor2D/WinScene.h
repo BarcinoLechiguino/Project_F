@@ -31,11 +31,10 @@ public:
 	UI_Button* win_main_menu;
 
 private:
-	SDL_Rect		background_rect;
-	SDL_Texture* background_texture;
+	SDL_Rect			background_rect;
+	SDL_Texture*		background_texture;
 	//Audio
 	uint				win_song;
-	uint				win_channel;
 
 };
 

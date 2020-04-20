@@ -132,7 +132,7 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	std::string HUD_electricity_resource_string = std::to_string(App->entity_manager->resource_electricity);
 	HUD_electricity_resource_text->RefreshTextInput(HUD_electricity_resource_string.c_str());
 
-	
+
 
 	return true;
 }
@@ -270,7 +270,7 @@ void GameplayScene::InitScene()
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
-	inGame_channel = App->audio->PlayMusic(inGame_song, 1);
+	App->audio->PlayMusic(inGame_song, 0.0f);
 }
 
 void GameplayScene::LoadGuiElements()
@@ -353,7 +353,16 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_pause_button_clicked = { 1237, 48, 63, 38 };
 
 	HUD_pause_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 601, -4, true, true, false, this, nullptr
-		, &HUD_pause_button_idle, &HUD_pause_button_hover, &HUD_pause_button_clicked);
+		, &HUD_pause_button_idle, &HUD_pause_button_hover, &HUD_pause_button_clicked);	
+	
+	// Play
+	SDL_Rect HUD_play_button_size = { 0, 0, 63, 38 };
+	SDL_Rect HUD_play_button_idle = { 1037, 3, 63, 38 };
+	SDL_Rect HUD_play_button_hover = { 1104, 3, 63, 38 };
+	SDL_Rect HUD_play_button_clicked = { 1171, 3, 63, 38 };
+
+	HUD_play_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 601, -4, false, true, false, this, nullptr
+		, &HUD_play_button_idle, &HUD_play_button_hover, &HUD_play_button_clicked);
 
 	// Home 
 	SDL_Rect HUD_home_button_size = { 0, 0, 63, 37 };
@@ -389,14 +398,14 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_text_data_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_data_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_data_resource_string = "0";
-	HUD_data_resource_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 1145, 634, HUD_text_data_resource_rect, HUD_data_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_data_resource_string);
+	HUD_data_resource_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 1145, 604, HUD_text_data_resource_rect, HUD_data_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_data_resource_string);
 
 	//Electricity Store
 
 	SDL_Rect HUD_text_electricity_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_electricity_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_electricity_resource_string = "0";
-	HUD_electricity_resource_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 1145, 604, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_electricity_resource_string);
+	HUD_electricity_resource_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 1145, 634, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_electricity_resource_string);
 
 	//Townhall Bar
 	SDL_Rect HUD_townhall_bar_size = { 20, 209, 798, 160 };
@@ -458,13 +467,13 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources2_unit_townhall_gatherer = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
 
-	// Price Gatherer1
+	// Price Gatherer Data
 	SDL_Rect HUD_text_townhall_price_unit_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price_unit_string = "20";
 	HUD_prices_unit_townhall_gatherer = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price_unit_rect, HUD_townhall_price_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_townhall_gatherer, &HUD_townhall_price_unit_string);
-	
-	// Price Gatherer2
+
+	// Price Gatherer Electricity
 	SDL_Rect HUD_text_townhall_price2_unit_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price2_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price2_unit_string = "0";
@@ -481,13 +490,13 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources2_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
 
-	// Price Upgrade Gatherer
+	// Price Upgrade Gatherer Data
 	SDL_Rect HUD_text_townhall_price_unit_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price_unit_upgrade_string = "100";
 	HUD_prices_unit_townhall_gatherer = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price_unit_upgrade_rect, HUD_townhall_price_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer, &HUD_townhall_price_unit_upgrade_string);
 
-	// Price Upgrade Gatherer2
+	// Price Upgrade Gatherer Electricity
 	SDL_Rect HUD_text_townhall_price2_unit_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price2_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price2_unit_upgrade_string = "50";
@@ -504,13 +513,13 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources2_upgrade_townhall = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
 
-	// Price Upgrade Townhall
+	// Price Upgrade Townhall Data
 	SDL_Rect HUD_text_townhall_price_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price_upgrade_string = "200";
 	HUD_prices_upgrade_townhall = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price_upgrade_rect, HUD_townhall_price_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_townhall, &HUD_townhall_price_upgrade_string);
 
-	// Price Upgrade Townhall2
+	// Price Upgrade Townhall Electricity
 	SDL_Rect HUD_text_townhall_price2_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price2_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price2_upgrade_string = "175";
@@ -598,13 +607,13 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources2_unit_barracks_infantry = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
 
-	// Price Infantry1
+	// Price Infantry Data
 	SDL_Rect HUD_text_barracks_price_unit_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price_unit_string = "0";
 	HUD_prices_unit_townhall_infantry = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price_unit_rect, HUD_barracks_price_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_barracks_infantry, &HUD_barracks_price_unit_string);
 
-	// Price Infantry2
+	// Price Infantry Electricity
 	SDL_Rect HUD_text_barracks_price2_unit_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price2_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price2_unit_string = "10";
@@ -621,13 +630,13 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources2_upgrade_unit_barracks_infantry = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
 
-	// Price Upgrade Infantry
+	// Price Upgrade Infantry Data
 	SDL_Rect HUD_text_barracks_price_unit_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price_unit_upgrade_string = "50";
 	HUD_prices_upgrade_unit_barracks_infantry = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price_unit_upgrade_rect, HUD_barracks_price_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry, &HUD_barracks_price_unit_upgrade_string);
 
-	// Price Upgrade Infantry2
+	// Price Upgrade Infantry Electricity
 	SDL_Rect HUD_text_barracks_price2_unit_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price2_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price2_unit_upgrade_string = "100";
@@ -644,13 +653,13 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources2_upgrade_barracks = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_res2_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
 
-	// Price Upgrade Barracks
+	// Price Upgrade Barracks Data
 	SDL_Rect HUD_text_barracks_price_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price_upgrade_string = "170";
 	HUD_prices_upgrade_barracks = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price_upgrade_rect, HUD_barracks_price_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_barracks, &HUD_barracks_price_upgrade_string);
 
-	// Price Upgrade Barracks2
+	// Price Upgrade Barracks Electricity
 	SDL_Rect HUD_text_barracks_price2_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price2_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price2_upgrade_string = "120";
@@ -702,14 +711,14 @@ void GameplayScene::LoadInGameOptionsMenu()
 	SDL_Rect in_game_scrollbar_rect = { 743,3,180,15 };
 
 	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 235, in_game_scrollbar_rect, in_game_thumb_rect
-																		, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, true, false, false, false);
+		, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, true, false, false, false);
 	in_game_music_scrollbar->parent = in_game_options_parent;
 
 	//SFX
 	std::string sfx_string = "SFX";
 	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 491, 264, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
 	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 275, in_game_scrollbar_rect, in_game_thumb_rect
-																		, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, false, false, false);
+		, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, false, false, false);
 	in_game_sfx_scrollbar->parent = in_game_options_parent;
 
 	//screen size
@@ -806,6 +815,17 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		// Pause
 		App->pause = !App->pause;
 		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->gui->SetElementsVisibility(HUD_pause_button, false);			
+		App->gui->SetElementsVisibility(HUD_play_button, true);	
+	}
+	
+	if (element == HUD_play_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Play
+		App->pause = !App->pause;
+		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->gui->SetElementsVisibility(HUD_play_button, false);
+		App->gui->SetElementsVisibility(HUD_pause_button, true);
 	}
 
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
@@ -844,7 +864,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
-		// Code to upgrade unit
+		UnitUpgrade();
 		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
@@ -904,7 +924,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
-		// Code to upgrade unit
+		UnitUpgrade();
 		App->audio->PlayFx(App->gui->upgrade_fx, 0);
 	}
 
@@ -1037,6 +1057,11 @@ void GameplayScene::UnitDebugKeys()
 			{
 				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
+			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+			{
+				App->entity_manager->resource_data += 300;
+				App->entity_manager->resource_electricity += 300;
+			}
 		}
 	}
 }
@@ -1136,7 +1161,6 @@ void GameplayScene::DebugHUDSpawn()
 
 			break;
 		}
-
 	}
 	else
 	{
@@ -1149,13 +1173,9 @@ void GameplayScene::DebugHUDSpawn()
 			App->gui->SetElementsVisibility(HUD_barracks_bar, false);
 		}
 	}
-
-
 }
-		
 
-
-
+// ------------------- ENTITY SPAWN METHODS -------------------
 
 void GameplayScene::UnitSpawn()
 {
@@ -1167,19 +1187,24 @@ void GameplayScene::UnitSpawn()
 		switch (App->player->building_selected->type)
 		{
 		case ENTITY_TYPE::TOWNHALL:
-			townhall = (TownHall*)App->player->building_selected;
-			townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->level);
+
+			if (CheckResources(20, 0))
+			{
+				townhall = (TownHall*)App->player->building_selected;
+				townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->unit_level);
+			}
 			break;
 
 		case ENTITY_TYPE::BARRACKS:
-			barrack = (Barracks*)App->player->building_selected;
-			barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->level);
+			if (CheckResources(0, 10))
+			{
+				barrack = (Barracks*)App->player->building_selected;
+				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->unit_level);
+			}
 			break;
 		}
 	}
 }
-
-// ------------------- ENTITY SPAWN METHODS -------------------
 
 void GameplayScene::BuildingUpgrade()
 {
@@ -1191,39 +1216,97 @@ void GameplayScene::BuildingUpgrade()
 		switch (App->player->building_selected->type)
 		{
 		case ENTITY_TYPE::TOWNHALL:
-			townhall = (TownHall*)App->player->building_selected;
-			townhall->level++;
-			townhall->LevelChanges();
+
+			if (CheckResources(200, 175))
+			{
+				townhall = (TownHall*)App->player->building_selected;
+				townhall->level++;
+				townhall->LevelChanges();
+			}
 			break;
 
 		case ENTITY_TYPE::BARRACKS:
-			barrack = (Barracks*)App->player->building_selected;
-			barrack->level++;
-			barrack->LevelChanges();
+
+			if (CheckResources(170, 120))
+			{
+				barrack = (Barracks*)App->player->building_selected;
+				barrack->level++;
+				barrack->LevelChanges();
+			}
 			break;
 		}
 	}
 
 }
-	// --------------- REVISE IF THEY ARE NEEDED ---------------
-	//bool Scene1::Load(pugi::xml_node& data)
-	//{
-	//	if (currentMap != data.child("currentMap").attribute("num").as_int())
-	//	{
-	//		LOG("Calling switch maps");
-	//		currentMap = data.child("currentMap").attribute("num").as_int();
-	//
-	//		//std::list<std::string>::iterator map_iterator = map_names.begin();
-	//
-	//		//std::advance(map_iterator, data.child("currentMap").attribute("num").as_int() );
-	//
-	//		//App->map->SwitchMaps( (*map_iterator) );
-	//	}
-	//	return true;
-	//}
 
-	//bool Scene1::Save(pugi::xml_node& data) const
-	//{
-	//	data.append_child("currentMap").append_attribute("num") = currentMap;
-	//	return true;
-	//}
+
+
+void GameplayScene::UnitUpgrade()
+{
+	if (App->player->building_selected != nullptr)
+	{
+		TownHall* townhall = nullptr;
+		Barracks* barrack = nullptr;
+
+		switch (App->player->building_selected->type)
+		{
+		case ENTITY_TYPE::TOWNHALL:
+			if (CheckResources(100, 50))
+			{
+				townhall = (TownHall*)App->player->building_selected;
+				townhall->unit_level++;
+			}
+			break;
+
+		case ENTITY_TYPE::BARRACKS:
+			if (CheckResources(50, 100))
+			{
+				barrack = (Barracks*)App->player->building_selected;
+				barrack->unit_level++;
+			}
+			break;
+		}
+	}
+}
+
+
+//--------------- RESOURCE MANAGEMENT ---------------
+
+
+bool GameplayScene::CheckResources(uint required_data, uint required_electricity)
+{
+	if ((required_data <= App->entity_manager->resource_data) && (required_electricity <= App->entity_manager->resource_electricity))
+	{
+		App->entity_manager->resource_data -= required_data;
+		App->entity_manager->resource_electricity -= required_electricity;
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
+
+
+// --------------- REVISE IF THEY ARE NEEDED ---------------
+//bool Scene1::Load(pugi::xml_node& data)
+//{
+//	if (currentMap != data.child("currentMap").attribute("num").as_int())
+//	{
+//		LOG("Calling switch maps");
+//		currentMap = data.child("currentMap").attribute("num").as_int();
+//
+//		//std::list<std::string>::iterator map_iterator = map_names.begin();
+//
+//		//std::advance(map_iterator, data.child("currentMap").attribute("num").as_int() );
+//
+//		//App->map->SwitchMaps( (*map_iterator) );
+//	}
+//	return true;
+//}
+
+//bool Scene1::Save(pugi::xml_node& data) const
+//{
+//	data.append_child("currentMap").append_attribute("num") = currentMap;
+//	return true;
+//}

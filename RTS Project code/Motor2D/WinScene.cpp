@@ -43,7 +43,6 @@ bool WinScene::PreUpdate()
 
 bool WinScene::Update(float dt)
 {
-	
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 	return true;
 }
@@ -58,6 +57,8 @@ bool WinScene::PostUpdate()
 
 bool WinScene::CleanUp()
 {
+	App->tex->UnLoad(background_texture);
+	
 	App->gui->CleanUp();
 	
 	return true;
@@ -116,5 +117,5 @@ void WinScene::ExecuteTransition()
 void WinScene::InitScene()
 {
 	win_song = App->audio->LoadMusic("audio/music/Victory_Song.ogg");
-	win_channel = App->audio->PlayMusic(win_song, 1);
+	App->audio->PlayMusic(win_song, 0);
 }
