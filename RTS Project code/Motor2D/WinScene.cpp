@@ -29,9 +29,9 @@ bool WinScene::Awake(pugi::xml_node&)
 
 bool WinScene::Start()
 {
-	App->gui->Start();
-	
+	App->gui->Start();	
 	LoadGuiElements();
+	InitScene();
 	
 	return true;
 }
@@ -111,4 +111,10 @@ void WinScene::ExecuteTransition()
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 12, true, true);
 	}
+}
+
+void WinScene::InitScene()
+{
+	win_song = App->audio->LoadMusic("audio/music/Victory_Song.ogg");
+	win_channel = App->audio->PlayMusic(win_song, 1);
 }

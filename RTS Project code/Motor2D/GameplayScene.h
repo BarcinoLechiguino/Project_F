@@ -38,8 +38,10 @@ public:
 	void InitScene();
 
 	void LoadGuiElements();
-	
+
 	void OnEventCall(UI* element, UI_EVENT ui_event);
+
+	void AdjustVolumeWithScrollbar();
 
 	void ExecuteTransition();
 
@@ -210,6 +212,10 @@ public:
 
 	std::string				HUD_data_resource_string;
 	std::string				HUD_electricity_resource_string;
+private:
+	//Audio
+	uint				inGame_song;
+	uint				inGame_channel;
 
 };
 #endif // !__GAMEPLAY_SCENE_H__

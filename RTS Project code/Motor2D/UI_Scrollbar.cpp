@@ -303,6 +303,11 @@ SDL_Rect UI_Scrollbar::GetThumbHitbox()
 	return thumb->GetHitbox();
 }
 
+void UI_Scrollbar::SetThumbHitbox(SDL_Rect hitbox)
+{
+	thumb->SetHitbox(hitbox);
+}
+
 void UI_Scrollbar::PlaceThumbOnMousePos()
 {
 	if (dragXAxis)

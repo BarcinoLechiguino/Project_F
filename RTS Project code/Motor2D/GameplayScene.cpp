@@ -230,6 +230,7 @@ bool GameplayScene::CleanUp()
 	App->tex->UnLoad(path_debug_tex);
 
 	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
+	App->player->ClearEntityBuffers();						//Clears the entity list
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui->CleanUp();
@@ -267,6 +268,8 @@ void GameplayScene::InitScene()
 	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
+	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
+	inGame_channel = App->audio->PlayMusic(inGame_song, 1);
 }
 
 void GameplayScene::LoadGuiElements()
@@ -379,19 +382,21 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_data_resource = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1115, 634, HUD_data_resource_size, true, true, false, this, HUD_resource_bar);
 
-	//Resources storage
+
+	//Data Store
 
 	SDL_Rect HUD_text_data_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_data_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_data_resource_string = "0";
 	HUD_data_resource_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 1145, 634, HUD_text_data_resource_rect, HUD_data_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_data_resource_string);
 
+	//Electricity Store
+
 	SDL_Rect HUD_text_electricity_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_electricity_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_electricity_resource_string = "0";
 	HUD_electricity_resource_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 1145, 604, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_electricity_resource_string);
 
-	
 	//Townhall Bar
 	SDL_Rect HUD_townhall_bar_size = { 20, 209, 798, 160 };
 
@@ -695,13 +700,15 @@ void GameplayScene::LoadInGameOptionsMenu()
 	SDL_Rect in_game_thumb_rect = { 930,2,18,31 };
 	SDL_Rect in_game_scrollbar_rect = { 743,3,180,15 };
 
-	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 235, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false);
+	in_game_music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 235, in_game_scrollbar_rect, in_game_thumb_rect
+																		, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, true, false, false, false);
 	in_game_music_scrollbar->parent = in_game_options_parent;
 
 	//SFX
 	std::string sfx_string = "SFX";
 	in_game_sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 491, 264, in_game_text_rect, in_game_font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &sfx_string);
-	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 275, in_game_scrollbar_rect, in_game_thumb_rect, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, true);
+	in_game_sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 600, 275, in_game_scrollbar_rect, in_game_thumb_rect
+																		, iPoint(20, -7), in_game_scrollbar_rect, 20.0f, true, false, false, false, false, false);
 	in_game_sfx_scrollbar->parent = in_game_options_parent;
 
 	//screen size
@@ -921,6 +928,31 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNHOVER)
 	{
 		App->gui->SetElementsVisibility(HUD_parent_resources_upgrade_barracks, false);
+	}
+}
+
+void GameplayScene::AdjustVolumeWithScrollbar()
+{
+	// --- Audio Scrollbars
+	if (in_game_music_scrollbar->isVisible)
+	{
+		float local_thumb_pos = in_game_music_scrollbar->GetThumbHitbox().x - in_game_music_scrollbar->GetHitbox().x;
+
+		float offset = local_thumb_pos / in_game_music_scrollbar->GetHitbox().w;											// Value from 0.0f to 1.0f
+
+
+		App->audio->volume = offset * 100;																					// Will make the offset a valid value to modify the volume.
+	}
+
+	if (in_game_sfx_scrollbar->isVisible)
+	{
+		float local_thumb_pos = in_game_sfx_scrollbar->GetThumbHitbox().x - in_game_sfx_scrollbar->GetHitbox().x;
+
+		float start_offset = local_thumb_pos / in_game_sfx_scrollbar->GetHitbox().w;										// Value from 0.0f to 1.0f
+
+		uint offset = floor(start_offset * 100);																			// Will make the offset a valid value to modify the volume.					
+
+		App->audio->volume_fx = offset;
 	}
 }
 

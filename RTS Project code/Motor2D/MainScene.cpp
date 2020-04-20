@@ -1,5 +1,7 @@
 #include "SDL/include/SDL_rect.h"
 
+#include "p2Log.h"
+
 #include "Application.h"
 #include "Window.h"
 #include "Render.h"
@@ -51,6 +53,8 @@ bool MainScene::PreUpdate()
 bool MainScene::Update(float dt)
 {
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
+
+	AdjustVolumeWithScrollbar();
 
 	return true;
 }
@@ -181,6 +185,7 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == new_game_button && ui_event == UI_EVENT::UNCLICKED)
 	{
+		Mix_FadeOutChannel(menu_channel, 300);
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, true, true);
 		App->audio->PlayFx(App->gui->new_game_fx,0);
 	}
@@ -213,6 +218,60 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	}
 }
 
+void MainScene::AdjustVolumeWithScrollbar()
+{	
+	//UpdateVolumeThumbPosition();
+	//UpdateFXVolumeThumbPosition();
+	
+	// --- Audio Scrollbars
+	if (music_scrollbar->isVisible)
+	{	
+		float local_thumb_pos = music_scrollbar->GetThumbHitbox().x - music_scrollbar->GetHitbox().x;
+
+		float offset = local_thumb_pos / music_scrollbar->GetHitbox().w;										// Value from 0.0f to 1.0f
+
+		App->audio->volume = offset * 100;																		// Will make the offset a valid value to modify the volume.
+	}
+
+	if (sfx_scrollbar->isVisible)
+	{
+		float local_thumb_pos = sfx_scrollbar->GetThumbHitbox().x - sfx_scrollbar->GetHitbox().x;
+
+		float start_offset = local_thumb_pos / sfx_scrollbar->GetHitbox().w;									// Value from 0.0f to 1.0f
+
+		uint offset = floor(start_offset * 100);																// Will make the offset a valid value to modify the volume.					
+
+		App->audio->volume_fx = offset;
+	}
+}
+
+void MainScene::UpdateVolumeThumbPosition()
+{
+	float current = App->audio->volume * 0.01f;
+
+	float local_thumb_pos = current * music_scrollbar->GetHitbox().w;
+
+	int world_thumb_pos = floor(local_thumb_pos + music_scrollbar->GetHitbox().x);
+
+	music_scrollbar->SetHitbox({ world_thumb_pos, music_scrollbar->GetHitbox().y, music_scrollbar->GetHitbox().w, music_scrollbar->GetHitbox().h });
+}
+
+void MainScene::UpdateFXVolumeThumbPosition()
+{
+	float current = App->audio->volume_fx * 0.01f;
+
+	float local_thumb_pos = current * sfx_scrollbar->GetHitbox().w;
+
+	int world_thumb_pos = floor(local_thumb_pos + sfx_scrollbar->GetHitbox().x);
+
+	sfx_scrollbar->SetThumbHitbox({ world_thumb_pos, sfx_scrollbar->GetHitbox().y, sfx_scrollbar->GetHitbox().w, sfx_scrollbar->GetHitbox().h });
+
+	const uint tmp = 10;
+	
+	std::string casual = { "My House %d", tmp };
+
+	LOG("%s", casual.c_str());
+}
 
 void MainScene::ExecuteTransition()
 {
@@ -242,6 +301,9 @@ void MainScene::ExecuteTransition()
 void MainScene::InitScene()
 {
 	App->gui->Start();
+
+	menu_song = App->audio->LoadMusic("audio/music/Music_Menu.ogg");
+	menu_channel = App->audio->PlayMusic(menu_song, 1);
 
 	LoadGuiElements();
 }
