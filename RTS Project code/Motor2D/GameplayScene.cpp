@@ -142,6 +142,12 @@ bool GameplayScene::PostUpdate()
 		UnitDebugKeys();
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		App->render->camera.x = 1550;
+		App->render->camera.y = -600;
+	}
+
 	CheckForWinLose();
 
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
@@ -219,6 +225,9 @@ void GameplayScene::InitScene()
 
 	//cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
 
+	App->render->camera.x = 1550;
+	App->render->camera.y = -600;
+	
 	App->gui->Start();
 
 	to_end = false;
@@ -674,6 +683,8 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Home
+		App->render->camera.x = 1550;
+		App->render->camera.y = -600;
 
 		App->audio->PlayFx(App->gui->standard_fx, 0);
 	}
