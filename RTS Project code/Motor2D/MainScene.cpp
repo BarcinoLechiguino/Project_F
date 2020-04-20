@@ -1,5 +1,7 @@
 #include "SDL/include/SDL_rect.h"
 
+#include "p2Log.h"
+
 #include "Application.h"
 #include "Window.h"
 #include "Render.h"
@@ -217,6 +219,9 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 void MainScene::AdjustVolumeWithScrollbar()
 {	
+	//UpdateVolumeThumbPosition();
+	//UpdateFXVolumeThumbPosition();
+	
 	// --- Audio Scrollbars
 	if (music_scrollbar->isVisible)
 	{	
@@ -252,7 +257,19 @@ void MainScene::UpdateVolumeThumbPosition()
 
 void MainScene::UpdateFXVolumeThumbPosition()
 {
+	float current = App->audio->volume_fx * 0.01f;
 
+	float local_thumb_pos = current * sfx_scrollbar->GetHitbox().w;
+
+	int world_thumb_pos = floor(local_thumb_pos + sfx_scrollbar->GetHitbox().x);
+
+	sfx_scrollbar->SetThumbHitbox({ world_thumb_pos, sfx_scrollbar->GetHitbox().y, sfx_scrollbar->GetHitbox().w, sfx_scrollbar->GetHitbox().h });
+
+	const uint tmp = 10;
+	
+	std::string casual = { "My House %d", tmp };
+
+	LOG("%s", casual.c_str());
 }
 
 void MainScene::ExecuteTransition()
