@@ -218,10 +218,8 @@ public:
 	std::string				HUD_data_resource_string;
 	std::string				HUD_electricity_resource_string;
 
-<<<<<<< HEAD
 private:
-=======
->>>>>>> e399f7fbbdb52cb0ad1daf2bc32064f1389f162f
+
 	//Audio
 
 	uint					inGame_song;
