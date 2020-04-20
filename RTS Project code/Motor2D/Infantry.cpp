@@ -63,10 +63,21 @@ bool Infantry::Update(float dt, bool doLogic)
 
 	if (doLogic)
 	{
-		if (target == nullptr && !path_full)
+		if (!path_full)
 		{
-			SetEntityTargetByProximity();
+			if (target == nullptr)
+			{
+				SetEntityTargetByProximity();
+			}
+			else
+			{
+				if (!TargetIsInRange())
+				{
+					ChaseTarget();
+				}
+			}
 		}
+
 	}
 
 	if (target != nullptr)
@@ -75,13 +86,13 @@ bool Infantry::Update(float dt, bool doLogic)
 		{
 			DealDamage();
 		}
-		else
+		/*else
 		{
 			if (!path_full)
 			{
 				ChaseTarget();
 			}
-		}
+		}*/
 	}
 
 	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
