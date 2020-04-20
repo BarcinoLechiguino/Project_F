@@ -25,10 +25,9 @@ public:
 	void ExecuteTransition();
 
 public:
-	// TMP TRANSITION BUTTON
-	UI_Button* transition_button;
-	UI_Text* button_text;
-	// ---------------------
+	
+
+	UI_Button* win_main_menu;
 
 private:
 	SDL_Rect		background_rect;
