@@ -215,9 +215,9 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		entity = new Rock(x, y, type, level);
 		break;
 
-	/*case ENTITY_TYPE::TREE:
+	case ENTITY_TYPE::TREE:
 		entity = new Tree(x, y, type, level);
-		break;*/
+		break;
 
 	}
 

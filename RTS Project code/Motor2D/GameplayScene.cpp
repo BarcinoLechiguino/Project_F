@@ -110,7 +110,6 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 		App->map->DataMapDebug();																// Will print on screen the debug tiles of the walkability map and the entity map.
 	}
 
-
 	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
 		App->win->ToggleFullscreen();
@@ -121,6 +120,8 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	{
 		DrawPathfindingDebug();																//Pathfinding Debug. Shows a debug texture on the path's tiles.
 	}
+
+	AdjustVolumeWithScrollbar();
 
 	DebugHUDSpawn();
 
@@ -714,6 +715,11 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == in_game_continue_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Continue
+		if (App->pause)
+		{
+			App->pause = false;
+		}
+
 		App->gui->SetElementsVisibility(in_game_background, false);
 		App->audio->PlayFx(App->gui->new_game_fx, 0);
 	}
@@ -914,7 +920,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 void GameplayScene::AdjustVolumeWithScrollbar()
 {
 	// --- Audio Scrollbars
-	if (in_game_music_scrollbar->isVisible)
+	if (in_game_music_scrollbar != nullptr)
 	{
 		float local_thumb_pos = in_game_music_scrollbar->GetThumbHitbox().x - in_game_music_scrollbar->GetHitbox().x;
 
@@ -924,7 +930,7 @@ void GameplayScene::AdjustVolumeWithScrollbar()
 		App->audio->volume = offset * 100;																					// Will make the offset a valid value to modify the volume.
 	}
 
-	if (in_game_sfx_scrollbar->isVisible)
+	if (in_game_sfx_scrollbar != nullptr)
 	{
 		float local_thumb_pos = in_game_sfx_scrollbar->GetThumbHitbox().x - in_game_sfx_scrollbar->GetHitbox().x;
 

@@ -223,9 +223,8 @@ void MainScene::AdjustVolumeWithScrollbar()
 	//UpdateVolumeThumbPosition();
 	//UpdateFXVolumeThumbPosition();
 	
-	// --- Audio Scrollbars
-	if (music_scrollbar->isVisible)
-	{	
+	if (music_scrollbar != nullptr)
+	{
 		float local_thumb_pos = music_scrollbar->GetThumbHitbox().x - music_scrollbar->GetHitbox().x;
 
 		float offset = local_thumb_pos / music_scrollbar->GetHitbox().w;										// Value from 0.0f to 1.0f
@@ -233,7 +232,7 @@ void MainScene::AdjustVolumeWithScrollbar()
 		App->audio->volume = offset * 100;																		// Will make the offset a valid value to modify the volume.
 	}
 
-	if (sfx_scrollbar->isVisible)
+	if (sfx_scrollbar != nullptr)
 	{
 		float local_thumb_pos = sfx_scrollbar->GetThumbHitbox().x - sfx_scrollbar->GetHitbox().x;
 
