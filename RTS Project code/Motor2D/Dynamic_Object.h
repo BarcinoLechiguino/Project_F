@@ -83,7 +83,7 @@ public:
 
 	float							accumulated_cooldown;						// Total amount of time that has been accumulated since the unit's attack entered cooldown.
 	bool							attack_in_cooldown;							// Will keep track whether or not the attack of a unit is in cooldown or not.
-
+	bool							looked_for_tile;
 
 	Entity*							target;
 

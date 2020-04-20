@@ -17,7 +17,7 @@ TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x,
 {
 	InitEntity();
 
-	center_point = iPoint(pixel_position.x, pixel_position.y + (((tiles_occupied_x -1) * App->map->data.tile_height/2) + ((tiles_occupied_y - 1) * App->map->data.tile_height / 2)) / 2 );
+	
 }
 
 bool TownHall::Awake(pugi::xml_node&)
@@ -81,6 +81,8 @@ void TownHall::InitEntity()
 	tiles_occupied_x = 3;
 	tiles_occupied_y = 3;
 
+	unit_level = 1;
+
 	max_health = 900;
 	current_health = max_health;
 
@@ -88,6 +90,8 @@ void TownHall::InitEntity()
 	{
 		AttachHealthbarToEntity();
 	}
+
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height/2);
 }
 
 void TownHall::AttachHealthbarToEntity()

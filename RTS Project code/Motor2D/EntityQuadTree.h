@@ -18,6 +18,8 @@ public:
 
 	void DrawQuadtree();
 
+	std::vector<Entity*> QueryEntities(SDL_Rect section);
+
 public:
 
 	std::vector<Entity*> entities;

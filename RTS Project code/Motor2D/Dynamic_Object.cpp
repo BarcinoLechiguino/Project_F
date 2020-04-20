@@ -23,6 +23,8 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Enti
 	target_tile = tile_position;
 	next_tile = tile_position;
 
+	looked_for_tile = false;
+
 	ChangeOccupiedTile(tile_position);
 }
 
@@ -132,6 +134,7 @@ bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 	}
 	else
 	{
+		
 		GetShortestPathWithinAttackRange();
 		PathToGatheringTarget();
 	}
