@@ -31,6 +31,8 @@ public:
 
 	int tiles_occupied_x;
 	int tiles_occupied_y;
+
+	float unit_creation_time;
 };
 
 #endif // !__STATIC_OBJECT_H__

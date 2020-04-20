@@ -3,6 +3,7 @@
 #include "Player.h"
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Static_Object.h"
 #include "Gui.h"
 
 #include "UI_Healthbar.h"
@@ -10,7 +11,7 @@
 #include "Textures.h"
 
 
-UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, Module* listener, UI* parent) 
+UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent)
 	: UI(element, x, y, *healthbar, listener, parent)
 {
 	tex = App->gui->GetAtlas();
@@ -42,6 +43,15 @@ UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL
 	{
 		this->background = *background;
 	}
+
+	this->is_progress_bar = is_progress_bar;
+
+	if (is_progress_bar)
+	{
+		progress_complete = false;
+		progress_timer = 0.0f;
+		this->healthbar.w = 0;
+	}
 }
 
 UI_Healthbar::~UI_Healthbar()
@@ -55,10 +65,21 @@ bool UI_Healthbar::Draw()
 	
 	UpdateHealthbarPosition();
 
-	if (attached_unit->current_health != attached_unit->max_health || attached_unit->is_selected || App->player->god_mode)
+	if (!is_progress_bar)
 	{
-		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
-		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &healthbar, 1.0f, 1.0f);
+		if (attached_unit->current_health != attached_unit->max_health || attached_unit->is_selected || App->player->god_mode)
+		{
+			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
+			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &healthbar, 1.0f, 1.0f);
+		}
+	}
+	else
+	{
+		if (!progress_complete)
+		{
+			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
+			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &healthbar, 1.0f, 1.0f);
+		}
 	}
 	
 	return true;
@@ -88,20 +109,55 @@ void UI_Healthbar::UpdateHealthbarValue()
 {
 	int new_width = 0;
 	
-	if (App->entity_manager->IsUnit(attached_unit))
+	if (!is_progress_bar)
 	{
-		new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
-	}
+		if (App->entity_manager->IsUnit(attached_unit))
+		{
+			new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+		}
 
-	if (App->entity_manager->IsBuilding(attached_unit))
-	{
-		new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
-	}
+		if (App->entity_manager->IsBuilding(attached_unit))
+		{
+			new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+		}
 
-	if (App->entity_manager->IsResource(attached_unit))
+		if (App->entity_manager->IsResource(attached_unit))
+		{
+			new_width = (MAX_RESOURCE_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+		}
+	}
+	else
 	{
-		new_width = (MAX_RESOURCE_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+		if (!progress_complete)
+		{
+			if (App->entity_manager->IsBuilding(attached_unit))
+			{
+				progress_timer += App->GetDt();
+
+				Static_Object* building = (Static_Object*)attached_unit;
+
+				new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * progress_timer) / building->unit_creation_time;
+
+				if (progress_timer >= building->unit_creation_time)
+				{
+					progress_complete = true;
+					progress_timer = 0.0f;
+				}
+			}
+		}
+		else
+		{
+			healthbar.w = 0;
+			
+			//ResetProgressBar();
+		}
 	}
 
 	healthbar.w = new_width;
+}
+
+void UI_Healthbar::ResetProgressBar()
+{
+	healthbar.w = 0;
+	progress_complete = false;
 }

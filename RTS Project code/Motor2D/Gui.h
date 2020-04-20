@@ -69,7 +69,7 @@ public:
 					, UI* parent = nullptr, SDL_Rect* scrollMask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
 
 	UI* CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* healthbar = nullptr, SDL_Rect* background = nullptr
-					, Entity* attached_unit = nullptr, Module* listener = nullptr, UI* parent = nullptr);
+					, Entity* attached_unit = nullptr, bool is_progress_bar = false, Module* listener = nullptr, UI* parent = nullptr);
 
 	
 	void DeleteGuiElement(UI* element_to_delete);
