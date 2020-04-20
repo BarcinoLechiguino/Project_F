@@ -147,7 +147,7 @@ void Enemy::InitEntity()
 	current_health = max_health;
 	attack_damage = 30;
 
-	attack_speed = 1.0f;
+	attack_speed = 0.75f;
 	attack_range = 5;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))

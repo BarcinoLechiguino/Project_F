@@ -210,59 +210,62 @@ iPoint PathFinding::FindNearbyPoint(iPoint pos)
 
 void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected)
 {
-	std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
-
-	if ((*units)->target == nullptr)
+	if (units_selected.size() != 0)
 	{
-		if (!(*units)->GiveNewTargetTile(pos))
+		std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
+
+		if ((*units)->target == nullptr)
 		{
-			return;
+			if (!(*units)->GiveNewTargetTile(pos))
+			{
+				return;
+			}
+
+			units++;
 		}
 
-		units++;
-	}
+		PathList frontier;
+		PathList visited;
 
-	PathList frontier;
-	PathList visited;
+		PathNode origin_node(0, 0, pos, nullptr);
+		frontier.list.push_back(origin_node);
 
-	PathNode origin_node(0, 0, pos, nullptr);
-	frontier.list.push_back(origin_node);
+		std::list<PathNode>::iterator current_node = frontier.list.begin();
 
-	std::list<PathNode>::iterator current_node = frontier.list.begin();
+		PathList neighbours;
 
-	PathList neighbours;
-
-	while (frontier.list.size() != 0 && units != units_selected.end() )
-	{
-		current_node->FindWalkableAdjacents(neighbours);																//Fill starting node
-
-		std::list<PathNode>::iterator item = neighbours.list.begin();
-
-		for (; item != neighbours.list.end() && units != units_selected.end(); ++item)
+		while (frontier.list.size() != 0 && units != units_selected.end())
 		{
-			PathNode neighbour = *item;																					// For Readability
+			current_node->FindWalkableAdjacents(neighbours);																//Fill starting node
 
-			if (visited.Find(neighbour.pos) == visited.list.end())														//if not in visited
+			std::list<PathNode>::iterator item = neighbours.list.begin();
+
+			for (; item != neighbours.list.end() && units != units_selected.end(); ++item)
 			{
-				if (App->pathfinding->IsWalkable(neighbour.pos))
-				{
-					(*units)->GiveNewTargetTile(neighbour.pos);															// Fix targeting.
+				PathNode neighbour = *item;																					// For Readability
 
-					units++;
-				}
-
-				if (/*!App->pathfinding->IsNonWalkable(neighbour.pos)*/App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos))													// App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos)
+				if (visited.Find(neighbour.pos) == visited.list.end())														//if not in visited
 				{
-					frontier.list.push_back(neighbour);
+					if (App->pathfinding->IsWalkable(neighbour.pos))
+					{
+						(*units)->GiveNewTargetTile(neighbour.pos);															// Fix targeting.
+
+						units++;
+					}
+
+					if (/*!App->pathfinding->IsNonWalkable(neighbour.pos)*/App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos))													// App->pathfinding->IsWalkable(neighbour.pos) || App->pathfinding->IsOccupied(neighbour.pos)
+					{
+						frontier.list.push_back(neighbour);
+					}
 				}
 			}
+
+			neighbours.list.clear();
+
+			visited.list.push_back((*current_node));
+
+			current_node++;
 		}
-
-		neighbours.list.clear();
-
-		visited.list.push_back((*current_node));
-
-		current_node++;
 	}
 }
 
