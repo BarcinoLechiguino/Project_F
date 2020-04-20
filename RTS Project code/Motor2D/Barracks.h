@@ -33,6 +33,8 @@ public:
 	SDL_Rect	barracks_rect;
 	SDL_Rect	barracks_rect_1;
 	SDL_Rect	barracks_rect_2;
+
+	int			unit_level;
 };
 
 #endif // !__BARRACKS_H__

@@ -172,6 +172,10 @@ bool Audio::PlayMusic(uint id, float fade_time)
 		{
 			Mix_FadeInMusic(*it, -1, (int)(fade_time * 1000.0f));
 		}
+		else if (fade_time == 0.0f)
+		{
+			Mix_PlayMusic(*it, -1);
+		}
 
 	}
 

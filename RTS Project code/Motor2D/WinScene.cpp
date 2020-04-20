@@ -29,9 +29,9 @@ bool WinScene::Awake(pugi::xml_node&)
 
 bool WinScene::Start()
 {
-	App->gui->Start();
-	
+	App->gui->Start();	
 	LoadGuiElements();
+	InitScene();
 	
 	return true;
 }
@@ -43,7 +43,6 @@ bool WinScene::PreUpdate()
 
 bool WinScene::Update(float dt)
 {
-	
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 	return true;
 }
@@ -58,6 +57,8 @@ bool WinScene::PostUpdate()
 
 bool WinScene::CleanUp()
 {
+	App->tex->UnLoad(background_texture);
+	
 	App->gui->CleanUp();
 	
 	return true;
@@ -111,4 +112,10 @@ void WinScene::ExecuteTransition()
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 12, true, true);
 	}
+}
+
+void WinScene::InitScene()
+{
+	win_song = App->audio->LoadMusic("audio/music/Victory_Song.ogg");
+	App->audio->PlayMusic(win_song, 0);
 }

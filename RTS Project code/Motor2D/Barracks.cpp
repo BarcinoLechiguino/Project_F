@@ -79,6 +79,8 @@ void Barracks::InitEntity()
 	tiles_occupied_x = 2;
 	tiles_occupied_y = 2;
 
+	unit_level = 1;
+
 	max_health = 600;
 	current_health = max_health;
 
@@ -109,19 +111,16 @@ void Barracks::GenerateUnit(ENTITY_TYPE type, int level)
 	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
 	switch (type)
 	{
-	case ENTITY_TYPE::ENEMY:
-		
-		break;
-	case ENTITY_TYPE::GATHERER:
+	/*case ENTITY_TYPE::GATHERER:
 		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, pos.x, pos.y, level);
-		break;
+		break;*/
 	case ENTITY_TYPE::INFANTRY:
 		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
 		break;
 	}
 }
 
-void Barracks::LevelChanges()
+void Barracks::LevelChanges()				//Updates the building stats when leveling up
 {
 	switch (level)
 	{

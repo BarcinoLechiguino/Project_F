@@ -111,18 +111,12 @@ void EnemyTownHall::GenerateUnit(ENTITY_TYPE type, int level)
 	switch (type)
 	{
 	case ENTITY_TYPE::ENEMY:
-
-		break;
-	case ENTITY_TYPE::GATHERER:
-		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x + 1, tile_position.y + 3, level);
-		break;
-	case ENTITY_TYPE::INFANTRY:
-		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3, level);
+		(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, tile_position.x, tile_position.y + 2, level);
 		break;
 	}
 }
 
-void EnemyTownHall::LevelChanges()
+void EnemyTownHall::LevelChanges()				//Updates the building stats when leveling up
 {
 	switch (level)
 	{

@@ -31,6 +31,11 @@ public:
 
 	void OnEventCall(UI* element, UI_EVENT ui_event);
 
+	void UpdateVolumeThumbPosition();
+	void UpdateFXVolumeThumbPosition();
+
+	void AdjustVolumeWithScrollbar();
+
 	void ExecuteTransition();
 
 	void LoadOptionsMenu();
@@ -62,8 +67,8 @@ public:
 	UI_Text*		music_text;
 	UI_Text*		options_text;
 
-
-public:
+	//Audio
+	uint				menu_song;
 
 };
 

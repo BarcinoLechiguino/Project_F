@@ -81,6 +81,8 @@ void TownHall::InitEntity()
 	tiles_occupied_x = 3;
 	tiles_occupied_y = 3;
 
+	unit_level = 1;
+
 	max_health = 900;
 	current_health = max_health;
 
@@ -111,19 +113,17 @@ void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
 	switch (type)
 	{
-	case ENTITY_TYPE::ENEMY:
-
-		break;
+	
 	case ENTITY_TYPE::GATHERER:
 		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, pos.x, pos.y, level);
 		break;
-	case ENTITY_TYPE::INFANTRY:
+	/*case ENTITY_TYPE::INFANTRY:
 		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
-		break;
+		break;*/
 	}
 }
 
-void TownHall::LevelChanges()
+void TownHall::LevelChanges()						//Updates the building stats when leveling up
 {
 	switch (level)
 	{

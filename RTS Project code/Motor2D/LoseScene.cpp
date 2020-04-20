@@ -33,6 +33,8 @@ bool LoseScene::Start()
 	
 	LoadGuiElements();
 	
+	InitScene();
+
 	return true;
 }
 
@@ -57,6 +59,8 @@ bool LoseScene::PostUpdate()
 
 bool LoseScene::CleanUp()
 {
+	App->tex->UnLoad(background_texture);
+	
 	App->gui->CleanUp();
 	
 	return true;
@@ -110,4 +114,10 @@ void LoseScene::ExecuteTransition()
 	}
 
 	// No KP_5 because we are in the 5th scene.
+}
+
+void LoseScene::InitScene()
+{
+	lose_song = App->audio->LoadMusic("audio/music/Lose_Song.ogg");
+	App->audio->PlayMusic(lose_song, 0);
 }

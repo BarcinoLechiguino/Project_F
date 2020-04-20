@@ -24,6 +24,8 @@ public:
 
 	void ExecuteTransition();
 
+	void InitScene();
+
 public:
 
 	UI_Button* lose_main_menu;
@@ -31,6 +33,8 @@ public:
 private:
 	SDL_Rect		background_rect;
 	SDL_Texture* background_texture;
+	//Audio
+	uint				lose_song;
 };
 
 #endif // !__LOSE_SCENE_H__
