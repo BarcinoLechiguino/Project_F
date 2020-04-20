@@ -22,6 +22,9 @@ Tree::Tree(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type
 	blit_section = new SDL_Rect{ tree_version, 0, 54, 44 };
 
 	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+
+	healthbar_position_offset.y = -25;
+	healthbar_position_offset.x = -30;
 }
 
 bool Tree::Awake(pugi::xml_node&)
@@ -71,7 +74,7 @@ bool Tree::CleanUp()
 
 void Tree::Draw()
 {
-	App->render->Blit(entity_sprite, pixel_position.x, pixel_position.y, blit_section);
+	App->render->Blit(entity_sprite, pixel_position.x, pixel_position.y - 20, blit_section);
 }
 
 void Tree::InitEntity()
@@ -105,7 +108,7 @@ void Tree::InitEntity()
 		healthbar_rect = { 618, 34, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
 
 		int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-		int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+		int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y - 20;					// The healthbar's position is already calculated in UI_Healthbar.
 
 		healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 	}
