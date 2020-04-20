@@ -207,7 +207,7 @@ void Dynamic_Object::HandleMovement(float dt)
 		next_tile_position = App->map->MapToWorld(next_tile.x, next_tile.y);
 
 		path_state = PATHFINDING_STATE::WALKING;
-
+		
 		SetEntityState();
 	}
 }
@@ -272,11 +272,70 @@ void Dynamic_Object::SetEntityState()
 			unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
 		}
 	}
+
+	//TMP FIX ON THE ENTITY_STATE BUGS
+	//if (tile_position.x > next_tile.x && tile_position.y > next_tile.y)					// next_tile is (--x , --y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_UP;
+	//	return;
+	//}
+
+	//if (tile_position.x < next_tile.x && tile_position.y < next_tile.y)					// next_tile is (++x , ++y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_DOWN;
+	//	return;
+	//}
+
+	//if (tile_position.x < next_tile.x && tile_position.y > next_tile.y)					// next_tile is (++x , --y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_RIGHT;
+	//	return;
+	//}
+
+	//if (tile_position.x > next_tile.x && tile_position.y < next_tile.y)					// next_tile is (--x, ++y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_LEFT;
+	//	return;
+	//}
+
+	//if (tile_position.x == next_tile.x && tile_position.y > next_tile.y)				// next_tile is (== , --y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_UP_RIGHT;
+	//	return;
+	//}
+
+	//if (tile_position.x > next_tile.x && tile_position.y == next_tile.y)				// next tile is (--x, ==)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_UP_LEFT;
+	//	return;
+	//}
+
+	//if (tile_position.x < next_tile.x && tile_position.y == next_tile.y)				// next tile is (++x, ==)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_DOWN_RIGHT;
+	//	return;
+	//}
+
+	//if (tile_position.x == next_tile.x && tile_position.y < next_tile.y)				// next tile is (==, ++y)
+	//{
+	//	unit_state = ENTITY_STATE::PATHING_DOWN_LEFT;
+	//	return;
+	//}
 }
 
 void Dynamic_Object::Move(float dt)
 {
 	bool next_reached = false;
+	
+	//if (tile_position == next_tile)										// TMP Safety Check (tile_position == next_tile && unit_state == ENTITY_STATE::IDLE but PATHFINDING_STATE::WALKING)
+	//{
+	//	next_reached = true;
+	//}
+
+	//if (abs(tile_position.x - next_tile.x) > 1 || abs(tile_position.y - next_tile.y) > 1)	// TMP Safety Check (next_tile is further than one tile away in the x or y axis.
+	//{	
+	//	target_tile = entity_path[0];
+	//}
 
 	switch (unit_state)
 	{

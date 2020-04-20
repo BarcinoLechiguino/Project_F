@@ -142,17 +142,22 @@ void MainScene::LoadOptionsMenu()
 	std::string music_string = "Music";
 	music_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &music_string);
 	
-	SDL_Rect thumb_rect = {930,2,18,31};
 	SDL_Rect scrollbar_rect = {743,3,180,15};
+	SDL_Rect thumb_rect = { 930,2,18,31 };
+	iPoint thumb_offset = { 20, -7 };
+	SDL_Rect drag_area = { 0, 0, 180, 15 };
+	float drag_factor = 0.2f;
 
 	//MUSIC
-	music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 260, scrollbar_rect, thumb_rect, iPoint(20, -7), scrollbar_rect, 20.0f, true, false);
+	music_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 260, scrollbar_rect, thumb_rect, thumb_offset
+																, drag_area, drag_factor, true, false, false, false, false, false);
 	music_scrollbar->parent = options_parent;
 
 	//SFX
 	std::string sfx_string = "SFX";
 	sfx_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &sfx_string);
-	sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 300, scrollbar_rect, thumb_rect, iPoint(20, -7), scrollbar_rect, 20.0f, true, false, false, true);
+	sfx_scrollbar = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 300, scrollbar_rect, thumb_rect, thumb_offset
+																, drag_area, drag_factor, true, false, false, false, false, false);
 	sfx_scrollbar->parent = options_parent;
 
 	//screen size

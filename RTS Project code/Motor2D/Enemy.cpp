@@ -42,8 +42,6 @@ bool Enemy::PreUpdate()
 
 bool Enemy::Update(float dt, bool doLogic)
 {
-	
-
 	HandleMovement(dt);
 
 	DataMapSafetyCheck();
@@ -62,9 +60,19 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	if (doLogic)
 	{
-		if (target == nullptr && !path_full)
+		if (!path_full)
 		{
-			SetEntityTargetByProximity();
+			if (target == nullptr)
+			{
+				SetEntityTargetByProximity();
+			}
+			else
+			{
+				if (TargetIsInRange())
+				{
+					ChaseTarget();
+				}
+			}
 		}
 	}
 
@@ -147,7 +155,7 @@ void Enemy::InitEntity()
 	current_health = max_health;
 	attack_damage = 30;
 
-	attack_speed = 1.0f;
+	attack_speed = 0.75f;
 	attack_range = 5;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
@@ -240,7 +248,7 @@ void Enemy::GetShortestPathWithinAttackRange()
 	std::vector<iPoint> tmp;
 
 	if (target != nullptr)
-	{
+	{	
 		for (int i = 0; i < entity_path.size(); ++i)
 		{
 			tmp.push_back(entity_path[i]);

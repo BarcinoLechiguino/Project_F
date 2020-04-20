@@ -106,7 +106,7 @@ void Map::Draw()
 		}
 	}
 	//(*data.layers.begin())->tiles_tree->DrawQuadtree();
-	LOG("Tiles drawn: %d", tiles_drawn);
+	//LOG("Tiles drawn: %d", tiles_drawn);
 }
 
 void Map::DataMapDebug()

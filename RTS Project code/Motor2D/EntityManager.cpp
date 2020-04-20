@@ -22,6 +22,7 @@
 #include "Barracks.h"
 #include "EnemyBarracks.h"
 #include "Rock.h"
+#include "Tree.h"
 #include <algorithm>
 
 //#include "mmgr/mmgr.h"
@@ -213,6 +214,11 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 	case ENTITY_TYPE::ROCK:
 		entity = new Rock(x, y, type, level);
 		break;
+
+	case ENTITY_TYPE::TREE:
+		entity = new Tree(x, y, type, level);
+		break;
+
 	}
 
 	if (entity != nullptr)
@@ -283,21 +289,22 @@ void EntityManager::LoadEntityTextures()
 	barracks_tex		= App->tex->Load(entity_textures.child("barracks_texture").attribute("path").as_string());
 	enemy_barracks_tex	= App->tex->Load(entity_textures.child("enemy_barracks_texture").attribute("path").as_string());
 	rock_tex			= App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
+	tree_tex			= App->tex->Load(entity_textures.child("tree_texture").attribute("path").as_string());
 }
 
 void EntityManager::LoadEntityAudios()
 {
-	gatherer_movement_fx = App->audio->LoadFx("audio/fx/Gatherer_movement.wav");
-	gather_fx = App->audio->LoadFx("audio/fx/Gathering.wav");
-	finished_gather_fx = App->audio->LoadFx("audio/fx/Finnished_gathering.wav");
-	infantry_movement_fx = App->audio->LoadFx("audio/fx/Infantry_movement.wav");
-	infantry_shot_fx = App->audio->LoadFx("audio/fx/Infantry_shot.wav");
-	click_barracks_fx = App->audio->LoadFx("audio/fx/Click Barracks.wav");
-	building_fx = App->audio->LoadFx("audio/fx/Building.wav");
-	finished_building_fx = App->audio->LoadFx("audio/fx/Finished_building.wav");
-	finished_recruiting_fx = App->audio->LoadFx("audio/fx/Finished_recruiting.wav");
-	finished_upgrading_fx = App->audio->LoadFx("audio/fx/Finished_Upgrading.wav");
-	click_townhall_fx = App->audio->LoadFx("audio/fx/Click_Townhall.wav");
+	gatherer_movement_fx	= App->audio->LoadFx("audio/fx/Gatherer_movement.wav");
+	gather_fx				= App->audio->LoadFx("audio/fx/Gathering.wav");
+	finished_gather_fx		= App->audio->LoadFx("audio/fx/Finnished_gathering.wav");
+	infantry_movement_fx	= App->audio->LoadFx("audio/fx/Infantry_movement.wav");
+	infantry_shot_fx		= App->audio->LoadFx("audio/fx/Infantry_shot.wav");
+	click_barracks_fx		= App->audio->LoadFx("audio/fx/Click Barracks.wav");
+	building_fx				= App->audio->LoadFx("audio/fx/Building.wav");
+	finished_building_fx	= App->audio->LoadFx("audio/fx/Finished_building.wav");
+	finished_recruiting_fx	= App->audio->LoadFx("audio/fx/Finished_recruiting.wav");
+	finished_upgrading_fx	= App->audio->LoadFx("audio/fx/Finished_Upgrading.wav");
+	click_townhall_fx		= App->audio->LoadFx("audio/fx/Click_Townhall.wav");
 }
 
 void EntityManager::UnLoadEntityTextures()
@@ -310,6 +317,7 @@ void EntityManager::UnLoadEntityTextures()
 	App->tex->UnLoad(barracks_tex);
 	App->tex->UnLoad(enemy_barracks_tex);
 	App->tex->UnLoad(rock_tex);
+	App->tex->UnLoad(tree_tex);
 
 	gatherer_tex		= nullptr;
 	infantry_tex		= nullptr;
@@ -319,6 +327,7 @@ void EntityManager::UnLoadEntityTextures()
 	barracks_tex		= nullptr;
 	enemy_barracks_tex	= nullptr;
 	rock_tex			= nullptr;
+	tree_tex			= nullptr;
 }
 
 SDL_Texture* EntityManager::GetGathererTexture() const
@@ -359,6 +368,11 @@ SDL_Texture* EntityManager::GetEnemyBarracksTexture() const
 SDL_Texture* EntityManager::GetRockTexture() const
 {
 	return rock_tex;
+}
+
+SDL_Texture* EntityManager::GetTreeTexture() const
+{
+	return tree_tex;
 }
 
 bool EntityManager::IsUnit(Entity* entity)
@@ -402,7 +416,7 @@ bool EntityManager::IsBuilding(Entity* entity)
 
 bool EntityManager::IsResource(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::ROCK)
+	if (entity->type == ENTITY_TYPE::ROCK || entity->type == ENTITY_TYPE::TREE)
 	{
 		return true;
 	}

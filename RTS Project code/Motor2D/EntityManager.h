@@ -59,6 +59,7 @@ public:
 	SDL_Texture* GetBarracksTexture() const;
 	SDL_Texture* GetEnemyBarracksTexture() const;
 	SDL_Texture* GetRockTexture() const;
+	SDL_Texture* GetTreeTexture() const;
 
 	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
 	bool IsInfantry(Entity* entity);
@@ -93,6 +94,7 @@ public:
 	SDL_Texture*					barracks_tex;
 	SDL_Texture*					enemy_barracks_tex;
 	SDL_Texture*					rock_tex;
+	SDL_Texture*					tree_tex;
 
 	uint							gatherer_movement_fx;
 	uint							gather_fx;
