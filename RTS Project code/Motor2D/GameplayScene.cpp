@@ -124,6 +124,15 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 
 	DebugHUDSpawn();
 
+	// Refresh resources on screen
+	std::string HUD_data_resource_string = std::to_string(App->entity_manager->resource_data);
+	HUD_data_resource_text->RefreshTextInput(HUD_data_resource_string.c_str());
+
+	std::string HUD_electricity_resource_string = std::to_string(App->entity_manager->resource_electricity);
+	HUD_electricity_resource_text->RefreshTextInput(HUD_electricity_resource_string.c_str());
+
+	
+
 	return true;
 }
 
@@ -370,6 +379,19 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_data_resource = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1115, 634, HUD_data_resource_size, true, true, false, this, HUD_resource_bar);
 
+	//Resources storage
+
+	SDL_Rect HUD_text_data_resource_rect = { 737, 54, 13, 25 };
+	_TTF_Font* HUD_data_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	HUD_data_resource_string = "0";
+	HUD_data_resource_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 1145, 634, HUD_text_data_resource_rect, HUD_data_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_data_resource_string);
+
+	SDL_Rect HUD_text_electricity_resource_rect = { 737, 54, 13, 25 };
+	_TTF_Font* HUD_electricity_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	HUD_electricity_resource_string = "0";
+	HUD_electricity_resource_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 1145, 604, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_electricity_resource_string);
+
+	
 	//Townhall Bar
 	SDL_Rect HUD_townhall_bar_size = { 20, 209, 798, 160 };
 

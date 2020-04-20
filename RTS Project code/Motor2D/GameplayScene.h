@@ -130,13 +130,13 @@ public:
 	UI_Text*				in_game_music_text;
 	UI_Text*				in_game_options_text;
 
+
 	// HUD
 	UI_Button*				 HUD_group_button;
 	UI_Button*				 HUD_home_button;
 	UI_Button*				 HUD_pause_button;
 	UI_Image*				 HUD_resource_bar;
-	UI_Image*				 HUD_data_resource;
-	UI_Image*				 HUD_electricity_resource;
+
 
 	// HUD townhall
 	UI_Image*				 HUD_townhall_bar;
@@ -199,6 +199,17 @@ public:
 	UI_Button*				 HUD_upgrade_barracks;
 
 	UI_Text*				 God_Mode_Activated;
+
+	//Resources HUD
+
+	UI_Text*				HUD_data_resource_text;
+	UI_Text*				HUD_electricity_resource_text;
+
+	UI_Image*				HUD_data_resource;
+	UI_Image*				HUD_electricity_resource;
+
+	std::string				HUD_data_resource_string;
+	std::string				HUD_electricity_resource_string;
 
 };
 #endif // !__GAMEPLAY_SCENE_H__
