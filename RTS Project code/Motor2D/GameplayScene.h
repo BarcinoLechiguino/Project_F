@@ -38,8 +38,10 @@ public:
 	void InitScene();
 
 	void LoadGuiElements();
-	
+
 	void OnEventCall(UI* element, UI_EVENT ui_event);
+
+	void AdjustVolumeWithScrollbar();
 
 	void ExecuteTransition();
 
