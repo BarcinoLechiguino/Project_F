@@ -106,16 +106,17 @@ void TownHall::AttachHealthbarToEntity()
 
 void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 {
+	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
 	switch (type)
 	{
 	case ENTITY_TYPE::ENEMY:
 
 		break;
 	case ENTITY_TYPE::GATHERER:
-		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, tile_position.x + 1, tile_position.y + 3, level);
+		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, pos.x, pos.y, level);
 		break;
 	case ENTITY_TYPE::INFANTRY:
-		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, tile_position.x + 1, tile_position.y + 3, level);
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
 		break;
 	}
 }
