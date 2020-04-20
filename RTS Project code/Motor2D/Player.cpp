@@ -224,7 +224,7 @@ void Player::OrderUnitsToAttack()
 
 	if (target != nullptr)
 	{
-		if (!App->pathfinding->IsWalkable(mouse_tile))																// TMP CHECK
+		if (App->pathfinding->IsOccupied(mouse_tile))																// TMP CHECK
 		{
 			if (App->entity_manager->IsEnemyEntity(target))
 			{

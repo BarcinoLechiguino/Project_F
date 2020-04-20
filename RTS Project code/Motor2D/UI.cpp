@@ -13,7 +13,7 @@ UI::UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener, UI* pa
 	parent(parent)
 {
 	//hitbox = {GetPosition().x, GetPosition().y, GetRect().w, GetRect().h };
-	hitbox = {position.x, position.y, rect.w, rect.h };
+	hitbox = {position.x, position.y, this->rect.w, this->rect.h };
 }
 
 UI::UI()		//Default Constructor
