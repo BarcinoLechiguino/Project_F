@@ -28,6 +28,8 @@ public:
 	bool GetDragYAxis() const;
 	iPoint GetThumbLocalPos();
 	SDL_Rect GetThumbHitbox();
+	void SetThumbHitbox(SDL_Rect hitbox);
+
 	void PlaceThumbOnMousePos();
 	void CheckKeyboardInputs();
 	void DragThumbWithMousewheel();

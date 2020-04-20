@@ -233,10 +233,10 @@ Twitter: [@missingmd2](<https://twitter.com/missingmd2>)
 
 ***missing.md*** does not own any of the sprites, tilesets, music or sounds used in the development of this game.
 
-* All sprites and tilesets belong to [Kenney](<https://www.kenney.nl/>). Note that they were modified to better fit the game's art style and mood.
+* All entity sprites and tilesets belong to [Kenney](<https://www.kenney.nl/>). Note that they were modified to better fit the game's art style and mood.
+* All UI sprites belong to us as they were designed and produced from scratch by us.
 
 * All FX were generated using the [rFXGen](<https://raylibtech.itch.io/rfxgen>) from [raylib technologies](<https://www.raylibtech.com/>).
-
 * All songs used were copyright free.
 
 
