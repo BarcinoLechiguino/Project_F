@@ -25,6 +25,8 @@
 #include "Barracks.h"
 #include "Gatherer.h"
 #include "Infantry.h"
+#include "Rock.h"
+#include "Tree.h"
 
 #include "Gui.h"
 #include "UI.h"
@@ -109,7 +111,7 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
 	{
 		App->win->ToggleFullscreen();
 	}
@@ -865,6 +867,11 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
 			{
 				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+			{
+				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 		}
 	}

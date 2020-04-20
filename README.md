@@ -38,19 +38,18 @@ Feel free to visit our [Repository](<https://github.com/BarcinoLechiguino/Projec
 
   * Ally and enemy combat units will automatically attack if one enters within attack range of the other and will chase them if they get out of it.
     
-
-  * 2 types of Buildings:
-
-    * **Town-hall:** Can generate Gatherer units. Can be upgraded. Can be an enemy entity.
+* 2 types of Buildings:
+  
+  * **Town-hall:** Can generate Gatherer units. Can be upgraded. Can be an enemy entity.
     * **Barracks:** Can generate Infantry units. Can be upgraded. Can be an enemy entity.
-
   
 
-  * 2 types of Resources:
+  
+* 2 types of Resources:
     * **Data Rocks**: Can be mined from certain spots all over the map. Used to create units and upgrade buildings.
     * **Data Trees:** Can be harvested from certain spots all over the map. Used to create units and upgrade buildings.
-
-  * Victory can be achieved by destroying the enemy's Town-hall. Conversely, if your Town-hall is destroyed it is Game Over.
+  
+* Victory can be achieved by destroying the enemy's Town-hall. Conversely, if your Town-hall is destroyed it is Game Over.
 
 
 
@@ -128,6 +127,11 @@ No previous installation is required to play the game, just download the latest 
   * **RIGHT Arrow Key:**  Move the camera to the right.
   * **LEFT Arrow Key:** Move the camera to the left.
   * **Space Key:** The camera will be centered around your Town-hall.
+    
+  
+* **Q Key:**  Toggle Fullscreen Mode.
+
+
 
 
 #### Debug Keys

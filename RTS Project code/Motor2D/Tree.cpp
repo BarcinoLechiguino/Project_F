@@ -10,38 +10,38 @@
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
 
-#include "Rock.h"
+#include "Tree.h"
 
 
-Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+Tree::Tree(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
 {
 	InitEntity();
 
-	int rock_version = (rand() % 4) * 54;
+	int tree_version = (rand() % 4) * 54;
 
-	blit_section = new SDL_Rect{rock_version,0,54,35};
+	blit_section = new SDL_Rect{ tree_version, 0, 54, 44 };
 
-	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 }
 
-bool Rock::Awake(pugi::xml_node&)
+bool Tree::Awake(pugi::xml_node&)
 {
 	return true;
 }
 
 
-bool Rock::PreUpdate()
+bool Tree::PreUpdate()
 {
 	return true;
 }
 
-bool Rock::Update(float dt, bool doLogic)
+bool Tree::Update(float dt, bool doLogic)
 {
-	
+
 	return true;
 }
 
-bool Rock::PostUpdate()
+bool Tree::PostUpdate()
 {
 	if (current_health <= 0)
 	{
@@ -51,7 +51,7 @@ bool Rock::PostUpdate()
 	return true;
 }
 
-bool Rock::CleanUp()
+bool Tree::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
@@ -63,20 +63,20 @@ bool Rock::CleanUp()
 		collider->to_delete = true;
 	}
 	App->gui->DeleteGuiElement(healthbar);
-	
+
 	delete blit_section;
 
 	return true;
 }
 
-void Rock::Draw()
+void Tree::Draw()
 {
 	App->render->Blit(entity_sprite, pixel_position.x, pixel_position.y, blit_section);
 }
 
-void Rock::InitEntity()
+void Tree::InitEntity()
 {
-	entity_sprite = App->entity_manager->GetRockTexture();
+	entity_sprite = App->entity_manager->GetTreeTexture();
 
 	is_selected = false;
 
@@ -90,7 +90,7 @@ void Rock::InitEntity()
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
-	ore = 20;
+	wood = 20;
 	gather_time = 1;
 
 	max_health = 300;

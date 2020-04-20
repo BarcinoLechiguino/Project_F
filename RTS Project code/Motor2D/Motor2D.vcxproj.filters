@@ -177,6 +177,9 @@
     <ClCompile Include="EntityQuadTree.cpp">
       <Filter>Engine  ===========\Tools</Filter>
     </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -375,6 +378,9 @@
     </ClInclude>
     <ClInclude Include="EntityQuadTree.h">
       <Filter>Engine  ===========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
