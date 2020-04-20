@@ -81,6 +81,8 @@ void TownHall::InitEntity()
 	tiles_occupied_x = 3;
 	tiles_occupied_y = 3;
 
+	unit_level = 1;
+
 	max_health = 900;
 	current_health = max_health;
 

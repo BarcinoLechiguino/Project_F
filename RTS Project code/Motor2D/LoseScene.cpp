@@ -59,6 +59,8 @@ bool LoseScene::PostUpdate()
 
 bool LoseScene::CleanUp()
 {
+	App->tex->UnLoad(background_texture);
+	
 	App->gui->CleanUp();
 	
 	return true;

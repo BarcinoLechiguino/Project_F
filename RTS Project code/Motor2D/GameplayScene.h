@@ -63,6 +63,10 @@ public:
 
 	void BuildingUpgrade();
 
+	void UnitUpgrade();
+
+	bool CheckResources(uint required_data, uint required_electricity);
+
 
 public:
 	//std::list<std::string>	map_names;
@@ -213,6 +217,8 @@ public:
 
 	std::string				HUD_data_resource_string;
 	std::string				HUD_electricity_resource_string;
+
+private:
 
 	//Audio
 

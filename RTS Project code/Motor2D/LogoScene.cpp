@@ -56,14 +56,14 @@ bool LogoScene::PostUpdate()
 
 bool LogoScene::CleanUp()
 {
-	App->gui->CleanUp();
+	App->tex->UnLoad(background_texture);
+	//App->gui->CleanUp();
 	return true;
 }
 
 void LogoScene::LoadGuiElements()
 {
-	background_rect = { 0,0,1280,720 };
-	background_texture = App->tex->Load("maps/MissingmdScreen.png");
+	
 }
 
 void LogoScene::OnEventCall(UI* element, UI_EVENT ui_event)
@@ -115,5 +115,8 @@ void LogoScene::InitScene()
 
 	App->gui->Start();
 
-	LoadGuiElements();
+	background_rect = { 0,0,1280,720 };
+	background_texture = App->tex->Load("maps/MissingmdScreen.png");
+
+	//LoadGuiElements();
 }

@@ -81,6 +81,8 @@ void Barracks::InitEntity()
 	tiles_occupied_x = 2;
 	tiles_occupied_y = 2;
 
+	unit_level = 1;
+
 	max_health = 600;
 	current_health = max_health;
 

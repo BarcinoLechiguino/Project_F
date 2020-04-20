@@ -33,6 +33,8 @@ public:
 	SDL_Rect	hall_rect;
 	SDL_Rect	hall_rect_1;
 	SDL_Rect	hall_rect_2;
+
+	int			unit_level;
 };
 
 #endif // !__TOWNHALL_H__
