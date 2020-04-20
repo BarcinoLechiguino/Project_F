@@ -1,4 +1,7 @@
 #include "Brofiler\Brofiler.h"
+//#include "mmgr/mmgr.h"
+
+#include <algorithm>
 
 #include "p2Log.h"
 #include "Application.h"
@@ -23,9 +26,6 @@
 #include "EnemyBarracks.h"
 #include "Rock.h"
 #include "Tree.h"
-#include <algorithm>
-
-//#include "mmgr/mmgr.h"
 
 struct {
 	bool operator()(Entity* a, Entity* b) const
@@ -386,7 +386,7 @@ bool EntityManager::IsUnit(Entity* entity)
 }
 bool EntityManager::IsInfantry(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::INFANTRY )
+	if (entity->type == ENTITY_TYPE::INFANTRY)
 	{
 		return true;
 	}

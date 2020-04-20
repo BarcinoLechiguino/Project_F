@@ -93,7 +93,7 @@ void Tree::InitEntity()
 	wood = 20;
 	gather_time = 1;
 
-	max_health = 450;
+	max_health = 300;
 	current_health = max_health;
 
 	if (App->entity_manager->CheckTileAvailability(iPoint(tile_position), this))

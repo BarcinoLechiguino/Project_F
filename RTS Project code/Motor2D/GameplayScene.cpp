@@ -22,6 +22,7 @@
 #include "Static_Object.h"
 #include "TownHall.h"
 #include "Barracks.h"
+#include "Barracks.h"
 #include "Gatherer.h"
 #include "Infantry.h"
 #include "Rock.h"
@@ -141,6 +142,12 @@ bool GameplayScene::PostUpdate()
 		UnitDebugKeys();
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	{
+		App->render->camera.x = 1550;
+		App->render->camera.y = -600;
+	}
+
 	CheckForWinLose();
 
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
@@ -160,8 +167,8 @@ bool GameplayScene::PostUpdate()
 	return ret;
 }
 
-void GameplayScene::CheckForWinLose() 
-{
+void GameplayScene::CheckForWinLose() {
+
 	if (!App->player->god_mode)
 	{
 		//Check for an enemy townhall alive. If none is found the player has won, thus we call the transition to win scene
@@ -218,8 +225,13 @@ void GameplayScene::InitScene()
 
 	//cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
 
+
 	App->entity_manager->resource_data = 0;
 	App->entity_manager->resource_electricity = 0;
+
+	App->render->camera.x = 1550;
+	App->render->camera.y = -600;
+
 	App->gui->Start();
 
 	to_end = false;
@@ -675,6 +687,8 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Home
+		App->render->camera.x = 1550;
+		App->render->camera.y = -600;
 
 		App->audio->PlayFx(App->gui->standard_fx, 0);
 	}

@@ -129,6 +129,7 @@
     <ClCompile Include="TownHall.cpp" />
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="TransitionManager.cpp" />
+    <ClCompile Include="Tree.cpp" />
     <ClCompile Include="UI_Healthbar.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
@@ -196,6 +197,7 @@
     <ClInclude Include="TownHall.h" />
     <ClInclude Include="Transition.h" />
     <ClInclude Include="TransitionManager.h" />
+    <ClInclude Include="Tree.h" />
     <ClInclude Include="UI_Healthbar.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="p2SString.h" />

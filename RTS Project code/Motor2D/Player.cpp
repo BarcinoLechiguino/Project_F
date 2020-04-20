@@ -589,7 +589,7 @@ void Player::ClearEntityBuffers()
 	{
 		for (int i = 0; i < units_selected.size(); ++i)
 		{
-			units_selected[i]->is_selected = false; //Crash when a lot of units were selected
+			units_selected[i]->is_selected = false; //fix
 		}
 
 		units_selected.clear();
