@@ -52,8 +52,9 @@ bool MainScene::PreUpdate()
 
 bool MainScene::Update(float dt)
 {
+	LOG("AFTER DRAW UPDATE");
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
-
+	LOG("BEFORE DRAW UPDATE");
 	AdjustVolumeWithScrollbar();
 	
 	return true;
@@ -80,6 +81,7 @@ bool MainScene::CleanUp()
 
 void MainScene::LoadGuiElements()
 {	
+	LOG("STARTED GUI LOAD");
 	// Main Screen
 		main_parent = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
@@ -126,7 +128,7 @@ void MainScene::LoadGuiElements()
 	// Options Menu
 		LoadOptionsMenu();
 		App->gui->SetElementsVisibility(options_parent, false);
-
+		LOG("FINISHED GUI LOAD");
 }
 
 void MainScene::LoadOptionsMenu()
@@ -336,9 +338,11 @@ void MainScene::ExecuteTransition()
 
 void MainScene::InitScene()
 {
+	LOG("INITSCENE START");
 	App->gui->Start();
 
 	menu_song = App->audio->LoadMusic("audio/music/Music_Menu.ogg");
 	App->audio->PlayMusic(menu_song, 0.0f);
 	LoadGuiElements();
+	LOG("INITSCENE END");
 }

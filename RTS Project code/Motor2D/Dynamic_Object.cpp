@@ -27,6 +27,8 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Enti
 
 	looked_for_tile = false;
 
+	path_state = PATHFINDING_STATE::IDLE;
+
 	ChangeOccupiedTile(tile_position);
 }
 
@@ -162,7 +164,7 @@ void Dynamic_Object::HandleMovement(float dt)
 	switch (path_state)
 	{
 	case PATHFINDING_STATE::IDLE:
-
+		
 		if (path_full && tile_position != target_tile)
 		{
 			path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;
@@ -175,11 +177,13 @@ void Dynamic_Object::HandleMovement(float dt)
 	case PATHFINDING_STATE::WALKING:
 
 		Move(dt);
+		
 
 		break;
 
 	case PATHFINDING_STATE::WAITING_NEXT_TILE:
 		//Check if unit is already in target_tile
+		
 		if (target_tile == tile_position)
 		{
 			entity_path.clear();
