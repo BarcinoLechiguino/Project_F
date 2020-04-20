@@ -35,7 +35,6 @@ private:
 	SDL_Texture* background_texture;
 	//Audio
 	uint				lose_song;
-	uint				lose_channel;
 };
 
 #endif // !__LOSE_SCENE_H__

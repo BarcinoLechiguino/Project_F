@@ -119,5 +119,5 @@ void LoseScene::ExecuteTransition()
 void LoseScene::InitScene()
 {
 	lose_song = App->audio->LoadMusic("audio/music/Lose_Song.ogg");
-	lose_channel = App->audio->PlayMusic(lose_song, 1);
+	App->audio->PlayMusic(lose_song, 0);
 }

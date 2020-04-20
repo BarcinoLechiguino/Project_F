@@ -117,5 +117,5 @@ void WinScene::ExecuteTransition()
 void WinScene::InitScene()
 {
 	win_song = App->audio->LoadMusic("audio/music/Victory_Song.ogg");
-	win_channel = App->audio->PlayMusic(win_song, 1);
+	App->audio->PlayMusic(win_song, 0);
 }
