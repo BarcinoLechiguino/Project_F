@@ -3,6 +3,8 @@
 
 #include <algorithm>
 
+#include "EntityQuadTree.h"
+
 #include "p2Log.h"
 #include "Application.h"
 #include "Window.h"
@@ -60,6 +62,8 @@ bool EntityManager::Awake(pugi::xml_node& config)
 
 bool EntityManager::Start()
 {
+	debug_center_point = false;
+
 	LoadEntityTextures();
 	LoadEntityAudios();
 
@@ -68,7 +72,6 @@ bool EntityManager::Start()
 	{
 		entities[i]->Start();
 	}
-
 	return true;
 }
 
@@ -78,6 +81,7 @@ bool EntityManager::PreUpdate()
 	{
 		entities[i]->PreUpdate();
 	}
+
 
 	return true;
 }
@@ -151,6 +155,11 @@ void EntityManager::DrawEntities()
 	for (int i = 0; i < entities_in_screen.size(); ++i)
 	{
 		entities_in_screen[i]->Draw();
+
+		if (debug_center_point)
+		{
+			App->render->Blit(center_point_debug, entities_in_screen[i]->center_point.x + App->map->data.tile_width/2 - 6, entities_in_screen[i]->center_point.y - 5, nullptr);
+		}
 	}
 }
 
@@ -290,6 +299,8 @@ void EntityManager::LoadEntityTextures()
 	enemy_barracks_tex	= App->tex->Load(entity_textures.child("enemy_barracks_texture").attribute("path").as_string());
 	rock_tex			= App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
 	tree_tex			= App->tex->Load(entity_textures.child("tree_texture").attribute("path").as_string());
+
+	center_point_debug = App->tex->Load("maps/center_position_debug.png");
 }
 
 void EntityManager::LoadEntityAudios()
@@ -375,6 +386,10 @@ SDL_Texture* EntityManager::GetTreeTexture() const
 	return tree_tex;
 }
 
+SDL_Texture* EntityManager::GetCenterPointTexture() const
+{
+	return center_point_debug;
+}
 bool EntityManager::IsUnit(Entity* entity)
 {
 	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::INFANTRY || entity->type == ENTITY_TYPE::ENEMY)
@@ -465,9 +480,8 @@ iPoint EntityManager::GetEntityPos(Entity* entity)
 
 void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null)
 {
-
 	if (entity_map != nullptr)
-	{
+	{	
 		if (!set_to_null)
 		{
 			if (IsUnit(entity))

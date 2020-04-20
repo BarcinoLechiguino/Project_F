@@ -35,8 +35,6 @@ bool Barracks::PreUpdate()
 
 bool Barracks::Update(float dt, bool doLogic)
 {
-
-
 	return true;
 }
 
@@ -91,7 +89,7 @@ void Barracks::InitEntity()
 		AttachHealthbarToEntity();
 	}
 
-	center_point = iPoint(pixel_position.x, pixel_position.y + (((tiles_occupied_x - 1) * App->map->data.tile_height / 2) + ((tiles_occupied_y - 1) * App->map->data.tile_height / 2)) / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height);
 }
 
 void Barracks::AttachHealthbarToEntity()

@@ -5,6 +5,8 @@
 #include "Module.h"
 #include "Point.h"
 
+#include "EntityQuadTree.h"
+
 #define MAX_ENTITIES 400
 #define MAX_ENEMIES 200
 
@@ -23,6 +25,7 @@ class TownHall;
 class EnemyTownHall;
 class Barracks;
 class EnemyBarracks;
+
 
 
 
@@ -61,6 +64,8 @@ public:
 	SDL_Texture* GetRockTexture() const;
 	SDL_Texture* GetTreeTexture() const;
 
+	SDL_Texture* GetCenterPointTexture() const;
+
 	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
 	bool IsInfantry(Entity* entity);
 	bool IsGatherer(Entity* enitity);
@@ -95,6 +100,7 @@ public:
 	SDL_Texture*					enemy_barracks_tex;
 	SDL_Texture*					rock_tex;
 	SDL_Texture*					tree_tex;
+	SDL_Texture*					center_point_debug;
 
 	uint							gatherer_movement_fx;
 	uint							gather_fx;
@@ -107,11 +113,11 @@ public:
 	uint							finished_recruiting_fx;
 	uint							finished_upgrading_fx;
 	uint							click_townhall_fx;
-
 	uint							heavy_shot_fx;
 
 	std::vector<Entity*>			entities;	
 	std::vector<Entity*>			entities_in_screen;
+
 
 	Entity**						entity_map;			//Array that will be used to keep track at which position are all entities at all times.
 	int								entity_map_width;	//Width of the entity_map.
@@ -120,6 +126,8 @@ public:
 	float							accumulated_time;	//Accumulates dt as time goes on.
 	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
 	bool							doLogic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
+	
+	bool							debug_center_point;
 
 	uint								resource_data;
 	uint								resource_electricity;

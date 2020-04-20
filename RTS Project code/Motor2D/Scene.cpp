@@ -6,6 +6,7 @@
 #include "Gui.h"
 #include "Player.h"
 #include "SceneManager.h"
+#include "EntityManager.h"
 
 #include "Scene.h"
 
@@ -168,4 +169,10 @@ void Scene::DebugKeys()
 	{
 		App->collisions->collider_debug = !App->collisions->collider_debug;
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_DOWN)					
+	{
+		App->entity_manager->debug_center_point = !App->entity_manager->debug_center_point;
+	}
+
 }
