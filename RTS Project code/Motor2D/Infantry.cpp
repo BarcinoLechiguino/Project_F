@@ -20,6 +20,7 @@
 
 Infantry::Infantry(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
 {
+	LOG("x %d and y %d", x, y);
 	InitEntity();
 };
 
