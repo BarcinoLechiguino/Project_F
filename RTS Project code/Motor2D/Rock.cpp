@@ -19,9 +19,9 @@ Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type
 
 	int rock_version = (rand() % 4) * 54;
 
-	blit_section = new SDL_Rect{ rock_version, 0, 54, 35 };
+	blit_section = new SDL_Rect{rock_version,0,54,35};
 
-	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 }
 
 bool Rock::Awake(pugi::xml_node&)

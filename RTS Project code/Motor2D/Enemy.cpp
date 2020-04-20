@@ -42,6 +42,8 @@ bool Enemy::PreUpdate()
 
 bool Enemy::Update(float dt, bool doLogic)
 {
+	
+
 	HandleMovement(dt);
 
 	DataMapSafetyCheck();
@@ -60,19 +62,9 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	if (doLogic)
 	{
-		if (!path_full)
+		if (target == nullptr && !path_full)
 		{
-			if (target == nullptr)
-			{
-				SetEntityTargetByProximity();
-			}
-			else
-			{
-				if (TargetIsInRange())
-				{
-					ChaseTarget();
-				}
-			}
+			SetEntityTargetByProximity();
 		}
 	}
 
@@ -248,7 +240,7 @@ void Enemy::GetShortestPathWithinAttackRange()
 	std::vector<iPoint> tmp;
 
 	if (target != nullptr)
-	{	
+	{
 		for (int i = 0; i < entity_path.size(); ++i)
 		{
 			tmp.push_back(entity_path[i]);
