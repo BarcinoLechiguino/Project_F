@@ -68,7 +68,10 @@ public:
 	UI_Text*		options_text;
 
 
-public:
+private:
+	//Audio
+	uint				menu_song;
+	uint				menu_channel;
 
 };
 

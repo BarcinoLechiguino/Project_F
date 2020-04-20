@@ -221,7 +221,7 @@ bool GameplayScene::CleanUp()
 	App->tex->UnLoad(path_debug_tex);
 
 	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
-	App->player->ClearEntityBuffers();
+	App->player->ClearEntityBuffers();						//Clears the entity list
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui->CleanUp();
@@ -259,6 +259,8 @@ void GameplayScene::InitScene()
 	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
+	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
+	inGame_channel = App->audio->PlayMusic(inGame_song, 1);
 }
 
 void GameplayScene::LoadGuiElements()
