@@ -75,7 +75,7 @@ bool GameplayScene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool GameplayScene::Start()
 {
-	bool ret = false;
+	bool ret = true;
 
 	InitScene();
 
@@ -832,22 +832,22 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_pause_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Pause
-		App->pause = true;
+		App->pause = !App->pause;
 		App->audio->PlayFx(App->gui->standard_fx, 0);
-		App->gui->SetElementsVisibility(HUD_pause_button, false);			
-		App->gui->SetElementsVisibility(HUD_play_button, true);	
-		element->ui_event = UI_EVENT::IDLE;
+		//App->gui->SetElementsVisibility(HUD_pause_button, false);			
+		//App->gui->SetElementsVisibility(HUD_play_button, true);	
+		//element->ui_event = UI_EVENT::IDLE;
 	}
 	
-	if (element == HUD_play_button && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Play
-		App->pause = false;
-		App->audio->PlayFx(App->gui->standard_fx, 0);
-		App->gui->SetElementsVisibility(HUD_play_button, false);
-		App->gui->SetElementsVisibility(HUD_pause_button, true);
-		
-	}
+	//if (element == HUD_play_button && ui_event == UI_EVENT::UNCLICKED)
+	//{
+	//	// Play
+	//	App->pause = false;
+	//	App->audio->PlayFx(App->gui->standard_fx, 0);
+	//	App->gui->SetElementsVisibility(HUD_play_button, false);
+	//	App->gui->SetElementsVisibility(HUD_pause_button, true);
+	//	
+	//}
 
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
 	{

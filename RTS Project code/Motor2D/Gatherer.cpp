@@ -48,7 +48,7 @@ bool Gatherer::Update(float dt, bool doLogic)
 	BROFILER_CATEGORY("Gatherer Update", Profiler::Color::Black);
 
 	HandleMovement(dt);
-	HandleFx();
+	//HandleFx();
 	DataMapSafetyCheck();
 
 	UpdateUnitSpriteSection();

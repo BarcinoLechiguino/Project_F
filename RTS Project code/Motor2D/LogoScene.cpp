@@ -58,7 +58,8 @@ bool LogoScene::CleanUp()
 {
 	App->tex->UnLoad(background_texture);
 	Mix_FadeOutChannel(logo_channel, 500);
-	//App->gui->CleanUp();
+	App->gui->CleanUp();
+
 	return true;
 }
 

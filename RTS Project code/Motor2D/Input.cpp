@@ -114,17 +114,17 @@ bool Input::PreUpdate()
 				}
 			break;
 
-			case SDL_TEXTINPUT:
+			//case SDL_TEXTINPUT:
 
-				CheckNewTextInput(event.text.text);
+			//	CheckNewTextInput(event.text.text);
 
-				break;
+			//	break;
 
-			case SDL_TEXTEDITING:
-				//composition = event.edit.text;
-				//cursor = event.edit.text;
-				//selection_len = event.edit.length;
-				break;
+			//case SDL_TEXTEDITING:
+			//	//composition = event.edit.text;
+			//	//cursor = event.edit.text;
+			//	//selection_len = event.edit.length;
+			//	break;
 
 			case SDL_MOUSEBUTTONDOWN:
 				mouse_buttons[event.button.button - 1] = KEY_DOWN;
@@ -196,7 +196,7 @@ void Input::GetMousewheelScrolling(int&x, int& y)
 // ---------------------------- TEXT INPUT METHODS ----------------------------
 void Input::TextInput()
 {
-	if (App->gui->focusedElement != nullptr)											
+	/*if (App->gui->focusedElement != nullptr)											
 	{
 		if (App->gui->focusedElement->element == UI_ELEMENT::INPUTBOX && App->gui->focusedElement->isVisible)
 		{
@@ -226,7 +226,7 @@ void Input::TextInput()
 	if (textInputEnabled)																
 	{
 		EditTextInputs();
-	}
+	}*/
 }
 
 void Input::EditTextInputs()										

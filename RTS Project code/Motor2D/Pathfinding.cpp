@@ -123,11 +123,16 @@ bool PathFinding::PathIsAccessible(const iPoint& origin, const iPoint& destinati
 	return (/*!IsOccupiedByEnemyEntity(destination) &&*/ (IsNonWalkable(origin) || IsNonWalkable(destination) || IsOccupied(destination)));
 }
 
-bool PathFinding::ChangeWalkability(const iPoint& pos, Entity* entity, uchar walkability)
+bool PathFinding::ChangeWalkability(iPoint pos, Entity* entity, uchar walkability)
 {
 	if (map != nullptr)
 	{
-		if (App->entity_manager->IsUnit(entity))
+		if (abs(pos.x) > App->map->data.width || abs(pos.y) > App->map->data.height)
+		{
+			LOG("THIS NUMBER IS BANANAS!");
+			return false;
+		}
+		else
 		{
 			map[(pos.y * App->map->data.width) + pos.x] = walkability;
 		}
