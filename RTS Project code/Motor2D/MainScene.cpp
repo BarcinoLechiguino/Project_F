@@ -71,9 +71,9 @@ bool MainScene::PostUpdate()
 
 bool MainScene::CleanUp()
 {
-	App->gui->CleanUp();
-	
 	App->tex->UnLoad(background_texture);
+	
+	App->gui->CleanUp();
 
 	return true;
 }
@@ -186,7 +186,7 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == new_game_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		Mix_FadeOutChannel(menu_channel, 300);
-		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, true, true);
+		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, false, 10, false, false);
 		App->audio->PlayFx(App->gui->new_game_fx,0);
 	}
 
