@@ -120,5 +120,8 @@ public:
 	float							accumulated_time;	//Accumulates dt as time goes on.
 	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
 	bool							doLogic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
+
+	int								resource_data;
+	int								resource_electricity;
 };
 #endif // __ENTITY_MANAGER_H__
