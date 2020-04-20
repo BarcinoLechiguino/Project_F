@@ -57,6 +57,7 @@ bool LogoScene::PostUpdate()
 bool LogoScene::CleanUp()
 {
 	App->tex->UnLoad(background_texture);
+	Mix_FadeOutChannel(logo_channel, 500);
 	//App->gui->CleanUp();
 	return true;
 }
@@ -77,7 +78,6 @@ void LogoScene::ExecuteTransition()
 
 	if (accumulated_time >= logo_scene_duration)
 	{
-		Mix_FadeOutChannel(logo_channel, 500);
 		App->transition_manager->CreateFadeToColour(SCENES::MAIN_SCENE);
 		accumulated_time = 0.0f;
 	}

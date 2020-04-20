@@ -48,6 +48,7 @@ public:
 	UI_Button*	options_button;
 	UI_Button*	exit_button;
 
+
 	//BACKGROUND
 	SDL_Rect		background_rect;
 	SDL_Texture*	background_texture;
@@ -55,8 +56,10 @@ public:
 	// Options
 	
 	UI_Image*		options_parent;
+	
 	//bool			options_created;
-
+	UI_Button*		fullscreen_off;
+	UI_Button*		fullscreen_on;
 	UI_Button*		back_button;
 	UI_Scrollbar*	music_scrollbar;
 	UI_Scrollbar*	sfx_scrollbar;

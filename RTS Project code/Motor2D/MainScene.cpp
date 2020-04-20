@@ -165,9 +165,27 @@ void MainScene::LoadOptionsMenu()
 	sfx_scrollbar->parent = options_parent;
 	
 	//screen size
-	std::string resolution_string = "screen";
-	resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 418, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
+	std::string resolution_string = "fullscreen";
+	resolution_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, 380, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
 	
+	// Fullscreen options
+
+	SDL_Rect opt_fullscreen_off_size = { 0, 0, 29, 24 };
+	SDL_Rect opt_fullscreen_off_idle = { 744, 18, 29, 24 };
+	SDL_Rect opt_fullscreen_off_hover = { 744, 18, 29, 24 };
+	SDL_Rect opt_fullscreen_off_clicked = { 744, 18, 29, 24 };
+
+	fullscreen_off = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 580, 334, true, true, false, this, options_parent
+		, &opt_fullscreen_off_idle, &opt_fullscreen_off_hover, &opt_fullscreen_off_clicked);
+
+	SDL_Rect opt_fullscreen_on_size = { 0, 0, 29, 24 };
+	SDL_Rect opt_fullscreen_on_idle = { 788, 18, 29, 24 };
+	SDL_Rect opt_fullscreen_on_hover = { 788, 18, 29, 24 };
+	SDL_Rect opt_fullscreen_on_clicked = { 788, 18, 29, 24 };
+
+	fullscreen_on = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 580, 334, false, true, false, this, nullptr
+		, &opt_fullscreen_on_idle, &opt_fullscreen_on_hover, &opt_fullscreen_on_clicked);
+
 	//Remapping
 	
 	//Back button
@@ -216,9 +234,25 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->gui->SetElementsVisibility(main_parent, true);							// Activate Main menu
 	
 		App->gui->SetElementsVisibility(options_parent, false);						//Deactivate Options Menu
+
+		App->gui->SetElementsVisibility(fullscreen_on, false);
 	
 		background_texture = App->tex->Load("maps/MainMenu_background.png");
 	}
+
+	if (element == fullscreen_off && ui_event == UI_EVENT::UNCLICKED)
+	{
+		App->gui->SetElementsVisibility(fullscreen_on, true);
+		App->gui->SetElementsVisibility(fullscreen_off, false);
+	}
+
+	if (element == fullscreen_on && ui_event == UI_EVENT::UNCLICKED)
+	{
+		App->win->ToggleFullscreen();
+		App->gui->SetElementsVisibility(fullscreen_on, false);
+		App->gui->SetElementsVisibility(fullscreen_off, true);
+	}
+
 }
 
 void MainScene::AdjustVolumeWithScrollbar()
