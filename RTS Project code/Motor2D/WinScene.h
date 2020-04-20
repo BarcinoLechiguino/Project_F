@@ -35,7 +35,6 @@ private:
 	SDL_Texture* background_texture;
 	//Audio
 	uint				win_song;
-	uint				win_channel;
 
 };
 

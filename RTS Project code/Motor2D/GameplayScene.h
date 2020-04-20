@@ -212,10 +212,10 @@ public:
 
 	std::string				HUD_data_resource_string;
 	std::string				HUD_electricity_resource_string;
-private:
+
 	//Audio
-	uint				inGame_song;
-	uint				inGame_channel;
+
+	uint					inGame_song;
 
 };
 #endif // !__GAMEPLAY_SCENE_H__

@@ -185,7 +185,6 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == new_game_button && ui_event == UI_EVENT::UNCLICKED)
 	{
-		Mix_FadeOutChannel(menu_channel, 300);
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, true, true);
 		App->audio->PlayFx(App->gui->new_game_fx,0);
 	}
@@ -302,7 +301,7 @@ void MainScene::InitScene()
 	App->gui->Start();
 
 	menu_song = App->audio->LoadMusic("audio/music/Music_Menu.ogg");
-	menu_channel = App->audio->PlayMusic(menu_song, 1);
+	App->audio->PlayMusic(menu_song, 0);
 
 	LoadGuiElements();
 }
