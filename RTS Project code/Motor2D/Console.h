@@ -1,4 +1,4 @@
-#ifndef __CONSOLE_H__
+#ifndef __jONSOLE_H__
 #define __CONSOLE_H__
 
 #include "Module.h"

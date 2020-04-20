@@ -75,7 +75,7 @@ bool GameplayScene::Awake(pugi::xml_node& config)
 // Called before the first frame
 bool GameplayScene::Start()
 {
-	bool ret = true;
+	bool ret = false;
 
 	InitScene();
 
