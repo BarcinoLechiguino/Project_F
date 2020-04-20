@@ -5,6 +5,8 @@
 #include "Render.h"
 #include "Entity.h"
 
+#include "Brofiler\Brofiler.h"
+
 EntityQuadTree::EntityQuadTree(SDL_Rect quadtree, uint level, uint max_levels) : QuadTree(quadtree, level, max_levels)
 {
 	divided = false;
@@ -65,6 +67,8 @@ void EntityQuadTree::InsertEntity(Entity* entity)
 
 void EntityQuadTree::DrawQuadtree()
 {
+	BROFILER_CATEGORY("Draw Entity Quadtree", Profiler::Color::FireBrick);
+
 	int screen_w;
 	int screen_h;
 	App->win->GetWindowSize(screen_w, screen_h);
@@ -93,4 +97,17 @@ void EntityQuadTree::DrawQuadtree()
 			}
 		}
 	}
+}
+
+std::vector<Entity*> EntityQuadTree::QueryEntities(SDL_Rect section)
+{
+	std::vector<Entity*> found;
+
+	if (!Intersects(section))
+	{
+
+	}
+
+
+	return found;
 }

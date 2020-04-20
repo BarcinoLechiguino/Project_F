@@ -14,12 +14,10 @@ QuadTree::~QuadTree()
 
 bool QuadTree::Intersects(SDL_Rect& rect)
 {
-
 	return !(rect.x + rect.w <= boundary.x ||
 		rect.x >= boundary.x + boundary.w ||
 		rect.y >= boundary.y + boundary.h ||
 		rect.y + rect.h <= boundary.y);
-
 }
 
 bool QuadTree::ContainsPoint(iPoint point)

@@ -127,4 +127,3 @@ void Entity::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
 }
-

@@ -21,7 +21,7 @@ Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type
 
 	blit_section = new SDL_Rect{rock_version,0,54,35};
 
-	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 	healthbar_position_offset.x = -30;
 }
 
