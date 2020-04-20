@@ -123,12 +123,18 @@ bool Application::Awake()
 
 		original_frame_cap	= frame_cap;
 	}
-
+	int i = 0;
 	if(ret)
 	{
 		for (std::list<Module*>::iterator item = modules.begin() ; item != modules.end() && ret; ++item)
 		{
+			i++;
 			ret  = (*item)->Awake(config.child((*item)->name.c_str()));
+			if (!ret)
+			{
+				LOG("AWAKE RET IS FALSE %d", i);
+			}
+			
 		}
 	}
 	
@@ -143,12 +149,17 @@ bool Application::Start()
 	PERF_START(perf_timer);
 	
 	bool ret = true;
-
+	int i = 0;
 	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret ; ++item)
 	{
 		if ((*item)->is_active)
 		{
+			i++;
 			ret = (*item)->Start();
+			if (!ret)
+			{
+				LOG("START RET IS FALSE %d", i);
+			}
 		}
 	}
 
@@ -166,8 +177,10 @@ bool Application::Update()
 	bool ret = true;
 	PrepareUpdate();
 
+
 	/*if(input->GetWindowEvent(WE_QUIT))
 		ret = false;*/
+
 
 	if(ret == true)
 		ret = PreUpdate();
@@ -297,9 +310,10 @@ bool Application::PreUpdate()
 bool Application::DoUpdate()
 {
 	bool ret = true;
-
+	int i = 0;
 	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
 	{
+		i++;
 		if(!(*item)->is_active)
 		{
 			continue;

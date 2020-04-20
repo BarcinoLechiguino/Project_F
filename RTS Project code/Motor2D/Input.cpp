@@ -91,6 +91,7 @@ bool Input::PreUpdate()
 		switch(event.type)
 		{
 			case SDL_QUIT:
+				LOG("EVEN IS SDL_QUIT!");
 				windowEvents[WE_QUIT] = true;
 			break;
 

@@ -134,7 +134,15 @@ bool PathFinding::ChangeWalkability(iPoint pos, Entity* entity, uchar walkabilit
 		}
 		else
 		{
-			map[(pos.y * App->map->data.width) + pos.x] = walkability;
+			if (abs(pos.x) > App->map->data.width || abs(pos.y) > App->map->data.height)
+			{
+				LOG("THIS NUMBER IS BANANAS!");
+				return false;
+			}
+			else
+			{
+				map[(pos.y * App->map->data.width) + pos.x] = walkability;
+			}
 		}
 
 		if (App->entity_manager->IsBuilding(entity) || App->entity_manager->IsResource(entity))

@@ -24,6 +24,8 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Enti
 	next_tile = tile_position;
 	occupied_tile = tile_position;
 
+	occupied_tile = tile_position;
+
 	looked_for_tile = false;
 
 	path_state = PATHFINDING_STATE::IDLE;
@@ -149,8 +151,10 @@ bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 
 void Dynamic_Object::ChangeOccupiedTile(iPoint new_occupied_tile)
 {
+	LOG("x %d and y %d", new_occupied_tile.x, new_occupied_tile.y);
+	
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
-
+	
 	occupied_tile = new_occupied_tile;
 
 	App->pathfinding->ChangeWalkability(new_occupied_tile, this, OCCUPIED);
@@ -161,7 +165,7 @@ void Dynamic_Object::HandleMovement(float dt)
 	switch (path_state)
 	{
 	case PATHFINDING_STATE::IDLE:
-
+		
 		if (path_full && tile_position != target_tile)
 		{
 			path_state = PATHFINDING_STATE::WAITING_NEXT_TILE;
@@ -174,11 +178,13 @@ void Dynamic_Object::HandleMovement(float dt)
 	case PATHFINDING_STATE::WALKING:
 
 		Move(dt);
+		
 
 		break;
 
 	case PATHFINDING_STATE::WAITING_NEXT_TILE:
 		//Check if unit is already in target_tile
+		
 		if (target_tile == tile_position)
 		{
 			entity_path.clear();
