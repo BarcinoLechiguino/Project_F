@@ -217,8 +217,27 @@ void GameplayScene::CheckForWinLose() {
 		}
 		if (exists_townhall == false)
 		{
-			App->transition_manager->CreateSlide(SCENES::WIN_SCENE, 0.5f, true, true, false, false, Black);
+			//App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 5, true, true);
+			App->transition_manager->CreateSlide(SCENES::LOSE_SCENE, 0.5f, true, true, false, false, Black);
 		}
+
+		bool exists_allyunits = false;
+		for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+		{
+			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::BARRACKS || App->entity_manager->entities[i]->type == ENTITY_TYPE::INFANTRY || App->entity_manager->entities[i]->type == ENTITY_TYPE::GATHERER)
+			{
+				exists_allyunits = true;
+				break;
+			}
+		}
+		if (exists_allyunits == false)
+		{
+			//App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 5, true, true);
+
+			App->transition_manager->CreateSlide(SCENES::LOSE_SCENE, 0.5f, true, true, false, false, Black);
+		}
+
+
 	}
 }
 
