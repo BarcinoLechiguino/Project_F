@@ -51,6 +51,7 @@
       <barracks_texture path="maps/Barracks.png"/>
       <enemy_barracks_texture path="maps/Barracks_enemy.png"/>
       <rock_texture path="maps/rocks.png"/>
+      <tree_texture path="maps/trees.png"/>
     </textures>
     
     <player>
