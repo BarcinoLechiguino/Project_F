@@ -37,8 +37,8 @@ public:
 	void PathToGatheringTarget();
 
 	bool TargetIsInRange();
-	void Gather();
-
+	void GatherResource();
+	
 	//void HandleFx();
 	//void SubstractResource();
 
@@ -46,7 +46,8 @@ public:
 
 public:
 	float	gathering_speed;
-	int		gathering_amount;
+	int		gathering_amount_data;
+	int		gathering_amount_electricity;
 	bool	gather_in_cooldown;
 
 };

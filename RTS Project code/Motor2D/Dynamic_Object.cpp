@@ -209,6 +209,9 @@ void Dynamic_Object::HandleMovement(float dt)
 		path_state = PATHFINDING_STATE::WALKING;
 
 		SetEntityState();
+
+		//Move so that it doesn't stutter
+		Move(dt);
 	}
 }
 

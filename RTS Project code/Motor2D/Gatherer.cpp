@@ -56,8 +56,6 @@ bool Gatherer::Update(float dt, bool doLogic)
 	selection_collider.x = pixel_position.x + 10;
 	selection_collider.y = pixel_position.y + 10;
 
-	
-
 	if (doLogic)
 	{
 		if (target == nullptr && !path_full)
@@ -73,7 +71,7 @@ bool Gatherer::Update(float dt, bool doLogic)
 		{
 			if (TargetIsInRange())
 			{
-				Gather();
+				GatherResource();
 			}
 			else
 			{
@@ -143,10 +141,10 @@ void Gatherer::InitEntity()
 	current_health = max_health;
 
 	gathering_speed = 1.0f;
-	gathering_amount = 15;
+	gathering_amount_data = 30;
+	gathering_amount_electricity = 15;
 
-	attack_damage = gathering_amount; //temporary use of these variables to check if it works
-	attack_speed = gathering_speed;
+	attack_damage = 10; //temporary use of these variables to check if it works
 
 	attack_range = 1;
 
@@ -274,8 +272,7 @@ void Gatherer::PathToGatheringTarget()
 }
 
 
-
-void Gatherer::Gather()
+void Gatherer::GatherResource()
 {
 	if (!gather_in_cooldown)
 	{
@@ -284,9 +281,18 @@ void Gatherer::Gather()
 			ApplyDamage(target);
 			App->audio->PlayFx(App->entity_manager->gather_fx);
 			gather_in_cooldown = true;
+
+			if (target->type == ENTITY_TYPE::ROCK)
+			{
+				App->entity_manager->resource_data += gathering_amount_data;
+				LOG("Data gathered: %d", App->entity_manager->resource_data);
+			}
+			else if (target->type == ENTITY_TYPE::TREE)
+			{
+				App->entity_manager->resource_electricity += gathering_amount_electricity;
+				LOG("Electricity gathered: %d", App->entity_manager->resource_electricity);
+			}
 		}
-
-
 		if (target->current_health <= 0)
 		{
 			target = nullptr;
@@ -296,7 +302,7 @@ void Gatherer::Gather()
 	{
 		accumulated_cooldown += App->GetDt();
 
-		if (accumulated_cooldown >= attack_speed)
+		if (accumulated_cooldown >= gathering_speed)
 		{
 			gather_in_cooldown = false;
 			accumulated_cooldown = 0.0f;

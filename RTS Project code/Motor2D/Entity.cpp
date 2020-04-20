@@ -113,7 +113,7 @@ void Entity::ApplyDamage(Entity* target)
 
 			target->healthbar->UpdateHealthbarValue();
 		}
-		else if (App->entity_manager->IsResource(target)) // Works but ir WRONG needs to be changed beacuse we are using Attack damage
+		else if (App->entity_manager->IsResource(target))
 		{
 			target->current_health -= attack_damage;
 

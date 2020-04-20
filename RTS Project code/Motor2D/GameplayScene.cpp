@@ -225,9 +225,13 @@ void GameplayScene::InitScene()
 
 	//cam_debug_speed = App->render->cam.camera_debug_speed;				//Sets the camera speed in debug mode.
 
+
+	App->entity_manager->resource_data = 0;
+	App->entity_manager->resource_electricity = 0;
+
 	App->render->camera.x = 1550;
 	App->render->camera.y = -600;
-	
+
 	App->gui->Start();
 
 	to_end = false;
