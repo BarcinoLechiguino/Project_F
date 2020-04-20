@@ -307,7 +307,9 @@ void UI_Scrollbar::PlaceThumbOnMousePos()
 {
 	if (dragXAxis)
 	{
-		newThumbPos = { GetMousePos().x, thumb->GetScreenPos().y };
+		int half_thumb_width = thumb->GetHitbox().w * 0.5f;
+
+		newThumbPos = { GetMousePos().x - half_thumb_width, thumb->GetScreenPos().y };
 
 		thumb->SetScreenPos(newThumbPos);
 		thumb->SetHitbox({ thumb->GetScreenPos().x, thumb->GetScreenPos().y, thumb->GetHitbox().w, thumb->GetHitbox().h });
@@ -315,7 +317,9 @@ void UI_Scrollbar::PlaceThumbOnMousePos()
 
 	if (dragYAxis)
 	{
-		newThumbPos = { thumb->GetScreenPos().x, GetMousePos().y };
+		int half_thumb_height = thumb->GetHitbox().h * 0.5f;
+
+		newThumbPos = { thumb->GetScreenPos().x, GetMousePos().y - half_thumb_height };
 
 		thumb->SetScreenPos(newThumbPos);
 		thumb->SetHitbox({ thumb->GetScreenPos().x, thumb->GetScreenPos().y, thumb->GetHitbox().w, thumb->GetHitbox().h });

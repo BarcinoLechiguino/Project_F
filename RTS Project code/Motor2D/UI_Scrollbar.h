@@ -9,7 +9,7 @@ class UI_Scrollbar : public UI
 {
 public:
 	UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis = false, bool dragYAxis = true,
-		bool invertedScrolling = false, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr,
+		bool invertedScrolling = false, bool isVisible = true, bool isInteractible = false, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr,
 		SDL_Rect* scrollMask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
 
 	bool Draw();
