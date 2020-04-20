@@ -202,7 +202,7 @@ void GameplayScene::CheckForWinLose() {
 		}
 		if (exists_enemytownhall == false)
 		{
-			App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+			App->transition_manager->CreateSlide(SCENES::WIN_SCENE, 0.5f, true, true, false, false, Black);
 		}
 
 		//Same but for allied town halls. We put it second so in case they break at the same frame (not gonna happen) the player wins.
@@ -217,7 +217,7 @@ void GameplayScene::CheckForWinLose() {
 		}
 		if (exists_townhall == false)
 		{
-			App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 5, true, true);
+			App->transition_manager->CreateSlide(SCENES::WIN_SCENE, 0.5f, true, true, false, false, Black);
 		}
 	}
 }
@@ -270,7 +270,7 @@ void GameplayScene::InitScene()
 
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
-	App->audio->PlayMusic(inGame_song, 0);
+	App->audio->PlayMusic(inGame_song, 0.1f);
 }
 
 void GameplayScene::LoadGuiElements()
@@ -813,19 +813,21 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_pause_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Pause
-		App->pause = !App->pause;
+		App->pause = true;
 		App->audio->PlayFx(App->gui->standard_fx, 0);
 		App->gui->SetElementsVisibility(HUD_pause_button, false);			
 		App->gui->SetElementsVisibility(HUD_play_button, true);	
+		element->ui_event = UI_EVENT::IDLE;
 	}
 	
 	if (element == HUD_play_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Play
-		App->pause = !App->pause;
+		App->pause = false;
 		App->audio->PlayFx(App->gui->standard_fx, 0);
 		App->gui->SetElementsVisibility(HUD_play_button, false);
 		App->gui->SetElementsVisibility(HUD_pause_button, true);
+		
 	}
 
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
@@ -998,12 +1000,13 @@ void GameplayScene::ExecuteTransition()
 
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 12, true, true);
+		App->transition_manager->CreateSlide(SCENES::WIN_SCENE, 0.5f, true, true, false, false, Black);
+		
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 12, false, true);
+		App->transition_manager->CreateSlide(SCENES::LOSE_SCENE, 0.5f, true, true, false, false, Black);
 	}
 }
 

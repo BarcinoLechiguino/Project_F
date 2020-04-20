@@ -54,5 +54,6 @@ extern Color RosyBrown;
 extern Color Magenta;
 extern Color Cyan;
 extern Color Grey;
+extern Color OldBlue;
 
 #endif // !__COLOR_H__

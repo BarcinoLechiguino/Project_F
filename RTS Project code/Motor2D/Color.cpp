@@ -32,3 +32,4 @@ Color RosyBrown = Color(188, 143, 143);
 Color Magenta	= Color(255, 0, 128);
 Color Cyan		= Color(0, 255, 255);
 Color Grey		= Color(128, 128, 128);
+Color OldBlue	= Color(0, 179, 179);
