@@ -83,7 +83,7 @@ public:
 
 	fPoint			pixel_position;			
 	iPoint			tile_position;
-	iPoint			center_point;												//Used for sprite ordering
+	fPoint			center_point;												//Used for sprite ordering
 
 	SDL_Rect		healthbar_background_rect;
 	SDL_Rect		healthbar_rect;

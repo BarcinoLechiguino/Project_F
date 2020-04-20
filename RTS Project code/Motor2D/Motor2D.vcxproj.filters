@@ -166,8 +166,6 @@
     <ClCompile Include="Minimap.cpp">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Quadtree.cpp" />
-    <ClCompile Include="TileQuadTree.cpp" />
     <ClCompile Include="EnemyTownHall.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
     </ClCompile>
@@ -179,6 +177,12 @@
     </ClCompile>
     <ClCompile Include="Tree.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="TileQuadTree.cpp">
+      <Filter>Engine  ===========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Engine  ===========\Tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -368,8 +372,6 @@
     <ClInclude Include="Minimap.h">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClInclude>
-    <ClInclude Include="Quadtree.h" />
-    <ClInclude Include="TileQuadTree.h" />
     <ClInclude Include="EnemyTownHall.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
     </ClInclude>
@@ -381,6 +383,12 @@
     </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="TileQuadTree.h">
+      <Filter>Engine  ===========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>Engine  ===========\Tools</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

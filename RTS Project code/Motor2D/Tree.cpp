@@ -21,7 +21,7 @@ Tree::Tree(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type
 
 	blit_section = new SDL_Rect{ tree_version, 0, 54, 44 };
 
-	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 
 	healthbar_position_offset.y = -25;
 	healthbar_position_offset.x = -30;

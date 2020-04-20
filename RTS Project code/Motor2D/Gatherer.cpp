@@ -80,7 +80,7 @@ bool Gatherer::Update(float dt, bool doLogic)
 		}
 	}
 
-	center_point = iPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 
 	return true;
 }
