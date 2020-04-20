@@ -52,6 +52,8 @@ bool MainScene::Update(float dt)
 {
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
+	AdjustVolumeWithScrollbar();
+
 	return true;
 }
 
@@ -213,6 +215,45 @@ void MainScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	}
 }
 
+void MainScene::AdjustVolumeWithScrollbar()
+{	
+	// --- Audio Scrollbars
+	if (music_scrollbar->isVisible)
+	{	
+		float local_thumb_pos = music_scrollbar->GetThumbHitbox().x - music_scrollbar->GetHitbox().x;
+
+		float offset = local_thumb_pos / music_scrollbar->GetHitbox().w;										// Value from 0.0f to 1.0f
+
+		App->audio->volume = offset * 100;																		// Will make the offset a valid value to modify the volume.
+	}
+
+	if (sfx_scrollbar->isVisible)
+	{
+		float local_thumb_pos = sfx_scrollbar->GetThumbHitbox().x - sfx_scrollbar->GetHitbox().x;
+
+		float start_offset = local_thumb_pos / sfx_scrollbar->GetHitbox().w;									// Value from 0.0f to 1.0f
+
+		uint offset = floor(start_offset * 100);																// Will make the offset a valid value to modify the volume.					
+
+		App->audio->volume_fx = offset;
+	}
+}
+
+void MainScene::UpdateVolumeThumbPosition()
+{
+	float current = App->audio->volume * 0.01f;
+
+	float local_thumb_pos = current * music_scrollbar->GetHitbox().w;
+
+	int world_thumb_pos = floor(local_thumb_pos + music_scrollbar->GetHitbox().x);
+
+	music_scrollbar->SetHitbox({ world_thumb_pos, music_scrollbar->GetHitbox().y, music_scrollbar->GetHitbox().w, music_scrollbar->GetHitbox().h });
+}
+
+void MainScene::UpdateFXVolumeThumbPosition()
+{
+
+}
 
 void MainScene::ExecuteTransition()
 {
