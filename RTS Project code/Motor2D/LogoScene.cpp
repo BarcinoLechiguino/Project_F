@@ -57,7 +57,7 @@ bool LogoScene::PostUpdate()
 bool LogoScene::CleanUp()
 {
 	App->tex->UnLoad(background_texture);
-	Mix_FadeOutChannel(logo_channel, 500); //crash
+	Mix_FadeOutChannel(logo_channel, 500);
 	//App->gui->CleanUp();
 	return true;
 }
@@ -107,8 +107,8 @@ void LogoScene::ExecuteTransition()
 
 void LogoScene::InitScene()
 {
-	//logo_fx = App->audio->LoadFx("audio/fx/LogoScreen_sfx.wav");
-	//logo_channel = App->audio->PlayFx(logo_fx, 0);
+	logo_fx = App->audio->LoadFx("audio/fx/LogoScreen_sfx.wav");
+	logo_channel = App->audio->PlayFx(logo_fx, 0);
 
 	logo_scene_duration = 5.0f;
 	accumulated_time	= 0.0f;

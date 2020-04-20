@@ -52,7 +52,7 @@ public:
 
 	void FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected) ;	//Finds close tiles to send units to
 
-	bool ChangeWalkability( iPoint pos, Entity* entity, uchar walkability);				//Change walkability of a tile in map array
+	bool ChangeWalkability(const iPoint& pos, Entity* entity, uchar walkability);				//Change walkability of a tile in map array
 
 private:
 

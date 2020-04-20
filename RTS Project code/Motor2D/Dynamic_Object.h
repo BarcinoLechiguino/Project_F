@@ -60,7 +60,7 @@ public:
 	virtual void PathToGatheringTarget();										// Method that will define the path to the target
 
 	bool GiveNewTargetTile(const iPoint& new_target_tile);
-	void ChangeOccupiedTile(iPoint new_occupied_tile);
+	void ChangeOccupiedTile(const iPoint& new_occupied_tile);
 	
 	void HandleMovement(float dt);
 	void SetEntityState();

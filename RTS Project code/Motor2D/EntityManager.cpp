@@ -187,10 +187,6 @@ void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision 
 Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 {
 	//static_assert?
-	if (abs(x) > App->map->data.width || abs(y) > App->map->data.height)
-	{
-		LOG("but why doe :(");
-	}
 
 	Entity* entity = nullptr;
 

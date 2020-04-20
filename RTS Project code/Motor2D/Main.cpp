@@ -83,12 +83,8 @@ int main(int argc, char* args[])
 			// Loop all modules until we are asked to leave ---------------------
 			case LOOP:
 			{
-				
 				if (App->Update() == false)
-				{
-					LOG("Update is false :(");
-					state = CLEAN;
-				}
+				state = CLEAN;
 			}
 			
 			break;
