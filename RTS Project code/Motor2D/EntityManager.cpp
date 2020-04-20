@@ -480,9 +480,8 @@ iPoint EntityManager::GetEntityPos(Entity* entity)
 
 void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null)
 {
-
 	if (entity_map != nullptr)
-	{
+	{	
 		if (!set_to_null)
 		{
 			if (IsUnit(entity))

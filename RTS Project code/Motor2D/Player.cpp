@@ -224,54 +224,60 @@ void Player::OrderUnitsToAttack()
 
 	if (target != nullptr)
 	{
-		if (App->entity_manager->IsEnemyEntity(target))
+		if (App->pathfinding->IsOccupied(mouse_tile))																// TMP CHECK
 		{
-			std::vector<Dynamic_Object*> infantries;																		//Temporal fix. For now we only have infantries as combat units.
-
-			for(int i = 0; i < units_selected.size(); ++i)
+			if (App->entity_manager->IsEnemyEntity(target))
 			{
-				if (App->entity_manager->IsInfantry(units_selected[i]))
+				std::vector<Dynamic_Object*> infantries;																		//Temporal fix. For now we only have infantries as combat units.
+
+				for (int i = 0; i < units_selected.size(); ++i)
 				{
-					infantries.push_back(units_selected[i]);
+					if (App->entity_manager->IsInfantry(units_selected[i]))
+					{
+						infantries.push_back(units_selected[i]);
+					}
 				}
+
+				for (int i = 0; i < infantries.size(); ++i)
+				{
+					infantries[i]->target = target;
+					App->pathfinding->ChangeWalkability(infantries[i]->occupied_tile, infantries[i], WALKABLE);
+				}
+
+				App->pathfinding->FindNearbyWalkable(target->tile_position, infantries);
+
+				infantries.clear();
 			}
-
-			for (int i = 0; i < infantries.size(); ++i)
-			{
-				infantries[i]->target = target;
-				App->pathfinding->ChangeWalkability(infantries[i]->occupied_tile, infantries[i], WALKABLE);
-			}
-
-			App->pathfinding->FindNearbyWalkable(target->tile_position, infantries);
-
-			infantries.clear();
 		}
 
-		if (App->entity_manager->IsResource(target))
+		if (App->pathfinding->IsNonWalkable(mouse_tile))
 		{
-			std::vector<Dynamic_Object*> gatherers;
-
-			for (int i = 0; i < units_selected.size(); ++i)
+			if (App->entity_manager->IsResource(target))
 			{
-				if (App->entity_manager->IsGatherer(units_selected[i]))
+				std::vector<Dynamic_Object*> gatherers;
+
+				for (int i = 0; i < units_selected.size(); ++i)
 				{
-					gatherers.push_back(units_selected[i]);
+					if (App->entity_manager->IsGatherer(units_selected[i]))
+					{
+						gatherers.push_back(units_selected[i]);
+					}
 				}
-			}
 
-			for (int i = 0; i < gatherers.size(); ++i)
+				for (int i = 0; i < gatherers.size(); ++i)
+				{
+					gatherers[i]->target = target;
+					App->pathfinding->ChangeWalkability(gatherers[i]->occupied_tile, gatherers[i], WALKABLE);
+				}
+
+				App->pathfinding->FindNearbyWalkable(target->tile_position, gatherers);							//Gives units targets around main target
+
+				gatherers.clear();
+			}
+			else
 			{
-				gatherers[i]->target = target;
-				App->pathfinding->ChangeWalkability(gatherers[i]->occupied_tile, gatherers[i], WALKABLE);
+				LOG("Target entity is not an enemy entity.");
 			}
-
-			App->pathfinding->FindNearbyWalkable(target->tile_position, gatherers);							//Gives units targets around main target
-
-			gatherers.clear();
-		}
-		else
-		{
-			LOG("Target entity is not an enemy entity.");
 		}
 	}
 }
@@ -484,39 +490,45 @@ void Player::SelectEntityAt(const iPoint& tile_position)
 
 		if (clicked_entity != nullptr)
 		{
-			if (App->entity_manager->IsUnit(clicked_entity))
+			if (App->pathfinding->IsOccupied(tile_position))
 			{
-				ClearEntityBuffers();
-				
-				Dynamic_Object* unit = (Dynamic_Object*)clicked_entity;
-
-				if (unit->is_selectable)
+				if (App->entity_manager->IsUnit(clicked_entity))
 				{
-					unit->is_selected = true;
-					units_selected.push_back((Dynamic_Object*)clicked_entity);
+					ClearEntityBuffers();
+
+					Dynamic_Object* unit = (Dynamic_Object*)clicked_entity;
+
+					if (unit->is_selectable)
+					{
+						unit->is_selected = true;
+						units_selected.push_back((Dynamic_Object*)clicked_entity);
+					}
+
+					return;
+				}
+			}
+
+			if (App->pathfinding->IsNonWalkable(tile_position))
+			{
+				if (App->entity_manager->IsBuilding(clicked_entity))
+				{
+					ClearEntityBuffers();
+
+					clicked_entity->is_selected = true;
+					building_selected = (Static_Object*)clicked_entity;
+
+					//LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", tile_position.x, tile_position.y);
+
+					return;
 				}
 
-				return;
-			}
+				if (App->entity_manager->IsResource(clicked_entity))
+				{
+					ClearEntityBuffers();
 
-			if (App->entity_manager->IsBuilding(clicked_entity))
-			{
-				ClearEntityBuffers();
-				
-				clicked_entity->is_selected = true;
-				building_selected = (Static_Object*)clicked_entity;
-
-				//LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", tile_position.x, tile_position.y);
-
-				return;
-			}
-
-			if (App->entity_manager->IsResource(clicked_entity))
-			{
-				ClearEntityBuffers();
-				
-				clicked_entity->is_selected = true;
-				resource_selected = (Static_Object*)clicked_entity;
+					clicked_entity->is_selected = true;
+					resource_selected = (Static_Object*)clicked_entity;
+				}
 			}
 		}
 		else

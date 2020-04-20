@@ -157,6 +157,7 @@ No previous installation is required to play the game, just download the latest 
 * **N Key:**  Spawn **Enemy Barracks** at mouse position.
 * **R Key:** Spawn **Data Rock Resource Point** at mouse position.
 * **T Key:** Spawn **Data Tree Resource Point** at mouse position.
+* **K Key:** Increase each type of resource stored by 300.
 * **V Key:** Select all enemy units. Can also be given a path.
 * **U Key:** Upgrade building at mouse position (if there is any).
 * **D Key:** Delete entity at mouse position (if there is any).
