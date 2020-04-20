@@ -212,6 +212,8 @@ void Dynamic_Object::HandleMovement(float dt)
 
 		//Move so that it doesn't stutter
 		Move(dt);
+
+		break;
 	}
 }
 
