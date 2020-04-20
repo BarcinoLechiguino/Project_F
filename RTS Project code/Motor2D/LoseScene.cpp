@@ -7,6 +7,7 @@
 #include "UI_Button.h"
 #include "SceneManager.h"
 #include "TransitionManager.h"
+#include "Textures.h"
 
 #include "LoseScene.h"
 
@@ -41,6 +42,7 @@ bool LoseScene::PreUpdate()
 
 bool LoseScene::Update(float dt)
 {
+	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 	return true;
 }
 
@@ -87,6 +89,9 @@ void LoseScene::LoadGuiElements()
 
 	button_text = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, center_button.x + text_rect.w, center_button.y - 2, text_rect, font
 		, SDL_Color{ 255, 255, 255, 255 }, true, false, false, nullptr, transition_button, &button_string);
+
+	background_rect = { 0,0,1280,720 };
+	background_texture = App->tex->Load("maps/DefeatScreen.png");
 }
 
 void LoseScene::OnEventCall(UI* element, UI_EVENT ui_event)

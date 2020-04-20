@@ -31,7 +31,8 @@ public:
 	// ---------------------
 
 private:
-
+	SDL_Rect		background_rect;
+	SDL_Texture* background_texture;
 
 };
 
