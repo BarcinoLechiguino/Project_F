@@ -370,6 +370,10 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_data_resource = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::IMAGE, 1115, 634, HUD_data_resource_size, true, true, false, this, HUD_resource_bar);
 
+	//Data Store
+
+	//Electricity Store
+
 	//Townhall Bar
 	SDL_Rect HUD_townhall_bar_size = { 20, 209, 798, 160 };
 
