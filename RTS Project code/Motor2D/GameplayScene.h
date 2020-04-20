@@ -137,6 +137,7 @@ public:
 	UI_Button*				 HUD_group_button;
 	UI_Button*				 HUD_home_button;
 	UI_Button*				 HUD_pause_button;
+	UI_Button*				 HUD_play_button;
 	UI_Image*				 HUD_resource_bar;
 
 

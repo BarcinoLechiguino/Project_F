@@ -353,7 +353,16 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_pause_button_clicked = { 1237, 48, 63, 38 };
 
 	HUD_pause_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 601, -4, true, true, false, this, nullptr
-		, &HUD_pause_button_idle, &HUD_pause_button_hover, &HUD_pause_button_clicked);
+		, &HUD_pause_button_idle, &HUD_pause_button_hover, &HUD_pause_button_clicked);	
+	
+	// Play
+	SDL_Rect HUD_play_button_size = { 0, 0, 63, 38 };
+	SDL_Rect HUD_play_button_idle = { 1037, 3, 63, 38 };
+	SDL_Rect HUD_play_button_hover = { 1104, 3, 63, 38 };
+	SDL_Rect HUD_play_button_clicked = { 1171, 3, 63, 38 };
+
+	HUD_play_button = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 601, -4, false, true, false, this, nullptr
+		, &HUD_play_button_idle, &HUD_play_button_hover, &HUD_play_button_clicked);
 
 	// Home 
 	SDL_Rect HUD_home_button_size = { 0, 0, 63, 37 };
@@ -806,6 +815,17 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		// Pause
 		App->pause = !App->pause;
 		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->gui->SetElementsVisibility(HUD_pause_button, false);			
+		App->gui->SetElementsVisibility(HUD_play_button, true);	
+	}
+	
+	if (element == HUD_play_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Play
+		App->pause = !App->pause;
+		App->audio->PlayFx(App->gui->standard_fx, 0);
+		App->gui->SetElementsVisibility(HUD_play_button, false);
+		App->gui->SetElementsVisibility(HUD_pause_button, true);
 	}
 
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
