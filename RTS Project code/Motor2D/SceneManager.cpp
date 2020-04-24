@@ -7,7 +7,8 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "LogoScene.h"
-#include "MainScene.h"
+#include "MainMenuScene.h"
+#include "OptionsScene.h"
 #include "GameplayScene.h"
 #include "WinScene.h"
 #include "LoseScene.h"
@@ -213,9 +214,15 @@ Scene* SceneManager::CreateScene(SCENES scene_name)
 
 		break;
 
-	case SCENES::MAIN_SCENE:
+	case SCENES::MAIN_MENU_SCENE:
 
-		item = new MainScene();
+		item = new MainMenuScene();
+
+		break;
+
+	case SCENES::OPTIONS_SCENE:
+
+		item = new OptionsScene();
 
 		break;
 
@@ -253,7 +260,8 @@ Scene* SceneManager::CreateScene(SCENES scene_name)
 void SceneManager::ScenePushbacks()
 {
 	CreateScene(SCENES::LOGO_SCENE);
-	CreateScene(SCENES::MAIN_SCENE);
+	CreateScene(SCENES::MAIN_MENU_SCENE);
+	CreateScene(SCENES::OPTIONS_SCENE);
 	CreateScene(SCENES::GAMEPLAY_SCENE);
 	CreateScene(SCENES::WIN_SCENE);
 	CreateScene(SCENES::LOSE_SCENE);

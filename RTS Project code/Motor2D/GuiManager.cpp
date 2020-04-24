@@ -9,7 +9,7 @@
 #include "Console.h"
 #include "Entity.h"
 
-#include "Gui.h"
+#include "GuiManager.h"
 #include "UI.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
@@ -20,18 +20,18 @@
 
 #include "Brofiler\Brofiler.h"
 
-Gui::Gui() : Module()
+GuiManager::GuiManager() : Module()
 {
 	name = ("gui");
-	audioAlreadyLoaded = false;
+	audio_already_loaded = false;
 }
 
 // Destructor
-Gui::~Gui()
+GuiManager::~GuiManager()
 {}
 
 // Called before render is available
-bool Gui::Awake(pugi::xml_node& conf)
+bool GuiManager::Awake(pugi::xml_node& conf)
 {
 	LOG("Loading GUI atlas");
 	bool ret = true;
@@ -42,29 +42,19 @@ bool Gui::Awake(pugi::xml_node& conf)
 }
 
 // Called before the first frame
-bool Gui::Start()
+bool GuiManager::Start()
 {
-	if (atlas == nullptr)
-	{
-		atlas = App->tex->Load(atlas_file_name.c_str());
-	}
+	atlas = App->tex->Load(atlas_file_name.c_str());
 
 	ui_debug = false;
 	escape = true;
 
 	
-	if (!audioAlreadyLoaded)
+	if (!audio_already_loaded)
 	{
-		new_game_fx = App->audio->LoadFx("audio/fx/UI/New Game_Continue.wav");
-		options_fx = App->audio->LoadFx("audio/fx/UI/Options.wav");
-		back_fx = App->audio->LoadFx("audio/fx/UI/Back.wav");
-		exit_fx = App->audio->LoadFx("audio/fx/UI/Back to menu.wav");
-		appear_menu_fx = App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
-		standard_fx = App->audio->LoadFx("audio/fx/UI/Standard.wav");
-		upgrade_fx = App->audio->LoadFx("audio/fx/UI/Upgrade Button.wav");
-		recruit_fx = App->audio->LoadFx("audio/fx/UI/Recruit_Unit.wav");
+		LoadGuiElementsAudio();
 
-		audioAlreadyLoaded = true;
+		audio_already_loaded = true;
 	}
 
 	//CreateGuiCommands();
@@ -73,8 +63,9 @@ bool Gui::Start()
 }
 
 // Update all guis
-bool Gui::PreUpdate()
+bool GuiManager::PreUpdate()
 {
+	// THIS
 	/*if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)						// Does not work, for now.
 	{
 		PassFocus();
@@ -90,56 +81,36 @@ bool Gui::PreUpdate()
 		}
 	}*/
 	
-	/*if(App->scene->main_in_menu->isVisible)
-	{
-		App->pause = true;
-	}*/
 
-	if (game_started) 
+	// CONSOLE MANAGING
+	/*if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN)			//  Bring this to console.cpp?
 	{
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		SetElementsVisibility(App->console->console_background, !App->console->console_background->is_visible);
+		//SetElementsVisibility(App->scene->upper_bar, !App->scene->upper_bar->is_visible);							//As it does not currently exist it CTDs on a nullptr
+
+		
+		App->input->ClearTextInput();
+
+		if (App->console->console_background->is_visible)
 		{
-			Mix_HaltMusic();
-			//SetElementsVisibility(App->scene1->main_in_menu, !App->scene->main_in_menu->isVisible);
-			////App->audio->PlayMusic(App->scene->music_path3.c_str());
-			//if (!App->scene1->main_in_menu->isVisible)
-			//{
-			//	App->pause = false;
-			//	
-			//}
+			focused_element = App->console->console_input;
 		}
-	}
+	}*/
 	
 
-	//if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN)			//  Bring this to console.cpp?
-	//{
-	//	SetElementsVisibility(App->console->console_background, !App->console->console_background->isVisible);
-	//	//SetElementsVisibility(App->scene->upper_bar, !App->scene->upper_bar->isVisible);							//As it does not currently exist it CTDs on a nullptr
-
-	//	
-	//	App->input->ClearTextInput();
-
-	//	if (App->console->console_background->isVisible)
-	//	{
-	//		focusedElement = App->console->console_input;
-	//	}
-	//}
-	//
 	return true;
 }
 
 // Called after all Updates
-bool Gui::PostUpdate()
+bool GuiManager::PostUpdate()
 {	
-
-	BROFILER_CATEGORY("GUI_Update", Profiler::Color::NavajoWhite);
-	//escape = true;
+	BROFILER_CATEGORY("GUI_PostUpdate", Profiler::Color::NavajoWhite);
 	
 	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
 
-	for (int i=0; i < elements.size(); i++)
+	for (int i = 0; i < elements.size(); ++i)
 	{
-		if (elements[i]->isVisible)
+		if (elements[i]->is_visible)
 		{
 			elements[i]->Draw();
 		}
@@ -151,38 +122,33 @@ bool Gui::PostUpdate()
 }
 
 // Called before quitting
-bool Gui::CleanUp()
+bool GuiManager::CleanUp()
 {
 	LOG("Freeing GUI");
 	
-	//Iterate the elements list and frees all allocated memory.
-	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
-	{
-		(*element_iterator)->CleanUp();
-		RELEASE((*element_iterator));
-	}
-
-	elements.clear();
+	DestroyGuiElements();
 
 	App->tex->UnLoad(atlas);
 	atlas = nullptr;
+
+	UnLoadGuiElementsAudio();
 
 	return true;
 }
 
 // const getter for atlas
-/*const*/ SDL_Texture* Gui::GetAtlas() const
+/*const*/ SDL_Texture* GuiManager::GetAtlas() const
 {
 	return atlas;
 }
 
 //----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
-UI* Gui::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent)
+UI* GuiManager::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent)
 {
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Image(element, x, y, hitbox, isVisible, isInteractible, isDraggable, listener, parent);
+	elem = new UI_Image(element, x, y, hitbox, is_visible, is_interactible, is_draggable, listener, parent);
 
 	if (elem != nullptr)
 	{
@@ -192,13 +158,13 @@ UI* Gui::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool isV
 	return elem;
 }
 
-UI* Gui::CreateText(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool isVisible, bool isInteractible, bool isDraggable
-	, Module* listener, UI* parent, std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString)
+UI* GuiManager::CreateText(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color font_colour, bool is_visible, bool is_interactible, bool is_draggable
+	, Module* listener, UI* parent, std::string* string, std::string* hover_string, std::string* left_click_string, std::string* right_click_string)
 {
 	BROFILER_CATEGORY("GUI_Text", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Text(element, x, y, hitbox, font, fontColour, isVisible, isInteractible, isDraggable, listener, parent, string, hoverString, leftClickString, rightClickString);
+	elem = new UI_Text(element, x, y, hitbox, font, font_colour, is_visible, is_interactible, is_draggable, listener, parent, string, hover_string, left_click_string, right_click_string);
 
 	if (elem != nullptr)
 	{
@@ -208,12 +174,12 @@ UI* Gui::CreateText(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font
 	return elem;
 }
 
-UI* Gui::CreateButton(UI_ELEMENT element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
+UI* GuiManager::CreateButton(UI_ELEMENT element, int x, int y, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
 {
 	BROFILER_CATEGORY("GUI_Button", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Button(element, x, y, isVisible, isInteractible, isDraggable, listener, parent, idle, hover, clicked);
+	elem = new UI_Button(element, x, y, is_visible, is_interactible, is_draggable, listener, parent, idle, hover, clicked);
 
 	if (elem != nullptr)
 	{
@@ -223,14 +189,14 @@ UI* Gui::CreateButton(UI_ELEMENT element, int x, int y, bool isVisible, bool isI
 	return elem;
 }
 
-UI* Gui::CreateInputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursor, SDL_Color cursorColour, iPoint textOffset, 
-					float blinkFrequency, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, std::string* defaultString, bool emptyElements)
+UI* GuiManager::CreateInputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color font_colour, SDL_Rect cursor, SDL_Color cursor_colour, iPoint text_offset, 
+					float blink_frequency, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent, std::string* default_string, bool empty_elements)
 {
 	BROFILER_CATEGORY("GUI_InputBox", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_InputBox(element, x, y, hitbox, font, fontColour, cursor, cursorColour, textOffset, blinkFrequency, isVisible, isInteractible, isDraggable, listener, parent,
-					defaultString, emptyElements);
+	elem = new UI_InputBox(element, x, y, hitbox, font, font_colour, cursor, cursor_colour, text_offset, blink_frequency, is_visible, is_interactible, is_draggable, listener, parent,
+					default_string, empty_elements);
 
 	if (elem != nullptr)
 	{
@@ -240,14 +206,15 @@ UI* Gui::CreateInputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_
 	return elem;
 }
 
-UI* Gui::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis, bool dragYAxis,
-					bool invertedScrolling, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent, SDL_Rect* scrollMask, iPoint maskOffset, bool emptyElements)
+UI* GuiManager::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumb_size, iPoint thumb_offset, SDL_Rect drag_area, float drag_factor, bool drag_x_axis, bool drag_y_axis,
+					bool inverted_scrolling, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent,
+					SDL_Rect* scroll_mask, iPoint mask_offset, bool empty_elements)
 {
 	BROFILER_CATEGORY("GUI_ScrollBar", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
 
-	elem = new UI_Scrollbar(element, x, y, hitbox, thumbSize, thumbOffset, dragArea, dragFactor, dragXAxis, dragYAxis, invertedScrolling,
-					isVisible, isInteractible, isDraggable, listener, parent, scrollMask, maskOffset, emptyElements);
+	elem = new UI_Scrollbar(element, x, y, hitbox, thumb_size, thumb_offset, drag_area, drag_factor, drag_x_axis, drag_y_axis, inverted_scrolling,
+					is_visible, is_interactible, is_draggable, listener, parent, scroll_mask, mask_offset, empty_elements);
 
 	if (elem != nullptr)
 	{
@@ -257,7 +224,7 @@ UI* Gui::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_
 	return elem;
 }
 
-UI* Gui::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent)
+UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent)
 {
 	UI* elem = nullptr;
 
@@ -271,24 +238,54 @@ UI* Gui::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_
 	return elem;
 }
 
-void Gui::DeleteGuiElement(UI* element_to_delete)
+void GuiManager::DestroyGuiElements()
 {
-	for (std::vector<UI*>::iterator element_iterator = elements.begin(); element_iterator != elements.end(); element_iterator++)
+	for (int i = 0; i < elements.size(); ++i)
 	{
-		if ((*element_iterator) == element_to_delete)
-		{
-			(*element_iterator)->CleanUp();
-			RELEASE((*element_iterator));
+		elements[i]->CleanUp();
+		RELEASE(elements[i]);
+	}
 
-			elements.erase(element_iterator);
+	elements.clear();
+}
+
+void GuiManager::DeleteGuiElement(UI* element_to_delete)
+{
+	std::vector<UI*>::iterator item = elements.begin();
+	
+	for (; item != elements.end(); ++item)
+	{
+		if ((*item) == element_to_delete)
+		{
+			(*item)->CleanUp();
+			RELEASE((*item));
+
+			elements.erase(item);
 
 			return;
 		}
 	}
 }
 
+void GuiManager::LoadGuiElementsAudio()
+{
+	new_game_fx		= App->audio->LoadFx("audio/fx/UI/New Game_Continue.wav");
+	options_fx		= App->audio->LoadFx("audio/fx/UI/Options.wav");
+	back_fx			= App->audio->LoadFx("audio/fx/UI/Back.wav");
+	exit_fx			= App->audio->LoadFx("audio/fx/UI/Back to menu.wav");
+	appear_menu_fx	= App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
+	standard_fx		= App->audio->LoadFx("audio/fx/UI/Standard.wav");
+	upgrade_fx		= App->audio->LoadFx("audio/fx/UI/Upgrade Button.wav");
+	recruit_fx		= App->audio->LoadFx("audio/fx/UI/Recruit_Unit.wav");
+}
+
+void GuiManager::UnLoadGuiElementsAudio()
+{
+
+}
+
 //--------------------------------- INPUT PROCESSING METHODS ---------------------------------
-void Gui::OnEventCall(UI* element, UI_EVENT ui_event)
+void GuiManager::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	BROFILER_CATEGORY("GUI_OnEventCall", Profiler::Color::NavajoWhite);
 
@@ -296,7 +293,7 @@ void Gui::OnEventCall(UI* element, UI_EVENT ui_event)
 } 
 
 // --- Method to return the foremost element of the UI. (First in inverse order of draw)
-UI* Gui::FirstElementUnderMouse() const
+UI* GuiManager::FirstElementUnderMouse() const
 {
 	UI* firstElement = nullptr;
 
@@ -316,14 +313,14 @@ UI* Gui::FirstElementUnderMouse() const
 	}
 }
 
-bool Gui::ElementCanBeClicked(UI* clickedElement) const
+bool GuiManager::ElementCanBeClicked(UI* clickedElement) const
 {
 	bool ret = false;
 
 	if (clickedElement->CheckMousePos()
-		&& clickedElement->isVisible
-		&& (clickedElement->isInteractible
-			|| clickedElement->isDraggable))
+		&& clickedElement->is_visible
+		&& (clickedElement->is_interactible
+			|| clickedElement->is_draggable))
 	{
 		ret = true;
 	}
@@ -333,22 +330,22 @@ bool Gui::ElementCanBeClicked(UI* clickedElement) const
 
 //----------------------------------- FOCUS MANAGEMENT METHODS -----------------------------------
 // --- Method that will pass the focus from focuseable UI Element to the next.
-void Gui::PassFocus()
+void GuiManager::PassFocus()
 {
 	if (elements.size() != 0)
 	{
-		if (iteratedElement == elements.end())
+		if (iterated_element == elements.end())
 		{
-			iteratedElement = elements.begin();
+			iterated_element = elements.begin();
 		}
 
-		if (focusedElement == nullptr)
+		if (focused_element == nullptr)
 		{
-			for (iteratedElement; iteratedElement != elements.end(); ++iteratedElement)			//Loop that is used to find the first interactible element of the elments list.
+			for (iterated_element; iterated_element != elements.end(); ++iterated_element)			//Loop that is used to find the first interactible element of the elments list.
 			{
-				if (ElementCanBeFocused((*iteratedElement)))									//If the element being iterated fulfills all focus conditions.
+				if (ElementCanBeFocused((*iterated_element)))									//If the element being iterated fulfills all focus conditions.
 				{
-					focusedElement = (*iteratedElement);										//UI* focusedElement is set with the UI* of the element being iterated.
+					focused_element = (*iterated_element);										//UI* focusedElement is set with the UI* of the element being iterated.
 					break;																		//The loop is stopped.
 				}
 			}
@@ -356,21 +353,21 @@ void Gui::PassFocus()
 			return;																				//Stops the function here so the focus remains in the first interactible element.
 		}
 
-		for (iteratedElement; iteratedElement != elements.end(); ++iteratedElement)				//Loop that is used to find the next interactible element of the elments list.
+		for (iterated_element; iterated_element != elements.end(); ++iterated_element)				//Loop that is used to find the next interactible element of the elments list.
 		{
-			if (*next(iteratedElement) != nullptr)												//If the next element of the list is not NULL.
+			if (*next(iterated_element) != nullptr)												//If the next element of the list is not NULL.
 			{
-				if (ElementCanBeFocused(*next(iteratedElement)))								//If the next element of the list fulfills all focus conditions.
+				if (ElementCanBeFocused(*next(iterated_element)))								//If the next element of the list fulfills all focus conditions.
 				{
-					focusedElement = *next(iteratedElement);									//UI* focusedElement is set with the UI* of the element next to the element being iterated. 
-					++iteratedElement;															//The element being iterated is set to the next element in the list.
+					focused_element = *next(iterated_element);									//UI* focusedElement is set with the UI* of the element next to the element being iterated. 
+					++iterated_element;															//The element being iterated is set to the next element in the list.
 					break;																		//The loop is stopped so the focus remains in the interactible element that now has the focus.
 				}
 			}
 			else																				//If the next element of the list is NULL.
 			{
-				iteratedElement = elements.end();												//The list_item is set to nullptr.
-				focusedElement = nullptr;														//The UI* focused element is set to nullptr, which efectively disables the focus.
+				iterated_element = elements.end();												//The list_item is set to nullptr.
+				focused_element = nullptr;														//The UI* focused element is set to nullptr, which efectively disables the focus.
 				break;																			//The loop is stopped so no element regains the focus.
 			}
 		}
@@ -378,11 +375,11 @@ void Gui::PassFocus()
 }
 
 // --- Method that returns true if the passed element is a visible BUTTON, INPUTBOX or a SCROLLBAR
-bool Gui::ElementCanBeFocused(UI* focusElement) const
+bool GuiManager::ElementCanBeFocused(UI* focusElement) const
 {
 	bool ret = false;
 
-	if (focusElement->isVisible
+	if (focusElement->is_visible
 		/*&& focusElement->isInteractible */
 			&& (focusElement->element == UI_ELEMENT::BUTTON
 			|| focusElement->element == UI_ELEMENT::SCROLLBAR
@@ -396,7 +393,7 @@ bool Gui::ElementCanBeFocused(UI* focusElement) const
 
 // --------------------------- PARENT/CHILD UI ELEMENTS METHODS --------------------------
 // --- 
-bool Gui::ElementHasChilds(UI* parentElement) const
+bool GuiManager::ElementHasChilds(UI* parentElement) const
 {
 	bool ret = false;
 
@@ -414,7 +411,7 @@ bool Gui::ElementHasChilds(UI* parentElement) const
 	return ret;
 }
 
-void Gui::UpdateChilds(UI* parentElement)
+void GuiManager::UpdateChilds(UI* parentElement)
 {
 	std::vector<UI*>::iterator child = elements.begin();
 
@@ -422,7 +419,7 @@ void Gui::UpdateChilds(UI* parentElement)
 	{
 		if ((*child)->parent == parentElement)
 		{
-			(*child)->prevMousePos = (*child)->parent->prevMousePos;				//The prevMousePos of the element being iterated is set with the parent's prev mouse pos.
+			(*child)->previous_mouse_position = (*child)->parent->previous_mouse_position;				//The prevMousePos of the element being iterated is set with the parent's prev mouse pos.
 			(*child)->DragElement();												//The child is also dragged, just as the parent.
 
 			if (ElementHasChilds((*child)))											//If the first child also has child elements, then they are updated the same way.
@@ -433,7 +430,7 @@ void Gui::UpdateChilds(UI* parentElement)
 	}
 }
 
-void Gui::SetElementsVisibility(UI* parentElement, bool state)
+void GuiManager::SetElementsVisibility(UI* parentElement, bool state)
 {
 	std::vector<UI*>::iterator child = elements.begin();
 
@@ -441,7 +438,7 @@ void Gui::SetElementsVisibility(UI* parentElement, bool state)
 	{
 		if ((*child)->parent == parentElement)										//If the parent of the iterated element is parentElement.
 		{
-			(*child)->isVisible = state;											//Enables/Disables the iterated child's visibility. Changes isVisible from true to false and viceversa.
+			(*child)->is_visible = state;											//Enables/Disables the iterated child's visibility. Changes isVisible from true to false and viceversa.
 
 			if (ElementHasChilds((*child)))											//If the first child also has child elements, then they are updated the same way.
 			{
@@ -450,17 +447,17 @@ void Gui::SetElementsVisibility(UI* parentElement, bool state)
 		}
 	}
 
-	parentElement->isVisible = state;												//Enables/Disables the parent element's visibility. Changes isVisible from true to false and viceversa.	
+	parentElement->is_visible = state;												//Enables/Disables the parent element's visibility. Changes isVisible from true to false and viceversa.	
 }
 
 //----------------------------------- UI DEBUG METHOD -----------------------------------
-void Gui::Debug_UI()
+void GuiManager::Debug_UI()
 {
 	if (ui_debug == true)
 	{
 		for (std::vector<UI*>::iterator elem = elements.begin(); elem != elements.end(); ++elem)
 		{
-			if ((*elem)->isVisible)
+			if ((*elem)->is_visible)
 			{
 				switch ((*elem)->element)
 				{
@@ -500,20 +497,20 @@ void Gui::Debug_UI()
 	}
 }
 
-void Gui::CreateGuiCommands()
+void GuiManager::CreateGuiCommands()
 {
-	quitCommand			= "quit";
+	quit_command			= "quit";
 	enable_ui_debug		= "enable_ui_debug";
 	disable_ui_debug	= "disable_ui_debug";
 
-	App->console->CreateCommand(quitCommand, this, 1, 1);
+	App->console->CreateCommand(quit_command, this, 1, 1);
 	App->console->CreateCommand(enable_ui_debug, this, 1, 1);
 	App->console->CreateCommand(disable_ui_debug, this, 1, 1);
 }
 
-void Gui::OnCommand(const char* command, const char* subCommand)
+void GuiManager::OnCommand(const char* command, const char* subCommand)
 {	
-	if (App->input->CmpStr(command, quitCommand))
+	if (App->input->CmpStr(command, quit_command))
 	{
 		escape = false;
 	}

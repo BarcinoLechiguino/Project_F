@@ -4,7 +4,7 @@
 #include "p2Log.h"
 #include "Application.h"
 #include "Window.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "UI.h"
 
 #include "Input.h"

@@ -14,7 +14,7 @@
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Collisions.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "Console.h"
 #include "Player.h"
 #include "Minimap.h"
@@ -43,7 +43,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	entity_manager		= new EntityManager();
 	minimap				= new Minimap();
 	font				= new Fonts();
-	gui					= new Gui();
+	gui_manager			= new GuiManager();
 	console				= new Console();
 	player				= new Player();
 	transition_manager	= new TransitionManager();
@@ -64,7 +64,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 
 	// scene_manager last before render.
 	AddModule(minimap);
-	AddModule(gui);
+	AddModule(gui_manager);
 	AddModule(scene_manager);
 	AddModule(transition_manager);
 	AddModule(entity_manager);
@@ -81,8 +81,10 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 // Destructor
 Application::~Application()
 {
+	std::vector<Module*>::iterator item = modules.begin();
+
 	// release modules
-	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() ; ++item)
+	for (; item != modules.end() ; ++item)
 	{
 		RELEASE((*item));
 	}
@@ -119,14 +121,16 @@ bool Application::Awake()
 		title				= (app_config.child("title").child_value());					//Calling constructor
 		organization		= (app_config.child("organization").child_value());
 		frame_cap			= config.child("app").attribute("framerate_cap").as_uint();
-		framesAreCapped		= config.child("app").attribute("frame_cap_on").as_bool();
+		frames_are_capped	= config.child("app").attribute("frame_cap_on").as_bool();
 
 		original_frame_cap	= frame_cap;
 	}
 	int i = 0;
 	if(ret)
 	{
-		for (std::list<Module*>::iterator item = modules.begin() ; item != modules.end() && ret; ++item)
+		std::vector<Module*>::iterator item = modules.begin();
+
+		for (; item != modules.end() && ret; ++item)
 		{
 			i++;
 			ret  = (*item)->Awake(config.child((*item)->name.c_str()));
@@ -150,7 +154,10 @@ bool Application::Start()
 	
 	bool ret = true;
 	int i = 0;
-	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret ; ++item)
+
+	std::vector<Module*>::iterator item = modules.begin();
+
+	for (; item != modules.end() && ret ; ++item)
 	{
 		if ((*item)->is_active)
 		{
@@ -242,7 +249,7 @@ void Application::FinishUpdate()
 	float frame_cap_ms = 1000 / frame_cap;
 	float current_frame_ms = frame_timer.Read();					
 
-	if (framesAreCapped)
+	if (frames_are_capped)
 	{
 		if (current_frame_ms < frame_cap_ms)						//If the current frame processing time is lower than the specified frame_cap. Timer instead of PerfTimer was used because SDL_Delay is inaccurate.
 		{
@@ -261,28 +268,28 @@ void Application::FinishUpdate()
 	uint32 last_frame_ms = frame_timer.Read();
 	uint32 frames_on_last_update = prev_sec_frames;					//Keeps track of how many frames were processed the last second.
 
-	if (framesAreCapped)
+	if (frames_are_capped)
 	{
-		frameCapOnOff = "On";
+		frame_cap_on_off = "On";
 	}
 	else
 	{
-		frameCapOnOff = "Off";
+		frame_cap_on_off = "Off";
 	}
 
-	if (vsyncIsActive)
+	if (vsync_is_active)
 	{
-		vsyncOnOff = "On";
+		vsync_on_off = "On";
 	}
 	else
 	{
-		vsyncOnOff = "Off";
+		vsync_on_off = "Off";
 	}
 
 	static char title[256];
 
 	sprintf_s(title, 256, "Av.FPS: %.2f / Last Frame Ms: %02u / Last sec frames: %i / Last dt: %.3f / Time since startup: %.3f / Frame Count: %llu / %d / Vsync: %s / Frame cap: %s",
-		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count, vsyncOnOff, frameCapOnOff , frameCapOnOff);
+		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count, vsync_on_off, frame_cap_on_off , frame_cap_on_off);
 
 	App->win->SetTitle(title);
 }
@@ -293,7 +300,9 @@ bool Application::PreUpdate()
 	BROFILER_CATEGORY("PreUpdate_App.cpp", Profiler::Color::Aqua)
 	bool ret = true;
 
-	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret ; ++item)
+	std::vector<Module*>::iterator item = modules.begin();
+
+	for (; item != modules.end() && ret ; ++item)
 	{
 		if(!(*item)->is_active)
 		{
@@ -311,7 +320,10 @@ bool Application::DoUpdate()
 {
 	bool ret = true;
 	int i = 0;
-	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
+
+	std::vector<Module*>::iterator item = modules.begin();
+
+	for (; item != modules.end() && ret; ++item)
 	{
 		i++;
 		if(!(*item)->is_active)
@@ -337,7 +349,9 @@ bool Application::PostUpdate()
 	BROFILER_CATEGORY("PostUpdate_App.cpp", Profiler::Color::Aqua)
 	bool ret = true;
 
-	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
+	std::vector<Module*>::iterator item = modules.begin();
+
+	for (; item != modules.end() && ret; ++item)
 	{
 
 		if(!(*item)->is_active)
@@ -355,7 +369,9 @@ bool Application::CleanUp()
 {
 	bool ret = true;
 
-	for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
+	std::vector<Module*>::iterator item = modules.begin();
+
+	for (; item != modules.end() && ret; ++item)
 	{
 		if ((*item)->name.empty())
 		{
@@ -449,7 +465,9 @@ bool Application::LoadGameNow()
 
 		ret = true;
 
-		for (std::list<Module*>::iterator item = modules.begin(); item != modules.end() && ret; ++item)
+		std::vector<Module*>::iterator item = modules.begin();
+
+		for (; item != modules.end() && ret; ++item)
 		{
 			ret = (*item)->Load(root.child((*item)->name.c_str()));
 		}
@@ -486,7 +504,9 @@ bool Application::SavegameNow() //Chenged to non const due to list unknown probl
 
 	root = data.append_child("game_state");
 
-	for (std::list<Module*>::iterator item = modules.begin() ; item != modules.end() && ret; ++item)
+	std::vector<Module*>::iterator item = modules.begin();
+
+	for (; item != modules.end() && ret; ++item)
 	{
 		ret = (*item)->Save(root.append_child((*item)->name.c_str()));
 	}

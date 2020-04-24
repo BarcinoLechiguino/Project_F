@@ -58,9 +58,6 @@
     <ClCompile Include="Console.cpp">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Gui.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
@@ -148,9 +145,6 @@
     <ClCompile Include="GameplayScene.cpp">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="MainScene.cpp">
-      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
     <ClCompile Include="LogoScene.cpp">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClCompile>
@@ -183,6 +177,18 @@
     </ClCompile>
     <ClCompile Include="Quadtree.cpp">
       <Filter>Engine  ===========\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="Movement.cpp">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiManager.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="OptionsScene.cpp">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClCompile>
+    <ClCompile Include="MainMenuScene.cpp">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -256,9 +262,6 @@
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="Console.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="Gui.h">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
@@ -354,9 +357,6 @@
     <ClInclude Include="GameplayScene.h">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="MainScene.h">
-      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClInclude>
     <ClInclude Include="LogoScene.h">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
@@ -389,6 +389,18 @@
     </ClInclude>
     <ClInclude Include="Quadtree.h">
       <Filter>Engine  ===========\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="OptionsScene.h">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="Movement.h">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiManager.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainMenuScene.h">
+      <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

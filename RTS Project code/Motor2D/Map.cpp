@@ -14,7 +14,7 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Entity.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "Console.h"
 #include "SceneManager.h"
 #include "Scene.h"

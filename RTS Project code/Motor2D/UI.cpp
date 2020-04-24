@@ -1,7 +1,7 @@
 #include "Application.h"
 #include "Render.h"
 #include "Input.h"
-#include "Gui.h"
+#include "GuiManager.h"
 
 #include "UI.h"
 
@@ -77,24 +77,24 @@ SDL_Rect UI::GetHitbox() const
 	return hitbox;										//Returns the hitbox of a UI element.
 }
 
-void UI::SetLocalPos(iPoint localPosition)
+void UI::SetLocalPos(iPoint local_position)
 {
-	this->localPosition = localPosition;
+	this->local_position = local_position;
 }
 
 iPoint UI::GetLocalPos() const
 {
-	return localPosition;
+	return local_position;
 }
 
-void UI::SetLocalRect(SDL_Rect localRect)
+void UI::SetLocalRect(SDL_Rect local_rect)
 {
-	int localPosX = localRect.x - this->parent->rect.x;
-	int localPosY = localRect.y - this->parent->rect.y;
+	int localPosX = local_rect.x - this->parent->rect.x;
+	int localPosY = local_rect.y - this->parent->rect.y;
 	
-	SDL_Rect newLocalRect = { localPosX, localPosY, localRect.w, localRect.h };
+	SDL_Rect newLocalRect = { localPosX, localPosY, local_rect.w, local_rect.h };
 
-	this->localRect = newLocalRect;
+	this->local_rect = newLocalRect;
 
 	//SetScreenRect(newLocalRect);
 }
@@ -106,39 +106,39 @@ SDL_Rect UI::GetLocalRect() const
 		//SDL_Rect localRect = { rect.x - parent->rect.x, rect.y - parent->rect.y, rect.w, rect.h };
 		//SDL_Rect localRect = { localPosition.x, localPosition.y, rect.w, rect.h };
 
-		return localRect;
+		return local_rect;
 	}
 }
 
-void UI::SetLocalHitbox(SDL_Rect localHitbox)
+void UI::SetLocalHitbox(SDL_Rect local_hitbox)
 {
-	int localPosX = localRect.x - this->parent->rect.x;
-	int localPosY = localRect.y - this->parent->rect.y;
+	int localPosX = local_rect.x - this->parent->rect.x;
+	int localPosY = local_rect.y - this->parent->rect.y;
 	
-	SDL_Rect newLocalHitbox = { localPosX, localPosY, localHitbox.w, localHitbox.h };
+	SDL_Rect newLocalHitbox = { localPosX, localPosY, local_hitbox.w, local_hitbox.h };
 
-	this->localHitbox = newLocalHitbox;
+	this->local_hitbox = newLocalHitbox;
 }
 
 // -------------------------------- UI ELEMENT INTERACTIONS --------------------------------
 iPoint UI::GetMousePos() /*const*/
 {
-	App->input->GetMousePosition(mousePos.x, mousePos.y);
+	App->input->GetMousePosition(mouse_position.x, mouse_position.y);
 
-	return mousePos;
+	return mouse_position;
 }
 
 bool UI::CheckMousePos() const
 {
-	return(mousePos.x > hitbox.x && mousePos.x < hitbox.x + hitbox.w
-		&& mousePos.y > hitbox.y && mousePos.y < hitbox.y + hitbox.h);
+	return(mouse_position.x > hitbox.x && mouse_position.x < hitbox.x + hitbox.w
+		&& mouse_position.y > hitbox.y && mouse_position.y < hitbox.y + hitbox.h);
 }
 
 iPoint UI::GetMouseMotion() /*const*/
 {
-	App->input->GetMouseMotion(mouseMotion.x, mouseMotion.y);
+	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 
-	return mouseMotion;
+	return mouse_motion;
 }
 
 // --- This method checks whether a UI Element is being hovered (The mouse is inside it's hitbox).
@@ -150,40 +150,41 @@ bool UI::IsHovered() const
 // --- This method checks whether the focused element is the same as the element that called the method.
 bool UI::IsFocused() const
 {
-	return App->gui->focusedElement == this;
+	return App->gui_manager->focused_element == this;
 }
 
 // --- This method checks whether the element that called the method is the foremost element under the mouse.
 bool UI::IsForemostElement() const
 {
-	return App->gui->FirstElementUnderMouse() == this;
+	return App->gui_manager->FirstElementUnderMouse() == this;
 }
 
 // --- This method checks whether or not the element that called the method fulfills the conditions to be dragged.
 bool UI::ElementCanBeDragged() const
 {
-	return ((isDraggable && isDragTarget && App->gui->FirstElementUnderMouse() == this) || isDragTarget);
+	return ((is_draggable && is_drag_target && App->gui_manager->FirstElementUnderMouse() == this) || is_drag_target);
 }
 
 // --- This method checks whetheror not the element that called the method has been clicked but not dragged anywhere.
 bool UI::ElementRemainedInPlace() const
 {
-	return (GetScreenPos() == initialPosition);
+	return (GetScreenPos() == initial_position);
 }
 
 // --- Drags an element around taking into account where the mouse was and where it currently is.
 void UI::DragElement()
 {	
-																			// --- Updating the UI Element's position when it is being dragged.
-	iPoint origin(0, 0);													//This prevents sending undragged elements to undesired places when passing from dragging one element to another as prevMousePos in undragged elements is (0,0).
+																								// --- Updating the UI Element's position when it is being dragged.
+	iPoint origin(0, 0);																		//This prevents sending undragged elements to undesired places when passing 
+																								//from dragging one element to another as prevMousePos in undragged elements is (0,0).
 
-	if (prevMousePos != GetMousePos() && prevMousePos != origin)			//If the recorded prevMousePos is different than the current mousePos and prevMouse pos is not origin.
+	if (previous_mouse_position != GetMousePos() && previous_mouse_position != origin)
 	{
-		position += GetMousePos() - prevMousePos;							//Check this, mouse is not at a fixed point, the UI Element moves too slow.
+		position += GetMousePos() - previous_mouse_position;									//Check this, mouse is not at a fixed point, the UI Element moves too slow.
 		SetScreenPos(position);
 	}
 
-																			// --- Updating the UI Element's hitbox rect when it is being dragged.
+																								// --- Updating the UI Element's hitbox rect when it is being dragged.
 	SDL_Rect newPosRect = { position.x, position.y, rect.w, rect.h };
 
 	this->SetHitbox(newPosRect);
@@ -202,14 +203,14 @@ void UI::AxisRestrictedDragElement(bool X_Axis, bool Y_Axis)
 	{
 		if (parent == NULL)
 		{
-			position.x += GetMousePos().x - prevMousePos.x;
+			position.x += GetMousePos().x - previous_mouse_position.x;
 			SetScreenPos(position);
 		}
 		else
 		{
 			if (position.x != parent->position.x && position.x + GetHitbox().w != parent->position.x + parent->GetHitbox().w)
 			{
-				position.x += GetMousePos().x - prevMousePos.x;
+				position.x += GetMousePos().x - previous_mouse_position.x;
 				SetScreenPos(position);
 			}
 
@@ -229,14 +230,14 @@ void UI::AxisRestrictedDragElement(bool X_Axis, bool Y_Axis)
 	{
 		if (parent == NULL)
 		{
-			position.y += GetMousePos().y - prevMousePos.y;
+			position.y += GetMousePos().y - previous_mouse_position.y;
 			SetScreenPos(position);
 		}
 		else
 		{
 			if (position.y != parent->position.y && position.y + GetHitbox().h != parent->position.y + parent->GetHitbox().h)
 			{
-				position.y += GetMousePos().y - prevMousePos.y;
+				position.y += GetMousePos().y - previous_mouse_position.y;
 				SetScreenPos(position);
 			}
 
@@ -260,8 +261,8 @@ void UI::AxisRestrictedDragElement(bool X_Axis, bool Y_Axis)
 // --- This method Checks if a UI Element has childs and updates them in case the UI Element (parent) has been moved/dragged.
 void UI::CheckElementChilds()
 {
-	if (App->gui->ElementHasChilds(this))
+	if (App->gui_manager->ElementHasChilds(this))
 	{
-		App->gui->UpdateChilds(this);
+		App->gui_manager->UpdateChilds(this);
 	}
 }

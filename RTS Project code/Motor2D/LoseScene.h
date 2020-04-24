@@ -28,13 +28,13 @@ public:
 
 public:
 
-	UI_Button* lose_main_menu;
+	UI_Button*		lose_main_menu;
 
 private:
 	SDL_Rect		background_rect;
-	SDL_Texture* background_texture;
+	SDL_Texture*	background_texture;
 	//Audio
-	uint				lose_song;
+	uint			lose_song;
 };
 
 #endif // !__LOSE_SCENE_H__

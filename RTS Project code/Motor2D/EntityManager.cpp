@@ -135,6 +135,7 @@ bool EntityManager::CleanUp()
 	entities.clear();
 
 	UnLoadEntityTextures();
+	UnLoadEntityAudios();
 
 	return true;
 }
@@ -281,7 +282,7 @@ void EntityManager::DeleteEntity(Entity* entity)
 
 			entities.erase(item);
 
-			entities.resize(entities.size());
+			entities.resize(entities.size());		// THIS?
 
 			break;
 		}
@@ -307,21 +308,6 @@ void EntityManager::LoadEntityTextures()
 	center_point_debug = App->tex->Load("maps/center_position_debug.png");
 }
 
-void EntityManager::LoadEntityAudios()
-{
-	gatherer_movement_fx	= App->audio->LoadFx("audio/fx/Gatherer_movement.wav");
-	gather_fx				= App->audio->LoadFx("audio/fx/Gathering.wav");
-	finished_gather_fx		= App->audio->LoadFx("audio/fx/Finnished_gathering.wav");
-	infantry_movement_fx	= App->audio->LoadFx("audio/fx/Infantry_movement.wav");
-	infantry_shot_fx		= App->audio->LoadFx("audio/fx/Infantry_shot.wav");
-	click_barracks_fx		= App->audio->LoadFx("audio/fx/Click Barracks.wav");
-	building_fx				= App->audio->LoadFx("audio/fx/Building.wav");
-	finished_building_fx	= App->audio->LoadFx("audio/fx/Finished_building.wav");
-	finished_recruiting_fx	= App->audio->LoadFx("audio/fx/Finished_recruiting.wav");
-	finished_upgrading_fx	= App->audio->LoadFx("audio/fx/Finished_Upgrading.wav");
-	click_townhall_fx		= App->audio->LoadFx("audio/fx/Click_Townhall.wav");
-}
-
 void EntityManager::UnLoadEntityTextures()
 {
 	App->tex->UnLoad(gatherer_tex);
@@ -343,6 +329,27 @@ void EntityManager::UnLoadEntityTextures()
 	enemy_barracks_tex	= nullptr;
 	rock_tex			= nullptr;
 	tree_tex			= nullptr;
+}
+
+void EntityManager::LoadEntityAudios()
+{
+	//Pass to xml
+	gatherer_movement_fx	= App->audio->LoadFx("audio/fx/Gatherer_movement.wav");
+	gather_fx				= App->audio->LoadFx("audio/fx/Gathering.wav");
+	finished_gather_fx		= App->audio->LoadFx("audio/fx/Finnished_gathering.wav");
+	infantry_movement_fx	= App->audio->LoadFx("audio/fx/Infantry_movement.wav");
+	infantry_shot_fx		= App->audio->LoadFx("audio/fx/Infantry_shot.wav");
+	click_barracks_fx		= App->audio->LoadFx("audio/fx/Click Barracks.wav");
+	building_fx				= App->audio->LoadFx("audio/fx/Building.wav");
+	finished_building_fx	= App->audio->LoadFx("audio/fx/Finished_building.wav");
+	finished_recruiting_fx	= App->audio->LoadFx("audio/fx/Finished_recruiting.wav");
+	finished_upgrading_fx	= App->audio->LoadFx("audio/fx/Finished_Upgrading.wav");
+	click_townhall_fx		= App->audio->LoadFx("audio/fx/Click_Townhall.wav");
+}
+
+void EntityManager::UnLoadEntityAudios()
+{
+	
 }
 
 SDL_Texture* EntityManager::GetGathererTexture() const

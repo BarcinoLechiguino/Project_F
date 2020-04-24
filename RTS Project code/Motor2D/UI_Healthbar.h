@@ -8,7 +8,7 @@ class Entity;
 class UI_Healthbar : public UI
 {
 public:
-	UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent);
+	UI_Healthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent);
 	~UI_Healthbar();
 
 	bool Draw();
@@ -25,7 +25,7 @@ public:
 	void ResetProgressBar();
 
 private:
-	SDL_Texture*	tex;					//Texture of the UI_Image.
+	/*const*/ SDL_Texture*	tex;				//Texture of the UI_Image.
 	
 	SDL_Rect		healthbar;				// Sprite and size of the lifebar.
 	SDL_Rect		background;				// Sprite and size of the lifebar background. Can be nullptr.

@@ -4,27 +4,27 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Static_Object.h"
-#include "Gui.h"
+#include "GuiManager.h"
 
 #include "UI_Healthbar.h"
 
 #include "Textures.h"
 
 
-UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent)
+UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent)
 	: UI(element, x, y, *healthbar, listener, parent)
 {
-	tex = App->gui->GetAtlas();
+	tex = App->gui_manager->GetAtlas();
 	
-	this->isVisible = isVisible;
+	this->is_visible = is_visible;
 	this->attached_unit = attached_unit;
 
-	if (this->isInteractible)													//If the Healthbar element is interactible.
+	if (this->is_interactible)													//If the Healthbar element is interactible.
 	{
 		this->listener = listener;												//This Healthbar's listener is set to the App->gui module (For OnCallEvent()).
 	}
 
-	if (parent != nullptr)															//If a parent is passed as argument.
+	if (parent != nullptr)														//If a parent is passed as argument.
 	{
 		int localPosX = x - parent->GetScreenPos().x;							//Gets the local position of the Healthbar element in the X Axis.
 		int localPosY = y - parent->GetScreenPos().y;							//Gets the local position of the Healthbar element in the Y Axis.

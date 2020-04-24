@@ -106,7 +106,7 @@ private:
 	char*		input_string;
 	int			text_size;
 	bool		textInputEnabled;
-	int			prevLength;
+	int			previous_length;
 	int			cursorIndex;
 };
 

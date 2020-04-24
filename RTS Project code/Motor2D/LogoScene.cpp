@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "Fonts.h"
 #include "Input.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "UI.h"
 #include "UI_Button.h"
 #include "SceneManager.h"
@@ -60,7 +60,7 @@ bool LogoScene::CleanUp()
 
 	Mix_FadeOutChannel(logo_channel, 500); //crash
 
-	App->gui->CleanUp();
+	App->gui_manager->DestroyGuiElements();
 
 	return true;
 }
@@ -81,7 +81,7 @@ void LogoScene::ExecuteTransition()
 
 	if (accumulated_time >= logo_scene_duration)
 	{
-		App->transition_manager->CreateFadeToColour(SCENES::MAIN_SCENE);
+		App->transition_manager->CreateFadeToColour(SCENES::MAIN_MENU_SCENE);
 		accumulated_time = 0.0f;
 	}
 	
@@ -89,20 +89,25 @@ void LogoScene::ExecuteTransition()
 
 	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
 	{
-		App->transition_manager->CreateExpandingBars(SCENES::MAIN_SCENE, 0.5f, true, 3, false, true);
+		App->transition_manager->CreateExpandingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 3, false, true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
 	{
-		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, false, true);
+		App->transition_manager->CreateExpandingBars(SCENES::OPTIONS_SCENE, 0.5f, true, 5, false, true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
 	{
-		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, false, true);
+		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 7, false, true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
+		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, true, true);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, true, true);
 	}
@@ -116,7 +121,7 @@ void LogoScene::InitScene()
 	logo_scene_duration = 5.0f;
 	accumulated_time	= 0.0f;
 
-	App->gui->Start();
+	App->gui_manager->Start();
 
 	background_rect = { 0,0,1280,720 };
 	background_texture = App->tex->Load("maps/MissingmdScreen.png");
