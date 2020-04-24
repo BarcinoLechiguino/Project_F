@@ -51,9 +51,11 @@ struct Properties
 		LOG("The Properties' destructor has been called");
 		LOG("property_list has %d elements", property_list.size());
 
-		for (std::list<Property*>::iterator prop_iterator = property_list.begin(); prop_iterator != property_list.end(); prop_iterator++)
+		std::vector<Property*>::iterator item = property_list.begin();
+
+		for (; item != property_list.end(); ++item)
 		{
-			RELEASE((*prop_iterator));										//Deletes all data members of a property and frees all allocated memory.
+			RELEASE((*item));										//Deletes all data members of a property and frees all allocated memory.
 		}
 		property_list.clear();												//Clears poperty_list by deleting all items in the list and freeing all allocated memory.
 	}
@@ -63,41 +65,41 @@ struct Properties
 	int Get(std::string name, int default_value = 0);						//Will get a specified property's data members. //This version will be used exclusively for pathfinding. (Draw / Nodraw)
 	//Changed to non const because of list unknown problem
 
-	std::list<Property*>	property_list;
+	std::vector<Property*>	property_list;
 };
 
 //Information of a specific object in the map.
 struct ObjectData
 {
-	uint				id;				//Object's id.
-	std::string			name;			//Object's name.
-	Object_Type			type;			//Type of collider associated with the object.
-	SDL_Rect*			collider;		//Rectangle that represents the object. As x, y, w and h are object properties, they can be grouped in a SDL_Rect.
-	float				rotation;		//Rotation of the object in degrees clockwise.
-	SDL_Texture*		texture;		//Visible image of the object.
+	uint				id;							//Object's id.
+	std::string			name;						//Object's name.
+	Object_Type			type;						//Type of collider associated with the object.
+	SDL_Rect*			collider;					//Rectangle that represents the object. As x, y, w and h are object properties, they can be grouped in a SDL_Rect.
+	float				rotation;					//Rotation of the object in degrees clockwise.
+	SDL_Texture*		texture;					//Visible image of the object.
 };
 
 //Object layer that has all the objects in the same "plane".
 struct ObjectGroup
 {
-	uint				id;				//ObjectGroup layer id.
-	std::string			name;			//ObjectGroup's name.
-	ObjectData*			object;			//Individual info of each object in the ObjectGroup layer.
-	std::string			type;			//ObjectGroup's type. It's an arbitrary string added in Tiled to the Object/ObjectGroup.
-	uint				num_objects;	//Quantity of objects. Treure per obj def.
+	uint				id;							//ObjectGroup layer id.
+	std::string			name;						//ObjectGroup's name.
+	ObjectData*			object;						//Individual info of each object in the ObjectGroup layer.
+	std::string			type;						//ObjectGroup's type. It's an arbitrary string added in Tiled to the Object/ObjectGroup.
+	uint				num_objects;				//Quantity of objects. Treure per obj def.
 };
 
 // Map Layer data members --------------------------------
 struct MapLayer
 {
-	std::string			name;			//Map name.
+	std::string			name;						//Map name.
 	TileQuadTree*		tiles_tree;
-	uint*				gid;			//Tile Id.
-	uint				width;			//Layer width in tiles.
-	uint				height;			//Layer height in tiles.
-	uint				size;			//width * height.
-	float				speed;			//Parallax speed.
-	Properties			properties;		//Properties of a layer.
+	uint*				gid;						//Tile Id.
+	uint				width;						//Layer width in tiles.
+	uint				height;						//Layer height in tiles.
+	uint				size;						//width * height.
+	float				speed;						//Parallax speed.
+	Properties			properties;					//Properties of a layer.
 
 	MapLayer() : gid(NULL) {} //New Comment
 
@@ -119,19 +121,19 @@ struct TileSet
 	//This method calculates the position of each tile when given a tile id. 
 	SDL_Rect GetTileRect(uint tile_id) const;
 
-	std::string			name;					//Tileset name.
-	int					firstgid;				//First global tile id. Maps to the first id in the tileset.
-	int					tile_width;				//Maximum width of tiles in a given tileset.
-	int					tile_height;			//Maximum height of tiles in a given tilesset.
-	int					spacing;				//Space in pixels between the tiles in a given tileset.
-	int					margin;					//Margin around the tiles in a given tileset.
-	SDL_Texture*		texture = nullptr;		//Image that will be embedded on the tileset.
-	int					tex_width;				//Image width in pixels.
-	int					tex_height;				//Image height in pixels.
-	int					num_tiles_width;		//Number of tiles at the X axis that will have a given texture. Ex: num_tiles_width = tile_width / tex_width; 
-	int					num_tiles_height;		//Number of tiles at the Y axis that will have a given texture. Ex: num_tiles_height = tile_height / tex_height;
-	int					offset_x;				//Horizontal offset in pixels.
-	int					offset_y;				//Vertical offset in pixels.
+	std::string			name;						//Tileset name.
+	int					firstgid;					//First global tile id. Maps to the first id in the tileset.
+	int					tile_width;					//Maximum width of tiles in a given tileset.
+	int					tile_height;				//Maximum height of tiles in a given tilesset.
+	int					spacing;					//Space in pixels between the tiles in a given tileset.
+	int					margin;						//Margin around the tiles in a given tileset.
+	SDL_Texture*		texture = nullptr;			//Image that will be embedded on the tileset.
+	int					tex_width;					//Image width in pixels.
+	int					tex_height;					//Image height in pixels.
+	int					num_tiles_width;			//Number of tiles at the X axis that will have a given texture. Ex: num_tiles_width = tile_width / tex_width; 
+	int					num_tiles_height;			//Number of tiles at the Y axis that will have a given texture. Ex: num_tiles_height = tile_height / tex_height;
+	int					offset_x;					//Horizontal offset in pixels.
+	int					offset_y;					//Vertical offset in pixels.
 
 };
 
@@ -148,15 +150,15 @@ enum MapTypes
 // ----------------------------------------------------
 struct MapData
 {
-	int						width;				//Map width in tiles.
-	int						height;				//Map height in tiles.
-	int						tile_width;			//Tile width in pixels.
-	int						tile_height;		//Tile height in pixels.
-	SDL_Color				background_color;	//Background colours.
-	MapTypes				type;				//Type of map (Orthogonal, Isometric, Staggered or Hexagonal)
-	std::list<TileSet*>		tilesets;			//List that accesses all tilesets and their data members/properties.
-	std::list<MapLayer*>	layers;				//List that accesses all layers and their data members/properties.
-	std::list<ObjectGroup*>	objectGroups;		//List that accesses all object groups and their data members/properties.
+	int							width;				//Map width in tiles.
+	int							height;				//Map height in tiles.
+	int							tile_width;			//Tile width in pixels.
+	int							tile_height;		//Tile height in pixels.
+	SDL_Color					background_color;	//Background colours.
+	MapTypes					type;				//Type of map (Orthogonal, Isometric, Staggered or Hexagonal)
+	std::vector<TileSet*>		tilesets;			//List that accesses all tilesets and their data members/properties.
+	std::vector<MapLayer*>		layers;				//List that accesses all layers and their data members/properties.
+	std::vector<ObjectGroup*>	objectGroups;		//List that accesses all object groups and their data members/properties.
 
 	std::string music_File;
 };

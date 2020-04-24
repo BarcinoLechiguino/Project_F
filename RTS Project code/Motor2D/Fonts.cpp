@@ -57,7 +57,9 @@ bool Fonts::CleanUp()
 {
 	LOG("Freeing True Type fonts and library");
 
-	for (std::list<TTF_Font*>::iterator item = fonts.begin(); item != fonts.end(); ++item)
+	std::vector<TTF_Font*>::iterator item = fonts.begin();
+
+	for (; item != fonts.end(); ++item)
 	{
 		TTF_CloseFont((*item));
 	}

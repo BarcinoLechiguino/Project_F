@@ -56,7 +56,9 @@ void Map::Draw()
 
 	App->win->GetWindowSize(winWidth, winHeight);																	//Gets the window size so it can be added to the camera collider as parameters.
 
-	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
+	std::vector<MapLayer*>::iterator layer = data.layers.begin();
+
+	for (; layer != data.layers.end(); layer++)																	
 	{
 		camera_pos_in_pixels.x = -App->render->camera.x ;
 		camera_pos_in_pixels.y = -App->render->camera.y ;
@@ -67,8 +69,8 @@ void Map::Draw()
 		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;
 		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x + 1;
 
-		min_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels.y).y; //Esquina dereche arriba
-		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y + 1 ; //Esquina izquierda abajo
+		min_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels.y).y;								//Top-Right Corner
+		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y + 1 ;		//Bottom-Left Corner
 
 		if (min_x_row < 0)
 		{
@@ -218,15 +220,15 @@ SDL_Rect TileSet::GetTileRect(uint tile_id) const
 
 TileSet* Map::GetTilesetFromTileId(int id) 				
 {
-	std::list<TileSet*>::iterator tilesetIter = data.tilesets.begin();
+	std::vector<TileSet*>::iterator tileset_item = data.tilesets.begin();
 
-	TileSet* ret = (*tilesetIter);
+	TileSet* ret = (*tileset_item);
 
-	for(tilesetIter; tilesetIter != data.tilesets.end(); tilesetIter++)
+	for(tileset_item; tileset_item != data.tilesets.end(); ++tileset_item)
 	{
-		if (id >=  (*tilesetIter)->firstgid)
+		if (id >=  (*tileset_item)->firstgid)
 		{
-			ret = (*tilesetIter);
+			ret = (*tileset_item);
 		}
 	}
 	return ret;
@@ -238,7 +240,9 @@ bool Map::CleanUp()
 	LOG("Unloading map");
 
 	// Remove all tilesets from memory
-	for (std::list<TileSet*>::iterator item = data.tilesets.begin() ; item != data.tilesets.end(); ++item)
+	std::vector<TileSet*>::iterator item = data.tilesets.begin();
+
+	for (; item != data.tilesets.end(); ++item)
 	{	
 		SDL_DestroyTexture((*item)->texture);
 		RELEASE((*item));
@@ -246,18 +250,22 @@ bool Map::CleanUp()
 	data.tilesets.clear();
 
 	// Remove all layers from memory
-	for (std::list<MapLayer*>::iterator map_layer_item = data.layers.begin(); map_layer_item != data.layers.end(); ++map_layer_item)
+	std::vector<MapLayer*>::iterator map_layer_item = data.layers.begin();
+
+	for (; map_layer_item != data.layers.end(); ++map_layer_item)
 	{
 		RELEASE((*map_layer_item));
 	}
 	data.layers.clear();
 
 	//Removing all Objects from memory
-	for (std::list<ObjectGroup*>::iterator object_iterator = data.objectGroups.begin() ; object_iterator != data.objectGroups.end() ; object_iterator++)
-	{	
-		delete[] (*object_iterator)->object;		//Frees the memory allocated to the object array. LoadObjectLayers() line 544.
+	std::vector<ObjectGroup*>::iterator object_layer_item = data.objectGroups.begin();
 
-		RELEASE((*object_iterator));				//RELEASE frees all memory allocated for a list item. All declared news that were added to the list will be deleted here.
+	for (; object_layer_item != data.objectGroups.end() ; ++object_layer_item)
+	{	
+		delete[] (*object_layer_item)->object;		//Frees the memory allocated to the object array. LoadObjectLayers() line 544.
+
+		RELEASE((*object_layer_item));				//RELEASE frees all memory allocated for a list tileset_item. All declared news that were added to the list will be deleted here.
 	}
 	data.objectGroups.clear();
 	
@@ -354,28 +362,28 @@ bool Map::Load(std::string file_name)
 		LOG("width: %d height: %d", data.width, data.height);
 		LOG("tile_width: %d tile_height: %d", data.tile_width, data.tile_height);
 
-		
-		for(std::list<TileSet*>::iterator item = data.tilesets.begin() ; item != data.tilesets.end() ; ++item)
+
+		for(std::vector<TileSet*>::iterator tileset_item = data.tilesets.begin(); tileset_item != data.tilesets.end(); ++tileset_item)
 		{
-			TileSet* tileset = (*item);
+			TileSet* tileset = (*tileset_item);
 			LOG("Tileset ----");
 			LOG("name: %s firstgid: %d", tileset->name.c_str(), tileset->firstgid);
 			LOG("tile width: %d tile height: %d", tileset->tile_width, tileset->tile_height);
 			LOG("spacing: %d margin: %d", tileset->spacing, tileset->margin);
 		}
 
-		for (std::list<MapLayer*>::iterator item_layer = data.layers.begin(); item_layer != data.layers.end(); item_layer++)
+		for (std::vector<MapLayer*>::iterator map_layer_item = data.layers.begin(); map_layer_item != data.layers.end(); map_layer_item++)
 		{
-			MapLayer* layer = (*item_layer);
+			MapLayer* layer = (*map_layer_item);
 			LOG("Layer ----");
 			LOG("name: %s", layer->name.c_str());
 			LOG("layer width: %d layer height: %d", layer->width, layer->height);
 			LOG("parallax speed: %f", layer->speed);
 		}
 
-		for (std::list<ObjectGroup*>::iterator obj_layer = data.objectGroups.begin(); obj_layer != data.objectGroups.end(); obj_layer++)
+		for (std::vector<ObjectGroup*>::iterator object_layer_item = data.objectGroups.begin(); object_layer_item != data.objectGroups.end(); object_layer_item++)
 		{
-			ObjectGroup* object = (*obj_layer);
+			ObjectGroup* object = (*object_layer_item);
 			LOG("Group ----");
 			LOG("Gname: %s", object->name.c_str());
 		}
@@ -725,7 +733,9 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 {
 	bool ret = false;
 
-	for (std::list<MapLayer*>::iterator item = data.layers.begin() ; item != data.layers.end() ; ++item)
+	std::vector<MapLayer*>::iterator item = data.layers.begin();
+
+	for (; item != data.layers.end() ; ++item)
 	{
 		MapLayer* layer = (*item);
 
@@ -820,11 +830,13 @@ void Map::GetMapSize(int& w, int& h) const
 
 int Properties::Get(std::string name, int default_value)							//Revise how to be able to not have a property without default value being nullptr.
 {
-	for (std::list<Property*>::iterator prop_iterator = property_list.begin(); prop_iterator != property_list.end(); prop_iterator++)
+	std::vector<Property*>::iterator item = property_list.begin();
+
+	for (; item != property_list.end(); item++)
 	{
-		if ((*prop_iterator)->name == name)
+		if ((*item)->name == name)
 		{
-			return (*prop_iterator)->intValue;
+			return (*item)->intValue;
 		}
 	}
 	return default_value;															//Default value is 0

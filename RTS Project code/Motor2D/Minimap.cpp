@@ -161,7 +161,9 @@ bool Minimap::MinimapCoords(int& map_x, int& map_y)
 
 void Minimap::DrawMinimap()
 {
-	for (std::list<MapLayer*>::const_iterator item = App->map->data.layers.begin(); item != App->map->data.layers.end(); item = next(item))
+	std::vector<MapLayer*>::const_iterator item = App->map->data.layers.begin();
+
+	for (; item != App->map->data.layers.end(); item = next(item))
 	{
 		MapLayer* layer = *item;
 

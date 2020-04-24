@@ -37,15 +37,15 @@ public:
 
 public:
 
-	std::list<_TTF_Font*>	fonts;
-	_TTF_Font*			default;
-	_TTF_Font*			default_bigger;
-	_TTF_Font*			title_buttons;
-	_TTF_Font*			main_title_buttons;
-	_TTF_Font*			main_title;
-	_TTF_Font*			subtitle;
-	_TTF_Font*			titles_other;
-	_TTF_Font*			hud;
+	std::vector<_TTF_Font*>	fonts;
+	_TTF_Font*				default;
+	_TTF_Font*				default_bigger;
+	_TTF_Font*				title_buttons;
+	_TTF_Font*				main_title_buttons;
+	_TTF_Font*				main_title;
+	_TTF_Font*				subtitle;
+	_TTF_Font*				titles_other;
+	_TTF_Font*				hud;
 };
 
 

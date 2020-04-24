@@ -47,7 +47,9 @@ bool Textures::CleanUp()
 {
 	LOG("Freeing textures and Image library");
 
-	for(std::list<SDL_Texture*>::iterator item = textures.begin(); item != textures.end(); ++item)
+	std::vector<SDL_Texture*>::iterator item = textures.begin();
+
+	for(; item != textures.end(); ++item)
 	{
 		SDL_DestroyTexture((*item));
 	}
@@ -79,7 +81,9 @@ SDL_Texture* const Textures::Load(const char* path, SDL_Renderer* renderer)
 // Unload texture
 bool Textures::UnLoad(SDL_Texture* texture)
 {
-	for (std::list<SDL_Texture*>::iterator item = textures.begin(); item != textures.end(); ++item)
+	std::vector<SDL_Texture*>::iterator item = textures.begin();
+
+	for (; item != textures.end(); ++item)
 	{
 		if(texture == (*item))
 		{

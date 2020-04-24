@@ -62,16 +62,16 @@ public:
 private:
 
 	//_Mix_Music*			music;
-	std::list<Mix_Chunk*>	fx;
-	std::list<Mix_Music*> music;
-	int					scale;
+	std::vector<Mix_Chunk*>	fx;
+	std::vector<Mix_Music*>	music;
+	int						scale;
 
 public:
-	float				volume;
-	uint				volume_fx;
+	float					volume;
+	uint					volume_fx;
 	//std::string			music_folder;
 	//std::string			sfx_folder;
-	uint				general_volume;
+	uint					general_volume;
 };
 
 #endif // __AUDIO_H__

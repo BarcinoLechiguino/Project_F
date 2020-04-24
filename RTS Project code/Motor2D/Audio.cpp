@@ -82,7 +82,9 @@ bool Audio::Update(float dt)
 {
 	Mix_VolumeMusic(volume);
 
-	for (std::list<Mix_Chunk*>::iterator chunk_item = fx.begin() ; chunk_item != fx.end() ; ++chunk_item)
+	std::vector<Mix_Chunk*>::iterator chunk_item = fx.begin();
+
+	for (; chunk_item != fx.end() ; ++chunk_item)
 	{
 		Mix_VolumeChunk((*chunk_item), volume_fx);
 	}
@@ -97,13 +99,13 @@ bool Audio::CleanUp()
 		return true;
 
 	LOG("Freeing sound FX, closing Mixer and Audio subsystem");
-	std::list<Mix_Music*>::iterator stl_item = music.begin(); //Release music list
+	std::vector<Mix_Music*>::iterator stl_item = music.begin(); //Release music list
 	for (; stl_item != music.end(); stl_item++)
 	{
 		Mix_FreeMusic(*stl_item);
 	}
 
-	std::list<Mix_Chunk*>::iterator stl_item2 = fx.begin(); //Release fx list
+	std::vector<Mix_Chunk*>::iterator stl_item2 = fx.begin(); //Release fx list
 	for (; stl_item2 != fx.end(); stl_item2++)
 	{
 		Mix_FreeChunk(*stl_item2);
@@ -154,7 +156,7 @@ bool Audio::PlayMusic(uint id, float fade_time)
 
 	if (id > 0 && id <= music.size())
 	{
-		std::list <Mix_Music*>::const_iterator it;
+		std::vector <Mix_Music*>::const_iterator it;
 		it = std::next(music.begin(), id - 1);
 
 		if (*it != NULL)
@@ -233,7 +235,7 @@ uint Audio::PlayFx(unsigned int id, int repeat)
 
 	if(id > 0 && id <= fx.size())
 	{
-		std::list<Mix_Chunk*>::iterator fx_item = fx.begin();
+		std::vector<Mix_Chunk*>::iterator fx_item = fx.begin();
 
 		std::advance(fx_item, id - 1);
 
@@ -254,7 +256,7 @@ bool Audio::PlaySpatialFx(uint id, uint channel_angle, uint distance, int repeat
 
 	if (id > 0 && id <= fx.size())
 	{
-		std::list <Mix_Chunk*>::const_iterator it;
+		std::vector <Mix_Chunk*>::const_iterator it;
 		it = std::next(fx.begin(), id - 1);
 		chunk = *it;
 	}
