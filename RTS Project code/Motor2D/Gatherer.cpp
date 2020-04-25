@@ -73,10 +73,6 @@ bool Gatherer::Update(float dt, bool doLogic)
 			{
 				GatherResource();
 			}
-			else
-			{
-
-			}
 		}
 	}
 

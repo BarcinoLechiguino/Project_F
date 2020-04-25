@@ -2,6 +2,7 @@
 #ifndef __PATHFINDING_H__
 #define __PATHFINDING_H__
 
+#include <map>
 #include "Module.h"
 #include "Point.h"
 
@@ -86,6 +87,8 @@ struct PathNode
 	
 	int CalculateF(const iPoint& destination);								// Calculate the F for a specific destination tile
 
+	//bool operator ==(PathNode node);
+
 	// -----------
 	int g;
 	int h;
@@ -93,24 +96,32 @@ struct PathNode
 	const PathNode* parent; // needed to reconstruct the path in the end
 };
 
+//bool PathNode::operator ==(PathNode node)
+//{
+//	bool ret = false;
+//	
+//	if (g == node.g && h == node.h && pos == node.pos && parent == node.parent)
+//	{
+//		ret = true;
+//	}
+//
+//	return ret;
+//}
+
 // ---------------------------------------------------------------------
 // Helper struct to include a list of path nodes
 // ---------------------------------------------------------------------
 struct PathList
 {
-	/*std::vector<PathNode>::iterator Find(const iPoint& point);
-	std::vector<PathNode>::iterator GetNodeLowestScore();*/
-
-	/*PathNode* Find(const iPoint& point);
-	PathNode* GetNodeLowestScore();*/
-
 	std::list<PathNode>::iterator Find(const iPoint& point);
 	std::list<PathNode>::iterator GetNodeLowestScore();
+
+	//PathNode* Find(const iPoint& point);
 
 	// -----------
 	// The list itself, note they are not pointers!
 	std::list<PathNode> list;
-	//std::vector<PathNode> list;					// Try to make the vector work by iterating it like a normal array ( for(int i = 0; i < list.size; ++i)).
+	//std::map<int, PathNode> list;
 };
 
 

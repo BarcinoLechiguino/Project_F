@@ -52,11 +52,11 @@ bool OptionsScene::PreUpdate()
 
 bool OptionsScene::Update(float dt)
 {
-	LOG("BEFORE DRAW UPDATE");
+	//LOG("BEFORE DRAW UPDATE");
 
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
-	LOG("AFTER DRAW UPDATE");
+	//LOG("AFTER DRAW UPDATE");
 
 	AdjustVolumeWithScrollbar();
 
