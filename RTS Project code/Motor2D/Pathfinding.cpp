@@ -537,7 +537,7 @@ uint PathNode::FindWalkableAdjacents(PathList& list_to_fill) const
 		//list_to_fill.list.insert(std::make_pair(8, PathNode(-1, -1, cell, this)));
 	}
 
-	LOG("Assigned Parent: Pos: %d, %d", this->pos.x, this->pos.y);
+	//LOG("Assigned Parent: Pos: %d, %d", this->pos.x, this->pos.y);
 
 	return list_to_fill.list.size();
 }

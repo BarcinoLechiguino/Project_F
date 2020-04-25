@@ -66,7 +66,7 @@ bool GuiManager::Start()
 bool GuiManager::PreUpdate()
 {
 	// THIS
-	/*if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)						// Does not work, for now.
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)						// Does not work, for now.
 	{
 		PassFocus();
 		//App->audio->PlayFx(new_game_fx, 0);
@@ -74,12 +74,12 @@ bool GuiManager::PreUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)					// Does not work, for now.
 	{
-		if (focusedElement != nullptr && focusedElement->isInteractible)
+		if (focused_element != nullptr && focused_element->is_interactible)
 		{
-			focusedElement->ui_event = UI_EVENT::UNCLICKED;
-			focusedElement->listener->OnEventCall(focusedElement, focusedElement->ui_event);
+			focused_element->ui_event = UI_EVENT::UNCLICKED;
+			focused_element->listener->OnEventCall(focused_element, focused_element->ui_event);
 		}
-	}*/
+	}
 	
 
 	// CONSOLE MANAGING
@@ -240,6 +240,11 @@ UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visibl
 
 void GuiManager::DestroyGuiElements()
 {
+	if (focused_element != nullptr)
+	{
+		focused_element = nullptr;
+	}
+	
 	for (int i = 0; i < elements.size(); ++i)
 	{
 		elements[i]->CleanUp();
@@ -334,26 +339,23 @@ void GuiManager::PassFocus()
 {
 	if (elements.size() != 0)
 	{
-		if (iterated_element == elements.end())
+		if (iterated_element == elements.end() || focused_element == nullptr)
 		{
 			iterated_element = elements.begin();
-		}
 
-		if (focused_element == nullptr)
-		{
-			for (iterated_element; iterated_element != elements.end(); ++iterated_element)			//Loop that is used to find the first interactible element of the elments list.
+			for (; iterated_element != elements.end(); ++iterated_element)
 			{
-				if (ElementCanBeFocused((*iterated_element)))									//If the element being iterated fulfills all focus conditions.
+				if (ElementCanBeFocused((*iterated_element)))
 				{
-					focused_element = (*iterated_element);										//UI* focusedElement is set with the UI* of the element being iterated.
-					break;																		//The loop is stopped.
+					focused_element = (*iterated_element);
+					break;
 				}
 			}
 
-			return;																				//Stops the function here so the focus remains in the first interactible element.
+			return;
 		}
 
-		for (iterated_element; iterated_element != elements.end(); ++iterated_element)				//Loop that is used to find the next interactible element of the elments list.
+		for (; iterated_element != elements.end(); ++iterated_element)							//Loop that is used to find the next interactible element of the elments list.
 		{
 			if (*next(iterated_element) != nullptr)												//If the next element of the list is not NULL.
 			{
@@ -367,8 +369,21 @@ void GuiManager::PassFocus()
 			else																				//If the next element of the list is NULL.
 			{
 				iterated_element = elements.end();												//The list_item is set to nullptr.
-				focused_element = nullptr;														//The UI* focused element is set to nullptr, which efectively disables the focus.
+				focused_element = nullptr;			//Change for focusing first element again.	//The UI* focused element is set to nullptr, which efectively disables the focus.
 				break;																			//The loop is stopped so no element regains the focus.
+
+				/*iterated_element = elements.begin();
+
+				for (; iterated_element != elements.end(); ++iterated_element)
+				{
+					if (ElementCanBeFocused((*iterated_element)))
+					{
+						focused_element = (*iterated_element);
+						break;
+					}
+				}
+
+				break;*/
 			}
 		}
 	}

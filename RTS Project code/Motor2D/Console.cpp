@@ -48,7 +48,7 @@ bool Console::PreUpdate()
 {	
 	BROFILER_CATEGORY("Console_PreUpdate", Profiler::Color::PowderBlue);
 
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	/*if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
 		command_was_found = false;
 		
@@ -73,7 +73,7 @@ bool Console::PreUpdate()
 		}
 
 		App->input->ClearTextInput();
-	}
+	}*/
 
 	//if (ConsoleIsOpen())
 	//{

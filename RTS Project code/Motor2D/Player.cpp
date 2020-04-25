@@ -173,7 +173,7 @@ void Player::CameraController(float dt)
 }
 
 void Player::GiveOrder()//fix
-{
+{	
 	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
 	{
 		if (units_selected.size() != 0)																								// If there are Units being selected

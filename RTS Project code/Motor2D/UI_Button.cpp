@@ -95,7 +95,7 @@ void UI_Button::CheckInput()
 		}
 
 		// --- UNHOVER EVENT
-		if ((!IsHovered() && (ui_event == UI_EVENT::HOVER)))									//If the mouse is on the button.
+		if ((!IsHovered() && (ui_event == UI_EVENT::HOVER) && !IsFocused()))									//If the mouse is on the button.
 		{		
 			ui_event = UI_EVENT::UNHOVER;
 			current_rect = idle;
