@@ -32,6 +32,8 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 
 	want_to_save = want_to_load = false;
 
+	frame_count = 0;
+
 	input				= new Input();
 	win					= new Window();
 	render				= new Render();
@@ -181,7 +183,6 @@ bool Application::Update()
 	/*if(input->GetWindowEvent(WE_QUIT))
 		ret = false;*/
 
-
 	if(ret == true)
 		ret = PreUpdate();
 
@@ -239,8 +240,8 @@ void Application::FinishUpdate()
 		frames_last_second = 0;
 	}
 
-	float frame_cap_ms = 1000 / frame_cap;
-	float current_frame_ms = frame_timer.Read();					
+	uint frame_cap_ms = 1000 / frame_cap;
+	uint current_frame_ms = frame_timer.Read();					
 
 	if (framesAreCapped)
 	{
@@ -250,7 +251,7 @@ void Application::FinishUpdate()
 
 			SDL_Delay(frame_cap_ms - current_frame_ms);				//SDL_Delay delays processing for a specified time. In this case, it delays for the difference in ms between the frame cap (30fps so 33,3ms per frame) and the current frame.
 
-			int intended_delay = frame_cap_ms - current_frame_ms;
+			uint intended_delay = frame_cap_ms - current_frame_ms;
 
 			//LOG("We waited for %d milliseconds and got back in %f", intended_delay, true_delay_timer.ReadMs());
 		}
@@ -281,8 +282,8 @@ void Application::FinishUpdate()
 
 	static char title[256];
 
-	sprintf_s(title, 256, "Av.FPS: %.2f / Last Frame Ms: %02u / Last sec frames: %i / Last dt: %.3f / Time since startup: %.3f / Frame Count: %llu / %d / Vsync: %s / Frame cap: %s",
-		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count, vsyncOnOff, frameCapOnOff , frameCapOnOff);
+	sprintf_s(title, 256, "Av.FPS: %.2f / Last Frame Ms: %02u / Last sec frames: %i / Last dt: %.3f / Time since startup: %.3f / Frame Count: %llu / Vsync: %s / Frame cap: %s",
+		avg_fps, last_frame_ms, frames_on_last_update, dt, seconds_since_startup, frame_count,  frameCapOnOff , frameCapOnOff);
 
 	App->win->SetTitle(title);
 }

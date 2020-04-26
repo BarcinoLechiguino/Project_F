@@ -36,7 +36,7 @@ void EntityQuadTree::Subdivide()
 void EntityQuadTree::InsertEntity(Entity* entity)
 {
 
-	if (!ContainsPoint(iPoint(entity->pixel_position.x, entity->pixel_position.y) ) )
+	if (!ContainsPoint(iPoint((int)entity->pixel_position.x, (int)entity->pixel_position.y) ) )
 	{
 		return;
 	}

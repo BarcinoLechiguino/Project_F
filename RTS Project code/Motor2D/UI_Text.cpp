@@ -135,7 +135,7 @@ void UI_Text::CheckInput()
 			}
 
 			// --- CLICKED EVENT (Left Click)
-			if (IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)				//If the mouse is on the text and the left mouse button is pressed.
+			if (IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)				//If the mouse is on the text and the left mouse button is pressed.
 			{
 				if (IsForemostElement())
 				{
@@ -145,7 +145,7 @@ void UI_Text::CheckInput()
 				}
 			}
 
-			if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)		//If the mouse is on the text and the left mouse button is being pressed.
+			if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)		//If the mouse is on the text and the left mouse button is being pressed.
 			{
 				if (IsForemostElement() || isDragTarget)															//If the UI Text element is the foremost element under the mouse. 
 				{
@@ -168,7 +168,7 @@ void UI_Text::CheckInput()
 			}
 
 			// --- UNCLICKED EVENT (Left Click)
-			if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)		//If the mouse is on the text and the left mouse button is released.
+			if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)		//If the mouse is on the text and the left mouse button is released.
 			{
 				if (IsForemostElement() && ElementRemainedInPlace())									//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 				{
@@ -185,7 +185,7 @@ void UI_Text::CheckInput()
 			}
 
 			// --- CLICKED EVENT (Right Click)
-			if (IsHovered() == true && App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)	//If the mouse is on the button and the right mouse button is pressed.
+			if (IsHovered() == true && App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KeyState::KEY_DOWN)	//If the mouse is on the button and the right mouse button is pressed.
 			{
 				if (IsForemostElement())																//If the UI Text element is the foremost element under the mouse. 
 				{

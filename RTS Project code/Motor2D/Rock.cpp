@@ -72,7 +72,7 @@ bool Rock::CleanUp()
 
 void Rock::Draw()
 {
-	App->render->Blit(entity_sprite, pixel_position.x, pixel_position.y, blit_section);
+	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y, blit_section);
 }
 
 void Rock::InitEntity()
@@ -83,8 +83,8 @@ void Rock::InitEntity()
 
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
-	pixel_position.x = world_position.x;
-	pixel_position.y = world_position.y;
+	pixel_position.x = (float)world_position.x;
+	pixel_position.y = (float)world_position.y;
 
 	tiles_occupied_x = 1;
 	tiles_occupied_y = 1;

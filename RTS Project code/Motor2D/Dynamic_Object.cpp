@@ -12,12 +12,12 @@
 
 Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Entity(x, y, type, level)
 {
-	pixel_position.x = App->map->MapToWorld(x, y).x;
-	pixel_position.y = App->map->MapToWorld(x, y).y;
+	pixel_position.x = (float)App->map->MapToWorld(x, y).x;
+	pixel_position.y = (float)App->map->MapToWorld(x, y).y;
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
-	speed_x_factor = 0.803f;							// Get from config.xml
+	speed_x_factor = 0.803f;							// Get from config.xml Magic
 	speed_y_factor = 0.59f;								// Get from config.xml
 
 	target_tile = tile_position;
@@ -392,8 +392,8 @@ void Dynamic_Object::Move(float dt)
 
 	if (next_reached)
 	{
-		pixel_position.x = next_tile_position.x;
-		pixel_position.y = next_tile_position.y;
+		pixel_position.x = (float)next_tile_position.x;
+		pixel_position.y = (float)next_tile_position.y;
 
 
 		App->entity_manager->ChangeEntityMap(tile_position, this, true);		// ENTITY MAP UPDATE

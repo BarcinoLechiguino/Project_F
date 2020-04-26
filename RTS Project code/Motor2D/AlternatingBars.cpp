@@ -12,8 +12,8 @@
 AlternatingBars::AlternatingBars(SCENES next_scene, float step_duration, bool non_lerp, int bar_number, bool vertical, bool random_colours, Color even_colour, Color odd_colour) 
 	: Transition(next_scene, step_duration, non_lerp)
 	, bar_number(bar_number)
-	, win_width(0.0f)
-	, win_height(0.0f)
+	, win_width(0)
+	, win_height(0)
 	, vertical(vertical)
 	, random_colours(random_colours)
 	, even_colour(even_colour)
@@ -104,29 +104,29 @@ void AlternatingBars::TranslateHorizontalBars()
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
 				if (i % 2 == 0)
 				{
-					bars[i].bar.x = Lerp(-win_width, 0, current_cutoff);
+					bars[i].bar.x = (int)Lerp((float)-win_width, 0, (float)current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.x = Lerp(win_width, 0, current_cutoff);
+					bars[i].bar.x = (int)Lerp((float)win_width, 0, (float)current_cutoff);
 				}
 			}
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
 				if (i % 2 == 0)
 				{
-					bars[i].bar.x = N_Lerp(-win_height, 0, current_cutoff);
+					bars[i].bar.x = (int)N_Lerp((float)-win_height, 0, (float)current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.x = N_Lerp(win_width, 0, current_cutoff);
+					bars[i].bar.x = (int)N_Lerp((float)win_width, 0, (float)current_cutoff);
 				}
 			}
 		}
@@ -136,29 +136,29 @@ void AlternatingBars::TranslateHorizontalBars()
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
 				if (i % 2 == 0)
 				{
-					bars[i].bar.x = Lerp(0, win_width, current_cutoff);
+					bars[i].bar.x = (int)Lerp(0, (float)win_width, (float)current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.x = Lerp(0, -win_width, current_cutoff);
+					bars[i].bar.x = (int)Lerp(0, (float)-win_width, (float)current_cutoff);
 				}
 			}
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
 				if (i % 2 == 0)
 				{
-					bars[i].bar.x = N_Lerp(0, win_width, current_cutoff);
+					bars[i].bar.x = (int)N_Lerp(0, (float)win_width, (float)current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.x = N_Lerp(0, -win_width, current_cutoff);
+					bars[i].bar.x = (int)N_Lerp(0, (float)-win_width, (float)current_cutoff);
 				}
 			}
 		}
@@ -171,29 +171,29 @@ void AlternatingBars::TranslateVerticalBars()
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
 				if (i % 2 == 0)
 				{
-					bars[i].bar.y = Lerp(-win_height, 0, current_cutoff);
+					bars[i].bar.y = (int)Lerp((float)-win_height, 0, (float)current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.y = Lerp(win_height, 0, current_cutoff);
+					bars[i].bar.y = (int)Lerp((float)win_height, 0, (float)current_cutoff);
 				}
 			}
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
 				if (i % 2 == 0)
 				{
-					bars[i].bar.y = N_Lerp(-win_height, 0, current_cutoff);
+					bars[i].bar.y = (int)N_Lerp((float)-win_height, 0, (float)current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.y = N_Lerp(win_height, 0, current_cutoff);
+					bars[i].bar.y = (int)N_Lerp((float)win_height, 0, (float)current_cutoff);
 				}
 			}
 		}
@@ -203,29 +203,29 @@ void AlternatingBars::TranslateVerticalBars()
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
 				if (i % 2 == 0)
 				{
-					bars[i].bar.y = Lerp(0, win_height, current_cutoff);
+					bars[i].bar.y = (int)Lerp(0, (float)win_height, (float)current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.y = Lerp(0, -win_height, current_cutoff);
+					bars[i].bar.y = (int)Lerp(0, (float)-win_height, (float)current_cutoff);
 				}
 			}
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
 				if (i % 2 == 0)
 				{
-					bars[i].bar.y = N_Lerp(0, win_height, current_cutoff);
+					bars[i].bar.y = (int)N_Lerp(0, (float)win_height, (float)current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.y = N_Lerp(0, -win_height, current_cutoff);
+					bars[i].bar.y = (int)N_Lerp(0, (float)-win_height, (float)current_cutoff);
 				}
 			}
 		}
@@ -234,9 +234,9 @@ void AlternatingBars::TranslateVerticalBars()
 
 void AlternatingBars::DrawBars()
 {
-	for (int i = 0; i < bars.size(); ++i)
+	for (int i = 0; i < (int)bars.size(); ++i)
 	{
-		SDL_SetRenderDrawColor(App->render->renderer, bars[i].colour.r, bars[i].colour.g, bars[i].colour.b, 255);
+		SDL_SetRenderDrawColor(App->render->renderer, (Uint8)bars[i].colour.r, (Uint8)bars[i].colour.g, (Uint8)bars[i].colour.b, 255);
 		SDL_RenderFillRect(App->render->renderer, &bars[i].bar);
 	}
 }
@@ -272,9 +272,9 @@ void AlternatingBars::AssignHorizontalBar(Bar& new_bar, const int& win_width, co
 {
 	int bar_width = win_width;
 	
-	float bar_num		= bar_number;																// As bar_number is an integer, when win_height is divided by it
+	float bar_num		= (float)bar_number;																// As bar_number is an integer, when win_height is divided by it
  	float height_ratio	= win_height / bar_num;														// the decimals are cut off. By creating 2 float buffers and using
-	int bar_height		= ceil(height_ratio);														// the ceil() function, an approximation is made to the real number.
+	int bar_height		= (int)ceil((int)height_ratio);														// the ceil() function, an approximation is made to the real number.
 	
 	if (index % 2 == 0)
 	{
@@ -290,9 +290,9 @@ void AlternatingBars::AssignVerticalBar(Bar& new_bar, const int& win_width, cons
 {
 	int bar_height = win_height;
 
-	float bar_num = bar_number;																		// As bar_number is an integer, when win_width is divided by it
+	float bar_num = (float)bar_number;																		// As bar_number is an integer, when win_width is divided by it
 	float width_ratio = win_width / bar_num;														// the decimals are cut off. By creating 2 float buffers and using
-	int bar_width = ceil(width_ratio);																// the ceil() function, an approximation is made to the real number.
+	int bar_width = (int)ceil(width_ratio);																// the ceil() function, an approximation is made to the real number.
 
 	if (index % 2 == 0)
 	{

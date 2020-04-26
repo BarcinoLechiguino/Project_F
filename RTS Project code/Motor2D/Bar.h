@@ -5,6 +5,11 @@ struct Color;
 
 struct Bar
 {
+	Bar()
+	{
+		bar = { 0,0,0,0 };
+	}
+
 	SDL_Rect	bar;
 	Color		colour;
 };

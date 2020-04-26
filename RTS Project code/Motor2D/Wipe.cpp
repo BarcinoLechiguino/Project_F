@@ -102,11 +102,11 @@ void Wipe::HorizontalWipe()
 		{
 			if (!non_lerp)
 			{
-				screen.x = Lerp(-screen.w, 0, current_cutoff);								// Linearly interpolated wipe.
+				screen.x = (int)Lerp((float)-screen.w, 0.f, current_cutoff);								// Linearly interpolated wipe.
 			}
 			else
 			{
-				screen.x = N_Lerp(-screen.w, 0, current_cutoff);							// Non-linearly interpolated wipe.
+				screen.x = (int)N_Lerp((float)-screen.w, 0.f, current_cutoff);							// Non-linearly interpolated wipe.
 			}
 		}
 
@@ -114,11 +114,11 @@ void Wipe::HorizontalWipe()
 		{
 			if (!non_lerp)
 			{
-				screen.x = Lerp(0, screen.w, current_cutoff);
+				screen.x = (int)Lerp(0.f, (float)screen.w, current_cutoff);
 			}
 			else
 			{
-				screen.x = N_Lerp(0, screen.w, current_cutoff);
+				screen.x = (int)N_Lerp(0.f, (float)screen.w, current_cutoff);
 			}
 		}
 	}
@@ -128,11 +128,11 @@ void Wipe::HorizontalWipe()
 		{
 			if (!non_lerp)
 			{
-				screen.x = Lerp(screen.w, 0, current_cutoff);
+				screen.x = (int)Lerp((float)screen.w, 0.f, current_cutoff);
 			}
 			else
 			{
-				screen.x = N_Lerp(screen.w, 0, current_cutoff);
+				screen.x = (int)N_Lerp((float)screen.w, 0.f, current_cutoff);
 			}
 		}
 
@@ -140,11 +140,11 @@ void Wipe::HorizontalWipe()
 		{
 			if (!non_lerp)
 			{
-				screen.x = Lerp(0, -screen.w, current_cutoff);
+				screen.x = (int)Lerp(0.f, (float)-screen.w, current_cutoff);
 			}
 			else
 			{
-				screen.x = N_Lerp(0, -screen.w, current_cutoff);
+				screen.x = (int)N_Lerp(0.f, (float)-screen.w, current_cutoff);
 			}
 		}
 	}
@@ -158,11 +158,11 @@ void Wipe::VerticalWipe()
 		{
 			if (!non_lerp)
 			{
-				screen.y = Lerp(-screen.h, 0, current_cutoff);								// Linearly interpolated wipe.
+				screen.y = (int)Lerp((float)-screen.h, 0.f, current_cutoff);								// Linearly interpolated wipe.
 			}
 			else
 			{
-				screen.y = N_Lerp(-screen.h, 0, current_cutoff);							// Non-linearly interpolated wipe.
+				screen.y = (int)N_Lerp((float)-screen.h, 0.f, current_cutoff);							// Non-linearly interpolated wipe.
 			}
 		}
 
@@ -170,11 +170,11 @@ void Wipe::VerticalWipe()
 		{
 			if (!non_lerp)
 			{
-				screen.y = Lerp(0, screen.h, current_cutoff);
+				screen.y = (int)Lerp(0.f, (float)screen.h, current_cutoff);
 			}
 			else
 			{
-				screen.y = N_Lerp(0, screen.h, current_cutoff);
+				screen.y = (int)N_Lerp(0.f, (float)screen.h, current_cutoff);
 			}
 		}
 	}
@@ -184,11 +184,11 @@ void Wipe::VerticalWipe()
 		{
 			if (!non_lerp)
 			{
-				screen.y = Lerp(screen.h, 0, current_cutoff);
+				screen.y = (int)Lerp((float)screen.h, 0.f, current_cutoff);
 			}
 			else
 			{
-				screen.y = N_Lerp(screen.h, 0, current_cutoff);
+				screen.y = (int)N_Lerp((float)screen.h, 0.f, current_cutoff);
 			}
 		}
 
@@ -196,11 +196,11 @@ void Wipe::VerticalWipe()
 		{
 			if (!non_lerp)
 			{
-				screen.y = Lerp(0, -screen.h, current_cutoff);
+				screen.y = (int)Lerp(0.f, (float)-screen.h, current_cutoff);
 			}
 			else
 			{
-				screen.y = N_Lerp(0, -screen.h, current_cutoff);
+				screen.y = (int)N_Lerp(0.f, (float)-screen.h, current_cutoff);
 			}
 		}
 	}
@@ -208,7 +208,7 @@ void Wipe::VerticalWipe()
 
 void Wipe::DrawWipe()
 {
-	SDL_SetRenderDrawColor(App->render->renderer, wipe_colour.r, wipe_colour.g, wipe_colour.b, 255);
+	SDL_SetRenderDrawColor(App->render->renderer, (Uint8)wipe_colour.r, (Uint8)wipe_colour.g, (Uint8)wipe_colour.b, (Uint8)255);
 	SDL_RenderFillRect(App->render->renderer, &screen);
 }
 

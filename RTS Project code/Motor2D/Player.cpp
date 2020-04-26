@@ -30,7 +30,8 @@
 
 #include "Player.h"
 
-Player::Player() : god_mode(nullptr), is_selecting(nullptr), building_selected(nullptr), resource_selected(nullptr)
+Player::Player() : god_mode(nullptr), is_selecting(nullptr), building_selected(nullptr), resource_selected(nullptr), cursor_clicked_ally(nullptr),cursor_clicked_enemy(nullptr), 
+cursor_clicked_UI(nullptr), cursor_hover_ally(nullptr), cursor_hover_enemy(nullptr), cursor_hover_UI(nullptr), cursor_idle(nullptr), mouse_tile_debug(nullptr), selection_rect({0,0,0,0})
 {
 
 }
@@ -138,35 +139,35 @@ void Player::CameraController(float dt)
 	
 	if (CurrentlyInGameplayScene())										// If the current scene is FIRST_SCENE (gameplay scene)
 	{
-		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_REPEAT)								//Left
+		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KeyState::KEY_REPEAT)								//Left
 		{
 			if (App->render->camera.x < scene_camera_x_limit.x)
 			{
-				App->render->camera.x += camera_speed.x * dt;
+				App->render->camera.x += (int)(camera_speed.x * dt);
 			}
 		}
 
-		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_REPEAT)			//Right
+		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KeyState::KEY_REPEAT)			//Right
 		{
 			if (App->render->camera.x > scene_camera_x_limit.y)
 			{
-				App->render->camera.x -= camera_speed.x * dt;
+				App->render->camera.x -= (int)(camera_speed.x * dt);
 			}
 		}
 
-		if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_REPEAT)			//Bottom
+		if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KeyState::KEY_REPEAT)			//Bottom
 		{
 			if (App->render->camera.y > scene_camera_y_limit.x)
 			{
-				App->render->camera.y -= camera_speed.y * dt;
+				App->render->camera.y -= (int)(camera_speed.y * dt);
 			}
 		}
 
-		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_REPEAT)								//Up
+		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KeyState::KEY_REPEAT)								//Up
 		{
 			if (App->render->camera.y < scene_camera_y_limit.y)
 			{
-				App->render->camera.y += camera_speed.y * dt;
+				App->render->camera.y += (int)(camera_speed.y * dt);
 			}
 		}
 	}
@@ -174,7 +175,7 @@ void Player::CameraController(float dt)
 
 void Player::GiveOrder()//fix
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_DOWN)
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KeyState::KEY_DOWN)
 	{
 		if (units_selected.size() != 0)																								// If there are Units being selected
 		{	
@@ -230,7 +231,7 @@ void Player::OrderUnitsToAttack()
 			{
 				std::vector<Dynamic_Object*> infantries;																		//Temporal fix. For now we only have infantries as combat units.
 
-				for (int i = 0; i < units_selected.size(); ++i)
+				for (int i = 0; i < (int)units_selected.size(); ++i)
 				{
 					if (App->entity_manager->IsInfantry(units_selected[i]))
 					{
@@ -238,7 +239,7 @@ void Player::OrderUnitsToAttack()
 					}
 				}
 
-				for (int i = 0; i < infantries.size(); ++i)
+				for (int i = 0; i < (int)infantries.size(); ++i)
 				{
 					infantries[i]->target = target;
 					App->pathfinding->ChangeWalkability(infantries[i]->occupied_tile, infantries[i], WALKABLE);
@@ -256,7 +257,7 @@ void Player::OrderUnitsToAttack()
 			{
 				std::vector<Dynamic_Object*> gatherers;
 
-				for (int i = 0; i < units_selected.size(); ++i)
+				for (int i = 0; i < (int)units_selected.size(); ++i)
 				{
 					if (App->entity_manager->IsGatherer(units_selected[i]))
 					{
@@ -264,7 +265,7 @@ void Player::OrderUnitsToAttack()
 					}
 				}
 
-				for (int i = 0; i < gatherers.size(); ++i)
+				for (int i = 0; i < (int)gatherers.size(); ++i)
 				{
 					gatherers[i]->target = target;
 					App->pathfinding->ChangeWalkability(gatherers[i]->occupied_tile, gatherers[i], WALKABLE);
@@ -297,7 +298,7 @@ void Player::DragSelection()
 {
 	if (CurrentlyInGameplayScene())
 	{
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
 		{
 			is_selecting = true;
 
@@ -310,7 +311,7 @@ void Player::DragSelection()
 		{
 			UpdateSelectionRect();
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)
 			{
 				is_selecting = false;
 
@@ -371,7 +372,7 @@ void Player::SelectOnClick()
 	{
 		if (!god_mode)
 		{
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
 			{
 				SelectEntityAt(mouse_tile);
 			}
@@ -381,22 +382,22 @@ void Player::SelectOnClick()
 
 void Player::SelectionShortcuts()
 {
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_DOWN)													// Select All Entities
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KeyState::KEY_DOWN)													// Select All Entities
 	{
 		SelectAllEntities();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_DOWN)													// Select All Gatherers
+	if (App->input->GetKey(SDL_SCANCODE_X) == KeyState::KEY_DOWN)													// Select All Gatherers
 	{
 		SelectGatherers();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_DOWN)													// Select All Infantries
+	if (App->input->GetKey(SDL_SCANCODE_C) == KeyState::KEY_DOWN)													// Select All Infantries
 	{
 		SelectInfantries();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_V) == KeyState::KEY_DOWN)
 	{
 		SelectEnemies();																				// Select All Enemies
 	}
@@ -547,12 +548,12 @@ void Player::DeleteOnInput()
 	{
 		if (god_mode)
 		{
-			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_DOWN)											// Delete entity at mouse position.
+			if (App->input->GetKey(SDL_SCANCODE_D) == KeyState::KEY_DOWN)											// Delete entity at mouse position.
 			{
 				DeleteEntityAt(mouse_tile);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_F) == KEY_DOWN)											// Delete all entities.
+			if (App->input->GetKey(SDL_SCANCODE_F) == KeyState::KEY_DOWN)											// Delete all entities.
 			{
 				ClearEntityBuffers();
 				App->entity_manager->DestroyEntities();
@@ -612,7 +613,7 @@ void Player::ClearEntityBuffers()
 {
 	if (units_selected.size() != 0)
 	{
-		for (int i = 0; i < units_selected.size(); ++i)
+		for (int i = 0; i < (int)units_selected.size(); ++i)
 		{
 			units_selected[i]->is_selected = false; //fix
 		}
@@ -638,7 +639,7 @@ void Player::DebugUnitSpawn()
 {
 	if (building_selected != nullptr)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_S) == KeyState::KEY_DOWN)
 		{
 			TownHall* townhall = nullptr;
 			EnemyTownHall* enemy_townhall = nullptr;
@@ -677,7 +678,7 @@ void Player::DebugUnitUpgrade()
 {
 	if (building_selected != nullptr)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_U) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_U) == KeyState::KEY_DOWN)
 		{
 			TownHall* townhall = nullptr;
 			EnemyTownHall* enemy_townhall = nullptr;

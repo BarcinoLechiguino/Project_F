@@ -57,7 +57,7 @@ bool Barracks::CleanUp()
 
 void Barracks::Draw()
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y - 18, &barracks_rect);
+	App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect); //Magic
 }
 
 void Barracks::InitEntity()
@@ -73,8 +73,8 @@ void Barracks::InitEntity()
 
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
-	pixel_position.x = world_position.x;
-	pixel_position.y = world_position.y;
+	pixel_position.x = (float)world_position.x;
+	pixel_position.y = (float)world_position.y;
 
 	tiles_occupied_x = 2;
 	tiles_occupied_y = 2;
@@ -94,7 +94,7 @@ void Barracks::InitEntity()
 
 void Barracks::AttachHealthbarToEntity()
 {
-	healthbar_position_offset.x = -6;
+	healthbar_position_offset.x = -6; //Magic
 	healthbar_position_offset.y = -6;
 
 	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };

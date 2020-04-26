@@ -6,17 +6,16 @@
 #include "UI.h"
 
 UI::UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
-	element(element),										//The variables of the UI element are initialized at the constructor.
-	position(x, y),
-	rect(rect),
-	listener(listener),
-	parent(parent)
+	element(element),position(x, y),rect(rect),listener(listener),parent(parent),dragXAxis(false),dragYAxis(false),isDraggable(false), isDragTarget(false), isFilled(false),
+	 isInteractible(false), isVisible(false), localHitbox({ 0,0,0,0 }), localRect({0,0,0,0}),ui_event(UI_EVENT::IDLE),hitbox({0,0,0,0})
+	
 {
 	//hitbox = {GetPosition().x, GetPosition().y, GetRect().w, GetRect().h };
 	hitbox = {position.x, position.y, rect.w, rect.h };
 }
 
-UI::UI()		//Default Constructor
+UI::UI() : element(UI_ELEMENT::EMPTY), position(0, 0), rect({ 0,0,0,0 }), listener(nullptr), parent(nullptr), dragXAxis(false), dragYAxis(false), isDraggable(false),
+	isDragTarget(false), isFilled(false), isInteractible(false), isVisible(false), localHitbox({ 0,0,0,0 }), localRect({ 0,0,0,0 }), ui_event(UI_EVENT::IDLE),hitbox({0,0,0,0})
 {
 
 }
@@ -108,6 +107,8 @@ SDL_Rect UI::GetLocalRect() const
 
 		return localRect;
 	}
+
+	return { 0,0,0,0 };
 }
 
 void UI::SetLocalHitbox(SDL_Rect localHitbox)

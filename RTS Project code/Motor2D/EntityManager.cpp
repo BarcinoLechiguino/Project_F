@@ -52,7 +52,7 @@ bool EntityManager::Awake(pugi::xml_node& config)
 
 	cycle_length = config.child("units").child("update_cycle_length").attribute("length").as_float(); //Fix pathfinding so it works with doLogic
 
-	for (int i = 0; i < entities.size(); ++i)
+	for (int i = 0; i < (int)entities.size(); ++i)
 	{
 		//entities[i]->Awake(config.child(entities[i]->name_tag.c_str()));				//name_tag is currently not being used.
 	}
@@ -68,7 +68,7 @@ bool EntityManager::Start()
 	LoadEntityAudios();
 
 	//Iterates all entities in the entities list and calls their Start() method.
-	for (int i = 0; i < entities.size(); ++i)
+	for (int i = 0; i < (int)entities.size(); ++i)
 	{
 		entities[i]->Start();
 	}
@@ -77,7 +77,7 @@ bool EntityManager::Start()
 
 bool EntityManager::PreUpdate()
 {
-	for (int i = 0; i < entities.size(); ++i)
+	for (int i = 0; i < (int)entities.size(); ++i)
 	{
 		entities[i]->PreUpdate();
 	}
@@ -96,7 +96,7 @@ bool EntityManager::Update(float dt)
 		doLogic = true;
 	}
 
-	for (int i = 0; i < entities.size(); ++i)
+	for (int i = 0; i < (int)entities.size(); ++i)
 	{
 		entities[i]->Update(dt, doLogic);;
 	}
@@ -115,7 +115,7 @@ bool EntityManager::Update(float dt)
 bool EntityManager::PostUpdate()
 {
 	//Iterates all entities and calls their PostUpdate() methods.
-	for (int i = 0; i < entities.size(); ++i)
+	for (int i = 0; i < (int)entities.size(); ++i)
 	{
 		entities[i]->PostUpdate();
 	}
@@ -126,7 +126,7 @@ bool EntityManager::PostUpdate()
 bool EntityManager::CleanUp()
 {
 	//Iterates all entities in the entities list and calls their CleanUp() method.
-	for (int i = 0; i < entities.size(); ++i)
+	for (int i = 0; i < (int)entities.size(); ++i)
 	{
 		entities[i]->CleanUp();
 		RELEASE(entities[i]);
@@ -152,13 +152,13 @@ void EntityManager::OrderEntities()
 
 void EntityManager::DrawEntities()
 {
-	for (int i = 0; i < entities_in_screen.size(); ++i)
+	for (int i = 0; i < (int)entities_in_screen.size(); ++i)
 	{
 		entities_in_screen[i]->Draw();
 
 		if (debug_center_point)
 		{
-			App->render->Blit(center_point_debug, entities_in_screen[i]->center_point.x + App->map->data.tile_width/2 - 6, entities_in_screen[i]->center_point.y - 5, nullptr);
+			App->render->Blit(center_point_debug, (int)entities_in_screen[i]->center_point.x + App->map->data.tile_width/2 - 6, (int)entities_in_screen[i]->center_point.y - 5, nullptr);
 		}
 	}
 }

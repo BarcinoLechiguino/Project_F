@@ -59,7 +59,7 @@ bool EnemyBarracks::CleanUp()
 
 void EnemyBarracks::Draw()
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 27, pixel_position.y - 18, &barracks_rect);
+	App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect);
 }
 
 void EnemyBarracks::InitEntity()
@@ -75,8 +75,8 @@ void EnemyBarracks::InitEntity()
 
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
-	pixel_position.x = world_position.x;
-	pixel_position.y = world_position.y;
+	pixel_position.x = (float)world_position.x;
+	pixel_position.y = (float)world_position.y;
 
 	tiles_occupied_x = 2;
 	tiles_occupied_y = 2;

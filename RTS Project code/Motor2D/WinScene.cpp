@@ -14,7 +14,10 @@
 
 WinScene::WinScene() :  Scene(SCENES::WIN_SCENE)
 {
-
+	win_main_menu = nullptr;
+	win_song = 0;
+	background_texture = 0;
+	background_rect = {0,0,0,0};
 }
 
 WinScene::~WinScene()
@@ -91,24 +94,24 @@ void WinScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 void WinScene::ExecuteTransition()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::LOGO_SCENE, 0.5f, true, 8, true, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_3) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 12, false, true);
 	}
 
 	// No KP_4 because we are in the 4th scene.
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_5) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 12, true, true);
 	}

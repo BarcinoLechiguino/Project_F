@@ -52,7 +52,7 @@ public:
 	float GetDt();
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	void GetSaveGames(std::list<std::string>& list_to_fill);
+	//void GetSaveGames(std::list<std::string>& list_to_fill);
 
 private:
 	
@@ -126,7 +126,6 @@ private:
 	PerfTimer			true_delay_timer;						//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
 	float				dt;										//Keeps track of the amount of time in milliseconds that has passed in a frame. 
 																//Will be used to make everything (update()) be in the same timestep.
-
 	char*				frameCapOnOff;							//String that is set to 'On' when the frame cap is on and  'Off' when it is off.
 	char*				vsyncOnOff;								//String that is set to 'On' when Vsync is on and 'Off' when it is off.
 };

@@ -39,7 +39,7 @@ bool Audio::Awake(pugi::xml_node& config)
 	int flags = MIX_INIT_OGG;
 	int init = Mix_Init(flags);
 
-	volume = config.child("volume").attribute("value").as_int(96);
+	volume = (float)config.child("volume").attribute("value").as_int(96);
 	volume_fx = config.child("volume_fx").attribute("value").as_int(26);
 	scale = config.child("distance").attribute("scale").as_int();	// Load the distance scale if you want to change it
 
@@ -67,11 +67,11 @@ bool Audio::Awake(pugi::xml_node& config)
 
 bool Audio::PreUpdate(float dt) {
 
-	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KeyState::KEY_REPEAT)
 	{
 		volume++;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_REPEAT)
+	else if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KeyState::KEY_REPEAT)
 	{
 		volume--;
 	}
@@ -80,7 +80,7 @@ bool Audio::PreUpdate(float dt) {
 
 bool Audio::Update(float dt)
 {
-	Mix_VolumeMusic(volume);
+	Mix_VolumeMusic((int)volume);
 
 	for (std::list<Mix_Chunk*>::iterator chunk_item = fx.begin() ; chunk_item != fx.end() ; ++chunk_item)
 	{
@@ -288,7 +288,7 @@ uint Audio::GetAngle(iPoint player_pos, iPoint enemy_pos)
 	double dot_x = vector_axis.y * vector_pos.y;			// Product of the two vectors to get the X position
 	double det_y = -(vector_axis.y * vector_pos.x);			// Determinant of the two vectors to get the Y position
 
-	float f_angle = (atan2(det_y, dot_x)) * RAD_TO_DEG;		// Arc tangent of the previous X and Y, multiply the result with RAD_TO_DEG to get the result in degrees instead of radiants
+	float f_angle = ((float)atan2(det_y, dot_x)) * RAD_TO_DEG;		// Arc tangent of the previous X and Y, multiply the result with RAD_TO_DEG to get the result in degrees instead of radiants
 
 	if (f_angle < 0)										// If the angle is negative we add +360 because in PlaySpatialFx() we need the channel to be positive
 		f_angle += 360;
@@ -300,7 +300,7 @@ uint Audio::GetDistance(iPoint player_pos, iPoint enemy_pos)
 {
 
 	// TODO 3 Calculate the distance between the player and the enemy passed by reference using pythagoras
-	uint distance = sqrt(pow(player_pos.x - enemy_pos.x, 2) + pow(player_pos.y - enemy_pos.y, 2));	// Calculate the distance with Pythagoras
+	uint distance = (int)sqrt(pow(player_pos.x - enemy_pos.x, 2) + pow(player_pos.y - enemy_pos.y, 2));	// Calculate the distance with Pythagoras
 
 	uint distance_scaled = (distance * MAX_DISTANCE) / scale;										// We can scale the maximum hear distance by modifying scale in the config XML
 
@@ -312,7 +312,7 @@ uint Audio::GetDistance(iPoint player_pos, iPoint enemy_pos)
 
 bool Audio::Load(pugi::xml_node & data)
 {
-	volume = data.child("volume").attribute("value").as_uint();
+	volume = (float)data.child("volume").attribute("value").as_uint();
 	return true;
 }
 

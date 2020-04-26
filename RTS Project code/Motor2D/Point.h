@@ -16,7 +16,10 @@ public:
 	TYPE x, y;
 
 	Point()
-	{}
+	{
+		this->x = 0;
+		this->y = 0;
+	}
 
 	Point(const Point<TYPE>& v)
 	{

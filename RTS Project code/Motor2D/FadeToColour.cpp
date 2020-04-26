@@ -80,7 +80,7 @@ void FadeToColour::Exiting()
 
 void FadeToColour::ApplyFade()
 {
-	SDL_SetRenderDrawColor(App->render->renderer, fade_colour.r, fade_colour.g, fade_colour.b, current_cutoff * 255.0f);
+	SDL_SetRenderDrawColor(App->render->renderer, (Uint8)fade_colour.r, (Uint8)fade_colour.g, (Uint8)fade_colour.b, (Uint8)(current_cutoff * 255.0f));
 
 	SDL_RenderFillRect(App->render->renderer, &screen);
 }

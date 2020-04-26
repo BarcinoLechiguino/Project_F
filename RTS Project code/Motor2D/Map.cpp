@@ -23,9 +23,10 @@
 
 
 
-Map::Map() : Module(), map_loaded(false), pathfinding_meta_debug(false), walkability_debug(false), entity_map_debug(false)
+Map::Map() : Module(), map_loaded(false), pathfinding_meta_debug(false), walkability_debug(false), entity_map_debug(false),smaller_camera(false)
 {
 	name = ("map");
+	
 }
 
 // Destructor
@@ -52,23 +53,36 @@ void Map::Draw()
 		return;
 	}
 
+	//CAMERA CULLING
+
 	int tiles_drawn = 0;
 
 	App->win->GetWindowSize(winWidth, winHeight);																	//Gets the window size so it can be added to the camera collider as parameters.
 
 	for (std::list<MapLayer*>::iterator layer = data.layers.begin(); layer != data.layers.end(); layer++)																	
 	{
-		camera_pos_in_pixels.x = -App->render->camera.x ;
-		camera_pos_in_pixels.y = -App->render->camera.y ;
+		if (smaller_camera)
+		{
+			camera_pos_in_pixels.x = -App->render->camera.x + winWidth / 4;
+			camera_pos_in_pixels.y = -App->render->camera.y + winHeight / 4;
 
-		bottom_right_x = -App->render->camera.x + winWidth ;
-		bottom_right_y = -App->render->camera.y + winHeight ;
+			bottom_right_x = -App->render->camera.x + winWidth / 4 * 3;
+			bottom_right_y = -App->render->camera.y + winHeight / 4 * 3;
+		}
+		else
+		{
+			camera_pos_in_pixels.x = -App->render->camera.x;
+			camera_pos_in_pixels.y = -App->render->camera.y;
 
-		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;
-		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x + 1;
+			bottom_right_x = -App->render->camera.x + winWidth;
+			bottom_right_y = -App->render->camera.y + winHeight;
+		}
 
-		min_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels.y).y; //Esquina dereche arriba
-		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y + 1 ; //Esquina izquierda abajo
+		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;					//Top Left Corner row
+		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x + 1;			//Down Right Corner row
+
+		min_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels.y).y;							//Up Righ Corner row
+		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y + 1;	//Down Left Corner row
 
 		if (min_x_row < 0)
 		{
@@ -83,7 +97,7 @@ void Map::Draw()
 		{
 			for (int y = min_y_row ; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
 			{
-				if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height * 2 && MapToWorld(x, y).x < bottom_right_x)
+				if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height  && MapToWorld(x, y).x < bottom_right_x)
 				{
 					int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
 
@@ -154,8 +168,8 @@ iPoint Map::MapToWorld(int x, int y) const
 	}
 	else if (data.type == MAPTYPE_ISOMETRIC)										//Position calculus for isometric maps
 	{
-		ret.x = (x - y) * (data.tile_width * 0.5);
-		ret.y = (x + y) * (data.tile_height * 0.5);
+		ret.x = (x - y) * (data.tile_width / 2);
+		ret.y = (x + y) * (data.tile_height / 2);
 	}
 	else
 	{
@@ -545,10 +559,6 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 		break;
 	}
 
-	BROFILER_CATEGORY("Create Tile QuadTree", Profiler::Color::Khaki);
-
-	layer->tiles_tree = new TileQuadTree(quad_tile_rect, 1, 6);
-
 	if (layer_data == NULL)
 	{
 		LOG("Error parsing map xml file: Cannot find 'layer/data' tag.");
@@ -557,33 +567,21 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	}
 	else
 	{
-		layer->gid = new uint[layer->width*layer->height];
-		memset(layer->gid, 0, layer->width*layer->height);
+
+		layer->gid = new uint[layer->width * layer->height];
+		memset(layer->gid, 0, layer->width * layer->height);
 
 		int i = 0;
 		int j = 0;
-		if (layer->name == "map")
-		{
-			for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"), i++)
-			{
-				layer->gid[i] = tile.attribute("gid").as_int(0);
+		
 
-				//Insert tiles into TileQuadTree TODO
-				//iPoint tile_position(MapToWorld(i - int(i / layer->width) * layer->width, int(i / layer->width)));
-				//layer->tiles_tree->InsertTile(tile_position, tile.attribute("gid").as_int(0));
-				/*LOG("Got here %d", j);
-				j++;*/
-			}
-		}
-		else
+		for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"), i++)
 		{
-			for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"), i++)
-			{
-				layer->gid[i] = tile.attribute("gid").as_int(0);
-			}
+			layer->gid[i] = tile.attribute("gid").as_int(0);
 		}
+
+		
 	}
-
 
 	return ret;
 }
@@ -808,8 +806,8 @@ bool Map::CreateEntityMap(int& width, int& height)
 
 void Map::Restart_Cam() // function that resets the camera
 {
-	App->render->camera.x = spawn_position_cam.x;
-	App->render->camera.y = spawn_position_cam.y;
+	App->render->camera.x = (int)spawn_position_cam.x;
+	App->render->camera.y = (int)spawn_position_cam.y;
 }
 
 void Map::GetMapSize(int& w, int& h) const

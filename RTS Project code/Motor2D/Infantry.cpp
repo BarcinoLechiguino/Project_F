@@ -59,8 +59,8 @@ bool Infantry::Update(float dt, bool doLogic)
 		UpdateUnitOrientation();
 	}
 
-	selection_collider.x = pixel_position.x;
-	selection_collider.y = pixel_position.y;
+	selection_collider.x = (int)pixel_position.x;
+	selection_collider.y = (int)pixel_position.y;
 
 	if (doLogic)
 	{
@@ -119,7 +119,7 @@ bool Infantry::CleanUp()
 
 void Infantry::Draw()
 {
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 15, &entity_sprite_section);
+	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section);
 
 	if (App->player->god_mode)
 	{
@@ -141,7 +141,7 @@ void Infantry::InitEntity()
 	attack_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
 
-	speed = 500.0f;
+	speed = 350.0f;
 
 	max_health = 300;
 	current_health = max_health;
@@ -239,7 +239,7 @@ void Infantry::GetShortestPathWithinAttackRange()
 
 	if (target != nullptr)
 	{
-		for (int i = 0; i < entity_path.size(); ++i)
+		for (int i = 0; i < (int)entity_path.size(); ++i)
 		{
 			tmp.push_back(entity_path[i]);
 

@@ -18,7 +18,7 @@ enum EventWindow
 	WE_COUNT
 };
 
-enum KeyState
+enum class KeyState
 {
 	KEY_IDLE = 0,
 	KEY_DOWN,

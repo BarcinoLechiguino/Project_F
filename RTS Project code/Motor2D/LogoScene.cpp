@@ -12,7 +12,7 @@
 
 #include "LogoScene.h"
 
-LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE)
+LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE), accumulated_time(0.f), background_rect({0,0,0,0}),background_texture(nullptr),button_text(nullptr),logo_channel(0),logo_fx(0),logo_scene_duration(0.f),transition_button(nullptr)
 {
 	
 }
@@ -31,7 +31,7 @@ bool LogoScene::Start()
 {
 	InitScene();	
 
-	return true;
+	return true;	//crash
 }
 
 bool LogoScene::PreUpdate()
@@ -60,7 +60,7 @@ bool LogoScene::CleanUp()
 
 	Mix_FadeOutChannel(logo_channel, 500); //crash
 
-	App->gui->CleanUp();
+	App->gui->CleanUp();//crash
 
 	return true;
 }
@@ -87,22 +87,22 @@ void LogoScene::ExecuteTransition()
 	
 	// No KP_1 because we are in the 1rst scene.
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::MAIN_SCENE, 0.5f, true, 3, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_3) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_5) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, true, true);
 	}

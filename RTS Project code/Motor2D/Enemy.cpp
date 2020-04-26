@@ -57,8 +57,8 @@ bool Enemy::Update(float dt, bool doLogic)
 		UpdateUnitOrientation();
 	}
 
-	selection_collider.x = pixel_position.x;
-	selection_collider.y = pixel_position.y;
+	selection_collider.x = (int)pixel_position.x;
+	selection_collider.y = (int)pixel_position.y;
 
 	if (doLogic)
 	{
@@ -119,7 +119,7 @@ bool Enemy::CleanUp()
 
 void Enemy::Draw()
 {
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y, &entity_sprite_section);
+	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y, &entity_sprite_section);
 
 	if (App->player->god_mode)
 	{
@@ -241,7 +241,7 @@ void Enemy::GetShortestPathWithinAttackRange()
 
 	if (target != nullptr)
 	{
-		for (int i = 0; i < entity_path.size(); ++i)
+		for (int i = 0; i < (int)entity_path.size(); ++i)
 		{
 			tmp.push_back(entity_path[i]);
 

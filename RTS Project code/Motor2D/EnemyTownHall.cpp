@@ -60,7 +60,7 @@ bool EnemyTownHall::CleanUp()
 
 void EnemyTownHall::Draw()
 {
-	App->render->Blit(entity_sprite, pixel_position.x - 51, pixel_position.y - 20, &hall_rect);
+	App->render->Blit(entity_sprite, (int)pixel_position.x - 51, (int)pixel_position.y - 20, &hall_rect);
 }
 
 void EnemyTownHall::InitEntity()
@@ -75,8 +75,8 @@ void EnemyTownHall::InitEntity()
 
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
-	pixel_position.x = world_position.x;
-	pixel_position.y = world_position.y;
+	pixel_position.x = (float)world_position.x;
+	pixel_position.y = (float)world_position.y;
 
 	tiles_occupied_x = 3;
 	tiles_occupied_y = 3;

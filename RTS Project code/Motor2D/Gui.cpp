@@ -97,7 +97,7 @@ bool Gui::PreUpdate()
 
 	if (game_started) 
 	{
-		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
 		{
 			Mix_HaltMusic();
 			//SetElementsVisibility(App->scene1->main_in_menu, !App->scene->main_in_menu->isVisible);
@@ -137,7 +137,7 @@ bool Gui::PostUpdate()
 	
 	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
 
-	for (int i=0; i < elements.size(); i++)
+	for (int i=0; i < (int)elements.size(); i++)
 	{
 		if (elements[i]->isVisible)
 		{
@@ -314,6 +314,8 @@ UI* Gui::FirstElementUnderMouse() const
 	{
 		return firstElement;																	//The last element that was checked to have the mouse on it will be returned.
 	}
+
+	//return firstElement;
 }
 
 bool Gui::ElementCanBeClicked(UI* clickedElement) const

@@ -82,13 +82,13 @@ void ZoomToMouse::ApplyZoom()
 
 	if (!non_lerp)
 	{
-		App->render->camera.x = Lerp(original_position.x, target_position.x, current_cutoff);				// Zoom rate goes from 1 to 2 to 1, so there is no need to
-		App->render->camera.y = Lerp(original_position.y, target_position.y, current_cutoff);				// separate the zoom in different steps.
+		App->render->camera.x = (int)Lerp((float)original_position.x, (float)target_position.x, current_cutoff);				// Zoom rate goes from 1 to 2 to 1, so there is no need to
+		App->render->camera.y = (int)Lerp((float)original_position.y, (float)target_position.y, current_cutoff);				// separate the zoom in different steps.
 	}
 	else
 	{
-		App->render->camera.x = N_Lerp(original_position.x, target_position.x, current_cutoff);
-		App->render->camera.y = N_Lerp(original_position.y, target_position.y, current_cutoff);
+		App->render->camera.x = (int)N_Lerp((float)original_position.x, (float)target_position.x, current_cutoff);
+		App->render->camera.y = (int)N_Lerp((float)original_position.y, (float)target_position.y, current_cutoff);
 	}
 
 	SDL_RenderSetScale(App->render->renderer, zoom_rate, zoom_rate);
@@ -118,8 +118,8 @@ void ZoomToMouse::InitZoomToMouse(iPoint mouse_position)
 	original_position.x = App->render->camera.x;
 	original_position.y = App->render->camera.y;
 	
-	target_position.x = (-mouse_position.x) + App->render->camera.w * 0.25f;					// Adjusting the final position of the camera taking into account the mouse position.
-	target_position.y = (-mouse_position.y) + App->render->camera.h * 0.25f;					// Adjusting the final position of the camera taking into account the mouse position.
+	target_position.x = (-mouse_position.x) + App->render->camera.w / 4;					// Adjusting the final position of the camera taking into account the mouse position.
+	target_position.y = (-mouse_position.y) + App->render->camera.h / 4;					// Adjusting the final position of the camera taking into account the mouse position.
 
 	step = TRANSITION_STEP::ENTERING;
 }

@@ -121,7 +121,7 @@ void UI_InputBox::CheckInput()
 			//CheckFocus();
 			
 			// --- CLICKED EVENT (Left Click)
-			if (IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)			//If the mouse is on the text and the left mouse button is pressed.
+			if (IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)			//If the mouse is on the text and the left mouse button is pressed.
 			{
 				prevMousePos = GetMousePos();														//Sets the initial position where the mouse was before starting to drag the element.
 				initialPosition = GetScreenPos();													//Sets initialPosition with the current position at mouse KEY_DOWN.
@@ -129,7 +129,7 @@ void UI_InputBox::CheckInput()
 				App->gui->focusedElement = this;													//Set the focus on the Input Box element when it is clicked.
 			}
 
-			if (!IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)		//Unfocus when the mouse clicks outside the input box.
+			if (!IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)		//Unfocus when the mouse clicks outside the input box.
 			{
 				if (App->gui->focusedElement == this)
 				{
@@ -139,7 +139,7 @@ void UI_InputBox::CheckInput()
 
 			if (isDraggable)
 			{
-				if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)		//If the mouse is on the text and the left mouse button is being pressed.
+				if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)		//If the mouse is on the text and the left mouse button is being pressed.
 				{
 					if (IsForemostElement() || isDragTarget)											//If the UI Text element is the foremost element under the mouse. 
 					{
@@ -158,7 +158,7 @@ void UI_InputBox::CheckInput()
 			}
 
 			// --- UNCLICKED EVENT (Left Click)
-			if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_UP)	//If the mouse is on the text and the left mouse button is released.
+			if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)	//If the mouse is on the text and the left mouse button is released.
 			{
 				if (IsForemostElement() && ElementRemainedInPlace())								//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 				{
@@ -301,7 +301,7 @@ void UI_InputBox::CheckFocus()																// -------------------------------
 
 void UI_InputBox::CheckCursorInputs()														// --------------------------------------------------------------------------
 {	
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)									// --------------------------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KeyState::KEY_DOWN)									// --------------------------------------------------------------------------
 	{
 		int prevIndex = GetCurrentCursorIndex();											//Gets the current cursor index. Named prevIndex to improve readability.
 
@@ -311,7 +311,7 @@ void UI_InputBox::CheckCursorInputs()														// --------------------------
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)			//See Input				// --------------------------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KeyState::KEY_DOWN)			//See Input				// --------------------------------------------------------------------------
 	{
 		int nextIndex = GetCurrentCursorIndex();											//Gets the current cursor index. Named nextIndex to improve readability.
 
@@ -321,7 +321,7 @@ void UI_InputBox::CheckCursorInputs()														// --------------------------
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)		//See Input				// --------------------------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_BACKSPACE) == KeyState::KEY_DOWN)		//See Input				// --------------------------------------------------------------------------
 	{
 		//currentIndex = GetCurrentCursorIndex();
 
@@ -337,7 +337,7 @@ void UI_InputBox::CheckCursorInputs()														// --------------------------
 		//}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)	//See Input					// --------------------------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_DELETE) == KeyState::KEY_DOWN)	//See Input					// --------------------------------------------------------------------------
 	{
 		currentIndex = GetCurrentCursorIndex();												//Gets the current cursor index. In this case current index will be 0. See j1Input.
 		SetCursorPosWithCursorIndex(currentIndex);											//Sets the cursor's poition to the one stored in the cursorPositions[] array for the passed index.
@@ -348,7 +348,7 @@ void UI_InputBox::CheckCursorInputs()														// --------------------------
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)								// --------------------------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)								// --------------------------------------------------------------------------
 	{
 		currentIndex = GetCurrentCursorIndex();												//Gets the current cursor index. In this case current index will be 0. See j1Input.
 		SetCursorPosWithCursorIndex(currentIndex);											//Sets the cursor's poition to the one stored in the cursorPositions[] array for the passed index.
@@ -359,14 +359,14 @@ void UI_InputBox::CheckCursorInputs()														// --------------------------
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_HOME) == KEY_DOWN)		//See Input					// --------------------------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_HOME) == KeyState::KEY_DOWN)		//See Input					// --------------------------------------------------------------------------
 	{
 		currentIndex = GetCurrentCursorIndex();												//Gets the current cursor index. In this case current index will be 0. See j1Input.
 
 		SetCursorPosWithCursorIndex(currentIndex);											//Sets the cursor's poition to the one stored in the cursorPositions[] array for the passed index.
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_END) == KEY_DOWN)		//See Input					// --------------------------------------------------------------------------
+	if (App->input->GetKey(SDL_SCANCODE_END) == KeyState::KEY_DOWN)		//See Input					// --------------------------------------------------------------------------
 	{
 		currentIndex = GetCurrentCursorIndex();												//Gets the current cursor index. In this case current index will be the length of the input_string.
 		

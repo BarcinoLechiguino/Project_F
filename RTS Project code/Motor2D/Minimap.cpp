@@ -50,7 +50,7 @@ void Minimap::CreateTexture()
 	// Initialize the variable "map_width" to obtain the width of the map in pixels
 	// Initialize the variable "minimap_scale" to get the relation between the map width and
 	// the minimap width (defined at config.xml and initialized in Awake())
-	map_width = App->map->data.width * App->map->data.tile_width;
+	map_width = (float)(App->map->data.width * App->map->data.tile_width);
 	minimap_scale = minimap_width / map_width;
 
 	x_offset = App->map->data.tile_width / 2 * minimap_scale;
@@ -88,7 +88,7 @@ bool Minimap::Update(float dt)
 	}
 
 	if (App->map->map_loaded == true) {
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_REPEAT)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
 		{
 			int map_x, map_y;
 

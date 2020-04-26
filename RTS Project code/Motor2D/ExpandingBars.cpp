@@ -104,25 +104,25 @@ void ExpandingBars::ExpandHorizontalBars()
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+			for (int i = 0; i < (int)bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
 			{																					// separate expansion and reduction in different steps.
-				bars[i].bar.x = Lerp(screen_center.x, 0, current_cutoff);
-				bars[i].bar.w = Lerp(0, win_width, current_cutoff);
+				bars[i].bar.x = (int)Lerp(screen_center.x, 0.f, current_cutoff);
+				bars[i].bar.w = (int)Lerp(0.f, (float)win_width, current_cutoff);
 			}
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+			for (int i = 0; i < (int)bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
 			{																					// separate expansion and reduction in different steps.
 				if (i % 2 == 0)																	// Ex: 0 --> win_width --> 0.
 				{
-					bars[i].bar.x = N_Lerp(screen_center.x, 0, current_cutoff);
-					bars[i].bar.w = N_Lerp(0, win_width, current_cutoff);
+					bars[i].bar.x = (int)N_Lerp(screen_center.x, 0.f, current_cutoff);
+					bars[i].bar.w = (int)N_Lerp(0.f, (float)win_width, current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.x = N_Lerp(screen_center.x, 0, current_cutoff, true);
-					bars[i].bar.w = N_Lerp(0, win_width, current_cutoff, true);
+					bars[i].bar.x = (int)N_Lerp(screen_center.x, 0.f, current_cutoff, true);
+					bars[i].bar.w = (int)N_Lerp(0.f, (float)win_width, current_cutoff, true);
 				}
 			}
 		}
@@ -130,10 +130,10 @@ void ExpandingBars::ExpandHorizontalBars()
 
 	if (step == TRANSITION_STEP::EXITING)
 	{
-		for (int i = 0; i < bars.size(); ++i)												// As in the exiting step all bars will be at the same position/size, we need Lerp().
+		for (int i = 0; i < (int)bars.size(); ++i)												// As in the exiting step all bars will be at the same position/size, we need Lerp().
 		{																					// By using Lerp(), non_lerp and even/odd bar distinction is not needed.
-			bars[i].bar.x = Lerp(screen_center.x, 0, current_cutoff);
-			bars[i].bar.w = Lerp(0, win_width, current_cutoff);
+			bars[i].bar.x = (int)Lerp(screen_center.x, 0.f, current_cutoff);
+			bars[i].bar.w = (int)Lerp(0.f, (float)win_width, current_cutoff);
 		}
 	}
 }
@@ -144,25 +144,25 @@ void ExpandingBars::ExpandVerticalBars()
 	{
 		if (!non_lerp)
 		{
-			for (int i = 0; i < bars.size(); ++i)
+			for (int i = 0; i < (int)bars.size(); ++i)
 			{
-				bars[i].bar.y = Lerp(screen_center.y, 0, current_cutoff);
-				bars[i].bar.h = Lerp(0, win_height, current_cutoff);
+				bars[i].bar.y = (int)Lerp(screen_center.y, 0.f, current_cutoff);
+				bars[i].bar.h = (int)Lerp(0.f, (float)win_height, current_cutoff);
 			}
 		}
 		else
 		{
-			for (int i = 0; i < bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
+			for (int i = 0; i < (int)bars.size(); ++i)												// cutoff goes from 0 to 1 to 0, so there would be no need to
 			{																					// separate expansion and reduction in different steps.
 				if (i % 2 == 0)																	// Ex: 0 --> win_width --> 0.
 				{
-					bars[i].bar.y = N_Lerp(screen_center.y, 0, current_cutoff);
-					bars[i].bar.h = N_Lerp(0, win_height, current_cutoff);
+					bars[i].bar.y = (int)N_Lerp(screen_center.y, 0.f, current_cutoff);
+					bars[i].bar.h = (int)N_Lerp(0.f, (float)win_height, current_cutoff);
 				}
 				else
 				{
-					bars[i].bar.y = N_Lerp(screen_center.y, 0, current_cutoff, true);
-					bars[i].bar.h = N_Lerp(0, win_height, current_cutoff, true);
+					bars[i].bar.y = (int)N_Lerp(screen_center.y, 0.f, current_cutoff, true);
+					bars[i].bar.h = (int)N_Lerp(0.f, (float)win_height, current_cutoff, true);
 				}
 			}
 		}
@@ -170,19 +170,19 @@ void ExpandingBars::ExpandVerticalBars()
 
 	if (step == TRANSITION_STEP::EXITING)
 	{
-		for (int i = 0; i < bars.size(); ++i)													// cutoff goes from 0 to 1 to 0, so there would be no need to									
+		for (int i = 0; i < (int)bars.size(); ++i)													// cutoff goes from 0 to 1 to 0, so there would be no need to									
 		{																						// separate expansion and reduction in different steps.
-			bars[i].bar.y = Lerp(screen_center.y, 0, current_cutoff);							// Ex: 0 --> win_height --> 0.
-			bars[i].bar.h = Lerp(0, win_height, current_cutoff);
+			bars[i].bar.y = (int)Lerp(screen_center.y, 0.f, current_cutoff);							// Ex: 0 --> win_height --> 0.
+			bars[i].bar.h = (int)Lerp(0.f, (float)win_height, current_cutoff);
 		}
 	}
 }
 
 void ExpandingBars::DrawBars()
 {
-	for (int i = 0; i < bars.size(); ++i)
+	for (int i = 0; i < (int)bars.size(); ++i)
 	{
-		SDL_SetRenderDrawColor(App->render->renderer, bars[i].colour.r, bars[i].colour.g, bars[i].colour.b, 255);
+		SDL_SetRenderDrawColor(App->render->renderer, (Uint8)bars[i].colour.r, (Uint8)bars[i].colour.g, (Uint8)bars[i].colour.b, 255);
 		SDL_RenderFillRect(App->render->renderer, &bars[i].bar);
 	}
 }
@@ -220,9 +220,9 @@ void ExpandingBars::AssignHorizontalBar(Bar& new_bar, const int& win_width, cons
 {
 	int bar_width = win_width;
 
-	float bar_num = bar_number;																		// As bar_number is an integer, when win_height is divided by it
+	float bar_num = (float)bar_number;																		// As bar_number is an integer, when win_height is divided by it
 	float height_ratio = win_height / bar_num;														// the decimals are cut off. By creating 2 float buffers and using
-	int bar_height = ceil(height_ratio);															// the ceil() function, an approximation to the real number is made.
+	int bar_height = (int)ceil(height_ratio);															// the ceil() function, an approximation to the real number is made.
 
 	new_bar.bar = { (int)screen_center.x, bar_height * index, 0, bar_height };
 }
@@ -231,9 +231,9 @@ void ExpandingBars::AssignVerticalBar(Bar& new_bar, const int& win_width, const 
 {
 	int bar_height = win_height;
 	
-	float bar_num = bar_number;																		// As bar_number is an integer, when win_width is divided by it
+	float bar_num = (float)bar_number;																		// As bar_number is an integer, when win_width is divided by it
 	float width_ratio = win_width / bar_num;														// the decimals are cut off. By creating 2 float buffers and using
-	int bar_width = ceil(width_ratio);																// the ceil() function, an approximation is made to the real number.
+	int bar_width = (int)ceil(width_ratio);																// the ceil() function, an approximation is made to the real number.
 
 	new_bar.bar = { bar_width * index, (int)screen_center.y, bar_width, 0 };
 }

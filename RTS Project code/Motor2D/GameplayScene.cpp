@@ -110,7 +110,7 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 		App->map->DataMapDebug();																// Will print on screen the debug tiles of the walkability map and the entity map.
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_DOWN)
 	{
 		App->win->ToggleFullscreen();
 	}
@@ -152,7 +152,7 @@ bool GameplayScene::PostUpdate()
 		UnitDebugKeys();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KeyState::KEY_DOWN)
 	{
 		App->render->camera.x = 1550;
 		App->render->camera.y = -600;
@@ -163,7 +163,7 @@ bool GameplayScene::PostUpdate()
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
 	ExecuteTransition();
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
 	{
 		App->pause = !App->pause;
 
@@ -192,7 +192,7 @@ void GameplayScene::CheckForWinLose() {
 	{
 		//Check for an enemy townhall alive. If none is found the player has won, thus we call the transition to win scene
 		bool exists_enemytownhall = false;
-		for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+		for (int i = 0; i < (int)App->entity_manager->entities.size(); ++i)
 		{
 			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL)
 			{
@@ -207,7 +207,7 @@ void GameplayScene::CheckForWinLose() {
 
 		//Same but for allied town halls. We put it second so in case they break at the same frame (not gonna happen) the player wins.
 		bool exists_townhall = false;
-		for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+		for (int i = 0; i < (int)App->entity_manager->entities.size(); ++i)
 		{
 			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::TOWNHALL)
 			{
@@ -222,7 +222,7 @@ void GameplayScene::CheckForWinLose() {
 		}
 
 		bool exists_allyunits = false;
-		for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+		for (int i = 0; i < (int)App->entity_manager->entities.size(); ++i)
 		{
 			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::BARRACKS || App->entity_manager->entities[i]->type == ENTITY_TYPE::INFANTRY || App->entity_manager->entities[i]->type == ENTITY_TYPE::GATHERER)
 			{
@@ -983,7 +983,7 @@ void GameplayScene::AdjustVolumeWithScrollbar()
 	// --- Audio Scrollbars
 	if (in_game_music_scrollbar != nullptr)
 	{
-		float local_thumb_pos = in_game_music_scrollbar->GetThumbHitbox().x - in_game_music_scrollbar->GetHitbox().x;
+		float local_thumb_pos = (float)in_game_music_scrollbar->GetThumbHitbox().x - (float)in_game_music_scrollbar->GetHitbox().x;
 
 		float offset = local_thumb_pos / in_game_music_scrollbar->GetHitbox().w;											// Value from 0.0f to 1.0f
 
@@ -993,11 +993,11 @@ void GameplayScene::AdjustVolumeWithScrollbar()
 
 	if (in_game_sfx_scrollbar != nullptr)
 	{
-		float local_thumb_pos = in_game_sfx_scrollbar->GetThumbHitbox().x - in_game_sfx_scrollbar->GetHitbox().x;
+		float local_thumb_pos = (float)in_game_sfx_scrollbar->GetThumbHitbox().x - (float)in_game_sfx_scrollbar->GetHitbox().x;
 
 		float start_offset = local_thumb_pos / in_game_sfx_scrollbar->GetHitbox().w;										// Value from 0.0f to 1.0f
 
-		uint offset = floor(start_offset * 100);																			// Will make the offset a valid value to modify the volume.					
+		uint offset = (int)floor(start_offset * 100);																			// Will make the offset a valid value to modify the volume.					
 
 		App->audio->volume_fx = offset;
 	}
@@ -1005,25 +1005,25 @@ void GameplayScene::AdjustVolumeWithScrollbar()
 
 void GameplayScene::ExecuteTransition()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::LOGO_SCENE, 0.5f, true, 8, true, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 	}
 
 	// No KP_3 because we are in the 3rd scene.
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateSlide(SCENES::WIN_SCENE, 0.5f, true, true, false, false, Black);
 		
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_5) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateSlide(SCENES::LOSE_SCENE, 0.5f, true, true, false, false, Black);
 	}
@@ -1035,51 +1035,51 @@ void GameplayScene::UnitDebugKeys()
 	{
 		if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
 		{
-			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_G) == KeyState::KEY_DOWN)
 			{
 				(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_I) == KeyState::KEY_DOWN)
 			{
 				(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_DOWN)
 			{
 				(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_H) == KeyState::KEY_DOWN)
 			{
 				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_J) == KeyState::KEY_DOWN)
 			{
 				(EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_B) == KeyState::KEY_DOWN)
 			{
 				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_N) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_N) == KeyState::KEY_DOWN)
 			{
 				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_R) == KeyState::KEY_DOWN)
 			{
 				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_T) == KeyState::KEY_DOWN)
 			{
 				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_K) == KeyState::KEY_DOWN)
 			{
 				App->entity_manager->resource_data += 300;
 				App->entity_manager->resource_electricity += 300;
@@ -1100,7 +1100,7 @@ void GameplayScene::PathfindingDebug()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->map->WorldToMap(p.x, p.y);
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_DOWN)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
 		{
 			if (origin_selected == true)
 			{
@@ -1165,7 +1165,9 @@ void GameplayScene::DebugHUDSpawn()
 			break;
 
 		case ENTITY_TYPE::BARRACKS:
+
 			App->gui->SetElementsVisibility(HUD_townhall_bar, false);
+
 			if (!HUD_barracks_bar->isVisible)
 			{
 				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
@@ -1173,7 +1175,7 @@ void GameplayScene::DebugHUDSpawn()
 
 				if (HUD_townhall_bar->isVisible)
 				{
-					!HUD_barracks_bar->isVisible;
+					HUD_townhall_bar->isVisible = !HUD_barracks_bar->isVisible;
 				}
 			}
 

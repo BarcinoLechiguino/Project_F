@@ -41,8 +41,13 @@ struct Properties
 {
 	struct Property															//Property struct that will hold the data members of the properties of a layer.
 	{
+		Property()
+		{
+			intValue = 0;
+		}
+
 		std::string	name;													//Name of the property in a layer.
-		values		value;													//Value of the property in a layer.
+		//values		value;													//Value of the property in a layer.
 		int			intValue;												//Int value of the property in a layer. Used mainly for pathfinding
 	};
 
@@ -91,7 +96,6 @@ struct ObjectGroup
 struct MapLayer
 {
 	std::string			name;			//Map name.
-	TileQuadTree*		tiles_tree;
 	uint*				gid;			//Tile Id.
 	uint				width;			//Layer width in tiles.
 	uint				height;			//Layer height in tiles.
@@ -99,7 +103,13 @@ struct MapLayer
 	float				speed;			//Parallax speed.
 	Properties			properties;		//Properties of a layer.
 
-	MapLayer() : gid(NULL) {} //New Comment
+	MapLayer() : gid(NULL) 
+	{
+		height =0;
+		size   =0;
+		speed  =0;
+		width  =0;
+	} //New Comment
 
 	~MapLayer()
 	{
@@ -218,6 +228,7 @@ public:
 	bool				entity_map_debug;				// Will track whether or not the entity map debug is active or not.
 
 	bool				map_loaded;
+	bool				smaller_camera;
 
 private:
 	pugi::xml_document	map_file;

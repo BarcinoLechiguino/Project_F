@@ -11,14 +11,14 @@ struct Collider
 {
 	SDL_Rect		collider;					//Rectangle that will be assigned to the collider.
 	Object_Type		type;						//Type that the collider will have. The type will be passed by the objects from the tmx file.
-	Module*			callback = NULL;			//Pointer that, when Check_Collision retuns true, it calls the OnCollision() method in the player1.cpp and player2.cpp and passes them 2 colliders as arguments.
+	Module*			callback;			//Pointer that, when Check_Collision retuns true, it calls the OnCollision() method in the player1.cpp and player2.cpp and passes them 2 colliders as arguments.
 	bool			to_delete;					//Used to delete colliders that are not needed anymore or
 
-	Collider(SDL_Rect collider, Object_Type type, Module* callback = NULL) {};
+	Collider(SDL_Rect collider, Object_Type type, Module* callback);
 
 	Collider(ObjectData object);
 
-	Collider() {};
+	Collider();
 
 	void Set_Position(int x, int y)
 	{

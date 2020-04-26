@@ -14,6 +14,9 @@
 UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool isVisible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent)
 	: UI(element, x, y, *healthbar, listener, parent)
 {
+	progress_timer = 0.f;
+	progress_complete = false;
+
 	tex = App->gui->GetAtlas();
 	
 	this->isVisible = isVisible;
@@ -97,8 +100,8 @@ void UI_Healthbar::CleanUp()
 
 void UI_Healthbar::UpdateHealthbarPosition()
 {
-	int position_x = attached_unit->pixel_position.x + attached_unit->healthbar_position_offset.x;
-	int position_y = attached_unit->pixel_position.y + attached_unit->healthbar_position_offset.y;
+	int position_x = (int)attached_unit->pixel_position.x + attached_unit->healthbar_position_offset.x;
+	int position_y = (int)attached_unit->pixel_position.y + attached_unit->healthbar_position_offset.y;
 
 	SetScreenPos({ position_x, position_y });
 

@@ -254,6 +254,22 @@ Collider::Collider(ObjectData object)
 {
 	collider = *object.collider;
 	type = object.type;
+	callback = nullptr;
+	to_delete = false;
 }
 
+Collider::Collider()
+{
+	collider = { 0,0,0,0 };				
+	type = UNKNOWN;						
+	callback = nullptr;			
+	to_delete = false;
+}
 
+Collider::Collider(SDL_Rect collider, Object_Type type, Module* callback)
+{
+	this->collider = collider;
+	this->type = type;
+	this->callback = callback;
+	this->to_delete = false;
+}

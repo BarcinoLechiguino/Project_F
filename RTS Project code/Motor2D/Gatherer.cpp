@@ -53,8 +53,8 @@ bool Gatherer::Update(float dt, bool doLogic)
 
 	UpdateUnitSpriteSection();
 
-	selection_collider.x = pixel_position.x + 10;
-	selection_collider.y = pixel_position.y + 10;
+	selection_collider.x = (int)pixel_position.x + 10;
+	selection_collider.y = (int)pixel_position.y + 10;
 
 	if (doLogic)
 	{
@@ -114,7 +114,7 @@ bool Gatherer::CleanUp()
 
 void Gatherer::Draw()
 {
-	App->render->Blit(this->entity_sprite, pixel_position.x, pixel_position.y - 14, &entity_sprite_section);
+	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 14, &entity_sprite_section);
 
 	if (App->player->god_mode)
 	{
@@ -251,7 +251,7 @@ void Gatherer::PathToGatheringTarget()
 {
 	std::vector<iPoint> tmp;
 
-	for (int i = 0; i < entity_path.size(); ++i)
+	for (int i = 0; i < (int)entity_path.size(); ++i)
 	{
 		tmp.push_back(entity_path[i]);
 

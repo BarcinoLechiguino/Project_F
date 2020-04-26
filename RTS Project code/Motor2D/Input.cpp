@@ -16,8 +16,8 @@ Input::Input() : Module()
 	name = ("input");
 
 	keyboard = new KeyState[MAX_KEYS];
-	memset(keyboard, KEY_IDLE, sizeof(KeyState) * MAX_KEYS);
-	memset(mouse_buttons, KEY_IDLE, sizeof(KeyState) * NUM_MOUSE_BUTTONS);
+	memset(keyboard, 0, sizeof(KeyState) * MAX_KEYS); // 0 = KEY_IDLE
+	memset(mouse_buttons, 0, sizeof(KeyState) * NUM_MOUSE_BUTTONS); // 0 = KEY_IDLE
 }
 
 // Destructor
@@ -61,27 +61,27 @@ bool Input::PreUpdate()
 	{
 		if(keys[i] == 1)
 		{
-			if(keyboard[i] == KEY_IDLE)
-				keyboard[i] = KEY_DOWN;
+			if(keyboard[i] == KeyState::KEY_IDLE)
+				keyboard[i] = KeyState::KEY_DOWN;
 			else
-				keyboard[i] = KEY_REPEAT;
+				keyboard[i] = KeyState::KEY_REPEAT;
 		}
 		else
 		{
-			if(keyboard[i] == KEY_REPEAT || keyboard[i] == KEY_DOWN)
-				keyboard[i] = KEY_UP;
+			if(keyboard[i] == KeyState::KEY_REPEAT || keyboard[i] == KeyState::KEY_DOWN)
+				keyboard[i] = KeyState::KEY_UP;
 			else
-				keyboard[i] = KEY_IDLE;
+				keyboard[i] = KeyState::KEY_IDLE;
 		}
 	}
 
 	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
-		if(mouse_buttons[i] == KEY_DOWN)
-			mouse_buttons[i] = KEY_REPEAT;
+		if(mouse_buttons[i] == KeyState::KEY_DOWN)
+			mouse_buttons[i] = KeyState::KEY_REPEAT;
 
-		if(mouse_buttons[i] == KEY_UP)
-			mouse_buttons[i] = KEY_IDLE;
+		if(mouse_buttons[i] == KeyState::KEY_UP)
+			mouse_buttons[i] = KeyState::KEY_IDLE;
 	}
 
 	TextInput();
@@ -128,12 +128,12 @@ bool Input::PreUpdate()
 			//	break;
 
 			case SDL_MOUSEBUTTONDOWN:
-				mouse_buttons[event.button.button - 1] = KEY_DOWN;
+				mouse_buttons[event.button.button - 1] = KeyState::KEY_DOWN;
 				//LOG("Mouse button %d down", event.button.button-1);
 			break;
 
 			case SDL_MOUSEBUTTONUP:
-				mouse_buttons[event.button.button - 1] = KEY_UP;
+				mouse_buttons[event.button.button - 1] = KeyState::KEY_UP;
 				//LOG("Mouse button %d up", event.button.button-1);
 			break;
 
@@ -146,7 +146,7 @@ bool Input::PreUpdate()
 				break;
 
 			case SDL_MOUSEMOTION:
-				int scale = App->win->GetScale();
+				int scale = (int)App->win->GetScale();
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
@@ -232,7 +232,7 @@ void Input::TextInput()
 
 void Input::EditTextInputs()										
 {
-	if (GetKey(SDL_SCANCODE_BACKSPACE) == KEY_DOWN)										// Delete character
+	if (GetKey(SDL_SCANCODE_BACKSPACE) == KeyState::KEY_DOWN)										// Delete character
 	{
 		if (strlen(input_string) != 0)
 		{
@@ -258,31 +258,31 @@ void Input::EditTextInputs()
 		}
 	}
 
-	if (GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
+	if (GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
 	{
 		//App->win->SetTitle(input_string);												// Sets the title with the current string.
 		//cursorIndex = 0;																// The cursor's index is set to 0 (Origin of the string).
 		//ClearTextInput();																// Deletes the whole string.
 	}
 
-	if (GetKey(SDL_SCANCODE_DELETE) == KEY_DOWN)										//Erase all text			
+	if (GetKey(SDL_SCANCODE_DELETE) == KeyState::KEY_DOWN)										//Erase all text			
 	{
 		cursorIndex = 0;
 		ClearTextInput();																
 	}
 
-	if (GetKey(SDL_SCANCODE_HOME) == KEY_DOWN)											// Return to start
+	if (GetKey(SDL_SCANCODE_HOME) == KeyState::KEY_DOWN)											// Return to start
 	{
 		cursorIndex = 0;																
 	}
 
-	if (GetKey(SDL_SCANCODE_END) == KEY_DOWN)											// Cursor to end
+	if (GetKey(SDL_SCANCODE_END) == KeyState::KEY_DOWN)											// Cursor to end
 	{
 		cursorIndex = strlen(input_string);												
 	}
 
 	// --- MOVING THE CURSOR AROUND
-	if (GetKey(SDL_SCANCODE_LEFT) == KEY_DOWN)											// Move cursor left
+	if (GetKey(SDL_SCANCODE_LEFT) == KeyState::KEY_DOWN)											// Move cursor left
 	{
 		if (cursorIndex != 0)															
 		{
@@ -290,7 +290,7 @@ void Input::EditTextInputs()
 		}
 	}
 
-	if (GetKey(SDL_SCANCODE_RIGHT) == KEY_DOWN)											// Move cursor right
+	if (GetKey(SDL_SCANCODE_RIGHT) == KeyState::KEY_DOWN)											// Move cursor right
 	{
 		if (cursorIndex != strlen(input_string))										
 		{
@@ -343,7 +343,7 @@ void Input::AddTextInput(const char* origin)											// ----------------------
 		text_size = strlen(input_string);												//Calcuates the size of the current string/text.
 		unsigned int need_size = strlen(origin) + text_size + 1;						//The size needed to store both the current string and the incoming input text together is calculated.
 
-		if (need_size > text_size)														//If the needed size is bigger than the current one.
+		if ((int)need_size > text_size)														//If the needed size is bigger than the current one.
 		{
 			char* tmp = input_string;													//Buffer that stores the current input_string.
 			Allocate(need_size);														//The required size is allocated in memory.

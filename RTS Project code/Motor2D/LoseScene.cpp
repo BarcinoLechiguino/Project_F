@@ -93,22 +93,22 @@ void LoseScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 void LoseScene::ExecuteTransition()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::LOGO_SCENE, 0.5f, true, 8, true, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_3) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 12, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 12, true, true);
 	}

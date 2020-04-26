@@ -40,7 +40,7 @@ private:
 
 	SDL_Renderer*		map_renderer = nullptr;
 
-	float minimap_scale;
+	float minimap_scale; //value from 
 
 	int x_offset;
 	int y_offset;
