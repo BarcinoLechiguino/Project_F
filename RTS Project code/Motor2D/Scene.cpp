@@ -72,22 +72,22 @@ void Scene::ExecuteTransition()
 
 void Scene::CameraDebugMovement(float dt)
 {
-	if (App->input->GetKey(SDL_SCANCODE_UP) == KeyState::KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_STATE::KEY_REPEAT)
 	{
 		App->render->camera.y += (int)floor(500.0f * dt);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KeyState::KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_STATE::KEY_REPEAT)
 	{
 		App->render->camera.y -= (int)floor(500.0f * dt);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KeyState::KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_REPEAT)
 	{
 		App->render->camera.x += (int)floor(500.0f * dt);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KeyState::KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_STATE::KEY_REPEAT)
 	{
 		App->render->camera.x -= (int)floor(500.0f * dt);
 	}
@@ -95,7 +95,7 @@ void Scene::CameraDebugMovement(float dt)
 
 void Scene::DebugKeys()
 {
-	if (App->input->GetKey(SDL_SCANCODE_F1) == KeyState::KEY_DOWN)						// Enable/Disable God Mode.
+	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_STATE::KEY_DOWN)						// Enable/Disable God Mode.
 	{
 
 		if (App->player->CurrentlyInGameplayScene())
@@ -105,7 +105,7 @@ void Scene::DebugKeys()
 		
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F2) == KeyState::KEY_DOWN)						// Switch the frame cap between 60 and 30 FPS.
+	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_STATE::KEY_DOWN)						// Switch the frame cap between 60 and 30 FPS.
 	{
 		//App->framesAreCapped = !App->framesAreCapped;
 		if (App->frame_cap == CAP_AT_60)
@@ -118,7 +118,7 @@ void Scene::DebugKeys()
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F3) == KeyState::KEY_DOWN)						//Enable/Disable Pause Mode.
+	if (App->input->GetKey(SDL_SCANCODE_F3) == KEY_STATE::KEY_DOWN)						//Enable/Disable Pause Mode.
 	{
 		if (App->player->CurrentlyInGameplayScene())
 		{
@@ -126,22 +126,22 @@ void Scene::DebugKeys()
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F4) == KeyState::KEY_DOWN)						//Enable/Disable UI_Debug Key. (Display all UI elements hitboxes)
+	if (App->input->GetKey(SDL_SCANCODE_F4) == KEY_STATE::KEY_DOWN)						//Enable/Disable UI_Debug Key. (Display all UI elements hitboxes)
 	{
 		App->gui_manager->ui_debug = !App->gui_manager->ui_debug;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F5) == KeyState::KEY_DOWN)						//Save Game Key
+	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_STATE::KEY_DOWN)						//Save Game Key
 	{
 		//App->SaveGame("save_game.xml");
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F6) == KeyState::KEY_DOWN)						//Load Game Key
+	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_STATE::KEY_DOWN)						//Load Game Key
 	{
 		//App->LoadGame("save_game.xml");
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F7) == KeyState::KEY_DOWN)						//Enable/Disable pathfinding meta debug. (Display pathfinding meta tiles)
+	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_STATE::KEY_DOWN)						//Enable/Disable pathfinding meta debug. (Display pathfinding meta tiles)
 	{
 		if (App->player->CurrentlyInGameplayScene())
 		{
@@ -149,7 +149,7 @@ void Scene::DebugKeys()
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F8) == KeyState::KEY_DOWN)						//Enable/Disable walkability map debug. (Display walkability map tiles)
+	if (App->input->GetKey(SDL_SCANCODE_F8) == KEY_STATE::KEY_DOWN)						//Enable/Disable walkability map debug. (Display walkability map tiles)
 	{
 		if (App->player->CurrentlyInGameplayScene())
 		{
@@ -157,7 +157,7 @@ void Scene::DebugKeys()
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F9) == KeyState::KEY_DOWN)						//Enable/Dasable entity map debug. (Display entity map tiles)
+	if (App->input->GetKey(SDL_SCANCODE_F9) == KEY_STATE::KEY_DOWN)						//Enable/Dasable entity map debug. (Display entity map tiles)
 	{
 		if (App->player->CurrentlyInGameplayScene())
 		{
@@ -165,17 +165,17 @@ void Scene::DebugKeys()
 		}
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F10) == KeyState::KEY_DOWN)						//Enable/Disable collider debug. (Display all colliders.)
+	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_STATE::KEY_DOWN)						//Enable/Disable collider debug. (Display all colliders.)
 	{
 		App->collisions->collider_debug = !App->collisions->collider_debug;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_STATE::KEY_DOWN)
 	{
 		App->entity_manager->debug_center_point = !App->entity_manager->debug_center_point;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_STATE::KEY_DOWN)
 	{
 		App->map->smaller_camera = !App->map->smaller_camera;
 	}

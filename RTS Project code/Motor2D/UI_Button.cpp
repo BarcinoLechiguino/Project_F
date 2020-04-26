@@ -102,7 +102,7 @@ void UI_Button::CheckInput()
 		}
 
 		// --- CLICKED EVENT (Left Click)
-		if (IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)			//If the mouse is on the button and the left mouse button is clicked.
+		if (IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN)			//If the mouse is on the button and the left mouse button is clicked.
 		{
 			if (IsForemostElement())
 			{
@@ -112,7 +112,7 @@ void UI_Button::CheckInput()
 			}
 		}
 
-		if ((IsHovered() || is_drag_target) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)		//If the mouse is on the button and the left mouse button is pressed continuously.
+		if ((IsHovered() || is_drag_target) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)		//If the mouse is on the button and the left mouse button is pressed continuously.
 		{
 			if (IsForemostElement() || is_drag_target)															//If the UI Text element is the foremost element under the mouse. 
 			{
@@ -131,7 +131,7 @@ void UI_Button::CheckInput()
 		}
 
 		// --- UNCLICKED EVENT (Left Click)
-		if ((IsHovered() || is_drag_target) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)			//If the mouse is on the button and the left mouse button is released.
+		if ((IsHovered() || is_drag_target) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP)			//If the mouse is on the button and the left mouse button is released.
 		{
 			if (IsForemostElement() && ElementRemainedInPlace())								//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 			{

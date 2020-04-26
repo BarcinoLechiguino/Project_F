@@ -88,7 +88,7 @@ bool Minimap::Update(float dt)
 	}
 
 	if (App->map->map_loaded == true) {
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)
 		{
 			int map_x, map_y;
 

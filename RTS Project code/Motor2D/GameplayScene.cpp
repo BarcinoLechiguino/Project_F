@@ -110,7 +110,7 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 		App->map->DataMapDebug();																// Will print on screen the debug tiles of the walkability map and the entity map.
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_STATE::KEY_DOWN)
 	{
 		App->win->ToggleFullscreen();
 	}
@@ -150,7 +150,7 @@ bool GameplayScene::PostUpdate()
 		UnitDebugKeys();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN)
 	{
 		App->render->camera.x = 1550;
 		App->render->camera.y = -600;
@@ -161,7 +161,7 @@ bool GameplayScene::PostUpdate()
 	//Transition To Any Scene. Load Scene / Unload GameplayScene
 	ExecuteTransition();
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_STATE::KEY_DOWN)
 	{
 		if (!App->transition_manager->is_transitioning)
 		{
@@ -1001,7 +1001,7 @@ void GameplayScene::AdjustVolumeWithScrollbar()
 
 void GameplayScene::ExecuteTransition()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_STATE::KEY_DOWN)
 	{
 		if (App->pause)
 		{
@@ -1011,7 +1011,7 @@ void GameplayScene::ExecuteTransition()
 		App->transition_manager->CreateAlternatingBars(SCENES::LOGO_SCENE, 0.5f, true, 8, true, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_DOWN)
 	{
 		if (App->pause)
 		{
@@ -1023,7 +1023,7 @@ void GameplayScene::ExecuteTransition()
 
 	// No KP_3 because we are in the 3rd scene.
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
 	{
 		if (App->pause)
 		{
@@ -1034,7 +1034,7 @@ void GameplayScene::ExecuteTransition()
 	}
 
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
 	{
 		if (App->pause)
 		{
@@ -1044,7 +1044,7 @@ void GameplayScene::ExecuteTransition()
 		App->transition_manager->CreateSlide(SCENES::WIN_SCENE, 0.5f, true, true, false, false, White);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_STATE::KEY_DOWN)
 	{
 		if (App->pause)
 		{
@@ -1061,51 +1061,51 @@ void GameplayScene::UnitDebugKeys()
 	{
 		if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
 		{
-			if (App->input->GetKey(SDL_SCANCODE_G) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_STATE::KEY_DOWN)
 			{
 				(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_I) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_STATE::KEY_DOWN)
 			{
 				(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_E) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_STATE::KEY_DOWN)
 			{
 				(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_H) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_STATE::KEY_DOWN)
 			{
 				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_J) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_STATE::KEY_DOWN)
 			{
 				(EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_B) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_STATE::KEY_DOWN)
 			{
 				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_N) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_N) == KEY_STATE::KEY_DOWN)
 			{
 				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
 			}
 
 
-			if (App->input->GetKey(SDL_SCANCODE_R) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
 			{
 				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
-			if (App->input->GetKey(SDL_SCANCODE_T) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_STATE::KEY_DOWN)
 			{
 				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_K) == KeyState::KEY_DOWN)
+			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)
 			{
 				App->entity_manager->resource_data += 300;
 				App->entity_manager->resource_electricity += 300;
@@ -1126,7 +1126,7 @@ void GameplayScene::PathfindingDebug()
 		iPoint p = App->render->ScreenToWorld(x, y);
 		p = App->map->WorldToMap(p.x, p.y);
 
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_DOWN)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN)
 		{
 			if (origin_selected == true)
 			{

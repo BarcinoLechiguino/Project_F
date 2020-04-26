@@ -87,27 +87,27 @@ void LogoScene::ExecuteTransition()
 	
 	// No KP_1 because we are in the 1rst scene.
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 3, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_STATE::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::OPTIONS_SCENE, 0.5f, true, 5, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 7, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, true, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_STATE::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, true, true);
 	}

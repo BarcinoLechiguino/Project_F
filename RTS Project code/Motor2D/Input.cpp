@@ -15,9 +15,15 @@ Input::Input() : Module()
 {
 	name = ("input");
 
-	keyboard = new KeyState[MAX_KEYS];
-	memset(keyboard, 0, sizeof(KeyState) * MAX_KEYS); // 0 = KEY_IDLE
-	memset(mouse_buttons, 0, sizeof(KeyState) * NUM_MOUSE_BUTTONS); // 0 = KEY_IDLE
+	keyboard = new KEY_STATE[MAX_KEYS];
+	//controller_buttons = new KEY_STATE[MAX_KEYS];										// If controller_buttons was a KEY_STATE*.
+	
+	memset(keyboard, 0, sizeof(KEY_STATE) * MAX_KEYS);									// 0 = KEY_IDLE
+	memset(mouse_buttons, 0, sizeof(KEY_STATE) * NUM_MOUSE_BUTTONS);					// 0 = KEY_IDLE
+	memset(controller_buttons, 0, sizeof(KEY_STATE) * NUM_CONTROLLER_BUTTONS);			// 0 = KEY_IDLE
+	//memset(controller_axis, 0, sizeof(KEY_STATE) * NUM_CONTROLLER_AXIS);				// 0 = KEY_IDLE
+
+	memset(game_controller.buttons, 0, sizeof(BUTTON_STATE) * NUM_CONTROLLER_BUTTONS);	// 0 = KEY_IDLE
 }
 
 // Destructor
@@ -37,6 +43,14 @@ bool Input::Awake(pugi::xml_node& config)
 	{
 		LOG("SDL_EVENTS could not initialize! SDL_Error: %s\n", SDL_GetError());
 		ret = false;
+	}
+
+	SDL_GameControllerEventState(SDL_ENABLE);
+
+	if (SDL_GameControllerEventState(SDL_QUERY) != 1)
+	{
+		LOG("SDL_GAME_CONTROLLER_EVENT could not initialize! SDL_Error: %s\n", SDL_GetError());
+		ret = false;	// CARE WITH THIS.
 	}
 
 	return ret;
@@ -61,29 +75,43 @@ bool Input::PreUpdate()
 	{
 		if(keys[i] == 1)
 		{
-			if(keyboard[i] == KeyState::KEY_IDLE)
-				keyboard[i] = KeyState::KEY_DOWN;
+			if(keyboard[i] == KEY_STATE::KEY_IDLE)
+				keyboard[i] = KEY_STATE::KEY_DOWN;
 			else
-				keyboard[i] = KeyState::KEY_REPEAT;
+				keyboard[i] = KEY_STATE::KEY_REPEAT;
 		}
 		else
 		{
-			if(keyboard[i] == KeyState::KEY_REPEAT || keyboard[i] == KeyState::KEY_DOWN)
-				keyboard[i] = KeyState::KEY_UP;
+			if(keyboard[i] == KEY_STATE::KEY_REPEAT || keyboard[i] == KEY_STATE::KEY_DOWN)
+				keyboard[i] = KEY_STATE::KEY_UP;
 			else
-				keyboard[i] = KeyState::KEY_IDLE;
+				keyboard[i] = KEY_STATE::KEY_IDLE;
 		}
 	}
 
 	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
-		if(mouse_buttons[i] == KeyState::KEY_DOWN)
-			mouse_buttons[i] = KeyState::KEY_REPEAT;
+		if(mouse_buttons[i] == KEY_STATE::KEY_DOWN)
+			mouse_buttons[i] = KEY_STATE::KEY_REPEAT;
 
-		if(mouse_buttons[i] == KeyState::KEY_UP)
-			mouse_buttons[i] = KeyState::KEY_IDLE;
+		if(mouse_buttons[i] == KEY_STATE::KEY_UP)
+			mouse_buttons[i] = KEY_STATE::KEY_IDLE;
 	}
 
+	for (int i = 0; i < NUM_CONTROLLER_BUTTONS; ++i)
+	{
+		if (controller_buttons[i] == KEY_STATE::KEY_DOWN)
+			controller_buttons[i] = KEY_STATE::KEY_REPEAT;
+
+		if (controller_buttons[i] == KEY_STATE::KEY_UP)
+			controller_buttons[i] = KEY_STATE::KEY_IDLE;
+	}
+
+	/*for (int i = 0; i < NUM_CONTROLLER_AXIS; ++i)
+	{
+
+	}*/
+	
 	TextInput();
 
 	int scale = (int)App->win->GetScale();
@@ -130,12 +158,12 @@ bool Input::PreUpdate()
 			//	break;
 
 			case SDL_MOUSEBUTTONDOWN:
-				mouse_buttons[event.button.button - 1] = KeyState::KEY_DOWN;
+				mouse_buttons[event.button.button - 1] = KEY_STATE::KEY_DOWN;
 				//LOG("Mouse button %d down", event.button.button-1);
 			break;
 
 			case SDL_MOUSEBUTTONUP:
-				mouse_buttons[event.button.button - 1] = KeyState::KEY_UP;
+				mouse_buttons[event.button.button - 1] = KEY_STATE::KEY_UP;
 				//LOG("Mouse button %d up", event.button.button-1);
 			break;
 
@@ -156,15 +184,23 @@ bool Input::PreUpdate()
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
 			break;
 
+			case SDL_CONTROLLERDEVICEADDED:
+
+				break;
+			
 			case SDL_CONTROLLERBUTTONDOWN:
-				controller_buttons[event.cbutton.button - 1] = KeyState::KEY_DOWN;
+				controller_buttons[event.cbutton.button - 1] = KEY_STATE::KEY_DOWN;
 				LOG("Controller button %d down", event.cbutton.button - 1);
 
 			break;
 
 			case SDL_CONTROLLERBUTTONUP:
-				controller_buttons[event.cbutton.button - 1] = KeyState::KEY_UP;
+				controller_buttons[event.cbutton.button - 1] = KEY_STATE::KEY_UP;
 				LOG("Controller button %d up", event.cbutton.button - 1);
+
+			break;
+
+			case SDL_CONTROLLERAXISMOTION:
 
 			break;
 		}
@@ -216,29 +252,29 @@ void Input::TextInput()
 		if (App->gui->focusedElement->element == UI_ELEMENT::INPUTBOX && App->gui->focusedElement->isVisible)
 		{
 			SDL_StartTextInput();														
-			textInputEnabled = true;													
+			text_input_is_enabled = true;													
 		}
 		else
 		{
 			SDL_StopTextInput();														
-			textInputEnabled = false;													
+			text_input_is_enabled = false;													
 		}
 	}
 	else
 	{
 		SDL_StopTextInput();
-		textInputEnabled = false;
+		text_input_is_enabled = false;
 	}
 
 	if (input_string == nullptr)														
 	{
 		Allocate(1);
 		ClearTextInput();
-		cursorIndex = 0;
+		cursor_index = 0;
 		prevLength = 0;
 	}
 
-	if (textInputEnabled)																
+	if (text_input_is_enabled)																
 	{
 		EditTextInputs();
 	}*/
@@ -246,25 +282,25 @@ void Input::TextInput()
 
 void Input::EditTextInputs()										
 {
-	if (GetKey(SDL_SCANCODE_BACKSPACE) == KeyState::KEY_DOWN)										// Delete character
+	if (GetKey(SDL_SCANCODE_BACKSPACE) == KEY_STATE::KEY_DOWN)										// Delete character
 	{
 		if (strlen(input_string) != 0)
 		{
-			if (cursorIndex == strlen(input_string))									// Cursor in end of char
+			if (cursor_index == strlen(input_string))									// Cursor in end of char
 			{
 				DeleteTextInput(strlen(input_string));							
-				cursorIndex--;														
+				cursor_index--;														
 			}
 			else
 			{
-				if (cursorIndex != 0)													// Cursor inside char
+				if (cursor_index != 0)													// Cursor inside char
 				{
-					char* tmp = GetCutText(cursorIndex - 1, cursorIndex - 1, false, true);	// Stores the chunk of the string to the right of the cursor's position.
+					char* tmp = GetCutText(cursor_index - 1, cursor_index - 1, false, true);	// Stores the chunk of the string to the right of the cursor's position.
 
-					DeleteTextInput(cursorIndex);										
+					DeleteTextInput(cursor_index);										
 					AddTextInput(tmp);													
 
-					cursorIndex--;														
+					cursor_index--;														
 
 					//delete[] tmp2;
 				}
@@ -272,43 +308,43 @@ void Input::EditTextInputs()
 		}
 	}
 
-	if (GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
+	if (GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN)
 	{
 		//App->win->SetTitle(input_string);												// Sets the title with the current string.
-		//cursorIndex = 0;																// The cursor's index is set to 0 (Origin of the string).
+		//cursor_index = 0;																// The cursor's index is set to 0 (Origin of the string).
 		//ClearTextInput();																// Deletes the whole string.
 	}
 
-	if (GetKey(SDL_SCANCODE_DELETE) == KeyState::KEY_DOWN)										//Erase all text			
+	if (GetKey(SDL_SCANCODE_DELETE) == KEY_STATE::KEY_DOWN)										//Erase all text			
 	{
-		cursorIndex = 0;
+		cursor_index = 0;
 		ClearTextInput();																
 	}
 
-	if (GetKey(SDL_SCANCODE_HOME) == KeyState::KEY_DOWN)											// Return to start
+	if (GetKey(SDL_SCANCODE_HOME) == KEY_STATE::KEY_DOWN)											// Return to start
 	{
-		cursorIndex = 0;																
+		cursor_index = 0;																
 	}
 
-	if (GetKey(SDL_SCANCODE_END) == KeyState::KEY_DOWN)											// Cursor to end
+	if (GetKey(SDL_SCANCODE_END) == KEY_STATE::KEY_DOWN)											// Cursor to end
 	{
-		cursorIndex = strlen(input_string);												
+		cursor_index = strlen(input_string);												
 	}
 
 	// --- MOVING THE CURSOR AROUND
-	if (GetKey(SDL_SCANCODE_LEFT) == KeyState::KEY_DOWN)											// Move cursor left
+	if (GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_DOWN)											// Move cursor left
 	{
-		if (cursorIndex != 0)															
+		if (cursor_index != 0)															
 		{
-			cursorIndex--;																
+			cursor_index--;																
 		}
 	}
 
-	if (GetKey(SDL_SCANCODE_RIGHT) == KeyState::KEY_DOWN)											// Move cursor right
+	if (GetKey(SDL_SCANCODE_RIGHT) == KEY_STATE::KEY_DOWN)											// Move cursor right
 	{
-		if (cursorIndex != strlen(input_string))										
+		if (cursor_index != strlen(input_string))										
 		{
-			cursorIndex++;																
+			cursor_index++;																
 		}
 	}
 }
@@ -332,21 +368,21 @@ int Input::GetInputTextLength()
 
 int Input::GetCursorIndex()
 {
-	return cursorIndex;
+	return cursor_index;
 }
 
 // TEXT EDITING METHODS
 void Input::CheckNewTextInput(const char* newTextInput)								// -----------------------------------------------------------------------------
 {
-	if (cursorIndex == strlen(input_string))											// If the cursor is at the end of the string.
+	if (cursor_index == strlen(input_string))											// If the cursor is at the end of the string.
 	{
 		AddTextInput(newTextInput);														// The incoming input text is added to the end of the string.
-		cursorIndex++;
+		cursor_index++;
 	}
 	else
 	{
 		InsertTextInput(newTextInput);													// If the cursor is anywhere else in the string, the incoming input text is added at the cursor' position.
-		cursorIndex++;
+		cursor_index++;
 	}
 }
 
@@ -371,16 +407,16 @@ void Input::AddTextInput(const char* origin)											// ----------------------
 
 void Input::InsertTextInput(const char* origin)										// -----------------------------------------------------------------------------
 {
-	char tmp[MAX_SIZE] = { *GetCutText(cursorIndex, cursorIndex, false, true) };		//Gets the part of the string to the right of the cursor and stores it.
+	char tmp[MAX_SIZE] = { *GetCutText(cursor_index, cursor_index, false, true) };		//Gets the part of the string to the right of the cursor and stores it.
 
-	int i = (GetInputTextLength() - (GetInputTextLength() - cursorIndex));				//Set the position from where the string will be copied taking into account the cursor's position.
-	for (int j = 0; j < (GetInputTextLength() - cursorIndex); j++)						//From the previously set position until the end of the string each character will be stored in tmp.
+	int i = (GetInputTextLength() - (GetInputTextLength() - cursor_index));				//Set the position from where the string will be copied taking into account the cursor's position.
+	for (int j = 0; j < (GetInputTextLength() - cursor_index); j++)						//From the previously set position until the end of the string each character will be stored in tmp.
 	{
 		tmp[j] = input_string[i];														//Stores input_string's character at index [i] and stores it in tmp's index [j]
 		i++;
 	}
 
-	DeleteTextInput(cursorIndex + 1);													//Deletes every character that is to the right of the cursor.
+	DeleteTextInput(cursor_index + 1);													//Deletes every character that is to the right of the cursor.
 	AddTextInput(origin);																//Adds the inputted text to the string.
 
 	AddTextInput(tmp);																	//Adds the previously stored tmp string to restore input_string, only that this time the inputted text passed as argument is in between.
@@ -450,7 +486,7 @@ void Input::DeleteTextInput(int positionIndex)										// ---------------------
 void Input::ClearTextInput()															// -----------------------------------------------------------------------------
 {
 	input_string[0] = '\0';																//Deletes all characters of input_string.
-	cursorIndex = 0;
+	cursor_index = 0;
 }
 
 void Input::Allocate(int required_memory)												// -----------------------------------------------------------------------------
