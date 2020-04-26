@@ -13,7 +13,7 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "GameplayScene.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "UI.h"
 
 #include "EntityManager.h"
@@ -76,7 +76,7 @@ bool Player::Update(float dt)
 	
 	CameraController(dt);
 
-	if (!App->gui->FirstElementUnderMouse()->CheckMousePos() && !App->pause)			//TMP. Dirty Fix(?)
+	if (!App->gui_manager->FirstElementUnderMouse()->CheckMousePos() && !App->pause)			//TMP. Dirty Fix(?)
 	{
 		DragSelection();
 
@@ -285,7 +285,7 @@ void Player::OrderUnitsToAttack()
 
 void Player::DrawCursor()
 {
-	if (CurrentlyInGameplayScene() && !App->gui->FirstElementUnderMouse()->CheckMousePos() && !App->pause)			//TMP. Dirty Fix(?)
+	if (CurrentlyInGameplayScene() && !App->gui_manager->FirstElementUnderMouse()->CheckMousePos() && !App->pause)			//TMP. Dirty Fix(?)
 	{
 		App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
 	}

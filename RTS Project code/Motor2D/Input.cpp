@@ -4,7 +4,7 @@
 #include "p2Log.h"
 #include "Application.h"
 #include "Window.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "UI.h"
 
 #include "Input.h"
@@ -152,6 +152,18 @@ bool Input::PreUpdate()
 				mouse_x = event.motion.x / scale;
 				mouse_y = event.motion.y / scale;
 				//LOG("Mouse motion x %d y %d", mouse_motion_x, mouse_motion_y);
+			break;
+
+			case SDL_CONTROLLERBUTTONDOWN:
+				controller_buttons[event.cbutton.button - 1] = KEY_DOWN;
+				LOG("Controller button %d down", event.cbutton.button - 1);
+
+			break;
+
+			case SDL_CONTROLLERBUTTONUP:
+				controller_buttons[event.cbutton.button - 1] = KEY_UP;
+				LOG("Controller button %d up", event.cbutton.button - 1);
+
 			break;
 		}
 	}

@@ -2,7 +2,7 @@
 #define __APPLICATION_H__
 
 #include "PugiXml\src\pugixml.hpp"
-#include <list>
+#include <vector>
 #include <string>
 #include "Module.h"
 #include "PerfTimer.h"
@@ -23,7 +23,7 @@ class PathFinding;
 class Collisions;
 class EntityManager;
 class Fonts;
-class Gui;
+class GuiManager;
 class Console;
 class Player;
 class TransitionManager;
@@ -52,7 +52,9 @@ public:
 	float GetDt();
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
-	//void GetSaveGames(std::list<std::string>& list_to_fill);
+
+	void GetSaveGames(std::vector<std::string>& list_to_fill);
+
 
 private:
 	
@@ -84,7 +86,7 @@ public:
 	PathFinding*		pathfinding;
 	EntityManager*		entity_manager;
 	Collisions*			collisions;
-	Gui*				gui;
+	GuiManager*			gui_manager;
 	Console*			console;
 	Player*				player;
 	TransitionManager*	transition_manager;
@@ -95,23 +97,23 @@ public:
 	uint				original_frame_cap;						//Stores the original frame cap at application start.
 	float				seconds_since_startup;					//Secons that have elapsed since app start.
 
-	bool				framesAreCapped;						//Keeps track whether the frame cap is on or off.
-	bool				vsyncIsActive;							//Keeps track whether Vsync is on or off.
+	bool				frames_are_capped;						//Keeps track whether the frame cap is on or off.
+	bool				vsync_is_active;							//Keeps track whether Vsync is on or off.
 	bool				pause;
 
 private:
 
-	std::list<Module*>	modules;
-	int					argc;
-	char**				args;
+	std::vector<Module*>	modules;
+	int						argc;
+	char**					args;
 
-	std::string			title;
-	std::string			organization;
+	std::string				title;
+	std::string				organization;
 
-	mutable bool		want_to_save;
-	bool				want_to_load;
-	std::string			load_game;
-	mutable std::string	save_game;
+	mutable bool			want_to_save;
+	bool					want_to_load;
+	std::string				load_game;
+	mutable std::string		save_game;
 
 	//Framerate
 	uint64				frame_count;			

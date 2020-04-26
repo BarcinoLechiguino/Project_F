@@ -53,6 +53,7 @@ public:
 	void LoadEntityTextures();
 	void UnLoadEntityTextures();
 	void LoadEntityAudios();
+	void UnLoadEntityAudios();
 
 	SDL_Texture* GetGathererTexture() const;
 	SDL_Texture* GetInfantryTexture() const;

@@ -3,25 +3,25 @@
 #include "Application.h"
 #include "Textures.h"
 #include "Input.h"
-#include "Gui.h"
+#include "GuiManager.h"
 
 #include "UI_Button.h"
 
 //UI_Button can be interactible (will almost always be) and draggable. Can potentially receive all events.
 //This element can receive up to 3 rects containing the coordinates of the sprites for each event (IDLE, HOVER & CLICKED).
-UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool isVisible, bool isInteractible, bool isDraggable, Module* listener, UI* parent,
+UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent,
 				SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked) : UI(element, x, y, *idle, listener, parent)
 {
-	tex = App->gui->GetAtlas();
+	tex = App->gui_manager->GetAtlas();
 
 	// --- Setting this element's flags to the ones passed as argument.
-	this->isVisible = isVisible;												//Sets the isVisible flag to the one passed as argument.
-	this->isInteractible = isInteractible;										//Sets the isInteractible flag to the one passed as argument. 
-	this->isDraggable = isDraggable;											//Sets the isDraggable flag to the one passed as argument.
-	this->dragXAxis = isDraggable;												//Sets the dragXaxis flag to the same as isDraggable. If it needs to be changed, it has to be done externally.
-	this->dragYAxis = isDraggable;												//Sets the dragYaxis flag to the same as isDraggable. If it needs to be changed, it has to be done externally.
-	prevMousePos = iPoint(0, 0);												//Initializes prevMousePos for this UI Element. Safety measure to avoid weird dragging behaviour.
-	initialPosition = GetScreenPos();											//Records the initial position where the element is at at app execution start.
+	this->is_visible = is_visible;												//Sets the isVisible flag to the one passed as argument.
+	this->is_interactible = is_interactible;									//Sets the isInteractible flag to the one passed as argument. 
+	this->is_draggable = is_draggable;											//Sets the isDraggable flag to the one passed as argument.
+	this->drag_x_axis = is_draggable;											//Sets the dragXaxis flag to the same as isDraggable. If it needs to be changed, it has to be done externally.
+	this->drag_y_axis = is_draggable;											//Sets the dragYaxis flag to the same as isDraggable. If it needs to be changed, it has to be done externally.
+	previous_mouse_position = iPoint(0, 0);										//Initializes prevMousePos for this UI Element. Safety measure to avoid weird dragging behaviour.
+	initial_position = GetScreenPos();											//Records the initial position where the element is at at app execution start.
 	
 	//If the SDL_Rect pointers are not null, then set the button rects to their data memebers.
 	if (idle != NULL)
@@ -39,7 +39,7 @@ UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool isVisible, bool isIn
 		this->clicked = *clicked;
 	}
 
-	if (this->isInteractible)													//If the button element is interactible.
+	if (this->is_interactible)													//If the button element is interactible.
 	{
 		this->listener = listener;												//This button's listener is set to the App->gui module (For OnCallEvent()).
 	}
@@ -56,7 +56,7 @@ UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool isVisible, bool isIn
 	}
 
 	ui_event = UI_EVENT::IDLE;
-	currentRect = this->idle;
+	current_rect = this->idle;
 }
 
 UI_Button::UI_Button() : UI()
@@ -64,9 +64,9 @@ UI_Button::UI_Button() : UI()
 
 bool UI_Button::Draw()
 {
-	CheckInput();																//Calling "Update" and Draw at the same time. 
+	CheckInput();																				//Calling "Update" and Draw at the same time. 
 
-	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &currentRect, 0.0f, 1.0f);
+	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &current_rect, 0.0f, 1.0f);
 
 	return true;
 }
@@ -76,7 +76,7 @@ void UI_Button::CheckInput()
 {
 	BROFILER_CATEGORY("Button_CheckInput", Profiler::Color::GhostWhite);
 
-	if (isVisible)																				//If the Button element is visible.
+	if (is_visible)																				//If the Button element is visible.
 	{
 		GetMousePos();																			//Gets the mouse's position on the screen.
 
@@ -84,21 +84,21 @@ void UI_Button::CheckInput()
 		if (!IsHovered() && (ui_event != UI_EVENT::HOVER))										//If the mouse is not on the button and event is not HOVER. TMP fix to have UNHOVER event.
 		{
 			ui_event = UI_EVENT::IDLE;
-			currentRect = idle;																	//Button Idle sprite.
+			current_rect = idle;																//Button Idle sprite.
 		}
 
 		// --- HOVER EVENT
 		if ((IsHovered() && IsForemostElement()) || IsFocused())								//If the mouse is on the button.
 		{
 			ui_event = UI_EVENT::HOVER;															//Button Hover sprite.
-			currentRect = hover;
+			current_rect = hover;
 		}
 
 		// --- UNHOVER EVENT
-		if ((!IsHovered() && (ui_event == UI_EVENT::HOVER)))									//If the mouse is on the button.
+		if ((!IsHovered() && (ui_event == UI_EVENT::HOVER) && !IsFocused()))									//If the mouse is on the button.
 		{		
 			ui_event = UI_EVENT::UNHOVER;
-			currentRect = idle;
+			current_rect = idle;
 		}
 
 		// --- CLICKED EVENT (Left Click)
@@ -106,26 +106,26 @@ void UI_Button::CheckInput()
 		{
 			if (IsForemostElement())
 			{
-				prevMousePos = GetMousePos();													//Sets the previous mouse position.
-				initialPosition = GetScreenPos();												//Sets initialPosition with the current position at mouse KEY_DOWN.	
-				isDragTarget = true;															//
+				previous_mouse_position = GetMousePos();										//Sets the previous mouse position.
+				initial_position = GetScreenPos();												//Sets initialPosition with the current position at mouse KEY_DOWN.	
+				is_drag_target = true;															//
 			}
 		}
 
 		if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)		//If the mouse is on the button and the left mouse button is pressed continuously.
 		{
-			if (IsForemostElement() || isDragTarget)															//If the UI Text element is the foremost element under the mouse. 
+			if (IsForemostElement() || is_drag_target)															//If the UI Text element is the foremost element under the mouse. 
 			{
 				ui_event = UI_EVENT::CLICKED;
-				currentRect = clicked;															//Button Clicked sprite is maintained.
+				current_rect = clicked;															//Button Clicked sprite is maintained.
 
-				if (ElementCanBeDragged() && isDraggable)										//If the UI Button element is draggable and is the foremost element under the mouse.
+				if (ElementCanBeDragged() && is_draggable)										//If the UI Button element is draggable and is the foremost element under the mouse.
 				{
 					DragElement();																//The UI Button element is dragged.
 
 					CheckElementChilds();														//Checks if this UI Button has any childs and updates them in consequence.
 
-					prevMousePos = GetMousePos();												//Updates prevMousePos so it can be dragged again next frame.
+					previous_mouse_position = GetMousePos();									//Updates prevMousePos so it can be dragged again next frame.
 				}
 			}
 		}
@@ -142,10 +142,10 @@ void UI_Button::CheckInput()
 				ui_event = UI_EVENT::UNHOVER;
 			}
 
-			if (isDragTarget)
+			if (is_drag_target)
 			{
-				isDragTarget = false;
-				initialPosition = GetScreenPos();
+				is_drag_target = false;
+				initial_position = GetScreenPos();
 			}
 		}
 

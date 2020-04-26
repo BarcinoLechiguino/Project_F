@@ -5,6 +5,7 @@
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
+#define NUM_CONTROLLER_BUTTONS 17 
 #define MAX_SIZE 1000
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
@@ -61,6 +62,11 @@ public:
 		return mouse_buttons[id - 1];
 	}
 
+	KeyState GetControllerButtonDown(int id) const
+	{
+		return controller_buttons[id - 1];
+	}
+
 	// Check if a certain window event happened
 	bool GetWindowEvent(int code);
 
@@ -96,6 +102,7 @@ private:
 	bool		windowEvents[WE_COUNT];
 	KeyState*	keyboard;
 	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
+	KeyState	controller_buttons[NUM_CONTROLLER_BUTTONS];
 	int			mouse_motion_x;
 	int			mouse_motion_y;
 	int			mouse_x;
@@ -106,7 +113,7 @@ private:
 	char*		input_string;
 	int			text_size;
 	bool		textInputEnabled;
-	int			prevLength;
+	int			previous_length;
 	int			cursorIndex;
 };
 

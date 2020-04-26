@@ -5,7 +5,7 @@
 #include "Audio.h"
 #include "Map.h"
 #include "Pathfinding.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
@@ -50,7 +50,7 @@ bool Barracks::CleanUp()
 
 	entity_sprite = nullptr;
 
-	App->gui->DeleteGuiElement(healthbar);
+	App->gui_manager->DeleteGuiElement(healthbar);
 	
 	return true;
 }
@@ -103,7 +103,7 @@ void Barracks::AttachHealthbarToEntity()
 	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
 	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
 
-	healthbar = (UI_Healthbar*)App->gui->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }
 
 void Barracks::GenerateUnit(ENTITY_TYPE type, int level)

@@ -10,7 +10,7 @@
 #include "Map.h"
 #include "EntityManager.h"
 
-#include "Gui.h"
+#include "GuiManager.h"
 #include "UI_Image.h"
 #include "UI_Text.h"
 #include "UI_InputBox.h"
@@ -18,7 +18,7 @@
 
 #include "Console.h"
 
-Console::Console() : Module(), commandWasFound(false)
+Console::Console() : Module(), command_was_found(false)
 {
 	name = ("console");
 }
@@ -48,30 +48,33 @@ bool Console::PreUpdate()
 {	
 	BROFILER_CATEGORY("Console_PreUpdate", Profiler::Color::PowderBlue);
 
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)
+
+	/*if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)
 	{
-		commandWasFound = false;
+		command_was_found = false;
 		
-		for (std::list<Command*>::iterator command = commands.begin(); command != commands.end(); command++)
+		std::vector<Command*>::iterator command = commands.begin();
+
+		for (; command != commands.end(); ++command)
 		{
 			Command* comm = (*command);
 
 			if (App->input->CmpStr(App->input->GetInputText(), comm->command.c_str()))
 			{
 				comm->callback->OnCommand(comm->command.c_str());
-				commandHistory.push_back(comm);
-				commandWasFound = true;
+				command_history.push_back(comm);
+				command_was_found = true;
 				break;
 			}
 		}
 		
-		if (!commandWasFound)
+		if (!command_was_found)
 		{
 			console_output->RefreshTextInput("Error: COMMAND NOT FOUND");
 		}
 
 		App->input->ClearTextInput();
-	}
+	}*/
 
 	//if (ConsoleIsOpen())
 	//{
@@ -114,12 +117,14 @@ bool Console::PostUpdate()
 
 bool Console::CleanUp()
 {
-	for (std::list<Command*>::iterator command = commands.begin(); command != commands.end(); command++)
+	std::vector<Command*>::iterator command = commands.begin();
+
+	for (; command != commands.end(); ++command)
 	{
 		RELEASE((*command));
 	}
 
-	commandHistory.clear();
+	command_history.clear();
 	commands.clear();
 	
 	return true;
@@ -146,9 +151,9 @@ void Console::InitConsole()
 	bg_colour.b = console.child("bg_colour").attribute("b").as_int();
 	bg_colour.a = console.child("bg_colour").attribute("a").as_int();
 
-	bg_isVisible = console.child("bg_isVisible").attribute("value").as_bool();
-	bg_isInteractible = console.child("bg_isInteractible").attribute("value").as_bool();
-	bg_isDraggable = console.child("bg_isDraggable").attribute("value").as_bool();
+	bg_is_visible = console.child("bg_isVisible").attribute("value").as_bool();
+	bg_is_interactible = console.child("bg_isInteractible").attribute("value").as_bool();
+	bg_is_draggable = console.child("bg_isDraggable").attribute("value").as_bool();
 
 	// --- OUTPUT
 	output_position.x = console.child("output_position").attribute("x").as_int();
@@ -167,9 +172,9 @@ void Console::InitConsole()
 	output_font_colour.b = console.child("output_font_colour").attribute("b").as_int();
 	output_font_colour.a = console.child("output_font_colour").attribute("a").as_int();
 
-	output_isVisible = console.child("output_isVisible").attribute("value").as_bool();
-	output_isInteractible = console.child("output_isInteractible").attribute("value").as_bool();;
-	output_isDraggable = console.child("output_isDraggable").attribute("value").as_bool();
+	output_is_visible = console.child("output_isVisible").attribute("value").as_bool();
+	output_is_interactible = console.child("output_isInteractible").attribute("value").as_bool();;
+	output_is_draggable = console.child("output_isDraggable").attribute("value").as_bool();
 
 	// --- INPUT
 	input_position.x = console.child("input_position").attribute("x").as_int();
@@ -201,10 +206,10 @@ void Console::InitConsole()
 	input_text_offset.x = console.child("input_text_offset").attribute("x").as_int();
 	input_text_offset.y = console.child("input_text_offset").attribute("y").as_int();
 
-	cursor_blinkFrequency = console.child("cursor_blinkFrequency").attribute("frequency").as_float();
-	input_isVisible = console.child("input_isVisible").attribute("value").as_bool();
-	input_isInteractible = console.child("input_isInteractible").attribute("value").as_bool();
-	input_isDraggable = console.child("input_isDraggable").attribute("value").as_bool();
+	cursor_blink_frequency = console.child("cursor_blinkFrequency").attribute("frequency").as_float();
+	input_is_visible = console.child("input_isVisible").attribute("value").as_bool();
+	input_is_interactible = console.child("input_isInteractible").attribute("value").as_bool();
+	input_is_draggable = console.child("input_isDraggable").attribute("value").as_bool();
 
 	// --- SCROLLBAR
 	scroll_position.x = console.child("scroll_position").attribute("x").as_int();
@@ -232,9 +237,9 @@ void Console::InitConsole()
 	drag_x_axis = console.child("drag_x_axis").attribute("value").as_bool();
 	drag_y_axis = console.child("drag_y_axis").attribute("value").as_bool();
 	inverted_scrolling = console.child("inverted_scrolling").attribute("value").as_bool();
-	scroll_isVisible = console.child("scroll_isVisible").attribute("value").as_bool();
-	scroll_isInteractible = console.child("scroll_isInteractible").attribute("value").as_bool();
-	scroll_isDraggable = console.child("scroll_isDraggable").attribute("value").as_bool();
+	scroll_is_visible = console.child("scroll_isVisible").attribute("value").as_bool();
+	scroll_is_interactible = console.child("scroll_isInteractible").attribute("value").as_bool();
+	scroll_is_draggable = console.child("scroll_isDraggable").attribute("value").as_bool();
 }
 
 void Console::CreateConsoleElements()
@@ -244,30 +249,30 @@ void Console::CreateConsoleElements()
 
 	std::string defaultString = "DefaultString";
 
-	console_background = (UI_Image*)App->gui->CreateImage(UI_ELEMENT::EMPTY, bg_position.x, bg_position.y, bg_rect, bg_isVisible, bg_isInteractible, bg_isDraggable, nullptr, nullptr);
+	console_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, bg_position.x, bg_position.y, bg_rect, bg_is_visible, bg_is_interactible, bg_is_draggable, nullptr, nullptr);
 	
-	console_output = (UI_Text*)App->gui->CreateText(UI_ELEMENT::TEXT, output_position.x, output_position.y, output_rect, output_font, output_font_colour
-												, output_isVisible, output_isInteractible, output_isDraggable, nullptr, console_background);
+	console_output = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, output_position.x, output_position.y, output_rect, output_font, output_font_colour
+												, output_is_visible, output_is_interactible, output_is_draggable, nullptr, console_background);
 
-	console_input = (UI_InputBox*)App->gui->CreateInputBox(UI_ELEMENT::INPUTBOX, input_position.x, (console_background->GetHitbox().h - input_rect.h), input_rect, input_font, input_font_colour
-												, cursor_rect, cursor_colour, input_text_offset, cursor_blinkFrequency, input_isVisible, input_isInteractible, input_isDraggable
+	console_input = (UI_InputBox*)App->gui_manager->CreateInputBox(UI_ELEMENT::INPUTBOX, input_position.x, (console_background->GetHitbox().h - input_rect.h), input_rect, input_font, input_font_colour
+												, cursor_rect, cursor_colour, input_text_offset, cursor_blink_frequency, input_is_visible, input_is_interactible, input_is_draggable
 												, nullptr, console_background, &defaultString, true);
 
-	console_scroll = (UI_Scrollbar*)App->gui->CreateScrollbar(UI_ELEMENT::SCROLLBAR, scroll_position.x, scroll_position.y, scrollbar_rect, thumb_rect, thumb_offset, drag_area, drag_factor
-												, drag_x_axis, drag_y_axis, inverted_scrolling, scroll_isVisible, scroll_isDraggable, scroll_isInteractible, nullptr, console_background
+	console_scroll = (UI_Scrollbar*)App->gui_manager->CreateScrollbar(UI_ELEMENT::SCROLLBAR, scroll_position.x, scroll_position.y, scrollbar_rect, thumb_rect, thumb_offset, drag_area, drag_factor
+												, drag_x_axis, drag_y_axis, inverted_scrolling, scroll_is_visible, scroll_is_draggable, scroll_is_interactible, nullptr, console_background
 												, NULL, iPoint(0, 0), true);
 
 	console_scroll->LinkScroll(console_output);
 
-	if (console_background->isVisible)
+	if (console_background->is_visible)
 	{
-		App->gui->focusedElement = console_input;
+		App->gui_manager->focused_element = console_input;
 	}
 }
 
 void Console::DrawBackgroundElement()
 {
-	if (console_background->isVisible)
+	if (console_background->is_visible)
 	{
 		App->render->DrawQuad(console_background->GetHitbox(), bg_colour.r, bg_colour.g, bg_colour.b, bg_colour.a, true, false);
 	}
@@ -275,7 +280,7 @@ void Console::DrawBackgroundElement()
 
 bool Console::ConsoleIsOpen()
 {
-	return console_background->isVisible;
+	return console_background->is_visible;
 
 	return false;
 }
@@ -312,9 +317,9 @@ void Console::CreateConsoleCommands()
 	// App Commands
 	enable_pause		= "enable_pause";
 	disable_pause		= "disable_pause";
-	enableFrameCap		= "enable_frame_cap";
-	disableFrameCap		= "disable_frame_cap";
-	resetFrameCap		= "reset_frame_cap";
+	enable_frame_cap	= "enable_frame_cap";
+	disable_frame_cap	= "disable_frame_cap";
+	reset_frame_cap		= "reset_frame_cap";
 	FPS_30				= "FPS 30";									//EVERYTHING IS A LIE. JUST SMOKE AND MIRRORS.
 	FPS_60				= "FPS 60";
 	FPS_120				= "FPS 120";
@@ -327,9 +332,9 @@ void Console::CreateConsoleCommands()
 	
 	CreateCommand(enable_pause, this, 1, 1);
 	CreateCommand(disable_pause, this, 1, 1);
-	CreateCommand(enableFrameCap, this, 1, 1);
-	CreateCommand(disableFrameCap, this, 1, 1);
-	CreateCommand(resetFrameCap, this, 1, 1);
+	CreateCommand(enable_frame_cap, this, 1, 1);
+	CreateCommand(disable_frame_cap, this, 1, 1);
+	CreateCommand(reset_frame_cap, this, 1, 1);
 	CreateCommand(FPS_30, this, 1, 1);
 	CreateCommand(FPS_60, this, 1, 1);
 	CreateCommand(FPS_120, this, 1, 1);
@@ -355,15 +360,15 @@ void Console::OnCommand(const char* command, const char* subCommand)
 	{
 		App->pause = false;												// Disable Pause Mode
 	}
-	if (App->input->CmpStr(command, enableFrameCap))					// -----------------------------------------------------------------------------------
+	if (App->input->CmpStr(command, enable_frame_cap))					// -----------------------------------------------------------------------------------
 	{
-		App->framesAreCapped = true;									// Enable Frame Cap
+		App->frames_are_capped = true;									// Enable Frame Cap
 	}
-	if (App->input->CmpStr(command, disableFrameCap))					// -----------------------------------------------------------------------------------
+	if (App->input->CmpStr(command, disable_frame_cap))					// -----------------------------------------------------------------------------------
 	{
-		App->framesAreCapped = false;									// Disable Frame Cap
+		App->frames_are_capped = false;									// Disable Frame Cap
 	}
-	if (App->input->CmpStr(command, resetFrameCap))						// -----------------------------------------------------------------------------------
+	if (App->input->CmpStr(command, reset_frame_cap))					// -----------------------------------------------------------------------------------
 	{
 		App->frame_cap = App->original_frame_cap;						// Reset Frame Cap
 	}

@@ -2,7 +2,7 @@
 #include "Window.h"
 #include "Fonts.h"
 #include "Input.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "Audio.h"
 #include "UI.h"
 #include "UI_Button.h"
@@ -28,9 +28,7 @@ bool LoseScene::Awake(pugi::xml_node&)
 }
 
 bool LoseScene::Start()
-{
-	App->gui->Start();
-	
+{	
 	LoadGuiElements();
 	
 	InitScene();
@@ -61,7 +59,7 @@ bool LoseScene::CleanUp()
 {
 	App->tex->UnLoad(background_texture);
 	
-	App->gui->CleanUp();
+	App->gui_manager->DestroyGuiElements();
 	
 	return true;
 }
@@ -78,7 +76,7 @@ void LoseScene::LoadGuiElements()
 	SDL_Rect lose_back_to_menu_hover = { 204, 137, 189, 23 };
 	SDL_Rect lose_back_to_menu_clicked = { 408, 137, 189, 23 };
 
-	lose_main_menu = (UI_Button*)App->gui->CreateButton(UI_ELEMENT::BUTTON, 555, 621, true, true, false, this, nullptr
+	lose_main_menu = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 555, 621, true, true, false, this, nullptr
 		, &lose_back_to_menu_idle, &lose_back_to_menu_hover, &lose_back_to_menu_clicked);
 }
 
@@ -86,8 +84,8 @@ void LoseScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	if (element == lose_main_menu && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, true, true);
-		App->audio->PlayFx(App->gui->exit_fx, 0);
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, true, true);
+		App->audio->PlayFx(App->gui_manager->exit_fx, 0);
 	}
 }
 
@@ -100,20 +98,25 @@ void LoseScene::ExecuteTransition()
 
 	if (App->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_SCENE, 0.5f, true, 10, false, true);
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, false, true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_3) == KeyState::KEY_DOWN)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 12, false, true);
+		App->transition_manager->CreateAlternatingBars(SCENES::OPTIONS_SCENE, 0.5f, true, 10, false, true);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_4) == KeyState::KEY_DOWN)
 	{
+		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 12, false, true);
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	{
 		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 12, true, true);
 	}
 
-	// No KP_5 because we are in the 5th scene.
+	// No 6 because we are in the 6th scene.
 }
 
 void LoseScene::InitScene()

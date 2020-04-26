@@ -26,7 +26,7 @@ struct Collider
 		collider.y = y;
 	}
 
-	bool Check_Collision(const SDL_Rect& r) const;
+	bool CheckCollision(const SDL_Rect& r) const;
 };
 
 class Collisions : public Module 
@@ -66,8 +66,9 @@ private:
 public:
 	//Variables
 	Collider collider; //Call to struct from the collision module.
-	std::list<Collider*> collider_list;
 	bool collider_debug;
+
+	std::vector<Collider*> collider_list;
 
 private:
 

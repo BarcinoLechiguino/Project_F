@@ -52,84 +52,84 @@ public:
 	void DrawBackgroundElement();
 	bool ConsoleIsOpen();
 	Command* CreateCommand(const char* command, Module* callback, int min_arg, int max_arg);
-	void OnCommand(const char* command, const char* subCommand = nullptr);
+	void OnCommand(const char* command, const char* sub_command = nullptr);
 	//void DrawConsoleElements();
 
 public:
-	UI_Image*			console_background;
-	UI_Text*			console_output;
-	UI_InputBox*		console_input;
-	UI_Scrollbar*		console_scroll;
+	UI_Image*				console_background;
+	UI_Text*				console_output;
+	UI_InputBox*			console_input;
+	UI_Scrollbar*			console_scroll;
 
-	iPoint				bg_position;
-	SDL_Rect			bg_rect;
-	SDL_Color			bg_colour;
-	bool				bg_isVisible;
-	bool				bg_isInteractible;
-	bool				bg_isDraggable;
+	iPoint					bg_position;
+	SDL_Rect				bg_rect;
+	SDL_Color				bg_colour;
+	bool					bg_is_visible;
+	bool					bg_is_interactible;
+	bool					bg_is_draggable;
 
-	iPoint				output_position;
-	SDL_Rect			output_rect;
-	std::string			output_font_path;
-	_TTF_Font*			output_font;
-	int					output_font_size;
-	SDL_Color			output_font_colour;
-	bool				output_isVisible;
-	bool				output_isInteractible;
-	bool				output_isDraggable;
+	iPoint					output_position;
+	SDL_Rect				output_rect;
+	std::string				output_font_path;
+	_TTF_Font*				output_font;
+	int						output_font_size;
+	SDL_Color				output_font_colour;
+	bool					output_is_visible;
+	bool					output_is_interactible;
+	bool					output_is_draggable;
 
-	iPoint				input_position;
-	SDL_Rect			input_rect;
-	std::string			input_font_path;
-	_TTF_Font*			input_font;
-	int					input_font_size;
-	SDL_Color			input_font_colour;
-	SDL_Rect			cursor_rect;
-	SDL_Color			cursor_colour;
-	iPoint				input_text_offset;
-	float				cursor_blinkFrequency;
-	bool				input_isVisible;
-	bool				input_isInteractible;
-	bool				input_isDraggable;
+	iPoint					input_position;
+	SDL_Rect				input_rect;
+	std::string				input_font_path;
+	_TTF_Font*				input_font;
+	int						input_font_size;
+	SDL_Color				input_font_colour;
+	SDL_Rect				cursor_rect;
+	SDL_Color				cursor_colour;
+	iPoint					input_text_offset;
+	float					cursor_blink_frequency;
+	bool					input_is_visible;
+	bool					input_is_interactible;
+	bool					input_is_draggable;
 
-	iPoint				scroll_position;
-	SDL_Rect			scrollbar_rect;
-	SDL_Rect			thumb_rect;
-	iPoint				thumb_offset;
-	SDL_Rect			drag_area;
-	float				drag_factor;
-	bool				drag_x_axis;
-	bool				drag_y_axis;
-	bool				inverted_scrolling;
-	bool				scroll_isVisible;
-	bool				scroll_isInteractible;
-	bool				scroll_isDraggable;
+	iPoint					scroll_position;
+	SDL_Rect				scrollbar_rect;
+	SDL_Rect				thumb_rect;
+	iPoint					thumb_offset;
+	SDL_Rect				drag_area;
+	float					drag_factor;
+	bool					drag_x_axis;
+	bool					drag_y_axis;
+	bool					inverted_scrolling;
+	bool					scroll_is_visible;
+	bool					scroll_is_interactible;
+	bool					scroll_is_draggable;
 
 
-	bool				runGame;
-	bool				commandWasFound;
-	std::list<Command*>	commands;
-	std::list<Command*>	commandHistory;
+	bool					run_game;
+	bool					command_was_found;
+	std::vector<Command*>	commands;
+	std::vector<Command*>	command_history;
 
 private:
-	pugi::xml_document	config_file;
-	pugi::xml_node		console;
+	pugi::xml_document		config_file;
+	pugi::xml_node			console;
 
 	// Console Strings
-	const char*			command_list;
-	const char*			enable_pause;
-	const char*			disable_pause;
-	const char*			enableFrameCap;
-	const char*			disableFrameCap;
-	const char*			resetFrameCap;
-	const char*			FPS_30;
-	const char*			FPS_45;
-	const char*			FPS_60;
-	const char*			FPS_90;
-	const char*			FPS_120;
+	const char*				command_list;
+	const char*				enable_pause;
+	const char*				disable_pause;
+	const char*				enable_frame_cap;
+	const char*				disable_frame_cap;
+	const char*				reset_frame_cap;
+	const char*				FPS_30;
+	const char*				FPS_45;
+	const char*				FPS_60;
+	const char*				FPS_90;
+	const char*				FPS_120;
 
-	const char*			enable_god_mode;
-	const char*			disable_god_mode;
+	const char*				enable_god_mode;
+	const char*				disable_god_mode;
 };
 
 #endif // !__CONSOLE_H__

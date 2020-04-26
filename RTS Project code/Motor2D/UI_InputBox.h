@@ -12,13 +12,15 @@ class UI_InputBox : public UI
 {
 public:
 	UI_InputBox();
-	UI_InputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColor, iPoint textOffset,
-		float blinkFrequency = 0.0f, bool isVisible = true, bool isInteractible = true, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr,
+	UI_InputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColor, iPoint text_offset,
+		float blink_frequency = 0.0f, bool is_visible = true, bool is_interactible = true, bool is_draggable = false, Module* listener = nullptr, UI* parent = nullptr,
 		std::string* defaultString = nullptr, bool emptyElements = false);
 
 	bool Draw();
 
 	void CheckInput();
+
+	void CleanUp();
 
 public:
 	void DrawInputBoxElements();
@@ -42,22 +44,21 @@ public:
 	int GetCurrentCursorIndex();							//Gets the current cursor index.
 
 private:
-	//SDL_Texture*	tex;
 	UI_Image		background;								//Background element of the Input Box.
 	UI_Text			text;									//Text element of the Input Box.
 	UI_Image		cursor;									//Cursor element of the Input Box.
 
 	_TTF_Font*		font;									//Loaded font.
-	int				textWidth;								//Current width of the text.
-	int				textHeight;								//Current height of the text.
-	iPoint			textOffset;								//Difference in origin position between the background's and the text's.
+	int				text_width;								//Current width of the text.
+	int				text_height;								//Current height of the text.
+	iPoint			text_offset;								//Difference in origin position between the background's and the text's.
 
-	SDL_Color		cursorColour;							//Colour of the cursor.
-	float			blinkTimer;								//Keeps track of the time (dt). Applied to the blinking of the cursor.
-	float			blinkFrequency;							//Amount of time that the cursor will spend in one state (visible/not visible). Set to 0 to make it always visible.
-	int				prevLength;								//Amount of letters currently in the text.
-	int				currentIndex;							//Each number of the cursorIndex corresponds with a letter. First letter: cursorIndex = 1...
-	int				cursorPositions[MAX_SIZE];				//Array that will keep track of all the positions that the cursor has been in. Each postion correspond with a cursor index.
+	SDL_Color		cursor_colour;							//Colour of the cursor.
+	float			blink_timer;								//Keeps track of the time (dt). Applied to the blinking of the cursor.
+	float			blink_frequency;							//Amount of time that the cursor will spend in one state (visible/not visible). Set to 0 to make it always visible.
+	int				previous_length;								//Amount of letters currently in the text.
+	int				current_index;							//Each number of the cursorIndex corresponds with a letter. First letter: cursorIndex = 1...
+	int				cursor_positions[MAX_SIZE];				//Array that will keep track of all the positions that the cursor has been in. Each postion correspond with a cursor index.
 };
 
 #endif // !__UI_INPUTBOX_H__

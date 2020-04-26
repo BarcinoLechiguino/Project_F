@@ -3,7 +3,7 @@
 #include "Input.h"
 #include "Collisions.h"
 #include "Map.h"
-#include "Gui.h"
+#include "GuiManager.h"
 #include "Player.h"
 #include "SceneManager.h"
 #include "EntityManager.h"
@@ -128,7 +128,7 @@ void Scene::DebugKeys()
 
 	if (App->input->GetKey(SDL_SCANCODE_F4) == KeyState::KEY_DOWN)						//Enable/Disable UI_Debug Key. (Display all UI elements hitboxes)
 	{
-		App->gui->ui_debug = !App->gui->ui_debug;
+		App->gui_manager->ui_debug = !App->gui_manager->ui_debug;
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KeyState::KEY_DOWN)						//Save Game Key

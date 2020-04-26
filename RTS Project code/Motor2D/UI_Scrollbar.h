@@ -8,13 +8,15 @@ class UI_Image;
 class UI_Scrollbar : public UI
 {
 public:
-	UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect dragArea, float dragFactor, bool dragXAxis = false, bool dragYAxis = true,
-		bool invertedScrolling = false, bool isVisible = true, bool isInteractible = false, bool isDraggable = false, Module* listener = nullptr, UI* parent = nullptr,
-		SDL_Rect* scrollMask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
+	UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect drag_area, float drag_factor, bool drag_x_axis = false, bool drag_y_axis = true,
+		bool inverted_scrolling = false, bool is_visible = true, bool is_interactible = false, bool is_draggable = false, Module* listener = nullptr, UI* parent = nullptr,
+		SDL_Rect* scroll_mask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
 
 	bool Draw();
 
 	void CheckInput();
+
+	void CleanUp();
 
 public:
 	void DrawScrollbarElements();
@@ -45,19 +47,19 @@ public:
 private:
 	UI_Image* bar;
 	UI_Image* thumb;
-	UI_Image* scrollMask;
+	UI_Image* scroll_mask;
 	
-	int scrollbarWidth;
-	int scrollbarHeight;
+	int scrollbar_width;
+	int scrollbar_height;
 
-	SDL_Rect	dragArea;
-	float		dragFactor;
-	iPoint		dragDisplacement;
-	iPoint		mouseWheelScroll;
-	bool		invertedScrolling;
-	float		arrowPosFactor;
-	iPoint		newThumbPos;
+	SDL_Rect	drag_area;
+	float		drag_factor;
+	iPoint		drag_displacement;
+	iPoint		mouse_wheel_scroll;
+	bool		inverted_scrolling;
+	float		arrow_position_factor;
+	iPoint		new_thumb_position;
 
-	std::vector<UI*> linkedElements;
+	std::vector<UI*> linked_elements;
 };
 #endif // !__UI_SCROLLBAR_H__

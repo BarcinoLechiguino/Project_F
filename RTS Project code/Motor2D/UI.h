@@ -58,13 +58,13 @@ public:
 	void SetHitbox(SDL_Rect hitbox);				//Sets the data members of a UI_Element's hitbox with the Screen as point of reference.
 	SDL_Rect GetHitbox() const;						//Gets the data members of a UI_Element's hitbox with the Screen as point of reference.
 	
-	void SetLocalPos(iPoint localPosition);			//Sets the position of a UI Element with it's Parent as point of reference.
+	void SetLocalPos(iPoint local_position);			//Sets the position of a UI Element with it's Parent as point of reference.
 	iPoint GetLocalPos() const;						//Gets the position of a UI Element with it's Parent as point of reference.
 
-	void SetLocalRect(SDL_Rect localRect);			//Sets the rect of a UI Element with the parent element as point of reference.
+	void SetLocalRect(SDL_Rect local_rect);			//Sets the rect of a UI Element with the parent element as point of reference.
 	SDL_Rect GetLocalRect() const;					//Gets the rect of a UI Element with the parent element as point of reference.
 
-	void SetLocalHitbox(SDL_Rect localHitbox);		//Sets the hitbox rect of a UI Element with the parent element as the point of reference.
+	void SetLocalHitbox(SDL_Rect local_hitbox);		//Sets the hitbox rect of a UI Element with the parent element as the point of reference.
 	SDL_Rect GetLocalHitbox();
 
 	iPoint GetMousePos() /*const*/;					//Gets the mouse's position.
@@ -83,15 +83,15 @@ public:
 	void CheckElementChilds();									//Checks if a UI Element has childs and updates them in case the parent element had changed its position (dragged)
 
 public:
-	bool		isVisible;							//Keeps track of whether or not a UI Element is visible or not. Can be overlapped with isInteractible.
-	bool		isInteractible;						//Keeps track of whether a UI Element is interactible or not.
-	bool		isDraggable;						//Keeps track of whether a UI Element is draggable or not.
-	iPoint		prevMousePos;						//Keeps track of the previous position of the mouse in the screen before starting to drag anything.
+	bool		is_visible;							//Keeps track of whether or not a UI Element is visible or not. Can be overlapped with isInteractible.
+	bool		is_interactible;					//Keeps track of whether a UI Element is interactible or not.
+	bool		is_draggable;						//Keeps track of whether a UI Element is draggable or not.
+	iPoint		previous_mouse_position;			//Keeps track of the previous position of the mouse in the screen before starting to drag anything.
 
-	bool		isDragTarget;						//Keeps track whether or not an element susceptible to be dragged is the element wanted to be dragged. Set on KEY_DOWN / KEY_UP.
+	bool		is_drag_target;						//Keeps track whether or not an element susceptible to be dragged is the element wanted to be dragged. Set on KEY_DOWN / KEY_UP.
 													//Used to avoid dragging the window after moving the mouse outside an element while keeping the mouse button clicked (button to window...).
-	bool		dragXAxis;							//Keeps track of which axis an element can be dragged in, in this case the X axis. If both bools are true or false, drag will be free.
-	bool		dragYAxis;							//Keeps track of which axis an element can be dragged in, in this case the Y axis. If both bools are true or false, drag will be free.
+	bool		drag_x_axis;						//Keeps track of which axis an element can be dragged in, in this case the X axis. If both bools are true or false, drag will be free.
+	bool		drag_y_axis;						//Keeps track of which axis an element can be dragged in, in this case the Y axis. If both bools are true or false, drag will be free.
 
 	UI_EVENT	ui_event;							//Defines which events will the UI_Elements send when interacted with.
 	UI_ELEMENT	element;							//Enum that defines which kind of element a UI element is.
@@ -100,23 +100,23 @@ public:
 
 	UI*			parent;								//Keeps track of the dependencies between UI elements.
 
-	iPoint		initialPosition;					//Keeps track of the initial position of a UI Element. Create Get/Set Methods?
+	iPoint		initial_position;					//Keeps track of the initial position of a UI Element. Create Get/Set Methods?
 	
-	bool		isFilled;							//Determines if an empty UI Element will have its rect drawn or not.
+	bool		is_filled;							//Determines if an empty UI Element will have its rect drawn or not.
 
 private:
 
 	iPoint		position;							//Position of the UI element in the world.
-	iPoint		localPosition;						//Position of the UI element relative to its parent's position in the world.
+	iPoint		local_position;						//Position of the UI element relative to its parent's position in the world.
 
 	SDL_Rect	rect;								//Rectangle that represents the UI element in the world. Used for textures.
-	SDL_Rect	localRect;							//Rectangle coordinates and size of the UI Element taking the parent element as point of reference.
+	SDL_Rect	local_rect;							//Rectangle coordinates and size of the UI Element taking the parent element as point of reference.
 
 	SDL_Rect	hitbox;								//Rectangle that represents the UI element's hitbox. Used for interactions.
-	SDL_Rect	localHitbox;						//Data members of hitbox (position) according to the parent's world position.
+	SDL_Rect	local_hitbox;						//Data members of hitbox (position) according to the parent's world position.
 
-	iPoint		mousePos;							//Position of the mouse.
-	iPoint		mouseMotion;						//Motion of the mouse. Used to move a dragged element around.
+	iPoint		mouse_position;						//Position of the mouse.
+	iPoint		mouse_motion;						//Motion of the mouse. Used to move a dragged element around.
 };
 
 #endif // !__UI_IMAGE_H__

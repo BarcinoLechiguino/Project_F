@@ -99,7 +99,7 @@
     <ClCompile Include="FadeToColour.cpp" />
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Gatherer.cpp" />
-    <ClCompile Include="Gui.cpp" />
+    <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="Infantry.cpp" />
     <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="LogoScene.cpp" />
@@ -109,6 +109,8 @@
     <ClCompile Include="Audio.cpp" />
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Map.cpp" />
+    <ClCompile Include="Movement.cpp" />
+    <ClCompile Include="OptionsScene.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -121,7 +123,7 @@
     <ClCompile Include="Static_Object.cpp" />
     <ClCompile Include="TileQuadTree.cpp" />
     <ClCompile Include="Timer.cpp" />
-    <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="mmgr\mmgr.cpp" />
     <ClCompile Include="p2Log.cpp" />
     <ClCompile Include="Render.cpp" />
@@ -164,12 +166,14 @@
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Gatherer.h" />
-    <ClInclude Include="Gui.h" />
+    <ClInclude Include="GuiManager.h" />
     <ClInclude Include="Infantry.h" />
     <ClInclude Include="Minimap.h" />
     <ClInclude Include="LogoScene.h" />
     <ClInclude Include="LoseScene.h" />
     <ClInclude Include="Map.h" />
+    <ClInclude Include="Movement.h" />
+    <ClInclude Include="OptionsScene.h" />
     <ClInclude Include="Pathfinding.h" />
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="Player.h" />
@@ -182,7 +186,7 @@
     <ClInclude Include="Static_Object.h" />
     <ClInclude Include="TileQuadTree.h" />
     <ClInclude Include="Timer.h" />
-    <ClInclude Include="MainScene.h" />
+    <ClInclude Include="MainMenuScene.h" />
     <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Input.h" />
