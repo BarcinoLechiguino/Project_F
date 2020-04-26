@@ -187,7 +187,7 @@ void OptionsScene::AdjustVolumeWithScrollbar()
 
 	if (music_scrollbar != nullptr)
 	{
-		float local_thumb_pos = music_scrollbar->GetThumbHitbox().x - music_scrollbar->GetHitbox().x;
+		float local_thumb_pos = (float)music_scrollbar->GetThumbHitbox().x - (float)music_scrollbar->GetHitbox().x;
 
 		float offset = local_thumb_pos / music_scrollbar->GetHitbox().w;										// Value from 0.0f to 1.0f
 
@@ -196,11 +196,11 @@ void OptionsScene::AdjustVolumeWithScrollbar()
 
 	if (sfx_scrollbar != nullptr)
 	{
-		float local_thumb_pos = sfx_scrollbar->GetThumbHitbox().x - sfx_scrollbar->GetHitbox().x;
+		float local_thumb_pos = (float)sfx_scrollbar->GetThumbHitbox().x - (float)sfx_scrollbar->GetHitbox().x;
 
 		float start_offset = local_thumb_pos / sfx_scrollbar->GetHitbox().w;									// Value from 0.0f to 1.0f
 
-		uint offset = floor(start_offset * 100);																// Will make the offset a valid value to modify the volume.					
+		uint offset = (int)floor(start_offset * 100.f);																// Will make the offset a valid value to modify the volume.					
 
 		App->audio->volume_fx = offset;
 	}
@@ -212,7 +212,7 @@ void OptionsScene::UpdateVolumeThumbPosition()
 
 	float local_thumb_pos = current * music_scrollbar->GetHitbox().w;
 
-	int world_thumb_pos = floor(local_thumb_pos + music_scrollbar->GetHitbox().x);
+	int world_thumb_pos = (int)floor(local_thumb_pos + (float)music_scrollbar->GetHitbox().x);
 
 	music_scrollbar->SetHitbox({ world_thumb_pos, music_scrollbar->GetHitbox().y, music_scrollbar->GetHitbox().w, music_scrollbar->GetHitbox().h });
 }
@@ -223,7 +223,7 @@ void OptionsScene::UpdateFXVolumeThumbPosition()
 
 	float local_thumb_pos = current * sfx_scrollbar->GetHitbox().w;
 
-	int world_thumb_pos = floor(local_thumb_pos + sfx_scrollbar->GetHitbox().x);
+	int world_thumb_pos = (int)floor(local_thumb_pos + (float)sfx_scrollbar->GetHitbox().x);
 
 	sfx_scrollbar->SetThumbHitbox({ world_thumb_pos, sfx_scrollbar->GetHitbox().y, sfx_scrollbar->GetHitbox().w, sfx_scrollbar->GetHitbox().h });
 
@@ -236,29 +236,29 @@ void OptionsScene::UpdateFXVolumeThumbPosition()
 
 void OptionsScene::ExecuteTransition()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_1) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::LOGO_SCENE, 0.5f, true, 3, true, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_2) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 5, true, true);
 	}
 
 	// No KP_3 because we are in the 3rd scene.
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_4) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 7, true, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_5) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, false, true);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_6) == KeyState::KEY_DOWN)
 	{
 		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, false, true);
 	}

@@ -1044,7 +1044,7 @@ void GameplayScene::ExecuteTransition()
 		App->transition_manager->CreateSlide(SCENES::WIN_SCENE, 0.5f, true, true, false, false, White);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_6) == KeyState::KEY_DOWN)
 	{
 		if (App->pause)
 		{
@@ -1200,7 +1200,7 @@ void GameplayScene::DebugHUDSpawn()
 
 				if (HUD_townhall_bar->is_visible)
 				{
-					HUD_townhall_bar->isVisible = !HUD_barracks_bar->isVisible;
+					HUD_townhall_bar->is_visible = !HUD_barracks_bar->is_visible;
 
 				}
 			}

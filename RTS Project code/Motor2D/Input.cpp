@@ -86,6 +86,8 @@ bool Input::PreUpdate()
 
 	TextInput();
 
+	int scale = (int)App->win->GetScale();
+
 	while(SDL_PollEvent(&event) != 0)
 	{
 		switch(event.type)
@@ -146,7 +148,7 @@ bool Input::PreUpdate()
 				break;
 
 			case SDL_MOUSEMOTION:
-				int scale = (int)App->win->GetScale();
+				
 				mouse_motion_x = event.motion.xrel / scale;
 				mouse_motion_y = event.motion.yrel / scale;
 				mouse_x = event.motion.x / scale;
@@ -155,13 +157,13 @@ bool Input::PreUpdate()
 			break;
 
 			case SDL_CONTROLLERBUTTONDOWN:
-				controller_buttons[event.cbutton.button - 1] = KEY_DOWN;
+				controller_buttons[event.cbutton.button - 1] = KeyState::KEY_DOWN;
 				LOG("Controller button %d down", event.cbutton.button - 1);
 
 			break;
 
 			case SDL_CONTROLLERBUTTONUP:
-				controller_buttons[event.cbutton.button - 1] = KEY_UP;
+				controller_buttons[event.cbutton.button - 1] = KeyState::KEY_UP;
 				LOG("Controller button %d up", event.cbutton.button - 1);
 
 			break;

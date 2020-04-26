@@ -91,7 +91,7 @@ void UI_Image::CheckInput()
 				}
 			}
 
-			if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)	//If the mouse is on the image and the left mouse button is continuously pressed.
+			if ((IsHovered() || is_drag_target) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_REPEAT)	//If the mouse is on the image and the left mouse button is continuously pressed.
 			{
 				if (IsForemostElement() || is_drag_target)												//If it is the first element under the mouse (in inverse order of draw) or is the drag target.
 				{
@@ -122,7 +122,7 @@ void UI_Image::CheckInput()
 				}
 			}
 
-			if ((IsHovered() || isDragTarget) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)				// -------------------------------------------------------------------
+			if ((IsHovered() || is_drag_target) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KeyState::KEY_UP)				// -------------------------------------------------------------------
 			{
 				if (is_drag_target)
 				{

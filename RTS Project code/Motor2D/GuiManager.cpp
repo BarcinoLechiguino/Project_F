@@ -66,13 +66,13 @@ bool GuiManager::Start()
 bool GuiManager::PreUpdate()
 {
 	// THIS
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_DOWN)						// Does not work, for now.
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KeyState::KEY_DOWN)						// Does not work, for now.
 	{
 		PassFocus();
 		//App->audio->PlayFx(new_game_fx, 0);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_DOWN)					// Does not work, for now.
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KeyState::KEY_DOWN)					// Does not work, for now.
 	{
 		if (focused_element != nullptr && focused_element->is_interactible)
 		{
