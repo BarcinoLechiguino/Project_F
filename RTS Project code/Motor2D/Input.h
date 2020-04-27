@@ -60,7 +60,7 @@ enum class BUTTON_BINDING						// Controller bindings. Implemented to be able to
 
 struct GameController
 {
-	SDL_GameController* controller_id;
+	_SDL_GameController* controller_id;
 	BUTTON_STATE		buttons[NUM_CONTROLLER_BUTTONS];
 
 	//int					axis;
