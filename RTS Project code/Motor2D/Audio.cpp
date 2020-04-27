@@ -67,11 +67,11 @@ bool Audio::Awake(pugi::xml_node& config)
 
 bool Audio::PreUpdate(float dt) {
 
-	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KeyState::KEY_REPEAT)
+	if (App->input->GetKey(SDL_SCANCODE_KP_PLUS) == KEY_STATE::KEY_REPEAT)
 	{
 		volume++;
 	}
-	else if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KeyState::KEY_REPEAT)
+	else if (App->input->GetKey(SDL_SCANCODE_KP_MINUS) == KEY_STATE::KEY_REPEAT)
 	{
 		volume--;
 	}

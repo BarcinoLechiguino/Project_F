@@ -5,11 +5,13 @@
 
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
-#define NUM_CONTROLLER_BUTTONS 17 
+#define NUM_CONTROLLER_BUTTONS 15
+#define MAX_AXIS 32767
 #define MAX_SIZE 1000
 //#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
+struct _SDL_GameController;
 
 enum EventWindow
 {
@@ -19,12 +21,50 @@ enum EventWindow
 	WE_COUNT
 };
 
-enum class KeyState
+enum class KEY_STATE
 {
 	KEY_IDLE = 0,
 	KEY_DOWN,
 	KEY_REPEAT,
 	KEY_UP
+};
+
+enum class BUTTON_STATE							// Controller input states. Added to improve readability. Could also be applied to the mouse.
+{
+	BUTTON_IDLE,
+	BUTTON_DOWN,
+	BUTTON_REPEAT,
+	BUTTON_UP
+};
+
+enum class AXIS_STATE							// Controller joystick states. 
+{
+	AXIS_IDLE,
+	AXIS_POSITIVE_DOWN,
+	AXIS_POSITIVE_REPEAT,
+	AXIS_POSITIVE_UP,
+	AXIS_NEGATIVE_DOWN,
+	AXIS_NEGATIVE_REPEAT,
+	AXIS_NEGATIVE_UP
+};
+
+enum class BUTTON_BINDING						// Controller bindings. Implemented to be able to use the selection shortcuts.
+{
+	SELECT_GATHERERS,
+	SELECT_SCOUTS,
+	SELECT_INFANTRIES,
+	SELECT_HEAVYS,
+	SELECT_TOWNHALL,
+	SELECT_BARRACKS
+};
+
+struct GameController
+{
+	SDL_GameController* controller_id;
+	BUTTON_STATE		buttons[NUM_CONTROLLER_BUTTONS];
+
+	//int					axis;
+	//AXIS_STATE			axis_state;
 };
 
 class Input : public Module
@@ -52,17 +92,17 @@ public:
 	bool GetWindowEvent(EventWindow ev);
 
 	// Check key states (includes mouse and joy buttons)
-	KeyState GetKey(int id) const
+	KEY_STATE GetKey(int id) const
 	{
 		return keyboard[id];
 	}
 
-	KeyState GetMouseButtonDown(int id) const
+	KEY_STATE GetMouseButtonDown(int id) const
 	{
 		return mouse_buttons[id - 1];
 	}
 
-	KeyState GetControllerButtonDown(int id) const
+	KEY_STATE GetControllerButtonDown(int id) const
 	{
 		return controller_buttons[id - 1];
 	}
@@ -100,9 +140,14 @@ private:
 
 private:
 	bool		windowEvents[WE_COUNT];
-	KeyState*	keyboard;
-	KeyState	mouse_buttons[NUM_MOUSE_BUTTONS];
-	KeyState	controller_buttons[NUM_CONTROLLER_BUTTONS];
+	
+	KEY_STATE*	keyboard;
+	KEY_STATE	mouse_buttons[NUM_MOUSE_BUTTONS];
+	KEY_STATE	controller_buttons[NUM_CONTROLLER_BUTTONS];
+
+	GameController game_controller;
+	
+	// MOUSE INPUT VARS
 	int			mouse_motion_x;
 	int			mouse_motion_y;
 	int			mouse_x;
@@ -110,11 +155,12 @@ private:
 	int			mouse_scroll_x;
 	int			mouse_scroll_y;
 
+	// TEXT INPUT VARS
+	bool		text_input_is_enabled;
 	char*		input_string;
 	int			text_size;
-	bool		textInputEnabled;
 	int			previous_length;
-	int			cursorIndex;
+	int			cursor_index;
 };
 
 #endif // __INPUT_H__

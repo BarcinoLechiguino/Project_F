@@ -57,7 +57,7 @@ private:
 	float			blink_timer;								//Keeps track of the time (dt). Applied to the blinking of the cursor.
 	float			blink_frequency;							//Amount of time that the cursor will spend in one state (visible/not visible). Set to 0 to make it always visible.
 	int				previous_length;								//Amount of letters currently in the text.
-	int				current_index;							//Each number of the cursorIndex corresponds with a letter. First letter: cursorIndex = 1...
+	int				current_index;							//Each number of the cursor_index corresponds with a letter. First letter: cursor_index = 1...
 	int				cursor_positions[MAX_SIZE];				//Array that will keep track of all the positions that the cursor has been in. Each postion correspond with a cursor index.
 };
 

@@ -70,7 +70,7 @@ bool SceneManager::PostUpdate()
 
 	current_scene->PostUpdate();
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KeyState::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_STATE::KEY_DOWN)
 	{
 		ret = false;
 	}
