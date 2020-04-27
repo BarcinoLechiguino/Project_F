@@ -9,7 +9,7 @@
 #include "TransitionManager.h"
 #include "Textures.h"
 #include "Audio.h"
-
+#include "p2Log.h"
 #include "LogoScene.h"
 
 LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE), accumulated_time(0.f), background_rect({0,0,0,0}),background_texture(nullptr),button_text(nullptr),logo_channel(0),logo_fx(0),logo_scene_duration(0.f),transition_button(nullptr)
@@ -30,6 +30,8 @@ bool LogoScene::Awake(pugi::xml_node&)
 bool LogoScene::Start()
 {
 	InitScene();	
+
+	LOG("Logo scene start");
 
 	return true;	//crash
 }

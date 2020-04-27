@@ -40,13 +40,13 @@ bool MainMenuScene::Start()
 {	
 	InitScene();
 
+	LOG("Main menu scene start");
+
 	return true;
 }
 
 bool MainMenuScene::PreUpdate()
 {
-
-
 	return true;
 }
 
@@ -82,7 +82,7 @@ bool MainMenuScene::CleanUp()
 
 void MainMenuScene::LoadGuiElements()
 {	
-	LOG("STARTED GUI LOAD");
+	//LOG("STARTED GUI LOAD");
 
 	// BACKGROUND
 	background_rect = { 0,0,1280,720 };
@@ -194,11 +194,11 @@ void MainMenuScene::ExecuteTransition()
 
 void MainMenuScene::InitScene()
 {
-	LOG("INITSCENE START");
+	//LOG("INITSCENE START");
 
 	menu_song = App->audio->LoadMusic("audio/music/Music_Menu.ogg");
 	App->audio->PlayMusic(menu_song, 0.0f);
 	LoadGuiElements();
 
-	LOG("INITSCENE END");
+	//LOG("INITSCENE END");
 }

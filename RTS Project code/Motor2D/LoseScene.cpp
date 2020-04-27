@@ -12,7 +12,7 @@
 
 #include "LoseScene.h"
 
-LoseScene::LoseScene() : Scene(SCENES::LOSE_SCENE)
+LoseScene::LoseScene() : Scene(SCENES::LOSE_SCENE),background_rect({0,0,0,0}),background_texture(nullptr),lose_main_menu(nullptr),lose_song(0)
 {
 
 }

@@ -41,9 +41,9 @@
 #include "GameplayScene.h"
 
 
-GameplayScene::GameplayScene() : Scene(SCENES::GAMEPLAY_SCENE)
+GameplayScene::GameplayScene() : Scene(SCENES::GAMEPLAY_SCENE), background_rect({ 0,0,0,0 }), background_texture(nullptr)
 {
-	name_tag = ("scene");
+	name_tag = ("Gameplay");
 }
 
 // Destructor
@@ -53,7 +53,6 @@ GameplayScene::~GameplayScene()
 // Called before render is available
 bool GameplayScene::Awake(pugi::xml_node& config)
 {
-	LOG("Loading Scene");
 
 	bool ret = true;
 
@@ -76,6 +75,8 @@ bool GameplayScene::Awake(pugi::xml_node& config)
 bool GameplayScene::Start()
 {
 	bool ret = true;
+
+	LOG("Gameplay scene start");
 
 	InitScene();
 
