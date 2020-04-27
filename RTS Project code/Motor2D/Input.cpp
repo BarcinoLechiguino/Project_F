@@ -1,4 +1,5 @@
 #include "SDL/include/SDL.h"
+#include "SDL/include/SDL_gamecontroller.h"
 #include "Brofiler\Brofiler.h"
 
 #include "p2Log.h"
@@ -16,14 +17,18 @@ Input::Input() : Module()
 	name = ("input");
 
 	keyboard = new KEY_STATE[MAX_KEYS];
-	//controller_buttons = new KEY_STATE[MAX_KEYS];										// If controller_buttons was a KEY_STATE*.
-	
 	memset(keyboard, 0, sizeof(KEY_STATE) * MAX_KEYS);									// 0 = KEY_IDLE
+
 	memset(mouse_buttons, 0, sizeof(KEY_STATE) * NUM_MOUSE_BUTTONS);					// 0 = KEY_IDLE
-	memset(controller_buttons, 0, sizeof(KEY_STATE) * NUM_CONTROLLER_BUTTONS);			// 0 = KEY_IDLE
+
 	//memset(controller_axis, 0, sizeof(KEY_STATE) * NUM_CONTROLLER_AXIS);				// 0 = KEY_IDLE
 
+	
+	game_controller.buttons = new BUTTON_STATE[NUM_CONTROLLER_BUTTONS];
 	memset(game_controller.buttons, 0, sizeof(BUTTON_STATE) * NUM_CONTROLLER_BUTTONS);	// 0 = KEY_IDLE
+
+	game_controller.id = nullptr;
+	game_controller.index = CONTROLLER_INDEX;
 }
 
 // Destructor
@@ -38,6 +43,7 @@ bool Input::Awake(pugi::xml_node& config)
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
+	SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
@@ -73,45 +79,60 @@ bool Input::PreUpdate()
 
 	for(int i = 0; i < MAX_KEYS; ++i)
 	{
-		if(keys[i] == 1)
+		if(keys[i] == SDL_PRESSED)																	// If a keyboard key was pressed. 1 represents PRESSED and 0 represents RELEASED.
 		{
-			if(keyboard[i] == KEY_STATE::KEY_IDLE)
+			if (keyboard[i] == KEY_STATE::KEY_IDLE)
+			{
 				keyboard[i] = KEY_STATE::KEY_DOWN;
+			}
 			else
+			{
 				keyboard[i] = KEY_STATE::KEY_REPEAT;
+			}
 		}
 		else
 		{
-			if(keyboard[i] == KEY_STATE::KEY_REPEAT || keyboard[i] == KEY_STATE::KEY_DOWN)
+			if (keyboard[i] == KEY_STATE::KEY_REPEAT || keyboard[i] == KEY_STATE::KEY_DOWN)
+			{
 				keyboard[i] = KEY_STATE::KEY_UP;
+			}
 			else
+			{
 				keyboard[i] = KEY_STATE::KEY_IDLE;
+			}
 		}
 	}
 
 	for(int i = 0; i < NUM_MOUSE_BUTTONS; ++i)
 	{
-		if(mouse_buttons[i] == KEY_STATE::KEY_DOWN)
+		if (mouse_buttons[i] == KEY_STATE::KEY_DOWN)
+		{
 			mouse_buttons[i] = KEY_STATE::KEY_REPEAT;
+		}
 
 		if(mouse_buttons[i] == KEY_STATE::KEY_UP)
+		{
 			mouse_buttons[i] = KEY_STATE::KEY_IDLE;
+		}
 	}
 
-	for (int i = 0; i < NUM_CONTROLLER_BUTTONS; ++i)
-	{
-		if (controller_buttons[i] == KEY_STATE::KEY_DOWN)
-			controller_buttons[i] = KEY_STATE::KEY_REPEAT;
+	//if (game_controller.id == nullptr)
+	//{
+	//	if (SDL_NumJoysticks() != 0)												//Returns the number of joysticks attached to the system. If != 0 then a joystick was detected.
+	//	{
+	//		if (SDL_IsGameController(CONTROLLER_INDEX))								//Joystick id's go from 0 to X. Since we only need to support one controller the id is 0.
+	//		{
+	//			game_controller.id = SDL_GameControllerOpen(CONTROLLER_INDEX);		//SDL_GameControllerOpen() will open a game controller with the given game controller index for use.
+	//		}
+	//	}
+	//	else
+	//	{
+	//		LOG("SDL_NumJoysticks ERROR: %s\n", SDL_GetError());
+	//	}
+	//}
 
-		if (controller_buttons[i] == KEY_STATE::KEY_UP)
-			controller_buttons[i] = KEY_STATE::KEY_IDLE;
-	}
+	SDL_GameControllerUpdate();
 
-	/*for (int i = 0; i < NUM_CONTROLLER_AXIS; ++i)
-	{
-
-	}*/
-	
 	TextInput();
 
 	int scale = (int)App->win->GetScale();
@@ -185,18 +206,33 @@ bool Input::PreUpdate()
 			break;
 
 			case SDL_CONTROLLERDEVICEADDED:
+				
+				if (game_controller.id == nullptr)
+				{
+					if (SDL_NumJoysticks() != 0)												//Returns the number of joysticks attached to the system. If != 0 then a joystick was detected.
+					{
+						if (SDL_IsGameController(CONTROLLER_INDEX))								//Joystick id's go from 0 to X. Since we only need to support one controller the id is 0.
+						{
+							game_controller.id = SDL_GameControllerOpen(CONTROLLER_INDEX);		//SDL_GameControllerOpen() will open a game controller with the given game controller index for use.
+						}
+					}
+					else
+					{
+						LOG("SDL_NumJoysticks ERROR: %s", SDL_GetError());
+					}
+				}
 
 				break;
 			
 			case SDL_CONTROLLERBUTTONDOWN:
-				controller_buttons[event.cbutton.button - 1] = KEY_STATE::KEY_DOWN;
-				LOG("Controller button %d down", event.cbutton.button - 1);
+				//controller_buttons[event.cbutton.button - 1] = KEY_STATE::KEY_DOWN;
+				//LOG("Controller button %d down", event.cbutton.button - 1);
 
 			break;
 
 			case SDL_CONTROLLERBUTTONUP:
-				controller_buttons[event.cbutton.button - 1] = KEY_STATE::KEY_UP;
-				LOG("Controller button %d up", event.cbutton.button - 1);
+				//controller_buttons[event.cbutton.button - 1] = KEY_STATE::KEY_UP;
+				//LOG("Controller button %d up", event.cbutton.button - 1);
 
 			break;
 
@@ -204,6 +240,39 @@ bool Input::PreUpdate()
 
 			break;
 		}
+	}
+
+	if (SDL_GameControllerGetAttached(game_controller.id))														//Will check if a given controller has been opened and is connected.
+	{
+		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)														//All controller buttons are checked. 
+		{
+			if (SDL_GameControllerGetButton(game_controller.id, SDL_GameControllerButton(i)) == SDL_PRESSED)	//If the method returns SDL_PRESSED that means that the given button has been pressed.
+			{
+				if (game_controller.buttons[i] == BUTTON_STATE::BUTTON_IDLE)
+				{
+					game_controller.buttons[i] = BUTTON_STATE::BUTTON_DOWN;
+				}
+				else
+				{
+					game_controller.buttons[i] = BUTTON_STATE::BUTTON_REPEAT;
+				}
+			}
+			else
+			{
+				if (game_controller.buttons[i] == BUTTON_STATE::BUTTON_DOWN || game_controller.buttons[i] == BUTTON_STATE::BUTTON_REPEAT)
+				{
+					game_controller.buttons[i] = BUTTON_STATE::BUTTON_UP;
+				}
+				else
+				{
+					game_controller.buttons[i] = BUTTON_STATE::BUTTON_IDLE;
+				}
+			}
+		}
+	}
+	else
+	{
+		LOG("Game controller was either not opened or not connected.");
 	}
 
 	return true;

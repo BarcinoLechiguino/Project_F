@@ -54,7 +54,7 @@ public:
 	void FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected) ;	//Finds close tiles to send units to
 
 
-	bool ChangeWalkability(iPoint pos, Entity* entity, uchar walkability);				//Change walkability of a tile in map array
+	bool ChangeWalkability(iPoint pos, Entity* entity, uchar walkability);						//Change walkability of a tile in map array
 
 
 private:
@@ -80,33 +80,20 @@ struct PathNode
 	PathNode(int g, int h, const iPoint& pos, const PathNode* parent);
 	PathNode(const PathNode& node);
 
-	uint FindWalkableAdjacents(PathList& list_to_fill) const;				// Fills a list (PathList) of all valid adjacent pathnodes
-	bool NodeIsAccessible(const iPoint& pos) const;							// Utility: Returns true if the given node position is accessible.
+	uint FindWalkableAdjacents(PathList& list_to_fill) const;									// Fills a list (PathList) of all valid adjacent pathnodes
+	bool NodeIsAccessible(const iPoint& pos) const;												// Utility: Returns true if the given node position is accessible.
 
-	int Score() const;														// Calculates this tile score
+	int Score() const;																			// Calculates this tile score
 	
-	int CalculateF(const iPoint& destination);								// Calculate the F for a specific destination tile
+	int CalculateF(const iPoint& destination);													// Calculate the F for a specific destination tile
 
-	//bool operator ==(PathNode node);
 
 	// -----------
 	int g;
 	int h;
 	iPoint pos;
-	const PathNode* parent; // needed to reconstruct the path in the end
+	const PathNode* parent;																		// needed to reconstruct the path in the end
 };
-
-//bool PathNode::operator ==(PathNode node)
-//{
-//	bool ret = false;
-//	
-//	if (g == node.g && h == node.h && pos == node.pos && parent == node.parent)
-//	{
-//		ret = true;
-//	}
-//
-//	return ret;
-//}
 
 // ---------------------------------------------------------------------
 // Helper struct to include a list of path nodes
