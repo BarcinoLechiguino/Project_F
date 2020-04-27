@@ -7,7 +7,8 @@ Transition::Transition(SCENES next_scene, float step_duration, bool non_lerp) :
 	step_duration(step_duration), 
 	non_lerp(non_lerp),
 	cutoff_rate(0.0f),
-	current_cutoff(0.0f)
+	current_cutoff(0.0f),
+	step(TRANSITION_STEP::NONE)
 {
 
 }

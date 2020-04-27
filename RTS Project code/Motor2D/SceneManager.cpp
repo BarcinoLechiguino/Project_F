@@ -110,6 +110,7 @@ void SceneManager::SwitchScene(SCENES scene_name)
 		if ((*item)->scene_name == scene_name)
 		{
 			current_scene = (*item);
+			break;
 		}
 	}
 
@@ -252,6 +253,8 @@ Scene* SceneManager::CreateScene(SCENES scene_name)
 	if (item != nullptr)
 	{
 		scenes.push_back(item);
+
+		LOG("Scene %s added", (*item).name_tag.c_str());
 	}
 
 	return item;

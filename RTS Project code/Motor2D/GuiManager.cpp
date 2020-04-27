@@ -108,7 +108,7 @@ bool GuiManager::PostUpdate()
 	
 	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
 
-	for (int i = 0; i < elements.size(); ++i)
+	for (int i = 0; i < (int)elements.size(); ++i)
 	{
 		if (elements[i]->is_visible)
 		{
@@ -245,7 +245,7 @@ void GuiManager::DestroyGuiElements()
 		focused_element = nullptr;
 	}
 	
-	for (int i = 0; i < elements.size(); ++i)
+	for (int i = 0; i < (int)elements.size(); ++i)
 	{
 		elements[i]->CleanUp();
 		RELEASE(elements[i]);

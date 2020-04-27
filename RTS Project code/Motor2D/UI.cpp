@@ -7,7 +7,7 @@
 
 UI::UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
 	element(element),position(x, y),rect(rect),listener(listener),parent(parent),drag_x_axis(false),drag_y_axis(false),is_draggable(false), is_drag_target(false), is_filled(false),
-	 is_interactible(false), local_hitbox({ 0,0,0,0 }), local_rect({0,0,0,0}),ui_event(UI_EVENT::IDLE),hitbox({0,0,0,0})
+	 is_visible(false),is_interactible(false), local_hitbox({ 0,0,0,0 }), local_rect({0,0,0,0}),ui_event(UI_EVENT::IDLE),hitbox({0,0,0,0})
 	
 {
 	//hitbox = {GetPosition().x, GetPosition().y, GetRect().w, GetRect().h };

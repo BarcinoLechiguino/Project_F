@@ -80,7 +80,7 @@ TTF_Font* const Fonts::Load(const char* path, int size)
 	}
 	else
 	{
-		LOG("Successfully loaded font %s size %d", path, size);
+		//LOG("Successfully loaded font %s size %d", path, size);
 		fonts.push_back(font);
 	}
 
