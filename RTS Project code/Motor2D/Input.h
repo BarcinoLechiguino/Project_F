@@ -6,6 +6,7 @@
 //#define NUM_KEYS 352
 #define NUM_MOUSE_BUTTONS 5
 #define NUM_CONTROLLER_BUTTONS 15
+#define CONTROLLER_INDEX 0
 #define MAX_AXIS 32767
 #define MAX_SIZE 1000
 //#define LAST_KEYS_PRESSED_BUFFER 50
@@ -58,10 +59,13 @@ enum class BUTTON_BINDING						// Controller bindings. Implemented to be able to
 	SELECT_BARRACKS
 };
 
-struct GameController
+struct GameController											// --- Game controller struct. Will contain all controller variables
 {
-	_SDL_GameController* controller_id;
-	BUTTON_STATE		buttons[NUM_CONTROLLER_BUTTONS];
+	_SDL_GameController*	id;									// Game controller identifier pointer. Represents a given game controller within the system.
+	int						index;								// Game controller joystick index. As this was implemented for a single player game, the index will always be 0;
+
+	//BUTTON_STATE			buttons[NUM_CONTROLLER_BUTTONS];	// All the button inputs that will be detected by the system from a given game controller.
+	BUTTON_STATE*			buttons;							// All the button inputs that will be detected by the system from a given game controller.
 
 	//int					axis;
 	//AXIS_STATE			axis_state;
@@ -102,9 +106,9 @@ public:
 		return mouse_buttons[id - 1];
 	}
 
-	KEY_STATE GetControllerButtonDown(int id) const
+	BUTTON_STATE GetControllerButtonDown(int id) const
 	{
-		return controller_buttons[id - 1];
+		return game_controller.buttons[id];
 	}
 
 	// Check if a certain window event happened
@@ -139,28 +143,27 @@ private:
 	void Allocate(int required_memory);
 
 private:
-	bool		windowEvents[WE_COUNT];
+	bool			windowEvents[WE_COUNT];
 	
-	KEY_STATE*	keyboard;
-	KEY_STATE	mouse_buttons[NUM_MOUSE_BUTTONS];
-	KEY_STATE	controller_buttons[NUM_CONTROLLER_BUTTONS];
+	KEY_STATE*		keyboard;
+	KEY_STATE		mouse_buttons[NUM_MOUSE_BUTTONS];
 
-	GameController game_controller;
+	GameController	game_controller;
 	
-	// MOUSE INPUT VARS
-	int			mouse_motion_x;
-	int			mouse_motion_y;
-	int			mouse_x;
-	int			mouse_y;
-	int			mouse_scroll_x;
-	int			mouse_scroll_y;
+	// --- MOUSE INPUT VARS ---
+	int				mouse_motion_x;
+	int				mouse_motion_y;
+	int				mouse_x;
+	int				mouse_y;
+	int				mouse_scroll_x;
+	int				mouse_scroll_y;
 
-	// TEXT INPUT VARS
-	bool		text_input_is_enabled;
-	char*		input_string;
-	int			text_size;
-	int			previous_length;
-	int			cursor_index;
+	// --- TEXT INPUT VARS ---
+	bool			text_input_is_enabled;
+	char*			input_string;
+	int				text_size;
+	int				previous_length;
+	int				cursor_index;
 };
 
 #endif // __INPUT_H__

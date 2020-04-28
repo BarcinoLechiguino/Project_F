@@ -139,7 +139,8 @@ void Player::CameraController(float dt)
 	
 	if (CurrentlyInGameplayScene())										// If the current scene is FIRST_SCENE (gameplay scene)
 	{	
-		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_REPEAT || App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_A) == KEY_STATE::KEY_DOWN)								//Left
+		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_REPEAT 
+			|| App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT) == BUTTON_STATE::BUTTON_REPEAT)								//Left
 		{
 			if (App->render->camera.x < scene_camera_x_limit.x)
 			{
@@ -147,7 +148,8 @@ void Player::CameraController(float dt)
 			}
 		}
 
-		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_STATE::KEY_REPEAT)			//Right
+		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_STATE::KEY_REPEAT 
+			|| App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == BUTTON_STATE::BUTTON_REPEAT)			//Right
 		{
 			if (App->render->camera.x > scene_camera_x_limit.y)
 			{
@@ -155,7 +157,8 @@ void Player::CameraController(float dt)
 			}
 		}
 
-		if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_STATE::KEY_REPEAT)			//Bottom
+		if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_STATE::KEY_REPEAT 
+			|| App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == BUTTON_STATE::BUTTON_REPEAT)			//Bottom
 		{
 			if (App->render->camera.y > scene_camera_y_limit.x)
 			{
@@ -163,7 +166,8 @@ void Player::CameraController(float dt)
 			}
 		}
 
-		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_STATE::KEY_REPEAT)								//Up
+		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_STATE::KEY_REPEAT 
+			|| App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_DPAD_UP) == BUTTON_STATE::BUTTON_REPEAT)								//Up
 		{
 			if (App->render->camera.y < scene_camera_y_limit.y)
 			{

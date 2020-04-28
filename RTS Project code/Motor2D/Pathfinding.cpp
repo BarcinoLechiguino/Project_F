@@ -654,6 +654,8 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	return ret;
 }
 
+
+// --- LIST TO MAP CREATE PATH
 /*int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 {
 	BROFILER_CATEGORY("CreatePath", Profiler::Color::SlateGray)
@@ -668,8 +670,9 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	PathList open;																	            //Declares/Creates the open list (frontier queue).
 	PathList closed;																            //Declares/Creates the closed list (visited list).
 
-	//PathNode lowest_node;
-	//PathNode current_node;
+	PathNode lowest_node;
+	PathNode current_node;
+	//PathNode* current_node;
 
 	PathNode origin_node(0, 0, origin, nullptr);									            //Declares/Creates a node that will store the data of the origin tile. G, H, position and parent are passed as arguments. 
 
@@ -678,11 +681,11 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 	while (open.list.size() != 0)								            					//While the list is not empty. If the count is higher than 0 that means the list is not empty.
 	{	
 		PathNode lowest_node = open.list.begin()->second;										// First element will always have the lowest F (?)
-
+		
 		PathNode current_node = lowest_node;
-
+		
 		closed.list.insert(std::make_pair((lowest_node.g + lowest_node.h), lowest_node));
-
+		
 		//PathNode current_node = prev(closed.list.end())->second;
 
 		open.list.erase(open.list.begin());
@@ -698,8 +701,6 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 			{
 				last_path.push_back(path_node->pos);
 			}
-
-			std::map<int, PathNode>::iterator item = closed.list.begin();
 
 			std::reverse(last_path.begin(), last_path.end());						            //Flips the vector's elements. The first element of the array will be the origin tile and the destination tile the last one.
 			ret = last_path.size();													            //Returns the amount of steps the path has.
@@ -717,9 +718,9 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 		{
 			PathNode neighbour = neighbour_item->second;
 
-			if (closed.Find(neighbour.pos) == nullptr)								//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
+			if (closed.Find(neighbour.pos) == nullptr)											//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
 			{
-				if (open.Find(neighbour.pos) != nullptr)								//If the neighbour being iterated is already in the open list.
+				if (open.Find(neighbour.pos) != nullptr)										//If the neighbour being iterated is already in the open list.
 				{
 					neighbour.CalculateF(destination);											//Calculates the F (F = G + H) of the neighbour being iterated. As G is recalculated (taking into account this new path), it can be compared with the same node in the open list (old path), if it's in it.
 
@@ -732,9 +733,68 @@ int PathFinding::CreatePath(const iPoint& origin, const iPoint& destination)
 				{
 					neighbour.CalculateF(destination);											//Calculates the F (F = G + H) of the neighbour being iterated. Sets both G and H for this tile/node for a specific path.
 					open.list.insert(std::make_pair((neighbour.g + neighbour.h), neighbour));	//Adds the neighbour being iterated to the open list.
+					//open.list[neighbour.g + neighbour.h] = neighbour;							//Adds the neighbour being iterated to the open list.
 				}
 			}
 		}
+
+		// --- LIST TO MAP V.02 ---
+		//lowest_node = open.list.begin()->second;
+
+		//closed.list[lowest_node.g + lowest_node.h] = lowest_node;
+		////closed.list.insert(std::make_pair((lowest_node.g + lowest_node.h), lowest_node));
+
+		//current_node = &closed.list[lowest_node.g + lowest_node.h];
+
+		//open.list.erase(open.list.begin());
+
+		//if (current_node->pos == destination)			            							//If destination is in the closed list (visited) and the position of the current node is the same as destination's.
+		//{
+		//	last_path.clear();														            //Sets the last_path dynArray count of number of elements to 0. Clears the dynArray.
+		//	last_path.shrink_to_fit();
+
+		//	const PathNode* path_node = current_node;
+
+		//	for (; path_node != nullptr; path_node = path_node->parent)
+		//	{
+		//		last_path.push_back(path_node->pos);
+		//	}
+
+		//	std::reverse(last_path.begin(), last_path.end());						            //Flips the vector's elements. The first element of the array will be the origin tile and the destination tile the last one.
+		//	ret = last_path.size();													            //Returns the amount of steps the path has.
+
+		//	break;
+		//}
+
+		//PathList neighbours;																	//Declares a list that will store the Walkable Adjacent nodes of a given node (current_node).
+
+		//current_node->FindWalkableAdjacents(neighbours);										//Fills the neighbours list with the walkable adjacent nodes of current_node.
+
+		//std::map<int, PathNode>::iterator neighbour_item = neighbours.list.begin();
+
+		//for (; neighbour_item != neighbours.list.end(); ++neighbour_item)
+		//{
+		//	PathNode neighbour = neighbour_item->second;
+
+		//	if (closed.Find(neighbour.pos) == nullptr)											//If the neighbour being iterated is not in the closed list (.Find() returns NULL when the item requested is not found).
+		//	{
+		//		if (open.Find(neighbour.pos) != nullptr)										//If the neighbour being iterated is already in the open list.
+		//		{
+		//			neighbour.CalculateF(destination);											//Calculates the F (F = G + H) of the neighbour being iterated. As G is recalculated (taking into account this new path), it can be compared with the same node in the open list (old path), if it's in it.
+
+		//			if ((neighbour.g) < (open.Find(neighbour.pos)->g))							//Compares Gs (total flat movement cost) between the neigbour being iterated and the same neighbour in the list.
+		//			{
+		//				open.Find(neighbour.pos)->parent = neighbour.parent;					//Updates the parent of the neighbour in the list with the parent of the neighbour being iterated.
+		//			}
+		//		}
+		//		else
+		//		{
+		//			neighbour.CalculateF(destination);											//Calculates the F (F = G + H) of the neighbour being iterated. Sets both G and H for this tile/node for a specific path.
+		//			open.list.insert(std::make_pair((neighbour.g + neighbour.h), neighbour));	//Adds the neighbour being iterated to the open list.
+		//			//open.list[neighbour.g + neighbour.h] = neighbour;							//Adds the neighbour being iterated to the open list.
+		//		}
+		//	}
+		//}
 
 		neighbours.list.clear();																//Clears the neighbours list so the elements are not accumulated from node to node (tile to tile).
 
