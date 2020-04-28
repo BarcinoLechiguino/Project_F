@@ -18,6 +18,7 @@ WinScene::WinScene() :  Scene(SCENES::WIN_SCENE)
 	win_song = 0;
 	background_texture = 0;
 	background_rect = {0,0,0,0};
+	name_tag = ("Win");
 }
 
 WinScene::~WinScene()

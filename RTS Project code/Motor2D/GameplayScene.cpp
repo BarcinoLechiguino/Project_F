@@ -40,7 +40,6 @@
 
 #include "GameplayScene.h"
 
-
 GameplayScene::GameplayScene() : Scene(SCENES::GAMEPLAY_SCENE), background_rect({ 0,0,0,0 }), background_texture(nullptr)
 {
 	name_tag = ("Gameplay");
@@ -53,7 +52,6 @@ GameplayScene::~GameplayScene()
 // Called before render is available
 bool GameplayScene::Awake(pugi::xml_node& config)
 {
-
 	bool ret = true;
 
 	/*for (pugi::xml_node map = config.child("map_name"); map; map = map.next_sibling("map_name"))
@@ -79,6 +77,8 @@ bool GameplayScene::Start()
 	LOG("Gameplay scene start");
 
 	InitScene();
+
+	LOG("Finished Gameplay scene start");
 
 	return ret;
 }
@@ -277,13 +277,21 @@ void GameplayScene::InitScene()
 
 	to_end = false;
 
+	LOG("Started loading map");
+
 	ret = App->map->Load("New_Tilesete_Map.tmx");
+
+	LOG("Finished loading map");
 
 	//test background
 	background_rect = { 0,0,1280,720 };
 	background_texture = App->tex->Load("maps/hacker_background.png");
 
+	LOG("Started loading gui");
+
 	LoadGuiElements();
+
+	LOG("Finished loading gui");
 
 	path_debug_tex = App->tex->Load("maps/path_tile.png");
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
@@ -292,6 +300,8 @@ void GameplayScene::InitScene()
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
 	App->audio->PlayMusic(inGame_song, 0.0f);
+
+	LOG("End of start");
 }
 
 void GameplayScene::LoadGuiElements()

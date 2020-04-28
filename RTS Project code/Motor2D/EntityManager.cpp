@@ -132,6 +132,10 @@ bool EntityManager::CleanUp()
 		RELEASE(entities[i]);
 	}
 
+	LOG("RELEASING ENTITY MAP");
+	RELEASE_ARRAY(entity_map);
+	LOG("ENTITY MAP RELEASED");
+
 	entities.clear();
 
 	UnLoadEntityTextures();
@@ -464,12 +468,14 @@ bool EntityManager::IsEnemyEntity(Entity* entity)
 
 void EntityManager::SetEntityMap(int width, int height)
 {
+	LOG("ENTERED SetEntityMap");
 	entity_map_width = width;
 	entity_map_height = height;
-
-	RELEASE_ARRAY(entity_map);
-
-	entity_map = new Entity * [width * height];
+	LOG("BEFORE RELEASE ARRAY");
+	//RELEASE_ARRAY(entity_map);
+	LOG("ALLOCATING ENTITY ARRAY");
+	entity_map = new Entity* [width * height];
+	LOG("FINISH ALLOCATing ENTITY ARRAY");
 
 	for (int y = 0; y < height; ++y)
 	{

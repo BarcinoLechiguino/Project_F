@@ -155,6 +155,7 @@ bool Application::Start()
 	PERF_START(perf_timer);
 	
 	bool ret = true;
+
 	int i = 0;
 
 	std::vector<Module*>::iterator item = modules.begin();
