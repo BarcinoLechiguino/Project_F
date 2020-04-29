@@ -44,11 +44,16 @@
   <entities>
     <textures>
       <gatherer_texture path="textures/Spritesheets/Entities/gatherer2_lowres.png"/>
+      <scout_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
       <infantry_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
+      <heavy_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
+      <enemy_gatherer_texture path="textures/Spritesheets/Entities/gatherer_lowres.png"/>
+      <enemy_scout_texture path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
       <enemy_texture path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
+      <enemy_heavy_texture path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
       <townhall_texture path="maps/hall.png"/>
-      <enemy_townhall_texture path="maps/Hall_enemy.png"/>
       <barracks_texture path="maps/Barracks.png"/>
+      <enemy_townhall_texture path="maps/Hall_enemy.png"/>
       <enemy_barracks_texture path="maps/Barracks_enemy.png"/>
       <rock_texture path="maps/rocks.png"/>
       <tree_texture path="maps/trees.png"/>

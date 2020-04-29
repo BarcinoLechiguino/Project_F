@@ -52,4 +52,4 @@ public:
 
 };
 
-#endif // __ENEMY_H__
+#endif // !__GATHERER_H__

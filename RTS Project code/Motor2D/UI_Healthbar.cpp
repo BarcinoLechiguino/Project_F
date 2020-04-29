@@ -139,7 +139,7 @@ void UI_Healthbar::UpdateHealthbarValue()
 
 				Static_Object* building = (Static_Object*)attached_unit;
 
-				new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * progress_timer) / building->unit_creation_time;
+				new_width = (int)((MAX_BUILDING_HEALTHBAR_WIDTH * progress_timer) / building->unit_creation_time);
 
 				if (progress_timer >= building->unit_creation_time)
 				{

@@ -19,12 +19,21 @@
 
 #include "EntityManager.h"
 #include "Entity.h"
+
+#include "Gatherer.h"
+#include "Scout.h"
+#include "Infantry.h"
+#include "Heavy.h"
+#include "EnemyGatherer.h"
+#include "EnemyScout.h"
+#include "Enemy.h"
+#include "EnemyHeavy.h"
+
 #include "Static_Object.h"
 #include "TownHall.h"
 #include "Barracks.h"
-#include "Barracks.h"
-#include "Gatherer.h"
-#include "Infantry.h"
+#include "EnemyTownHall.h"
+#include "EnemyBarracks.h"
 #include "Rock.h"
 #include "Tree.h"
 
@@ -305,7 +314,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_group_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Group
-		App->player->SelectAllEntities();
+		App->player->SelectAllUnits();
 		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 	}
 
@@ -661,8 +670,6 @@ void GameplayScene::BuildingUpgrade()
 
 }
 
-
-
 void GameplayScene::UnitUpgrade()
 {
 	if (App->player->building_selected != nullptr)
@@ -690,7 +697,6 @@ void GameplayScene::UnitUpgrade()
 		}
 	}
 }
-
 
 //--------------- RESOURCE MANAGEMENT ---------------
 bool GameplayScene::CheckResources(uint required_data, uint required_electricity)
@@ -1215,28 +1221,51 @@ void GameplayScene::UnitDebugKeys()
 	{
 		if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
 		{
+			// UNITS
 			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_STATE::KEY_DOWN)
 			{
 				(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
+
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_STATE::KEY_DOWN)
+			{
+				(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+			}
+
 			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_STATE::KEY_DOWN)
 			{
 				(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
-			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_STATE::KEY_DOWN)
+
+			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_STATE::KEY_DOWN)
+			{
+				(Heavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::HEAVY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_STATE::KEY_DOWN)
 			{
 				(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
+			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyHeavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_HEAVY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+			}
 
+			//  BUILDINGS
 			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_STATE::KEY_DOWN)
 			{
 				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_STATE::KEY_DOWN)
-			{
-				(EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_STATE::KEY_DOWN)
@@ -1244,12 +1273,17 @@ void GameplayScene::UnitDebugKeys()
 				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
+			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
+			}
+
 			if (App->input->GetKey(SDL_SCANCODE_N) == KEY_STATE::KEY_DOWN)
 			{
 				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
 			}
 
-
+			// RESOURCES
 			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
 			{
 				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
@@ -1259,6 +1293,7 @@ void GameplayScene::UnitDebugKeys()
 			{
 				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
+
 			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)
 			{
 				App->entity_manager->resource_data += 300;

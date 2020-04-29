@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
+#include "Infantry.h"
 
 #include "Barracks.h"
 

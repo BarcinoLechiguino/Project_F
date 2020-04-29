@@ -50,4 +50,4 @@ public:
 	//const std::vector<iPoint>*	entity_path;
 };
 
-#endif // __ENEMY_H__
+#endif // __INFANTRY_H__

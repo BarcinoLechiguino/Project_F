@@ -235,25 +235,27 @@ void Player::OrderUnitsToAttack()
 		{
 			if (App->entity_manager->IsEnemyEntity(target))
 			{
-				std::vector<Dynamic_Object*> infantries;															//Temporal fix. For now we only have infantries as combat units.
+				std::vector<Dynamic_Object*> ally_units;															//Temporal fix. For now we only have infantries as combat units.
 
 				for (int i = 0; i < (int)units_selected.size(); ++i)
 				{
-					if (App->entity_manager->IsInfantry(units_selected[i]))
+					if (App->entity_manager->IsScout(units_selected[i]) 
+						|| App->entity_manager->IsInfantry(units_selected[i]) 
+						|| App->entity_manager->IsHeavy(units_selected[i]))
 					{
-						infantries.push_back(units_selected[i]);
+						ally_units.push_back(units_selected[i]);
 					}
 				}
 
-				for (int i = 0; i < (int)infantries.size(); ++i)
+				for (int i = 0; i < (int)ally_units.size(); ++i)
 				{
-					infantries[i]->target = target;
-					App->pathfinding->ChangeWalkability(infantries[i]->occupied_tile, infantries[i], WALKABLE);
+					ally_units[i]->target = target;
+					App->pathfinding->ChangeWalkability(ally_units[i]->occupied_tile, ally_units[i], WALKABLE);
 				}
 
-				App->pathfinding->FindNearbyWalkable(target->tile_position, infantries);
+				App->pathfinding->FindNearbyWalkable(target->tile_position, ally_units);
 
-				infantries.clear();
+				ally_units.clear();
 			}
 		}
 
@@ -394,7 +396,7 @@ void Player::SelectionShortcuts()
 	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN 
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_Y) == BUTTON_STATE::BUTTON_DOWN)				// Select All Entities
 	{
-		SelectAllEntities();
+		SelectAllyUnits();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_STATE::KEY_DOWN 
@@ -406,7 +408,7 @@ void Player::SelectionShortcuts()
 	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_STATE::KEY_DOWN 
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == BUTTON_STATE::BUTTON_DOWN)		// Select All Scouts
 	{
-		//SelectScouts();
+		SelectScouts();
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_STATE::KEY_DOWN 
@@ -418,39 +420,47 @@ void Player::SelectionShortcuts()
 	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_STATE::KEY_DOWN 
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_DPAD_LEFT) == BUTTON_STATE::BUTTON_DOWN)		// Select All Heavys
 	{
-		//SelectHeavys();
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_STATE::KEY_DOWN)													// Select All Enemies
-	{
-		//SelectAllEnemies();
+		SelectHeavys();
 	}
 	
+	
+	// DEBUG SELECTION SHORTCUTS
+	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_STATE::KEY_DOWN)													// Select All Units
+	{																												
+		SelectAllUnits();																							
+	}																												
+																													
+																													
+	// Select Enemy Units																							
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_STATE::KEY_DOWN)													// Select All Enemy Units
+	{																												
+		SelectEnemyUnits();																							
+	}																												
+																													
 	if (App->input->GetKey(SDL_SCANCODE_COMMA) == KEY_STATE::KEY_DOWN)												// Select All Enemy Gatherers
-	{
-		//SelectEnemyGatherers();
-	}
-
+	{																												
+		SelectEnemyGatherers();																						
+	}																												
+																													
 	if (App->input->GetKey(SDL_SCANCODE_PERIOD) == KEY_STATE::KEY_DOWN)												// Select All Enemy Scouts
-	{
-		//SelectEnemyScouts();
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_MINUS) == KEY_STATE::KEY_DOWN)												// Select All Enemy Infantries
-	{
-		SelectEnemies();
-		//SelectEnemyInfantries();
-	}
-
+	{																												
+		SelectEnemyScouts();																						
+	}																												
+																													
+	if (App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_STATE::KEY_DOWN)												// Select All Enemy Infantries
+	{																												
+		SelectEnemies();																							
+		//SelectEnemyInfantries();																					
+	}																												
+																													
 	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_STATE::KEY_DOWN)												// Select All Enemy Heavys
 	{
-		//SelectEnemyHeavys();
+		SelectEnemyHeavys();
 	}
-
-
 }
 
-void Player::SelectAllEntities()
+// -------------- UNIT SELECTION METHODS --------------
+void Player::SelectAllUnits()
 {
 	ClearEntityBuffers();
 
@@ -462,6 +472,26 @@ void Player::SelectAllEntities()
 		{
 			Dynamic_Object* unit = (Dynamic_Object*)(*item);
 
+			(*item)->is_selected = true;
+			units_selected.push_back(unit);
+		}
+	}
+
+	LOG("All units selected. Total unit amount: %d", units_selected.size());
+}
+
+void Player::SelectAllyUnits()
+{
+	ClearEntityBuffers();
+
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if (App->entity_manager->IsAllyUnit((*item)))
+		{
+			Dynamic_Object* unit = (Dynamic_Object*)(*item);
+
 			if (unit->is_selectable)
 			{
 				(*item)->is_selected = true;
@@ -470,7 +500,30 @@ void Player::SelectAllEntities()
 		}
 	}
 
-	LOG("All units selected. Total unit amount: %d", units_selected.size());
+	LOG("All ally units selected. Total unit amount: %d", units_selected.size());
+}
+
+void Player::SelectEnemyUnits()
+{
+	ClearEntityBuffers();
+
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if (App->entity_manager->IsEnemyUnit((*item)))
+		{
+			Dynamic_Object* unit = (Dynamic_Object*)(*item);
+
+			if (!unit->is_selectable)
+			{
+				(*item)->is_selected = true;
+				units_selected.push_back(unit);
+			}
+		}
+	}
+
+	LOG("All enemy units selected. Total unit amount: %d", units_selected.size());
 }
 
 void Player::SelectGatherers()
@@ -491,6 +544,24 @@ void Player::SelectGatherers()
 	LOG("All gatherers selected. Total gatherer amount: %d", units_selected.size());
 }
 
+void Player::SelectScouts()
+{
+	ClearEntityBuffers();
+
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if ((*item)->type == ENTITY_TYPE::SCOUT)
+		{
+			(*item)->is_selected = true;
+			units_selected.push_back((Dynamic_Object*)(*item));
+		}
+	}
+
+	LOG("All scouts selected. Total gatherer amount: %d", units_selected.size());
+}
+
 void Player::SelectInfantries()
 {
 	ClearEntityBuffers();
@@ -507,6 +578,66 @@ void Player::SelectInfantries()
 	}
 
 	LOG("All infantries selected. Total infantry amount: %d", units_selected.size());
+}
+
+void Player::SelectHeavys()
+{
+	ClearEntityBuffers();
+
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item != App->entity_manager->entities.end(); ++item)
+	{
+		if ((*item)->type == ENTITY_TYPE::HEAVY)
+		{
+			(*item)->is_selected = true;
+			units_selected.push_back((Dynamic_Object*)(*item));
+		}
+	}
+
+	LOG("All Heavys selected. Total infantry amount: %d", units_selected.size());
+}
+
+void Player::SelectEnemyGatherers()
+{
+	if (god_mode)
+	{
+		ClearEntityBuffers();
+
+		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+		for (; item != App->entity_manager->entities.end(); ++item)
+		{
+			if ((*item)->type == ENTITY_TYPE::ENEMY_GATHERER)
+			{
+				(*item)->is_selected = true;
+				units_selected.push_back((Dynamic_Object*)(*item));
+			}
+		}
+
+		LOG("All enemy gatherers selected. Total enemy amount: %d", units_selected.size());
+	}
+}
+
+void Player::SelectEnemyScouts()
+{
+	if (god_mode)
+	{
+		ClearEntityBuffers();
+
+		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+		for (; item != App->entity_manager->entities.end(); ++item)
+		{
+			if ((*item)->type == ENTITY_TYPE::ENEMY_SCOUT)
+			{
+				(*item)->is_selected = true;
+				units_selected.push_back((Dynamic_Object*)(*item));
+			}
+		}
+
+		LOG("All enemy scouts selected. Total enemy amount: %d", units_selected.size());
+	}
 }
 
 void Player::SelectEnemies()
@@ -527,6 +658,27 @@ void Player::SelectEnemies()
 		}
 
 		LOG("All enemies selected. Total enemy amount: %d", units_selected.size());
+	}
+}
+
+void Player::SelectEnemyHeavys()
+{
+	if (god_mode)
+	{
+		ClearEntityBuffers();
+
+		std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+		for (; item != App->entity_manager->entities.end(); ++item)
+		{
+			if ((*item)->type == ENTITY_TYPE::ENEMY_HEAVY)
+			{
+				(*item)->is_selected = true;
+				units_selected.push_back((Dynamic_Object*)(*item));
+			}
+		}
+
+		LOG("All enemy heavys selected. Total enemy amount: %d", units_selected.size());
 	}
 }
 
@@ -686,7 +838,7 @@ void Player::DebugUnitSpawn()
 {
 	if (building_selected != nullptr)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_S) == KEY_STATE::KEY_DOWN)
+		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_STATE::KEY_DOWN)
 		{
 			TownHall* townhall = nullptr;
 			EnemyTownHall* enemy_townhall = nullptr;

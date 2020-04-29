@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
+#include "Gatherer.h"
 
 #include "TownHall.h"
 

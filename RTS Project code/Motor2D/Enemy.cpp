@@ -224,7 +224,7 @@ void Enemy::SetEntityTargetByProximity()
 
 	for (; item != App->entity_manager->entities.end(); ++item)
 	{
-		if (!App->entity_manager->IsEnemyEntity((*item)) && !App->entity_manager->IsResource((*item)))
+		if (App->entity_manager->IsAllyEntity((*item)))
 		{
 			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
 			{
