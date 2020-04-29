@@ -70,6 +70,8 @@ bool OptionsScene::PostUpdate()
 	//Load Scene / Unload MainMenuScene
 	ExecuteTransition();
 
+	ExecuteDebugTransition();
+
 	return true;
 }
 
@@ -82,78 +84,17 @@ bool OptionsScene::CleanUp()
 	return true;
 }
 
-void OptionsScene::LoadGuiElements()
+void OptionsScene::ExecuteTransition()
 {
-	LOG("STARTED GUI LOAD");
-	// BACKGROUND
-	background_rect = { 0, 0, 1280, 720 };
-	background_texture = App->tex->Load("maps/Options_Background.png");
-	
-	//Options Menu
-	SDL_Rect text_rect = { 0, 0, 100, 20 };
-	_TTF_Font* font = App->font->Load("fonts/borgsquadcond.ttf", 40);
-	_TTF_Font* font2 = App->font->Load("fonts/borgsquadcond.ttf", 30);
-	options_parent = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
-
-	//Options
-	std::string title_string = "Options";
-	options_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 370, 150, text_rect, font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &title_string);
-
-	//Music
-	std::string music_string = "Music";
-	music_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &music_string);
-
-	SDL_Rect scrollbar_rect = { 743,3,180,15 };
-	SDL_Rect thumb_rect = { 930,2,18,31 };
-	iPoint thumb_offset = { 20, -7 };
-	SDL_Rect drag_area = { 0, 0, 180, 15 };
-	float drag_factor = 0.2f;
-
-	//MUSIC
-	music_scrollbar = (UI_Scrollbar*)App->gui_manager->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 260, scrollbar_rect, thumb_rect, thumb_offset
-		, drag_area, drag_factor, true, false, false, true, false, false);
-	music_scrollbar->parent = options_parent;
-
-	//SFX
-	std::string sfx_string = "SFX";
-	sfx_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &sfx_string);
-	sfx_scrollbar = (UI_Scrollbar*)App->gui_manager->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 300, scrollbar_rect, thumb_rect, thumb_offset
-		, drag_area, drag_factor, true, false, false, true, false, false);
-	sfx_scrollbar->parent = options_parent;
-
-	//screen size
-	std::string resolution_string = "fullscreen";
-	resolution_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 380, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
-
-	// Fullscreen options
-
-	SDL_Rect opt_fullscreen_off_size = { 0, 0, 29, 24 };
-	SDL_Rect opt_fullscreen_off_idle = { 744, 18, 29, 24 };
-	SDL_Rect opt_fullscreen_off_hover = { 744, 18, 29, 24 };
-	SDL_Rect opt_fullscreen_off_clicked = { 744, 18, 29, 24 };
-
-	fullscreen_off = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 580, 334, true, true, false, this, options_parent
-		, &opt_fullscreen_off_idle, &opt_fullscreen_off_hover, &opt_fullscreen_off_clicked);
-
-	SDL_Rect opt_fullscreen_on_size = { 0, 0, 29, 24 };
-	SDL_Rect opt_fullscreen_on_idle = { 788, 18, 29, 24 };
-	SDL_Rect opt_fullscreen_on_hover = { 788, 18, 29, 24 };
-	SDL_Rect opt_fullscreen_on_clicked = { 788, 18, 29, 24 };
-
-	fullscreen_on = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 580, 334, false, true, false, this, nullptr
-		, &opt_fullscreen_on_idle, &opt_fullscreen_on_hover, &opt_fullscreen_on_clicked);
-
-	//Remapping
-
-	//Back button
-	SDL_Rect back_button_size = { 0, 0, 45, 33 };
-	SDL_Rect back_button_idle = { 0, 103, 45, 33 };
-	SDL_Rect back_button_hover = { 57, 103, 45, 33 };
-	SDL_Rect back_button_clicked = { 114, 103, 45, 33 };
-
-	back_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 400, 470, true, true, false, this, options_parent
-		, &back_button_idle, &back_button_hover, &back_button_clicked);
-	LOG("FINISHED GUI LOAD");
+	if (transition_to_main_menu_scene)
+	{
+		if (App->pause)
+		{
+			App->pause = false;
+		}
+		
+		App->transition_manager->CreateSlide(SCENES::MAIN_MENU_SCENE, 0.5f, true, false, true);
+	}
 }
 
 void OptionsScene::OnEventCall(UI* element, UI_EVENT ui_event)
@@ -162,7 +103,7 @@ void OptionsScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->back_fx, 0);
 
-		App->transition_manager->CreateSlide(SCENES::MAIN_MENU_SCENE, 0.5f, true, false, true);
+		transition_to_main_menu_scene = true;
 	}
 
 	if (element == fullscreen_off && ui_event == UI_EVENT::UNCLICKED)
@@ -234,40 +175,86 @@ void OptionsScene::UpdateFXVolumeThumbPosition()
 	LOG("%s", casual.c_str());
 }
 
-void OptionsScene::ExecuteTransition()
+void OptionsScene::LoadGuiElements()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::LOGO_SCENE, 0.5f, true, 3, true, true);
-	}
+	LOG("STARTED GUI LOAD");
+	// BACKGROUND
+	background_rect = { 0, 0, 1280, 720 };
+	background_texture = App->tex->Load("maps/Options_Background.png");
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 5, true, true);
-	}
+	//Options Menu
+	SDL_Rect text_rect = { 0, 0, 100, 20 };
+	_TTF_Font* font = App->font->Load("fonts/borgsquadcond.ttf", 40);
+	_TTF_Font* font2 = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	options_parent = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
-	// No KP_3 because we are in the 3rd scene.
+	//Options
+	std::string title_string = "Options";
+	options_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 370, 150, text_rect, font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &title_string);
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 7, true, true);
-	}
+	//Music
+	std::string music_string = "Music";
+	music_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &music_string);
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, false, true);
-	}
+	SDL_Rect scrollbar_rect = { 743,3,180,15 };
+	SDL_Rect thumb_rect = { 930,2,18,31 };
+	iPoint thumb_offset = { 20, -7 };
+	SDL_Rect drag_area = { 0, 0, 180, 15 };
+	float drag_factor = 0.2f;
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, false, true);
-	}
+	//MUSIC
+	music_scrollbar = (UI_Scrollbar*)App->gui_manager->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 260, scrollbar_rect, thumb_rect, thumb_offset
+		, drag_area, drag_factor, true, false, false, true, false, false);
+	music_scrollbar->parent = options_parent;
+
+	//SFX
+	std::string sfx_string = "SFX";
+	sfx_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &sfx_string);
+	sfx_scrollbar = (UI_Scrollbar*)App->gui_manager->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 300, scrollbar_rect, thumb_rect, thumb_offset
+		, drag_area, drag_factor, true, false, false, true, false, false);
+	sfx_scrollbar->parent = options_parent;
+
+	//screen size
+	std::string resolution_string = "fullscreen";
+	resolution_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 380, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
+
+	// Fullscreen options
+
+	SDL_Rect opt_fullscreen_off_size = { 0, 0, 29, 24 };
+	SDL_Rect opt_fullscreen_off_idle = { 744, 18, 29, 24 };
+	SDL_Rect opt_fullscreen_off_hover = { 744, 18, 29, 24 };
+	SDL_Rect opt_fullscreen_off_clicked = { 744, 18, 29, 24 };
+
+	fullscreen_off = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 580, 334, true, true, false, this, options_parent
+		, &opt_fullscreen_off_idle, &opt_fullscreen_off_hover, &opt_fullscreen_off_clicked);
+
+	SDL_Rect opt_fullscreen_on_size = { 0, 0, 29, 24 };
+	SDL_Rect opt_fullscreen_on_idle = { 788, 18, 29, 24 };
+	SDL_Rect opt_fullscreen_on_hover = { 788, 18, 29, 24 };
+	SDL_Rect opt_fullscreen_on_clicked = { 788, 18, 29, 24 };
+
+	fullscreen_on = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 580, 334, false, true, false, this, nullptr
+		, &opt_fullscreen_on_idle, &opt_fullscreen_on_hover, &opt_fullscreen_on_clicked);
+
+	//Remapping
+
+	//Back button
+	SDL_Rect back_button_size = { 0, 0, 45, 33 };
+	SDL_Rect back_button_idle = { 0, 103, 45, 33 };
+	SDL_Rect back_button_hover = { 57, 103, 45, 33 };
+	SDL_Rect back_button_clicked = { 114, 103, 45, 33 };
+
+	back_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 400, 470, true, true, false, this, options_parent
+		, &back_button_idle, &back_button_hover, &back_button_clicked);
+	LOG("FINISHED GUI LOAD");
 }
 
 void OptionsScene::InitScene()
 {
 	LOG("INITSCENE START");
 
+	transition_to_main_menu_scene = false;
+	
 	menu_song = App->audio->LoadMusic("audio/music/Music_Menu.ogg");
 	App->audio->PlayMusic(menu_song, 0.0f);
 	LoadGuiElements();

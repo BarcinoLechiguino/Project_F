@@ -51,6 +51,8 @@ bool LoseScene::PostUpdate()
 {
 	//Load Scene / Unload LoseScene
 	ExecuteTransition();
+
+	ExecuteDebugTransition();
 	
 	return true;
 }
@@ -66,7 +68,7 @@ bool LoseScene::CleanUp()
 
 void LoseScene::LoadGuiElements()
 {
-
+	// BACKGROUND
 	background_rect = { 0,0,1280,720 };
 	background_texture = App->tex->Load("maps/DefeatScreen.png");
 
@@ -84,43 +86,29 @@ void LoseScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	if (element == lose_main_menu && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, true, true);
 		App->audio->PlayFx(App->gui_manager->exit_fx, 0);
+
+		transition_to_main_menu_scene = true;
 	}
 }
 
 void LoseScene::ExecuteTransition()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_STATE::KEY_DOWN)
+	if (transition_to_main_menu_scene)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::LOGO_SCENE, 0.5f, true, 8, true, true);
-	}
+		if (App->pause)
+		{
+			App->pause = false;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, false, true);
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, true, true);
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::OPTIONS_SCENE, 0.5f, true, 10, false, true);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 12, false, true);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 12, true, true);
-	}
-
-	// No 6 because we are in the 6th scene.
 }
 
 void LoseScene::InitScene()
 {
+	transition_to_main_menu_scene = false;
+	
 	lose_song = App->audio->LoadMusic("audio/music/Lose_Song.ogg");
 	App->audio->PlayMusic(lose_song, 0);
 }

@@ -138,10 +138,10 @@ void Player::CameraController(float dt)
 	int window_width, window_height;
 	App->win->GetWindowSize(window_width, window_height);
 	
-	if (CurrentlyInGameplayScene())										// If the current scene is FIRST_SCENE (gameplay scene)
+	if (CurrentlyInGameplayScene())																							// If the current scene is FIRST_SCENE (gameplay scene)
 	{	
 		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_REPEAT
-			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)								//Left
+			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)			//Left
 		{
 			if (App->render->camera.x < scene_camera_x_limit.x)
 			{
@@ -150,7 +150,7 @@ void Player::CameraController(float dt)
 		}
 
 		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_STATE::KEY_REPEAT 
-			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)								//Right
+			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)			//Right
 		{
 			if (App->render->camera.x > scene_camera_x_limit.y)
 			{

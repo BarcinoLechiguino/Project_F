@@ -3,10 +3,11 @@
 #include "Input.h"
 #include "Collisions.h"
 #include "Map.h"
+#include "EntityManager.h"
 #include "GuiManager.h"
 #include "Player.h"
 #include "SceneManager.h"
-#include "EntityManager.h"
+#include "TransitionManager.h"
 
 #include "Scene.h"
 
@@ -180,4 +181,85 @@ void Scene::DebugKeys()
 		App->map->smaller_camera = !App->map->smaller_camera;
 	}
 
+}
+
+void Scene::ExecuteDebugTransition()
+{
+	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_STATE::KEY_DOWN)
+	{
+		if (scene_name != SCENES::LOGO_SCENE)
+		{
+			if (App->pause)
+			{
+				App->pause = false;
+			}
+
+			App->transition_manager->CreateExpandingBars(SCENES::LOGO_SCENE, 0.5f, true, 3, true, true);
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_DOWN)
+	{
+		if (scene_name != SCENES::MAIN_MENU_SCENE)
+		{
+			if (App->pause)
+			{
+				App->pause = false;
+			}
+			
+			App->transition_manager->CreateExpandingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 3, false, true);
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_STATE::KEY_DOWN)
+	{
+		if (scene_name != SCENES::OPTIONS_SCENE)
+		{
+			if (App->pause)
+			{
+				App->pause = false;
+			}
+			
+			App->transition_manager->CreateExpandingBars(SCENES::OPTIONS_SCENE, 0.5f, true, 5, false, true);
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
+	{
+		if (scene_name != SCENES::GAMEPLAY_SCENE)
+		{
+			if (App->pause)
+			{
+				App->pause = false;
+			}
+			
+			App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 7, false, true);
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
+	{
+		if (scene_name != SCENES::WIN_SCENE)
+		{
+			if (App->pause)
+			{
+				App->pause = false;
+			}
+			
+			App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, true, true);
+		}
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_STATE::KEY_DOWN)
+	{
+		if (scene_name != SCENES::LOSE_SCENE)
+		{
+			if (App->pause)
+			{
+				App->pause = false;
+			}
+			
+			App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, true, true);
+		}
+	}
 }

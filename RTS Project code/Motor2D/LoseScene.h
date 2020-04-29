@@ -27,6 +27,8 @@ public:
 	void InitScene();
 
 public:
+	bool transition_to_main_menu_scene;
+
 
 	UI_Button*		lose_main_menu;
 

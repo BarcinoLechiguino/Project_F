@@ -67,6 +67,8 @@ bool MainMenuScene::PostUpdate()
 	
 	//Load Scene / Unload MainMenuScene
 	ExecuteTransition();
+
+	ExecuteDebugTransition();
 	
 	return true;
 }
@@ -80,54 +82,27 @@ bool MainMenuScene::CleanUp()
 	return true;
 }
 
-void MainMenuScene::LoadGuiElements()
-{	
-	//LOG("STARTED GUI LOAD");
+void MainMenuScene::ExecuteTransition()
+{
+	if (transition_to_gameplay_scene)
+	{
+		if (App->pause)
+		{
+			App->pause = false;
+		}
+		
+		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 30, true, false, Magenta, Black);
+	}
 
-	// BACKGROUND
-	background_rect = { 0,0,1280,720 };
-	background_texture = App->tex->Load("maps/MainMenu_background.png");
-	
-	// Main Screen
-		main_parent = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
-
-		// New Game Button
-		SDL_Rect new_game_button_size = { 0, 0, 175, 28 };
-		SDL_Rect new_game_button_idle = { 2, 24, 175, 28 };
-		SDL_Rect new_game_button_hover = { 179, 24, 175, 28 };
-		SDL_Rect new_game_button_clicked = { 357, 24, 175, 28 };
-	
-		new_game_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 420, 274, true, true, false, this, main_parent
-			, &new_game_button_idle, &new_game_button_hover, &new_game_button_clicked);
-	
-		// Continue Button
-		SDL_Rect continue_button_size = { 0, 0, 158, 23 };
-		SDL_Rect continue_button_idle = { 1, 0, 158, 23 };
-		SDL_Rect continue_button_hover = { 178, 0, 158, 23 };
-		SDL_Rect continue_button_clicked = { 356, 0, 158, 23 };
-	
-		continue_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 425, 306, true, true, false, this, main_parent
-			, &continue_button_idle, &continue_button_hover, &continue_button_clicked);
-	
-		// Options Button
-		SDL_Rect options_button_size = { 0, 0, 133, 24 };
-		SDL_Rect options_button_idle = { 1, 52, 133, 24 };
-		SDL_Rect options_button_hover = { 178, 52, 133, 24 };
-		SDL_Rect options_button_clicked = { 356, 52, 133, 24 };
-	
-		options_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 439, 336, true, true, false, this, main_parent
-			, &options_button_idle, &options_button_hover, &options_button_clicked);
-	
-		// Exit Button
-		SDL_Rect exit_button_size = { 0, 0, 74, 23 };
-		SDL_Rect exit_button_idle = { 1, 77, 74, 23 };
-		SDL_Rect exit_button_hover = { 178, 77, 74, 23 };
-		SDL_Rect exit_button_clicked = { 356, 77, 74, 23 };
-	
-		exit_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 465, 366, true, true, false, this, main_parent
-			, &exit_button_idle, &exit_button_hover, &exit_button_clicked);
-
-		LOG("FINISHED GUI LOAD");
+	if (transition_to_options_scene)
+	{
+		if (App->pause)
+		{
+			App->pause = false;
+		}
+		
+		App->transition_manager->CreateSlide(SCENES::OPTIONS_SCENE, 0.5f, true);
+	}
 }
 
 void MainMenuScene::OnEventCall(UI* element, UI_EVENT ui_event)
@@ -135,12 +110,12 @@ void MainMenuScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == new_game_button && ui_event == UI_EVENT::UNCLICKED)
 	{
-		/*App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 5, true, true);*/
-		iPoint mousepos;
-		App->input->GetMousePosition(mousepos.x, mousepos.y);
-		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 30, true, false, Magenta, Black);
+		/*iPoint mousepos;
+		App->input->GetMousePosition(mousepos.x, mousepos.y);*/
 
 		App->audio->PlayFx(App->gui_manager->new_game_fx,0);
+
+		transition_to_gameplay_scene = true;
 	}
 
 	if (element == exit_button && ui_event == UI_EVENT::UNCLICKED)
@@ -151,53 +126,70 @@ void MainMenuScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == options_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->options_fx, 0);
-	
-		//App->gui_manager->SetElementsVisibility(main_parent, false);							// Deactivate Main menu
-	
-		//App->gui_manager->SetElementsVisibility(options_parent, true);							//Activate Options Menu
-	
-		//background_texture = App->tex->Load("maps/Options_background.png");
 
-		App->transition_manager->CreateSlide(SCENES::OPTIONS_SCENE, 0.5f, true);
+		transition_to_options_scene = true;
 	}	
 }
 
-void MainMenuScene::ExecuteTransition()
+void MainMenuScene::LoadGuiElements()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::LOGO_SCENE, 0.5f, true, 3, true, true);
-	}
+	//LOG("STARTED GUI LOAD");
 
-	// No KP_2 because we are in the 2nd scene.
-	
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::OPTIONS_SCENE, 0.5f, true, 5, true, true);
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 7, true, true);
-	}
-	
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, false, true);
-	}
+	// Main Screen
+	main_parent = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, false, true);
-	}
+	// New Game Button
+	SDL_Rect new_game_button_size = { 0, 0, 175, 28 };
+	SDL_Rect new_game_button_idle = { 2, 24, 175, 28 };
+	SDL_Rect new_game_button_hover = { 179, 24, 175, 28 };
+	SDL_Rect new_game_button_clicked = { 357, 24, 175, 28 };
+
+	new_game_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 420, 274, true, true, false, this, main_parent
+		, &new_game_button_idle, &new_game_button_hover, &new_game_button_clicked);
+
+	// Continue Button
+	SDL_Rect continue_button_size = { 0, 0, 158, 23 };
+	SDL_Rect continue_button_idle = { 1, 0, 158, 23 };
+	SDL_Rect continue_button_hover = { 178, 0, 158, 23 };
+	SDL_Rect continue_button_clicked = { 356, 0, 158, 23 };
+
+	continue_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 425, 306, true, true, false, this, main_parent
+		, &continue_button_idle, &continue_button_hover, &continue_button_clicked);
+
+	// Options Button
+	SDL_Rect options_button_size = { 0, 0, 133, 24 };
+	SDL_Rect options_button_idle = { 1, 52, 133, 24 };
+	SDL_Rect options_button_hover = { 178, 52, 133, 24 };
+	SDL_Rect options_button_clicked = { 356, 52, 133, 24 };
+
+	options_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 439, 336, true, true, false, this, main_parent
+		, &options_button_idle, &options_button_hover, &options_button_clicked);
+
+	// Exit Button
+	SDL_Rect exit_button_size = { 0, 0, 74, 23 };
+	SDL_Rect exit_button_idle = { 1, 77, 74, 23 };
+	SDL_Rect exit_button_hover = { 178, 77, 74, 23 };
+	SDL_Rect exit_button_clicked = { 356, 77, 74, 23 };
+
+	exit_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 465, 366, true, true, false, this, main_parent
+		, &exit_button_idle, &exit_button_hover, &exit_button_clicked);
+
+	LOG("FINISHED GUI LOAD");
 }
 
 void MainMenuScene::InitScene()
 {
 	//LOG("INITSCENE START");
+	transition_to_gameplay_scene = false;
+	transition_to_options_scene = false;
 
 	menu_song = App->audio->LoadMusic("audio/music/Music_Menu.ogg");
 	App->audio->PlayMusic(menu_song, 0.0f);
+	
+	// BACKGROUND
+	background_rect = { 0, 0, 1280, 720 };
+	background_texture = App->tex->Load("maps/MainMenu_background.png");
+	
 	LoadGuiElements();
 
 	//LOG("INITSCENE END");

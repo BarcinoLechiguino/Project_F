@@ -52,6 +52,7 @@ bool LogoScene::PostUpdate()
 	//Load Scene / Unload LogoScene
 	ExecuteTransition();
 
+	ExecuteDebugTransition();
 
 	return true;
 }
@@ -67,18 +68,13 @@ bool LogoScene::CleanUp()
 	return true;
 }
 
-void LogoScene::LoadGuiElements()
-{
-	
-}
-
-void LogoScene::OnEventCall(UI* element, UI_EVENT ui_event)
-{
-
-}
-
 void LogoScene::ExecuteTransition()
 {
+	if (App->pause)
+	{
+		App->pause = false;
+	}
+	
 	accumulated_time += App->GetDt();
 
 	if (accumulated_time >= logo_scene_duration)
@@ -86,33 +82,16 @@ void LogoScene::ExecuteTransition()
 		App->transition_manager->CreateFadeToColour(SCENES::MAIN_MENU_SCENE);
 		accumulated_time = 0.0f;
 	}
-	
-	// No KP_1 because we are in the 1rst scene.
+}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 3, false, true);
-	}
+void LogoScene::OnEventCall(UI* element, UI_EVENT ui_event)
+{
 
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::OPTIONS_SCENE, 0.5f, true, 5, false, true);
-	}
+}
 
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 7, false, true);
-	}
+void LogoScene::LoadGuiElements()
+{
 
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::WIN_SCENE, 0.5f, true, 7, true, true);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateExpandingBars(SCENES::LOSE_SCENE, 0.5f, true, 7, true, true);
-	}
 }
 
 void LogoScene::InitScene()
@@ -125,7 +104,8 @@ void LogoScene::InitScene()
 
 	App->gui_manager->Start();
 
-	background_rect = { 0,0,1280,720 };
+	// BACKGROUND
+	background_rect = { 0, 0, 1280, 720 };
 	background_texture = App->tex->Load("maps/MissingmdScreen.png");
 
 	//LoadGuiElements();

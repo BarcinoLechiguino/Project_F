@@ -54,6 +54,8 @@ bool WinScene::PostUpdate()
 {
 	//Load Scene / Unload WinScene
 	ExecuteTransition();
+
+	ExecuteDebugTransition();
 	
 	return true;
 }
@@ -69,7 +71,7 @@ bool WinScene::CleanUp()
 
 void WinScene::LoadGuiElements()
 {
-	
+	// BACKGROUND
 	background_rect = { 0,0,1280,720 };
 	background_texture = App->tex->Load("maps/WinScreen.png");
 
@@ -87,48 +89,29 @@ void WinScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	if (element == win_main_menu && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, true, true);
 		App->audio->PlayFx(App->gui_manager->exit_fx, 0);
+
+		transition_to_main_menu_scene = true;
 	}
 }
 
 void WinScene::ExecuteTransition()
 {
-	if (App->input->GetKey(SDL_SCANCODE_1) == KEY_STATE::KEY_DOWN)
+	if (transition_to_main_menu_scene)
 	{
-		App->transition_manager->CreateAlternatingBars(SCENES::LOGO_SCENE, 0.5f, true, 8, true, true);
-	}
+		if (App->pause)
+		{
+			App->pause = false;
+		}
 
-	if (App->input->GetKey(SDL_SCANCODE_2) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, false, true);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::OPTIONS_SCENE, 0.5f, true, 10, false, true);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 12, false, true);
-	}
-
-	// No 5 because we are in the 5th scene.
-
-	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::WIN_SCENE, 0.5f, true, 12, true, true);
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_6) == KEY_STATE::KEY_DOWN)
-	{
-		App->transition_manager->CreateAlternatingBars(SCENES::LOSE_SCENE, 0.5f, true, 12, true, true);
+		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, true, true);
 	}
 }
 
 void WinScene::InitScene()
 {
+	transition_to_main_menu_scene = false;
+	
 	win_song = App->audio->LoadMusic("audio/music/Victory_Song.ogg");
 	App->audio->PlayMusic(win_song, 0);
 }

@@ -38,7 +38,9 @@ public:
 	virtual void ExecuteTransition();							// Method that will trigger a new transition depending on the input received.
 
 	virtual void CameraDebugMovement(float dt);					// Method that will move the camera around depending on the input.
-	virtual void DebugKeys();									// Method that will contain all the debug keys for a given scene.
+	
+	void DebugKeys();											// Method that will contain all the debug keys for a given scene.
+	void ExecuteDebugTransition();								// Method that will trigger a new transition given a debug input (1 to 6 on the keyboard)
 
 public:
 	std::string		name_tag;
