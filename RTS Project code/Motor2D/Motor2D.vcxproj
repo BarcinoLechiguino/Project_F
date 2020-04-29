@@ -89,7 +89,7 @@
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Cut.cpp" />
     <ClCompile Include="Dynamic_Object.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyInfantry.cpp" />
     <ClCompile Include="EnemyGatherer.cpp" />
     <ClCompile Include="EnemyHeavy.cpp" />
     <ClCompile Include="EnemyScout.cpp" />
@@ -171,7 +171,7 @@
     <ClInclude Include="ExpandingBars.h" />
     <ClInclude Include="FadeToColour.h" />
     <ClInclude Include="Fonts.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyInfantry.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Gatherer.h" />

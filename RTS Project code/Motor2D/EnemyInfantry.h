@@ -5,13 +5,13 @@
 
 class Infantry;
 
-class Enemy : public Dynamic_Object
+class EnemyInfantry : public Dynamic_Object
 {
 public:
 
-	Enemy(int x, int y, ENTITY_TYPE type, int level);
+	EnemyInfantry(int x, int y, ENTITY_TYPE type, int level);
 
-	~Enemy();
+	~EnemyInfantry();
 
 	bool Awake(pugi::xml_node&);
 

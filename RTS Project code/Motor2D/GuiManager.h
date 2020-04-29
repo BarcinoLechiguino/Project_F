@@ -60,7 +60,7 @@ public:
 					, UI* parent = nullptr, SDL_Rect* scroll_mask = nullptr, iPoint mask_offset = iPoint(0, 0), bool empty_elements = false);
 
 	UI* CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* healthbar = nullptr, SDL_Rect* background = nullptr
-					, Entity* attached_unit = nullptr, bool is_progress_bar = false, Module* listener = nullptr, UI* parent = nullptr);
+					, Entity* attached_unit = nullptr, bool is_creation_bar = false, Module* listener = nullptr, UI* parent = nullptr);
 
 	
 	void DestroyGuiElements();

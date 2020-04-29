@@ -25,7 +25,7 @@
 #include "Heavy.h"
 #include "EnemyGatherer.h"
 #include "EnemyScout.h"
-#include "Enemy.h"
+#include "EnemyInfantry.h"
 #include "EnemyHeavy.h"
 
 #include "Static_Object.h"
@@ -242,8 +242,8 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		entity = new EnemyScout(x, y, type, level);
 		break;
 
-	case ENTITY_TYPE::ENEMY:
-		entity = new Enemy(x, y, type, level);
+	case ENTITY_TYPE::ENEMY_INFANTRY:
+		entity = new EnemyInfantry(x, y, type, level);
 		break;
 
 	case ENTITY_TYPE::ENEMY_HEAVY:
@@ -492,7 +492,7 @@ bool EntityManager::IsAllyEntity(Entity* entity)
 bool EntityManager::IsEnemyEntity(Entity* entity)
 {
 	if (entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT
-		|| entity->type == ENTITY_TYPE::ENEMY || entity->type == ENTITY_TYPE::ENEMY_HEAVY
+		|| entity->type == ENTITY_TYPE::ENEMY_INFANTRY || entity->type == ENTITY_TYPE::ENEMY_HEAVY
 		|| entity->type == ENTITY_TYPE::ENEMY_TOWNHALL || entity->type == ENTITY_TYPE::ENEMY_BARRACKS)
 	{
 		return true;
@@ -504,7 +504,7 @@ bool EntityManager::IsEnemyEntity(Entity* entity)
 bool EntityManager::IsUnit(Entity* entity)	// Maybe change condition to !IsBuilding() or something.
 {
 	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::SCOUT || entity->type == ENTITY_TYPE::INFANTRY || entity->type == ENTITY_TYPE::HEAVY 
-		|| entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT || entity->type == ENTITY_TYPE::ENEMY || entity->type == ENTITY_TYPE::ENEMY_HEAVY)
+		|| entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT || entity->type == ENTITY_TYPE::ENEMY_INFANTRY || entity->type == ENTITY_TYPE::ENEMY_HEAVY)
 	{
 		return true;
 	}
@@ -524,7 +524,7 @@ bool EntityManager::IsAllyUnit(Entity* entity)	// Maybe change condition to !IsB
 
 bool EntityManager::IsEnemyUnit(Entity* entity)	// Maybe change condition to !IsBuilding() or something.
 {
-	if (entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT || entity->type == ENTITY_TYPE::ENEMY || entity->type == ENTITY_TYPE::ENEMY_HEAVY)
+	if (entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT || entity->type == ENTITY_TYPE::ENEMY_INFANTRY || entity->type == ENTITY_TYPE::ENEMY_HEAVY)
 	{
 		return true;
 	}
@@ -661,11 +661,9 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 
 			if (IsBuilding(entity) || IsResource(entity))
 			{
-				Static_Object* item = (Static_Object*)entity;
-
-				for (int y = 0; y != item->tiles_occupied_y; ++y)
+				for (int y = 0; y != entity->tiles_occupied.y; ++y)
 				{
-					for (int x = 0; x != item->tiles_occupied_x; ++x)
+					for (int x = 0; x != entity->tiles_occupied.x; ++x)
 					{
 						int pos_y = pos.y + y;
 						int pos_x = pos.x + x;
@@ -687,9 +685,9 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 			{
 				Static_Object* item = (Static_Object*)entity;
 
-				for (int y = 0; y != item->tiles_occupied_y; ++y)
+				for (int y = 0; y != item->tiles_occupied.y; ++y)
 				{
-					for (int x = 0; x != item->tiles_occupied_x; ++x)
+					for (int x = 0; x != item->tiles_occupied.x; ++x)
 					{
 						int pos_y = pos.y + y;
 						int pos_x = pos.x + x;
@@ -732,11 +730,9 @@ bool EntityManager::CheckTileAvailability(const iPoint& pos, Entity* entity)
 
 		if (IsBuilding(entity) || IsResource(entity))
 		{
-			Static_Object* building = (Static_Object*)entity;
-
-			for (int y = 0; y != building->tiles_occupied_y; ++y)
+			for (int y = 0; y != entity->tiles_occupied.y; ++y)
 			{
-				for (int x = 0; x != building->tiles_occupied_x; ++x)
+				for (int x = 0; x != entity->tiles_occupied.x; ++x)
 				{
 					int pos_y = pos.y + y;
 					int pos_x = pos.x + x;

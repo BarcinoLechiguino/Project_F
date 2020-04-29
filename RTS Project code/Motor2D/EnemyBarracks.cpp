@@ -9,7 +9,7 @@
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
-#include "Enemy.h"
+#include "EnemyInfantry.h"
 
 #include "EnemyBarracks.h"
 
@@ -69,19 +69,31 @@ void EnemyBarracks::InitEntity()
 
 	is_selected = false;
 
+	// --- SPRITE SECTIONS ---
 	barracks_rect_1 = { 0, 0, 106, 95 };
 	barracks_rect_2 = { 108, 0, 106, 95 };
-
 	barracks_rect = barracks_rect_1;
 
+	// --- CREATION TIMES ---
+	accumulated_creation_time = 0.0f;
+	building_creation_time = 5.0f;
+
+	created_unit_type = ENTITY_TYPE::UNKNOWN;
+	
+	enemy_scout_creation_time = 1.0f;
+	enemy_infantry_creation_time = 2.0f;
+	enemy_heavy_creation_time = 5.0f;
+
+	// --- POSITION AND SIZE ---
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
 	pixel_position.x = (float)world_position.x;
 	pixel_position.y = (float)world_position.y;
 
-	tiles_occupied_x = 2;
-	tiles_occupied_y = 2;
+	tiles_occupied.x = 2;
+	tiles_occupied.y = 2;
 
+	// --- STATS & HEALTHBAR ---
 	max_health = 600;
 	current_health = max_health;
 
@@ -111,8 +123,8 @@ void EnemyBarracks::GenerateUnit(ENTITY_TYPE type, int level)
 {
 	switch (type)
 	{
-	case ENTITY_TYPE::ENEMY:
-		(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, tile_position.x, tile_position.y + 2, level);
+	case ENTITY_TYPE::ENEMY_INFANTRY:
+		(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, tile_position.x, tile_position.y + 2, level);
 		break;
 	}
 }

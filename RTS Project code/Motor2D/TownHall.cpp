@@ -16,9 +16,7 @@
 
 TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
 {
-	InitEntity();
-
-	
+	InitEntity();	
 }
 
 bool TownHall::Awake(pugi::xml_node&)
@@ -70,18 +68,27 @@ void TownHall::InitEntity()
 
 	is_selected = false;
 
+	// --- SPRITE SECTIONS ---
 	hall_rect_1 = { 0, 0, 155, 138 };
 	hall_rect_2 = { 155, 0, 155, 138 };
 	hall_rect = hall_rect_1;
 
+	// --- CREATION TIMERS ---
+	accumulated_creation_time = 0.0f;
+	building_creation_time = 5.0f;
+
+	gatherer_creation_time = 1.0f;														//Magic
+
+	// --- POSITION AND SIZE ---
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
 	pixel_position.x = (float)world_position.x;
 	pixel_position.y = (float)world_position.y;
 
-	tiles_occupied_x = 3;
-	tiles_occupied_y = 3;
+	tiles_occupied.x = 3;
+	tiles_occupied.y = 3;
 
+	// --- STATS & HEALTHBAR ---
 	unit_level = 1;
 
 	max_health = 900;
@@ -92,11 +99,12 @@ void TownHall::InitEntity()
 		AttachHealthbarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height/2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height * 0.5f);
 }
 
 void TownHall::AttachHealthbarToEntity()
 {
+	// HP Healthbar
 	healthbar_position_offset.x = -6;
 	healthbar_position_offset.y = -6;
 
@@ -107,6 +115,9 @@ void TownHall::AttachHealthbarToEntity()
 	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
 
 	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+
+	// Creation Bar
+
 }
 
 void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
@@ -114,13 +125,9 @@ void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
 	switch (type)
 	{
-	
 	case ENTITY_TYPE::GATHERER:
 		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, pos.x, pos.y, level);
 		break;
-	/*case ENTITY_TYPE::INFANTRY:
-		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
-		break;*/
 	}
 }
 

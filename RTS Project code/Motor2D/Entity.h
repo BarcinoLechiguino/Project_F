@@ -15,14 +15,14 @@ struct SDL_Rect;
 
 enum class ENTITY_TYPE
 {
-	UNKNOWN_TYPE,
+	UNKNOWN,
 	GATHERER,
 	SCOUT,
 	INFANTRY,
 	HEAVY,
 	ENEMY_GATHERER,
 	ENEMY_SCOUT,
-	ENEMY,
+	ENEMY_INFANTRY,
 	ENEMY_HEAVY,
 	TOWNHALL,
 	BARRACKS,
@@ -75,6 +75,7 @@ public:
 
 public:
 	//Entity Variables
+	std::string		name_tag;													//Name of the entity in the xml file.
 	ENTITY_TYPE		type;
 
 	bool			is_selected;
@@ -83,16 +84,15 @@ public:
 	int				current_health;
 	int				attack_damage;
 	int				level;
+	
+	fPoint			pixel_position;												// The entity's world position (pixels).
+	fPoint			center_point;												// Used for sprite ordering
+	iPoint			tile_position;												// The entity's map position (tiles).
+	iPoint			tiles_occupied;												// Amount of tiles that a given entity occupies in the x and y axis.
 
-	std::string		name_tag;													//Name of the entity in the xml file.
-
-	fPoint			pixel_position;			
-	iPoint			tile_position;
-	fPoint			center_point;												//Used for sprite ordering
-
-	SDL_Rect		healthbar_background_rect;
-	SDL_Rect		healthbar_rect;
-	iPoint			healthbar_position_offset;
+	SDL_Rect		healthbar_background_rect;									// The background sprite of an entity's healthbar.
+	SDL_Rect		healthbar_rect;												// The foremost sprite of an entity's healthbar.
+	iPoint			healthbar_position_offset;									// Value that will affect where around the entity the healthbar will appear.
 
 	UI_Healthbar*	healthbar;
 

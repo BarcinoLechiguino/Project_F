@@ -33,6 +33,8 @@ public:
 	SDL_Rect	hall_rect;
 	SDL_Rect	hall_rect_1;
 	SDL_Rect	hall_rect_2;
+
+	float		enemy_gatherer_creation_time;
 };
 
 #endif // !__ENEMY_TOWNHALL_H__

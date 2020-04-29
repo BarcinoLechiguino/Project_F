@@ -3,6 +3,16 @@
 
 #include "Entity.h"
 
+enum class BUILDING_STATE
+{
+	UNKNOWN,
+	IDLE,
+	CONSTRUCTING,
+	GENERATING_UNIT,
+	DAMAGED,
+	DESTROYED
+};
+
 class Static_Object : public Entity
 {
 public:
@@ -26,13 +36,22 @@ public:
 	//virtual void LevelChanges();
 
 public:
-	int tile_width;
-	int tile_height;
+	BUILDING_STATE	state;
 
-	int tiles_occupied_x;
-	int tiles_occupied_y;
+	int				tile_width;
+	int				tile_height;
 
-	float unit_creation_time;
+	float			building_creation_time;
+	float			accumulated_creation_time;										// Time accumulated in the creation process of a given building or a given unit.
+
+	bool			creating_unit;
+	bool			creation_has_finished;
+
+	UI_Healthbar*	creation_bar;
+
+	SDL_Rect		creation_bar_background_rect;									// The background sprite of an entity's healthbar.
+	SDL_Rect		creation_bar_rect;												// The foremost sprite of an entity's healthbar.
+	iPoint			creation_bar_position_offset;									// Value that will affect where around the entity the healthbar will appear.
 };
 
 #endif // !__STATIC_OBJECT_H__

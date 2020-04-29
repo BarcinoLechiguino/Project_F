@@ -14,7 +14,7 @@
 #include "Entity.h"
 
 
-Entity::Entity() : tile_position(0, 0), type(ENTITY_TYPE::UNKNOWN_TYPE), level(1), entity_sprite(nullptr), collider(nullptr), animation(nullptr)
+Entity::Entity() : tile_position(0, 0), type(ENTITY_TYPE::UNKNOWN), level(1), entity_sprite(nullptr), collider(nullptr), animation(nullptr)
 {
 
 }
@@ -103,7 +103,7 @@ void Entity::ApplyDamage(Entity* target)
 	{
 		target->current_health -= attack_damage;
 
-		target->healthbar->UpdateHealthbarValue();
+		target->healthbar->UpdateBarValue();
 	}
 	else
 	{
@@ -111,13 +111,13 @@ void Entity::ApplyDamage(Entity* target)
 		{
 			target->current_health -= attack_damage;
 
-			target->healthbar->UpdateHealthbarValue();
+			target->healthbar->UpdateBarValue();
 		}
 		else if (App->entity_manager->IsResource(target))
 		{
 			target->current_health -= attack_damage;
 
-			target->healthbar->UpdateHealthbarValue();
+			target->healthbar->UpdateBarValue();
 		}
 		
 	}

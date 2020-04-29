@@ -26,7 +26,7 @@
 #include "Heavy.h"
 #include "EnemyGatherer.h"
 #include "EnemyScout.h"
-#include "Enemy.h"
+#include "EnemyInfantry.h"
 #include "EnemyHeavy.h"
 
 #include "Static_Object.h"
@@ -1254,7 +1254,7 @@ void GameplayScene::UnitDebugKeys()
 
 			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_STATE::KEY_DOWN)
 			{
-				(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+				(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_STATE::KEY_DOWN)

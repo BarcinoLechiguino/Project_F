@@ -31,9 +31,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Dynamic_Object.cpp">
       <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
     </ClCompile>
@@ -208,6 +205,9 @@
     <ClCompile Include="EnemyHeavy.cpp">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyInfantry.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -254,9 +254,6 @@
     </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Engine  ===========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Dynamic_Object.h">
       <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
@@ -436,6 +433,9 @@
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="EnemyHeavy.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyInfantry.h">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClInclude>
   </ItemGroup>

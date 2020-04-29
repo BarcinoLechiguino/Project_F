@@ -50,7 +50,7 @@ void PathFinding::SetMap(uint width, uint height, uchar* data)
 bool PathFinding::CheckBoundaries(const iPoint& pos) const
 {
 	return (pos.x >= 0 && pos.x < (int)width &&
-			pos.y >= 0 && pos.y <= (int)height);
+			pos.y >= 0 && pos.y </*=*/ (int)height);
 }
 
 // Utility: return the walkability value of a tile
@@ -127,31 +127,16 @@ bool PathFinding::ChangeWalkability(iPoint pos, Entity* entity, uchar walkabilit
 {
 	if (map != nullptr)
 	{
-		if (abs(pos.x) > App->map->data.width || abs(pos.y) > App->map->data.height)
+		if (App->entity_manager->IsUnit(entity))
 		{
-			LOG("THIS NUMBER IS BANANAS!");
-			return false;
-		}
-		else
-		{
-			if (abs(pos.x) > App->map->data.width || abs(pos.y) > App->map->data.height)
-			{
-				LOG("THIS NUMBER IS BANANAS!");
-				return false;
-			}
-			else
-			{
-				map[(pos.y * App->map->data.width) + pos.x] = walkability;
-			}
+			map[(pos.y * App->map->data.width) + pos.x] = walkability;
 		}
 
 		if (App->entity_manager->IsBuilding(entity) || App->entity_manager->IsResource(entity))
 		{
-			Static_Object* item = (Static_Object*)entity;
-
-			for (int y = 0; y != item->tiles_occupied_y; ++y)
+			for (int y = 0; y != entity->tiles_occupied.y; ++y)
 			{
-				for (int x = 0; x != item->tiles_occupied_x; ++x)
+				for (int x = 0; x != entity->tiles_occupied.x; ++x)
 				{
 					int pos_y = pos.y + y;
 					int pos_x = pos.x + x;

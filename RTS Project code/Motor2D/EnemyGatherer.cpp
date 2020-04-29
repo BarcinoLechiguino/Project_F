@@ -76,7 +76,7 @@ bool EnemyGatherer::Update(float dt, bool doLogic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 
 	return true;
 }

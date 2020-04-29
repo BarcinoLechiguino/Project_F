@@ -12,35 +12,35 @@
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
 
-#include "Enemy.h"
+#include "EnemyInfantry.h"
 
 
-Enemy::Enemy(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
+EnemyInfantry::EnemyInfantry(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	InitEntity();
 };
 
-Enemy::~Enemy()  //Destructor. Called at the last frame.
+EnemyInfantry::~EnemyInfantry()  //Destructor. Called at the last frame.
 {
 
 };
 
-bool Enemy::Awake(pugi::xml_node& config)
-{
-	return true;
-};
-
-bool Enemy::Start()
+bool EnemyInfantry::Awake(pugi::xml_node& config)
 {
 	return true;
 };
 
-bool Enemy::PreUpdate()
+bool EnemyInfantry::Start()
+{
+	return true;
+};
+
+bool EnemyInfantry::PreUpdate()
 {	
 	return true;
 };
 
-bool Enemy::Update(float dt, bool doLogic)
+bool EnemyInfantry::Update(float dt, bool doLogic)
 {
 	
 
@@ -85,12 +85,12 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 
 	return true;
 };
 
-bool Enemy::PostUpdate()
+bool EnemyInfantry::PostUpdate()
 {
 	if (current_health <= 0)
 	{
@@ -100,7 +100,7 @@ bool Enemy::PostUpdate()
 	return true;
 };
 
-bool Enemy::CleanUp()
+bool EnemyInfantry::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
@@ -117,7 +117,7 @@ bool Enemy::CleanUp()
 	return true;
 };
 
-void Enemy::Draw()
+void EnemyInfantry::Draw()
 {
 	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y, &entity_sprite_section);
 
@@ -127,7 +127,7 @@ void Enemy::Draw()
 	}
 }
 
-void Enemy::InitEntity()
+void EnemyInfantry::InitEntity()
 {
 	entity_sprite = App->entity_manager->GetEnemyTexture();
 
@@ -155,10 +155,10 @@ void Enemy::InitEntity()
 		AttachHealthbarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 }
 
-void Enemy::AttachHealthbarToEntity()
+void EnemyInfantry::AttachHealthbarToEntity()
 {
 	healthbar_position_offset.x = -6;										//Magic
 	healthbar_position_offset.y = -6;
@@ -172,7 +172,7 @@ void Enemy::AttachHealthbarToEntity()
 	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }
 
-void Enemy::InitUnitSpriteSections()
+void EnemyInfantry::InitUnitSpriteSections()
 {
 	entity_sprite_section		= { 58, 0, 58, 47 };
 
@@ -186,7 +186,7 @@ void Enemy::InitUnitSpriteSections()
 	pathing_down_left_section	= { 0, 0, 58, 47 };
 }
 
-void Enemy::UpdateUnitSpriteSection()
+void EnemyInfantry::UpdateUnitSpriteSection()
 {
 	//change section according to pathing. 
 	switch (unit_state)
@@ -218,7 +218,7 @@ void Enemy::UpdateUnitSpriteSection()
 	}
 }
 
-void Enemy::SetEntityTargetByProximity()
+void EnemyInfantry::SetEntityTargetByProximity()
 {
 	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
@@ -235,7 +235,7 @@ void Enemy::SetEntityTargetByProximity()
 	}
 }
 
-void Enemy::GetShortestPathWithinAttackRange()
+void EnemyInfantry::GetShortestPathWithinAttackRange()
 {
 	std::vector<iPoint> tmp;
 
@@ -262,7 +262,7 @@ void Enemy::GetShortestPathWithinAttackRange()
 	}
 }
 
-void Enemy::UpdateUnitOrientation()
+void EnemyInfantry::UpdateUnitOrientation()
 {
 	if (target != nullptr)
 	{
@@ -316,7 +316,7 @@ void Enemy::UpdateUnitOrientation()
 	}
 }
 
-bool Enemy::TargetIsInRange()
+bool EnemyInfantry::TargetIsInRange()
 {
 	if (target != nullptr)
 	{
@@ -331,7 +331,7 @@ bool Enemy::TargetIsInRange()
 	return false;
 }
 
-void Enemy::ChaseTarget()
+void EnemyInfantry::ChaseTarget()
 {
 	std::vector<Dynamic_Object*> tmp;
 	tmp.push_back(this);
@@ -342,7 +342,7 @@ void Enemy::ChaseTarget()
 	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);
 }
 
-void Enemy::DealDamage()
+void EnemyInfantry::DealDamage()
 {
 	if (!attack_in_cooldown)
 	{
@@ -367,7 +367,7 @@ void Enemy::DealDamage()
 }
 
 // Collision Handling ---------------------------------------
-void Enemy::OnCollision(Collider* C1, Collider* C2)
+void EnemyInfantry::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
 }

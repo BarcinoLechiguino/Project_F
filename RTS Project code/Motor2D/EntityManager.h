@@ -22,7 +22,7 @@ enum class ENTITY_TYPE;
 //class Heavy;
 //class EnemyGatherer;
 //class EnemyScout;
-//class Enemy;
+//class EnemyInfantry;
 //class EnemyHeavy;
 //
 //class Static_Object;
