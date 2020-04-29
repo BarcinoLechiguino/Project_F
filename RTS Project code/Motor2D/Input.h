@@ -4,12 +4,23 @@
 #include "Module.h"
 
 //#define NUM_KEYS 352
+//#define LAST_KEYS_PRESSED_BUFFER 50
+
+#define MAX_KEYS 300
+
 #define NUM_MOUSE_BUTTONS 5
 #define NUM_CONTROLLER_BUTTONS 15
-#define CONTROLLER_INDEX 0
-#define MAX_AXIS 32767
+#define NUM_CONTROLLER_AXIS 4
+#define NUM_CONTROLLER_TRIGGERS 2
+
+#define MAX_AXIS 32767								// Absolute maximum axis value that can be returned by a given controller axis.
+#define CONTROLLER_INDEX 0							// Added to increase readability. As only one controller will be supported the controller index will always be 0.
+#define TRIGGER_INDEX 4								// The trigger axis are the 5th and 6th element of the SDL_GameControllerAxis, so their index starts at 4.
+
+#define LEFT_TRIGGER 0								// Own macros to support the implementation of the triggers as if they were buttons.
+#define RIGHT_TRIGGER 1								// Triggers have 0 and 1 as their game_controller.trigger index.
+
 #define MAX_SIZE 1000
-//#define LAST_KEYS_PRESSED_BUFFER 50
 
 struct SDL_Rect;
 struct _SDL_GameController;
@@ -30,26 +41,28 @@ enum class KEY_STATE
 	KEY_UP
 };
 
-enum class BUTTON_STATE							// Controller input states. Added to improve readability. Could also be applied to the mouse.
+enum class BUTTON_STATE								// Struct implemented to improve the readability of the code and separate keys from buttons. Same as KEY_STATE.
 {
 	BUTTON_IDLE,
 	BUTTON_DOWN,
 	BUTTON_REPEAT,
-	BUTTON_UP
+	BUTTON_UP,
+	UNKNOWN_BUTTON									// State that will be used in case the GetGameControllerButton/Trigger is called and there is no controller currently connected.
 };
 
-enum class AXIS_STATE							// Controller joystick states. 
+enum class AXIS_STATE								// Struct implemented to add a "button" state to a given axis value.
 {
 	AXIS_IDLE,
-	AXIS_POSITIVE_DOWN,
-	AXIS_POSITIVE_REPEAT,
-	AXIS_POSITIVE_UP,
-	AXIS_NEGATIVE_DOWN,
-	AXIS_NEGATIVE_REPEAT,
-	AXIS_NEGATIVE_UP
+	POSITIVE_AXIS_DOWN,
+	POSITIVE_AXIS_REPEAT,
+	POSITIVE_AXIS_RELEASE,
+	NEGATIVE_AXIS_DOWN,
+	NEGATIVE_AXIS_REPEAT,
+	NEGATIVE_AXIS_RELEASE,
+	UNKNOWN_AXIS									// State that will be used in case the GetGameControllerAxis is called and there is no controller currently connected.
 };
 
-enum class BUTTON_BINDING						// Controller bindings. Implemented to be able to use the selection shortcuts.
+enum class BUTTON_BINDINGS
 {
 	SELECT_GATHERERS,
 	SELECT_SCOUTS,
@@ -59,16 +72,17 @@ enum class BUTTON_BINDING						// Controller bindings. Implemented to be able to
 	SELECT_BARRACKS
 };
 
-struct GameController											// --- Game controller struct. Will contain all controller variables
+struct GameController
 {
-	_SDL_GameController*	id;									// Game controller identifier pointer. Represents a given game controller within the system.
-	int						index;								// Game controller joystick index. As this was implemented for a single player game, the index will always be 0;
-
-	//BUTTON_STATE			buttons[NUM_CONTROLLER_BUTTONS];	// All the button inputs that will be detected by the system from a given game controller.
-	BUTTON_STATE*			buttons;							// All the button inputs that will be detected by the system from a given game controller.
-
-	//int					axis;
-	//AXIS_STATE			axis_state;
+	_SDL_GameController*	id;							// The controller id pointer. Will designate which controller is sending the event and so on.
+	int						index;						// The index will always be 0 as only one controller will be supported. (Singleplayer game)
+														
+	BUTTON_STATE*			buttons;					
+	BUTTON_STATE*			triggers;					// Although the controller triggers are inside the SDL_GameControllerAxis structure, they will be treated as if they were buttons.
+	AXIS_STATE*				axis;					
+													
+	float					max_axis_input_threshold;	// Limit before any given axis input is detected. Goes from 0.0f to 1.0f.
+	float					min_axis_input_threshold;	// Limit before the release/idle axis input is detected. Goes from 0.0f to 1.0f.
 };
 
 class Input : public Module
@@ -76,49 +90,34 @@ class Input : public Module
 public:
 
 	Input();
+	virtual ~Input();											// Destructor
 
-	// Destructor
-	virtual ~Input();
+	bool Awake(pugi::xml_node&);								// Called before render is available
+	bool Start();												// Called before the first frame
+	bool PreUpdate();											// Called each loop iteration
+	bool CleanUp();												// Called before quitting
 
-	// Called before render is available
-	bool Awake(pugi::xml_node&);
+public:
+	bool GetWindowEvent(EventWindow ev);						// Gather relevant win events
+	bool GetWindowEvent(int code);								// Check if a certain window event happened
 
-	// Called before the first frame
-	bool Start();
+	// Check key states (includes mouse and joy).
+	KEY_STATE GetKey(int id) const;								// Get Keyboard Key State
+	KEY_STATE GetMouseButtonDown(int id) const;					// Get Mouse Button State
+	BUTTON_STATE GetGameControllerButton(int id) const;			// Get Game Controller Button State
+	BUTTON_STATE GetGameControllerTrigger(int id) const;		// Get Game Controller Trigger State
+	AXIS_STATE GetGameControllerAxis(int id) const;				// Get Game Controller Axis State.
 
-	// Called each loop iteration
-	bool PreUpdate();
+	// Mouse (position & axis)
+	void GetMousePosition(int &x, int &y);						// Returns the current mouse position.
+	void GetMouseMotion(int& x, int& y);						// Returns the current mouse motion value.
+	void GetMousewheelScrolling(int&x, int& y);					// Returns the current mousewheel scroll value.
 
-	// Called before quitting
-	bool CleanUp();
+	// Game Controller
+	void CheckGameControllerState();							// Will check all the states of all buttons and axis of a game controller. Implemented for readability.
 
-	// Gather relevant win events
-	bool GetWindowEvent(EventWindow ev);
 
-	// Check key states (includes mouse and joy buttons)
-	KEY_STATE GetKey(int id) const
-	{
-		return keyboard[id];
-	}
-
-	KEY_STATE GetMouseButtonDown(int id) const
-	{
-		return mouse_buttons[id - 1];
-	}
-
-	BUTTON_STATE GetControllerButtonDown(int id) const
-	{
-		return game_controller.buttons[id];
-	}
-
-	// Check if a certain window event happened
-	bool GetWindowEvent(int code);
-
-	// Get mouse / axis position
-	void GetMousePosition(int &x, int &y);
-	void GetMouseMotion(int& x, int& y);
-	void GetMousewheelScrolling(int&x, int& y);
-
+public:
 	// Text Input
 	void TextInput();
 	void EditTextInputs();
@@ -148,7 +147,7 @@ private:
 	KEY_STATE*		keyboard;
 	KEY_STATE		mouse_buttons[NUM_MOUSE_BUTTONS];
 
-	GameController	game_controller;
+	GameController game_controller;
 	
 	// --- MOUSE INPUT VARS ---
 	int				mouse_motion_x;
