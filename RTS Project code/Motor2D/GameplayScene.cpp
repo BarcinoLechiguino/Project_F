@@ -151,7 +151,7 @@ bool GameplayScene::PostUpdate()
 		UnitDebugKeys();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_STATE::KEY_DOWN)
 	{
 		App->render->camera.x = 1550;
 		App->render->camera.y = -600;
@@ -1032,18 +1032,17 @@ void GameplayScene::ExecuteTransition()
 		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, false, true);
 	}
 
-	// No KP_3 because we are in the 3rd scene.
-
-	if (App->input->GetKey(SDL_SCANCODE_4) == KEY_STATE::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_3) == KEY_STATE::KEY_DOWN)
 	{
 		if (App->pause)
 		{
 			App->pause = false;
 		}
-		
+
 		App->transition_manager->CreateSlide(SCENES::OPTIONS_SCENE, 0.5f, true, true, false, false, Black);
 	}
 
+	// No KP_4 because we are in the 4th scene.
 
 	if (App->input->GetKey(SDL_SCANCODE_5) == KEY_STATE::KEY_DOWN)
 	{

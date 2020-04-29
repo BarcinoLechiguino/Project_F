@@ -6,6 +6,7 @@
 #include "Window.h"
 #include "Audio.h"
 #include "Textures.h"
+#include "Input.h"
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "Map.h"
@@ -139,8 +140,8 @@ void Player::CameraController(float dt)
 	
 	if (CurrentlyInGameplayScene())										// If the current scene is FIRST_SCENE (gameplay scene)
 	{	
-		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_REPEAT 
-			|| App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_DPAD_LEFT) == BUTTON_STATE::BUTTON_REPEAT)								//Left
+		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_REPEAT
+			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)								//Left
 		{
 			if (App->render->camera.x < scene_camera_x_limit.x)
 			{
@@ -149,7 +150,7 @@ void Player::CameraController(float dt)
 		}
 
 		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_STATE::KEY_REPEAT 
-			|| App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == BUTTON_STATE::BUTTON_REPEAT)			//Right
+			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)								//Right
 		{
 			if (App->render->camera.x > scene_camera_x_limit.y)
 			{
@@ -158,7 +159,7 @@ void Player::CameraController(float dt)
 		}
 
 		if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_STATE::KEY_REPEAT 
-			|| App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == BUTTON_STATE::BUTTON_REPEAT)			//Bottom
+			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::POSITIVE_AXIS_REPEAT)			//Bottom
 		{
 			if (App->render->camera.y > scene_camera_y_limit.x)
 			{
@@ -166,8 +167,8 @@ void Player::CameraController(float dt)
 			}
 		}
 
-		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_STATE::KEY_REPEAT 
-			|| App->input->GetControllerButtonDown(SDL_CONTROLLER_BUTTON_DPAD_UP) == BUTTON_STATE::BUTTON_REPEAT)								//Up
+		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_STATE::KEY_REPEAT
+			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)			//Up
 		{
 			if (App->render->camera.y < scene_camera_y_limit.y)
 			{
@@ -179,9 +180,10 @@ void Player::CameraController(float dt)
 
 void Player::GiveOrder()//fix
 {
-	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_STATE::KEY_DOWN)
+	if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_STATE::KEY_DOWN 
+		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
 	{
-		if (units_selected.size() != 0)																								// If there are Units being selected
+		if (units_selected.size() != 0)																						// If there are Units being selected
 		{	
 			if (App->entity_manager->GetEntityAt(mouse_tile) == nullptr)
 			{
@@ -233,7 +235,7 @@ void Player::OrderUnitsToAttack()
 		{
 			if (App->entity_manager->IsEnemyEntity(target))
 			{
-				std::vector<Dynamic_Object*> infantries;																		//Temporal fix. For now we only have infantries as combat units.
+				std::vector<Dynamic_Object*> infantries;															//Temporal fix. For now we only have infantries as combat units.
 
 				for (int i = 0; i < (int)units_selected.size(); ++i)
 				{
@@ -302,7 +304,8 @@ void Player::DragSelection()
 {
 	if (CurrentlyInGameplayScene())
 	{
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN)
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN 
+			|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
 		{
 			is_selecting = true;
 
@@ -315,7 +318,8 @@ void Player::DragSelection()
 		{
 			UpdateSelectionRect();
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
 			{
 				is_selecting = false;
 
@@ -376,7 +380,8 @@ void Player::SelectOnClick()
 	{
 		if (!god_mode)
 		{
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN 
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
 			{
 				SelectEntityAt(mouse_tile);
 			}
@@ -386,25 +391,63 @@ void Player::SelectOnClick()
 
 void Player::SelectionShortcuts()
 {
-	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_STATE::KEY_DOWN)													// Select All Entities
+	if (App->input->GetKey(SDL_SCANCODE_SPACE) == KEY_STATE::KEY_DOWN 
+		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_Y) == BUTTON_STATE::BUTTON_DOWN)				// Select All Entities
 	{
 		SelectAllEntities();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_STATE::KEY_DOWN)													// Select All Gatherers
+	if (App->input->GetKey(SDL_SCANCODE_Z) == KEY_STATE::KEY_DOWN 
+		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_DPAD_UP) == BUTTON_STATE::BUTTON_DOWN)			// Select All Gatherers
 	{
 		SelectGatherers();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_STATE::KEY_DOWN)													// Select All Infantries
+	if (App->input->GetKey(SDL_SCANCODE_X) == KEY_STATE::KEY_DOWN 
+		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_DPAD_RIGHT) == BUTTON_STATE::BUTTON_DOWN)		// Select All Scouts
+	{
+		//SelectScouts();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_C) == KEY_STATE::KEY_DOWN 
+		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_DPAD_DOWN) == BUTTON_STATE::BUTTON_DOWN)		// Select All Infantries
 	{
 		SelectInfantries();
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_STATE::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_V) == KEY_STATE::KEY_DOWN 
+		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_DPAD_LEFT) == BUTTON_STATE::BUTTON_DOWN)		// Select All Heavys
 	{
-		SelectEnemies();																				// Select All Enemies
+		//SelectHeavys();
 	}
+
+	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_STATE::KEY_DOWN)													// Select All Enemies
+	{
+		//SelectAllEnemies();
+	}
+	
+	if (App->input->GetKey(SDL_SCANCODE_COMMA) == KEY_STATE::KEY_DOWN)												// Select All Enemy Gatherers
+	{
+		//SelectEnemyGatherers();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_PERIOD) == KEY_STATE::KEY_DOWN)												// Select All Enemy Scouts
+	{
+		//SelectEnemyScouts();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_MINUS) == KEY_STATE::KEY_DOWN)												// Select All Enemy Infantries
+	{
+		SelectEnemies();
+		//SelectEnemyInfantries();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_STATE::KEY_DOWN)												// Select All Enemy Heavys
+	{
+		//SelectEnemyHeavys();
+	}
+
+
 }
 
 void Player::SelectAllEntities()

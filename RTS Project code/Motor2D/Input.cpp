@@ -10,25 +10,29 @@
 
 #include "Input.h"
 
-#define MAX_KEYS 300
-
 Input::Input() : Module()
 {
 	name = ("input");
 
 	keyboard = new KEY_STATE[MAX_KEYS];
-	memset(keyboard, 0, sizeof(KEY_STATE) * MAX_KEYS);									// 0 = KEY_IDLE
+	memset(keyboard, 0, sizeof(KEY_STATE) * MAX_KEYS);										// 0 = KEY_IDLE
 
-	memset(mouse_buttons, 0, sizeof(KEY_STATE) * NUM_MOUSE_BUTTONS);					// 0 = KEY_IDLE
+	memset(mouse_buttons, 0, sizeof(KEY_STATE) * NUM_MOUSE_BUTTONS);						// 0 = KEY_IDLE
 
-	//memset(controller_axis, 0, sizeof(KEY_STATE) * NUM_CONTROLLER_AXIS);				// 0 = KEY_IDLE
-
-	
+	// --- INITIALIZING THE GAME CONTROLLER VARIABLES ---
 	game_controller.buttons = new BUTTON_STATE[NUM_CONTROLLER_BUTTONS];
-	memset(game_controller.buttons, 0, sizeof(BUTTON_STATE) * NUM_CONTROLLER_BUTTONS);	// 0 = KEY_IDLE
+	memset(game_controller.buttons, 0, sizeof(BUTTON_STATE) * NUM_CONTROLLER_BUTTONS);		// 0 = BUTTON_IDLE
+
+	game_controller.triggers = new BUTTON_STATE[NUM_CONTROLLER_TRIGGERS];					// Only 2 triggers are supported for a given game controller.
+	memset(game_controller.triggers, 0, sizeof(BUTTON_STATE) * NUM_CONTROLLER_TRIGGERS);	// 0 = BUTTON_IDLE
+
+	game_controller.axis = new AXIS_STATE[NUM_CONTROLLER_AXIS];								// Only 4 axis are supported for a given game controller.
+	memset(game_controller.axis, 0, sizeof(AXIS_STATE) * NUM_CONTROLLER_AXIS);				// 0 = AXIS_IDLE
 
 	game_controller.id = nullptr;
 	game_controller.index = CONTROLLER_INDEX;
+	game_controller.max_axis_input_threshold = 0.5f;
+	game_controller.min_axis_input_threshold = 0.2f;
 }
 
 // Destructor
@@ -43,7 +47,6 @@ bool Input::Awake(pugi::xml_node& config)
 	LOG("Init SDL input event system");
 	bool ret = true;
 	SDL_Init(0);
-	SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER);
 
 	if(SDL_InitSubSystem(SDL_INIT_EVENTS) < 0)
 	{
@@ -51,12 +54,18 @@ bool Input::Awake(pugi::xml_node& config)
 		ret = false;
 	}
 
-	SDL_GameControllerEventState(SDL_ENABLE);
-
-	if (SDL_GameControllerEventState(SDL_QUERY) != 1)
+	if (SDL_InitSubSystem(SDL_INIT_GAMECONTROLLER) < 0)											//Will initialize the game controller subsystem as well as the joystick subsystem.
 	{
-		LOG("SDL_GAME_CONTROLLER_EVENT could not initialize! SDL_Error: %s\n", SDL_GetError());
-		ret = false;	// CARE WITH THIS.
+		LOG("SDL_GAMECONTROLLER could not initialize! SDL_Error: %s\n", SDL_GetError());
+		ret = false;
+	}
+
+	SDL_GameControllerEventState(SDL_ENABLE);													//Enable/Disable events dealing with Game Controllers. SDL_QUERY and SDL_ENABLE/IGNORE.
+
+	if (SDL_GameControllerEventState(SDL_QUERY) != SDL_ENABLE)									//Checking the state of the game controller event. QUERY will return 1 on ENABLE and 0 on IGNORE.
+	{
+		LOG("The Controller Event State could not be enabled! SDL_Error: %s\n", SDL_GetError());
+		ret = false;		// CARE. CAN CLOSE THE APPLICATION.
 	}
 
 	return ret;
@@ -116,22 +125,10 @@ bool Input::PreUpdate()
 		}
 	}
 
-	//if (game_controller.id == nullptr)
-	//{
-	//	if (SDL_NumJoysticks() != 0)												//Returns the number of joysticks attached to the system. If != 0 then a joystick was detected.
-	//	{
-	//		if (SDL_IsGameController(CONTROLLER_INDEX))								//Joystick id's go from 0 to X. Since we only need to support one controller the id is 0.
-	//		{
-	//			game_controller.id = SDL_GameControllerOpen(CONTROLLER_INDEX);		//SDL_GameControllerOpen() will open a game controller with the given game controller index for use.
-	//		}
-	//	}
-	//	else
-	//	{
-	//		LOG("SDL_NumJoysticks ERROR: %s\n", SDL_GetError());
-	//	}
-	//}
-
-	SDL_GameControllerUpdate();
+	/*if (game_controller.id != nullptr)
+	{
+		CheckGameControllerState();
+	}*/
 
 	TextInput();
 
@@ -206,47 +203,31 @@ bool Input::PreUpdate()
 			break;
 
 			case SDL_CONTROLLERDEVICEADDED:
-				
-				if (game_controller.id == nullptr)
+				if (game_controller.id == nullptr)											// The game_controller has not been initialized/assigned an identifier.
 				{
-					if (SDL_NumJoysticks() != 0)												//Returns the number of joysticks attached to the system. If != 0 then a joystick was detected.
+					if (SDL_NumJoysticks() > 0)												// > 0 as SDL_NumJoysticks will return a negative error code (number) on failure.
 					{
-						if (SDL_IsGameController(CONTROLLER_INDEX))								//Joystick id's go from 0 to X. Since we only need to support one controller the id is 0.
+						if (SDL_IsGameController(CONTROLLER_INDEX))							// Will return SDL_TRUE if the given joystick is supported by the game controller interface.
 						{
-							game_controller.id = SDL_GameControllerOpen(CONTROLLER_INDEX);		//SDL_GameControllerOpen() will open a game controller with the given game controller index for use.
+							game_controller.id = SDL_GameControllerOpen(CONTROLLER_INDEX);	// Will open a game controller for use. Will return the game controller identifier pointer.
 						}
 					}
 					else
 					{
-						LOG("SDL_NumJoysticks ERROR: %s", SDL_GetError());
+						LOG("No joysticks currently attached to the system. SDL_Error: %s\n", SDL_GetError());
 					}
 				}
-
-				break;
-			
-			case SDL_CONTROLLERBUTTONDOWN:
-				//controller_buttons[event.cbutton.button - 1] = KEY_STATE::KEY_DOWN;
-				//LOG("Controller button %d down", event.cbutton.button - 1);
-
-			break;
-
-			case SDL_CONTROLLERBUTTONUP:
-				//controller_buttons[event.cbutton.button - 1] = KEY_STATE::KEY_UP;
-				//LOG("Controller button %d up", event.cbutton.button - 1);
-
-			break;
-
-			case SDL_CONTROLLERAXISMOTION:
 
 			break;
 		}
 	}
 
-	if (SDL_GameControllerGetAttached(game_controller.id))														//Will check if a given controller has been opened and is connected.
+	if (SDL_GameControllerGetAttached(game_controller.id))														// Returns true if the given game controller is open and currently connected.
 	{
-		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)														//All controller buttons are checked. 
+		// --- GAME CONTROLLER BUTTON STATES ---
+		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)														// Will iterate through all the buttons available. Same as the keyboard key loop.
 		{
-			if (SDL_GameControllerGetButton(game_controller.id, SDL_GameControllerButton(i)) == SDL_PRESSED)	//If the method returns SDL_PRESSED that means that the given button has been pressed.
+			if (SDL_GameControllerGetButton(game_controller.id, SDL_GameControllerButton(i)) == SDL_PRESSED)	// Gets the current state of a button in a controller. 1 = PRESSED / 0 = RELEASED.
 			{
 				if (game_controller.buttons[i] == BUTTON_STATE::BUTTON_IDLE)
 				{
@@ -269,10 +250,111 @@ bool Input::PreUpdate()
 				}
 			}
 		}
+
+		// --- GAME CONTROLLER TRIGGER STATES ---
+		for (int i = 0; i < NUM_CONTROLLER_TRIGGERS; ++i)
+		{
+			int trigger_value = SDL_GameControllerGetAxis(game_controller.id, SDL_GameControllerAxis(TRIGGER_INDEX + i));
+			//LOG("CURRENT AXIS VALUE IS: %d", trigger_value);
+
+			if (trigger_value > game_controller.max_axis_input_threshold * MAX_AXIS)
+			{
+				if (game_controller.triggers[i] == BUTTON_STATE::BUTTON_IDLE)
+				{
+					game_controller.triggers[i] = BUTTON_STATE::BUTTON_DOWN;
+				}
+				else
+				{
+					game_controller.triggers[i] = BUTTON_STATE::BUTTON_REPEAT;
+				}
+			}
+			else
+			{
+				if (game_controller.triggers[i] == BUTTON_STATE::BUTTON_DOWN || game_controller.triggers[i] == BUTTON_STATE::BUTTON_REPEAT)
+				{
+					game_controller.triggers[i] = BUTTON_STATE::BUTTON_UP;
+				}
+				else
+				{
+					game_controller.triggers[i] = BUTTON_STATE::BUTTON_IDLE;
+				}
+			}
+		}
+
+		// --- GAME CONTROLLER AXIS STATES ---
+		int max_positive_threshold = (int)(game_controller.max_axis_input_threshold * MAX_AXIS);			//Maybe make it part of the GameController struct.
+		int max_negative_threshold = -(int)(game_controller.max_axis_input_threshold * MAX_AXIS);
+		int min_positive_threshold = (int)(game_controller.min_axis_input_threshold * MAX_AXIS);
+		int min_negative_threshold = -(int)(game_controller.min_axis_input_threshold * MAX_AXIS);
+
+		for (int i = 0; i < NUM_CONTROLLER_AXIS; ++i)
+		{
+			int axis_value = SDL_GameControllerGetAxis(game_controller.id, SDL_GameControllerAxis(i));		//Getting the current axis value of the given joystick.
+
+			if (abs(axis_value) < (int)(game_controller.min_axis_input_threshold * MAX_AXIS))
+			{
+				axis_value = 0;																				// Safety check to compensate for the controller's joystick dead value.
+			}
+
+			//LOG("CURRENT AXIS VALUE IS: %d", axis_value);
+
+			if (axis_value > max_positive_threshold)														// The joystick is all the way into the positive (BOTTOM / RIGHT).
+			{
+				if (game_controller.axis[i] == AXIS_STATE::AXIS_IDLE)
+				{
+					game_controller.axis[i] = AXIS_STATE::POSITIVE_AXIS_DOWN;
+				}
+				else
+				{
+					game_controller.axis[i] = AXIS_STATE::POSITIVE_AXIS_REPEAT;
+				}
+			}
+			else
+			{
+				if (axis_value < min_positive_threshold && axis_value > min_negative_threshold)			// The joystick is within the min threshold. (No negative axis input)
+				{
+					if (game_controller.axis[i] == AXIS_STATE::POSITIVE_AXIS_DOWN || game_controller.axis[i] == AXIS_STATE::POSITIVE_AXIS_REPEAT)
+					{
+						game_controller.axis[i] = AXIS_STATE::POSITIVE_AXIS_RELEASE;
+					}
+					else
+					{
+						game_controller.axis[i] = AXIS_STATE::AXIS_IDLE;
+					}
+				}
+			}
+
+			if (axis_value < max_negative_threshold)														// The joystick is all the way into the negative (TOP / LEFT).
+			{
+				if (game_controller.axis[i] == AXIS_STATE::AXIS_IDLE)
+				{
+					game_controller.axis[i] = AXIS_STATE::NEGATIVE_AXIS_DOWN;
+				}
+				else
+				{
+					game_controller.axis[i] = AXIS_STATE::NEGATIVE_AXIS_REPEAT;
+				}
+			}
+			else if (axis_value > min_negative_threshold && axis_value < min_positive_threshold)													// The joystick is not past the positive threshold. (No positive axis input)
+			{
+				if (game_controller.axis[i] == AXIS_STATE::NEGATIVE_AXIS_DOWN || game_controller.axis[i] == AXIS_STATE::NEGATIVE_AXIS_REPEAT)
+				{
+					game_controller.axis[i] = AXIS_STATE::NEGATIVE_AXIS_RELEASE;
+				}
+				else
+				{
+					game_controller.axis[i] = AXIS_STATE::AXIS_IDLE;
+				}
+			}
+		}
 	}
-	else
+	else																											// If the game controller has been disconnected.
 	{
-		LOG("Game controller was either not opened or not connected.");
+		if (game_controller.id != nullptr)																			// There was a controller that was open, attached and had an ID
+		{
+			SDL_GameControllerClose(game_controller.id);
+			game_controller.id = nullptr;
+		}
 	}
 
 	return true;
@@ -292,6 +374,47 @@ bool Input::GetWindowEvent(EventWindow ev)
 	return windowEvents[ev];
 }
 
+KEY_STATE Input::GetKey(int id) const
+{
+	return keyboard[id];
+}
+
+KEY_STATE Input::GetMouseButtonDown(int id) const
+{
+	return mouse_buttons[id - 1];
+}
+
+BUTTON_STATE Input::GetGameControllerButton(int id) const
+{
+	if (game_controller.id != nullptr)
+	{
+		return game_controller.buttons[id];
+	}
+
+	return BUTTON_STATE::UNKNOWN_BUTTON;
+}
+
+BUTTON_STATE Input::GetGameControllerTrigger(int id) const
+{
+	if (game_controller.id != nullptr)
+	{
+		return game_controller.triggers[id];
+	}
+
+	return BUTTON_STATE::UNKNOWN_BUTTON;
+}
+
+AXIS_STATE Input::GetGameControllerAxis(int id) const
+{
+	if (game_controller.id != nullptr)
+	{
+		return game_controller.axis[id];
+	}
+
+	return AXIS_STATE::UNKNOWN_AXIS;
+}
+
+// ---------------- MOUSE INPUT METHODS ----------------
 void Input::GetMousePosition(int& x, int& y)
 {
 	x = mouse_x;
@@ -311,6 +434,145 @@ void Input::GetMousewheelScrolling(int&x, int& y)
 
 	mouse_scroll_x = 0;
 	mouse_scroll_y = 0;
+}
+
+// ---------------- GAME CONTROLLER INPUT METHODS ----------------
+void Input::CheckGameControllerState()
+{
+	if (SDL_GameControllerGetAttached(game_controller.id))														// Returns true if the given game controller is open and currently connected.
+	{
+		// --- GAME CONTROLLER BUTTON STATES ---
+		for (int i = 0; i < SDL_CONTROLLER_BUTTON_MAX; ++i)														// Will iterate through all the buttons available. Same as the keyboard key loop.
+		{
+			if (SDL_GameControllerGetButton(game_controller.id, SDL_GameControllerButton(i)) == SDL_PRESSED)	// Gets the current state of a button in a controller. 1 = PRESSED / 0 = RELEASED.
+			{
+				if (game_controller.buttons[i] == BUTTON_STATE::BUTTON_IDLE)
+				{
+					game_controller.buttons[i] = BUTTON_STATE::BUTTON_DOWN;
+				}
+				else
+				{
+					game_controller.buttons[i] = BUTTON_STATE::BUTTON_REPEAT;
+				}
+			}
+			else
+			{
+				if (game_controller.buttons[i] == BUTTON_STATE::BUTTON_DOWN || game_controller.buttons[i] == BUTTON_STATE::BUTTON_REPEAT)
+				{
+					game_controller.buttons[i] = BUTTON_STATE::BUTTON_UP;
+				}
+				else
+				{
+					game_controller.buttons[i] = BUTTON_STATE::BUTTON_IDLE;
+				}
+			}
+		}
+
+		// --- GAME CONTROLLER TRIGGER STATES ---
+		for (int i = 0; i < NUM_CONTROLLER_TRIGGERS; ++i)
+		{
+			int trigger_value = SDL_GameControllerGetAxis(game_controller.id, SDL_GameControllerAxis(TRIGGER_INDEX + i));
+			//LOG("CURRENT AXIS VALUE IS: %d", trigger_value);
+
+			if (trigger_value > game_controller.max_axis_input_threshold * MAX_AXIS)
+			{
+				if (game_controller.triggers[i] == BUTTON_STATE::BUTTON_IDLE)
+				{
+					game_controller.triggers[i] = BUTTON_STATE::BUTTON_DOWN;
+				}
+				else
+				{
+					game_controller.triggers[i] = BUTTON_STATE::BUTTON_REPEAT;
+				}
+			}
+			else
+			{
+				if (game_controller.triggers[i] == BUTTON_STATE::BUTTON_DOWN || game_controller.triggers[i] == BUTTON_STATE::BUTTON_REPEAT)
+				{
+					game_controller.triggers[i] = BUTTON_STATE::BUTTON_UP;
+				}
+				else
+				{
+					game_controller.triggers[i] = BUTTON_STATE::BUTTON_IDLE;
+				}
+			}
+		}
+
+		// --- GAME CONTROLLER AXIS STATES ---
+		int max_positive_threshold = (int)(game_controller.max_axis_input_threshold * MAX_AXIS);			//Maybe make it part of the GameController struct.
+		int max_negative_threshold = -(int)(game_controller.max_axis_input_threshold * MAX_AXIS);
+		int min_positive_threshold = (int)(game_controller.min_axis_input_threshold * MAX_AXIS);
+		int min_negative_threshold = -(int)(game_controller.min_axis_input_threshold * MAX_AXIS);
+
+		for (int i = 0; i < NUM_CONTROLLER_AXIS; ++i)
+		{
+			int axis_value = SDL_GameControllerGetAxis(game_controller.id, SDL_GameControllerAxis(i));		//Getting the current axis value of the given joystick.
+
+			if (abs(axis_value) < game_controller.min_axis_input_threshold * MAX_AXIS)
+			{
+				axis_value = 0;																				// Safety check to compensate for the controller's joystick dead value.
+			}
+
+			LOG("CURRENT AXIS VALUE IS: %d", axis_value);
+
+			if (axis_value > max_positive_threshold)														// The joystick is all the way into the positive (BOTTOM / RIGHT).
+			{
+				if (game_controller.axis[i] == AXIS_STATE::AXIS_IDLE)
+				{
+					game_controller.axis[i] = AXIS_STATE::POSITIVE_AXIS_DOWN;
+				}
+				else
+				{
+					game_controller.axis[i] = AXIS_STATE::POSITIVE_AXIS_REPEAT;
+				}
+			}
+			else
+			{
+				if (axis_value < min_positive_threshold && axis_value > min_negative_threshold)			// The joystick is within the min threshold. (No negative axis input)
+				{
+					if (game_controller.axis[i] == AXIS_STATE::POSITIVE_AXIS_DOWN || game_controller.axis[i] == AXIS_STATE::POSITIVE_AXIS_REPEAT)
+					{
+						game_controller.axis[i] = AXIS_STATE::POSITIVE_AXIS_RELEASE;
+					}
+					else
+					{
+						game_controller.axis[i] = AXIS_STATE::AXIS_IDLE;
+					}
+				}
+			}
+
+			if (axis_value < max_negative_threshold)														// The joystick is all the way into the negative (TOP / LEFT).
+			{
+				if (game_controller.axis[i] == AXIS_STATE::AXIS_IDLE)
+				{
+					game_controller.axis[i] = AXIS_STATE::NEGATIVE_AXIS_DOWN;
+				}
+				else
+				{
+					game_controller.axis[i] = AXIS_STATE::NEGATIVE_AXIS_REPEAT;
+				}
+			}
+			else if (axis_value > min_negative_threshold && axis_value < min_positive_threshold)													// The joystick is not past the positive threshold. (No positive axis input)
+			{
+				if (game_controller.axis[i] == AXIS_STATE::NEGATIVE_AXIS_DOWN || game_controller.axis[i] == AXIS_STATE::NEGATIVE_AXIS_REPEAT)
+				{
+					game_controller.axis[i] = AXIS_STATE::NEGATIVE_AXIS_RELEASE;
+				}
+				else
+				{
+					game_controller.axis[i] = AXIS_STATE::AXIS_IDLE;
+				}
+			}
+		}
+	}
+	else																											// If the game controller has been disconnected.
+	{
+		if (game_controller.id != nullptr)																			// There was a controller that was open, attached and had an ID
+		{
+			SDL_GameControllerClose(game_controller.id);
+			game_controller.id = nullptr;
+		}
+	}
 }
 
 // ---------------------------- TEXT INPUT METHODS ----------------------------
