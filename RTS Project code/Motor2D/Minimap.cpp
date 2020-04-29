@@ -149,7 +149,6 @@ bool Minimap::MinimapCoords(int& map_x, int& map_y)
 		map_x = (mouse_x - minimap_position.x - minimap_width/2) / minimap_scale;
 		map_y = (mouse_y - minimap_position.y) / minimap_scale;
 	}
-
 	else
 		return false;
 
@@ -190,7 +189,6 @@ void Minimap::DrawMinimap()
 
 void Minimap::DrawCamera()
 {
-
 	SDL_Rect map_camera = { ((-App->render->camera.x)) * minimap_scale + minimap_width * 0.5f + minimap_position.x, -App->render->camera.y * minimap_scale + minimap_position.y,
 							App->render->camera.w * minimap_scale, App->render->camera.h * minimap_scale };
 
@@ -209,7 +207,7 @@ void Minimap::DrawEntities()
 {
 	int pos_x, pos_y;
 
-	for (int i = 0; i < App->entity_manager->entities.size(); ++i)
+	for (int i = 0; i < (int)App->entity_manager->entities.size(); ++i)
 	{
 
 		pos_x = App->entity_manager->entities[i]->pixel_position.x * minimap_scale;
@@ -245,5 +243,3 @@ void Minimap::DrawEntities()
 		}
 	}
 }
-
-

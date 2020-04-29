@@ -105,20 +105,25 @@ void SceneManager::SwitchScene(SCENES scene_name)
 
 	std::vector<Scene*>::iterator item = scenes.begin();
 
-	for (; item != scenes.end(); ++item)
+	for (int i=0; i < (int)scenes.size(); i++)
 	{
-		if ((*item)->scene_name == scene_name)
+		if (item[i]->scene_name == scene_name)
 		{
-			current_scene = (*item);
+			current_scene = item[i];
 			break;
 		}
 	}
 
+	LOG("LOADING %s SCENE", current_scene->name_tag.c_str());
+
 	if (current_scene != nullptr)
 	{
  		current_scene->Awake(config.child(current_scene->name_tag.c_str()));
+		LOG("FINISHED AWAKING %s SCENE", current_scene->name_tag.c_str());
 		current_scene->Start();
+		LOG("FINISHED LOADING %s SCENE", current_scene->name_tag.c_str());
 	}
+	
 }
 
 void SceneManager::LoadScene(SCENES scene_name)
@@ -132,6 +137,7 @@ void SceneManager::LoadScene(SCENES scene_name)
 			if (current_scene == nullptr)
 			{
 				current_scene = (*item);
+				
 			}
 			else
 			{
@@ -150,6 +156,8 @@ void SceneManager::LoadScene(SCENES scene_name)
 	}
 
 	next_scene->Start();
+
+	LOG("Loading %s scene", (*item)->name_tag);
 }
 
 void SceneManager::UnloadScene(Scene* scene_to_unload)
