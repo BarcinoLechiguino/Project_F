@@ -74,6 +74,7 @@ public:
 	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
 	bool IsResource(Entity* entity);													//Method that will return true if the entity passed as argument is a resource.
 	bool IsEnemyEntity(Entity* entity);													//Method that will return true if the entity passed as argument is a enemy entity.
+	bool InViewport(Entity* entity);
 
 	void SetEntityMap(int width, int height);											//Method that will allocate the necessary memory for the entity_map.
 	void ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null = false);	//Method that will modify the entity map when a unit or building is spawned.
