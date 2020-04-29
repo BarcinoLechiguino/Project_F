@@ -77,12 +77,11 @@ bool EntityManager::Start()
 
 bool EntityManager::PreUpdate()
 {
+
 	for (int i = 0; i < (int)entities.size(); ++i)
 	{
 		entities[i]->PreUpdate();
 	}
-
-
 	return true;
 }
 
@@ -91,14 +90,25 @@ bool EntityManager::Update(float dt)
 	BROFILER_CATEGORY("EntityManager Update", Profiler::Color::FireBrick);
 	accumulated_time += dt;
 
+	entities_in_screen.clear();
+
 	if (accumulated_time >= cycle_length) //Timer that will set doLogic to true 10 times per second (cycle_length == 0.1 sec).
 	{
 		doLogic = true;
 	}
 
+	int j = 0;
+
 	for (int i = 0; i < (int)entities.size(); ++i)
 	{
-		entities[i]->Update(dt, doLogic);;
+		entities[i]->Update(dt, doLogic);
+
+		if(InViewport(entities[i])) //Entities to be drawn
+		{
+			entities_in_screen.push_back(entities[i]);
+			j++;
+			//LOG("trues %d", j);
+		}
 	}
 
 	if (doLogic == true)				//Resets the doLogic timer.
@@ -148,8 +158,6 @@ void EntityManager::OrderEntities()
 {
 	BROFILER_CATEGORY("OrderEntities", Profiler::Color::FireBrick);
 
-	entities_in_screen = entities;
-
 	std::sort(entities_in_screen.begin(), entities_in_screen.end(), customLess);
 
 	DrawEntities();
@@ -157,6 +165,8 @@ void EntityManager::OrderEntities()
 
 void EntityManager::DrawEntities()
 {
+	//LOG("Entities in screen %d", entities_in_screen.size());
+
 	for (int i = 0; i < (int)entities_in_screen.size(); ++i)
 	{
 		entities_in_screen[i]->Draw();
@@ -463,6 +473,31 @@ bool EntityManager::IsEnemyEntity(Entity* entity)
 		return true;
 	}
 
+	return false;
+}
+
+bool EntityManager::InViewport(Entity* entity)
+{
+	SDL_Rect window;
+
+	App->win->GetWindowRect(window);
+
+	window.x = -App->render->camera.x - 100;
+	window.y = -App->render->camera.y -100;
+	window.w += 100;
+	window.h += 100;
+
+	//LOG("WINDOW RECT x %d y %d w %d h %d", window.x, window.y, window.w, window.h);
+	//LOG("ENTITY POS x %d y %d", (int)entity->pixel_position.x, (int)entity->pixel_position.y);
+
+	if (window.x < (int)entity->pixel_position.x
+		&& window.x + window.w > (int)entity->pixel_position.x
+		&& window.y < (int)entity->pixel_position.y
+		&& window.y + window.h > (int)entity->pixel_position.y)
+	{
+		return true;
+	}
+	
 	return false;
 }
 
