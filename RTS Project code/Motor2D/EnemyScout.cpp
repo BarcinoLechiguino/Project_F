@@ -342,7 +342,7 @@ void EnemyScout::ChaseTarget()
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	//GiveNewTargetTile(target->tile_position);
-	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);
+	App->pathfinding->MoveOrder(target->tile_position, tmp);
 }
 
 void EnemyScout::DealDamage()

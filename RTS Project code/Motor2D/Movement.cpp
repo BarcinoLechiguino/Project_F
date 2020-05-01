@@ -4,6 +4,7 @@
 #include "Dynamic_Object.h"
 #include "Pathfinding.h"
 #include "Application.h"
+#include "Map.h"
 #include "p2Log.h"
 
 #include "Movement.h"
@@ -72,53 +73,73 @@ void Movement::OrderUnitsToMove(iPoint tile, std::vector<Dynamic_Object*> units_
 
 void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> units_selected)
 {
-	Entity* target = App->entity_manager->GetEntityAt(tile);
-
-	if (target != nullptr)
+	if (App->map->CheckMapBoundaries(tile))														// Checks that the current mouse_tile is within the map's boundaries.
 	{
-		if (App->entity_manager->IsEnemyEntity(target))
-		{
-			std::vector<Dynamic_Object*> infantries;															//Temporal fix. For now we only have infantries as combat units.
+		Entity* target = App->entity_manager->GetEntityAt(tile);
 
-			for (int i = 0; i < (int)units_selected.size(); ++i)
+		if (target != nullptr)
+		{
+			if (!App->pathfinding->IsWalkable(tile))													// TMP CHECK. Avoids getting corrupted entity pointers from the entity map.
 			{
-				if (App->entity_manager->IsInfantry(units_selected[i]))
+				if (App->entity_manager->IsEnemyEntity(target))
 				{
-					units_selected[i]->target = target;
-					App->pathfinding->ChangeWalkability(units_selected[i]->occupied_tile, units_selected[i], WALKABLE);
-					infantries.push_back(units_selected[i]);
+					std::vector<Dynamic_Object*> ally_units;												//Temporal fix. For now we only have infantries as combat units.
+
+					for (int i = 0; i < (int)units_selected.size(); ++i)
+					{
+						if (App->entity_manager->IsScout(units_selected[i])
+							|| App->entity_manager->IsInfantry(units_selected[i])
+							|| App->entity_manager->IsHeavy(units_selected[i]))
+						{
+							ally_units.push_back(units_selected[i]);
+						}
+					}
+
+					for (int i = 0; i < (int)ally_units.size(); ++i)
+					{
+						ally_units[i]->target = target;
+						App->pathfinding->ChangeWalkability(ally_units[i]->occupied_tile, ally_units[i], WALKABLE);
+					}
+
+					App->pathfinding->MoveOrder(target->tile_position, ally_units);
+
+					ally_units.clear();
 				}
 			}
 
-			App->pathfinding->MoveOrder(target->tile_position, infantries);
-
-			//AttackOrder(target->tile_position, infantries);
-
-			infantries.clear();
-		}
-		
-		if (App->entity_manager->IsResource(target))
-		{
-			std::vector<Dynamic_Object*> gatherers;
-
-			for (int i = 0; i < (int)units_selected.size(); ++i)
+			if (App->pathfinding->IsNonWalkable(tile))
 			{
-				if (App->entity_manager->IsGatherer(units_selected[i]))
+				if (App->entity_manager->IsResource(target))
 				{
-					units_selected[i]->target = target;
-					App->pathfinding->ChangeWalkability(units_selected[i]->occupied_tile, units_selected[i], WALKABLE);
-					gatherers.push_back(units_selected[i]);
+					std::vector<Dynamic_Object*> gatherers;
+
+					for (int i = 0; i < (int)units_selected.size(); ++i)
+					{
+						if (App->entity_manager->IsGatherer(units_selected[i]))
+						{
+							gatherers.push_back(units_selected[i]);
+						}
+					}
+
+					for (int i = 0; i < (int)gatherers.size(); ++i)
+					{
+						gatherers[i]->target = target;
+						App->pathfinding->ChangeWalkability(gatherers[i]->occupied_tile, gatherers[i], WALKABLE);
+					}
+
+					App->pathfinding->MoveOrder(target->tile_position, gatherers);							//Gives units targets around main target
+
+					gatherers.clear();
+				}
+				else
+				{
+					LOG("Target entity is not an enemy entity.");
 				}
 			}
-
-			App->pathfinding->MoveOrder(target->tile_position, gatherers);							//Gives units targets around main target
-
-			gatherers.clear();
 		}
-		else
-		{
-			LOG("Target entity is not an enemy entity.");
-		}
-		
+	}
+	else
+	{
+		LOG("Target tile (%d, %d) is not within the map's bounds", tile.x, tile.y);
 	}
 }
