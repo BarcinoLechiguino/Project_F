@@ -85,7 +85,7 @@ bool Enemy::Update(float dt, bool doLogic)
 
 	
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);//crash
 
 	return true;
 };
@@ -339,7 +339,7 @@ void Enemy::ChaseTarget()
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	//GiveNewTargetTile(target->tile_position);
-	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);
+	App->pathfinding->MoveOrder(target->tile_position, tmp);
 }
 
 void Enemy::DealDamage()

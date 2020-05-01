@@ -31,8 +31,7 @@ public:
 	void CameraController(float dt);
 	
 	void GiveOrder();
-	void OrderUnitsToMove();									// Will order all units in the units_selected vector to move towards a target tile (mouse tile position).
-	void OrderUnitsToAttack();									// Will give all units in the units_selected vector a target entity to attack.
+										// Will give all units in the units_selected vector a target entity to attack.
 
 	void DrawCursor();
 

@@ -175,7 +175,6 @@ iPoint PathFinding::FindNearbyPoint(iPoint pos)
 {
 	iPoint ret(0, 0);
 	
-
 	PathList frontier;
 	PathList visited;
 
@@ -222,7 +221,7 @@ iPoint PathFinding::FindNearbyPoint(iPoint pos)
 	return ret;
 }
 
-void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Object*> units_selected)
+void PathFinding::MoveOrder(const iPoint& pos, std::vector<Dynamic_Object*> units_selected)
 {
 	if (units_selected.size() != 0)
 	{
@@ -250,6 +249,8 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 
 		while (frontier.list.size() != 0 && units != units_selected.end())
 		{
+			current_node = frontier.list.begin();
+
 			current_node->FindWalkableAdjacents(neighbours);																//Fill starting node
 
 			std::list<PathNode>::iterator item = neighbours.list.begin();
@@ -274,10 +275,9 @@ void PathFinding::FindNearbyWalkable(const iPoint& pos, std::vector<Dynamic_Obje
 				}
 			}
 
+			frontier.list.erase(current_node);
 			neighbours.list.clear();
-
 			visited.list.push_back((*current_node));
-
 			current_node++;
 		}
 	}

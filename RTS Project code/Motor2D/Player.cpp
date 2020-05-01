@@ -16,6 +16,7 @@
 #include "GameplayScene.h"
 #include "GuiManager.h"
 #include "UI.h"
+#include "Movement.h"
 
 #include "EntityManager.h"
 #include "Dynamic_Object.h"
@@ -187,11 +188,11 @@ void Player::GiveOrder()//fix
 		{	
 			if (App->entity_manager->GetEntityAt(mouse_tile) == nullptr)
 			{
-				OrderUnitsToMove();
+				App->movement->OrderUnitsToMove(mouse_tile,units_selected);
 			}
 			else
 			{
-				OrderUnitsToAttack();
+				App->movement->OrderUnitsToAttack(mouse_tile, units_selected);
 			}
 		}
 		else
@@ -201,93 +202,6 @@ void Player::GiveOrder()//fix
 	}
 }
 
-void Player::OrderUnitsToMove()
-{
-	if (App->pathfinding->IsWalkable(mouse_tile))
-	{
-		std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
-		
-		for (; item != units_selected.end(); item++)
-		{
-			if ((*item)->target != nullptr)
-			{
-				(*item)->target = nullptr;
-			}
-
-			App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
-		}
-
-		App->pathfinding->FindNearbyWalkable(mouse_tile, units_selected);							//Gives units targets around main target
-	}
-	else
-	{
-		LOG("Tile cannot be targeted");
-	}
-}
-
-void Player::OrderUnitsToAttack()
-{
-	Entity* target = App->entity_manager->GetEntityAt(mouse_tile);
-
-	if (target != nullptr)
-	{
-		if (!App->pathfinding->IsWalkable(mouse_tile))																// TMP CHECK
-		{
-			if (App->entity_manager->IsEnemyEntity(target))
-			{
-				std::vector<Dynamic_Object*> infantries;															//Temporal fix. For now we only have infantries as combat units.
-
-				for (int i = 0; i < (int)units_selected.size(); ++i)
-				{
-					if (App->entity_manager->IsInfantry(units_selected[i]))
-					{
-						infantries.push_back(units_selected[i]);
-					}
-				}
-
-				for (int i = 0; i < (int)infantries.size(); ++i)
-				{
-					infantries[i]->target = target;
-					App->pathfinding->ChangeWalkability(infantries[i]->occupied_tile, infantries[i], WALKABLE);
-				}
-
-				App->pathfinding->FindNearbyWalkable(target->tile_position, infantries);
-
-				infantries.clear();
-			}
-		}
-
-		if (App->pathfinding->IsNonWalkable(mouse_tile))
-		{
-			if (App->entity_manager->IsResource(target))
-			{
-				std::vector<Dynamic_Object*> gatherers;
-
-				for (int i = 0; i < (int)units_selected.size(); ++i)
-				{
-					if (App->entity_manager->IsGatherer(units_selected[i]))
-					{
-						gatherers.push_back(units_selected[i]);
-					}
-				}
-
-				for (int i = 0; i < (int)gatherers.size(); ++i)
-				{
-					gatherers[i]->target = target;
-					App->pathfinding->ChangeWalkability(gatherers[i]->occupied_tile, gatherers[i], WALKABLE);
-				}
-
-				App->pathfinding->FindNearbyWalkable(target->tile_position, gatherers);							//Gives units targets around main target
-
-				gatherers.clear();
-			}
-			else
-			{
-				LOG("Target entity is not an enemy entity.");
-			}
-		}
-	}
-}
 
 void Player::DrawCursor()
 {

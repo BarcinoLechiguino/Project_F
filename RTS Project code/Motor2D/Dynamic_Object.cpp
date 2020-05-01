@@ -139,7 +139,6 @@ bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 	}
 	else
 	{
-		
 		GetShortestPathWithinAttackRange();
 		PathToGatheringTarget();
 	}
@@ -179,7 +178,6 @@ void Dynamic_Object::HandleMovement(float dt)
 
 		Move(dt);
 		
-
 		break;
 
 	case PATHFINDING_STATE::WAITING_NEXT_TILE:
@@ -201,30 +199,27 @@ void Dynamic_Object::HandleMovement(float dt)
 				ChangeOccupiedTile(tile_position);
 			}
 
-			break;
 		}
+		else
+		{
+			//Calculate next tile and decide direction
+			advance(current_path_tile, 1);
 
-		//Calculate next tile and decide direction
+			next_tile = (*current_path_tile);
 
-		advance(current_path_tile, 1);
+			App->entity_manager->ChangeEntityMap(tile_position, this, true);
+			App->entity_manager->ChangeEntityMap(next_tile, this);
 
-		next_tile = (*current_path_tile);
+			//LOG("Next tile %d %d", next_tile.x, next_tile.y);
 
-		App->entity_manager->ChangeEntityMap(tile_position, this, true);
+			next_tile_position = App->map->MapToWorld(next_tile.x, next_tile.y);
+			path_state = PATHFINDING_STATE::WALKING;
 
-		App->entity_manager->ChangeEntityMap(next_tile, this);
+			SetEntityState();
 
-		//LOG("Next tile %d %d", next_tile.x, next_tile.y);
-
-		next_tile_position = App->map->MapToWorld(next_tile.x, next_tile.y);
-
-		path_state = PATHFINDING_STATE::WALKING;
-
-		SetEntityState();
-
-		//Move so that it doesn't stutter
-		Move(dt);
-
+			//Move so that it doesn't stutter
+			Move(dt);
+		}
 		break;
 	}
 }
