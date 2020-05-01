@@ -137,6 +137,7 @@
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="TransitionManager.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="UI_CreationBar.cpp" />
     <ClCompile Include="UI_Cursor.cpp" />
     <ClCompile Include="UI_Healthbar.cpp" />
     <ClCompile Include="Window.cpp" />
@@ -213,6 +214,7 @@
     <ClInclude Include="Transition.h" />
     <ClInclude Include="TransitionManager.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="UI_CreationBar.h" />
     <ClInclude Include="UI_Cursor.h" />
     <ClInclude Include="UI_Healthbar.h" />
     <ClInclude Include="Window.h" />

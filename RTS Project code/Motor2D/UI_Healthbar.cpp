@@ -150,7 +150,7 @@ void UI_Healthbar::UpdateCreationBarValue()
 {
 	int new_width = 0;
 	
-	if (!creation_complete)
+	/*if (!creation_complete)
 	{
 		if (App->entity_manager->IsBuilding(attached_unit))
 		{
@@ -174,7 +174,7 @@ void UI_Healthbar::UpdateCreationBarValue()
 			{
 				creation_complete = true;
 				creation_timer = 0.0f;
-			}*/
+			}
 		}
 
 		healthbar.w = new_width;
@@ -184,7 +184,7 @@ void UI_Healthbar::UpdateCreationBarValue()
 		healthbar.w = 0;
 
 		//ResetProgressBar();
-	}
+	}*/
 }
 
 void UI_Healthbar::ResetProgressBar()

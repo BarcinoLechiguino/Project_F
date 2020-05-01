@@ -75,8 +75,8 @@ void EnemyBarracks::InitEntity()
 	barracks_rect = barracks_rect_1;
 
 	// --- CREATION TIMES ---
-	accumulated_creation_time = 0.0f;
-	building_creation_time = 5.0f;
+	/*accumulated_creation_time = 0.0f;
+	building_creation_time = 5.0f;*/
 
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
 	

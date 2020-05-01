@@ -208,6 +208,9 @@
     <ClCompile Include="EnemyInfantry.cpp">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="UI_CreationBar.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -437,6 +440,9 @@
     </ClInclude>
     <ClInclude Include="EnemyInfantry.h">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_CreationBar.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

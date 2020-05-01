@@ -76,8 +76,8 @@ void EnemyTownHall::InitEntity()
 	hall_rect = hall_rect_1;
 
 	// --- CREATION TIMERS ---
-	accumulated_creation_time = 0.0f;
-	building_creation_time = 5.0f;
+	/*accumulated_creation_time = 0.0f;
+	building_creation_time = 5.0f;*/
 	
 	enemy_gatherer_creation_time = 1.0f;														//Magic
 

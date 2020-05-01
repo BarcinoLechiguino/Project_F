@@ -38,10 +38,10 @@ bool Barracks::PreUpdate()
 
 bool Barracks::Update(float dt, bool doLogic)
 {
-	if (creating_unit)
+	/*if (creating_unit)
 	{
 		accumulated_creation_time += dt;
-	}
+	}*/
 	
 	return true;
 }
@@ -80,8 +80,8 @@ void Barracks::InitEntity()
 	barracks_rect = barracks_rect_1;
 
 	// --- CREATION TIMERS & VARS ---
-	accumulated_creation_time = 0.0f;
-	building_creation_time = 5.0f;
+	/*accumulated_creation_time = 0.0f;
+	building_creation_time = 5.0f;*/
 	
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
 
@@ -128,6 +128,23 @@ void Barracks::AttachHealthbarToEntity()
 
 void Barracks::GenerateUnit(ENTITY_TYPE type, int level)
 {	
+	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
+
+	switch (type)
+	{
+		/*case ENTITY_TYPE::SCOUT:
+			(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, level);
+			break;*/
+
+	case ENTITY_TYPE::INFANTRY:
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
+		break;
+
+		/*case ENTITY_TYPE::HEAVY:
+
+			break;*/
+	}
+	
 	/*if (type == ENTITY_TYPE::SCOUT)
 	{
 		created_unit_type = ENTITY_TYPE::SCOUT;
@@ -158,28 +175,26 @@ void Barracks::GenerateUnit(ENTITY_TYPE type, int level)
 		}
 	}*/
 	
-	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
-	
-	if (creation_has_finished)
-	{
-		switch (type)
-		{
-		/*case ENTITY_TYPE::SCOUT:
-			(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, level);
-			break;*/
+	//if (creation_has_finished)
+	//{
+	//	switch (type)
+	//	{
+	//	/*case ENTITY_TYPE::SCOUT:
+	//		(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, level);
+	//		break;*/
 
-		case ENTITY_TYPE::INFANTRY:
-			(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
-			break;
+	//	case ENTITY_TYPE::INFANTRY:
+	//		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
+	//		break;
 
-		/*case ENTITY_TYPE::HEAVY:
+	//	/*case ENTITY_TYPE::HEAVY:
 
-			break;*/
-		}
+	//		break;*/
+	//	}
 
-		/*creation_has_finished = false;
-		created_unit_type = ENTITY_TYPE::UNKNOWN;*/
-	}
+	//	/*creation_has_finished = false;
+	//	created_unit_type = ENTITY_TYPE::UNKNOWN;*/
+	//}
 }
 
 void Barracks::LevelChanges()				//Updates the building stats when leveling up

@@ -41,17 +41,19 @@ public:
 	int				tile_width;
 	int				tile_height;
 
-	float			building_creation_time;
-	float			accumulated_creation_time;										// Time accumulated in the creation process of a given building or a given unit.
+	std::vector<Entity*> creation_queue;
 
-	bool			creating_unit;
-	bool			creation_has_finished;
+	//float			building_creation_time;
+	//float			accumulated_creation_time;										// Time accumulated in the creation process of a given building or a given unit.
 
-	UI_Healthbar*	creation_bar;
+	//bool			creating_unit;
+	//bool			creation_has_finished;
 
-	SDL_Rect		creation_bar_background_rect;									// The background sprite of an entity's healthbar.
-	SDL_Rect		creation_bar_rect;												// The foremost sprite of an entity's healthbar.
-	iPoint			creation_bar_position_offset;									// Value that will affect where around the entity the healthbar will appear.
+	//UI_Healthbar*	creation_bar;
+
+	//SDL_Rect		creation_bar_background_rect;									// The background sprite of an entity's healthbar.
+	//SDL_Rect		creation_bar_rect;												// The foremost sprite of an entity's healthbar.
+	//iPoint			creation_bar_position_offset;									// Value that will affect where around the entity the healthbar will appear.
 };
 
 #endif // !__STATIC_OBJECT_H__
