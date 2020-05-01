@@ -1,15 +1,15 @@
-#ifndef __INFANTRY_H__
-#define __INFANTRY_H__
+#ifndef __SCOUT_H__
+#define __SCOUT_H__
 
 #include "Dynamic_Object.h"
 
-class Infantry : public Dynamic_Object
+class Scout : public Dynamic_Object
 {
 public:
 
-	Infantry(int x, int y, ENTITY_TYPE type, int level);
+	Scout(int x, int y, ENTITY_TYPE type, int level);
 
-	~Infantry();
+	~Scout();
 
 	bool Awake(pugi::xml_node&);
 
@@ -24,15 +24,15 @@ public:
 	bool CleanUp();
 
 	void Draw();
-	
+
 public:
 	void InitEntity();
-	
+
 	void AttachHealthbarToEntity();
 
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
-	
+
 	void SetEntityTargetByProximity();
 	void GetShortestPathWithinAttackRange();
 	void UpdateUnitOrientation();
@@ -50,4 +50,4 @@ public:
 	//const std::vector<iPoint>*	entity_path;
 };
 
-#endif // __INFANTRY_H__
+#endif // !__SCOUT_H__

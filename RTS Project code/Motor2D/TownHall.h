@@ -35,6 +35,8 @@ public:
 	SDL_Rect	hall_rect_2;
 
 	int			unit_level;
+
+	float		gatherer_creation_time;
 };
 
 #endif // !__TOWNHALL_H__

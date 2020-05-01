@@ -24,6 +24,8 @@ public:
 public:
 	void InitEntity();
 
+	void AttachHealthbarToEntity();
+
 public:
 	int ore;
 

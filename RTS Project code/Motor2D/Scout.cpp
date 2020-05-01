@@ -1,3 +1,5 @@
+#include "p2Log.h"
+
 #include "Application.h"
 #include "Render.h"
 #include "Textures.h"
@@ -7,43 +9,43 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Player.h"
+#include "EntityManager.h"
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
-#include "EntityManager.h"
+#include "SceneManager.h"
 
-#include "Enemy.h"
+#include "Scout.h"
 
 
-Enemy::Enemy(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
+Scout::Scout(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
 {
+	LOG("x %d and y %d", x, y);
 	InitEntity();
 };
 
-Enemy::~Enemy()  //Destructor. Called at the last frame.
+Scout::~Scout()  //Destructor. Called at the last frame.
 {
 
 };
 
-bool Enemy::Awake(pugi::xml_node& config)
-{
-	return true;
-};
-
-bool Enemy::Start()
+bool Scout::Awake(pugi::xml_node& config)
 {
 	return true;
 };
 
-bool Enemy::PreUpdate()
-{	
+bool Scout::Start()
+{
 	return true;
 };
 
-bool Enemy::Update(float dt, bool doLogic)
+bool Scout::PreUpdate()
 {
-	
+	return true;
+};
 
+bool Scout::Update(float dt, bool doLogic)
+{
 	HandleMovement(dt);
 
 	DataMapSafetyCheck();
@@ -83,24 +85,22 @@ bool Enemy::Update(float dt, bool doLogic)
 		}
 	}
 
-	
-
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);//crash
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 
 	return true;
 };
 
-bool Enemy::PostUpdate()
+bool Scout::PostUpdate()
 {
 	if (current_health <= 0)
 	{
 		App->entity_manager->DeleteEntity(this);
 	}
-	
+
 	return true;
 };
 
-bool Enemy::CleanUp()
+bool Scout::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
@@ -113,13 +113,13 @@ bool Enemy::CleanUp()
 	}
 
 	App->gui_manager->DeleteGuiElement(healthbar);
-	
+
 	return true;
 };
 
-void Enemy::Draw()
+void Scout::Draw()
 {
-	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y, &entity_sprite_section);
+	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section);
 
 	if (App->player->god_mode)
 	{
@@ -127,13 +127,13 @@ void Enemy::Draw()
 	}
 }
 
-void Enemy::InitEntity()
+void Scout::InitEntity()
 {
-	entity_sprite = App->entity_manager->GetEnemyTexture();
+	entity_sprite = App->entity_manager->GetScoutTexture();
 
 	InitUnitSpriteSections();
 
-	is_selectable = false;
+	is_selectable = true;
 	is_selected = false;
 	path_full = false;
 
@@ -141,30 +141,28 @@ void Enemy::InitEntity()
 	attack_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
 
-	speed = 500.0f;
+	speed = 750.0f;
 
-	max_health = 300;
+	max_health = 200;
 	current_health = max_health;
-	attack_damage = 30;
+	attack_damage = 10;
 
-	attack_speed = 0.75f;
+	attack_speed = 0.5f;
 	attack_range = 5;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 	}
-
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
 }
 
-void Enemy::AttachHealthbarToEntity()
+void Scout::AttachHealthbarToEntity()
 {
-	healthbar_position_offset.x = -6;										//Magic
+	healthbar_position_offset.x = -6;			// Magic
 	healthbar_position_offset.y = -6;
 
 	healthbar_background_rect = { 967, 1, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
-	healthbar_rect = { 967, 7, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
+	healthbar_rect = { 967, 13, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
 
 	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
 	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
@@ -172,21 +170,21 @@ void Enemy::AttachHealthbarToEntity()
 	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }
 
-void Enemy::InitUnitSpriteSections()
+void Scout::InitUnitSpriteSections()
 {
-	entity_sprite_section		= { 58, 0, 58, 47 };
+	entity_sprite_section = { 58, 0, 58, 47 };						//Down Right
 
-	pathing_up_section			= { 0, 47, 70, 52 };
-	pathing_down_section		= { 71, 47, 70, 52 };
-	pathing_rigth_section		= { 202, 47, 59, 52 };
-	pathing_left_section		= { 142, 47, 59, 52 };
-	pathing_up_right_section	= { 116, 0, 60, 47 };
-	pathing_up_left_section		= { 176, 0, 59, 47 };
-	pathing_down_right_section	= { 58, 0, 58, 47 };
-	pathing_down_left_section	= { 0, 0, 58, 47 };
+	pathing_up_section = { 0, 47, 70, 52 };
+	pathing_down_section = { 71, 47, 70, 52 };
+	pathing_rigth_section = { 202, 47, 59, 52 };
+	pathing_left_section = { 142, 47, 59, 52 };
+	pathing_up_right_section = { 116, 0, 60, 47 };
+	pathing_up_left_section = { 176, 0, 59, 47 };
+	pathing_down_right_section = { 58, 0, 58, 47 };
+	pathing_down_left_section = { 0, 0, 58, 47 };
 }
 
-void Enemy::UpdateUnitSpriteSection()
+void Scout::UpdateUnitSpriteSection()
 {
 	//change section according to pathing. 
 	switch (unit_state)
@@ -218,13 +216,13 @@ void Enemy::UpdateUnitSpriteSection()
 	}
 }
 
-void Enemy::SetEntityTargetByProximity()
+void Scout::SetEntityTargetByProximity()
 {
 	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
 	for (; item != App->entity_manager->entities.end(); ++item)
 	{
-		if (!App->entity_manager->IsEnemyEntity((*item)) && !App->entity_manager->IsResource((*item)))
+		if (App->entity_manager->IsEnemyEntity((*item)))
 		{
 			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
 			{
@@ -235,7 +233,7 @@ void Enemy::SetEntityTargetByProximity()
 	}
 }
 
-void Enemy::GetShortestPathWithinAttackRange()
+void Scout::GetShortestPathWithinAttackRange()
 {
 	std::vector<iPoint> tmp;
 
@@ -262,61 +260,64 @@ void Enemy::GetShortestPathWithinAttackRange()
 	}
 }
 
-void Enemy::UpdateUnitOrientation()
+void Scout::UpdateUnitOrientation()
 {
-	if (target != nullptr)
+	if (unit_state == ENTITY_STATE::IDLE)
 	{
-		if (tile_position.x > target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , --y)
+		if (target != nullptr)
 		{
-			entity_sprite_section = pathing_up_section;
-			return;
-		}
+			if (tile_position.x > target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , --y)
+			{
+				entity_sprite_section = pathing_up_section;
+				return;
+			}
 
-		if (tile_position.x < target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x , ++y)
-		{
-			entity_sprite_section = pathing_down_section;
-			return;
-		}
+			if (tile_position.x < target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x , ++y)
+			{
+				entity_sprite_section = pathing_down_section;
+				return;
+			}
 
-		if (tile_position.x < target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , ++y)
-		{
-			entity_sprite_section = pathing_rigth_section;
-			return;
-		}
+			if (tile_position.x < target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (--x , ++y)
+			{
+				entity_sprite_section = pathing_rigth_section;
+				return;
+			}
 
-		if (tile_position.x > target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x, --y)
-		{
-			entity_sprite_section = pathing_left_section;
-			return;
-		}
+			if (tile_position.x > target->tile_position.x && tile_position.y < target->tile_position.y)					// next_tile is (++x, --y)
+			{
+				entity_sprite_section = pathing_left_section;
+				return;
+			}
 
-		if (tile_position.x == target->tile_position.x && tile_position.y > target->tile_position.y)				// next_tile is (== , --y)
-		{
-			entity_sprite_section = pathing_up_right_section;
-			return;
-		}
+			if (tile_position.x == target->tile_position.x && tile_position.y > target->tile_position.y)					// next_tile is (== , --y)
+			{
+				entity_sprite_section = pathing_up_right_section;
+				return;
+			}
 
-		if (tile_position.x > target->tile_position.x && tile_position.y == target->tile_position.y)				// next tile is (--x, ==)
-		{
-			entity_sprite_section = pathing_up_left_section;
-			return;
-		}
+			if (tile_position.x > target->tile_position.x && tile_position.y == target->tile_position.y)					// next tile is (--x, ==)
+			{
+				entity_sprite_section = pathing_up_left_section;
+				return;
+			}
 
-		if (tile_position.x < target->tile_position.x && tile_position.y == target->tile_position.y)				// next tile is (++x, ==)
-		{
-			entity_sprite_section = pathing_down_right_section;
-			return;
-		}
+			if (tile_position.x < target->tile_position.x && tile_position.y == target->tile_position.y)					// next tile is (++x, ==)
+			{
+				entity_sprite_section = pathing_down_right_section;
+				return;
+			}
 
-		if (tile_position.x == target->tile_position.x && tile_position.y < target->tile_position.y)				// next tile is (==, ++y)
-		{
-			entity_sprite_section = pathing_down_left_section;
-			return;
+			if (tile_position.x == target->tile_position.x && tile_position.y < target->tile_position.y)					// next tile is (==, ++y)
+			{
+				entity_sprite_section = pathing_down_left_section;
+				return;
+			}
 		}
 	}
 }
 
-bool Enemy::TargetIsInRange()
+bool Scout::TargetIsInRange()
 {
 	if (target != nullptr)
 	{
@@ -331,7 +332,7 @@ bool Enemy::TargetIsInRange()
 	return false;
 }
 
-void Enemy::ChaseTarget()
+void Scout::ChaseTarget()
 {
 	std::vector<Dynamic_Object*> tmp;
 	tmp.push_back(this);
@@ -339,14 +340,15 @@ void Enemy::ChaseTarget()
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	//GiveNewTargetTile(target->tile_position);
-	App->pathfinding->MoveOrder(target->tile_position, tmp);
+	App->pathfinding->FindNearbyWalkable(target->tile_position, tmp);
 }
 
-void Enemy::DealDamage()
+void Scout::DealDamage()
 {
 	if (!attack_in_cooldown)
 	{
 		ApplyDamage(target);
+		App->audio->PlayFx(App->entity_manager->infantry_shot_fx);
 		attack_in_cooldown = true;
 	}
 	else
@@ -367,7 +369,7 @@ void Enemy::DealDamage()
 }
 
 // Collision Handling ---------------------------------------
-void Enemy::OnCollision(Collider* C1, Collider* C2)
+void Scout::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
 }

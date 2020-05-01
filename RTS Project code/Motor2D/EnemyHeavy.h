@@ -1,15 +1,15 @@
-#ifndef __INFANTRY_H__
-#define __INFANTRY_H__
+#ifndef __ENEMY__HEAVY_H__
+#define __ENEMY_HEAVY_H__
 
 #include "Dynamic_Object.h"
 
-class Infantry : public Dynamic_Object
+class EnemyHeavy : public Dynamic_Object
 {
 public:
 
-	Infantry(int x, int y, ENTITY_TYPE type, int level);
+	EnemyHeavy(int x, int y, ENTITY_TYPE type, int level);
 
-	~Infantry();
+	~EnemyHeavy();
 
 	bool Awake(pugi::xml_node&);
 
@@ -24,15 +24,15 @@ public:
 	bool CleanUp();
 
 	void Draw();
-	
+
 public:
 	void InitEntity();
-	
+
 	void AttachHealthbarToEntity();
 
 	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
-	
+
 	void SetEntityTargetByProximity();
 	void GetShortestPathWithinAttackRange();
 	void UpdateUnitOrientation();
@@ -45,9 +45,10 @@ public:
 
 public:
 	int							attack_range;							// A unit's attack range in tiles.
+	int							attack_radius;							// The unit's effective attack area. The heavy has an AoE attack. Radius in tiles.
 	float						attack_speed;							// A unit's attack speed in attacks/second.
 
 	//const std::vector<iPoint>*	entity_path;
 };
 
-#endif // __INFANTRY_H__
+#endif // !__ENEMY_HEAVY_H__

@@ -43,10 +43,18 @@ public:
 	void SelectionShortcuts();									// Unit selection shortcuts. Currently Z (All), X (Gatherers), C (Infantries), V (Enemies).
 	void SelectOnClick();										// Method that will select whichever entity is at the mouse's position when it is right-clicked.
 
-	void SelectAllEntities();
+	void SelectAllUnits();
+	void SelectAllyUnits();
+	void SelectEnemyUnits();
+
 	void SelectGatherers();
+	void SelectScouts();
 	void SelectInfantries();
+	void SelectHeavys();
+	void SelectEnemyGatherers();
+	void SelectEnemyScouts();
 	void SelectEnemies();
+	void SelectEnemyHeavys();
 
 	void SelectEntityAt(const iPoint& tile_position);
 

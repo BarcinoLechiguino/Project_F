@@ -4,6 +4,10 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Static_Object.h"
+#include "TownHall.h"
+#include "EnemyTownHall.h"
+#include "Barracks.h"
+#include "EnemyBarracks.h"
 #include "GuiManager.h"
 
 #include "UI_Healthbar.h"
@@ -11,11 +15,11 @@
 #include "Textures.h"
 
 
-UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_progress_bar, Module* listener, UI* parent)
+UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_creation_bar, Module* listener, UI* parent)
 	: UI(element, x, y, *healthbar, listener, parent)
 {
-	progress_timer = 0.f;
-	progress_complete = false;
+	creation_timer = 0.f;
+	creation_complete = false;
 
 	tex = App->gui_manager->GetAtlas();
 	
@@ -47,12 +51,12 @@ UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool is_visible, SD
 		this->background = *background;
 	}
 
-	this->is_progress_bar = is_progress_bar;
+	this->is_creation_bar = is_creation_bar;
 
-	if (is_progress_bar)
+	if (is_creation_bar)
 	{
-		progress_complete = false;
-		progress_timer = 0.0f;
+		creation_complete = false;
+		creation_timer = 0.0f;
 		this->healthbar.w = 0;
 	}
 }
@@ -68,7 +72,7 @@ bool UI_Healthbar::Draw()
 	
 	UpdateHealthbarPosition();
 
-	if (!is_progress_bar)
+	if (!is_creation_bar)
 	{
 		if (attached_unit->current_health != attached_unit->max_health || attached_unit->is_selected || App->player->god_mode)
 		{
@@ -78,7 +82,7 @@ bool UI_Healthbar::Draw()
 	}
 	else
 	{
-		if (!progress_complete)
+		if (!creation_complete)
 		{
 			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
 			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &healthbar, 1.0f, 1.0f);
@@ -108,59 +112,83 @@ void UI_Healthbar::UpdateHealthbarPosition()
 	SetHitbox({ position_x, position_y, GetHitbox().w, GetHitbox().h });
 }
 
-void UI_Healthbar::UpdateHealthbarValue()
+void UI_Healthbar::UpdateBarValue()
 {
-	int new_width = 0;
-	
-	if (!is_progress_bar)
+	if (!is_creation_bar)
 	{
-		if (App->entity_manager->IsUnit(attached_unit))
-		{
-			new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
-		}
-
-		if (App->entity_manager->IsBuilding(attached_unit))
-		{
-			new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
-		}
-
-		if (App->entity_manager->IsResource(attached_unit))
-		{
-			new_width = (MAX_RESOURCE_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
-		}
+		UpdateHealthBarValue();
 	}
 	else
 	{
-		if (!progress_complete)
-		{
-			if (App->entity_manager->IsBuilding(attached_unit))
-			{
-				progress_timer += App->GetDt();
+		UpdateCreationBarValue();
+	}
+}
 
-				Static_Object* building = (Static_Object*)attached_unit;
+void UI_Healthbar::UpdateHealthBarValue()
+{
+	int new_width = 0;
 
-				new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * progress_timer) / building->unit_creation_time;
+	if (App->entity_manager->IsUnit(attached_unit))
+	{
+		new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+	}
 
-				if (progress_timer >= building->unit_creation_time)
-				{
-					progress_complete = true;
-					progress_timer = 0.0f;
-				}
-			}
-		}
-		else
-		{
-			healthbar.w = 0;
-			
-			//ResetProgressBar();
-		}
+	if (App->entity_manager->IsBuilding(attached_unit))
+	{
+		new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
+	}
+
+	if (App->entity_manager->IsResource(attached_unit))
+	{
+		new_width = (MAX_RESOURCE_HEALTHBAR_WIDTH * attached_unit->current_health) / attached_unit->max_health;
 	}
 
 	healthbar.w = new_width;
 }
 
+void UI_Healthbar::UpdateCreationBarValue()
+{
+	int new_width = 0;
+	
+	/*if (!creation_complete)
+	{
+		if (App->entity_manager->IsBuilding(attached_unit))
+		{
+			creation_timer += App->GetDt();
+
+			if (attached_unit->type == ENTITY_TYPE::TOWNHALL)
+			{
+				TownHall* townhall = (TownHall*)attached_unit;
+
+				new_width = (int)((MAX_BUILDING_HEALTHBAR_WIDTH * creation_timer) / townhall->gatherer_creation_time);
+			}
+
+			if (attached_unit->type == ENTITY_TYPE::ENEMY_TOWNHALL)
+			{
+				EnemyTownHall* enemy_townhall = (EnemyTownHall*)attached_unit;
+
+				new_width = (int)((MAX_BUILDING_HEALTHBAR_WIDTH * creation_timer) / enemy_townhall->enemy_gatherer_creation_time);
+			}
+
+			/*if (creation_timer >= building->unit_creation_time)
+			{
+				creation_complete = true;
+				creation_timer = 0.0f;
+			}
+		}
+
+		healthbar.w = new_width;
+	}
+	else
+	{
+		healthbar.w = 0;
+
+		//ResetProgressBar();
+	}*/
+}
+
 void UI_Healthbar::ResetProgressBar()
 {
 	healthbar.w = 0;
-	progress_complete = false;
+	creation_complete = false;
 }

@@ -33,6 +33,12 @@ public:
 	SDL_Rect	barracks_rect_1;
 	SDL_Rect	barracks_rect_2;
 	SDL_Rect	barracks_rect;
+
+	ENTITY_TYPE created_unit_type;
+	
+	float		enemy_scout_creation_time;
+	float		enemy_infantry_creation_time;
+	float		enemy_heavy_creation_time;
 };
 
 #endif // !__ENEMY_BARRACKS_H__

@@ -144,17 +144,16 @@ struct TileSet
 	int					num_tiles_height;			//Number of tiles at the Y axis that will have a given texture. Ex: num_tiles_height = tile_height / tex_height;
 	int					offset_x;					//Horizontal offset in pixels.
 	int					offset_y;					//Vertical offset in pixels.
-
 };
 
 // Different supported MapTypes ----------------------------------------------------
-enum MapTypes
+enum class MAP_TYPE
 {
-	MAPTYPE_UNKNOWN = 0,
-	MAPTYPE_ORTHOGONAL,
-	MAPTYPE_ISOMETRIC,
-	MAPTYPE_STAGGERED,
-	MAPTYPE_HEXAGONAL
+	UNKNOWN = 0,
+	ORTHOGONAL,
+	ISOMETRIC,
+	STAGGERED,
+	HEXAGONAL
 };
 
 // ----------------------------------------------------
@@ -165,7 +164,7 @@ struct MapData
 	int							tile_width;			//Tile width in pixels.
 	int							tile_height;		//Tile height in pixels.
 	SDL_Color					background_color;	//Background colours.
-	MapTypes					type;				//Type of map (Orthogonal, Isometric, Staggered or Hexagonal)
+	MAP_TYPE					type;				//Type of map (Orthogonal, Isometric, Staggered or Hexagonal)
 	std::vector<TileSet*>		tilesets;			//List that accesses all tilesets and their data members/properties.
 	std::vector<MapLayer*>		layers;				//List that accesses all layers and their data members/properties.
 	std::vector<ObjectGroup*>	objectGroups;		//List that accesses all object groups and their data members/properties.
@@ -194,6 +193,8 @@ public:
 	iPoint WorldToMap(int x, int y) const;									//This method translates the position of the tile on the screen to its equivalent position on the map.
 	iPoint TiledIsoCoordsToMap(int x, int y) const;
 	
+	bool CheckMapBoundaries(const iPoint& tile_position);					//This method will check whether or not a given tile position is within the map's bounds.
+
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);		//Changed to non const because of list unknown problem
 	bool CreateEntityMap(int& width, int& height);							//This method will allocate the necessary memory and initialize the entities map. Not necessary in this case(?).
 

@@ -31,9 +31,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Dynamic_Object.cpp">
       <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
     </ClCompile>
@@ -190,6 +187,30 @@
     <ClCompile Include="MainMenuScene.cpp">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClCompile>
+    <ClCompile Include="UI_Cursor.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Scout.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClCompile>
+    <ClCompile Include="Heavy.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGatherer.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyScout.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHeavy.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyInfantry.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_CreationBar.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -236,9 +257,6 @@
     </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Engine  ===========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Dynamic_Object.h">
       <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
@@ -401,6 +419,30 @@
     </ClInclude>
     <ClInclude Include="MainMenuScene.h">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Cursor.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Scout.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClInclude>
+    <ClInclude Include="Heavy.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGatherer.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyScout.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHeavy.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyInfantry.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_CreationBar.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

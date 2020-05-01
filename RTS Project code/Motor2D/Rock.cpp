@@ -17,6 +17,7 @@ Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type
 {
 	InitEntity();
 
+	// --- SPRITE SECTIONS ---
 	int rock_version = (rand() % 4) * 54;
 
 	blit_section = new SDL_Rect{rock_version,0,54,35};
@@ -81,16 +82,18 @@ void Rock::InitEntity()
 
 	is_selected = false;
 
+	// --- POSITION AND SIZE ---
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
 	pixel_position.x = (float)world_position.x;
 	pixel_position.y = (float)world_position.y;
 
-	tiles_occupied_x = 1;
-	tiles_occupied_y = 1;
+	tiles_occupied.x = 1;
+	tiles_occupied.y = 1;
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
+	// --- STATS & HEALTHBAR ---
 	ore = 20;
 	gather_time = 1;
 
@@ -99,15 +102,29 @@ void Rock::InitEntity()
 
 	if (App->entity_manager->CheckTileAvailability(iPoint(tile_position), this))
 	{
-		healthbar_position_offset.x = -6;
-		healthbar_position_offset.y = -6;
-
-		healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
-		healthbar_rect = { 618, 34, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
-
-		int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-		int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
-
-		healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+		AttachHealthbarToEntity();
 	}
+
+	// Resources will not have a creation bar.
+	/*creating_unit = false;
+	creation_has_finished = true;
+	creation_bar = nullptr;
+
+	creation_bar_background_rect = { 0, 0, 0, 0 };
+	creation_bar_rect = { 0, 0, 0, 0 };
+	creation_bar_position_offset = { 0, 0 };*/
+}
+
+void Rock::AttachHealthbarToEntity()
+{
+	healthbar_position_offset.x = -6;
+	healthbar_position_offset.y = -6;
+
+	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
+	healthbar_rect = { 618, 34, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
+
+	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+
+	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }

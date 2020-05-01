@@ -34,6 +34,9 @@ public:
 	void ExecuteTransition();
 
 public:
+	bool transition_to_gameplay_scene;					// Will keep track whether or not the transition to the gameplay scene has been triggered.
+	bool transition_to_options_scene;					// Will keep track whether or not the transition to the options scene has been triggered.
+	
 	//BACKGROUND
 	SDL_Rect		background_rect;
 	SDL_Texture*	background_texture;

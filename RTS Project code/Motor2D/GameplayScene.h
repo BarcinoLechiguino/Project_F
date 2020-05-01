@@ -47,14 +47,6 @@ public:
 
 	void LoadInGameOptionsMenu();
 
-
-	//void DebugKeys();
-
-	void UnitDebugKeys();
-
-	void PathfindingDebug();
-	void DrawPathfindingDebug();
-
 	// --- Entity Spawn HUD
 	void DebugHUDSpawn();
 
@@ -66,6 +58,12 @@ public:
 	void UnitUpgrade();
 
 	bool CheckResources(uint required_data, uint required_electricity);
+
+	// --- Debug Methods
+	void UnitDebugKeys();
+
+	void PathfindingDebug();
+	void DrawPathfindingDebug();
 
 
 public:
@@ -80,8 +78,9 @@ public:
 	bool					to_end;
 
 public:
-	//float					cam_debug_speed;							//Will store the movement speed for the camera while in debug mode. Done for readability.
-
+	bool transition_to_main_menu_scene;									// Will keep track whether or not the transition to the main menu scene has been triggered.
+	bool transition_to_win_scene;										// Will keep track whether or not the transition to the win scene has been triggered.
+	bool transition_to_lose_scene;										// Will keep track whether or not the transition to the lose scene has been triggered.
 	
 	UI_Image*				background;
 	SDL_Rect				background_rect;

@@ -17,14 +17,21 @@
 
 #include "EntityManager.h"
 #include "Entity.h"
+
 #include "Dynamic_Object.h"
-#include "Static_Object.h"
 #include "Gatherer.h"
+#include "Scout.h"
 #include "Infantry.h"
-#include "Enemy.h"
+#include "Heavy.h"
+#include "EnemyGatherer.h"
+#include "EnemyScout.h"
+#include "EnemyInfantry.h"
+#include "EnemyHeavy.h"
+
+#include "Static_Object.h"
 #include "TownHall.h"
-#include "EnemyTownHall.h"
 #include "Barracks.h"
+#include "EnemyTownHall.h"
 #include "EnemyBarracks.h"
 #include "Rock.h"
 #include "Tree.h"
@@ -215,24 +222,44 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		entity = new Gatherer(x, y, type, level);
 		break;
 
+	case ENTITY_TYPE::SCOUT:
+		entity = new Scout(x, y, type, level);
+		break;
+
 	case ENTITY_TYPE::INFANTRY:
 		entity = new Infantry(x, y, type, level);
 		break;
 
-	case ENTITY_TYPE::ENEMY:
-		entity = new Enemy(x, y, type, level);
+	case ENTITY_TYPE::HEAVY:
+		entity = new Heavy(x, y, type, level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_GATHERER:
+		entity = new EnemyGatherer(x, y, type, level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_SCOUT:
+		entity = new EnemyScout(x, y, type, level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_INFANTRY:
+		entity = new EnemyInfantry(x, y, type, level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_HEAVY:
+		entity = new EnemyHeavy(x, y, type, level);
 		break;
 
 	case ENTITY_TYPE::TOWNHALL:
 		entity = new TownHall(x, y, type, level);
 		break;
 
-	case ENTITY_TYPE::ENEMY_TOWNHALL:
-		entity = new EnemyTownHall(x, y, type, level);
-		break;
-
 	case ENTITY_TYPE::BARRACKS:
 		entity = new Barracks(x, y, type, level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_TOWNHALL:
+		entity = new EnemyTownHall(x, y, type, level);
 		break;
 
 	case ENTITY_TYPE::ENEMY_BARRACKS:
@@ -303,6 +330,7 @@ void EntityManager::DeleteEntity(Entity* entity)
 	}
 }
 
+// --- ENTITY TEXTURE LOAD & UNLOAD ---
 void EntityManager::LoadEntityTextures()
 {
 	config_file.load_file("config.xml");
@@ -310,11 +338,17 @@ void EntityManager::LoadEntityTextures()
 	pugi::xml_node entity_textures = config_file.child("config").child("entities").child("textures");
 
 	gatherer_tex		= App->tex->Load(entity_textures.child("gatherer_texture").attribute("path").as_string());
+	scout_tex			= App->tex->Load(entity_textures.child("scout_texture").attribute("path").as_string());
 	infantry_tex		= App->tex->Load(entity_textures.child("infantry_texture").attribute("path").as_string());
+	heavy_tex			= App->tex->Load(entity_textures.child("heavy_texture").attribute("path").as_string());
+	enemy_gatherer_tex	= App->tex->Load(entity_textures.child("enemy_gatherer_texture").attribute("path").as_string());
+	enemy_scout_tex		= App->tex->Load(entity_textures.child("enemy_scout_texture").attribute("path").as_string());
 	enemy_tex			= App->tex->Load(entity_textures.child("enemy_texture").attribute("path").as_string());
+	enemy_heavy_tex		= App->tex->Load(entity_textures.child("enemy_heavy_texture").attribute("path").as_string());
+
 	townhall_tex		= App->tex->Load(entity_textures.child("townhall_texture").attribute("path").as_string());
-	enemy_townhall_tex	= App->tex->Load(entity_textures.child("enemy_townhall_texture").attribute("path").as_string());
 	barracks_tex		= App->tex->Load(entity_textures.child("barracks_texture").attribute("path").as_string());
+	enemy_townhall_tex	= App->tex->Load(entity_textures.child("enemy_townhall_texture").attribute("path").as_string());
 	enemy_barracks_tex	= App->tex->Load(entity_textures.child("enemy_barracks_texture").attribute("path").as_string());
 	rock_tex			= App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
 	tree_tex			= App->tex->Load(entity_textures.child("tree_texture").attribute("path").as_string());
@@ -345,6 +379,7 @@ void EntityManager::UnLoadEntityTextures()
 	tree_tex			= nullptr;
 }
 
+// --- ENTITY AUDIO LOAD & UNLOAD ---
 void EntityManager::LoadEntityAudios()
 {
 	//Pass to xml
@@ -366,9 +401,15 @@ void EntityManager::UnLoadEntityAudios()
 	
 }
 
+// --- ENTITY TEXTURE GETTERS ---
 SDL_Texture* EntityManager::GetGathererTexture() const
 {
 	return gatherer_tex;
+}
+
+SDL_Texture* EntityManager::GetScoutTexture() const
+{
+	return scout_tex;
 }
 
 SDL_Texture* EntityManager::GetInfantryTexture() const
@@ -376,9 +417,29 @@ SDL_Texture* EntityManager::GetInfantryTexture() const
 	return infantry_tex;
 }
 
+SDL_Texture* EntityManager::GetHeavyTexture() const
+{
+	return heavy_tex;
+}
+
+SDL_Texture* EntityManager::GetEnemyGathererTexture() const
+{
+	return enemy_gatherer_tex;
+}
+
+SDL_Texture* EntityManager::GetEnemyScoutTexture() const
+{
+	return enemy_scout_tex;
+}
+
 SDL_Texture* EntityManager::GetEnemyTexture() const
 {
 	return enemy_tex;
+}
+
+SDL_Texture* EntityManager::GetEnemyHeavyTexture() const
+{
+	return enemy_heavy_tex;
 }
 
 SDL_Texture* EntityManager::GetTownHallTexture() const
@@ -386,14 +447,14 @@ SDL_Texture* EntityManager::GetTownHallTexture() const
 	return townhall_tex;
 }
 
-SDL_Texture* EntityManager::GetEnemyTownHallTexture() const
-{
-	return enemy_townhall_tex;
-}
-
 SDL_Texture* EntityManager::GetBarracksTexture() const
 {
 	return barracks_tex;
+}
+
+SDL_Texture* EntityManager::GetEnemyTownHallTexture() const
+{
+	return enemy_townhall_tex;
 }
 
 SDL_Texture* EntityManager::GetEnemyBarracksTexture() const
@@ -415,24 +476,62 @@ SDL_Texture* EntityManager::GetCenterPointTexture() const
 {
 	return center_point_debug;
 }
-bool EntityManager::IsUnit(Entity* entity)
+
+// --- ENTITY CONDITIONAL METHODS
+bool EntityManager::IsAllyEntity(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::INFANTRY || entity->type == ENTITY_TYPE::ENEMY)
+	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::SCOUT || entity->type == ENTITY_TYPE::INFANTRY || entity->type == ENTITY_TYPE::HEAVY
+		|| entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS)
 	{
 		return true;
 	}
 
 	return false;
 }
-bool EntityManager::IsInfantry(Entity* entity)
+
+bool EntityManager::IsEnemyEntity(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::INFANTRY)
+	if (entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT
+		|| entity->type == ENTITY_TYPE::ENEMY_INFANTRY || entity->type == ENTITY_TYPE::ENEMY_HEAVY
+		|| entity->type == ENTITY_TYPE::ENEMY_TOWNHALL || entity->type == ENTITY_TYPE::ENEMY_BARRACKS)
 	{
 		return true;
 	}
 
 	return false;
 }
+
+bool EntityManager::IsUnit(Entity* entity)	// Maybe change condition to !IsBuilding() or something.
+{
+	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::SCOUT || entity->type == ENTITY_TYPE::INFANTRY || entity->type == ENTITY_TYPE::HEAVY 
+		|| entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT || entity->type == ENTITY_TYPE::ENEMY_INFANTRY || entity->type == ENTITY_TYPE::ENEMY_HEAVY)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool EntityManager::IsAllyUnit(Entity* entity)	// Maybe change condition to !IsBuilding() or something.
+{
+	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::SCOUT || entity->type == ENTITY_TYPE::INFANTRY || entity->type == ENTITY_TYPE::HEAVY)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool EntityManager::IsEnemyUnit(Entity* entity)	// Maybe change condition to !IsBuilding() or something.
+{
+	if (entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT || entity->type == ENTITY_TYPE::ENEMY_INFANTRY || entity->type == ENTITY_TYPE::ENEMY_HEAVY)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool EntityManager::IsGatherer(Entity* entity)
 {
 	if (entity->type == ENTITY_TYPE::GATHERER)
@@ -443,10 +542,40 @@ bool EntityManager::IsGatherer(Entity* entity)
 	return false;
 }
 
+bool EntityManager::IsScout(Entity* entity)
+{
+	if (entity->type == ENTITY_TYPE::SCOUT)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool EntityManager::IsInfantry(Entity* entity)
+{
+	if (entity->type == ENTITY_TYPE::INFANTRY)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool EntityManager::IsHeavy(Entity* entity)
+{
+	if (entity->type == ENTITY_TYPE::HEAVY)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool EntityManager::IsBuilding(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::ENEMY_TOWNHALL
-		|| entity->type == ENTITY_TYPE::BARRACKS || entity->type == ENTITY_TYPE::ENEMY_BARRACKS)
+	if (entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS
+		|| entity->type == ENTITY_TYPE::ENEMY_TOWNHALL || entity->type == ENTITY_TYPE::ENEMY_BARRACKS)
 	{
 		return true;
 	}
@@ -457,18 +586,6 @@ bool EntityManager::IsBuilding(Entity* entity)
 bool EntityManager::IsResource(Entity* entity)
 {
 	if (entity->type == ENTITY_TYPE::ROCK || entity->type == ENTITY_TYPE::TREE)
-	{
-		return true;
-	}
-
-	return false;
-}
-
-bool EntityManager::IsEnemyEntity(Entity* entity)
-{
-	if (entity->type == ENTITY_TYPE::ENEMY 
-		|| entity->type == ENTITY_TYPE::ENEMY_TOWNHALL 
-		|| entity->type == ENTITY_TYPE::ENEMY_BARRACKS)
 	{
 		return true;
 	}
@@ -544,11 +661,9 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 
 			if (IsBuilding(entity) || IsResource(entity))
 			{
-				Static_Object* item = (Static_Object*)entity;
-
-				for (int y = 0; y != item->tiles_occupied_y; ++y)
+				for (int y = 0; y != entity->tiles_occupied.y; ++y)
 				{
-					for (int x = 0; x != item->tiles_occupied_x; ++x)
+					for (int x = 0; x != entity->tiles_occupied.x; ++x)
 					{
 						int pos_y = pos.y + y;
 						int pos_x = pos.x + x;
@@ -570,9 +685,9 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 			{
 				Static_Object* item = (Static_Object*)entity;
 
-				for (int y = 0; y != item->tiles_occupied_y; ++y)
+				for (int y = 0; y != item->tiles_occupied.y; ++y)
 				{
-					for (int x = 0; x != item->tiles_occupied_x; ++x)
+					for (int x = 0; x != item->tiles_occupied.x; ++x)
 					{
 						int pos_y = pos.y + y;
 						int pos_x = pos.x + x;
@@ -597,6 +712,8 @@ Entity* EntityManager::GetEntityAt(const iPoint& pos) const
 	{
 		return entity_map[(pos.y * entity_map_width) + pos.x];
 	}
+
+	return nullptr;
 }
 
 bool EntityManager::CheckTileAvailability(const iPoint& pos, Entity* entity)
@@ -613,11 +730,9 @@ bool EntityManager::CheckTileAvailability(const iPoint& pos, Entity* entity)
 
 		if (IsBuilding(entity) || IsResource(entity))
 		{
-			Static_Object* building = (Static_Object*)entity;
-
-			for (int y = 0; y != building->tiles_occupied_y; ++y)
+			for (int y = 0; y != entity->tiles_occupied.y; ++y)
 			{
-				for (int x = 0; x != building->tiles_occupied_x; ++x)
+				for (int x = 0; x != entity->tiles_occupied.x; ++x)
 				{
 					int pos_y = pos.y + y;
 					int pos_x = pos.x + x;

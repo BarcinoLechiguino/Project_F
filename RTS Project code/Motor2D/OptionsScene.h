@@ -39,6 +39,8 @@ public:
 	void ExecuteTransition();
 
 public:
+	bool transition_to_main_menu_scene;					// Will keep track whether or not the transition to the main menu scene has been triggered.
+	
 	//BACKGROUND
 	SDL_Rect		background_rect;
 	SDL_Texture*	background_texture;

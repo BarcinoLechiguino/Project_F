@@ -234,7 +234,7 @@ void Minimap::DrawEntities()
 				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
 				App->render->DrawQuad({(pos_x + minimap_width / 2) + 1 + minimap_position.x, pos_y - y_offset + minimap_position.y +1, 2, 2 }, 153, 204, 204, 255, true, false);
 				break;
-			case ENTITY_TYPE::ENEMY:
+			case ENTITY_TYPE::ENEMY_INFANTRY:
 				App->render->DrawQuad({ pos_x + minimap_width / 2+ minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 0, 204, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ROCK:

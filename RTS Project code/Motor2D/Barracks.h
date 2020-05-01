@@ -35,6 +35,12 @@ public:
 	SDL_Rect	barracks_rect_2;
 
 	int			unit_level;
+
+	ENTITY_TYPE created_unit_type;
+
+	float		scout_creation_time;
+	float		infantry_creation_time;
+	float		heavy_creation_time;
 };
 
 #endif // !__BARRACKS_H__

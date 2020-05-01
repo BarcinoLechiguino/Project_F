@@ -163,15 +163,15 @@ iPoint Map::MapToWorld(int x, int y) const
 {
 	iPoint ret(0, 0);																//Position of the tile on the world.
 
-	if (data.type == MAPTYPE_ORTHOGONAL)											//Position calculus for orhogonal maps
+	if (data.type == MAP_TYPE::ORTHOGONAL)											//Position calculus for orhogonal maps
 	{
 		ret.x = x * data.tile_width;												//Position in the X axis of the tile on the world in pixels. For tile_width = 32 --> Tile 1: x = 0, Tile 2: x = 32.
 		ret.y = y * data.tile_height;												//Position in the Y axis of the tile on the world in pixels. For tile_height = 32 --> Tile 1: y = 0, Tile 2: y = 32.
 	}
-	else if (data.type == MAPTYPE_ISOMETRIC)										//Position calculus for isometric maps
+	else if (data.type == MAP_TYPE::ISOMETRIC)										//Position calculus for isometric maps
 	{
-		ret.x = (x - y) * (data.tile_width / 2);
-		ret.y = (x + y) * (data.tile_height / 2);
+		ret.x = (int)((x - y) * (data.tile_width * 0.5f));
+		ret.y = (int)((x + y) * (data.tile_height * 0.5f));
 	}
 	else
 	{
@@ -186,17 +186,17 @@ iPoint Map::WorldToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
 
-	if (data.type == MAPTYPE_ORTHOGONAL)
+	if (data.type == MAP_TYPE::ORTHOGONAL)
 	{
 		ret.x = x / data.tile_width;
 		ret.y = y / data.tile_height;
 	}
-	else if (data.type == MAPTYPE_ISOMETRIC)
+	else if (data.type == MAP_TYPE::ISOMETRIC)
 	{
 		float half_width = data.tile_width * 0.5f;
 		float half_height = data.tile_height * 0.5f;
-		ret.x = int((x / half_width + y / half_height) / 2) - 1;
-		ret.y = int((y / half_height - (x / half_width)) / 2);
+		ret.x = int((x / half_width + y / half_height) * 0.5f) - 1;				//THIS
+		ret.y = int((y / half_height - (x / half_width)) *0.5f);
 	}
 	else
 	{
@@ -211,7 +211,7 @@ iPoint Map::TiledIsoCoordsToMap(int x, int y) const
 {
 	iPoint ret(0, 0);
 
-	//Yup. Is that dumb. Tiled Iso maps have their coords along the tile's axis, not aligned to the screen.
+	//Yup. It is that dumb. Tiled Iso maps have their coords along the tile's axis, not aligned to the screen.
 	ret.x = x / 40;
 	ret.y = y / 40;
 
@@ -433,7 +433,7 @@ bool Map::LoadMap()
 		data.height			= map.attribute("height").as_int();
 		data.tile_width		= map.attribute("tilewidth").as_int();
 		data.tile_height	= map.attribute("tileheight").as_int();
-		data.music_File		= map.child("properties").child("property").attribute("value").as_string();
+		data.music_File		= map.child("properties").child("property").attribute("value").as_string();				//THIS HERE
 
 		std::string bg_color = (map.attribute("backgroundcolor").as_string());
 
@@ -465,19 +465,19 @@ bool Map::LoadMap()
 
 		if(orientation == "orthogonal")
 		{
-			data.type = MAPTYPE_ORTHOGONAL;
+			data.type = MAP_TYPE::ORTHOGONAL;
 		}
 		else if(orientation == "isometric")
 		{
-			data.type = MAPTYPE_ISOMETRIC;
+			data.type = MAP_TYPE::ISOMETRIC;
 		}
 		else if(orientation == "staggered")
 		{
-			data.type = MAPTYPE_STAGGERED;
+			data.type = MAP_TYPE::STAGGERED;
 		}
 		else
 		{
-			data.type = MAPTYPE_UNKNOWN;
+			data.type = MAP_TYPE::UNKNOWN;
 		}
 	}
 
@@ -561,11 +561,11 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 
 	switch (data.type)
 	{
-	case(MAPTYPE_ORTHOGONAL):
+	case(MAP_TYPE::ORTHOGONAL):
 
 		break;
 
-	case(MAPTYPE_ISOMETRIC):
+	case(MAP_TYPE::ISOMETRIC):
 
 		quad_tile_rect.x = MapToWorld(0, data.height).x;
 		quad_tile_rect.y = 0;
@@ -584,20 +584,16 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	}
 	else
 	{
-
 		layer->gid = new uint[layer->width * layer->height];
 		memset(layer->gid, 0, layer->width * layer->height);
 
 		int i = 0;
 		int j = 0;
 		
-
 		for (pugi::xml_node tile = layer_data.child("tile"); tile; tile = tile.next_sibling("tile"), i++)
 		{
 			layer->gid[i] = tile.attribute("gid").as_int(0);
 		}
-
-		
 	}
 
 	return ret;
@@ -669,7 +665,7 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 		if (object_type == "enemy")
 		{
 			objectgroup->object[index].type = ENEMY;
-			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, tile_coords.x, tile_coords.y);
+			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, tile_coords.x, tile_coords.y);
 		}
 		else if (object_type == "enemy_barracks")
 		{
@@ -740,6 +736,12 @@ bool Map::LoadProperties(pugi::xml_node& node, Properties& properties)							//R
 	}
 
 	return ret;
+}
+
+bool Map::CheckMapBoundaries(const iPoint& tile_position)
+{
+	return (tile_position.x >= 0 && tile_position.x < (int)data.width &&
+			tile_position.y >= 0 && tile_position.y < (int)data.height);
 }
 
 bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)

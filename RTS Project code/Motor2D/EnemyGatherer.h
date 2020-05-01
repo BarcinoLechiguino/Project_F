@@ -1,15 +1,15 @@
-#ifndef __GATHERER_H__
-#define __GATHERER_H__
+#ifndef __ENEMY_GATHERER_H__
+#define __ENEMY_GATHERER_H__
 
 #include "Dynamic_Object.h"
 
-class Gatherer : public Dynamic_Object
+class EnemyGatherer : public Dynamic_Object
 {
 public:
 
-	Gatherer(int x, int y, ENTITY_TYPE type, int level);
+	EnemyGatherer(int x, int y, ENTITY_TYPE type, int level);
 
-	~Gatherer();
+	~EnemyGatherer();
 
 	bool Awake(pugi::xml_node&);
 
@@ -27,7 +27,7 @@ public:
 
 public:
 	void InitEntity();
-	
+
 	void AttachHealthbarToEntity();
 
 	void InitUnitSpriteSections();
@@ -38,7 +38,7 @@ public:
 
 	bool TargetIsInRange();
 	void GatherResource();
-	
+
 	//void HandleFx();
 	//void SubstractResource();
 
@@ -52,4 +52,4 @@ public:
 
 };
 
-#endif // !__GATHERER_H__
+#endif // !__ENEMY_GATHERER_H__

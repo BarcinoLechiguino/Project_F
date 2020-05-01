@@ -22,9 +22,10 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Enti
 
 	target_tile = tile_position;
 	next_tile = tile_position;
-	occupied_tile = tile_position;
+	//occupied_tile = tile_position;
 
-	occupied_tile = tile_position;
+	tiles_occupied.x = 1;								// TMP Placeholder.
+	tiles_occupied.y = 1;								// Might be used later on for units bigger than 1x1.
 
 	looked_for_tile = false;
 

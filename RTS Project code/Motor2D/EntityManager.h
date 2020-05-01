@@ -15,18 +15,23 @@ struct SDL_Texture;
 class Entity;
 enum class ENTITY_TYPE;
 
-class Dynamic_Object;
-class Static_Object;
-class Gatherer;
-class Infantry;
-class Enemy;
-class Rock;
-class TownHall;
-class EnemyTownHall;
-class Barracks;
-class EnemyBarracks;
-
-
+//class Dynamic_Object;
+//class Gatherer;
+//class Scout;
+//class Infantry;
+//class Heavy;
+//class EnemyGatherer;
+//class EnemyScout;
+//class EnemyInfantry;
+//class EnemyHeavy;
+//
+//class Static_Object;
+//class TownHall;
+//class Barracks;
+//class EnemyTownHall;
+//class EnemyBarracks;
+//class Rock;
+//class Tree;
 
 
 class EntityManager : public Module
@@ -45,9 +50,8 @@ public:
 	void DrawEntities();
 
 public:
-
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0, int level = 1);		//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
-	void DestroyEntities();													//Calls the CleanUp() method of each entity and then it clears the entities list.
+	void DestroyEntities();																//Calls the CleanUp() method of each entity and then it clears the entities list.
 	void DeleteEntity(Entity* entity_to_delete);
 
 	void LoadEntityTextures();
@@ -56,24 +60,38 @@ public:
 	void UnLoadEntityAudios();
 
 	SDL_Texture* GetGathererTexture() const;
+	SDL_Texture* GetScoutTexture() const;
 	SDL_Texture* GetInfantryTexture() const;
+	SDL_Texture* GetHeavyTexture() const;
+	SDL_Texture* GetEnemyGathererTexture() const;
+	SDL_Texture* GetEnemyScoutTexture() const;
 	SDL_Texture* GetEnemyTexture() const;
+	SDL_Texture* GetEnemyHeavyTexture() const;
+	
 	SDL_Texture* GetTownHallTexture() const;
-	SDL_Texture* GetEnemyTownHallTexture() const;
 	SDL_Texture* GetBarracksTexture() const;
+	SDL_Texture* GetEnemyTownHallTexture() const;
 	SDL_Texture* GetEnemyBarracksTexture() const;
 	SDL_Texture* GetRockTexture() const;
 	SDL_Texture* GetTreeTexture() const;
 
 	SDL_Texture* GetCenterPointTexture() const;
 
+	bool IsAllyEntity(Entity* entity);													//Method that will return true if the entity passed as argument is a enemy entity.
+	bool IsEnemyEntity(Entity* entity);													//Method that will return true if the entity passed as argument is a enemy entity.
+
 	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
-	bool IsInfantry(Entity* entity);
+	bool IsAllyUnit(Entity* entity);													// Temporal methods, might be unnecessary down the line.
+	bool IsEnemyUnit(Entity* entity);													// Temporal methods, might be unnecessary down the line.
+
 	bool IsGatherer(Entity* enitity);
+	bool IsScout(Entity* enitity);
+	bool IsInfantry(Entity* entity);
+	bool IsHeavy(Entity* enitity);
 	
 	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
 	bool IsResource(Entity* entity);													//Method that will return true if the entity passed as argument is a resource.
-	bool IsEnemyEntity(Entity* entity);													//Method that will return true if the entity passed as argument is a enemy entity.
+	
 	bool InViewport(Entity* entity);
 
 	void SetEntityMap(int width, int height);											//Method that will allocate the necessary memory for the entity_map.
@@ -94,14 +112,21 @@ public:
 	pugi::xml_node					config;
 
 	SDL_Texture*					gatherer_tex;
+	SDL_Texture*					scout_tex;
 	SDL_Texture*					infantry_tex;
+	SDL_Texture*					heavy_tex;
+	SDL_Texture*					enemy_gatherer_tex;
+	SDL_Texture*					enemy_scout_tex;
 	SDL_Texture*					enemy_tex;
+	SDL_Texture*					enemy_heavy_tex;
+	
 	SDL_Texture*					townhall_tex;
-	SDL_Texture*					enemy_townhall_tex;
 	SDL_Texture*					barracks_tex;
+	SDL_Texture*					enemy_townhall_tex;
 	SDL_Texture*					enemy_barracks_tex;
 	SDL_Texture*					rock_tex;
 	SDL_Texture*					tree_tex;
+	
 	SDL_Texture*					center_point_debug;
 
 	uint							gatherer_movement_fx;

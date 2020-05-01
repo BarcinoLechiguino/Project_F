@@ -89,7 +89,10 @@
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Cut.cpp" />
     <ClCompile Include="Dynamic_Object.cpp" />
-    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="EnemyInfantry.cpp" />
+    <ClCompile Include="EnemyGatherer.cpp" />
+    <ClCompile Include="EnemyHeavy.cpp" />
+    <ClCompile Include="EnemyScout.cpp" />
     <ClCompile Include="EnemyTownHall.cpp" />
     <ClCompile Include="EnemyBarracks.cpp" />
     <ClCompile Include="Entity.cpp" />
@@ -100,6 +103,7 @@
     <ClCompile Include="Fonts.cpp" />
     <ClCompile Include="Gatherer.cpp" />
     <ClCompile Include="GuiManager.cpp" />
+    <ClCompile Include="Heavy.cpp" />
     <ClCompile Include="Infantry.cpp" />
     <ClCompile Include="Minimap.cpp" />
     <ClCompile Include="LogoScene.cpp" />
@@ -119,6 +123,7 @@
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="GameplayScene.cpp" />
     <ClCompile Include="SceneManager.cpp" />
+    <ClCompile Include="Scout.cpp" />
     <ClCompile Include="Slide.cpp" />
     <ClCompile Include="Static_Object.cpp" />
     <ClCompile Include="TileQuadTree.cpp" />
@@ -132,6 +137,8 @@
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="TransitionManager.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="UI_CreationBar.cpp" />
+    <ClCompile Include="UI_Cursor.cpp" />
     <ClCompile Include="UI_Healthbar.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
@@ -157,16 +164,20 @@
     <ClInclude Include="Cut.h" />
     <ClInclude Include="Dynamic_Object.h" />
     <ClInclude Include="EnemyBarracks.h" />
+    <ClInclude Include="EnemyGatherer.h" />
+    <ClInclude Include="EnemyHeavy.h" />
+    <ClInclude Include="EnemyScout.h" />
     <ClInclude Include="EnemyTownHall.h" />
     <ClInclude Include="EntityQuadTree.h" />
     <ClInclude Include="ExpandingBars.h" />
     <ClInclude Include="FadeToColour.h" />
     <ClInclude Include="Fonts.h" />
-    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyInfantry.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
     <ClInclude Include="Gatherer.h" />
     <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="Heavy.h" />
     <ClInclude Include="Infantry.h" />
     <ClInclude Include="Minimap.h" />
     <ClInclude Include="LogoScene.h" />
@@ -182,6 +193,7 @@
     <ClInclude Include="Scene.h" />
     <ClInclude Include="GameplayScene.h" />
     <ClInclude Include="SceneManager.h" />
+    <ClInclude Include="Scout.h" />
     <ClInclude Include="Slide.h" />
     <ClInclude Include="Static_Object.h" />
     <ClInclude Include="TileQuadTree.h" />
@@ -202,6 +214,8 @@
     <ClInclude Include="Transition.h" />
     <ClInclude Include="TransitionManager.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="UI_CreationBar.h" />
+    <ClInclude Include="UI_Cursor.h" />
     <ClInclude Include="UI_Healthbar.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="p2SString.h" />

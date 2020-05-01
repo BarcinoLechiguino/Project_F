@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "EntityManager.h"
+#include "EnemyInfantry.h"
 
 #include "EnemyTownHall.h"
 
@@ -69,18 +70,27 @@ void EnemyTownHall::InitEntity()
 
 	is_selected = false;
 
+	// --- SPRITE SECTIONS ---
 	hall_rect_1 = { 0, 0, 155, 138 };
 	hall_rect_2 = { 155, 0, 155, 138 };
 	hall_rect = hall_rect_1;
 
+	// --- CREATION TIMERS ---
+	/*accumulated_creation_time = 0.0f;
+	building_creation_time = 5.0f;*/
+	
+	enemy_gatherer_creation_time = 1.0f;														//Magic
+
+	// --- POSITION AND SIZE ---
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
 	pixel_position.x = (float)world_position.x;
 	pixel_position.y = (float)world_position.y;
 
-	tiles_occupied_x = 3;
-	tiles_occupied_y = 3;
+	tiles_occupied.x = 3;
+	tiles_occupied.y = 3;
 
+	// --- STATS & HEALTHBAR ---
 	max_health = 900;
 	current_health = max_health;
 
@@ -89,7 +99,7 @@ void EnemyTownHall::InitEntity()
 		AttachHealthbarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height * 0.5f);
 }
 
 void EnemyTownHall::AttachHealthbarToEntity()
@@ -110,8 +120,8 @@ void EnemyTownHall::GenerateUnit(ENTITY_TYPE type, int level)
 {
 	switch (type)
 	{
-	case ENTITY_TYPE::ENEMY:
-		(Enemy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY, tile_position.x, tile_position.y + 2, level);
+	case ENTITY_TYPE::ENEMY_INFANTRY:
+		(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, tile_position.x, tile_position.y + 2, level);
 		break;
 	}
 }
