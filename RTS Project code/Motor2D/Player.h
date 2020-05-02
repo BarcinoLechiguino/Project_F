@@ -4,11 +4,15 @@
 #include "SDL/include/SDL_rect.h"
 #include "Module.h"
 #include "Point.h"
+#include "UI_Cursor.h"
 
 class Pathfinding;
+
 class Entity;
 class Dynamic_Object;
 class Static_Object;
+
+class UI_Cursor;
 
 class Player : public Module
 {
@@ -26,12 +30,17 @@ public:
 	bool CleanUp();
 
 public:
-	// --- Camera and mouse methods.
-	void MouseCalculations();
+	void InitializePlayer();
+	
+	// --- Camera and Cursor methods.
+	void CursorCalculations();
+
 	void CameraController(float dt);
 	
+	void MoveCameraWithGameController();
+	void MoveCursorWithGameController();
+
 	void GiveOrder();
-										// Will give all units in the units_selected vector a target entity to attack.
 
 	void DrawCursor();
 
@@ -53,7 +62,7 @@ public:
 	void SelectHeavys();
 	void SelectEnemyGatherers();
 	void SelectEnemyScouts();
-	void SelectEnemies();
+	void SelectEnemyInfantries();
 	void SelectEnemyHeavys();
 
 	void SelectEntityAt(const iPoint& tile_position);
@@ -76,29 +85,44 @@ public:
 
 
 public:
-	bool			god_mode;
-	bool			is_selecting;
-
-	iPoint			scene_camera_x_limit;
-	iPoint			scene_camera_y_limit;
-	iPoint			mouse_position;
-	iPoint			mouse_map_position;
-	iPoint			mouse_tile;									// The tile where the mouse is currently on.
-	fPoint			camera_speed;								// Speed at which the camera will move when moving it with the mouse.
+	pugi::xml_document	config_file;
 	
-	iPoint			selection_start;							// Position where unit selection will start (Selection rect's anchor point).
+	bool				god_mode;
+	bool				is_selecting;
 
-	SDL_Texture*	cursor_idle;
-	SDL_Texture*	cursor_hover_ally;
-	SDL_Texture*	cursor_hover_enemy;
-	SDL_Texture*	cursor_hover_UI;
-	SDL_Texture*	cursor_clicked_ally;
-	SDL_Texture*	cursor_clicked_enemy;
-	SDL_Texture*	cursor_clicked_UI;
+	SDL_Texture*		mouse_tile_debug;
+
+	iPoint				scene_camera_x_limit;						// x = left limit, y = right limit.
+	iPoint				scene_camera_y_limit;						// x = top limit, y = bottom limit.
+
+	iPoint				cursor_position;
+	iPoint				cursor_map_position;						// The tile where the cursor is currently on.
+	iPoint				cursor_tile;
+
+	//iPoint				mouse_position;
+	//iPoint				mouse_map_position;
+	//iPoint				mouse_tile;									// The tile where the mouse is currently on.
 	
-	SDL_Texture*	mouse_tile_debug;
+	fPoint				camera_speed;								// Speed at which the camera will move when moving it with the mouse.
+	fPoint				controller_cursor_speed;					// Speed at which the cursor will move under the influence of the game controller.
+	
+	iPoint				selection_start;							// Position where unit selection will start (Selection rect's anchor point).
+	SDL_Rect			selection_rect;
+	
+	UI_Cursor			cursor;										// For whatever reason only a pointer works with the forward declaration.
+	
+	SDL_Rect			idle;										// IDLE Sprite of the cursor.
 
-	SDL_Rect		selection_rect;
+	SDL_Rect			cursor_hover_ally;							// HOVER Sprite for when the cursor hovers an ally entity.
+	SDL_Rect			cursor_hover_enemy;							// HOVER Sprite for when the cursor hovers an enemy entity.
+	SDL_Rect			cursor_hover_resource;						// HOVER Sprite for when the cursor hovers a resource entity.
+	SDL_Rect			cursor_hover_UI;							// HOVER Sprite for when the cursor hovers an interactible UI_Element.
+
+	SDL_Rect			cursor_clicked_idle;						// CLICKED Sprite for when the cursor clicks and there is nothing under it.
+	SDL_Rect			cursor_clicked_ally;						// CLICKED Sprite for when the cursor hovers an ally entity.
+	SDL_Rect			cursor_clicked_enemy;						// CLICKED Sprite for when the cursor hovers an enemy entity.
+	SDL_Rect			cursor_clicked_resource;					// CLICKED Sprite for when the cursor hovers a resource entity.
+	SDL_Rect			cursor_clicked_UI;							// CLICKED Sprite for when the cursor hovers an interactible UI_Element.
 
 
 	std::vector<Dynamic_Object*>	units_selected;

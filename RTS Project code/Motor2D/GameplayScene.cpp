@@ -1219,7 +1219,7 @@ void GameplayScene::UnitDebugKeys()
 {
 	if (App->player->god_mode)
 	{
-		if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
+		/*if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
 		{
 			// UNITS
 			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_STATE::KEY_DOWN)
@@ -1292,6 +1292,88 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_STATE::KEY_DOWN)
 			{
 				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)
+			{
+				App->entity_manager->resource_data += 300;
+				App->entity_manager->resource_electricity += 300;
+			}
+		}*/
+
+		if (App->pathfinding->IsWalkable(iPoint(App->player->cursor_tile.x, App->player->cursor_tile.y)))
+		{
+			// UNITS
+			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_STATE::KEY_DOWN)
+			{
+				(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_STATE::KEY_DOWN)
+			{
+				(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_STATE::KEY_DOWN)
+			{
+				(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_STATE::KEY_DOWN)
+			{
+				(Heavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::HEAVY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyHeavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_HEAVY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			//  BUILDINGS
+			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_STATE::KEY_DOWN)
+			{
+				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_STATE::KEY_DOWN)
+			{
+				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, App->player->cursor_tile.x, App->player->cursor_tile.y);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_N) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->cursor_tile.x, App->player->cursor_tile.y);
+			}
+
+			// RESOURCES
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
+			{
+				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_STATE::KEY_DOWN)
+			{
+				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)

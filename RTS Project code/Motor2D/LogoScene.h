@@ -33,9 +33,6 @@ public:
 	void ExecuteTransition();
 
 public:
-	// TMP TRANSITION BUTTON
-	UI_Button* transition_button;
-	UI_Text* button_text;
 	//BACKGROUND
 	SDL_Rect		background_rect;
 	SDL_Texture* background_texture;
@@ -43,6 +40,7 @@ public:
 private:
 	float				logo_scene_duration;
 	float				accumulated_time;
+	
 	//Audio
 	uint				logo_fx;
 	uint				logo_channel;

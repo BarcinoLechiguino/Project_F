@@ -14,9 +14,11 @@
 #include "SceneManager.h"
 #include "Scene.h"
 #include "GameplayScene.h"
+#include "Movement.h"
+
 #include "GuiManager.h"
 #include "UI.h"
-#include "Movement.h"
+#include "UI_Cursor.h"
 
 #include "EntityManager.h"
 #include "Dynamic_Object.h"
@@ -28,12 +30,9 @@
 #include "Gatherer.h"
 #include "Infantry.h"
 
-
-
 #include "Player.h"
 
-Player::Player() : god_mode(nullptr), is_selecting(nullptr), building_selected(nullptr), resource_selected(nullptr), cursor_clicked_ally(nullptr),cursor_clicked_enemy(nullptr), 
-cursor_clicked_UI(nullptr), cursor_hover_ally(nullptr), cursor_hover_enemy(nullptr), cursor_hover_UI(nullptr), cursor_idle(nullptr), mouse_tile_debug(nullptr), selection_rect({0,0,0,0})
+Player::Player() : building_selected(nullptr), resource_selected(nullptr), mouse_tile_debug(nullptr)
 {
 
 }
@@ -50,19 +49,7 @@ bool Player::Awake(pugi::xml_node& conf)
 
 bool Player::Start()
 {
-	cursor_idle = App->tex->Load("gui/cursor/cursor_idle.png");
-
-	mouse_tile_debug = App->tex->Load("maps/mouse_tile_debug.png");
-
-	scene_camera_x_limit = iPoint(1700, -600);										//Magic Numbers
-	scene_camera_y_limit = iPoint(-1430, 200);										//(Nice)
-
-	camera_speed.x = 700.0f;
-	camera_speed.y = 700.0f;
-
-	SDL_SetRelativeMouseMode(SDL_TRUE);
-
-	is_selecting = false;
+	InitializePlayer();
 
 	return true;
 }
@@ -74,14 +61,15 @@ bool Player::PreUpdate()
 
 bool Player::Update(float dt)
 {
-	MouseCalculations();
+	CursorCalculations();
 	
-	CameraController(dt);
+	//CameraController(dt);
+	CameraController(App->GetUnpausableDt());
 
-	if (!App->gui_manager->FirstElementUnderMouse()->CheckMousePos() && !App->pause)			//TMP. Dirty Fix(?)
+	DragSelection();
+
+	if (!App->pause && !App->gui_manager->VisibleElementIsUnderCursor())			//TMP. Dirty Fix(?)
 	{
-		DragSelection();
-
 		SelectOnClick();
 
 		DeleteOnInput();
@@ -100,6 +88,8 @@ bool Player::Update(float dt)
 
 bool Player::PostUpdate()
 {
+	MoveCursorWithGameController();
+	
 	DrawCursor();
 	
 	return true;
@@ -107,7 +97,6 @@ bool Player::PostUpdate()
 
 bool Player::CleanUp()
 {
-	App->tex->UnLoad(cursor_idle);
 	App->tex->UnLoad(mouse_tile_debug);
 	
 	ClearEntityBuffers();
@@ -116,66 +105,174 @@ bool Player::CleanUp()
 }
 
 // ------------------- CAMERA AND MOUSE METHODS -------------------
-void Player::MouseCalculations()
+void Player::CursorCalculations()
 {
-	//Get Mouse Position
-	App->input->GetMousePosition(mouse_position.x, mouse_position.y);
+	//Get Cursor Position
+	cursor_position = cursor.GetScreenPos();
 
-	iPoint mouse_camera;
-	mouse_camera.x = mouse_position.x - App->render->camera.x;
-	mouse_camera.y = mouse_position.y - App->render->camera.y;
+	iPoint cursor_camera;
+	cursor_camera.x = cursor_position.x - App->render->camera.x;
+	cursor_camera.y = cursor_position.y - App->render->camera.y;
 
 	// Get Mouse's Map Position (In Tiles)
-	iPoint to_map_mouse_pos		= App->map->WorldToMap(mouse_camera.x, mouse_camera.y + 20); //magic
-	mouse_tile					= iPoint(to_map_mouse_pos.x, to_map_mouse_pos.y);
+	iPoint to_map_cursor_pos = App->map->WorldToMap(cursor_camera.x, cursor_camera.y + 20); //magic
+	cursor_tile = iPoint(to_map_cursor_pos.x, to_map_cursor_pos.y);
 
 	// Get Mouse's World Poisition (In Pixels)
-	iPoint to_world_mouse_pos	= App->map->MapToWorld(mouse_tile.x, mouse_tile.y);
-	mouse_map_position			= iPoint(to_world_mouse_pos.x, to_world_mouse_pos.y);
+	iPoint to_world_cursor_pos = App->map->MapToWorld(cursor_tile.x, cursor_tile.y);
+	cursor_map_position = iPoint(to_world_cursor_pos.x, to_world_cursor_pos.y);
 }
 
 void Player::CameraController(float dt)
 {
 	int window_width, window_height;
 	App->win->GetWindowSize(window_width, window_height);
-	
+
 	if (CurrentlyInGameplayScene())																							// If the current scene is FIRST_SCENE (gameplay scene)
-	{	
-		if (mouse_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_REPEAT
-			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)			//Left
+	{
+		if (!cursor.game_controller_mode)
 		{
-			if (App->render->camera.x < scene_camera_x_limit.x)
+			if (cursor_position.x <= 10 || App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_REPEAT)								//Left
 			{
-				App->render->camera.x += (int)(camera_speed.x * dt);
+				if (App->render->camera.x < scene_camera_x_limit.y)
+				{
+					App->render->camera.x += (int)(camera_speed.x * dt);
+				}
 			}
+
+			if (cursor_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_STATE::KEY_REPEAT)			//Right
+			{
+				if (App->render->camera.x > scene_camera_x_limit.x)
+				{
+					App->render->camera.x -= (int)(camera_speed.x * dt);
+				}
+			}
+
+			if (cursor_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_STATE::KEY_REPEAT)			//Bottom
+			{
+				if (App->render->camera.y > scene_camera_y_limit.x)
+				{
+					App->render->camera.y -= (int)(camera_speed.y * dt);
+				}
+			}
+
+			if (cursor_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_STATE::KEY_REPEAT)								//Up
+			{
+				if (App->render->camera.y < scene_camera_y_limit.y)
+				{
+					App->render->camera.y += (int)(camera_speed.y * dt);
+				}
+			}
+		}
+		else
+		{
+			MoveCameraWithGameController();
+		}
+	}
+}
+
+void Player::MoveCameraWithGameController()
+{
+	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Left
+	{
+		if (App->render->camera.x < scene_camera_x_limit.y)
+		{
+			App->render->camera.x += (int)(camera_speed.x * App->GetUnpausableDt());
+		}
+	}
+
+	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Right
+	{
+		if (App->render->camera.x > scene_camera_x_limit.x)
+		{
+			App->render->camera.x -= (int)(camera_speed.x * App->GetUnpausableDt());
+		}
+	}
+
+	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Bottom
+	{
+		if (App->render->camera.y > scene_camera_y_limit.x)
+		{
+			App->render->camera.y -= (int)(camera_speed.y * App->GetUnpausableDt());
+		}
+	}
+
+	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Up
+	{
+		if (App->render->camera.y < scene_camera_y_limit.y)
+		{
+			App->render->camera.y += (int)(camera_speed.y * App->GetUnpausableDt());
+		}
+	}
+}
+
+void Player::MoveCursorWithGameController()
+{
+	SDL_Rect window;
+	App->win->GetWindowRect(window);
+
+	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_LEFTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)			//Left
+	{
+		iPoint cursor_position = cursor.GetScreenPos();
+		
+		if (cursor_position.x > window.x)
+		{
+			cursor_position.x -= (int)(controller_cursor_speed.x * App->GetUnpausableDt());
+		}
+		else
+		{
+			cursor_position.x = window.x;
 		}
 
-		if (mouse_position.x >= (window_width - 10) || App->input->GetKey(SDL_SCANCODE_RIGHT) == KEY_STATE::KEY_REPEAT 
-			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)			//Right
+		cursor.SetScreenPos(cursor_position);
+	}
+
+	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_LEFTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)			//Right
+	{
+		iPoint cursor_position = cursor.GetScreenPos();
+
+		if (cursor_position.x < window.x + window.w - 2)															//Magic
 		{
-			if (App->render->camera.x > scene_camera_x_limit.y)
-			{
-				App->render->camera.x -= (int)(camera_speed.x * dt);
-			}
+			cursor_position.x += (int)(controller_cursor_speed.x * App->GetUnpausableDt());
+		}
+		else
+		{
+			cursor_position.x = window.x + window.w - 2;															//Magic
 		}
 
-		if (mouse_position.y >= (window_height - 10) || App->input->GetKey(SDL_SCANCODE_DOWN) == KEY_STATE::KEY_REPEAT 
-			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::POSITIVE_AXIS_REPEAT)			//Bottom
+		cursor.SetScreenPos(cursor_position);
+	}
+
+	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_LEFTY) == AXIS_STATE::POSITIVE_AXIS_REPEAT)			//Bottom
+	{
+		iPoint cursor_position = cursor.GetScreenPos();
+
+		if (cursor_position.y < window.y + window.h - 2)															//Magic
 		{
-			if (App->render->camera.y > scene_camera_y_limit.x)
-			{
-				App->render->camera.y -= (int)(camera_speed.y * dt);
-			}
+			cursor_position.y += (int)(controller_cursor_speed.y * App->GetUnpausableDt());
+		}
+		else
+		{
+			cursor_position.y = window.y + window.h - 2;															//Magic
 		}
 
-		if (mouse_position.y <= 10 || App->input->GetKey(SDL_SCANCODE_UP) == KEY_STATE::KEY_REPEAT
-			|| App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)			//Up
+		cursor.SetScreenPos(cursor_position);
+	}
+
+	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_LEFTY) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)			//Up
+	{
+		iPoint cursor_position = cursor.GetScreenPos();
+
+		if (cursor_position.y > window.y)
 		{
-			if (App->render->camera.y < scene_camera_y_limit.y)
-			{
-				App->render->camera.y += (int)(camera_speed.y * dt);
-			}
+			cursor_position.y -= (int)(controller_cursor_speed.y * App->GetUnpausableDt());
 		}
+		else
+		{
+			cursor_position.y = window.y;
+		}
+
+		cursor.SetScreenPos(cursor_position);
 	}
 }
 
@@ -186,13 +283,13 @@ void Player::GiveOrder()//fix
 	{
 		if (units_selected.size() != 0)																						// If there are Units being selected
 		{	
-			if (App->entity_manager->GetEntityAt(mouse_tile) == nullptr)
+			if (App->entity_manager->GetEntityAt(cursor_tile) == nullptr)
 			{
-				App->movement->OrderUnitsToMove(mouse_tile,units_selected);
+				App->movement->OrderUnitsToMove(cursor_tile, units_selected);
 			}
 			else
 			{
-				App->movement->OrderUnitsToAttack(mouse_tile, units_selected);
+				App->movement->OrderUnitsToAttack(cursor_tile, units_selected);
 			}
 		}
 		else
@@ -238,16 +335,16 @@ void Player::DrawCursor()
 {
 	if (CurrentlyInGameplayScene())
 	{
-		if (App->map->CheckMapBoundaries(mouse_tile))
+		if (App->map->CheckMapBoundaries(cursor_tile))
 		{
-			if (!App->gui_manager->FirstElementUnderMouse()->CheckMousePos() && !App->pause)			//TMP. Dirty Fix(?)
+			if (!App->gui_manager->VisibleElementIsUnderCursor())															//TMP. Dirty Fix(?)
 			{
-				App->render->Blit(mouse_tile_debug, mouse_map_position.x, mouse_map_position.y, nullptr, false, 1.f);
+				App->render->Blit(mouse_tile_debug, cursor_map_position.x, cursor_map_position.y, nullptr, false, 1.f);
 			}
 		}
 	}
-
-	App->render->Blit(cursor_idle, mouse_position.x, mouse_position.y, nullptr, false, 0.f);
+	
+	cursor.Draw();
 }
 
 // ------------------- ENTITY SELECTION METHODS -------------------
@@ -256,21 +353,28 @@ void Player::DragSelection()
 	if (CurrentlyInGameplayScene())
 	{
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN 
+			|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN
 			|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
 		{
-			is_selecting = true;
+			if (!App->gui_manager->VisibleElementIsUnderCursor())
+			{
+				is_selecting = true;
 
-			selection_start = mouse_position;
+				//selection_start = mouse_position;
+				selection_start = cursor_position;
 
-			ClearEntityBuffers();
+				ClearEntityBuffers();
+			}
 		}
 
 		if (is_selecting)
 		{
 			UpdateSelectionRect();
 
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP
-				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP 
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP
+				/*|| App->gui_manager->VisibleElementIsUnderMouse()*/)															//TMP FIX. Talk about what to do with this.
 			{
 				is_selecting = false;
 
@@ -282,20 +386,20 @@ void Player::DragSelection()
 
 void Player::UpdateSelectionRect()
 {
-	//Cases with mouse pos
-	if (mouse_position.x > selection_start.x)
+	//Cases with cursor pos
+	if (cursor_position.x > selection_start.x)
 	{
-		selection_rect = { selection_start.x , selection_start.y, mouse_position.x - selection_start.x, mouse_position.y - selection_start.y };
+		selection_rect = { selection_start.x , selection_start.y, cursor_position.x - selection_start.x, cursor_position.y - selection_start.y };
 	}
 	else
 	{
-		selection_rect = { mouse_position.x ,selection_start.y, selection_start.x - mouse_position.x , mouse_position.y - selection_start.y };
+		selection_rect = { cursor_position.x ,selection_start.y, selection_start.x - cursor_position.x , cursor_position.y - selection_start.y };
 	}
 
-	if (mouse_position.y < selection_start.y)
+	if (cursor_position.y < selection_start.y)
 	{
-		selection_rect.y = mouse_position.y;
-		selection_rect.h = selection_start.y - mouse_position.y;
+		selection_rect.y = cursor_position.y;
+		selection_rect.h = selection_start.y - cursor_position.y;
 	}
 
 	App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
@@ -332,9 +436,10 @@ void Player::SelectOnClick()
 		if (!god_mode)
 		{
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN 
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN
 				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
 			{
-				SelectEntityAt(mouse_tile);
+				SelectEntityAt(cursor_tile);
 			}
 		}
 	}
@@ -376,30 +481,29 @@ void Player::SelectionShortcuts()
 	// DEBUG SELECTION SHORTCUTS
 	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_STATE::KEY_DOWN)													// Select All Units
 	{																												
-		SelectAllUnits();																							
-	}																												
-																													
-																													
+		SelectAllUnits();
+	}
+
+
 	// Select Enemy Units																							
 	if (App->input->GetKey(SDL_SCANCODE_M) == KEY_STATE::KEY_DOWN)													// Select All Enemy Units
 	{																												
-		SelectEnemyUnits();																							
+		SelectEnemyUnits();
 	}																												
 																													
 	if (App->input->GetKey(SDL_SCANCODE_COMMA) == KEY_STATE::KEY_DOWN)												// Select All Enemy Gatherers
 	{																												
-		SelectEnemyGatherers();																						
+		SelectEnemyGatherers();
 	}																												
 																													
 	if (App->input->GetKey(SDL_SCANCODE_PERIOD) == KEY_STATE::KEY_DOWN)												// Select All Enemy Scouts
 	{																												
-		SelectEnemyScouts();																						
+		SelectEnemyScouts();
 	}																												
 																													
 	if (App->input->GetKey(SDL_SCANCODE_SLASH) == KEY_STATE::KEY_DOWN)												// Select All Enemy Infantries
 	{																												
-		SelectEnemies();																							
-		//SelectEnemyInfantries();																					
+		SelectEnemyInfantries();
 	}																												
 																													
 	if (App->input->GetKey(SDL_SCANCODE_RSHIFT) == KEY_STATE::KEY_DOWN)												// Select All Enemy Heavys
@@ -589,7 +693,7 @@ void Player::SelectEnemyScouts()
 	}
 }
 
-void Player::SelectEnemies()
+void Player::SelectEnemyInfantries()
 {
 	if (god_mode)
 	{
@@ -633,66 +737,59 @@ void Player::SelectEnemyHeavys()
 
 void Player::SelectEntityAt(const iPoint& tile_position)
 {
-	if (App->pathfinding->CheckBoundaries(tile_position))													// Make a check map boundaries method in map.
+	if (App->entity_manager->entity_map != nullptr)
 	{
-		if (App->entity_manager->entity_map != nullptr)
+		Entity* clicked_entity = App->entity_manager->GetEntityAt(tile_position);						//clicked_entity will be assigned the entity in the entity_map at the given position.
+
+		if (clicked_entity != nullptr)
 		{
-			Entity* clicked_entity = App->entity_manager->GetEntityAt(tile_position);						//clicked_entity will be assigned the entity in the entity_map at the given position.
-
-			if (clicked_entity != nullptr)
+			if (App->pathfinding->IsOccupied(tile_position))
 			{
-				if (App->pathfinding->IsOccupied(tile_position))
+				if (App->entity_manager->IsUnit(clicked_entity))
 				{
-					if (App->entity_manager->IsUnit(clicked_entity))
+					ClearEntityBuffers();
+
+					Dynamic_Object* unit = (Dynamic_Object*)clicked_entity;
+
+					if (unit->is_selectable)
 					{
-						ClearEntityBuffers();
-
-						Dynamic_Object* unit = (Dynamic_Object*)clicked_entity;
-
-						if (unit->is_selectable)
-						{
-							unit->is_selected = true;
-							units_selected.push_back((Dynamic_Object*)clicked_entity);
-						}
-
-						return;
-					}
-				}
-
-				if (App->pathfinding->IsNonWalkable(tile_position))
-				{
-					if (App->entity_manager->IsBuilding(clicked_entity))
-					{
-						ClearEntityBuffers();
-
-						clicked_entity->is_selected = true;
-						building_selected = (Static_Object*)clicked_entity;
-
-						//LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", tile_position.x, tile_position.y);
-
-						return;
+						unit->is_selected = true;
+						units_selected.push_back((Dynamic_Object*)clicked_entity);
 					}
 
-					if (App->entity_manager->IsResource(clicked_entity))
-					{
-						ClearEntityBuffers();
-
-						clicked_entity->is_selected = true;
-						resource_selected = (Static_Object*)clicked_entity;
-					}
+					return;
 				}
 			}
-			else
-			{
-				ClearEntityBuffers();
 
-				LOG("There is no Entity at tile (%d, %d)", tile_position.x, tile_position.y);
+			if (App->pathfinding->IsNonWalkable(tile_position))
+			{
+				if (App->entity_manager->IsBuilding(clicked_entity))
+				{
+					ClearEntityBuffers();
+
+					clicked_entity->is_selected = true;
+					building_selected = (Static_Object*)clicked_entity;
+
+					//LOG("A BUILDING WAS SELECTED AT TILE (%d, %d)", tile_position.x, tile_position.y);
+
+					return;
+				}
+
+				if (App->entity_manager->IsResource(clicked_entity))
+				{
+					ClearEntityBuffers();
+
+					clicked_entity->is_selected = true;
+					resource_selected = (Static_Object*)clicked_entity;
+				}
 			}
 		}
-	}
-	else
-	{
-		LOG("Target tile (%d, %d) is outside the map's bounds", tile_position.x, tile_position.y);
+		else
+		{
+			ClearEntityBuffers();
+
+			LOG("There is no Entity at tile (%d, %d)", tile_position.x, tile_position.y);
+		}
 	}
 }
 
@@ -705,7 +802,8 @@ void Player::DeleteOnInput()
 		{
 			if (App->input->GetKey(SDL_SCANCODE_D) == KEY_STATE::KEY_DOWN)											// Delete entity at mouse position.
 			{
-				DeleteEntityAt(mouse_tile);
+				//DeleteEntityAt(mouse_tile);
+				DeleteEntityAt(cursor_tile);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_F) == KEY_STATE::KEY_DOWN)											// Delete all entities.
@@ -721,7 +819,8 @@ void Player::DeleteEntityAt(const iPoint& tile_position)
 {
 	if (App->entity_manager->entity_map != nullptr)
 	{
-		Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
+		//Entity* clicked_entity = App->entity_manager->GetEntityAt(mouse_tile);
+		Entity* clicked_entity = App->entity_manager->GetEntityAt(cursor_tile);
 
 		if (clicked_entity != nullptr)
 		{
@@ -889,4 +988,101 @@ bool Player::CheckSelectionRectBorders(Dynamic_Object* unit)
 			(unit->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&					// Unit is inside the right border.
 			(unit->selection_collider.y + unit->selection_collider.h > selection_rect.y - App->render->camera.y) &&			// Unit is inside the top border.
 			(unit->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h);						// Unit is inside the bottom border.
+}
+
+void Player::InitializePlayer()
+{
+	SDL_SetRelativeMouseMode(SDL_TRUE);
+
+	selection_rect = { 0, 0, 0, 0 };
+
+	// --- Loading from xml ---
+	config_file.load_file("config.xml");
+
+	pugi::xml_node player = config_file.child("config").child("player");
+
+	god_mode					= player.child("god_mode").attribute("value").as_bool();
+	is_selecting				= player.child("is_selecting").attribute("value").as_bool();
+	
+	mouse_tile_debug			= App->tex->Load(player.child("mouse_tile_tex").attribute("path").as_string());
+
+	scene_camera_x_limit.x		= player.child("camera").child("x_axis_limit").attribute("left").as_int();
+	scene_camera_x_limit.y		= player.child("camera").child("x_axis_limit").attribute("right").as_int();
+	scene_camera_y_limit.x		= player.child("camera").child("y_axis_limit").attribute("top").as_int();
+	scene_camera_y_limit.y		= player.child("camera").child("y_axis_limit").attribute("bottom").as_int();
+
+	camera_speed.x				= player.child("camera").child("speed").attribute("x").as_float();
+	camera_speed.y				= player.child("camera").child("speed").attribute("y").as_float();
+
+	controller_cursor_speed.x	= player.child("game_controller").child("cursor_speed").attribute("x").as_float();
+	controller_cursor_speed.y	= player.child("game_controller").child("cursor_speed").attribute("y").as_float();
+
+	// --- Cursor Section Sprites
+	// -- Cursor IDLE
+	idle.x = player.child("cursor_sections").child("idle").attribute("x").as_int();
+	idle.y = player.child("cursor_sections").child("idle").attribute("y").as_int();
+	idle.w = player.child("cursor_sections").child("idle").attribute("w").as_int();
+	idle.h = player.child("cursor_sections").child("idle").attribute("h").as_int();
+	
+	// -- Cursor HOVER Ally
+	cursor_hover_ally.x = player.child("cursor_sections").child("hover_ally").attribute("x").as_int();
+	cursor_hover_ally.y = player.child("cursor_sections").child("hover_ally").attribute("y").as_int();
+	cursor_hover_ally.w = player.child("cursor_sections").child("hover_ally").attribute("w").as_int();
+	cursor_hover_ally.h = player.child("cursor_sections").child("hover_ally").attribute("h").as_int();
+
+	// -- Cursor HOVER Enemy
+	cursor_hover_enemy.x = player.child("cursor_sections").child("hover_enemy").attribute("x").as_int();
+	cursor_hover_enemy.y = player.child("cursor_sections").child("hover_enemy").attribute("y").as_int();
+	cursor_hover_enemy.w = player.child("cursor_sections").child("hover_enemy").attribute("w").as_int();
+	cursor_hover_enemy.h = player.child("cursor_sections").child("hover_enemy").attribute("h").as_int();
+
+	// -- Cursor HOVER Resource
+	cursor_hover_resource.x = player.child("cursor_sections").child("hover_resource").attribute("x").as_int();
+	cursor_hover_resource.y = player.child("cursor_sections").child("hover_resource").attribute("y").as_int();
+	cursor_hover_resource.w = player.child("cursor_sections").child("hover_resource").attribute("w").as_int();
+	cursor_hover_resource.h = player.child("cursor_sections").child("hover_resource").attribute("h").as_int();
+
+	// -- Cursor HOVER UI
+	cursor_hover_UI.x = player.child("cursor_sections").child("hover_UI").attribute("x").as_int();
+	cursor_hover_UI.y = player.child("cursor_sections").child("hover_UI").attribute("y").as_int();
+	cursor_hover_UI.w = player.child("cursor_sections").child("hover_UI").attribute("w").as_int();
+	cursor_hover_UI.h = player.child("cursor_sections").child("hover_UI").attribute("h").as_int();
+
+	// -- Cursor CLICKED IDLE
+	cursor_clicked_idle.x = player.child("cursor_sections").child("clicked_idle").attribute("x").as_int();
+	cursor_clicked_idle.y = player.child("cursor_sections").child("clicked_idle").attribute("y").as_int();
+	cursor_clicked_idle.w = player.child("cursor_sections").child("clicked_idle").attribute("w").as_int();
+	cursor_clicked_idle.h = player.child("cursor_sections").child("clicked_idle").attribute("h").as_int();
+	
+	// -- Cursor CLICKED Ally
+	cursor_clicked_ally.x = player.child("cursor_sections").child("clicked_ally").attribute("x").as_int();
+	cursor_clicked_ally.y = player.child("cursor_sections").child("clicked_ally").attribute("y").as_int();
+	cursor_clicked_ally.w = player.child("cursor_sections").child("clicked_ally").attribute("w").as_int();
+	cursor_clicked_ally.h = player.child("cursor_sections").child("clicked_ally").attribute("h").as_int();
+
+	// -- Cursor CLICKED Enemy
+	cursor_clicked_enemy.x = player.child("cursor_sections").child("clicked_enemy").attribute("x").as_int();
+	cursor_clicked_enemy.y = player.child("cursor_sections").child("clicked_enemy").attribute("y").as_int();
+	cursor_clicked_enemy.w = player.child("cursor_sections").child("clicked_enemy").attribute("w").as_int();
+	cursor_clicked_enemy.h = player.child("cursor_sections").child("clicked_enemy").attribute("h").as_int();
+
+	// -- Cursor CLICKED Resource
+	cursor_clicked_resource.x	= player.child("cursor_sections").child("clicked_resource").attribute("x").as_int();
+	cursor_clicked_resource.y = player.child("cursor_sections").child("clicked_resource").attribute("y").as_int();
+	cursor_clicked_resource.w = player.child("cursor_sections").child("clicked_resource").attribute("w").as_int();
+	cursor_clicked_resource.h = player.child("cursor_sections").child("clicked_resource").attribute("h").as_int();
+
+	// -- Cursor CLICKED UI
+	cursor_clicked_UI.x = player.child("cursor_sections").child("clicked_UI").attribute("x").as_int();
+	cursor_clicked_UI.y = player.child("cursor_sections").child("clicked_UI").attribute("y").as_int();
+	cursor_clicked_UI.w = player.child("cursor_sections").child("clicked_UI").attribute("w").as_int();
+	cursor_clicked_UI.h = player.child("cursor_sections").child("clicked_UI").attribute("h").as_int();
+
+	
+	// --- UI_CURSOR ---
+	iPoint mouse_pos;
+	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
+
+	cursor = UI_Cursor(UI_ELEMENT::CURSOR, mouse_pos.x, mouse_pos.y, true, &idle, &cursor_clicked_idle, &cursor_hover_ally, &cursor_hover_enemy, &cursor_hover_resource, &cursor_hover_UI
+		, &cursor_clicked_ally, &cursor_clicked_enemy, &cursor_clicked_resource, &cursor_clicked_UI);
 }

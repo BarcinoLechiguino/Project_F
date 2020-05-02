@@ -23,6 +23,8 @@ class UI_InputBox;
 class UI_Scrollbar;
 class UI_Healthbar;
 
+class UI_Cursor;
+
 class GuiManager : public Module
 {
 public:
@@ -62,6 +64,12 @@ public:
 	UI* CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* healthbar = nullptr, SDL_Rect* background = nullptr
 					, Entity* attached_unit = nullptr, bool is_creation_bar = false, Module* listener = nullptr, UI* parent = nullptr);
 
+	UI* CreateCreationBar();
+
+	UI* CreateCursor(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* idle = nullptr, SDL_Rect* clicked_idle = nullptr
+					, SDL_Rect* hover_ally = nullptr, SDL_Rect* hover_enemy = nullptr, SDL_Rect* hover_resource = nullptr, SDL_Rect* hover_UI = nullptr
+					, SDL_Rect* clicked_ally = nullptr, SDL_Rect* clicked_enemy = nullptr, SDL_Rect* clicked_resource = nullptr, SDL_Rect* clicked_UI = nullptr);
+
 	
 	void DestroyGuiElements();
 	void DeleteGuiElement(UI* element_to_delete);
@@ -74,7 +82,11 @@ public:
 	void PassFocus();														//Method that passes the focus from an interactible and able to focused element to another with the same conditions.
 	bool ElementCanBeFocused(UI* focusElement) const;						//If an element fulfills all requirements (is a button or a scrollbar), then this method returns true. Used to filter which UI elements can or cannot have focus.
 	
-	UI* FirstElementUnderMouse() const;										//Returs the first element under the mouse.
+	//bool VisibleElementIsUnderMouse() const;								//Returns true if the mouse is over a visible UI_Element.
+	bool VisibleElementIsUnderCursor() const;								//Returns true if the mouse is over a visible UI_Element.		//TMP CONTROLLER
+
+	//UI* FirstInteractibleElementUnderMouse() const;							//Returs the first interactible element under the mouse.
+	UI* FirstInteractibleElementUnderCursor() const;						//Returs the first interactible element under the mouse.		//TMP CONTROLLER
 	bool ElementCanBeClicked(UI* clickedElement) const;
 
 	bool ElementHasChilds(UI* parentElement) const;							//Returns true if the element passed as argument has at least one child.

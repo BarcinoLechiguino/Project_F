@@ -135,6 +135,11 @@ void UI_Scrollbar::CheckInput()
 			}*/
 		}
 
+		if (CheckCursorPos() && App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN)		
+		{
+			PlaceThumbOnCursorPos();
+		}
+
 		if (!IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN)		//Unfocus when the mouse clicks outside the input box.
 		{
 			if (App->gui_manager->focused_element == this)
@@ -145,7 +150,7 @@ void UI_Scrollbar::CheckInput()
 
 		if ((IsHovered() || is_drag_target) && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)	//If the mouse is on the image and the left mouse button is continuously pressed.
 		{
-			if (IsForemostElement() || is_drag_target);															//If it is the first element under the mouse (in inverse order of draw)
+			if (IsForemostElement() || is_drag_target)															//If it is the first element under the mouse (in inverse order of draw)
 			{
 				ui_event = UI_EVENT::CLICKED;
 
@@ -310,7 +315,7 @@ void UI_Scrollbar::SetThumbHitbox(SDL_Rect hitbox)
 
 void UI_Scrollbar::PlaceThumbOnMousePos()
 {
-	if (drag_x_axis)
+	if (drag_x_axis /*&& !drag_y_axis*/)
 	{
 		int half_thumb_width = thumb->GetHitbox().w / 2;
 
@@ -320,11 +325,34 @@ void UI_Scrollbar::PlaceThumbOnMousePos()
 		thumb->SetHitbox({ thumb->GetScreenPos().x, thumb->GetScreenPos().y, thumb->GetHitbox().w, thumb->GetHitbox().h });
 	}
 
-	if (drag_y_axis)
+	if (drag_y_axis /*&& !drag_x_axis*/)
 	{
 		int half_thumb_height = thumb->GetHitbox().h /2;
 
 		new_thumb_position = { thumb->GetScreenPos().x, GetMousePos().y + half_thumb_height };
+
+		thumb->SetScreenPos(new_thumb_position);
+		thumb->SetHitbox({ thumb->GetScreenPos().x, thumb->GetScreenPos().y, thumb->GetHitbox().w, thumb->GetHitbox().h });
+	}
+}
+
+void UI_Scrollbar::PlaceThumbOnCursorPos()
+{
+	if (drag_x_axis /*&& !drag_y_axis*/)
+	{
+		int half_thumb_width = thumb->GetHitbox().w / 2;
+
+		new_thumb_position = { GetCursorPos().x - half_thumb_width, thumb->GetScreenPos().y };
+
+		thumb->SetScreenPos(new_thumb_position);
+		thumb->SetHitbox({ thumb->GetScreenPos().x, thumb->GetScreenPos().y, thumb->GetHitbox().w, thumb->GetHitbox().h });
+	}
+
+	if (drag_y_axis /*&& !drag_x_axis*/)
+	{
+		int half_thumb_height = thumb->GetHitbox().h / 2;
+
+		new_thumb_position = { thumb->GetScreenPos().x, GetCursorPos().y + half_thumb_height };
 
 		thumb->SetScreenPos(new_thumb_position);
 		thumb->SetHitbox({ thumb->GetScreenPos().x, thumb->GetScreenPos().y, thumb->GetHitbox().w, thumb->GetHitbox().h });
@@ -339,8 +367,8 @@ void UI_Scrollbar::CheckKeyboardInputs()
 		{
 			if (!ThumbIsAtLeftBound())
 			{
-				int arrowFactorLeft = thumb->GetScreenPos().x - (scrollbar_height * (int)arrow_position_factor);
-				new_thumb_position = { arrowFactorLeft, thumb->GetScreenPos().y };
+				int arrow_factor_left = thumb->GetScreenPos().x - (scrollbar_height * (int)arrow_position_factor);
+				new_thumb_position = { arrow_factor_left, thumb->GetScreenPos().y };
 
 				thumb->SetScreenPos(new_thumb_position);
 				thumb->SetHitbox({ thumb->GetScreenPos().x, thumb->GetScreenPos().y, thumb->GetHitbox().w, thumb->GetHitbox().h });
@@ -351,8 +379,8 @@ void UI_Scrollbar::CheckKeyboardInputs()
 		{
 			if (!ThumbIsAtRightBound())
 			{
-				int arrowFactorRight = thumb->GetScreenPos().x + (scrollbar_height * (int)arrow_position_factor);
-				new_thumb_position = { arrowFactorRight, thumb->GetScreenPos().y };
+				int arrow_factor_right = thumb->GetScreenPos().x + (scrollbar_height * (int)arrow_position_factor);
+				new_thumb_position = { arrow_factor_right, thumb->GetScreenPos().y };
 
 				thumb->SetScreenPos(new_thumb_position);
 				thumb->SetHitbox({ thumb->GetScreenPos().x, thumb->GetScreenPos().y, thumb->GetHitbox().w, thumb->GetHitbox().h });
@@ -376,7 +404,7 @@ void UI_Scrollbar::CheckKeyboardInputs()
 		}
 	}
 
-	if (drag_y_axis)
+	if (drag_y_axis /*&& !drag_x_axis*/)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_UP) == KEY_STATE::KEY_DOWN)
 		{

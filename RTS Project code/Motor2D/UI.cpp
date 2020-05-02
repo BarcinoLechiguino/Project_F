@@ -1,14 +1,17 @@
 #include "Application.h"
 #include "Render.h"
 #include "Input.h"
+#include "Map.h"
+
+#include "Player.h"					// TMP CONTROLLER
+
 #include "GuiManager.h"
 
 #include "UI.h"
 
 UI::UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
-	element(element),position(x, y),rect(rect),listener(listener),parent(parent),drag_x_axis(false),drag_y_axis(false),is_draggable(false), is_drag_target(false), is_filled(false),
-	 is_visible(false),is_interactible(false), local_hitbox({ 0,0,0,0 }), local_rect({0,0,0,0}),ui_event(UI_EVENT::IDLE),hitbox({0,0,0,0})
-	
+	element(element), position(x, y), rect(rect), listener(listener), parent(parent), drag_x_axis(false), drag_y_axis(false), is_draggable(false), is_drag_target(false), is_filled(false),
+	 is_visible(false), is_interactible(false), local_hitbox({ 0, 0, 0, 0 }), local_rect({ 0, 0, 0, 0 }), ui_event(UI_EVENT::IDLE), hitbox({ 0, 0, 0, 0 })
 {
 	//hitbox = {GetPosition().x, GetPosition().y, GetRect().w, GetRect().h };
 	hitbox = {position.x, position.y, rect.w, rect.h };
@@ -129,10 +132,40 @@ iPoint UI::GetMousePos() /*const*/
 	return mouse_position;
 }
 
+iPoint UI::GetCursorPos() /*const*/
+{
+	iPoint cursor_pos = App->player->cursor.GetScreenPos();							//TMP CONTROLLER
+
+	return cursor_pos;
+}
+
+iPoint UI::GetMouseTilePosition()
+{
+	App->input->GetMousePosition(mouse_position.x, mouse_position.y);
+
+	iPoint mouse_camera;
+	mouse_camera.x = mouse_position.x - App->render->camera.x;
+	mouse_camera.y = mouse_position.y - App->render->camera.y;
+
+	iPoint world_to_map_offset = { 0, 20 };
+
+	mouse_tile_position = App->map->WorldToMap(mouse_camera.x + world_to_map_offset.x, mouse_camera.y + world_to_map_offset.y);
+
+	return mouse_tile_position;
+}
+
 bool UI::CheckMousePos() const
 {
 	return(mouse_position.x > hitbox.x && mouse_position.x < hitbox.x + hitbox.w
 		&& mouse_position.y > hitbox.y && mouse_position.y < hitbox.y + hitbox.h);
+}
+
+bool UI::CheckCursorPos() const																				// TMP CONTROLLER
+{
+	iPoint cursor_pos = App->player->cursor.GetScreenPos();
+	
+	return (cursor_pos.x > hitbox.x && cursor_pos.x < hitbox.x + hitbox.w
+			&& cursor_pos.y > hitbox.y && cursor_pos.y < hitbox.y + hitbox.h);
 }
 
 iPoint UI::GetMouseMotion() /*const*/
@@ -157,13 +190,13 @@ bool UI::IsFocused() const
 // --- This method checks whether the element that called the method is the foremost element under the mouse.
 bool UI::IsForemostElement() const
 {
-	return App->gui_manager->FirstElementUnderMouse() == this;
+	return App->gui_manager->FirstInteractibleElementUnderCursor() == this;
 }
 
 // --- This method checks whether or not the element that called the method fulfills the conditions to be dragged.
 bool UI::ElementCanBeDragged() const
 {
-	return ((is_draggable && is_drag_target && App->gui_manager->FirstElementUnderMouse() == this) || is_drag_target);
+	return ((is_draggable && is_drag_target && App->gui_manager->FirstInteractibleElementUnderCursor() == this) || is_drag_target);
 }
 
 // --- This method checks whetheror not the element that called the method has been clicked but not dragged anywhere.

@@ -50,7 +50,8 @@ public:
 	const char* GetTitle() const;
 	const char* GetOrganization() const;
 
-	float GetDt();
+	float GetDt() const;
+	float GetUnpausableDt() const;
 	void LoadGame(const char* file);
 	void SaveGame(const char* file) const;
 

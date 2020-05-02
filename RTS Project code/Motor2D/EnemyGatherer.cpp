@@ -60,7 +60,8 @@ bool EnemyGatherer::Update(float dt, bool doLogic)
 	{
 		if (target == nullptr && !path_full)
 		{
-			SetGatheringTarget(App->player->mouse_tile);
+			//SetGatheringTarget(App->player->mouse_tile);
+			SetGatheringTarget(App->player->cursor_tile);
 		}
 	}
 

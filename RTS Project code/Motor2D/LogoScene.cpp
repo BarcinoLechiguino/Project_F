@@ -12,7 +12,7 @@
 #include "p2Log.h"
 #include "LogoScene.h"
 
-LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE), accumulated_time(0.f), background_rect({0,0,0,0}),background_texture(nullptr),button_text(nullptr),logo_channel(0),logo_fx(0),logo_scene_duration(0.f),transition_button(nullptr)
+LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE), accumulated_time(0.f), background_rect({ 0, 0, 0, 0 }), background_texture(nullptr), logo_channel(0), logo_fx(0), logo_scene_duration(0.f)
 {
 	name_tag = ("Logo");
 }

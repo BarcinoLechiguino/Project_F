@@ -8,6 +8,7 @@
 #include "Fonts.h"
 #include "Console.h"
 #include "Entity.h"
+#include "Player.h"									// TMP CONTROLLER
 
 #include "GuiManager.h"
 #include "UI.h"
@@ -17,6 +18,8 @@
 #include "UI_InputBox.h"
 #include "UI_Scrollbar.h"
 #include "UI_Healthbar.h"
+#include "UI_CreationBar.h"
+#include "UI_Cursor.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -66,18 +69,27 @@ bool GuiManager::Start()
 bool GuiManager::PreUpdate()
 {
 	// THIS
-	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_STATE::KEY_DOWN)						// Does not work, for now.
+	if (App->input->GetKey(SDL_SCANCODE_TAB) == KEY_STATE::KEY_DOWN)
 	{
-		PassFocus();
+		if (!App->player->cursor.game_controller_mode)																				// TMP CONTROLLER
+		{
+			PassFocus();
+		}
+
 		//App->audio->PlayFx(new_game_fx, 0);
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN)					// Does not work, for now.
+	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN 
+		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN)								// TMP CONTROLLER
 	{
 		if (focused_element != nullptr && focused_element->is_interactible)
 		{
 			focused_element->ui_event = UI_EVENT::UNCLICKED;
-			focused_element->listener->OnEventCall(focused_element, focused_element->ui_event);
+			
+			if (focused_element->listener != nullptr)
+			{
+				focused_element->listener->OnEventCall(focused_element, focused_element->ui_event);
+			}
 		}
 	}
 	
@@ -142,7 +154,7 @@ bool GuiManager::CleanUp()
 	return atlas;
 }
 
-//----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
+// ----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
 UI* GuiManager::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent)
 {
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
@@ -206,9 +218,9 @@ UI* GuiManager::CreateInputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox
 	return elem;
 }
 
-UI* GuiManager::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumb_size, iPoint thumb_offset, SDL_Rect drag_area, float drag_factor, bool drag_x_axis, bool drag_y_axis,
-					bool inverted_scrolling, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent,
-					SDL_Rect* scroll_mask, iPoint mask_offset, bool empty_elements)
+UI* GuiManager::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumb_size, iPoint thumb_offset , SDL_Rect drag_area, float drag_factor
+								, bool drag_x_axis, bool drag_y_axis, bool inverted_scrolling, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent
+								, SDL_Rect* scroll_mask, iPoint mask_offset, bool empty_elements)
 {
 	BROFILER_CATEGORY("GUI_ScrollBar", Profiler::Color::NavajoWhite);
 	UI* elem = nullptr;
@@ -224,7 +236,8 @@ UI* GuiManager::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbo
 	return elem;
 }
 
-UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit, bool is_creation_bar, Module* listener, UI* parent)
+UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit
+								, bool is_creation_bar, Module* listener, UI* parent)
 {
 	UI* elem = nullptr;
 
@@ -238,6 +251,24 @@ UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visibl
 	return elem;
 }
 
+UI* GuiManager::CreateCursor(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* idle, SDL_Rect* clicked_idle
+							, SDL_Rect* hover_ally, SDL_Rect* hover_enemy, SDL_Rect* hover_resource, SDL_Rect* hover_UI
+							, SDL_Rect* clicked_ally, SDL_Rect* clicked_enemy, SDL_Rect* clicked_resource, SDL_Rect* clicked_UI)
+{
+	UI* elem = nullptr;
+
+	elem = new UI_Cursor(element, x, y, is_visible, idle, clicked_idle, hover_ally, hover_enemy, hover_resource, clicked_ally, clicked_enemy, clicked_resource);
+
+	if (elem != nullptr)
+	{
+		elements.push_back(elem);
+	}
+
+	return elem;
+}
+
+
+// ----------------------------------- UI ELEMENT DELETION METHODS -----------------------------------
 void GuiManager::DestroyGuiElements()
 {
 	if (focused_element != nullptr)
@@ -297,35 +328,61 @@ void GuiManager::OnEventCall(UI* element, UI_EVENT ui_event)
 
 } 
 
-// --- Method to return the foremost element of the UI. (First in inverse order of draw)
-UI* GuiManager::FirstElementUnderMouse() const
+// --- Method that will return true of there is a visible element under the mouse.
+bool GuiManager::VisibleElementIsUnderCursor() const
 {
-	UI* firstElement = nullptr;
+	bool ret = false;
 
-	std::vector<UI*>::const_iterator iterator = elements.cbegin();
-
-	for (; iterator != elements.cend(); iterator++)
+	for (int i = 0; i < elements.size(); ++i)
 	{
-		if (ElementCanBeClicked((*iterator)))													//Checks that the element being iterated has the mouse on it.
+		if (elements[i]->is_visible)
 		{
-			firstElement = (*iterator);															//The element being iterated is assigned to firstElement.
+			if (elements[i]->CheckMousePos() || elements[i]->CheckCursorPos())					// If the mouse is on the iterated UI_Element. // TMP CONTROLLER
+			{
+				ret = true;
+				break;
+			}
 		}
 	}
 
-	if (firstElement != nullptr)
+	return ret;
+}
+
+// --- Method that will return the foremost element of the UI under the Mouse. (First in inverse order of draw)
+UI* GuiManager::FirstInteractibleElementUnderCursor() const
+{
+	UI* first_element = nullptr;
+
+	/*std::vector<UI*>::const_iterator item = elements.cbegin();
+
+	for (; item != elements.cend(); item++)
 	{
-		return firstElement;																	//The last element that was checked to have the mouse on it will be returned.
+		if (ElementCanBeClicked((*item)))														//Checks that the element being iterated has the mouse on it.
+		{
+			first_element = (*item);															//The element being iterated is assigned to first_element.
+		}
+	}*/
+
+	std::vector<UI*>::const_reverse_iterator item = elements.crbegin();							// As what is looked for is the first element in inverse order of draw,
+																								// we use a reverse_iterator to start from the end of the elements vector.
+	for (; item != elements.crend(); ++item)
+	{
+		if (ElementCanBeClicked((*item)))
+		{
+			first_element = (*item);															// Since the first element that meets the criteria is the first element in
+			break;																				// inverse order of draw, the loop can be stopped here.
+		}
 	}
+
+	return first_element;
 }
 
 bool GuiManager::ElementCanBeClicked(UI* clickedElement) const
 {
 	bool ret = false;
 
-	if (clickedElement->CheckMousePos()
-		&& clickedElement->is_visible
-		&& (clickedElement->is_interactible
-			|| clickedElement->is_draggable))
+	if ((clickedElement->CheckMousePos() || clickedElement->CheckCursorPos()) &&									//TMP CONTROLLER
+			clickedElement->is_visible && (clickedElement->is_interactible || clickedElement->is_draggable))
 	{
 		ret = true;
 	}
@@ -357,7 +414,7 @@ void GuiManager::PassFocus()
 
 		for (; iterated_element != elements.end(); ++iterated_element)							//Loop that is used to find the next interactible element of the elments list.
 		{
-			if (*next(iterated_element) != nullptr)												//If the next element of the list is not NULL.
+ 			if (*next(iterated_element) != nullptr)												//If the next element of the list is not NULL.
 			{
 				if (ElementCanBeFocused(*next(iterated_element)))								//If the next element of the list fulfills all focus conditions.
 				{

@@ -702,8 +702,8 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 
 bool EntityManager::CheckEntityMapBoundaries(const iPoint& pos) const
 {
-	return (pos.x >= 0 && pos.x <= entity_map_width &&
-		pos.y >= 0 && pos.y <= entity_map_height);
+	return (pos.x >= 0 && pos.x < entity_map_width &&
+		pos.y >= 0 && pos.y < entity_map_height);
 }
 
 Entity* EntityManager::GetEntityAt(const iPoint& pos) const
