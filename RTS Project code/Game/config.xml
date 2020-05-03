@@ -41,6 +41,35 @@
     </layers>
   </map>
 
+  <player>
+    <god_mode value="0"/>
+    <is_selecting value="0"/>
+    <mouse_tile_tex path="maps/mouse_tile_debug.png"/>
+
+    <camera>
+      <speed x="700.0f" y="700.0f"/>
+      <x_axis_limit left="-600" right="1700"/>
+      <y_axis_limit top="-1430" bottom="200"/>
+    </camera>
+
+    <game_controller>
+      <cursor_speed x="500.0f" y="500.0f"/>
+    </game_controller>
+
+    <cursor_sections>
+      <idle x="1095" y="232" w="20" h="24"/>
+      <hover_ally x="1115" y="232" w="20" h="24"/>
+      <hover_enemy x="1135" y="232" w="20" h="24"/>
+      <hover_resource x="1155" y="232" w="20" h="24"/>
+      <hover_UI x="1175" y="232" w="20" h="24"/>
+      <clicked_idle x="1095" y="256" w="20" h="24"/>
+      <clicked_ally x="1115" y="256" w="20" h="24"/>
+      <clicked_enemy x="1135" y="256" w="20" h="24"/>
+      <clicked_resource x="1155" y="256" w="20" h="24"/>
+      <clicked_UI x="1175" y="256" w="20" h="24"/>
+    </cursor_sections>
+  </player>
+
   <entities>
     <textures>
       <gatherer_texture path="textures/Spritesheets/Entities/gatherer2_lowres.png"/>
@@ -59,9 +88,6 @@
       <tree_texture path="maps/trees.png"/>
     </textures>
     
-    <player>
-    </player>
-
     <units>
       <update_cycle_length length="0.1f"/>
       <speed_factor x="0.803f" y="0.59f"/>
@@ -139,28 +165,6 @@
           <attack_range range="10"/>
           <attack_speed speed="5.0f"/>
         </enemy>
-        
-        <mecha>
-          <position x="199" y="400"/>
-          <speed x="125.0f" y="0"/>
-          <max_speed x="240.0f" y="500.0f"/>
-          <acceleration x="60.0f" y="450.0f"/>
-          <gravity value="40.0f"/>
-          <sprite_size w="56" h="78"/>
-          <points value ="100"/>
-          <lives lives="1"/>
-          <detection_radius radius="125"/>
-        </mecha>
-
-        <alien>
-          <position x="212" y="400"/>
-          <speed x="200.0f" y="125.0f"/>
-          <sprite_size w="38" h="52"/>
-          <points value ="75"/>
-          <lives lives="1"/>
-          <detection_radius radius="125"/>
-          <update_cycle_length length="0.1f"/>
-        </alien>
       </enemies>
     </units>
 

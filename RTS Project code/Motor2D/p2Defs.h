@@ -85,4 +85,6 @@ inline const char* const PATH(const char* folder, const char* file)
 #define MAX_BUILDING_HEALTHBAR_WIDTH 115
 #define MAX_RESOURCE_HEALTHBAR_WIDTH 115
 
+#define MAX_CREATION_BAR_WIDTH 115
+
 #endif

@@ -60,7 +60,8 @@ bool Gatherer::Update(float dt, bool doLogic)
 	{
 		if (target == nullptr && !path_full)
 		{
-			SetGatheringTarget(App->player->mouse_tile);
+			//SetGatheringTarget(App->player->mouse_tile);
+			SetGatheringTarget(App->player->cursor_tile);
 		}
 	}
 
@@ -223,15 +224,15 @@ bool Gatherer::TargetIsInRange()
 
 void Gatherer::SetGatheringTarget(const iPoint& tile_position)
 {
-	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+	Entity* gathering_target = App->entity_manager->GetEntityAt(tile_position);
 
-	for (; item != App->entity_manager->entities.end(); ++item)
+	if (gathering_target != nullptr)
 	{
-		if (App->entity_manager->IsResource((*item)))
+		if (App->entity_manager->IsResource(gathering_target))
 		{
 			if (App->pathfinding->DistanceInTiles(tile_position, (*item)->tile_position) <= attack_range)
 			{
-				target = (*item);
+				target = gathering_target;
 				break;
 			}
 		}

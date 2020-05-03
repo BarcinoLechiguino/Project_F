@@ -19,7 +19,7 @@ UI_Image::UI_Image(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool is_vi
 {
 	tex = App->gui_manager->GetAtlas();													//The atlas already has the path to the atlas spritesheet. Check how to work around the const
 
-	if (tex == NULL)
+	if (tex == nullptr)
 	{
 		LOG("Atlas could not be loaded");
 	}
@@ -39,7 +39,7 @@ UI_Image::UI_Image(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool is_vi
 		this->listener = listener;												//This Image's listener is set to the App->gui module (For OnCallEvent()).
 	}
 
-	if (parent != NULL)															//If a parent is passed as argument.
+	if (parent != nullptr)														//If a parent is passed as argument.
 	{
 		int localPosX = x - parent->GetScreenPos().x;							//Gets the local position of the Image element in the X Axis.
 		int localPosY = y - parent->GetScreenPos().y;							//Gets the local position of the Image element in the Y Axis.

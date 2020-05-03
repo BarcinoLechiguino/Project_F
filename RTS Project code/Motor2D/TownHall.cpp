@@ -8,6 +8,7 @@
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
+#include "UI_CreationBar.h"
 #include "EntityManager.h"
 #include "Gatherer.h"
 
@@ -32,6 +33,33 @@ bool TownHall::PreUpdate()
 
 bool TownHall::Update(float dt, bool doLogic)
 {
+	if (creation_queue.size() != 0)
+	{
+		if (!creating_unit)
+		{
+			StartUnitCreation();
+		}
+		else
+		{
+			creation_bar->UpdateCreationBarValue();
+
+			if (creation_bar->creation_finished)
+			{
+				GenerateUnit(created_unit_type, unit_level);
+
+				created_unit_type = ENTITY_TYPE::UNKNOWN;
+
+				creation_queue.erase(creation_queue.begin());
+
+				creating_unit = false;
+			}
+		}
+	}
+	else
+	{
+		creation_bar->is_visible = false;
+	}
+	
 	return true;
 }
 
@@ -53,6 +81,7 @@ bool TownHall::CleanUp()
 	entity_sprite = nullptr;
 
 	App->gui_manager->DeleteGuiElement(healthbar);
+	App->gui_manager->DeleteGuiElement(creation_bar);
 
 	return true;
 }
@@ -62,62 +91,20 @@ void TownHall::Draw()
 	App->render->Blit(entity_sprite, (int)pixel_position.x - 51, (int)pixel_position.y - 20, &hall_rect);
 }
 
-void TownHall::InitEntity()
+void TownHall::StartUnitCreation()
 {
-	entity_sprite = App->entity_manager->GetTownHallTexture();
+	creation_bar->is_visible = true;
 
-	is_selected = false;
+	creating_unit = true;
 
-	// --- SPRITE SECTIONS ---
-	hall_rect_1 = { 0, 0, 155, 138 };
-	hall_rect_2 = { 155, 0, 155, 138 };
-	hall_rect = hall_rect_1;
+	created_unit_type = (*creation_queue.begin());
 
-	// --- CREATION TIMERS ---
-	/*accumulated_creation_time = 0.0f;
-	building_creation_time = 5.0f;*/
-
-	gatherer_creation_time = 1.0f;														//Magic
-
-	// --- POSITION AND SIZE ---
-	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
-
-	pixel_position.x = (float)world_position.x;
-	pixel_position.y = (float)world_position.y;
-
-	tiles_occupied.x = 3;
-	tiles_occupied.y = 3;
-
-	// --- STATS & HEALTHBAR ---
-	unit_level = 1;
-
-	max_health = 900;
-	current_health = max_health;
-
-	if (App->entity_manager->CheckTileAvailability(tile_position, this))
+	switch (created_unit_type)
 	{
-		AttachHealthbarToEntity();
+	case ENTITY_TYPE::GATHERER:
+		creation_bar->SetNewCreationTime(gatherer_creation_time);
+		break;
 	}
-
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height * 0.5f);
-}
-
-void TownHall::AttachHealthbarToEntity()
-{
-	// HP Healthbar
-	healthbar_position_offset.x = -6;
-	healthbar_position_offset.y = -6;
-
-	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
-	healthbar_rect = { 618, 23, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
-
-	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
-
-	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
-
-	// Creation Bar
-
 }
 
 void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
@@ -147,4 +134,75 @@ void TownHall::LevelChanges()						//Updates the building stats when leveling up
 		hall_rect = hall_rect_2;
 		break;
 	}
+}
+
+void TownHall::InitEntity()
+{
+	entity_sprite = App->entity_manager->GetTownHallTexture();
+
+	is_selected = false;
+
+	created_unit_type = ENTITY_TYPE::UNKNOWN;
+
+	// --- SPRITE SECTIONS ---
+	hall_rect_1 = { 0, 0, 155, 138 };
+	hall_rect_2 = { 155, 0, 155, 138 };
+	hall_rect = hall_rect_1;
+
+	// --- CREATION TIMERS ---
+	gatherer_creation_time = 1.0f;														//Magic
+
+	// --- POSITION AND SIZE ---
+	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
+
+	pixel_position.x = (float)world_position.x;
+	pixel_position.y = (float)world_position.y;
+
+	tiles_occupied.x = 3;
+	tiles_occupied.y = 3;
+
+	// --- STATS & HEALTHBAR ---
+	unit_level = 1;
+
+	max_health = 900;
+	current_health = max_health;
+
+	if (App->entity_manager->CheckTileAvailability(tile_position, this))
+	{
+		AttachHealthbarToEntity();
+		AttachCreationBarToEntity();
+	}
+
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height * 0.5f);
+}
+
+void TownHall::AttachHealthbarToEntity()
+{
+	// HP Healthbar
+	healthbar_position_offset.x = -6;
+	healthbar_position_offset.y = -6;
+
+	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
+	healthbar_rect = { 618, 23, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
+
+	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+
+	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+
+}
+
+void TownHall::AttachCreationBarToEntity()
+{
+	creation_bar_position_offset.x = -6;															// Magic
+	creation_bar_position_offset.y = 16;
+
+	creation_bar_background_rect = { 618, 1, MAX_CREATION_BAR_WIDTH, 9 };
+	creation_bar_rect = { 618, 23, MAX_CREATION_BAR_WIDTH, 9 };
+
+	int creation_bar_position_x = (int)pixel_position.x + creation_bar_position_offset.x;
+	int creation_bar_position_y = (int)pixel_position.y + creation_bar_position_offset.y;
+
+	creation_bar = (UI_CreationBar*)App->gui_manager->CreateCreationBar(UI_ELEMENT::CREATIONBAR, creation_bar_position_x, creation_bar_position_y, false
+		, &creation_bar_rect, &creation_bar_background_rect, this);
 }

@@ -103,7 +103,7 @@ void Entity::ApplyDamage(Entity* target)
 	{
 		target->current_health -= attack_damage;
 
-		target->healthbar->UpdateBarValue();
+		target->healthbar->UpdateHealthbarValue();
 	}
 	else
 	{
@@ -111,13 +111,13 @@ void Entity::ApplyDamage(Entity* target)
 		{
 			target->current_health -= attack_damage;
 
-			target->healthbar->UpdateBarValue();
+			target->healthbar->UpdateHealthbarValue();
 		}
 		else if (App->entity_manager->IsResource(target))
 		{
 			target->current_health -= attack_damage;
 
-			target->healthbar->UpdateBarValue();
+			target->healthbar->UpdateHealthbarValue();
 		}
 		
 	}

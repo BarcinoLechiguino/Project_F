@@ -33,6 +33,7 @@ public:
 	void SetThumbHitbox(SDL_Rect hitbox);
 
 	void PlaceThumbOnMousePos();
+	void PlaceThumbOnCursorPos();											//TMP CONTROLLER
 	void CheckKeyboardInputs();
 	void DragThumbWithMousewheel();
 	

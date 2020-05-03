@@ -413,9 +413,8 @@ const char* Application::GetOrganization() const
 	return organization.c_str();
 }
 
-float Application::GetDt()
+float Application::GetDt() const
 {
-	//LOG("dt is: %f", dt);
 	if (!pause)
 	{
 		return dt;
@@ -424,6 +423,11 @@ float Application::GetDt()
 	{
 		return 0.0f;
 	}
+}
+
+float Application::GetUnpausableDt() const
+{
+	return dt;
 }
 
 // Load / Save

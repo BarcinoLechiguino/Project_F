@@ -8,6 +8,7 @@
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
+#include "UI_CreationBar.h"
 #include "EntityManager.h"
 #include "Scout.h"
 #include "Infantry.h"
@@ -38,10 +39,32 @@ bool Barracks::PreUpdate()
 
 bool Barracks::Update(float dt, bool doLogic)
 {
-	/*if (creating_unit)
+	if (creation_queue.size() != 0)
+	{	
+		if (!creating_unit)
+		{
+			StartUnitCreation();
+		}
+		else
+		{
+			creation_bar->UpdateCreationBarValue();
+
+			if (creation_bar->creation_finished)
+			{
+				GenerateUnit(created_unit_type, unit_level);
+				
+				created_unit_type = ENTITY_TYPE::UNKNOWN;
+
+				creation_queue.erase(creation_queue.begin());
+
+				creating_unit = false;
+			}
+		}
+	}
+	else
 	{
-		accumulated_creation_time += dt;
-	}*/
+		creation_bar->is_visible = false;
+	}
 	
 	return true;
 }
@@ -59,6 +82,7 @@ bool Barracks::CleanUp()
 	entity_sprite = nullptr;
 
 	App->gui_manager->DeleteGuiElement(healthbar);
+	App->gui_manager->DeleteGuiElement(creation_bar);
 	
 	return true;
 }
@@ -68,62 +92,28 @@ void Barracks::Draw()
 	App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect); //Magic
 }
 
-void Barracks::InitEntity()
+void Barracks::StartUnitCreation()
 {
-	entity_sprite = App->entity_manager->GetBarracksTexture();
-
-	is_selected = false;
-
-	// --- SPRITE SECTIONS ---
-	barracks_rect_1 = { 0, 0, 106, 95 };
-	barracks_rect_2 = { 108, 0, 106, 95 };
-	barracks_rect = barracks_rect_1;
-
-	// --- CREATION TIMERS & VARS ---
-	/*accumulated_creation_time = 0.0f;
-	building_creation_time = 5.0f;*/
+	creation_bar->is_visible = true;
 	
-	created_unit_type = ENTITY_TYPE::UNKNOWN;
-
-	scout_creation_time = 1.0f;
-	infantry_creation_time = 2.0f;
-	heavy_creation_time = 5.0f;
-
-	// --- POSITION AND SIZE ---
-	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
-
-	pixel_position.x = (float)world_position.x;
-	pixel_position.y = (float)world_position.y;
-
-	tiles_occupied.x = 2;
-	tiles_occupied.y = 2;
-
-	// --- STATS & HEALTHBAR ---
-	unit_level = 1;
-
-	max_health = 600;
-	current_health = max_health;
-
-	if (App->entity_manager->CheckTileAvailability(tile_position, this))
+	creating_unit = true;
+	
+	created_unit_type = (*creation_queue.begin());
+	
+	switch (created_unit_type)
 	{
-		AttachHealthbarToEntity();
+	case ENTITY_TYPE::SCOUT:
+		creation_bar->SetNewCreationTime(scout_creation_time);
+		break;
+
+	case ENTITY_TYPE::INFANTRY:
+		creation_bar->SetNewCreationTime(infantry_creation_time);
+		break;
+
+	case ENTITY_TYPE::HEAVY:
+		creation_bar->SetNewCreationTime(heavy_creation_time);
+		break;
 	}
-
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height);
-}
-
-void Barracks::AttachHealthbarToEntity()
-{
-	healthbar_position_offset.x = -6; //Magic
-	healthbar_position_offset.y = -6;
-
-	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
-	healthbar_rect = { 618, 23, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
-
-	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
-
-	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }
 
 void Barracks::GenerateUnit(ENTITY_TYPE type, int level)
@@ -132,69 +122,18 @@ void Barracks::GenerateUnit(ENTITY_TYPE type, int level)
 
 	switch (type)
 	{
-		/*case ENTITY_TYPE::SCOUT:
-			(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, level);
-			break;*/
+	case ENTITY_TYPE::SCOUT:
+		(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, level);
+		break;
 
 	case ENTITY_TYPE::INFANTRY:
 		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
 		break;
 
-		/*case ENTITY_TYPE::HEAVY:
-
-			break;*/
+	case ENTITY_TYPE::HEAVY:
+		(Heavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::HEAVY, pos.x, pos.y, level);
+		break;
 	}
-	
-	/*if (type == ENTITY_TYPE::SCOUT)
-	{
-		created_unit_type = ENTITY_TYPE::SCOUT;
-
-		if (accumulated_creation_time >= scout_creation_time)
-		{
-			creation_has_finished = true;
-		}
-	}
-
-	if (type == ENTITY_TYPE::INFANTRY)
-	{
-		created_unit_type = ENTITY_TYPE::INFANTRY;
-
-		if (accumulated_creation_time >= infantry_creation_time)
-		{
-			creation_has_finished = true;
-		}
-	}
-
-	if (type == ENTITY_TYPE::HEAVY)
-	{
-		created_unit_type = ENTITY_TYPE::HEAVY;
-
-		if (accumulated_creation_time >= heavy_creation_time)
-		{
-			creation_has_finished = true;
-		}
-	}*/
-	
-	//if (creation_has_finished)
-	//{
-	//	switch (type)
-	//	{
-	//	/*case ENTITY_TYPE::SCOUT:
-	//		(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, level);
-	//		break;*/
-
-	//	case ENTITY_TYPE::INFANTRY:
-	//		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
-	//		break;
-
-	//	/*case ENTITY_TYPE::HEAVY:
-
-	//		break;*/
-	//	}
-
-	//	/*creation_has_finished = false;
-	//	created_unit_type = ENTITY_TYPE::UNKNOWN;*/
-	//}
 }
 
 void Barracks::LevelChanges()				//Updates the building stats when leveling up
@@ -208,9 +147,81 @@ void Barracks::LevelChanges()				//Updates the building stats when leveling up
 		barracks_rect = barracks_rect_2;
 		max_health = 800;
 		current_health = max_health;
+		unit_level++;
 		break;
 	default:
 		barracks_rect = barracks_rect_2;
 		break;
 	}
+}
+
+void Barracks::InitEntity()
+{
+	entity_sprite = App->entity_manager->GetBarracksTexture();
+
+	is_selected = false;
+
+	created_unit_type = ENTITY_TYPE::UNKNOWN;
+
+	// --- SPRITE SECTIONS ---
+	barracks_rect_1 = { 0, 0, 106, 95 };
+	barracks_rect_2 = { 108, 0, 106, 95 };
+	barracks_rect = barracks_rect_1;
+
+	// --- CREATION TIMERS & VARS ---
+	scout_creation_time = 1.0f;
+	infantry_creation_time = 2.0f;
+	heavy_creation_time = 5.0f;
+
+	// --- POSITION AND SIZE ---
+	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
+
+	pixel_position.x = (float)world_position.x;
+	pixel_position.y = (float)world_position.y;
+
+	tiles_occupied.x = 2;
+	tiles_occupied.y = 2;
+
+	// --- STATS & BARS ---
+	unit_level = 1;
+
+	max_health = 600;
+	current_health = max_health;
+
+	if (App->entity_manager->CheckTileAvailability(tile_position, this))
+	{
+		AttachHealthbarToEntity();
+		AttachCreationBarToEntity();
+	}
+
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height);
+}
+
+void Barracks::AttachHealthbarToEntity()
+{
+	healthbar_position_offset.x = -6;																//Magic
+	healthbar_position_offset.y = -6;
+
+	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
+	healthbar_rect = { 618, 23, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
+
+	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+
+	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+}
+
+void Barracks::AttachCreationBarToEntity()
+{
+	creation_bar_position_offset.x = -6;															// Magic
+	creation_bar_position_offset.y = 16;
+
+	creation_bar_background_rect = { 618, 1, MAX_CREATION_BAR_WIDTH, 9 };
+	creation_bar_rect = { 618, 23, MAX_CREATION_BAR_WIDTH, 9 };
+
+	int creation_bar_position_x = (int)pixel_position.x + creation_bar_position_offset.x;
+	int creation_bar_position_y = (int)pixel_position.y + creation_bar_position_offset.y;
+
+	creation_bar = (UI_CreationBar*)App->gui_manager->CreateCreationBar(UI_ELEMENT::CREATIONBAR, creation_bar_position_x, creation_bar_position_y, false
+																		, &creation_bar_rect, &creation_bar_background_rect, this);
 }

@@ -559,6 +559,8 @@ void GameplayScene::DebugHUDSpawn()
 		{
 		case ENTITY_TYPE::TOWNHALL:
 			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
 			if (!HUD_townhall_bar->is_visible)
 			{
 				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
@@ -568,12 +570,22 @@ void GameplayScene::DebugHUDSpawn()
 			break;
 
 		case ENTITY_TYPE::ENEMY_TOWNHALL:
+			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
+			if (!HUD_enemy_townhall_bar->is_visible)
+			{
+				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
+				App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, true);
+			}
 
 			break;
 
 		case ENTITY_TYPE::BARRACKS:
 
 			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
 			if (!HUD_barracks_bar->is_visible)
 			{
 				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
@@ -584,11 +596,47 @@ void GameplayScene::DebugHUDSpawn()
 					HUD_townhall_bar->is_visible = !HUD_barracks_bar->is_visible;
 
 				}
+				if (HUD_enemy_townhall_bar->is_visible)
+				{
+					HUD_enemy_townhall_bar->is_visible = !HUD_barracks_bar->is_visible;
+
+				}
+				if (HUD_enemy_barracks_bar->is_visible)
+				{
+					HUD_enemy_barracks_bar->is_visible = !HUD_barracks_bar->is_visible;
+
+				}
 			}
 
 			break;
 
 		case ENTITY_TYPE::ENEMY_BARRACKS:
+
+			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
+			if (!HUD_enemy_barracks_bar->is_visible)
+			{
+				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
+				App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, true);
+
+				if (HUD_enemy_townhall_bar->is_visible)
+				{
+					HUD_enemy_townhall_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
+
+				}
+				if (HUD_townhall_bar->is_visible)
+				{
+					HUD_townhall_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
+
+				}
+				
+				if (HUD_barracks_bar->is_visible)
+				{
+					HUD_barracks_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
+
+				}
+			}
 
 			break;
 		}
@@ -602,6 +650,14 @@ void GameplayScene::DebugHUDSpawn()
 		if (HUD_barracks_bar->is_visible)
 		{
 			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+		}
+		if (HUD_enemy_townhall_bar->is_visible)
+		{
+			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
+		}
+		if (HUD_enemy_barracks_bar->is_visible)
+		{
+			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
 		}
 	}
 }
@@ -622,7 +678,10 @@ void GameplayScene::UnitSpawn()
 			if (CheckResources(20, 0))
 			{
 				townhall = (TownHall*)App->player->building_selected;
-				townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->unit_level);
+				
+				townhall->creation_queue.push_back(ENTITY_TYPE::GATHERER);
+
+				//townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->unit_level);
 			}
 			break;
 
@@ -630,7 +689,10 @@ void GameplayScene::UnitSpawn()
 			if (CheckResources(0, 10))
 			{
 				barrack = (Barracks*)App->player->building_selected;
-				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->unit_level);
+
+				barrack->creation_queue.push_back(ENTITY_TYPE::INFANTRY);
+
+				//barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->unit_level);
 			}
 			break;
 		}
@@ -773,6 +835,8 @@ void GameplayScene::LoadGuiElements()
 	LoadInGameOptionsMenu();
 	App->gui_manager->SetElementsVisibility(in_game_options_parent, false);
 
+
+
 	// HUD
 
 	// Up Bar
@@ -812,6 +876,8 @@ void GameplayScene::LoadGuiElements()
 	HUD_home_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 657, -4, true, true, false, this, nullptr
 		, &HUD_home_button_idle, &HUD_home_button_hover, &HUD_home_button_clicked);
 
+
+
 	//Down Bar
 
 	//Resource Bar
@@ -842,6 +908,7 @@ void GameplayScene::LoadGuiElements()
 	_TTF_Font* HUD_electricity_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_electricity_resource_string = "0";
 	HUD_electricity_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 634, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_electricity_resource_string);
+
 
 	//Townhall Bar
 	SDL_Rect HUD_townhall_bar_size = { 20, 209, 798, 160 };
@@ -1117,6 +1184,51 @@ void GameplayScene::LoadGuiElements()
 		, &HUD_upgrade_barracks_idle, &HUD_upgrade_barracks_hover, &HUD_upgrade_barracks_clicked);
 
 
+
+	//Enemy Down Bar
+	SDL_Rect HUD_enemy_townhall_bar_size = { 20, 209, 798, 160 };
+
+	HUD_enemy_townhall_bar = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 309, 560, HUD_enemy_townhall_bar_size, false, true, false, this, nullptr);
+
+	// Title Enemy Townhall
+	SDL_Rect HUD_enemy_text_townhall_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_enemy_townhall_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_enemy_title_townhall_string = "TOWNHALL";
+	HUD_enemy_title_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 360, 582, HUD_enemy_text_townhall_rect, HUD_enemy_townhall_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_townhall_bar, &HUD_enemy_title_townhall_string);
+
+	// Description Enemy Townhall
+	SDL_Rect HUD_enemy_text_townhall_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_enemy_townhall_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_enemy_townhall_descp_string = "The main building of the base.";
+	std::string HUD_enemy_townhall_descp_string2 = "Destroy It to win";
+	std::string HUD_enemy_townhall_descp_string3 = "the game.";
+	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 335, 635, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string);
+	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 362, 649, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string2);
+	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 379, 662, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string3);
+
+	// Barracks
+	//Enemy Barracks Bar
+	SDL_Rect HUD_enemy_barracks_bar_size = { 20, 209, 798, 160 };
+
+	HUD_enemy_barracks_bar = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 309, 560, HUD_enemy_barracks_bar_size, false, true, false, this, nullptr);
+
+	// Title Enemy Barracks
+	SDL_Rect HUD_enemy_text_barracks_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_enemy_barracks_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_enemy_title_barracks_string = "BARRACKS";
+	HUD_enemy_title_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 362, 582, HUD_enemy_text_barracks_rect, HUD_enemy_barracks_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_barracks_bar, &HUD_enemy_title_barracks_string);
+
+	// Description Barracks
+	SDL_Rect HUD_enemy_text_barracks_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_enemy_barracks_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_enemy_barracks_descp_string = "Trains different military units";
+	std::string HUD_enemy_barracks_descp_string2 = "depending on the number of";
+	std::string HUD_enemy_barracks_descp_string3 = "resources the enemy acquire.";
+	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 329, 635, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string);
+	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 341, 649, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string2);
+	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 359, 662, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string3);
+
+
 	// God_Mode
 	SDL_Rect HUD_text_God = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_God_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
@@ -1219,7 +1331,7 @@ void GameplayScene::UnitDebugKeys()
 {
 	if (App->player->god_mode)
 	{
-		if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
+		/*if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
 		{
 			// UNITS
 			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_STATE::KEY_DOWN)
@@ -1292,6 +1404,88 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_STATE::KEY_DOWN)
 			{
 				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)
+			{
+				App->entity_manager->resource_data += 300;
+				App->entity_manager->resource_electricity += 300;
+			}
+		}*/
+
+		if (App->pathfinding->IsWalkable(iPoint(App->player->cursor_tile.x, App->player->cursor_tile.y)))
+		{
+			// UNITS
+			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_STATE::KEY_DOWN)
+			{
+				(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_STATE::KEY_DOWN)
+			{
+				(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_STATE::KEY_DOWN)
+			{
+				(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_STATE::KEY_DOWN)
+			{
+				(Heavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::HEAVY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyHeavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_HEAVY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			//  BUILDINGS
+			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_STATE::KEY_DOWN)
+			{
+				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_STATE::KEY_DOWN)
+			{
+				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, App->player->cursor_tile.x, App->player->cursor_tile.y);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_N) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->cursor_tile.x, App->player->cursor_tile.y);
+			}
+
+			// RESOURCES
+			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
+			{
+				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_STATE::KEY_DOWN)
+			{
+				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)

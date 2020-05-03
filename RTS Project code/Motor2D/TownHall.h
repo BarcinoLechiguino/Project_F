@@ -24,6 +24,9 @@ public:
 public:
 	void InitEntity();
 	void AttachHealthbarToEntity();
+	void AttachCreationBarToEntity();
+
+	void StartUnitCreation();
 
 	void GenerateUnit(ENTITY_TYPE type, int level);
 
@@ -37,6 +40,9 @@ public:
 	int			unit_level;
 
 	float		gatherer_creation_time;
+
+	ENTITY_TYPE created_unit_type;
+	bool		creating_unit;
 };
 
 #endif // !__TOWNHALL_H__
