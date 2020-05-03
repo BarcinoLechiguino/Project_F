@@ -622,7 +622,10 @@ void GameplayScene::UnitSpawn()
 			if (CheckResources(20, 0))
 			{
 				townhall = (TownHall*)App->player->building_selected;
-				townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->unit_level);
+				
+				townhall->creation_queue.push_back(ENTITY_TYPE::GATHERER);
+
+				//townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->unit_level);
 			}
 			break;
 
@@ -630,7 +633,10 @@ void GameplayScene::UnitSpawn()
 			if (CheckResources(0, 10))
 			{
 				barrack = (Barracks*)App->player->building_selected;
-				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->unit_level);
+
+				barrack->creation_queue.push_back(ENTITY_TYPE::INFANTRY);
+
+				//barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->unit_level);
 			}
 			break;
 		}

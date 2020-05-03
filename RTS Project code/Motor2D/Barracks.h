@@ -24,6 +24,9 @@ public:
 public:
 	void InitEntity();
 	void AttachHealthbarToEntity();
+	void AttachCreationBarToEntity();
+
+	void StartUnitCreation();
 
 	void GenerateUnit(ENTITY_TYPE type, int level);
 
@@ -36,11 +39,12 @@ public:
 
 	int			unit_level;
 
-	ENTITY_TYPE created_unit_type;
-
 	float		scout_creation_time;
 	float		infantry_creation_time;
 	float		heavy_creation_time;
+
+	ENTITY_TYPE created_unit_type;
+	bool		creating_unit;
 };
 
 #endif // !__BARRACKS_H__

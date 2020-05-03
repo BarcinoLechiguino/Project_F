@@ -53,7 +53,7 @@
     </camera>
 
     <game_controller>
-      <cursor_speed x="700.0f" y="700.0f"/>
+      <cursor_speed x="500.0f" y="500.0f"/>
     </game_controller>
 
     <cursor_sections>

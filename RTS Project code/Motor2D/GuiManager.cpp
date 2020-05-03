@@ -236,12 +236,25 @@ UI* GuiManager::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbo
 	return elem;
 }
 
-UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_unit
-								, bool is_creation_bar, Module* listener, UI* parent)
+UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_entity)
 {
 	UI* elem = nullptr;
 
-	elem = new UI_Healthbar(element, x, y, is_visible, healthbar, background, attached_unit, is_creation_bar, listener, parent);
+	elem = new UI_Healthbar(element, x, y, is_visible, healthbar, background, attached_entity);
+
+	if (elem != nullptr)
+	{
+		elements.push_back(elem);
+	}
+
+	return elem;
+}
+
+UI* GuiManager::CreateCreationBar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* creation_bar, SDL_Rect* background, Entity* attached_entity)
+{
+	UI* elem = nullptr;
+
+	elem = new UI_CreationBar(element, x, y, is_visible, creation_bar, background, attached_entity);
 
 	if (elem != nullptr)
 	{

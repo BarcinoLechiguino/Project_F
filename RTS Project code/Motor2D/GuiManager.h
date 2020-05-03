@@ -61,10 +61,9 @@ public:
 					, bool drag_y_axis = true, bool inverted_scrolling = false, bool is_visible = true, bool is_interactible = true, bool is_draggable = false, Module* listener = nullptr
 					, UI* parent = nullptr, SDL_Rect* scroll_mask = nullptr, iPoint mask_offset = iPoint(0, 0), bool empty_elements = false);
 
-	UI* CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* healthbar = nullptr, SDL_Rect* background = nullptr
-					, Entity* attached_unit = nullptr, bool is_creation_bar = false, Module* listener = nullptr, UI* parent = nullptr);
+	UI* CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* healthbar = nullptr, SDL_Rect* background = nullptr, Entity* attached_entity = nullptr);
 
-	UI* CreateCreationBar();
+	UI* CreateCreationBar(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* creation_bar = nullptr, SDL_Rect* background = nullptr, Entity* attached_entity = nullptr);
 
 	UI* CreateCursor(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* idle = nullptr, SDL_Rect* clicked_idle = nullptr
 					, SDL_Rect* hover_ally = nullptr, SDL_Rect* hover_enemy = nullptr, SDL_Rect* hover_resource = nullptr, SDL_Rect* hover_UI = nullptr
