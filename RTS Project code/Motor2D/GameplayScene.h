@@ -217,6 +217,17 @@ public:
 	std::string				HUD_data_resource_string;
 	std::string				HUD_electricity_resource_string;
 
+	//Enemy HUD 
+	// Townhall
+	UI_Image*			    HUD_enemy_townhall_bar;
+	UI_Text*				HUD_enemy_title_townhall;
+	UI_Text*				HUD_enemy_description_townhall;
+
+	// Barracks
+	UI_Image*				HUD_enemy_barracks_bar;
+	UI_Text*				HUD_enemy_title_barracks;
+	UI_Text*				HUD_enemy_description_barracks;
+
 private:
 
 	//Audio
