@@ -56,14 +56,14 @@ bool Gatherer::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x + 10;
 	selection_collider.y = (int)pixel_position.y + 10;
 
-	if (doLogic)
-	{
-		if (target == nullptr && !path_full)
-		{
-			//SetGatheringTarget(App->player->mouse_tile);
-			SetGatheringTarget(App->player->cursor_tile);
-		}
-	}
+	//if (doLogic)
+	//{
+	//	if (target == nullptr && !path_full)
+	//	{
+	//		//SetGatheringTarget(App->player->mouse_tile);
+	//		SetGatheringTarget(App->player->cursor_tile);
+	//	}
+	//}
 
 	if (target != nullptr)
 	{

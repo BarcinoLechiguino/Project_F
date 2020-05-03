@@ -65,6 +65,7 @@ bool Player::Update(float dt)
 	
 	//CameraController(dt);
 	CameraController(App->GetUnpausableDt());
+	
 
 	DragSelection();
 

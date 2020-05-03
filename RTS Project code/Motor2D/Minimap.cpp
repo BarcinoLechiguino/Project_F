@@ -7,6 +7,7 @@
 #include "Input.h"
 #include "EntityManager.h"
 #include "Entity.h"
+#include "Player.h"
 
 #include "Brofiler/Brofiler.h"
 
@@ -84,18 +85,22 @@ bool Minimap::Update(float dt)
 		CreateTexture();
 	}
 
-	if (App->map->map_loaded == true) {
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)
-		{
-			int map_x, map_y;
-
-			if (MinimapCoords(map_x, map_y))
+	if (App->map->map_loaded == true) 
+	{
+		//if (!App->player->is_selecting)
+		//{
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)
 			{
-				// Assign to the center of the camera, the coordinates "map_x" and "map_y"
-				App->render->camera.x = -map_x + App->win->width / 2;
-				App->render->camera.y = -map_y + App->win->height / 2;
+				int map_x, map_y;
+
+				if (MinimapCoords(map_x, map_y))
+				{
+					// Assign to the center of the camera, the coordinates "map_x" and "map_y"
+					App->render->camera.x = -map_x + App->win->width / 2;
+					App->render->camera.y = -map_y + App->win->height / 2;
+				}
 			}
-		}
+		//}
 	}
 
 	return true;

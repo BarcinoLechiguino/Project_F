@@ -177,7 +177,7 @@ void UI_Cursor::CleanUp()
 // ---  MOUSE CURSOR EVENTS --
 void UI_Cursor::CheckIdleEvent(iPoint mouse_tile_position)
 {
-	if (!App->gui_manager->VisibleElementIsUnderCursor() && App->entity_manager->GetEntityAt(mouse_tile_position) == nullptr)
+	if (!App->gui_manager->VisibleElementIsUnderCursor() && App->entity_manager->GetEntityAt(mouse_tile_position) == nullptr)//crash
 	{
 		current_section = idle;
 		ui_event = UI_EVENT::IDLE;
