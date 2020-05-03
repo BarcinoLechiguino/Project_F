@@ -59,6 +59,9 @@ public:
 	virtual void SetGatheringTarget(const iPoint& tile_position);				// Method that will set as a target the selected Resource
 	virtual void PathToGatheringTarget();										// Method that will define the path to the target
 
+	virtual Entity* GetTarget();
+	virtual int GetAttackRange();
+
 	bool GiveNewTargetTile(const iPoint& new_target_tile);
 	void ChangeOccupiedTile(iPoint new_occupied_tile);
 	

@@ -67,13 +67,12 @@ bool Gatherer::Update(float dt, bool doLogic)
 	if (target != nullptr)
 	{
 		//path_full = false;
-		if (target != nullptr)
+		
+		if (TargetIsInRange())
 		{
-			if (TargetIsInRange())
-			{
-				GatherResource();
-			}
+			GatherResource();
 		}
+		
 	}
 
 	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
@@ -142,7 +141,7 @@ void Gatherer::InitEntity()
 
 	attack_damage = 10; //temporary use of these variables to check if it works
 
-	attack_range = 1;
+	attack_range = 2;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
@@ -214,17 +213,13 @@ bool Gatherer::TargetIsInRange()
 {
 	if (target != nullptr)
 	{
-		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
-
-		if (distance <= attack_range)
+		if (App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range )
 		{
 			return true;
 		}
 	}
-
 	return false;
 }
-
 
 void Gatherer::SetGatheringTarget(const iPoint& tile_position)
 {
@@ -234,7 +229,7 @@ void Gatherer::SetGatheringTarget(const iPoint& tile_position)
 	{
 		if (App->entity_manager->IsResource((*item)))
 		{
-			if (App->entity_manager->GetEntityPos(*item) == tile_position)
+			if (App->pathfinding->DistanceInTiles(tile_position, (*item)->tile_position) <= attack_range)
 			{
 				target = (*item);
 				break;
@@ -251,7 +246,7 @@ void Gatherer::PathToGatheringTarget()
 	{
 		tmp.push_back(entity_path[i]);
 
-		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+		if (App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range)
 		{
 			entity_path.clear();
 
@@ -304,6 +299,16 @@ void Gatherer::GatherResource()
 			accumulated_cooldown = 0.0f;
 		}
 	}
+}
+
+Entity* Gatherer::GetTarget()
+{
+	return target;
+}
+
+int Gatherer::GetAttackRange()
+{
+	return attack_range;
 }
 
 void Gatherer::OnCollision(Collider* C1, Collider* C2)

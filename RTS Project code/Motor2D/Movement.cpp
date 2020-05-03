@@ -61,8 +61,10 @@ void Movement::OrderUnitsToMove(iPoint tile, std::vector<Dynamic_Object*> units_
 			{
 				(*item)->target = nullptr;
 			}
+
 			App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
 		}
+
 		App->pathfinding->MoveOrder(tile, units_selected);							//Gives units targets around main target
 	}
 	else
@@ -101,7 +103,7 @@ void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> unit
 						App->pathfinding->ChangeWalkability(ally_units[i]->occupied_tile, ally_units[i], WALKABLE);
 					}
 
-					App->pathfinding->MoveOrder(target->tile_position, ally_units);
+					App->pathfinding->AttackOrder(target->tile_position, ally_units);
 
 					ally_units.clear();
 				}
@@ -118,16 +120,16 @@ void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> unit
 						if (App->entity_manager->IsGatherer(units_selected[i]))
 						{
 							gatherers.push_back(units_selected[i]);
+
+							units_selected[i]->target = target;
+							App->pathfinding->ChangeWalkability(units_selected[i]->occupied_tile, units_selected[i], WALKABLE);
 						}
 					}
 
-					for (int i = 0; i < (int)gatherers.size(); ++i)
+					if ( gatherers.size()  !=0)
 					{
-						gatherers[i]->target = target;
-						App->pathfinding->ChangeWalkability(gatherers[i]->occupied_tile, gatherers[i], WALKABLE);
+						App->pathfinding->AttackOrder(target->tile_position, gatherers);							//Gives units targets around main target
 					}
-
-					App->pathfinding->MoveOrder(target->tile_position, gatherers);							//Gives units targets around main target
 
 					gatherers.clear();
 				}
