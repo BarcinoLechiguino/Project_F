@@ -43,7 +43,6 @@ public:
 	int						tile_width;
 	int						tile_height;
 
-	//std::vector<Entity*>	creation_queue;
 	std::vector<ENTITY_TYPE>	creation_queue;
 
 	UI_CreationBar*			creation_bar;

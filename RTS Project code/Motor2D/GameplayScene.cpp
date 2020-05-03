@@ -61,21 +61,7 @@ GameplayScene::~GameplayScene()
 // Called before render is available
 bool GameplayScene::Awake(pugi::xml_node& config)
 {
-	bool ret = true;
-
-	/*for (pugi::xml_node map = config.child("map_name"); map; map = map.next_sibling("map_name"))
-	{
-		std::string data;
-
-		data = (map.attribute("name").as_string());
-		map_names.push_back(data);
-	}*/
-
-	music_path = (config.child("audio").attribute("path").as_string());
-	music_path2 = (config.child("audio2").attribute("path").as_string());
-	music_path3 = (config.child("audio3").attribute("path").as_string());
-
-	return ret;
+	return true;
 }
 
 // Called before the first frame
@@ -83,11 +69,7 @@ bool GameplayScene::Start()
 {
 	bool ret = true;
 
-	LOG("Gameplay scene start");
-
 	InitScene();
-
-	LOG("Finished Gameplay scene start");
 
 	return ret;
 }
@@ -119,12 +101,6 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	{
 		App->map->DataMapDebug();																// Will print on screen the debug tiles of the walkability map and the entity map.
 	}
-
-	if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_STATE::KEY_DOWN)
-	{
-		App->win->ToggleFullscreen();
-	}
-
 
 	if (App->map->pathfinding_meta_debug)
 	{
@@ -162,8 +138,8 @@ bool GameplayScene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_LSHIFT) == KEY_STATE::KEY_DOWN)
 	{
-		App->render->camera.x = 1550;
-		App->render->camera.y = -600;
+		App->render->camera.x = App->player->original_camera_position.x;
+		App->render->camera.y = App->player->original_camera_position.y;
 	}
 
 	CheckForWinLose();
@@ -219,6 +195,39 @@ bool GameplayScene::CleanUp()
 	return true;
 }
 
+// --------------- INITIALIZING THE SCENE ---------------
+void GameplayScene::InitScene()
+{
+	bool ret = true;
+
+	transition_to_main_menu_scene = false;
+	transition_to_win_scene = false;
+	transition_to_lose_scene = false;
+
+	App->entity_manager->resource_data = 0;
+	App->entity_manager->resource_electricity = 0;
+
+	App->render->camera.x = App->player->original_camera_position.x;
+	App->render->camera.y = App->player->original_camera_position.y;
+
+	ret = App->map->Load("New_Tilesete_Map.tmx");
+
+	//test background
+	background_rect = { 0, 0, 1280, 720 };
+	background_texture = App->tex->Load("maps/hacker_background.png");
+
+	LoadGuiElements();
+
+	path_debug_tex = App->tex->Load("maps/path_tile.png");
+	occupied_debug = App->tex->Load("maps/occupied_tile.png");
+	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
+
+	//App->audio->PlayMusic(App->scene->music_path2.c_str());
+	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
+	App->audio->PlayMusic(inGame_song, 0.0f);
+}
+
+// --- SCENE TRANSITIONS
 void GameplayScene::ExecuteTransition()
 {
 	if (transition_to_main_menu_scene)
@@ -249,249 +258,6 @@ void GameplayScene::ExecuteTransition()
 		}
 
 		App->transition_manager->CreateSlide(SCENES::LOSE_SCENE, 0.5f, true, true, false, false, Black);
-	}
-}
-
-void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
-{
-	// In_game menu
-
-	if (element == in_game_continue_button && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Continue
-		if (App->pause)
-		{
-			App->pause = false;
-		}
-
-		App->gui_manager->SetElementsVisibility(in_game_background, false);
-		App->audio->PlayFx(App->gui_manager->new_game_fx, 0);
-	}
-
-	if (element == in_game_options_button && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Options
-		App->audio->PlayFx(App->gui_manager->options_fx, 0);
-
-		App->gui_manager->SetElementsVisibility(in_game_continue_button, false);							// Deactivate Pause Menu
-		App->gui_manager->SetElementsVisibility(in_game_options_button, false);
-		App->gui_manager->SetElementsVisibility(in_game_exit_button, false);
-		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, false);
-		App->gui_manager->SetElementsVisibility(in_game_title_text, false);
-
-		App->gui_manager->SetElementsVisibility(in_game_options_parent, true);
-	}
-
-	if (element == in_game_back_button && ui_event == UI_EVENT::UNCLICKED)
-	{
-		App->audio->PlayFx(App->gui_manager->back_fx, 0);
-
-		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu
-		App->gui_manager->SetElementsVisibility(in_game_options_button, true);
-		App->gui_manager->SetElementsVisibility(in_game_exit_button, true);
-		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, true);
-		App->gui_manager->SetElementsVisibility(in_game_title_text, true);
-
-		App->gui_manager->SetElementsVisibility(in_game_options_parent, false);
-	}
-
-	if (element == in_game_back_to_menu && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Back to menu
-		App->audio->PlayFx(App->gui_manager->exit_fx, 0);
-
-		transition_to_main_menu_scene = true;
-	}
-
-	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
-	{	
-		// Exit
-		escape = false;
-	}
-
-
-	// HUD
-	if (element == HUD_group_button && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Group
-		App->player->SelectAllUnits();
-		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
-	}
-
-	if (element == HUD_pause_button && ui_event == UI_EVENT::UNCLICKED)
-	{
-		if (!App->transition_manager->is_transitioning)
-		{
-			// Pause
-			App->pause = !App->pause;
-			App->audio->PlayFx(App->gui_manager->standard_fx, 0);
-			//App->gui->SetElementsVisibility(HUD_pause_button, false);			
-			//App->gui->SetElementsVisibility(HUD_play_button, true);	
-			//element->ui_event = UI_EVENT::IDLE;
-		}
-	}
-	
-	//if (element == HUD_play_button && ui_event == UI_EVENT::UNCLICKED)
-	//{
-	//	// Play
-	//	App->pause = false;
-	//	App->audio->PlayFx(App->gui->standard_fx, 0);
-	//	App->gui->SetElementsVisibility(HUD_play_button, false);
-	//	App->gui->SetElementsVisibility(HUD_pause_button, true);
-	//	
-	//}
-
-	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Home
-		App->render->camera.x = 1550;
-		App->render->camera.y = -600;
-
-		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
-	}
-
-
-	// Townhall bar
-
-	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Recruit Unit
-		UnitSpawn();
-		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
-	}
-
-	if (element == HUD_unit_townhall && ui_event == UI_EVENT::HOVER)
-	{
-		// Price to recruit
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, true);
-		App->gui_manager->SetElementsVisibility(HUD_title_townhall, false);
-		App->gui_manager->SetElementsVisibility(HUD_title_gatherer, true);
-	}
-	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNHOVER)
-	{
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, false);
-		App->gui_manager->SetElementsVisibility(HUD_title_townhall, true);
-		App->gui_manager->SetElementsVisibility(HUD_title_gatherer, false);
-	}
-
-	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Upgrade Unit
-		UnitUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
-	}
-
-	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::HOVER)
-	{
-		// Price to upgrade unit
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall_gatherer, true);
-	}
-	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::UNHOVER)
-	{
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall_gatherer, false);
-	}
-
-	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Upgrade Townhall
-		BuildingUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
-	}
-
-	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::HOVER)
-	{
-		// Price to upgrade townhall
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_townhall, true);
-	}
-	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNHOVER)
-	{
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_townhall, false);
-	}
-
-
-
-	// Barracks Bar
-
-	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Recruit Unit
-		UnitSpawn();
-		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
-	}
-
-	if (element == HUD_unit_barracks && ui_event == UI_EVENT::HOVER)
-	{
-		// Price to recruit
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, true);
-		App->gui_manager->SetElementsVisibility(HUD_title_barracks, false);
-		App->gui_manager->SetElementsVisibility(HUD_title_infantry, true);
-	}
-	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNHOVER)
-	{
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, false);
-		App->gui_manager->SetElementsVisibility(HUD_title_barracks, true);
-		App->gui_manager->SetElementsVisibility(HUD_title_infantry, false);
-	}
-
-
-	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Upgrade Unit
-		UnitUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
-	}
-
-	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::HOVER)
-	{
-		// Price to upgrade unit
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks_infantry, true);
-	}
-	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::UNHOVER)
-	{
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks_infantry, false);
-	}
-
-	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
-	{
-		// Upgrade Barracks
-		// Code to upgrade barracks
-		BuildingUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
-	}
-
-	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::HOVER)
-	{
-		// Price to upgrade townhall
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_barracks, true);
-	}
-	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNHOVER)
-	{
-		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_barracks, false);
-	}
-}
-
-void GameplayScene::AdjustVolumeWithScrollbar()
-{
-	// --- Audio Scrollbars
-	if (in_game_music_scrollbar != nullptr)
-	{
-		float local_thumb_pos = (float)in_game_music_scrollbar->GetThumbHitbox().x - (float)in_game_music_scrollbar->GetHitbox().x;
-
-		float offset = local_thumb_pos / in_game_music_scrollbar->GetHitbox().w;											// Value from 0.0f to 1.0f
-
-
-		App->audio->volume = offset * 100;																					// Will make the offset a valid value to modify the volume.
-	}
-
-	if (in_game_sfx_scrollbar != nullptr)
-	{
-		float local_thumb_pos = (float)in_game_sfx_scrollbar->GetThumbHitbox().x - (float)in_game_sfx_scrollbar->GetHitbox().x;
-
-		float start_offset = local_thumb_pos / in_game_sfx_scrollbar->GetHitbox().w;										// Value from 0.0f to 1.0f
-
-		uint offset = (int)floor(start_offset * 100);																			// Will make the offset a valid value to modify the volume.					
-
-		App->audio->volume_fx = offset;
 	}
 }
 
@@ -535,7 +301,9 @@ void GameplayScene::CheckForWinLose()
 		bool exists_allyunits = false;
 		for (int i = 0; i < (int)App->entity_manager->entities.size(); ++i)
 		{
-			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::BARRACKS || App->entity_manager->entities[i]->type == ENTITY_TYPE::INFANTRY || App->entity_manager->entities[i]->type == ENTITY_TYPE::GATHERER)
+			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::BARRACKS 
+				|| App->entity_manager->entities[i]->type == ENTITY_TYPE::INFANTRY 
+				|| App->entity_manager->entities[i]->type == ENTITY_TYPE::GATHERER)
 			{
 				exists_allyunits = true;
 				break;
@@ -549,152 +317,157 @@ void GameplayScene::CheckForWinLose()
 	}
 }
 
-// ------------------- ENTITY HUD METHODS -------------------
-
-void GameplayScene::DebugHUDSpawn()
-{
-	if (App->player->building_selected != nullptr)
-	{
-		switch (App->player->building_selected->type)
-		{
-		case ENTITY_TYPE::TOWNHALL:
-			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
-			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
-			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
-			if (!HUD_townhall_bar->is_visible)
-			{
-				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
-				App->gui_manager->SetElementsVisibility(HUD_townhall_bar, true);
-			}
-
-			break;
-
-		case ENTITY_TYPE::ENEMY_TOWNHALL:
-			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
-			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
-			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
-			if (!HUD_enemy_townhall_bar->is_visible)
-			{
-				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
-				App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, true);
-			}
-
-			break;
-
-		case ENTITY_TYPE::BARRACKS:
-
-			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
-			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
-			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
-			if (!HUD_barracks_bar->is_visible)
-			{
-				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
-				App->gui_manager->SetElementsVisibility(HUD_barracks_bar, true);
-
-				if (HUD_townhall_bar->is_visible)
-				{
-					HUD_townhall_bar->is_visible = !HUD_barracks_bar->is_visible;
-
-				}
-				if (HUD_enemy_townhall_bar->is_visible)
-				{
-					HUD_enemy_townhall_bar->is_visible = !HUD_barracks_bar->is_visible;
-
-				}
-				if (HUD_enemy_barracks_bar->is_visible)
-				{
-					HUD_enemy_barracks_bar->is_visible = !HUD_barracks_bar->is_visible;
-
-				}
-			}
-
-			break;
-
-		case ENTITY_TYPE::ENEMY_BARRACKS:
-
-			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
-			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
-			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
-			if (!HUD_enemy_barracks_bar->is_visible)
-			{
-				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
-				App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, true);
-
-				if (HUD_enemy_townhall_bar->is_visible)
-				{
-					HUD_enemy_townhall_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
-
-				}
-				if (HUD_townhall_bar->is_visible)
-				{
-					HUD_townhall_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
-
-				}
-				
-				if (HUD_barracks_bar->is_visible)
-				{
-					HUD_barracks_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
-
-				}
-			}
-
-			break;
-		}
-	}
-	else
-	{
-		if (HUD_townhall_bar->is_visible)
-		{
-			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
-		}
-		if (HUD_barracks_bar->is_visible)
-		{
-			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
-		}
-		if (HUD_enemy_townhall_bar->is_visible)
-		{
-			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
-		}
-		if (HUD_enemy_barracks_bar->is_visible)
-		{
-			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
-		}
-	}
-}
-
 // ------------------- ENTITY SPAWN METHODS -------------------
-
-void GameplayScene::UnitSpawn()
+void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 {
-	if (App->player->building_selected != nullptr)
+	if (App->player->building_selected != nullptr)														// Safety check
 	{
 		TownHall* townhall = nullptr;
 		Barracks* barrack = nullptr;
 
-		switch (App->player->building_selected->type)
+		switch (type)
 		{
-		case ENTITY_TYPE::TOWNHALL:
+		case ENTITY_TYPE::GATHERER:
 
 			if (CheckResources(20, 0))
 			{
 				townhall = (TownHall*)App->player->building_selected;
-				
-				townhall->creation_queue.push_back(ENTITY_TYPE::GATHERER);
 
-				//townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->unit_level);
+				townhall->creation_queue.push_back(ENTITY_TYPE::GATHERER);
 			}
 			break;
 
-		case ENTITY_TYPE::BARRACKS:
+		case ENTITY_TYPE::SCOUT:
+			if (CheckResources(0, 10))
+			{
+				barrack = (Barracks*)App->player->building_selected;
+
+				barrack->creation_queue.push_back(ENTITY_TYPE::SCOUT);
+			}
+			break;
+
+		case ENTITY_TYPE::INFANTRY:
 			if (CheckResources(0, 10))
 			{
 				barrack = (Barracks*)App->player->building_selected;
 
 				barrack->creation_queue.push_back(ENTITY_TYPE::INFANTRY);
-
-				//barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->unit_level);
 			}
 			break;
+
+		case ENTITY_TYPE::HEAVY:
+			if (CheckResources(0, 50))
+			{
+				barrack = (Barracks*)App->player->building_selected;
+
+				barrack->creation_queue.push_back(ENTITY_TYPE::HEAVY);
+
+			}
+			break;
+		}
+	}
+}
+
+void GameplayScene::SpawnEnemyUnit(ENTITY_TYPE type)
+{
+	if (App->player->building_selected != nullptr)														// Safety check
+	{
+		EnemyTownHall* enemy_townhall = nullptr;
+		EnemyBarracks* enemy_barrack = nullptr;
+
+		switch (type)
+		{
+		case ENTITY_TYPE::ENEMY_GATHERER:
+
+			if (CheckResources(20, 0))
+			{
+				enemy_townhall = (EnemyTownHall*)App->player->building_selected;
+
+				enemy_townhall->creation_queue.push_back(ENTITY_TYPE::ENEMY_GATHERER);
+			}
+			break;
+
+		case ENTITY_TYPE::ENEMY_SCOUT:
+			if (CheckResources(0, 10))
+			{
+				enemy_barrack = (EnemyBarracks*)App->player->building_selected;
+
+				enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_SCOUT);
+			}
+			break;
+
+		case ENTITY_TYPE::ENEMY_INFANTRY:
+			if (CheckResources(0, 10))
+			{
+				enemy_barrack = (EnemyBarracks*)App->player->building_selected;
+
+				enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_INFANTRY);
+			}
+			break;
+
+		case ENTITY_TYPE::ENEMY_HEAVY:
+			if (CheckResources(0, 50))
+			{
+				enemy_barrack = (EnemyBarracks*)App->player->building_selected;
+
+				enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_HEAVY);
+
+			}
+			break;
+		}
+	}
+}
+
+void GameplayScene::SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount)
+{
+	EnemyTownHall* enemy_townhall = nullptr;
+	EnemyBarracks* enemy_barracks = nullptr;
+
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
+
+	for (; item < App->entity_manager->entities.end(); ++item)									// Finding Both the enemy townhall and the enemy barracks.
+	{
+		if (enemy_townhall == nullptr || enemy_barracks == nullptr)
+		{
+			if ((*item)->type == ENTITY_TYPE::ENEMY_TOWNHALL)
+			{
+				enemy_townhall = (EnemyTownHall*)(*item);
+			}
+
+			if ((*item)->type == ENTITY_TYPE::ENEMY_BARRACKS && enemy_barracks == nullptr)			// COULD THERE BE MULTIPLE ENEMY BARRACKS?
+			{
+				enemy_barracks = (EnemyBarracks*)(*item);
+			}
+		}
+		else
+		{
+			break;
+		}
+	}
+
+	if (enemy_townhall != nullptr)
+	{
+		for (int i = 0; i < gatherer_amount; ++i)
+		{
+			enemy_townhall->creation_queue.push_back(ENTITY_TYPE::ENEMY_GATHERER);
+		}
+	}
+
+	if (enemy_barracks != nullptr)
+	{
+		for (int i = 0; i < scout_amount; ++i)
+		{
+			enemy_barracks->creation_queue.push_back(ENTITY_TYPE::ENEMY_SCOUT);
+		}
+
+		for (int i = 0; i < infantry_amount; ++i)
+		{
+			enemy_barracks->creation_queue.push_back(ENTITY_TYPE::ENEMY_INFANTRY);
+		}
+
+		for (int i = 0; i < heavy_amount; ++i)
+		{
+			enemy_barracks->creation_queue.push_back(ENTITY_TYPE::ENEMY_HEAVY);
 		}
 	}
 }
@@ -1282,48 +1055,360 @@ void GameplayScene::LoadInGameOptionsMenu()
 		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
 }
 
-// --------------- INITIALIZING THE SCENE ---------------
-void GameplayScene::InitScene()
+void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
-	bool ret = true;
+	// In_game menu
 
-	transition_to_main_menu_scene = false;
-	transition_to_win_scene = false;
-	transition_to_lose_scene = false;
+	if (element == in_game_continue_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Continue
+		if (App->pause)
+		{
+			App->pause = false;
+		}
 
-	App->entity_manager->resource_data = 0;
-	App->entity_manager->resource_electricity = 0;
+		App->gui_manager->SetElementsVisibility(in_game_background, false);
+		App->audio->PlayFx(App->gui_manager->new_game_fx, 0);
+	}
 
-	App->render->camera.x = 1550;
-	App->render->camera.y = -600;
+	if (element == in_game_options_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Options
+		App->audio->PlayFx(App->gui_manager->options_fx, 0);
 
-	to_end = false;
+		App->gui_manager->SetElementsVisibility(in_game_continue_button, false);							// Deactivate Pause Menu
+		App->gui_manager->SetElementsVisibility(in_game_options_button, false);
+		App->gui_manager->SetElementsVisibility(in_game_exit_button, false);
+		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, false);
+		App->gui_manager->SetElementsVisibility(in_game_title_text, false);
 
-	LOG("Started loading map");
+		App->gui_manager->SetElementsVisibility(in_game_options_parent, true);
+	}
 
-	ret = App->map->Load("New_Tilesete_Map.tmx");
+	if (element == in_game_back_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		App->audio->PlayFx(App->gui_manager->back_fx, 0);
 
-	LOG("Finished loading map");
+		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu
+		App->gui_manager->SetElementsVisibility(in_game_options_button, true);
+		App->gui_manager->SetElementsVisibility(in_game_exit_button, true);
+		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, true);
+		App->gui_manager->SetElementsVisibility(in_game_title_text, true);
 
-	//test background
-	background_rect = { 0, 0, 1280, 720 };
-	background_texture = App->tex->Load("maps/hacker_background.png");
+		App->gui_manager->SetElementsVisibility(in_game_options_parent, false);
+	}
 
-	LOG("Started loading gui");
+	if (element == in_game_back_to_menu && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Back to menu
+		App->audio->PlayFx(App->gui_manager->exit_fx, 0);
 
-	LoadGuiElements();
+		transition_to_main_menu_scene = true;
+	}
 
-	LOG("Finished loading gui");
+	if (element == in_game_exit_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Exit
+		escape = false;
+	}
 
-	path_debug_tex = App->tex->Load("maps/path_tile.png");
-	occupied_debug = App->tex->Load("maps/occupied_tile.png");
-	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
 
-	//App->audio->PlayMusic(App->scene->music_path2.c_str());
-	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
-	App->audio->PlayMusic(inGame_song, 0.0f);
+	// HUD
+	if (element == HUD_group_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Group
+		App->player->SelectAllUnits();
+		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+	}
 
-	LOG("End of start");
+	if (element == HUD_pause_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		if (!App->transition_manager->is_transitioning)
+		{
+			// Pause
+			App->pause = !App->pause;
+			App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+			//App->gui->SetElementsVisibility(HUD_pause_button, false);			
+			//App->gui->SetElementsVisibility(HUD_play_button, true);	
+			//element->ui_event = UI_EVENT::IDLE;
+		}
+	}
+
+	//if (element == HUD_play_button && ui_event == UI_EVENT::UNCLICKED)
+	//{
+	//	// Play
+	//	App->pause = false;
+	//	App->audio->PlayFx(App->gui->standard_fx, 0);
+	//	App->gui->SetElementsVisibility(HUD_play_button, false);
+	//	App->gui->SetElementsVisibility(HUD_pause_button, true);
+	//	
+	//}
+
+	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Home
+		App->render->camera.x = 1550;
+		App->render->camera.y = -600;
+
+		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+	}
+
+
+	// Townhall bar
+
+	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Recruit Unit
+		SpawnAllyUnit(ENTITY_TYPE::GATHERER);
+
+		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
+	}
+
+	if (element == HUD_unit_townhall && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to recruit
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, true);
+		App->gui_manager->SetElementsVisibility(HUD_title_townhall, false);
+		App->gui_manager->SetElementsVisibility(HUD_title_gatherer, true);
+	}
+	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, false);
+		App->gui_manager->SetElementsVisibility(HUD_title_townhall, true);
+		App->gui_manager->SetElementsVisibility(HUD_title_gatherer, false);
+	}
+
+	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Upgrade Unit
+		UnitUpgrade();
+		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+	}
+
+	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to upgrade unit
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall_gatherer, true);
+	}
+	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_unit_townhall_gatherer, false);
+	}
+
+	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Upgrade Townhall
+		BuildingUpgrade();
+		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+	}
+
+	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to upgrade townhall
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_townhall, true);
+	}
+	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_townhall, false);
+	}
+
+
+
+	// Barracks Bar
+
+	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Recruit Unit
+		SpawnAllyUnit(ENTITY_TYPE::INFANTRY);
+		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
+	}
+
+	if (element == HUD_unit_barracks && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to recruit
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, true);
+		App->gui_manager->SetElementsVisibility(HUD_title_barracks, false);
+		App->gui_manager->SetElementsVisibility(HUD_title_infantry, true);
+	}
+	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, false);
+		App->gui_manager->SetElementsVisibility(HUD_title_barracks, true);
+		App->gui_manager->SetElementsVisibility(HUD_title_infantry, false);
+	}
+
+
+	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Upgrade Unit
+		UnitUpgrade();
+		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+	}
+
+	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to upgrade unit
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks_infantry, true);
+	}
+	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_unit_barracks_infantry, false);
+	}
+
+	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNCLICKED)
+	{
+		// Upgrade Barracks
+		// Code to upgrade barracks
+		BuildingUpgrade();
+		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+	}
+
+	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::HOVER)
+	{
+		// Price to upgrade townhall
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_barracks, true);
+	}
+	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNHOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_barracks, false);
+	}
+}
+
+// --- ENTITY HUD METHODS ---
+void GameplayScene::DebugHUDSpawn()
+{
+	if (App->player->building_selected != nullptr)
+	{
+		switch (App->player->building_selected->type)
+		{
+		case ENTITY_TYPE::TOWNHALL:
+			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
+			if (!HUD_townhall_bar->is_visible)
+			{
+				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
+				App->gui_manager->SetElementsVisibility(HUD_townhall_bar, true);
+			}
+
+			break;
+
+		case ENTITY_TYPE::ENEMY_TOWNHALL:
+			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
+			if (!HUD_enemy_townhall_bar->is_visible)
+			{
+				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
+				App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, true);
+			}
+
+			break;
+
+		case ENTITY_TYPE::BARRACKS:
+
+			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
+			if (!HUD_barracks_bar->is_visible)
+			{
+				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
+				App->gui_manager->SetElementsVisibility(HUD_barracks_bar, true);
+
+				if (HUD_townhall_bar->is_visible)
+				{
+					HUD_townhall_bar->is_visible = !HUD_barracks_bar->is_visible;
+
+				}
+				if (HUD_enemy_townhall_bar->is_visible)
+				{
+					HUD_enemy_townhall_bar->is_visible = !HUD_barracks_bar->is_visible;
+
+				}
+				if (HUD_enemy_barracks_bar->is_visible)
+				{
+					HUD_enemy_barracks_bar->is_visible = !HUD_barracks_bar->is_visible;
+
+				}
+			}
+
+			break;
+
+		case ENTITY_TYPE::ENEMY_BARRACKS:
+
+			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
+			if (!HUD_enemy_barracks_bar->is_visible)
+			{
+				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
+				App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, true);
+
+				if (HUD_enemy_townhall_bar->is_visible)
+				{
+					HUD_enemy_townhall_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
+
+				}
+				if (HUD_townhall_bar->is_visible)
+				{
+					HUD_townhall_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
+
+				}
+
+				if (HUD_barracks_bar->is_visible)
+				{
+					HUD_barracks_bar->is_visible = !HUD_enemy_barracks_bar->is_visible;
+
+				}
+			}
+
+			break;
+		}
+	}
+	else
+	{
+		if (HUD_townhall_bar->is_visible)
+		{
+			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
+		}
+		if (HUD_barracks_bar->is_visible)
+		{
+			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+		}
+		if (HUD_enemy_townhall_bar->is_visible)
+		{
+			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
+		}
+		if (HUD_enemy_barracks_bar->is_visible)
+		{
+			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+		}
+	}
+}
+
+void GameplayScene::AdjustVolumeWithScrollbar()
+{
+	// --- Audio Scrollbars
+	if (in_game_music_scrollbar != nullptr)
+	{
+		float local_thumb_pos = (float)in_game_music_scrollbar->GetThumbHitbox().x - (float)in_game_music_scrollbar->GetHitbox().x;
+
+		float offset = local_thumb_pos / in_game_music_scrollbar->GetHitbox().w;											// Value from 0.0f to 1.0f
+
+
+		App->audio->volume = offset * 100;																					// Will make the offset a valid value to modify the volume.
+	}
+
+	if (in_game_sfx_scrollbar != nullptr)
+	{
+		float local_thumb_pos = (float)in_game_sfx_scrollbar->GetThumbHitbox().x - (float)in_game_sfx_scrollbar->GetHitbox().x;
+
+		float start_offset = local_thumb_pos / in_game_sfx_scrollbar->GetHitbox().w;										// Value from 0.0f to 1.0f
+
+		uint offset = (int)floor(start_offset * 100);																			// Will make the offset a valid value to modify the volume.					
+
+		App->audio->volume_fx = offset;
+	}
 }
 
 // --------------- DEBUG METHODS ---------------
@@ -1331,88 +1416,6 @@ void GameplayScene::UnitDebugKeys()
 {
 	if (App->player->god_mode)
 	{
-		/*if (App->pathfinding->IsWalkable(iPoint(App->player->mouse_tile.x, App->player->mouse_tile.y)))
-		{
-			// UNITS
-			if (App->input->GetKey(SDL_SCANCODE_G) == KEY_STATE::KEY_DOWN)
-			{
-				(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_S) == KEY_STATE::KEY_DOWN)
-			{
-				(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_I) == KEY_STATE::KEY_DOWN)
-			{
-				(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_O) == KEY_STATE::KEY_DOWN)
-			{
-				(Heavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::HEAVY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_STATE::KEY_DOWN)
-			{
-				(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_STATE::KEY_DOWN)
-			{
-				(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_9) == KEY_STATE::KEY_DOWN)
-			{
-				(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_0) == KEY_STATE::KEY_DOWN)
-			{
-				(EnemyHeavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_HEAVY, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			//  BUILDINGS
-			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_STATE::KEY_DOWN)
-			{
-				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_STATE::KEY_DOWN)
-			{
-				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_STATE::KEY_DOWN)
-			{
-				(EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, App->player->mouse_tile.x, App->player->mouse_tile.y);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_N) == KEY_STATE::KEY_DOWN)
-			{
-				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->mouse_tile.x, App->player->mouse_tile.y);
-			}
-
-			// RESOURCES
-			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
-			{
-				(Rock*)App->entity_manager->CreateEntity(ENTITY_TYPE::ROCK, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_STATE::KEY_DOWN)
-			{
-				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->mouse_tile.x, App->player->mouse_tile.y, 1);
-			}
-
-			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)
-			{
-				App->entity_manager->resource_data += 300;
-				App->entity_manager->resource_electricity += 300;
-			}
-		}*/
-
 		if (App->pathfinding->IsWalkable(iPoint(App->player->cursor_tile.x, App->player->cursor_tile.y)))
 		{
 			// UNITS
@@ -1439,6 +1442,7 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_STATE::KEY_DOWN)
 			{
 				(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+				SpawnEnemyWave(5, 5, 5, 5);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_STATE::KEY_DOWN)
@@ -1551,7 +1555,7 @@ void GameplayScene::DrawPathfindingDebug()
 	}
 }
 
-// --------------- REVISE IF THEY ARE NEEDED ---------------
+// --------------- REQUIRED FOR THE GOLD VERSION ---------------
 //bool Scene1::Load(pugi::xml_node& data)
 //{
 //	if (currentMap != data.child("currentMap").attribute("num").as_int())

@@ -34,12 +34,14 @@ public:
 	void UpdateUnitSpriteSection();
 	
 	void SetEntityTargetByProximity();
-	void GetShortestPathWithinAttackRange();
 	void UpdateUnitOrientation();
 
 	bool TargetIsInRange();
 	void ChaseTarget();
 	void DealDamage();
+
+	Entity* GetTarget();
+	int GetAttackRange();
 
 	void OnCollision(Collider* C1, Collider* C2);
 

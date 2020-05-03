@@ -48,6 +48,7 @@
 
     <camera>
       <speed x="700.0f" y="700.0f"/>
+      <original_position x="1550" y="-600"/>
       <x_axis_limit left="-600" right="1700"/>
       <y_axis_limit top="-1430" bottom="200"/>
     </camera>

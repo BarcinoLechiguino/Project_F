@@ -105,18 +105,9 @@ struct MapLayer
 	float				speed;			//Parallax speed.
 	Properties			properties;		//Properties of a layer.
 
-	MapLayer() : gid(NULL) 
-	{
-		height =0;
-		size   =0;
-		speed  =0;
-		width  =0;
-	} //New Comment
+	MapLayer();
+	~MapLayer();
 
-	~MapLayer()
-	{
-		RELEASE(gid);		//Breaks with mmgr.
-	}
 	//Get id of tile in position x, y from gid[] array
 	inline uint Get(uint x, uint y) const 
 	{
@@ -137,7 +128,7 @@ struct TileSet
 	int					tile_height;				//Maximum height of tiles in a given tilesset.
 	int					spacing;					//Space in pixels between the tiles in a given tileset.
 	int					margin;						//Margin around the tiles in a given tileset.
-	SDL_Texture*		texture = nullptr;			//Image that will be embedded on the tileset.
+	SDL_Texture*		texture;					//Image that will be embedded on the tileset.
 	int					tex_width;					//Image width in pixels.
 	int					tex_height;					//Image height in pixels.
 	int					num_tiles_width;			//Number of tiles at the X axis that will have a given texture. Ex: num_tiles_width = tile_width / tex_width; 

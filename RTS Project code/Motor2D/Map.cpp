@@ -856,3 +856,16 @@ int Properties::Get(std::string name, int default_value)							//Revise how to b
 	}
 	return default_value;															//Default value is 0
 }
+
+MapLayer::MapLayer() : gid(NULL)
+{
+	height = 0;
+	size = 0;
+	speed = 0;
+	width = 0;
+}
+
+MapLayer::~MapLayer()
+{
+	RELEASE(gid);		//Breaks with mmgr.
+}

@@ -1,4 +1,5 @@
 #include "Application.h"
+#include "Window.h"
 #include "Render.h"
 #include "Input.h"
 #include "Collisions.h"
@@ -176,11 +177,18 @@ void Scene::DebugKeys()
 		App->entity_manager->debug_center_point = !App->entity_manager->debug_center_point;
 	}
 
-	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_STATE::KEY_DOWN)
+	if (App->input->GetKey(SDL_SCANCODE_HOME) == KEY_STATE::KEY_DOWN)
 	{
-		App->map->smaller_camera = !App->map->smaller_camera;
+		if (App->player->CurrentlyInGameplayScene())
+		{
+			App->map->smaller_camera = !App->map->smaller_camera;
+		}
 	}
 
+	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_STATE::KEY_DOWN)
+	{
+		App->win->ToggleFullscreen();
+	}
 }
 
 void Scene::ExecuteDebugTransition()

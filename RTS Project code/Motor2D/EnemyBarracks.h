@@ -24,6 +24,9 @@ public:
 public:
 	void InitEntity();
 	void AttachHealthbarToEntity();
+	void AttachCreationBarToEntity();
+
+	void StartUnitCreation();
 
 	void GenerateUnit(ENTITY_TYPE type, int level);
 
@@ -34,11 +37,14 @@ public:
 	SDL_Rect	barracks_rect_2;
 	SDL_Rect	barracks_rect;
 
-	ENTITY_TYPE created_unit_type;
+	int			unit_level;
 	
 	float		enemy_scout_creation_time;
 	float		enemy_infantry_creation_time;
 	float		enemy_heavy_creation_time;
+
+	ENTITY_TYPE created_unit_type;
+	bool		creating_unit;
 };
 
 #endif // !__ENEMY_BARRACKS_H__

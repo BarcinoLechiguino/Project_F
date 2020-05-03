@@ -38,6 +38,13 @@ struct EntityData
 	iPoint			position;
 };
 
+struct EntityCost
+{
+	uint			data;
+	uint			electricity;
+	uint			chips;
+};
+
 class Entity
 {
 public:

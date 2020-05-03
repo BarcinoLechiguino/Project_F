@@ -92,6 +92,7 @@ public:
 
 	SDL_Texture*		mouse_tile_debug;
 
+	iPoint				original_camera_position;
 	iPoint				scene_camera_x_limit;						// x = left limit, y = right limit.
 	iPoint				scene_camera_y_limit;						// x = top limit, y = bottom limit.
 

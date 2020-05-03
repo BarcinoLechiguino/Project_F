@@ -156,7 +156,7 @@ public:
 	
 	bool							debug_center_point;
 
-	uint								resource_data;
-	uint								resource_electricity;
+	uint							resource_data;
+	uint							resource_electricity;
 };
 #endif // __ENTITY_MANAGER_H__

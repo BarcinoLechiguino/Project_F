@@ -42,8 +42,6 @@ bool EnemyInfantry::PreUpdate()
 
 bool EnemyInfantry::Update(float dt, bool doLogic)
 {
-	
-
 	HandleMovement(dt);
 
 	DataMapSafetyCheck();
@@ -224,7 +222,7 @@ void EnemyInfantry::SetEntityTargetByProximity()
 	{
 		if (App->entity_manager->IsAllyEntity((*item)))
 		{
-			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
+			if (App->pathfinding->DistanceInTiles(tile_position, (*item)->tile_position) <= attack_range)
 			{
 				target = (*item);
 				break;
@@ -318,9 +316,7 @@ bool EnemyInfantry::TargetIsInRange()
 {
 	if (target != nullptr)
 	{
-		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
-
-		if (distance <= attack_range)
+		if (App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range)
 		{
 			return true;
 		}
@@ -337,7 +333,7 @@ void EnemyInfantry::ChaseTarget()
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	//GiveNewTargetTile(target->tile_position);
-	App->pathfinding->MoveOrder(target->tile_position, tmp);
+	App->pathfinding->AttackOrder(target->tile_position, tmp);
 }
 
 void EnemyInfantry::DealDamage()
@@ -368,4 +364,13 @@ void EnemyInfantry::DealDamage()
 void EnemyInfantry::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
+}
+Entity* EnemyInfantry::GetTarget()
+{
+	return target;
+}
+
+int  EnemyInfantry::GetAttackRange()
+{
+	return attack_range;
 }

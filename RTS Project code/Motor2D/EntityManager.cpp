@@ -46,6 +46,8 @@ struct {
 EntityManager::EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
 {
 	name = ("entities");
+
+	entity_map = nullptr;
 }
 
 EntityManager::~EntityManager()
@@ -708,9 +710,12 @@ bool EntityManager::CheckEntityMapBoundaries(const iPoint& pos) const
 
 Entity* EntityManager::GetEntityAt(const iPoint& pos) const
 {
-	if (CheckEntityMapBoundaries(pos))
+	if (entity_map != nullptr)
 	{
-		return entity_map[(pos.y * entity_map_width) + pos.x];
+		if (CheckEntityMapBoundaries(pos))
+		{
+			return entity_map[(pos.y * entity_map_width) + pos.x];
+		}
 	}
 
 	return nullptr;

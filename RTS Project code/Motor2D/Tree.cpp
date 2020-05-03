@@ -106,15 +106,6 @@ void Tree::InitEntity()
 	{
 		AttachHealthbarToEntity();
 	}
-
-	// Resources will not have a creation bar.
-	/*creating_unit = false;
-	creation_has_finished = true;
-	creation_bar = nullptr;
-
-	creation_bar_background_rect = { 0, 0, 0, 0 };
-	creation_bar_rect = { 0, 0, 0, 0 };
-	creation_bar_position_offset = { 0, 0 };*/
 }
 
 void Tree::AttachHealthbarToEntity()

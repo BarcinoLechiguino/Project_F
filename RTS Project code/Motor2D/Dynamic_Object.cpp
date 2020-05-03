@@ -24,6 +24,7 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Enti
 	next_tile = tile_position;
 	//occupied_tile = tile_position;
 
+
 	tiles_occupied.x = 1;								// TMP Placeholder.
 	tiles_occupied.y = 1;								// Might be used later on for units bigger than 1x1.
 
@@ -132,17 +133,8 @@ bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 
 	path_full = true;
 
-	//Change target and current tile to get next
-	if (target == nullptr)
-	{
-		target_tile = entity_path.back();
-		current_path_tile = entity_path.begin();
-	}
-	else
-	{
-		GetShortestPathWithinAttackRange();
-		PathToGatheringTarget();
-	}
+	target_tile = entity_path.back();
+	current_path_tile = entity_path.begin();
 
 	ChangeOccupiedTile(target_tile);
 
@@ -417,6 +409,16 @@ void Dynamic_Object::DataMapSafetyCheck()
 			App->entity_manager->ChangeEntityMap(tile_position, this);
 		}
 	}
+}
+
+Entity* Dynamic_Object::GetTarget()
+{
+	return target;
+}
+
+int Dynamic_Object::GetAttackRange()
+{
+	return attack_range;
 }
 
 ////--- ALTERNATIVE VERSION

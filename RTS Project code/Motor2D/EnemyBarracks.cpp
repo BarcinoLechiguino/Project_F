@@ -8,8 +8,11 @@
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
+#include "UI_CreationBar.h"
 #include "EntityManager.h"
+#include "EnemyScout.h"
 #include "EnemyInfantry.h"
+#include "EnemyHeavy.h"
 
 #include "EnemyBarracks.h"
 
@@ -32,6 +35,32 @@ bool EnemyBarracks::PreUpdate()
 
 bool EnemyBarracks::Update(float dt, bool doLogic)
 {
+	if (creation_queue.size() != 0)
+	{
+		if (!creating_unit)
+		{
+			StartUnitCreation();
+		}
+		else
+		{
+			creation_bar->UpdateCreationBarValue();
+
+			if (creation_bar->creation_finished)
+			{
+				GenerateUnit(created_unit_type, unit_level);
+
+				created_unit_type = ENTITY_TYPE::UNKNOWN;
+
+				creation_queue.erase(creation_queue.begin());
+
+				creating_unit = false;
+			}
+		}
+	}
+	else
+	{
+		creation_bar->is_visible = false;
+	}
 
 	return true;
 }
@@ -54,6 +83,7 @@ bool EnemyBarracks::CleanUp()
 	entity_sprite = nullptr;
 
 	App->gui_manager->DeleteGuiElement(healthbar);
+	App->gui_manager->DeleteGuiElement(creation_bar);
 
 	return true;
 }
@@ -61,6 +91,69 @@ bool EnemyBarracks::CleanUp()
 void EnemyBarracks::Draw()
 {
 	App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect);
+}
+
+void EnemyBarracks::StartUnitCreation()
+{
+	creation_bar->is_visible = true;
+
+	creating_unit = true;
+
+	created_unit_type = (*creation_queue.begin());
+
+	switch (created_unit_type)
+	{
+	case ENTITY_TYPE::ENEMY_SCOUT:
+		creation_bar->SetNewCreationTime(enemy_scout_creation_time);
+		break;
+
+	case ENTITY_TYPE::ENEMY_INFANTRY:
+		creation_bar->SetNewCreationTime(enemy_infantry_creation_time);
+		break;
+
+	case ENTITY_TYPE::ENEMY_HEAVY:
+		creation_bar->SetNewCreationTime(enemy_heavy_creation_time);
+		break;
+	}
+}
+
+void EnemyBarracks::GenerateUnit(ENTITY_TYPE type, int level)
+{
+	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
+	
+	switch (type)
+	{
+	case ENTITY_TYPE::ENEMY_SCOUT:
+		(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, pos.x, pos.y, level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_INFANTRY:
+		(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, pos.x, pos.y, level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_HEAVY:
+		(EnemyHeavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_HEAVY, pos.x, pos.y, level);
+		break;
+	}
+}
+
+void EnemyBarracks::LevelChanges()
+{
+	switch (level)								//Updates the building stats when leveling up	
+	{
+	case 1:
+		barracks_rect = barracks_rect_1;
+		break;
+	case 2:
+		barracks_rect = barracks_rect_2;
+		max_health = 800;
+		current_health = max_health;
+		unit_level++;
+		break;
+	default:
+		barracks_rect = barracks_rect_2;
+		break;
+	}
 }
 
 void EnemyBarracks::InitEntity()
@@ -75,11 +168,8 @@ void EnemyBarracks::InitEntity()
 	barracks_rect = barracks_rect_1;
 
 	// --- CREATION TIMES ---
-	/*accumulated_creation_time = 0.0f;
-	building_creation_time = 5.0f;*/
-
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
-	
+
 	enemy_scout_creation_time = 1.0f;
 	enemy_infantry_creation_time = 2.0f;
 	enemy_heavy_creation_time = 5.0f;
@@ -94,12 +184,15 @@ void EnemyBarracks::InitEntity()
 	tiles_occupied.y = 2;
 
 	// --- STATS & HEALTHBAR ---
+	unit_level = 1;
+
 	max_health = 600;
 	current_health = max_health;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
+		AttachCreationBarToEntity();
 	}
 
 	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height);
@@ -119,30 +212,17 @@ void EnemyBarracks::AttachHealthbarToEntity()
 	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }
 
-void EnemyBarracks::GenerateUnit(ENTITY_TYPE type, int level)
+void EnemyBarracks::AttachCreationBarToEntity()
 {
-	switch (type)
-	{
-	case ENTITY_TYPE::ENEMY_INFANTRY:
-		(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, tile_position.x, tile_position.y + 2, level);
-		break;
-	}
-}
+	creation_bar_position_offset.x = -6;															// Magic
+	creation_bar_position_offset.y = 16;
 
-void EnemyBarracks::LevelChanges()
-{
-	switch (level)								//Updates the building stats when leveling up	
-	{
-	case 1:
-		barracks_rect = barracks_rect_1;
-		break;
-	case 2:
-		barracks_rect = barracks_rect_2;
-		max_health = 800;
-		current_health = max_health;
-		break;
-	default:
-		barracks_rect = barracks_rect_2;
-		break;
-	}
+	creation_bar_background_rect = { 618, 1, MAX_CREATION_BAR_WIDTH, 9 };
+	creation_bar_rect = { 618, 23, MAX_CREATION_BAR_WIDTH, 9 };
+
+	int creation_bar_position_x = (int)pixel_position.x + creation_bar_position_offset.x;
+	int creation_bar_position_y = (int)pixel_position.y + creation_bar_position_offset.y;
+
+	creation_bar = (UI_CreationBar*)App->gui_manager->CreateCreationBar(UI_ELEMENT::CREATIONBAR, creation_bar_position_x, creation_bar_position_y, false
+		, &creation_bar_rect, &creation_bar_background_rect, this);
 }

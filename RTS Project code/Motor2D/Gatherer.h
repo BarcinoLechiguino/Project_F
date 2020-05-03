@@ -39,6 +39,9 @@ public:
 	bool TargetIsInRange();
 	void GatherResource();
 	
+	Entity* GetTarget();
+	int GetAttackRange();
+
 	//void HandleFx();
 	//void SubstractResource();
 

@@ -65,6 +65,7 @@ bool Player::Update(float dt)
 	
 	//CameraController(dt);
 	CameraController(App->GetUnpausableDt());
+	
 
 	DragSelection();
 
@@ -1006,6 +1007,9 @@ void Player::InitializePlayer()
 	
 	mouse_tile_debug			= App->tex->Load(player.child("mouse_tile_tex").attribute("path").as_string());
 
+	original_camera_position.x	= player.child("camera").child("original_position").attribute("x").as_int();
+	original_camera_position.y	= player.child("camera").child("original_position").attribute("y").as_int();
+	
 	scene_camera_x_limit.x		= player.child("camera").child("x_axis_limit").attribute("left").as_int();
 	scene_camera_x_limit.y		= player.child("camera").child("x_axis_limit").attribute("right").as_int();
 	scene_camera_y_limit.x		= player.child("camera").child("y_axis_limit").attribute("top").as_int();

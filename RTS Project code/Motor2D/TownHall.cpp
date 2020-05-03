@@ -99,7 +99,7 @@ void TownHall::StartUnitCreation()
 
 	created_unit_type = (*creation_queue.begin());
 
-	switch (created_unit_type)
+	switch (created_unit_type)															// Used a switch taking into account scalability.
 	{
 	case ENTITY_TYPE::GATHERER:
 		creation_bar->SetNewCreationTime(gatherer_creation_time);
@@ -110,6 +110,7 @@ void TownHall::StartUnitCreation()
 void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 {
 	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
+
 	switch (type)
 	{
 	case ENTITY_TYPE::GATHERER:

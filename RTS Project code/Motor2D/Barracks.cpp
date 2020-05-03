@@ -147,7 +147,7 @@ void Barracks::LevelChanges()				//Updates the building stats when leveling up
 		barracks_rect = barracks_rect_2;
 		max_health = 800;
 		current_health = max_health;
-		unit_level++;
+		//unit_level++;									// TALK ABOUT THIS
 		break;
 	default:
 		barracks_rect = barracks_rect_2;

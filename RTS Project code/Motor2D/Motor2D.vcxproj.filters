@@ -211,6 +211,9 @@
     <ClCompile Include="UI_CreationBar.cpp">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
+    <ClCompile Include="EnemyAI.cpp">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -443,6 +446,9 @@
     </ClInclude>
     <ClInclude Include="UI_CreationBar.h">
       <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAI.h">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
