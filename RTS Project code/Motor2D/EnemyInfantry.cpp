@@ -40,7 +40,7 @@ bool EnemyInfantry::PreUpdate()
 	return true;
 };
 
-bool EnemyInfantry::Update(float dt, bool doLogic)
+bool EnemyInfantry::Update(float dt, bool do_logic)
 {
 	HandleMovement(dt);
 
@@ -58,7 +58,7 @@ bool EnemyInfantry::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x;
 	selection_collider.y = (int)pixel_position.y;
 
-	if (doLogic)
+	if (do_logic)
 	{
 		if (target == nullptr && !path_full)
 		{

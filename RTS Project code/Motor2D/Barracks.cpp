@@ -17,9 +17,14 @@
 #include "Barracks.h"
 
 
-Barracks::Barracks(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
+Barracks::Barracks(int x, int y, ENTITY_TYPE type, int level) : Building(x, y, type, level)
 {
 	InitEntity();
+}
+
+Barracks::~Barracks()
+{
+
 }
 
 bool Barracks::Awake(pugi::xml_node&)
@@ -27,17 +32,19 @@ bool Barracks::Awake(pugi::xml_node&)
 	return true;
 }
 
-bool Barracks::PreUpdate()
+bool Barracks::Start()
 {
-	if (current_health <= 0)
-	{
-		App->entity_manager->DeleteEntity(this);
-	}
-
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
+	
 	return true;
 }
 
-bool Barracks::Update(float dt, bool doLogic)
+bool Barracks::PreUpdate()
+{
+	return true;
+}
+
+bool Barracks::Update(float dt, bool do_logic)
 {
 	if (creation_queue.size() != 0)
 	{	
@@ -71,6 +78,11 @@ bool Barracks::Update(float dt, bool doLogic)
 
 bool Barracks::PostUpdate()
 {
+	if (current_health <= 0)
+	{
+		App->entity_manager->DeleteEntity(this);
+	}
+	
 	return true;
 }
 

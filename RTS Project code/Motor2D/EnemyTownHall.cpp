@@ -15,9 +15,14 @@
 #include "EnemyTownHall.h"
 
 
-EnemyTownHall::EnemyTownHall(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
+EnemyTownHall::EnemyTownHall(int x, int y, ENTITY_TYPE type, int level) : Building(x, y, type, level)
 {
 	InitEntity();
+}
+
+EnemyTownHall::~EnemyTownHall()
+{
+
 }
 
 bool EnemyTownHall::Awake(pugi::xml_node&)
@@ -25,13 +30,19 @@ bool EnemyTownHall::Awake(pugi::xml_node&)
 	return true;
 }
 
-bool EnemyTownHall::PreUpdate()
+bool EnemyTownHall::Start()
 {
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
 
 	return true;
 }
 
-bool EnemyTownHall::Update(float dt, bool doLogic)
+bool EnemyTownHall::PreUpdate()
+{
+	return true;
+}
+
+bool EnemyTownHall::Update(float dt, bool do_logic)
 {
 	if (creation_queue.size() != 0)
 	{

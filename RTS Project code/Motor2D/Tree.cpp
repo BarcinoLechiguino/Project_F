@@ -13,7 +13,7 @@
 #include "Tree.h"
 
 
-Tree::Tree(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
+Tree::Tree(int x, int y, ENTITY_TYPE type, int level) : Resource(x, y, type, level)
 {
 	InitEntity();
 
@@ -28,20 +28,30 @@ Tree::Tree(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type,
 	healthbar_position_offset.x = -30;
 }
 
+Tree::~Tree()
+{
+
+}
+
 bool Tree::Awake(pugi::xml_node&)
 {
 	return true;
 }
 
+bool Tree::Start()
+{
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
+	
+	return true;
+}
 
 bool Tree::PreUpdate()
 {
 	return true;
 }
 
-bool Tree::Update(float dt, bool doLogic)
+bool Tree::Update(float dt, bool do_logic)
 {
-
 	return true;
 }
 
@@ -96,9 +106,6 @@ void Tree::InitEntity()
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
 	// --- STATS & HEALTHBAR ---
-	wood = 20;
-	gather_time = 1;
-
 	max_health = 300;
 	current_health = max_health;
 

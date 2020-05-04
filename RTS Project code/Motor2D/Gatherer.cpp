@@ -43,7 +43,7 @@ bool Gatherer::PreUpdate()
 	return true;
 }
 
-bool Gatherer::Update(float dt, bool doLogic)
+bool Gatherer::Update(float dt, bool do_logic)
 {
 	BROFILER_CATEGORY("Gatherer Update", Profiler::Color::Black);
 
@@ -56,7 +56,7 @@ bool Gatherer::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x + 10;
 	selection_collider.y = (int)pixel_position.y + 10;
 
-	//if (doLogic)
+	//if (do_logic)
 	//{
 	//	if (target == nullptr && !path_full)
 	//	{

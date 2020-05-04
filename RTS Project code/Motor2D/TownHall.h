@@ -1,25 +1,27 @@
 #ifndef __TOWNHALL_H__
 #define __TOWNHALL_H__
 
-#include "StaticObject.h"
+#include "Building.h"
 
-class TownHall : public StaticObject
+class TownHall : public Building
 {
 public:
-
 	TownHall(int x, int y, ENTITY_TYPE type, int level);
+	~TownHall();
 
-	virtual bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node&);
 
-	virtual bool PreUpdate();
+	bool Start();
 
-	virtual bool Update(float dt, bool doLogic);
+	bool PreUpdate();
 
-	virtual bool PostUpdate();
+	bool Update(float dt, bool do_logic);
 
-	virtual bool CleanUp();
+	bool PostUpdate();
 
-	virtual void Draw();
+	bool CleanUp();
+
+	void Draw();
 
 public:
 	void InitEntity();

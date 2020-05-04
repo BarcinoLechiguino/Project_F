@@ -17,9 +17,14 @@
 #include "EnemyBarracks.h"
 
 
-EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
+EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type, int level) : Building(x, y, type, level)
 {
 	InitEntity();
+}
+
+EnemyBarracks::~EnemyBarracks()
+{
+
 }
 
 bool EnemyBarracks::Awake(pugi::xml_node&)
@@ -27,13 +32,19 @@ bool EnemyBarracks::Awake(pugi::xml_node&)
 	return true;
 }
 
-bool EnemyBarracks::PreUpdate()
+bool EnemyBarracks::Start()
 {
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
 
 	return true;
 }
 
-bool EnemyBarracks::Update(float dt, bool doLogic)
+bool EnemyBarracks::PreUpdate()
+{
+	return true;
+}
+
+bool EnemyBarracks::Update(float dt, bool do_logic)
 {
 	if (creation_queue.size() != 0)
 	{

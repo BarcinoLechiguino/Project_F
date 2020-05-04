@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="AlternatingBars.cpp" />
     <ClCompile Include="Barracks.cpp" />
+    <ClCompile Include="Building.cpp" />
     <ClCompile Include="CameraToMouse.cpp" />
     <ClCompile Include="Collisions.cpp" />
     <ClCompile Include="Color.cpp" />
@@ -120,6 +121,7 @@
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Quadtree.cpp" />
+    <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="GameplayScene.cpp" />
@@ -158,6 +160,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="Barracks.h" />
+    <ClInclude Include="Building.h" />
     <ClInclude Include="CameraToMouse.h" />
     <ClInclude Include="Collisions.h" />
     <ClInclude Include="Color.h" />
@@ -191,6 +194,7 @@
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Quadtree.h" />
+    <ClInclude Include="Resource.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="GameplayScene.h" />

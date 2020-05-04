@@ -50,7 +50,7 @@ bool Entity::PreUpdate()
 	return true;
 }
 
-bool Entity::Update(float dt, bool doLogic)
+bool Entity::Update(float dt, bool do_logic)
 {
 	return true;
 }

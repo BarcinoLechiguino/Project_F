@@ -50,6 +50,7 @@ class Entity
 public:
 	Entity();
 	Entity(int x, int y, ENTITY_TYPE type, int level);	// here we will set initial position
+	//virtual ~Entity()
 
 	//Must be virtual so when an entity is executed the compiler goes to the entity's methods instead of these
 	virtual bool Awake(pugi::xml_node&);
@@ -58,7 +59,7 @@ public:
 
 	virtual bool PreUpdate();
 
-	virtual bool Update(float dt, bool doLogic);
+	virtual bool Update(float dt, bool do_logic);
 
 	virtual bool PostUpdate();
 

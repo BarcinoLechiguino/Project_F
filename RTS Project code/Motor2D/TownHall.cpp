@@ -15,9 +15,14 @@
 #include "TownHall.h"
 
 
-TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
+TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Building(x, y, type, level)
 {
 	InitEntity();	
+}
+
+TownHall::~TownHall()
+{
+
 }
 
 bool TownHall::Awake(pugi::xml_node&)
@@ -25,13 +30,19 @@ bool TownHall::Awake(pugi::xml_node&)
 	return true;
 }
 
-bool TownHall::PreUpdate()
+bool TownHall::Start()
 {
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
 
 	return true;
 }
 
-bool TownHall::Update(float dt, bool doLogic)
+bool TownHall::PreUpdate()
+{
+	return true;
+}
+
+bool TownHall::Update(float dt, bool do_logic)
 {
 	if (creation_queue.size() != 0)
 	{

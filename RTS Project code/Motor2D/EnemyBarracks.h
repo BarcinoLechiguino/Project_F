@@ -1,25 +1,22 @@
 #ifndef __ENEMY_BARRACKS_H__
 #define __ENEMY_BARRACKS_H__
 
-#include "StaticObject.h"
+#include "Building.h"
 
-class EnemyBarracks : public StaticObject
+class EnemyBarracks : public Building
 {
 public:
-
 	EnemyBarracks(int x, int y, ENTITY_TYPE type, int level);
+	~EnemyBarracks();
 
-	virtual bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node&);
+	bool Start();
+	bool PreUpdate();
+	bool Update(float dt, bool do_logic);
+	bool PostUpdate();
+	bool CleanUp();
 
-	virtual bool PreUpdate();
-
-	virtual bool Update(float dt, bool doLogic);
-
-	virtual bool PostUpdate();
-
-	virtual bool CleanUp();
-
-	virtual void Draw();
+	void Draw();
 
 public:
 	void InitEntity();

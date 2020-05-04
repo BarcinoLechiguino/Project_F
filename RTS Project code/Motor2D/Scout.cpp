@@ -44,7 +44,7 @@ bool Scout::PreUpdate()
 	return true;
 };
 
-bool Scout::Update(float dt, bool doLogic)
+bool Scout::Update(float dt, bool do_logic)
 {
 	HandleMovement(dt);
 
@@ -62,7 +62,7 @@ bool Scout::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x;
 	selection_collider.y = (int)pixel_position.y;
 
-	if (doLogic)
+	if (do_logic)
 	{
 		if (target == nullptr && !path_full)
 		{

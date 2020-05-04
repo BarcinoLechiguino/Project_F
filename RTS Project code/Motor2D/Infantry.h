@@ -17,7 +17,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update(float dt, bool doLogic);
+	bool Update(float dt, bool do_logic);
 
 	bool PostUpdate();
 

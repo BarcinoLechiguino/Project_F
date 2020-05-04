@@ -37,7 +37,7 @@ public:
 
 	virtual bool PreUpdate();
 
-	virtual bool Update(float dt, bool doLogic);
+	virtual bool Update(float dt, bool do_logic);
 
 	virtual bool PostUpdate();
 
