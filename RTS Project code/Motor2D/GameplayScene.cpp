@@ -1194,7 +1194,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_enemy_text_townhall_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_enemy_townhall_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
 	std::string HUD_enemy_title_townhall_string = "TOWNHALL";
-	HUD_enemy_title_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 360, 582, HUD_enemy_text_townhall_rect, HUD_enemy_townhall_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_townhall_bar, &HUD_enemy_title_townhall_string);
+	HUD_enemy_title_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 360, 582, HUD_enemy_text_townhall_rect, HUD_enemy_townhall_font, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_townhall_bar, &HUD_enemy_title_townhall_string);
 
 	// Description Enemy Townhall
 	SDL_Rect HUD_enemy_text_townhall_descp_rect = { 0, 0, 100, 20 };
@@ -1202,9 +1202,9 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_enemy_townhall_descp_string = "The main building of the base.";
 	std::string HUD_enemy_townhall_descp_string2 = "Destroy It to win";
 	std::string HUD_enemy_townhall_descp_string3 = "the game.";
-	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 335, 635, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string);
-	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 362, 649, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string2);
-	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 379, 662, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string3);
+	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 335, 635, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string);
+	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 362, 649, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string2);
+	HUD_enemy_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 385, 662, HUD_enemy_text_townhall_descp_rect, HUD_enemy_townhall_descp_font, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_title_townhall, &HUD_enemy_townhall_descp_string3);
 
 	// Barracks
 	//Enemy Barracks Bar
@@ -1216,7 +1216,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_enemy_text_barracks_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_enemy_barracks_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
 	std::string HUD_enemy_title_barracks_string = "BARRACKS";
-	HUD_enemy_title_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 362, 582, HUD_enemy_text_barracks_rect, HUD_enemy_barracks_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_barracks_bar, &HUD_enemy_title_barracks_string);
+	HUD_enemy_title_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 362, 582, HUD_enemy_text_barracks_rect, HUD_enemy_barracks_font, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_barracks_bar, &HUD_enemy_title_barracks_string);
 
 	// Description Barracks
 	SDL_Rect HUD_enemy_text_barracks_descp_rect = { 0, 0, 100, 20 };
@@ -1224,9 +1224,9 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_enemy_barracks_descp_string = "Trains different military units";
 	std::string HUD_enemy_barracks_descp_string2 = "depending on the number of";
 	std::string HUD_enemy_barracks_descp_string3 = "resources the enemy acquire.";
-	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 329, 635, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string);
-	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 341, 649, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string2);
-	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 359, 662, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 186,85,211,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string3);
+	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 329, 635, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string);
+	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 341, 649, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string2);
+	HUD_enemy_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 339, 662, HUD_enemy_text_barracks_descp_rect, HUD_enemy_barracks_descp_font, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string3);
 
 
 	// God_Mode
