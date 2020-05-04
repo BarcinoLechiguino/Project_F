@@ -4,7 +4,7 @@
 #include "UI.h"
 
 //class Entity;
-class Static_Object;
+class StaticObject;
 
 class UI_CreationBar : public UI
 {

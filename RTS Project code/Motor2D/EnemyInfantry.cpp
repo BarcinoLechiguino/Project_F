@@ -15,7 +15,7 @@
 #include "EnemyInfantry.h"
 
 
-EnemyInfantry::EnemyInfantry(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
+EnemyInfantry::EnemyInfantry(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	InitEntity();
 };
@@ -40,10 +40,8 @@ bool EnemyInfantry::PreUpdate()
 	return true;
 };
 
-bool EnemyInfantry::Update(float dt, bool doLogic)
+bool EnemyInfantry::Update(float dt, bool do_logic)
 {
-	
-
 	HandleMovement(dt);
 
 	DataMapSafetyCheck();
@@ -60,7 +58,7 @@ bool EnemyInfantry::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x;
 	selection_collider.y = (int)pixel_position.y;
 
-	if (doLogic)
+	if (do_logic)
 	{
 		if (target == nullptr && !path_full)
 		{
@@ -224,7 +222,7 @@ void EnemyInfantry::SetEntityTargetByProximity()
 	{
 		if (App->entity_manager->IsAllyEntity((*item)))
 		{
-			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
+			if (App->pathfinding->DistanceInTiles(tile_position, (*item)->tile_position) <= attack_range)
 			{
 				target = (*item);
 				break;
@@ -318,9 +316,7 @@ bool EnemyInfantry::TargetIsInRange()
 {
 	if (target != nullptr)
 	{
-		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
-
-		if (distance <= attack_range)
+		if (App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range)
 		{
 			return true;
 		}
@@ -331,13 +327,13 @@ bool EnemyInfantry::TargetIsInRange()
 
 void EnemyInfantry::ChaseTarget()
 {
-	std::vector<Dynamic_Object*> tmp;
+	std::vector<DynamicObject*> tmp;
 	tmp.push_back(this);
 
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	//GiveNewTargetTile(target->tile_position);
-	App->pathfinding->MoveOrder(target->tile_position, tmp);
+	App->pathfinding->AttackOrder(target->tile_position, tmp);
 }
 
 void EnemyInfantry::DealDamage()
@@ -368,4 +364,13 @@ void EnemyInfantry::DealDamage()
 void EnemyInfantry::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
+}
+Entity* EnemyInfantry::GetTarget()
+{
+	return target;
+}
+
+int  EnemyInfantry::GetAttackRange()
+{
+	return attack_range;
 }

@@ -50,7 +50,7 @@ bool Entity::PreUpdate()
 	return true;
 }
 
-bool Entity::Update(float dt, bool doLogic)
+bool Entity::Update(float dt, bool do_logic)
 {
 	return true;
 }
@@ -106,20 +106,13 @@ void Entity::ApplyDamage(Entity* target)
 		target->healthbar->UpdateHealthbarValue();
 	}
 	else
-	{
-		if (App->entity_manager->IsEnemyEntity(target))
+	{		
+		if (!App->entity_manager->IsAllyEntity(target))
 		{
 			target->current_health -= attack_damage;
 
 			target->healthbar->UpdateHealthbarValue();
 		}
-		else if (App->entity_manager->IsResource(target))
-		{
-			target->current_health -= attack_damage;
-
-			target->healthbar->UpdateHealthbarValue();
-		}
-		
 	}
 }
 

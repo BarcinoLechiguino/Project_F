@@ -8,6 +8,8 @@ struct SDL_Texture;
 class Timer;
 class PerfTimer;
 
+enum class ENTITY_TYPE;
+
 class UI;
 class UI_Image;
 class UI_Text;
@@ -37,21 +39,13 @@ public:
 public:
 	void InitScene();
 
-	void LoadGuiElements();
-
-	void OnEventCall(UI* element, UI_EVENT ui_event);
-
-	void AdjustVolumeWithScrollbar();
-
 	void ExecuteTransition();
 
-	void LoadInGameOptionsMenu();
-
-	// --- Entity Spawn HUD
-	void DebugHUDSpawn();
-
 	// --- Entity Spawn Methods.
-	void UnitSpawn();
+	void SpawnAllyUnit(ENTITY_TYPE type);
+	void SpawnEnemyUnit(ENTITY_TYPE type);
+
+	void SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount);		// TMP. Put in EnemyAI module.
 
 	void BuildingUpgrade();
 
@@ -59,23 +53,22 @@ public:
 
 	bool CheckResources(uint required_data, uint required_electricity);
 
+	// --- UI & HUD
+	void LoadGuiElements();
+
+	void LoadInGameOptionsMenu();
+
+	void OnEventCall(UI* element, UI_EVENT ui_event);
+
+	void DebugHUDSpawn();																	// HUD SPAWN
+
+	void AdjustVolumeWithScrollbar();
+	
 	// --- Debug Methods
 	void UnitDebugKeys();
 
 	void PathfindingDebug();
 	void DrawPathfindingDebug();
-
-
-public:
-	//std::list<std::string>	map_names;
-	
-	float					fade_time;
-	
-	std::string				music_path;
-	std::string				music_path2;
-	std::string				music_path3;
-
-	bool					to_end;
 
 public:
 	bool transition_to_main_menu_scene;									// Will keep track whether or not the transition to the main menu scene has been triggered.

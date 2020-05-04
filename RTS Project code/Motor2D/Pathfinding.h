@@ -13,7 +13,7 @@
 #define NON_WALKABLE 0
 
 class Entity;
-class Dynamic_Object;
+class DynamicObject;
 
 // --------------------------------------------------
 // Recommended reading:
@@ -51,8 +51,10 @@ public:
 
 	iPoint FindNearbyPoint(iPoint pos);
 
-	void MoveOrder(const iPoint& pos, std::vector<Dynamic_Object*> units_selected) ;	//Finds close tiles to send units to
+	int DistanceInTiles(iPoint tile_1,iPoint tile_2);
 
+	void MoveOrder(const iPoint& pos, std::vector<DynamicObject*> units_selected) ;	//Finds close tiles to send units to
+	void AttackOrder(const iPoint& pos, std::vector<DynamicObject*> units_selected);		//Finds tiles in range of target
 
 	bool ChangeWalkability(iPoint pos, Entity* entity, uchar walkability);						//Change walkability of a tile in map array
 

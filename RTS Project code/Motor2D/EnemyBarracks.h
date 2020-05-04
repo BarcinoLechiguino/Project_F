@@ -1,29 +1,29 @@
 #ifndef __ENEMY_BARRACKS_H__
 #define __ENEMY_BARRACKS_H__
 
-#include "Static_Object.h"
+#include "Building.h"
 
-class EnemyBarracks : public Static_Object
+class EnemyBarracks : public Building
 {
 public:
-
 	EnemyBarracks(int x, int y, ENTITY_TYPE type, int level);
+	~EnemyBarracks();
 
-	virtual bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node&);
+	bool Start();
+	bool PreUpdate();
+	bool Update(float dt, bool do_logic);
+	bool PostUpdate();
+	bool CleanUp();
 
-	virtual bool PreUpdate();
-
-	virtual bool Update(float dt, bool doLogic);
-
-	virtual bool PostUpdate();
-
-	virtual bool CleanUp();
-
-	virtual void Draw();
+	void Draw();
 
 public:
 	void InitEntity();
 	void AttachHealthbarToEntity();
+	void AttachCreationBarToEntity();
+
+	void StartUnitCreation();
 
 	void GenerateUnit(ENTITY_TYPE type, int level);
 
@@ -34,11 +34,14 @@ public:
 	SDL_Rect	barracks_rect_2;
 	SDL_Rect	barracks_rect;
 
-	ENTITY_TYPE created_unit_type;
+	int			unit_level;
 	
 	float		enemy_scout_creation_time;
 	float		enemy_infantry_creation_time;
 	float		enemy_heavy_creation_time;
+
+	ENTITY_TYPE created_unit_type;
+	bool		creating_unit;
 };
 
 #endif // !__ENEMY_BARRACKS_H__

@@ -8,15 +8,21 @@
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
+#include "UI_CreationBar.h"
 #include "EntityManager.h"
-#include "EnemyInfantry.h"
+#include "EnemyGatherer.h"
 
 #include "EnemyTownHall.h"
 
 
-EnemyTownHall::EnemyTownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+EnemyTownHall::EnemyTownHall(int x, int y, ENTITY_TYPE type, int level) : Building(x, y, type, level)
 {
 	InitEntity();
+}
+
+EnemyTownHall::~EnemyTownHall()
+{
+
 }
 
 bool EnemyTownHall::Awake(pugi::xml_node&)
@@ -24,15 +30,46 @@ bool EnemyTownHall::Awake(pugi::xml_node&)
 	return true;
 }
 
-bool EnemyTownHall::PreUpdate()
+bool EnemyTownHall::Start()
 {
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
 
 	return true;
 }
 
-bool EnemyTownHall::Update(float dt, bool doLogic)
+bool EnemyTownHall::PreUpdate()
 {
-	
+	return true;
+}
+
+bool EnemyTownHall::Update(float dt, bool do_logic)
+{
+	if (creation_queue.size() != 0)
+	{
+		if (!creating_unit)
+		{
+			StartUnitCreation();
+		}
+		else
+		{
+			creation_bar->UpdateCreationBarValue();
+
+			if (creation_bar->creation_finished)
+			{
+				GenerateUnit(created_unit_type, unit_level);
+
+				created_unit_type = ENTITY_TYPE::UNKNOWN;
+
+				creation_queue.erase(creation_queue.begin());
+
+				creating_unit = false;
+			}
+		}
+	}
+	else
+	{
+		creation_bar->is_visible = false;
+	}
 
 	return true;
 }
@@ -55,6 +92,7 @@ bool EnemyTownHall::CleanUp()
 	entity_sprite = nullptr;
 
 	App->gui_manager->DeleteGuiElement(healthbar);
+	App->gui_manager->DeleteGuiElement(creation_bar);
 
 	return true;
 }
@@ -64,11 +102,60 @@ void EnemyTownHall::Draw()
 	App->render->Blit(entity_sprite, (int)pixel_position.x - 51, (int)pixel_position.y - 20, &hall_rect);
 }
 
+void EnemyTownHall::StartUnitCreation()
+{
+	creation_bar->is_visible = true;
+
+	creating_unit = true;
+
+	created_unit_type = (*creation_queue.begin());
+
+	switch (created_unit_type)															// Used a switch taking into account scalability.
+	{
+	case ENTITY_TYPE::ENEMY_GATHERER:
+		creation_bar->SetNewCreationTime(enemy_gatherer_creation_time);
+		break;
+	}
+}
+
+void EnemyTownHall::GenerateUnit(ENTITY_TYPE type, int level)
+{
+	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
+	
+	switch (type)
+	{
+	case ENTITY_TYPE::ENEMY_GATHERER:
+		(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, pos.x, pos.y, level);
+		break;
+	}
+}
+
+void EnemyTownHall::LevelChanges()				//Updates the building stats when leveling up
+{
+	switch (level)
+	{
+	case 1:
+		hall_rect = hall_rect_1;
+		break;
+	case 2:
+		hall_rect = hall_rect_2;
+		max_health = 1200;
+		current_health = max_health;
+		unit_level++;
+		break;
+	default:
+		hall_rect = hall_rect_2;
+		break;
+	}
+}
+
 void EnemyTownHall::InitEntity()
 {
 	entity_sprite = App->entity_manager->GetEnemyTownHallTexture();
 
 	is_selected = false;
+
+	created_unit_type = ENTITY_TYPE::UNKNOWN;
 
 	// --- SPRITE SECTIONS ---
 	hall_rect_1 = { 0, 0, 155, 138 };
@@ -76,9 +163,6 @@ void EnemyTownHall::InitEntity()
 	hall_rect = hall_rect_1;
 
 	// --- CREATION TIMERS ---
-	/*accumulated_creation_time = 0.0f;
-	building_creation_time = 5.0f;*/
-	
 	enemy_gatherer_creation_time = 1.0f;														//Magic
 
 	// --- POSITION AND SIZE ---
@@ -94,9 +178,12 @@ void EnemyTownHall::InitEntity()
 	max_health = 900;
 	current_health = max_health;
 
+	unit_level = 1;
+
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
+		AttachCreationBarToEntity();
 	}
 
 	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height * 0.5f);
@@ -116,30 +203,17 @@ void EnemyTownHall::AttachHealthbarToEntity()
 	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }
 
-void EnemyTownHall::GenerateUnit(ENTITY_TYPE type, int level)
+void EnemyTownHall::AttachCreationBarToEntity()
 {
-	switch (type)
-	{
-	case ENTITY_TYPE::ENEMY_INFANTRY:
-		(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, tile_position.x, tile_position.y + 2, level);
-		break;
-	}
-}
+	creation_bar_position_offset.x = -6;															// Magic
+	creation_bar_position_offset.y = 16;
 
-void EnemyTownHall::LevelChanges()				//Updates the building stats when leveling up
-{
-	switch (level)
-	{
-	case 1:
-		hall_rect = hall_rect_1;
-		break;
-	case 2:
-		hall_rect = hall_rect_2;
-		max_health = 1200;
-		current_health = max_health;
-		break;
-	default:
-		hall_rect = hall_rect_2;
-		break;
-	}
+	creation_bar_background_rect = { 618, 1, MAX_CREATION_BAR_WIDTH, 9 };
+	creation_bar_rect = { 618, 23, MAX_CREATION_BAR_WIDTH, 9 };
+
+	int creation_bar_position_x = (int)pixel_position.x + creation_bar_position_offset.x;
+	int creation_bar_position_y = (int)pixel_position.y + creation_bar_position_offset.y;
+
+	creation_bar = (UI_CreationBar*)App->gui_manager->CreateCreationBar(UI_ELEMENT::CREATIONBAR, creation_bar_position_x, creation_bar_position_y, false
+		, &creation_bar_rect, &creation_bar_background_rect, this);
 }

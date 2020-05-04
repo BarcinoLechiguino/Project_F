@@ -2,38 +2,29 @@
 #ifndef __TREE_H__
 #define __TREE_H__
 
-#include "Static_Object.h"
+#include "Resource.h"
 
-class Tree : public Static_Object
+class Tree : public Resource
 {
 public:
-
 	Tree(int x, int y, ENTITY_TYPE type, int level);
+	~Tree();
 
-	virtual bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node&);
+	bool Start();
+	bool PreUpdate();
+	bool Update(float dt, bool do_logic);
+	bool PostUpdate();
+	bool CleanUp();
 
-	virtual bool PreUpdate();
-
-	virtual bool Update(float dt, bool doLogic);
-
-	virtual bool PostUpdate();
-
-	virtual bool CleanUp();
-
-	virtual void Draw();
+	void Draw();
 
 public:
 	void InitEntity();
 
 	void AttachHealthbarToEntity();
 
-public:
-	int wood;
-
-	int gather_time;
-
 private:
-	SDL_Rect* blit_section;
 
 };
 

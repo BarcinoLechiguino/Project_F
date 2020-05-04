@@ -1,11 +1,11 @@
 #ifndef __ENEMY_H__
 #define __ENEMY_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
 class Infantry;
 
-class EnemyInfantry : public Dynamic_Object
+class EnemyInfantry : public DynamicObject
 {
 public:
 
@@ -19,7 +19,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update(float dt,  bool doLogic);
+	bool Update(float dt,  bool do_logic);
 
 	bool PostUpdate();
 
@@ -42,6 +42,9 @@ public:
 	bool TargetIsInRange();
 	void ChaseTarget();
 	void DealDamage();
+
+	Entity* GetTarget();
+	int GetAttackRange();
 
 	void OnCollision(Collider* C1, Collider* C2);
 

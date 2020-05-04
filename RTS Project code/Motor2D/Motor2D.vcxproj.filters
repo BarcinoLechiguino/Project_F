@@ -31,15 +31,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Dynamic_Object.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
-    </ClCompile>
-    <ClCompile Include="Static_Object.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
-    </ClCompile>
-    <ClCompile Include="Rock.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
-    </ClCompile>
     <ClCompile Include="Entity.cpp">
       <Filter>Engine  ===========\Modules\Entities</Filter>
     </ClCompile>
@@ -89,16 +80,10 @@
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
     <ClCompile Include="Gatherer.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
-    </ClCompile>
-    <ClCompile Include="TownHall.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="Barracks.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClCompile>
     <ClCompile Include="Infantry.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClCompile>
     <ClCompile Include="Transition.cpp">
       <Filter>Engine  ===========\Modules\Transitions</Filter>
@@ -157,17 +142,8 @@
     <ClCompile Include="Minimap.cpp">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyTownHall.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyBarracks.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
-    </ClCompile>
     <ClCompile Include="EntityQuadTree.cpp">
       <Filter>Engine  ===========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Tree.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
     </ClCompile>
     <ClCompile Include="TileQuadTree.cpp">
       <Filter>Engine  ===========\Tools</Filter>
@@ -191,10 +167,10 @@
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="Scout.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClCompile>
     <ClCompile Include="Heavy.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClCompile>
     <ClCompile Include="EnemyGatherer.cpp">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
@@ -210,6 +186,39 @@
     </ClCompile>
     <ClCompile Include="UI_CreationBar.cpp">
       <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAI.cpp">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClCompile>
+    <ClCompile Include="DynamicObject.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="Building.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
+    </ClCompile>
+    <ClCompile Include="Resource.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="Barracks.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyBarracks.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyTownHall.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="TownHall.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Rock.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Tree.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObject.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -257,15 +266,6 @@
     </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Engine  ===========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Dynamic_Object.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
-    </ClInclude>
-    <ClInclude Include="Static_Object.h">
-      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
-    </ClInclude>
-    <ClInclude Include="Rock.h">
-      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
     </ClInclude>
     <ClInclude Include="Entity.h">
       <Filter>Engine  ===========\Modules\Entities</Filter>
@@ -319,16 +319,10 @@
       <Filter>Engine  ===========\Core</Filter>
     </ClInclude>
     <ClInclude Include="Gatherer.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
-    </ClInclude>
-    <ClInclude Include="TownHall.h">
-      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="Barracks.h">
-      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClInclude>
     <ClInclude Include="Infantry.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClInclude>
     <ClInclude Include="Transition.h">
       <Filter>Engine  ===========\Modules\Transitions</Filter>
@@ -390,17 +384,8 @@
     <ClInclude Include="Minimap.h">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyTownHall.h">
-      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyBarracks.h">
-      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
-    </ClInclude>
     <ClInclude Include="EntityQuadTree.h">
       <Filter>Engine  ===========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Tree.h">
-      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
     </ClInclude>
     <ClInclude Include="TileQuadTree.h">
       <Filter>Engine  ===========\Tools</Filter>
@@ -424,10 +409,10 @@
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Scout.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClInclude>
     <ClInclude Include="Heavy.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allied</Filter>
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClInclude>
     <ClInclude Include="EnemyGatherer.h">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
@@ -443,6 +428,39 @@
     </ClInclude>
     <ClInclude Include="UI_CreationBar.h">
       <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAI.h">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicObject.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObject.h">
+      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
+    </ClInclude>
+    <ClInclude Include="Building.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="Barracks.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyBarracks.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyTownHall.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="TownHall.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Rock.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -480,20 +498,11 @@
     <Filter Include="Engine  ===========\Modules\Entities\Static">
       <UniqueIdentifier>{36e35673-638c-4c24-9dad-f5d06c9b884b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine  ===========\Modules\Entities\Static\Buildings">
-      <UniqueIdentifier>{d8af655e-522b-40ee-b083-1548d8a7be61}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine  ===========\Modules\Entities\Static\Resources">
-      <UniqueIdentifier>{15ffcaff-8973-48e6-b92f-ec6be2c7d83a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Dynamic">
       <UniqueIdentifier>{e96a4ccf-5996-4da6-8d54-7d5fcc7477e3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Enemies">
       <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Allied">
-      <UniqueIdentifier>{a7300310-4fa0-4b46-8cbe-f69324b1c8b4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine  ===========\Modules\Interactions">
       <UniqueIdentifier>{cf73c846-5205-46c2-b047-e3046a31911b}</UniqueIdentifier>
@@ -539,6 +548,21 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Multimedia">
       <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Allies">
+      <UniqueIdentifier>{a7300310-4fa0-4b46-8cbe-f69324b1c8b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Static\Buildings">
+      <UniqueIdentifier>{d8af655e-522b-40ee-b083-1548d8a7be61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Static\Resources">
+      <UniqueIdentifier>{15ffcaff-8973-48e6-b92f-ec6be2c7d83a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Static\Buildings\Building Entities">
+      <UniqueIdentifier>{5db827d6-2c4d-49f3-9391-5e65a0562382}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Static\Resources\Resource Entities">
+      <UniqueIdentifier>{3bdfee68-3a18-4461-ba17-615146dd4e9a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

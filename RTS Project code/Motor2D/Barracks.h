@@ -1,25 +1,22 @@
 #ifndef __BARRACKS_H__
 #define __BARRACKS_H__
 
-#include "Static_Object.h"
+#include "Building.h"
 
-class Barracks : public Static_Object
+class Barracks : public Building
 {
 public:
-
 	Barracks(int x, int y, ENTITY_TYPE type, int level);
+	~Barracks();
 
-	virtual bool Awake(pugi::xml_node&);
+	bool Awake(pugi::xml_node&);
+	bool Start();
+	bool PreUpdate();
+	bool Update(float dt, bool do_logic);
+	bool PostUpdate();
+	bool CleanUp();
 
-	virtual bool PreUpdate();
-
-	virtual bool Update(float dt, bool doLogic);
-
-	virtual bool PostUpdate();
-
-	virtual bool CleanUp();
-
-	virtual void Draw();
+	void Draw();
 
 public:
 	void InitEntity();

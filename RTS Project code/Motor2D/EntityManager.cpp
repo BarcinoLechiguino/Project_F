@@ -18,7 +18,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 #include "Gatherer.h"
 #include "Scout.h"
 #include "Infantry.h"
@@ -28,7 +28,7 @@
 #include "EnemyInfantry.h"
 #include "EnemyHeavy.h"
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 #include "TownHall.h"
 #include "Barracks.h"
 #include "EnemyTownHall.h"
@@ -46,6 +46,8 @@ struct {
 EntityManager::EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
 {
 	name = ("entities");
+
+	entity_map = nullptr;
 }
 
 EntityManager::~EntityManager()
@@ -57,11 +59,11 @@ bool EntityManager::Awake(pugi::xml_node& config)
 {
 	this->config = config;
 
-	cycle_length = config.child("units").child("update_cycle_length").attribute("length").as_float(); //Fix pathfinding so it works with doLogic
+	cycle_length = config.child("units").child("update_cycle_length").attribute("length").as_float();		//Fix pathfinding so it works with do_logic
 
 	for (int i = 0; i < (int)entities.size(); ++i)
 	{
-		//entities[i]->Awake(config.child(entities[i]->name_tag.c_str()));				//name_tag is currently not being used.
+		//entities[i]->Awake(config.child(entities[i]->name_tag.c_str()));									//name_tag is currently not being used.
 	}
 
 	return true;
@@ -99,16 +101,16 @@ bool EntityManager::Update(float dt)
 
 	entities_in_screen.clear();
 
-	if (accumulated_time >= cycle_length) //Timer that will set doLogic to true 10 times per second (cycle_length == 0.1 sec).
+	if (accumulated_time >= cycle_length)											//Timer that will set do_logic to true 10 times per second (cycle_length == 0.1 sec).
 	{
-		doLogic = true;
+		do_logic = true;
 	}
 
 	int j = 0;
 
 	for (int i = 0; i < (int)entities.size(); ++i)
 	{
-		entities[i]->Update(dt, doLogic);
+		entities[i]->Update(dt, do_logic);
 
 		if(InViewport(entities[i])) //Entities to be drawn
 		{
@@ -118,9 +120,9 @@ bool EntityManager::Update(float dt)
 		}
 	}
 
-	if (doLogic == true)				//Resets the doLogic timer.
+	if (do_logic == true)				//Resets the do_logic timer.
 	{
-		doLogic = false;
+		do_logic = false;
 		accumulated_time = 0.0f;
 	}
 
@@ -280,10 +282,10 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 	{
 		if (CheckTileAvailability(iPoint(x, y), entity))
 		{
-			entities.push_back(entity);								//Adds the generated entity to the entities list.
-			ChangeEntityMap(iPoint(x, y), entity);					//Adds the generated entity to entity_map.
+			entities.push_back(entity);								// Adds the generated entity to the entities list.
+			ChangeEntityMap(iPoint(x, y), entity);					// Adds the generated entity to entity_map.
 
-			entity->Start();
+			entity->Start();										// Required. entity_manager only iterates the entities' Start() at EntityManager::Start() (Once before first app frame).
 		}
 		else
 		{
@@ -683,7 +685,7 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 
 			if (IsBuilding(entity) || IsResource(entity))
 			{
-				Static_Object* item = (Static_Object*)entity;
+				StaticObject* item = (StaticObject*)entity;
 
 				for (int y = 0; y != item->tiles_occupied.y; ++y)
 				{
@@ -708,9 +710,12 @@ bool EntityManager::CheckEntityMapBoundaries(const iPoint& pos) const
 
 Entity* EntityManager::GetEntityAt(const iPoint& pos) const
 {
-	if (CheckEntityMapBoundaries(pos))
+	if (entity_map != nullptr)
 	{
-		return entity_map[(pos.y * entity_map_width) + pos.x];
+		if (CheckEntityMapBoundaries(pos))
+		{
+			return entity_map[(pos.y * entity_map_width) + pos.x];
+		}
 	}
 
 	return nullptr;

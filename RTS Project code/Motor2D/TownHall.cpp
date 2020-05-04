@@ -15,9 +15,14 @@
 #include "TownHall.h"
 
 
-TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Building(x, y, type, level)
 {
 	InitEntity();	
+}
+
+TownHall::~TownHall()
+{
+
 }
 
 bool TownHall::Awake(pugi::xml_node&)
@@ -25,13 +30,19 @@ bool TownHall::Awake(pugi::xml_node&)
 	return true;
 }
 
-bool TownHall::PreUpdate()
+bool TownHall::Start()
 {
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
 
 	return true;
 }
 
-bool TownHall::Update(float dt, bool doLogic)
+bool TownHall::PreUpdate()
+{
+	return true;
+}
+
+bool TownHall::Update(float dt, bool do_logic)
 {
 	if (creation_queue.size() != 0)
 	{
@@ -99,7 +110,7 @@ void TownHall::StartUnitCreation()
 
 	created_unit_type = (*creation_queue.begin());
 
-	switch (created_unit_type)
+	switch (created_unit_type)															// Used a switch taking into account scalability.
 	{
 	case ENTITY_TYPE::GATHERER:
 		creation_bar->SetNewCreationTime(gatherer_creation_time);
@@ -110,6 +121,7 @@ void TownHall::StartUnitCreation()
 void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 {
 	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
+
 	switch (type)
 	{
 	case ENTITY_TYPE::GATHERER:
@@ -162,10 +174,10 @@ void TownHall::InitEntity()
 	tiles_occupied.y = 3;
 
 	// --- STATS & HEALTHBAR ---
-	unit_level = 1;
-
 	max_health = 900;
 	current_health = max_health;
+
+	unit_level = 1;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{

@@ -17,9 +17,14 @@
 #include "Barracks.h"
 
 
-Barracks::Barracks(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+Barracks::Barracks(int x, int y, ENTITY_TYPE type, int level) : Building(x, y, type, level)
 {
 	InitEntity();
+}
+
+Barracks::~Barracks()
+{
+
 }
 
 bool Barracks::Awake(pugi::xml_node&)
@@ -27,17 +32,19 @@ bool Barracks::Awake(pugi::xml_node&)
 	return true;
 }
 
-bool Barracks::PreUpdate()
+bool Barracks::Start()
 {
-	if (current_health <= 0)
-	{
-		App->entity_manager->DeleteEntity(this);
-	}
-
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
+	
 	return true;
 }
 
-bool Barracks::Update(float dt, bool doLogic)
+bool Barracks::PreUpdate()
+{
+	return true;
+}
+
+bool Barracks::Update(float dt, bool do_logic)
 {
 	if (creation_queue.size() != 0)
 	{	
@@ -71,6 +78,11 @@ bool Barracks::Update(float dt, bool doLogic)
 
 bool Barracks::PostUpdate()
 {
+	if (current_health <= 0)
+	{
+		App->entity_manager->DeleteEntity(this);
+	}
+	
 	return true;
 }
 
@@ -147,7 +159,7 @@ void Barracks::LevelChanges()				//Updates the building stats when leveling up
 		barracks_rect = barracks_rect_2;
 		max_health = 800;
 		current_health = max_health;
-		unit_level++;
+		//unit_level++;									// TALK ABOUT THIS
 		break;
 	default:
 		barracks_rect = barracks_rect_2;
@@ -183,10 +195,10 @@ void Barracks::InitEntity()
 	tiles_occupied.y = 2;
 
 	// --- STATS & BARS ---
-	unit_level = 1;
-
 	max_health = 600;
 	current_health = max_health;
+
+	unit_level = 1;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{

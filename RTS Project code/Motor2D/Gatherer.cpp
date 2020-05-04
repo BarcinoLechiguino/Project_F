@@ -18,7 +18,7 @@
 #include "Gatherer.h"
 
 
-Gatherer::Gatherer(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)
+Gatherer::Gatherer(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)
 {
 	InitEntity();
 }
@@ -43,7 +43,7 @@ bool Gatherer::PreUpdate()
 	return true;
 }
 
-bool Gatherer::Update(float dt, bool doLogic)
+bool Gatherer::Update(float dt, bool do_logic)
 {
 	BROFILER_CATEGORY("Gatherer Update", Profiler::Color::Black);
 
@@ -56,25 +56,24 @@ bool Gatherer::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x + 10;
 	selection_collider.y = (int)pixel_position.y + 10;
 
-	if (doLogic)
-	{
-		if (target == nullptr && !path_full)
-		{
-			//SetGatheringTarget(App->player->mouse_tile);
-			SetGatheringTarget(App->player->cursor_tile);
-		}
-	}
+	//if (do_logic)
+	//{
+	//	if (target == nullptr && !path_full)
+	//	{
+	//		//SetGatheringTarget(App->player->mouse_tile);
+	//		SetGatheringTarget(App->player->cursor_tile);
+	//	}
+	//}
 
 	if (target != nullptr)
 	{
 		//path_full = false;
-		if (target != nullptr)
+		
+		if (TargetIsInRange())
 		{
-			if (TargetIsInRange())
-			{
-				GatherResource();
-			}
+			GatherResource();
 		}
+		
 	}
 
 	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
@@ -119,66 +118,6 @@ void Gatherer::Draw()
 	}
 }
 
-void Gatherer::InitEntity()
-{
-	entity_sprite = App->entity_manager->GetGathererTexture();
-	InitUnitSpriteSections();
-
-	target = nullptr;
-	gather_in_cooldown = false;
-	accumulated_cooldown = 0.0f;
-
-	is_selectable = true;
-	is_selected = false;
-	path_full = false;
-
-	speed = 400.0f;
-
-	max_health = 150;
-	current_health = max_health;
-
-	gathering_speed = 1.0f;
-	gathering_amount_data = 30;
-	gathering_amount_electricity = 15;
-
-	attack_damage = 10; //temporary use of these variables to check if it works
-
-	attack_range = 1;
-
-	if (App->entity_manager->CheckTileAvailability(tile_position, this))
-	{
-		AttachHealthbarToEntity();
-	}
-}
-
-void Gatherer::AttachHealthbarToEntity()
-{
-	healthbar_position_offset.x = -6;										// Magic
-	healthbar_position_offset.y = -6;
-
-	healthbar_background_rect = { 967, 1, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
-	healthbar_rect = { 967, 13, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
-
-	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
-
-	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
-}
-
-void Gatherer::InitUnitSpriteSections()
-{
-	entity_sprite_section		= { 52, 0, 52, 49 };
-	
-	pathing_up_section			= { 0, 49, 39, 42 };
-	pathing_down_section		= { 39, 49, 38, 45 };
-	pathing_rigth_section		= { 123, 49, 43, 42 };
-	pathing_left_section		= { 78, 49, 43, 42 };
-	pathing_up_right_section	= { 104, 0, 52, 49 };
-	pathing_up_left_section		= { 156, 0, 52, 49 };
-	pathing_down_right_section	= { 52, 0, 52 ,49 };
-	pathing_down_left_section	= { 0, 0, 52, 49 };
-}
-
 void Gatherer::UpdateUnitSpriteSection()
 {
 	//change section according to pathing. 
@@ -215,27 +154,27 @@ bool Gatherer::TargetIsInRange()
 {
 	if (target != nullptr)
 	{
-		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
-
-		if (distance <= attack_range)
+		if (App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range )
 		{
 			return true;
 		}
 	}
-
 	return false;
 }
 
-
 void Gatherer::SetGatheringTarget(const iPoint& tile_position)
 {
-	Entity* gathering_target = App->entity_manager->GetEntityAt(tile_position);
+	std::vector<Entity*>::iterator item = App->entity_manager->entities.begin();
 
-	if (gathering_target != nullptr)
+	for (; item != App->entity_manager->entities.end(); ++item)
 	{
-		if (App->entity_manager->IsResource(gathering_target))
+		if (App->entity_manager->IsResource((*item)))
 		{
-			target = gathering_target;
+			if (App->pathfinding->DistanceInTiles(this->tile_position, tile_position) <= attack_range)
+			{
+				target = (*item);
+				break;
+			}
 		}
 	}
 }
@@ -248,7 +187,7 @@ void Gatherer::PathToGatheringTarget()
 	{
 		tmp.push_back(entity_path[i]);
 
-		if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+		if (App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range)
 		{
 			entity_path.clear();
 
@@ -301,6 +240,129 @@ void Gatherer::GatherResource()
 			accumulated_cooldown = 0.0f;
 		}
 	}
+}
+
+Entity* Gatherer::GetTarget()
+{
+	return target;
+}
+
+int Gatherer::GetAttackRange()
+{
+	return attack_range;
+}
+
+void Gatherer::InitEntity()
+{
+	//config_file.load_file("config.xml");
+	//pugi::xml_node gatherer = config_file.child("config").child("entities").child("units").child("allies").child("gatherer");
+	
+	entity_sprite = App->entity_manager->GetGathererTexture();
+	InitUnitSpriteSections();
+
+	target = nullptr;
+	gather_in_cooldown = false;
+	accumulated_cooldown = 0.0f;
+
+	is_selectable = true;
+	is_selected = false;
+	path_full = false;
+
+	speed = 400.0f;
+
+	max_health = 150;
+	current_health = max_health;
+
+	gathering_speed = 1.0f;
+	gathering_amount_data = 30;
+	gathering_amount_electricity = 15;
+
+	attack_damage = 10; //temporary use of these variables to check if it works
+
+	attack_range = 2;
+
+	if (App->entity_manager->CheckTileAvailability(tile_position, this))
+	{
+		AttachHealthbarToEntity();
+	}
+}
+
+void Gatherer::AttachHealthbarToEntity()
+{
+	healthbar_position_offset.x = -6;										// Magic
+	healthbar_position_offset.y = -6;
+
+	healthbar_background_rect = { 967, 1, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
+	healthbar_rect = { 967, 13, MAX_UNIT_HEALTHBAR_WIDTH, 6 };
+
+	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+
+	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+}
+
+void Gatherer::InitUnitSpriteSections()
+{	
+	pathing_up_section			= { 0, 49, 39, 42 };
+
+	pathing_down_section		= { 39, 49, 38, 45 };
+
+	pathing_rigth_section		= { 123, 49, 43, 42 };
+
+	pathing_left_section		= { 78, 49, 43, 42 };
+
+	pathing_up_right_section	= { 104, 0, 52, 49 };
+
+	pathing_up_left_section		= { 156, 0, 52, 49 };
+
+	pathing_down_right_section	= { 52, 0, 52 ,49 };
+
+	pathing_down_left_section	= { 0, 0, 52, 49 };
+
+	entity_sprite_section		= pathing_down_right_section;
+
+	// --- LOADING FROM XML ---
+	//pugi::xml_node sections = config_file.child("config").child("entities").child("units").child("allies").child("gatherer").child("sprite_sections");
+
+	/*pathing_up_section.x = sections.child("pathing_up").attribute("x").as_int();
+	pathing_up_section.y = sections.child("pathing_up").attribute("y").as_int();
+	pathing_up_section.w = sections.child("pathing_up").attribute("w").as_int();
+	pathing_up_section.h = sections.child("pathing_up").attribute("h").as_int();
+
+	pathing_down_section.x = sections.child("pathing_down").attribute("x").as_int();
+	pathing_down_section.y = sections.child("pathing_down").attribute("y").as_int();
+	pathing_down_section.w = sections.child("pathing_down").attribute("w").as_int();
+	pathing_down_section.h = sections.child("pathing_down").attribute("h").as_int();
+
+	pathing_rigth_section.x = sections.child("pathing_right").attribute("x").as_int();
+	pathing_rigth_section.y = sections.child("pathing_right").attribute("y").as_int();
+	pathing_rigth_section.w = sections.child("pathing_right").attribute("w").as_int();
+	pathing_rigth_section.h = sections.child("pathing_right").attribute("h").as_int();
+
+	pathing_left_section.x = sections.child("pathing_left").attribute("x").as_int();
+	pathing_left_section.y = sections.child("pathing_left").attribute("y").as_int();
+	pathing_left_section.w = sections.child("pathing_left").attribute("w").as_int();
+	pathing_left_section.h = sections.child("pathing_left").attribute("h").as_int();
+
+	pathing_up_right_section.x = sections.child("pathing_up_right").attribute("x").as_int();
+	pathing_up_right_section.y = sections.child("pathing_up_right").attribute("y").as_int();
+	pathing_up_right_section.w = sections.child("pathing_up_right").attribute("w").as_int();
+	pathing_up_right_section.h = sections.child("pathing_up_right").attribute("h").as_int();
+
+	pathing_up_left_section.x = sections.child("pathing_up_left").attribute("x").as_int();
+	pathing_up_left_section.y = sections.child("pathing_up_left").attribute("y").as_int();
+	pathing_up_left_section.w = sections.child("pathing_up_left").attribute("w").as_int();
+	pathing_up_left_section.h = sections.child("pathing_up_left").attribute("h").as_int();
+
+	pathing_down_right_section.x = sections.child("pathing_down_right").attribute("x").as_int();
+	pathing_down_right_section.y = sections.child("pathing_down_right").attribute("y").as_int();
+	pathing_down_right_section.w = sections.child("pathing_down_right").attribute("w").as_int();
+	pathing_down_right_section.h = sections.child("pathing_down_right").attribute("h").as_int();
+
+	pathing_down_left_section.x = sections.child("pathing_down_left").attribute("x").as_int();
+	pathing_down_left_section.y = sections.child("pathing_down_left").attribute("y").as_int();
+	pathing_down_left_section.w = sections.child("pathing_down_left").attribute("w").as_int();
+	pathing_down_left_section.h = sections.child("pathing_down_left").attribute("h").as_int();*/
 }
 
 void Gatherer::OnCollision(Collider* C1, Collider* C2)

@@ -13,7 +13,7 @@
 #include "Rock.h"
 
 
-Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Resource(x, y, type, level)
 {
 	InitEntity();
 
@@ -22,8 +22,13 @@ Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type
 
 	blit_section = new SDL_Rect{rock_version,0,54,35};
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 	healthbar_position_offset.x = -30;
+}
+
+Rock::~Rock()
+{
+
 }
 
 bool Rock::Awake(pugi::xml_node&)
@@ -31,15 +36,20 @@ bool Rock::Awake(pugi::xml_node&)
 	return true;
 }
 
+bool Rock::Start()
+{
+	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
+
+	return true;
+}
 
 bool Rock::PreUpdate()
 {
 	return true;
 }
 
-bool Rock::Update(float dt, bool doLogic)
+bool Rock::Update(float dt, bool do_logic)
 {
-	
 	return true;
 }
 
@@ -94,9 +104,6 @@ void Rock::InitEntity()
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
 	// --- STATS & HEALTHBAR ---
-	ore = 20;
-	gather_time = 1;
-
 	max_health = 300;
 	current_health = max_health;
 
@@ -104,15 +111,6 @@ void Rock::InitEntity()
 	{
 		AttachHealthbarToEntity();
 	}
-
-	// Resources will not have a creation bar.
-	/*creating_unit = false;
-	creation_has_finished = true;
-	creation_bar = nullptr;
-
-	creation_bar_background_rect = { 0, 0, 0, 0 };
-	creation_bar_rect = { 0, 0, 0, 0 };
-	creation_bar_position_offset = { 0, 0 };*/
 }
 
 void Rock::AttachHealthbarToEntity()

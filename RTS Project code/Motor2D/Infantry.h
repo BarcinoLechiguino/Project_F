@@ -1,9 +1,9 @@
 #ifndef __INFANTRY_H__
 #define __INFANTRY_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
-class Infantry : public Dynamic_Object
+class Infantry : public DynamicObject
 {
 public:
 
@@ -17,7 +17,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update(float dt, bool doLogic);
+	bool Update(float dt, bool do_logic);
 
 	bool PostUpdate();
 
@@ -34,12 +34,14 @@ public:
 	void UpdateUnitSpriteSection();
 	
 	void SetEntityTargetByProximity();
-	void GetShortestPathWithinAttackRange();
 	void UpdateUnitOrientation();
 
 	bool TargetIsInRange();
 	void ChaseTarget();
 	void DealDamage();
+
+	Entity* GetTarget();
+	int GetAttackRange();
 
 	void OnCollision(Collider* C1, Collider* C2);
 

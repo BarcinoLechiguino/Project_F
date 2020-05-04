@@ -18,7 +18,7 @@
 #include "Infantry.h"
 
 
-Infantry::Infantry(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
+Infantry::Infantry(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	LOG("x %d and y %d", x, y);
 	InitEntity();
@@ -44,7 +44,7 @@ bool Infantry::PreUpdate()
 	return true;
 };
 
-bool Infantry::Update(float dt, bool doLogic)
+bool Infantry::Update(float dt, bool do_logic)
 {
 	HandleMovement(dt);
 
@@ -62,7 +62,7 @@ bool Infantry::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x;
 	selection_collider.y = (int)pixel_position.y;
 
-	if (doLogic)
+	if (do_logic)
 	{
 		if (target == nullptr && !path_full)
 		{
@@ -224,7 +224,7 @@ void Infantry::SetEntityTargetByProximity()
 	{
 		if (App->entity_manager->IsEnemyEntity((*item)))
 		{
-			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
+			if (App->pathfinding->DistanceInTiles(tile_position, (*item)->tile_position) <= attack_range)
 			{
 				target = (*item);
 				break;
@@ -233,32 +233,32 @@ void Infantry::SetEntityTargetByProximity()
 	}
 }
 
-void Infantry::GetShortestPathWithinAttackRange()
-{
-	std::vector<iPoint> tmp;
-
-	if (target != nullptr)
-	{
-		for (int i = 0; i < (int)entity_path.size(); ++i)
-		{
-			tmp.push_back(entity_path[i]);
-
-			if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
-			{
-				entity_path.clear();
-
-				entity_path = tmp;
-
-				target_tile = entity_path.back();
-				current_path_tile = entity_path.begin();
-
-				tmp.clear();
-
-				break;
-			}
-		}
-	}
-}
+//void Infantry::GetShortestPathWithinAttackRange()
+//{
+//	std::vector<iPoint> tmp;
+//
+//	if (target != nullptr)
+//	{
+//		for (int i = 0; i < (int)entity_path.size(); ++i)
+//		{
+//			tmp.push_back(entity_path[i]);
+//
+//			if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
+//			{
+//				entity_path.clear();
+//
+//				entity_path = tmp;
+//
+//				target_tile = entity_path.back();
+//				current_path_tile = entity_path.begin();
+//
+//				tmp.clear();
+//
+//				break;
+//			}
+//		}
+//	}
+//}
 
 void Infantry::UpdateUnitOrientation()
 {
@@ -321,9 +321,7 @@ bool Infantry::TargetIsInRange()
 {
 	if (target != nullptr)
 	{
-		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
-
-		if (distance <= attack_range)
+		if (App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range)
 		{
 			return true;
 		}
@@ -334,13 +332,13 @@ bool Infantry::TargetIsInRange()
 
 void Infantry::ChaseTarget()
 {
-	std::vector<Dynamic_Object*> tmp;
+	std::vector<DynamicObject*> tmp;
 	tmp.push_back(this);
 
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	//GiveNewTargetTile(target->tile_position);
-	App->pathfinding->MoveOrder(target->tile_position, tmp);
+	App->pathfinding->AttackOrder(target->tile_position, tmp);
 }
 
 void Infantry::DealDamage()
@@ -372,4 +370,14 @@ void Infantry::DealDamage()
 void Infantry::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
+}
+
+Entity* Infantry::GetTarget()
+{
+	return target;
+}
+
+int Infantry::GetAttackRange()
+{
+	return attack_range;
 }

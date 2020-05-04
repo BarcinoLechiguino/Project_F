@@ -38,11 +38,19 @@ struct EntityData
 	iPoint			position;
 };
 
+struct EntityCost
+{
+	uint			data;
+	uint			electricity;
+	uint			chips;
+};
+
 class Entity
 {
 public:
 	Entity();
 	Entity(int x, int y, ENTITY_TYPE type, int level);	// here we will set initial position
+	//virtual ~Entity()
 
 	//Must be virtual so when an entity is executed the compiler goes to the entity's methods instead of these
 	virtual bool Awake(pugi::xml_node&);
@@ -51,7 +59,7 @@ public:
 
 	virtual bool PreUpdate();
 
-	virtual bool Update(float dt, bool doLogic);
+	virtual bool Update(float dt, bool do_logic);
 
 	virtual bool PostUpdate();
 
@@ -74,6 +82,9 @@ public:
 	void ApplyDamage(Entity* target);											//Applies the current unit damage to the referenced target, also handles the target health bar.
 
 public:
+	pugi::xml_document	config_file;
+	pugi::xml_node		config;
+	
 	//Entity Variables
 	std::string		name_tag;													//Name of the entity in the xml file.
 	ENTITY_TYPE		type;

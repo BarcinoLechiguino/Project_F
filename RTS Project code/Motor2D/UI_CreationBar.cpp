@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "EntityManager.h"
 //#include "Entity.h"
-#include "Static_Object.h"
+#include "StaticObject.h"
 #include "GuiManager.h"
 
 #include "UI_CreationBar.h"

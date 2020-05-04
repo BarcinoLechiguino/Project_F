@@ -1,9 +1,9 @@
 #ifndef __GATHERER_H__
 #define __GATHERER_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
-class Gatherer : public Dynamic_Object
+class Gatherer : public DynamicObject
 {
 public:
 
@@ -17,7 +17,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update(float dt, bool doLogic);
+	bool Update(float dt, bool do_logic);
 
 	bool PostUpdate();
 
@@ -27,10 +27,9 @@ public:
 
 public:
 	void InitEntity();
-	
+	void InitUnitSpriteSections();
 	void AttachHealthbarToEntity();
 
-	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 
 	void SetGatheringTarget(const iPoint& tile_position);
@@ -39,17 +38,19 @@ public:
 	bool TargetIsInRange();
 	void GatherResource();
 	
+	Entity* GetTarget();
+	int GetAttackRange();
+
 	//void HandleFx();
 	//void SubstractResource();
 
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
+	bool	gather_in_cooldown;
 	float	gathering_speed;
 	int		gathering_amount_data;
 	int		gathering_amount_electricity;
-	bool	gather_in_cooldown;
-
 };
 
 #endif // !__GATHERER_H__

@@ -1,7 +1,7 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Entity.h"
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 #include "Pathfinding.h"
 #include "Application.h"
 #include "Map.h"
@@ -49,11 +49,11 @@ bool Movement::CleanUp()
 	return true;
 }
 
-void Movement::OrderUnitsToMove(iPoint tile, std::vector<Dynamic_Object*> units_selected)
+void Movement::OrderUnitsToMove(iPoint tile, std::vector<DynamicObject*> units_selected)
 {
 	if (App->pathfinding->IsWalkable(tile))
 	{
-		std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+		std::vector<DynamicObject*>::iterator item = units_selected.begin();
 
 		for (; item != units_selected.end(); item++)
 		{
@@ -61,8 +61,10 @@ void Movement::OrderUnitsToMove(iPoint tile, std::vector<Dynamic_Object*> units_
 			{
 				(*item)->target = nullptr;
 			}
+
 			App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
 		}
+
 		App->pathfinding->MoveOrder(tile, units_selected);							//Gives units targets around main target
 	}
 	else
@@ -71,7 +73,7 @@ void Movement::OrderUnitsToMove(iPoint tile, std::vector<Dynamic_Object*> units_
 	}
 }
 
-void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> units_selected)
+void Movement::OrderUnitsToAttack(iPoint tile, std::vector<DynamicObject*> units_selected)
 {
 	if (App->map->CheckMapBoundaries(tile))														// Checks that the current mouse_tile is within the map's boundaries.
 	{
@@ -83,7 +85,7 @@ void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> unit
 			{
 				if (App->entity_manager->IsEnemyEntity(target))
 				{
-					std::vector<Dynamic_Object*> ally_units;												//Temporal fix. For now we only have infantries as combat units.
+					std::vector<DynamicObject*> ally_units;												//Temporal fix. For now we only have infantries as combat units.
 
 					for (int i = 0; i < (int)units_selected.size(); ++i)
 					{
@@ -101,7 +103,7 @@ void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> unit
 						App->pathfinding->ChangeWalkability(ally_units[i]->occupied_tile, ally_units[i], WALKABLE);
 					}
 
-					App->pathfinding->MoveOrder(target->tile_position, ally_units);
+					App->pathfinding->AttackOrder(target->tile_position, ally_units);
 
 					ally_units.clear();
 				}
@@ -111,23 +113,23 @@ void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> unit
 			{
 				if (App->entity_manager->IsResource(target))
 				{
-					std::vector<Dynamic_Object*> gatherers;
+					std::vector<DynamicObject*> gatherers;
 
 					for (int i = 0; i < (int)units_selected.size(); ++i)
 					{
 						if (App->entity_manager->IsGatherer(units_selected[i]))
 						{
 							gatherers.push_back(units_selected[i]);
+
+							units_selected[i]->target = target;
+							App->pathfinding->ChangeWalkability(units_selected[i]->occupied_tile, units_selected[i], WALKABLE);
 						}
 					}
 
-					for (int i = 0; i < (int)gatherers.size(); ++i)
+					if ( gatherers.size()  !=0)
 					{
-						gatherers[i]->target = target;
-						App->pathfinding->ChangeWalkability(gatherers[i]->occupied_tile, gatherers[i], WALKABLE);
+						App->pathfinding->AttackOrder(target->tile_position, gatherers);							//Gives units targets around main target
 					}
-
-					App->pathfinding->MoveOrder(target->tile_position, gatherers);							//Gives units targets around main target
 
 					gatherers.clear();
 				}

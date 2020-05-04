@@ -15,7 +15,7 @@ struct SDL_Texture;
 class Entity;
 enum class ENTITY_TYPE;
 
-//class Dynamic_Object;
+//class DynamicObject;
 //class Gatherer;
 //class Scout;
 //class Infantry;
@@ -25,7 +25,7 @@ enum class ENTITY_TYPE;
 //class EnemyInfantry;
 //class EnemyHeavy;
 //
-//class Static_Object;
+//class StaticObject;
 //class TownHall;
 //class Barracks;
 //class EnemyTownHall;
@@ -152,11 +152,11 @@ public:
 
 	float							accumulated_time;	//Accumulates dt as time goes on.
 	float							cycle_length;		//How much time needs to pass / be accumulated before running a cycle. 
-	bool							doLogic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
+	bool							do_logic;			//Keeps track whether or not the entity needs to do it's logic (pathfinding...)
 	
 	bool							debug_center_point;
 
-	uint								resource_data;
-	uint								resource_electricity;
+	uint							resource_data;
+	uint							resource_electricity;
 };
 #endif // __ENTITY_MANAGER_H__

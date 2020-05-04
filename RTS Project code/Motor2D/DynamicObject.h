@@ -25,11 +25,11 @@ enum class ENTITY_STATE //Maybe WALKING instead?
 	DEAD,
 };
 
-class Dynamic_Object : public Entity
+class DynamicObject : public Entity
 {
 public:
 
-	Dynamic_Object(int x, int y, ENTITY_TYPE type, int level);
+	DynamicObject(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 
@@ -37,7 +37,7 @@ public:
 
 	virtual bool PreUpdate();
 
-	virtual bool Update(float dt, bool doLogic);
+	virtual bool Update(float dt, bool do_logic);
 
 	virtual bool PostUpdate();
 
@@ -58,6 +58,9 @@ public:
 
 	virtual void SetGatheringTarget(const iPoint& tile_position);				// Method that will set as a target the selected Resource
 	virtual void PathToGatheringTarget();										// Method that will define the path to the target
+
+	virtual Entity* GetTarget();
+	virtual int GetAttackRange();
 
 	bool GiveNewTargetTile(const iPoint& new_target_tile);
 	void ChangeOccupiedTile(iPoint new_occupied_tile);

@@ -18,7 +18,7 @@
 #include "EnemyGatherer.h"
 
 
-EnemyGatherer::EnemyGatherer(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)
+EnemyGatherer::EnemyGatherer(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)
 {
 	InitEntity();
 }
@@ -43,7 +43,7 @@ bool EnemyGatherer::PreUpdate()
 	return true;
 }
 
-bool EnemyGatherer::Update(float dt, bool doLogic)
+bool EnemyGatherer::Update(float dt, bool do_logic)
 {
 	BROFILER_CATEGORY("EnemyGatherer Update", Profiler::Color::Black);
 
@@ -56,7 +56,7 @@ bool EnemyGatherer::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x + 10;
 	selection_collider.y = (int)pixel_position.y + 10;
 
-	if (doLogic)
+	if (do_logic)
 	{
 		if (target == nullptr && !path_full)
 		{

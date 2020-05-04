@@ -18,7 +18,7 @@
 #include "Heavy.h"
 
 
-Heavy::Heavy(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
+Heavy::Heavy(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	LOG("x %d and y %d", x, y);
 	InitEntity();
@@ -44,7 +44,7 @@ bool Heavy::PreUpdate()
 	return true;
 };
 
-bool Heavy::Update(float dt, bool doLogic)
+bool Heavy::Update(float dt, bool do_logic)
 {
 	HandleMovement(dt);
 
@@ -62,7 +62,7 @@ bool Heavy::Update(float dt, bool doLogic)
 	selection_collider.x = (int)pixel_position.x;
 	selection_collider.y = (int)pixel_position.y;
 
-	if (doLogic)
+	if (do_logic)
 	{
 		if (target == nullptr && !path_full)
 		{
@@ -334,7 +334,7 @@ bool Heavy::TargetIsInRange()
 
 void Heavy::ChaseTarget()
 {
-	std::vector<Dynamic_Object*> tmp;
+	std::vector<DynamicObject*> tmp;
 	tmp.push_back(this);
 
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);

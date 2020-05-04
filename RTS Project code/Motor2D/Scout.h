@@ -1,9 +1,9 @@
 #ifndef __SCOUT_H__
 #define __SCOUT_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
-class Scout : public Dynamic_Object
+class Scout : public DynamicObject
 {
 public:
 
@@ -17,7 +17,7 @@ public:
 
 	bool PreUpdate();
 
-	bool Update(float dt, bool doLogic);
+	bool Update(float dt, bool do_logic);
 
 	bool PostUpdate();
 
@@ -40,6 +40,8 @@ public:
 	bool TargetIsInRange();
 	void ChaseTarget();
 	void DealDamage();
+
+
 
 	void OnCollision(Collider* C1, Collider* C2);
 
