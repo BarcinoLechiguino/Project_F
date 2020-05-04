@@ -163,10 +163,10 @@ void TownHall::InitEntity()
 	tiles_occupied.y = 3;
 
 	// --- STATS & HEALTHBAR ---
-	unit_level = 1;
-
 	max_health = 900;
 	current_health = max_health;
+
+	unit_level = 1;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{

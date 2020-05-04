@@ -27,10 +27,9 @@ public:
 
 public:
 	void InitEntity();
-	
+	void InitUnitSpriteSections();
 	void AttachHealthbarToEntity();
 
-	void InitUnitSpriteSections();
 	void UpdateUnitSpriteSection();
 
 	void SetGatheringTarget(const iPoint& tile_position);
@@ -48,11 +47,10 @@ public:
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
+	bool	gather_in_cooldown;
 	float	gathering_speed;
 	int		gathering_amount_data;
 	int		gathering_amount_electricity;
-	bool	gather_in_cooldown;
-
 };
 
 #endif // !__GATHERER_H__
