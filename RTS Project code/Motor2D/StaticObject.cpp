@@ -3,20 +3,20 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 
 
-Static_Object::Static_Object(int x, int y, ENTITY_TYPE type, int level) : Entity(x, y, type, level)
+StaticObject::StaticObject(int x, int y, ENTITY_TYPE type, int level) : Entity(x, y, type, level)
 {
 	
 }
 
-bool Static_Object::Awake(pugi::xml_node&)
+bool StaticObject::Awake(pugi::xml_node&)
 {
 	return true;
 }
 
-bool Static_Object::Start()
+bool StaticObject::Start()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
 	
@@ -32,29 +32,29 @@ bool Static_Object::Start()
 	return true;
 }
 
-bool Static_Object::PreUpdate()
+bool StaticObject::PreUpdate()
 {
 	
 
 	return true;
 }
 
-bool Static_Object::Update(float dt, bool doLogic)
+bool StaticObject::Update(float dt, bool doLogic)
 {
 	return true;
 }
 
-bool Static_Object::PostUpdate()
+bool StaticObject::PostUpdate()
 {
 	return true;
 }
 
-bool Static_Object::CleanUp()
+bool StaticObject::CleanUp()
 {
 	return true;
 }
 
-void Static_Object::Draw()
+void StaticObject::Draw()
 {
 	return;
 }

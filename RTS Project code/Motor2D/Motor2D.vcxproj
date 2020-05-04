@@ -88,7 +88,7 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Cut.cpp" />
-    <ClCompile Include="Dynamic_Object.cpp" />
+    <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="EnemyInfantry.cpp" />
     <ClCompile Include="EnemyGatherer.cpp" />
@@ -126,7 +126,7 @@
     <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="Scout.cpp" />
     <ClCompile Include="Slide.cpp" />
-    <ClCompile Include="Static_Object.cpp" />
+    <ClCompile Include="StaticObject.cpp" />
     <ClCompile Include="TileQuadTree.cpp" />
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
@@ -163,7 +163,7 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Cut.h" />
-    <ClInclude Include="Dynamic_Object.h" />
+    <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="EnemyBarracks.h" />
     <ClInclude Include="EnemyGatherer.h" />
@@ -197,7 +197,7 @@
     <ClInclude Include="SceneManager.h" />
     <ClInclude Include="Scout.h" />
     <ClInclude Include="Slide.h" />
-    <ClInclude Include="Static_Object.h" />
+    <ClInclude Include="StaticObject.h" />
     <ClInclude Include="TileQuadTree.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="MainMenuScene.h" />

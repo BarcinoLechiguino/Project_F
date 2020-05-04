@@ -16,8 +16,8 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-	void OrderUnitsToMove(iPoint tile,std::vector<Dynamic_Object*> units_selected);
-	void OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> units_selected);
+	void OrderUnitsToMove(iPoint tile,std::vector<DynamicObject*> units_selected);
+	void OrderUnitsToAttack(iPoint tile, std::vector<DynamicObject*> units_selected);
 
 	//void AttackOrder()
 

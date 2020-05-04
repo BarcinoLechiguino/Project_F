@@ -6,8 +6,8 @@
 #include "Map.h"
 #include "EntityManager.h"
 #include "Entity.h"
-#include "Dynamic_Object.h"
-#include "Static_Object.h"
+#include "DynamicObject.h"
+#include "StaticObject.h"
 #include "Infantry.h"
 
 #include "PathFinding.h"
@@ -216,11 +216,11 @@ iPoint PathFinding::FindNearbyPoint(iPoint pos)
 	return ret;
 }
 
-void PathFinding::MoveOrder(const iPoint& pos, std::vector<Dynamic_Object*> units_selected)
+void PathFinding::MoveOrder(const iPoint& pos, std::vector<DynamicObject*> units_selected)
 {
 	if (units_selected.size() != 0)
 	{
-		std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
+		std::vector<DynamicObject*>::iterator units = units_selected.begin();
 
 		if ((*units)->target == nullptr)
 		{
@@ -278,14 +278,14 @@ void PathFinding::MoveOrder(const iPoint& pos, std::vector<Dynamic_Object*> unit
 	}
 }
 
-void PathFinding::AttackOrder(const iPoint& pos, std::vector<Dynamic_Object*> units_selected)
+void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> units_selected)
 {
 	iPoint initial_walkable_tile = FindNearbyPoint(pos);
 
 	LOG(" initial found x %d y %d", initial_walkable_tile.x, initial_walkable_tile.y);
 
-	//Dynamic_Object sample = *units_selected[0];
-	Dynamic_Object* sample = units_selected[0];
+	//DynamicObject sample = *units_selected[0];
+	DynamicObject* sample = units_selected[0];
 
 	LOG("sample pos x %d y %d", sample->tile_position.x, sample->tile_position.y);
 	LOG("sample range %d", sample->attack_range);
@@ -314,7 +314,7 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<Dynamic_Object*> un
 
 	if (units_selected.size() != 0)
 	{
-		std::vector<Dynamic_Object*>::iterator units = units_selected.begin();
+		std::vector<DynamicObject*>::iterator units = units_selected.begin();
 
 		if (App->pathfinding->IsWalkable(final_point))
 		{

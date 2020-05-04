@@ -13,7 +13,7 @@
 #include "Tree.h"
 
 
-Tree::Tree(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+Tree::Tree(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
 {
 	InitEntity();
 

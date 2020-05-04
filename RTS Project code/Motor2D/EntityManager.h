@@ -15,7 +15,7 @@ struct SDL_Texture;
 class Entity;
 enum class ENTITY_TYPE;
 
-//class Dynamic_Object;
+//class DynamicObject;
 //class Gatherer;
 //class Scout;
 //class Infantry;
@@ -25,7 +25,7 @@ enum class ENTITY_TYPE;
 //class EnemyInfantry;
 //class EnemyHeavy;
 //
-//class Static_Object;
+//class StaticObject;
 //class TownHall;
 //class Barracks;
 //class EnemyTownHall;

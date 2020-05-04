@@ -15,11 +15,11 @@ enum class BUILDING_STATE
 	DESTROYED
 };
 
-class Static_Object : public Entity
+class StaticObject : public Entity
 {
 public:
 
-	Static_Object(int x, int y, ENTITY_TYPE type, int level);
+	StaticObject(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 

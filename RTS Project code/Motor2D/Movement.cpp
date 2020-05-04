@@ -1,7 +1,7 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Entity.h"
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 #include "Pathfinding.h"
 #include "Application.h"
 #include "Map.h"
@@ -49,11 +49,11 @@ bool Movement::CleanUp()
 	return true;
 }
 
-void Movement::OrderUnitsToMove(iPoint tile, std::vector<Dynamic_Object*> units_selected)
+void Movement::OrderUnitsToMove(iPoint tile, std::vector<DynamicObject*> units_selected)
 {
 	if (App->pathfinding->IsWalkable(tile))
 	{
-		std::vector<Dynamic_Object*>::iterator item = units_selected.begin();
+		std::vector<DynamicObject*>::iterator item = units_selected.begin();
 
 		for (; item != units_selected.end(); item++)
 		{
@@ -73,7 +73,7 @@ void Movement::OrderUnitsToMove(iPoint tile, std::vector<Dynamic_Object*> units_
 	}
 }
 
-void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> units_selected)
+void Movement::OrderUnitsToAttack(iPoint tile, std::vector<DynamicObject*> units_selected)
 {
 	if (App->map->CheckMapBoundaries(tile))														// Checks that the current mouse_tile is within the map's boundaries.
 	{
@@ -85,7 +85,7 @@ void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> unit
 			{
 				if (App->entity_manager->IsEnemyEntity(target))
 				{
-					std::vector<Dynamic_Object*> ally_units;												//Temporal fix. For now we only have infantries as combat units.
+					std::vector<DynamicObject*> ally_units;												//Temporal fix. For now we only have infantries as combat units.
 
 					for (int i = 0; i < (int)units_selected.size(); ++i)
 					{
@@ -113,7 +113,7 @@ void Movement::OrderUnitsToAttack(iPoint tile, std::vector<Dynamic_Object*> unit
 			{
 				if (App->entity_manager->IsResource(target))
 				{
-					std::vector<Dynamic_Object*> gatherers;
+					std::vector<DynamicObject*> gatherers;
 
 					for (int i = 0; i < (int)units_selected.size(); ++i)
 					{

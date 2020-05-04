@@ -1,9 +1,9 @@
 #ifndef __INFANTRY_H__
 #define __INFANTRY_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
-class Infantry : public Dynamic_Object
+class Infantry : public DynamicObject
 {
 public:
 

@@ -29,7 +29,7 @@
 #include "EnemyInfantry.h"
 #include "EnemyHeavy.h"
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 #include "TownHall.h"
 #include "Barracks.h"
 #include "EnemyTownHall.h"

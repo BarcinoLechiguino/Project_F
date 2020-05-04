@@ -1,9 +1,9 @@
 #ifndef __SCOUT_H__
 #define __SCOUT_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
-class Scout : public Dynamic_Object
+class Scout : public DynamicObject
 {
 public:
 

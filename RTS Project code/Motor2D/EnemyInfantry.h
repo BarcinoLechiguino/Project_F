@@ -1,11 +1,11 @@
 #ifndef __ENEMY_H__
 #define __ENEMY_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
 class Infantry;
 
-class EnemyInfantry : public Dynamic_Object
+class EnemyInfantry : public DynamicObject
 {
 public:
 

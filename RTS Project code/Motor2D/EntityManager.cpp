@@ -18,7 +18,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 #include "Gatherer.h"
 #include "Scout.h"
 #include "Infantry.h"
@@ -28,7 +28,7 @@
 #include "EnemyInfantry.h"
 #include "EnemyHeavy.h"
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 #include "TownHall.h"
 #include "Barracks.h"
 #include "EnemyTownHall.h"
@@ -685,7 +685,7 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 
 			if (IsBuilding(entity) || IsResource(entity))
 			{
-				Static_Object* item = (Static_Object*)entity;
+				StaticObject* item = (StaticObject*)entity;
 
 				for (int y = 0; y != item->tiles_occupied.y; ++y)
 				{

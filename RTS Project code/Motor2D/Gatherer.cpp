@@ -18,7 +18,7 @@
 #include "Gatherer.h"
 
 
-Gatherer::Gatherer(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)
+Gatherer::Gatherer(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)
 {
 	InitEntity();
 }

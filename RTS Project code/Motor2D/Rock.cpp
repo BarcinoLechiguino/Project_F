@@ -13,7 +13,7 @@
 #include "Rock.h"
 
 
-Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
 {
 	InitEntity();
 

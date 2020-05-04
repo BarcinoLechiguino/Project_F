@@ -18,7 +18,7 @@
 #include "EnemyGatherer.h"
 
 
-EnemyGatherer::EnemyGatherer(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)
+EnemyGatherer::EnemyGatherer(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)
 {
 	InitEntity();
 }

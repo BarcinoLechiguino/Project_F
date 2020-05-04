@@ -15,7 +15,7 @@
 #include "TownHall.h"
 
 
-TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+TownHall::TownHall(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
 {
 	InitEntity();	
 }

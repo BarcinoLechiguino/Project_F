@@ -31,12 +31,6 @@
     <ClCompile Include="Main.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Dynamic_Object.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
-    </ClCompile>
-    <ClCompile Include="Static_Object.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
-    </ClCompile>
     <ClCompile Include="Rock.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
     </ClCompile>
@@ -214,6 +208,12 @@
     <ClCompile Include="EnemyAI.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
+    <ClCompile Include="DynamicObject.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
+    </ClCompile>
+    <ClCompile Include="StaticObject.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -260,12 +260,6 @@
     </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Engine  ===========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Dynamic_Object.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
-    </ClInclude>
-    <ClInclude Include="Static_Object.h">
-      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
     </ClInclude>
     <ClInclude Include="Rock.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Resources</Filter>
@@ -449,6 +443,12 @@
     </ClInclude>
     <ClInclude Include="EnemyAI.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="DynamicObject.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic</Filter>
+    </ClInclude>
+    <ClInclude Include="StaticObject.h">
+      <Filter>Engine  ===========\Modules\Entities\Static</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

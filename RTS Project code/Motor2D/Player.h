@@ -9,8 +9,8 @@
 class Pathfinding;
 
 class Entity;
-class Dynamic_Object;
-class Static_Object;
+class DynamicObject;
+class StaticObject;
 
 class UI_Cursor;
 
@@ -81,7 +81,7 @@ public:
 
 	// --- Conditional Checks
 	bool CurrentlyInGameplayScene();
-	bool CheckSelectionRectBorders(Dynamic_Object* unit);
+	bool CheckSelectionRectBorders(DynamicObject* unit);
 
 
 public:
@@ -126,10 +126,10 @@ public:
 	SDL_Rect			cursor_clicked_UI;							// CLICKED Sprite for when the cursor hovers an interactible UI_Element.
 
 
-	std::vector<Dynamic_Object*>	units_selected;
+	std::vector<DynamicObject*>	units_selected;
 
-	Static_Object*					building_selected;
-	Static_Object*					resource_selected;
+	StaticObject*					building_selected;
+	StaticObject*					resource_selected;
 };
 
 #endif // !__PLAYER_H__

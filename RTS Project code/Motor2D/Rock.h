@@ -1,9 +1,9 @@
 #ifndef __ROCK_H__
 #define __ROCK_H__
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 
-class Rock : public Static_Object
+class Rock : public StaticObject
 {
 public:
 

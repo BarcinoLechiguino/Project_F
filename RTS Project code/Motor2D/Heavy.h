@@ -1,9 +1,9 @@
 #ifndef __HEAVY_H__
 #define __HEAVY_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
-class Heavy : public Dynamic_Object
+class Heavy : public DynamicObject
 {
 public:
 

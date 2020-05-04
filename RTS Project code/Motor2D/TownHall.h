@@ -1,9 +1,9 @@
 #ifndef __TOWNHALL_H__
 #define __TOWNHALL_H__
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 
-class TownHall : public Static_Object
+class TownHall : public StaticObject
 {
 public:
 

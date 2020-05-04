@@ -25,11 +25,11 @@ enum class ENTITY_STATE //Maybe WALKING instead?
 	DEAD,
 };
 
-class Dynamic_Object : public Entity
+class DynamicObject : public Entity
 {
 public:
 
-	Dynamic_Object(int x, int y, ENTITY_TYPE type, int level);
+	DynamicObject(int x, int y, ENTITY_TYPE type, int level);
 
 	virtual bool Awake(pugi::xml_node&);
 

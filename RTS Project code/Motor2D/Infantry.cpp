@@ -18,7 +18,7 @@
 #include "Infantry.h"
 
 
-Infantry::Infantry(int x, int y, ENTITY_TYPE type, int level) : Dynamic_Object(x, y, type, level)  //Constructor. Called at the first frame.
+Infantry::Infantry(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	LOG("x %d and y %d", x, y);
 	InitEntity();
@@ -332,7 +332,7 @@ bool Infantry::TargetIsInRange()
 
 void Infantry::ChaseTarget()
 {
-	std::vector<Dynamic_Object*> tmp;
+	std::vector<DynamicObject*> tmp;
 	tmp.push_back(this);
 
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);

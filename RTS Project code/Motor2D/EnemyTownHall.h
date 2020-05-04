@@ -1,9 +1,9 @@
 #ifndef __ENEMY_TOWNHALL_H__
 #define __ENEMY_TOWNHALL_H__
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 
-class EnemyTownHall : public Static_Object
+class EnemyTownHall : public StaticObject
 {
 public:
 

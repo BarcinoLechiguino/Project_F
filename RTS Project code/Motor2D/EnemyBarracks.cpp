@@ -17,7 +17,7 @@
 #include "EnemyBarracks.h"
 
 
-EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+EnemyBarracks::EnemyBarracks(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
 {
 	InitEntity();
 }

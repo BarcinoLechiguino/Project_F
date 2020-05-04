@@ -1,9 +1,9 @@
 #ifndef __ENEMY_SCOUT_H__
 #define __ENEMY_SCOUT_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
-class EnemyScout : public Dynamic_Object
+class EnemyScout : public DynamicObject
 {
 public:
 

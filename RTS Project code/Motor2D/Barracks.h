@@ -1,9 +1,9 @@
 #ifndef __BARRACKS_H__
 #define __BARRACKS_H__
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 
-class Barracks : public Static_Object
+class Barracks : public StaticObject
 {
 public:
 

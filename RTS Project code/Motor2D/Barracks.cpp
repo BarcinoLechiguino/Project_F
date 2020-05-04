@@ -17,7 +17,7 @@
 #include "Barracks.h"
 
 
-Barracks::Barracks(int x, int y, ENTITY_TYPE type, int level) : Static_Object(x, y, type, level)
+Barracks::Barracks(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
 {
 	InitEntity();
 }

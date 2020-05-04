@@ -1,9 +1,9 @@
 #ifndef __ENEMY_BARRACKS_H__
 #define __ENEMY_BARRACKS_H__
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 
-class EnemyBarracks : public Static_Object
+class EnemyBarracks : public StaticObject
 {
 public:
 

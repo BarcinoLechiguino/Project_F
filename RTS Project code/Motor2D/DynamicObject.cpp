@@ -7,10 +7,10 @@
 
 #include "Player.h"
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
 
-Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Entity(x, y, type, level)
+DynamicObject::DynamicObject(int x, int y, ENTITY_TYPE type, int level) : Entity(x, y, type, level)
 {
 	pixel_position.x = (float)App->map->MapToWorld(x, y).x;
 	pixel_position.y = (float)App->map->MapToWorld(x, y).y;
@@ -35,92 +35,92 @@ Dynamic_Object::Dynamic_Object(int x, int y, ENTITY_TYPE type, int level) : Enti
 	ChangeOccupiedTile(tile_position);
 }
 
-bool Dynamic_Object::Awake(pugi::xml_node&)
+bool DynamicObject::Awake(pugi::xml_node&)
 {
 	return true;
 }
 
-bool Dynamic_Object::Start()
+bool DynamicObject::Start()
 {	
 	return true;
 }
 
-bool Dynamic_Object::PreUpdate()
+bool DynamicObject::PreUpdate()
 {
 	return true;
 }
 
-bool Dynamic_Object::Update(float dt, bool doLogic)
+bool DynamicObject::Update(float dt, bool doLogic)
 {
 	return true;
 }
 
-bool Dynamic_Object::PostUpdate()
+bool DynamicObject::PostUpdate()
 {
 	return true;
 }
 
-bool Dynamic_Object::CleanUp()
+bool DynamicObject::CleanUp()
 {
 	return true;
 }
 
-void Dynamic_Object::Draw()
+void DynamicObject::Draw()
 {
 	return;
 }
 
-void Dynamic_Object::InitUnitSpriteSections()
+void DynamicObject::InitUnitSpriteSections()
 {
 	return;
 }
 
-void Dynamic_Object::UpdateUnitSpriteSection()
+void DynamicObject::UpdateUnitSpriteSection()
 {
 	return;
 }
 
-void Dynamic_Object::UpdateUnitOrientation()
+void DynamicObject::UpdateUnitOrientation()
 {
 	return;
 }
 
-void Dynamic_Object::SetEntityTargetByProximity(const iPoint& target_position)
+void DynamicObject::SetEntityTargetByProximity(const iPoint& target_position)
 {
 	return;
 }
 
-void Dynamic_Object::GetShortestPathWithinAttackRange()
+void DynamicObject::GetShortestPathWithinAttackRange()
 {
 	return;
 }
 
-void Dynamic_Object::SetGatheringTarget(const iPoint& tile_position)
+void DynamicObject::SetGatheringTarget(const iPoint& tile_position)
 {
 	return;
 }
 
-void Dynamic_Object::PathToGatheringTarget()
+void DynamicObject::PathToGatheringTarget()
 {
 	return;
 }
 
-bool Dynamic_Object::TargetIsInRange()
+bool DynamicObject::TargetIsInRange()
 {
 	return true;
 }
 
-void Dynamic_Object::ChaseTarget()
+void DynamicObject::ChaseTarget()
 {
 	return;
 }
 
-void Dynamic_Object::DealDamage()
+void DynamicObject::DealDamage()
 {
 	return;
 }
 
-bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
+bool DynamicObject::GiveNewTargetTile(const iPoint& new_target_tile)
 {
 	//New Path using the next tile if it's going to one
 	if (App->pathfinding->CreatePath(next_tile, new_target_tile) == -2)
@@ -141,7 +141,7 @@ bool Dynamic_Object::GiveNewTargetTile(const iPoint& new_target_tile)
 	return true;
 }
 
-void Dynamic_Object::ChangeOccupiedTile(iPoint new_occupied_tile)
+void DynamicObject::ChangeOccupiedTile(iPoint new_occupied_tile)
 {
 	LOG("x %d and y %d", new_occupied_tile.x, new_occupied_tile.y);
 	
@@ -152,7 +152,7 @@ void Dynamic_Object::ChangeOccupiedTile(iPoint new_occupied_tile)
 	App->pathfinding->ChangeWalkability(new_occupied_tile, this, OCCUPIED);
 }
 
-void Dynamic_Object::HandleMovement(float dt)
+void DynamicObject::HandleMovement(float dt)
 {
 	switch (path_state)
 	{
@@ -217,7 +217,7 @@ void Dynamic_Object::HandleMovement(float dt)
 	}
 }
 
-void Dynamic_Object::HandleFx()
+void DynamicObject::HandleFx()
 {
 	if (path_full && type == ENTITY_TYPE::GATHERER)
 	{
@@ -234,7 +234,7 @@ void Dynamic_Object::HandleFx()
 	}
 }
 
-void Dynamic_Object::SetEntityState()
+void DynamicObject::SetEntityState()
 {
 	if (next_tile.x == tile_position.x + 1)
 	{
@@ -279,7 +279,7 @@ void Dynamic_Object::SetEntityState()
 	}
 }
 
-void Dynamic_Object::Move(float dt)
+void DynamicObject::Move(float dt)
 {
 	bool next_reached = false;
 
@@ -395,7 +395,7 @@ void Dynamic_Object::Move(float dt)
 	}
 }
 
-void Dynamic_Object::DataMapSafetyCheck()
+void DynamicObject::DataMapSafetyCheck()
 {
 	if (!path_full)
 	{
@@ -411,12 +411,12 @@ void Dynamic_Object::DataMapSafetyCheck()
 	}
 }
 
-Entity* Dynamic_Object::GetTarget()
+Entity* DynamicObject::GetTarget()
 {
 	return target;
 }
 
-int Dynamic_Object::GetAttackRange()
+int DynamicObject::GetAttackRange()
 {
 	return attack_range;
 }

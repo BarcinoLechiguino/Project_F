@@ -2,9 +2,9 @@
 #ifndef __TREE_H__
 #define __TREE_H__
 
-#include "Static_Object.h"
+#include "StaticObject.h"
 
-class Tree : public Static_Object
+class Tree : public StaticObject
 {
 public:
 

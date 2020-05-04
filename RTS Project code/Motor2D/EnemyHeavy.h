@@ -1,9 +1,9 @@
 #ifndef __ENEMY__HEAVY_H__
 #define __ENEMY_HEAVY_H__
 
-#include "Dynamic_Object.h"
+#include "DynamicObject.h"
 
-class EnemyHeavy : public Dynamic_Object
+class EnemyHeavy : public DynamicObject
 {
 public:
 
