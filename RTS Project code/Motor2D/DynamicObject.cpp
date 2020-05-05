@@ -143,7 +143,7 @@ bool DynamicObject::GiveNewTargetTile(const iPoint& new_target_tile)
 
 void DynamicObject::ChangeOccupiedTile(iPoint new_occupied_tile)
 {
-	LOG("x %d and y %d", new_occupied_tile.x, new_occupied_tile.y);
+	//LOG("x %d and y %d", new_occupied_tile.x, new_occupied_tile.y);
 	
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 	

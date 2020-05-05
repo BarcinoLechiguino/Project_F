@@ -41,6 +41,9 @@ public:
 	void ChaseTarget();
 	void DealDamage();
 
+	Entity* GetTarget();
+	int GetAttackRange();
+
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:

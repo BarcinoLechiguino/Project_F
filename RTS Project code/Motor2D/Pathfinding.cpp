@@ -282,13 +282,13 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 {
 	iPoint initial_walkable_tile = FindNearbyPoint(pos);
 
-	LOG(" initial found x %d y %d", initial_walkable_tile.x, initial_walkable_tile.y);
+	//LOG(" initial found x %d y %d", initial_walkable_tile.x, initial_walkable_tile.y);
 
 	//DynamicObject sample = *units_selected[0];
 	DynamicObject* sample = units_selected[0];
 
-	LOG("sample pos x %d y %d", sample->tile_position.x, sample->tile_position.y);
-	LOG("sample range %d", sample->attack_range);
+	//LOG("sample pos x %d y %d", sample->tile_position.x, sample->tile_position.y);
+	//LOG("sample range %d", sample->attack_range);
 
 	CreatePath(units_selected[0]->tile_position, initial_walkable_tile);
 
@@ -298,11 +298,12 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 
 	int attack_range = units_selected[0]->GetAttackRange();
 
+	//Find point in range
 	for (int i = 0; i < (int)last_path.size(); ++i)
 	{
-		LOG("target pos x %d y %d", sample->target->tile_position.x, sample->target->tile_position.y);
+		//LOG("target pos x %d y %d", sample->target->tile_position.x, sample->target->tile_position.y);
 
-		LOG("Distance is %d range is %d", DistanceInTiles(last_path[i],target->tile_position) , attack_range);
+		//LOG("Distance is %d range is %d", DistanceInTiles(last_path[i],target->tile_position) , attack_range);
 
 		if ( DistanceInTiles(last_path[i], target->tile_position) <= attack_range)
 		{
@@ -312,8 +313,13 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 		}
 	}
 
+	int loops = 0;
+
+	//Give target tiles
 	if (units_selected.size() != 0)
 	{
+		
+
 		std::vector<DynamicObject*>::iterator units = units_selected.begin();
 
 		if (App->pathfinding->IsWalkable(final_point))
@@ -332,10 +338,11 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 
 		PathList neighbours;
 
-		while (frontier.list.size() != 0 || units != units_selected.end())
+		while ( (frontier.list.size() != 0 || units != units_selected.end()) && loops < 30)
 		{
-			current_node = frontier.list.begin();
+			loops++;
 
+			current_node = frontier.list.begin();
 			current_node->FindWalkableAdjacents(neighbours);																//Fill starting node
 
 			std::list<PathNode>::iterator item = neighbours.list.begin();
@@ -343,6 +350,7 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 			for (; item != neighbours.list.end() && units != units_selected.end(); ++item)
 			{
 				PathNode neighbour = *item;																					// For Readability
+
 				if (visited.Find(neighbour.pos) == visited.list.end())														//if not in visited
 				{
 					if (App->pathfinding->IsWalkable(neighbour.pos) && DistanceInTiles(neighbour.pos, target->tile_position) <= attack_range)
@@ -351,7 +359,6 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 
 						units++;
 					}
-
 					if ((!IsNonWalkable(neighbour.pos)) && DistanceInTiles(neighbour.pos, target->tile_position) <= attack_range)					//optimization
 					{
 						frontier.list.push_back(neighbour);
@@ -365,9 +372,6 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 			current_node++;
 		}
 	}
-
-
-
 }
 
 // Looks for a node in this list and returns it's list node or NULL

@@ -148,7 +148,7 @@ void EnemyHeavy::InitEntity()
 	attack_damage = 60;
 
 	attack_speed = 1.5f;
-	attack_range = 7;
+	attack_range = 3;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
@@ -226,7 +226,7 @@ void EnemyHeavy::SetEntityTargetByProximity()
 	{
 		if (App->entity_manager->IsAllyEntity((*item)))
 		{
-			if (tile_position.DistanceNoSqrt((*item)->tile_position) * 0.1f <= attack_range)
+			if (App->pathfinding->DistanceInTiles(tile_position, (*item)->tile_position) <= attack_range)
 			{
 				target = (*item);
 				break;
@@ -237,29 +237,29 @@ void EnemyHeavy::SetEntityTargetByProximity()
 
 void EnemyHeavy::GetShortestPathWithinAttackRange()
 {
-	std::vector<iPoint> tmp;
+	//std::vector<iPoint> tmp;
 
-	if (target != nullptr)
-	{
-		for (int i = 0; i < (int)entity_path.size(); ++i)
-		{
-			tmp.push_back(entity_path[i]);
+	//if (target != nullptr)
+	//{
+	//	for (int i = 0; i < (int)entity_path.size(); ++i)
+	//	{
+	//		tmp.push_back(entity_path[i]);
 
-			if ((entity_path[i].DistanceNoSqrt(target->tile_position) * 0.1f) <= attack_range)
-			{
-				entity_path.clear();
+	//		if ((App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range)
+	//		{
+	//			entity_path.clear();
 
-				entity_path = tmp;
+	//			entity_path = tmp;
 
-				target_tile = entity_path.back();
-				current_path_tile = entity_path.begin();
+	//			target_tile = entity_path.back();
+	//			current_path_tile = entity_path.begin();
 
-				tmp.clear();
+	//			tmp.clear();
 
-				break;
-			}
-		}
-	}
+	//			break;
+	//		}
+	//	}
+	//}
 }
 
 void EnemyHeavy::UpdateUnitOrientation()
@@ -323,9 +323,7 @@ bool EnemyHeavy::TargetIsInRange()
 {
 	if (target != nullptr)
 	{
-		float distance = tile_position.DistanceNoSqrt(target->tile_position) * 0.1f;
-
-		if (distance <= attack_range)
+		if (App->pathfinding->DistanceInTiles(tile_position, target->tile_position) <= attack_range)
 		{
 			return true;
 		}
@@ -342,7 +340,7 @@ void EnemyHeavy::ChaseTarget()
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);
 
 	//GiveNewTargetTile(target->tile_position);
-	App->pathfinding->MoveOrder(target->tile_position, tmp);
+	App->pathfinding->AttackOrder(target->tile_position, tmp);
 }
 
 void EnemyHeavy::DealDamage()
@@ -374,4 +372,14 @@ void EnemyHeavy::DealDamage()
 void EnemyHeavy::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
+}
+
+Entity* EnemyHeavy::GetTarget()
+{
+	return target;
+}
+
+int  EnemyHeavy::GetAttackRange()
+{
+	return attack_range;
 }

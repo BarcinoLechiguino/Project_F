@@ -137,7 +137,7 @@ void EnemyInfantry::InitEntity()
 	attack_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
 
-	speed = 500.0f;
+	speed = 350.0f;
 
 	max_health = 300;
 	current_health = max_health;
@@ -365,6 +365,7 @@ void EnemyInfantry::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
 }
+
 Entity* EnemyInfantry::GetTarget()
 {
 	return target;
