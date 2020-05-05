@@ -25,7 +25,8 @@ public:
 
 	void StartUnitCreation();
 
-	void GenerateUnit(ENTITY_TYPE type, int level);
+	void GenerateUnit(ENTITY_TYPE type, int level);				// Will spawn a unit given a type and a level.
+	void GenerateUnitByType(ENTITY_TYPE type);					// Will spawn a unit given a type. The level is deduced from the type (See scout_level, infantry_level and heavy_level).
 
 	void LevelChanges();
 
@@ -34,7 +35,9 @@ public:
 	SDL_Rect	barracks_rect_1;
 	SDL_Rect	barracks_rect_2;
 
-	int			unit_level;
+	int			scout_level;
+	int			infantry_level;
+	int			heavy_level;
 
 	float		scout_creation_time;
 	float		infantry_creation_time;

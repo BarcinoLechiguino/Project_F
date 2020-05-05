@@ -30,7 +30,8 @@ public:
 
 	void StartUnitCreation();
 
-	void GenerateUnit(ENTITY_TYPE type, int level);
+	void GenerateUnit(ENTITY_TYPE type, int level);				// Will spawn a unit given a type and a level.
+	void GenerateUnitByType(ENTITY_TYPE type);					// Will spawn a unit given a type. The level is deduced from the type (See gatherer_level)
 
 	void LevelChanges();
 
@@ -39,7 +40,7 @@ public:
 	SDL_Rect	hall_rect_1;
 	SDL_Rect	hall_rect_2;
 
-	int			unit_level;
+	int			gatherer_level;
 
 	float		gatherer_creation_time;
 

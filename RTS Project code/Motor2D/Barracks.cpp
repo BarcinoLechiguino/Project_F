@@ -58,7 +58,7 @@ bool Barracks::Update(float dt, bool do_logic)
 
 			if (creation_bar->creation_finished)
 			{
-				GenerateUnit(created_unit_type, unit_level);
+				GenerateUnitByType(created_unit_type);
 				
 				created_unit_type = ENTITY_TYPE::UNKNOWN;
 
@@ -148,6 +148,26 @@ void Barracks::GenerateUnit(ENTITY_TYPE type, int level)
 	}
 }
 
+void Barracks::GenerateUnitByType(ENTITY_TYPE type)
+{
+	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
+
+	switch (type)
+	{
+	case ENTITY_TYPE::SCOUT:
+		(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, scout_level);
+		break;
+
+	case ENTITY_TYPE::INFANTRY:
+		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, infantry_level);
+		break;
+
+	case ENTITY_TYPE::HEAVY:
+		(Heavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::HEAVY, pos.x, pos.y, heavy_level);
+		break;
+	}
+}
+
 void Barracks::LevelChanges()				//Updates the building stats when leveling up
 {
 	switch (level)
@@ -159,7 +179,7 @@ void Barracks::LevelChanges()				//Updates the building stats when leveling up
 		barracks_rect = barracks_rect_2;
 		max_health = 800;
 		current_health = max_health;
-		//unit_level++;									// TALK ABOUT THIS
+		//infantry_level++;									// TALK ABOUT THIS
 		break;
 	default:
 		barracks_rect = barracks_rect_2;
@@ -198,7 +218,9 @@ void Barracks::InitEntity()
 	max_health = 600;
 	current_health = max_health;
 
-	unit_level = 1;
+	scout_level = 1;
+	infantry_level = 1;
+	heavy_level = 1;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{

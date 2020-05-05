@@ -56,7 +56,7 @@ bool TownHall::Update(float dt, bool do_logic)
 
 			if (creation_bar->creation_finished)
 			{
-				GenerateUnit(created_unit_type, unit_level);
+				GenerateUnitByType(created_unit_type);
 
 				created_unit_type = ENTITY_TYPE::UNKNOWN;
 
@@ -130,6 +130,18 @@ void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 	}
 }
 
+void TownHall::GenerateUnitByType(ENTITY_TYPE type)
+{
+	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
+
+	switch (type)
+	{
+	case ENTITY_TYPE::GATHERER:
+		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, pos.x, pos.y, gatherer_level);
+		break;
+	}
+}
+
 void TownHall::LevelChanges()						//Updates the building stats when leveling up
 {
 	switch (level)
@@ -177,7 +189,7 @@ void TownHall::InitEntity()
 	max_health = 900;
 	current_health = max_health;
 
-	unit_level = 1;
+	gatherer_level = 1;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{

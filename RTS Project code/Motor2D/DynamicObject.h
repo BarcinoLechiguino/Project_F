@@ -3,6 +3,8 @@
 
 #include "Entity.h"
 
+#define MAX_UNIT_LEVEL 2								//TMP. Right now all units have the same level cap.
+
 enum class PATHFINDING_STATE
 {
 	IDLE,

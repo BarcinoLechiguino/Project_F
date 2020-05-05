@@ -518,7 +518,7 @@ void GameplayScene::UnitUpgrade()
 			if (CheckResources(100, 50))
 			{
 				townhall = (TownHall*)App->player->building_selected;
-				townhall->unit_level++;
+				townhall->gatherer_level++;
 			}
 			break;
 
@@ -526,7 +526,7 @@ void GameplayScene::UnitUpgrade()
 			if (CheckResources(50, 100))
 			{
 				barrack = (Barracks*)App->player->building_selected;
-				barrack->unit_level++;
+				barrack->infantry_level++;
 			}
 			break;
 		}

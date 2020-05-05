@@ -56,7 +56,7 @@ bool EnemyTownHall::Update(float dt, bool do_logic)
 
 			if (creation_bar->creation_finished)
 			{
-				GenerateUnit(created_unit_type, unit_level);
+				GenerateUnitByType(created_unit_type);
 
 				created_unit_type = ENTITY_TYPE::UNKNOWN;
 
@@ -130,6 +130,18 @@ void EnemyTownHall::GenerateUnit(ENTITY_TYPE type, int level)
 	}
 }
 
+void EnemyTownHall::GenerateUnitByType(ENTITY_TYPE type)
+{
+	iPoint pos = App->pathfinding->FindNearbyPoint(iPoint(tile_position.x, tile_position.y + 2));
+
+	switch (type)
+	{
+	case ENTITY_TYPE::ENEMY_GATHERER:
+		(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, pos.x, pos.y, enemy_gatherer_level);
+		break;
+	}
+}
+
 void EnemyTownHall::LevelChanges()				//Updates the building stats when leveling up
 {
 	switch (level)
@@ -141,7 +153,7 @@ void EnemyTownHall::LevelChanges()				//Updates the building stats when leveling
 		hall_rect = hall_rect_2;
 		max_health = 1200;
 		current_health = max_health;
-		unit_level++;
+		enemy_gatherer_level++;
 		break;
 	default:
 		hall_rect = hall_rect_2;
@@ -178,7 +190,7 @@ void EnemyTownHall::InitEntity()
 	max_health = 900;
 	current_health = max_health;
 
-	unit_level = 1;
+	enemy_gatherer_level = 1;
 
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{

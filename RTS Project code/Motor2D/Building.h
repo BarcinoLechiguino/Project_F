@@ -3,6 +3,8 @@
 
 #include "StaticObject.h"
 
+#define MAX_BUILDING_LEVEL 2									//TMP. Right now all buildings have the same level cap.
+
 class UI_CreationBar;
 
 class Building : public StaticObject

@@ -103,7 +103,10 @@ void Movement::OrderUnitsToAttack(iPoint tile, std::vector<DynamicObject*> units
 						App->pathfinding->ChangeWalkability(ally_units[i]->occupied_tile, ally_units[i], WALKABLE);
 					}
 
-					App->pathfinding->AttackOrder(target->tile_position, ally_units);
+					if (ally_units.size() != 0)
+					{
+						App->pathfinding->AttackOrder(target->tile_position, ally_units);
+					}
 
 					ally_units.clear();
 				}
