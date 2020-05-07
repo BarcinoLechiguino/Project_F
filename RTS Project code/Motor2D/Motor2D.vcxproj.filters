@@ -223,6 +223,9 @@
     <ClCompile Include="FowManager.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
+    <ClCompile Include="DialogSystem.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -467,6 +470,9 @@
     </ClInclude>
     <ClInclude Include="FowManager.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClInclude>      
+    <ClInclude Include="DialogSystem.h">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

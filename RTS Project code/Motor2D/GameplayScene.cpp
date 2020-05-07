@@ -1007,6 +1007,18 @@ void GameplayScene::LoadGuiElements()
 	_TTF_Font* HUD_God_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
 	std::string HUD_God_string = "God Mode Activated";
 	God_Mode_Activated = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 950, 2, HUD_text_God, HUD_God_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_God_string);
+
+
+	// HUD Missions
+	//Tab
+	SDL_Rect HUD_missions_tab_size = { 0, 0, 30, 81 };
+	SDL_Rect HUD_missions_tab_idle = { 780, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_hover = { 813, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_clicked = { 846, 117, 30, 81 };
+
+	HUD_missions_tab = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 1252, 503, true, true, false, this, nullptr
+		, &HUD_missions_tab_idle, &HUD_missions_tab_hover, &HUD_missions_tab_clicked);
+
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1117,7 +1129,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_group_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Group
-		App->player->SelectAllUnits();
+		App->player->SelectAllyUnits();
 		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 	}
 
@@ -1271,6 +1283,15 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::UNHOVER)
 	{
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_upgrade_barracks, false);
+	}
+
+
+
+	// Missions HUD
+	if (element == HUD_missions_tab && ui_event == UI_EVENT::UNCLICKED)
+	{
+		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+		/*HUD_missions_tab->SetScreenPos(iPoint(0, 0));*/
 	}
 }
 

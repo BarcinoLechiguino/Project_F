@@ -31,6 +31,7 @@ class SceneManager;
 class Minimap;
 class Movement;
 class FowManager;
+class DialogSystem;
 
 class Application
 {
@@ -97,6 +98,7 @@ public:
 	Minimap*			minimap;
 	Movement*			movement;
 	FowManager*			fow_manager;
+	DialogSystem*		dialog;
 
 	uint				frame_cap;								//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;						//Stores the original frame cap at application start.

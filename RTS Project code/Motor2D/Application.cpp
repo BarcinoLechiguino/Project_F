@@ -22,6 +22,7 @@
 #include "SceneManager.h"
 #include "Movement.h"
 #include "FowManager.h"
+#include "DialogSystem.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -54,6 +55,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	scene_manager		= new SceneManager();
 	movement			= new Movement();
 	fow_manager			= new FowManager();
+	dialog				= new DialogSystem();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -67,6 +69,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(console);
 	AddModule(collisions);
 	AddModule(movement);
+	AddModule(dialog);
 
 	// scene_manager last before render.
 	AddModule(minimap);
