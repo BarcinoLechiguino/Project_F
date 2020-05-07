@@ -354,6 +354,15 @@ void Player::DragSelection()
 					SelectEntitiesInSelectionRect();
 				}
 			}
+			else
+			{
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP
+					|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
+					|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
+				{
+					SelectEntityAt(cursor_tile);
+				}
+			}
 		}
 	}
 }
@@ -414,12 +423,7 @@ void Player::SelectOnClick()
 	{
 		if (!god_mode)
 		{
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP 
-				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
-				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
-			{
-				SelectEntityAt(cursor_tile);
-			}
+			
 		}
 	}
 }
