@@ -1117,7 +1117,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_group_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Group
-		App->player->SelectAllUnits();
+		App->player->SelectAllyUnits();
 		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 	}
 
