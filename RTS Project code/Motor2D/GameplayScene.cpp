@@ -1291,7 +1291,9 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_missions_tab && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
-		/*HUD_missions_tab->SetScreenPos(iPoint(0, 0));*/
+
+		HUD_missions_tab->SetScreenPos(iPoint(10, 10));
+		HUD_missions_tab->SetHitbox({ 10,10,30, 81 });
 	}
 }
 
