@@ -221,6 +221,12 @@ public:
 	UI_Text*				HUD_enemy_title_barracks;
 	UI_Text*				HUD_enemy_description_barracks;
 
+
+	//Missions HUD
+	// Tab
+
+	UI_Button*				HUD_missions_tab;
+
 private:
 
 	//Audio
