@@ -1,6 +1,7 @@
 #include "DialogSystem.h"
 #include "p2Log.h"
 
+
 DialogOption::DialogOption()
 {
 	next_node = 0;

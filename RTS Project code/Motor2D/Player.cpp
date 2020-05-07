@@ -66,7 +66,6 @@ bool Player::Update(float dt)
 	//CameraController(dt);
 	CameraController(App->GetUnpausableDt());
 	
-
 	DragSelection();
 
 	if (!App->pause && !App->gui_manager->VisibleElementIsUnderCursor())			//TMP. Dirty Fix(?)
@@ -300,38 +299,6 @@ void Player::GiveOrder()//fix
 	}
 }
 
-//void Player::OrderUnitsToMove()
-//{
-//	if (App->map->CheckMapBoundaries(mouse_tile))
-//	{
-//		if (App->pathfinding->IsWalkable(mouse_tile))
-//		{
-//			std::vector<DynamicObject*>::iterator item = units_selected.begin();
-//
-//			for (; item != units_selected.end(); item++)
-//			{
-//				if ((*item)->target != nullptr)
-//				{
-//					(*item)->target = nullptr;
-//				}
-//
-//				App->pathfinding->ChangeWalkability((*item)->occupied_tile, (*item), WALKABLE);
-//			}
-//
-//			App->pathfinding->FindNearbyWalkable(mouse_tile, units_selected);							//Gives units targets around main target
-//		}
-//		else
-//		{
-//			LOG("Tile (%d, %d) cannot be targeted.", mouse_tile.x, mouse_tile.y);
-//		}
-//	}
-//	else
-//	{
-//		LOG("Tile (%d, %d) is outside the map's bounds.", mouse_tile.x, mouse_tile.y);
-//	}
-//}
-
-
 void Player::DrawCursor()
 {
 	if (CurrentlyInGameplayScene())
@@ -370,16 +337,22 @@ void Player::DragSelection()
 
 		if (is_selecting)
 		{
-			UpdateSelectionRect();
-
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP 
-				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
-				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP
-				/*|| App->gui_manager->VisibleElementIsUnderMouse()*/)															//TMP FIX. Talk about what to do with this.
+			if (selection_start != cursor_position )
 			{
-				is_selecting = false;
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)
+				{
+					UpdateSelectionRect();
+				}
 
-				SelectEntitiesInSelectionRect();
+				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP
+					|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
+					|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP
+					/*|| App->gui_manager->VisibleElementIsUnderMouse()*/)															//TMP FIX. Talk about what to do with this.
+				{
+					is_selecting = false;
+
+					SelectEntitiesInSelectionRect();
+				}
 			}
 		}
 	}
@@ -403,7 +376,12 @@ void Player::UpdateSelectionRect()
 		selection_rect.h = selection_start.y - cursor_position.y;
 	}
 
-	App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
+	//App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
+
+	App->render->DrawLine(selection_rect.x, selection_rect.y, selection_rect.x + selection_rect.w, selection_rect.y, 150, 150, 255, 255,false); //Top line
+	App->render->DrawLine(selection_rect.x + selection_rect.w , selection_rect.y, selection_rect.x + selection_rect.w, selection_rect.y + selection_rect.h, 150, 150, 255, 255, false); //Right line
+	App->render->DrawLine(selection_rect.x , selection_rect.y + selection_rect.h, selection_rect.x + selection_rect.w, selection_rect.y + selection_rect.h, 150, 150, 255, 255, false); //Bottom line
+	App->render->DrawLine(selection_rect.x, selection_rect.y, selection_rect.x, selection_rect.y + selection_rect.h, 150, 150, 255, 255, false); //Left line
 }
 
 void Player::SelectEntitiesInSelectionRect()
@@ -436,9 +414,9 @@ void Player::SelectOnClick()
 	{
 		if (!god_mode)
 		{
-			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN 
-				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN
-				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP 
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
 			{
 				SelectEntityAt(cursor_tile);
 			}
