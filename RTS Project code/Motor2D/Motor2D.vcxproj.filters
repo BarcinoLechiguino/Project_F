@@ -220,6 +220,9 @@
     <ClCompile Include="StaticObject.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static</Filter>
     </ClCompile>
+    <ClCompile Include="FowManager.cpp">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClCompile>
     <ClCompile Include="DialogSystem.cpp">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
@@ -465,6 +468,9 @@
     <ClInclude Include="Tree.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
     </ClInclude>
+    <ClInclude Include="FowManager.h">
+      <Filter>Engine  ===========\Modules\Interactions</Filter>
+    </ClInclude>      
     <ClInclude Include="DialogSystem.h">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>

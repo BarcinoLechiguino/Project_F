@@ -104,6 +104,7 @@
     <ClCompile Include="ExpandingBars.cpp" />
     <ClCompile Include="FadeToColour.cpp" />
     <ClCompile Include="Fonts.cpp" />
+    <ClCompile Include="FowManager.cpp" />
     <ClCompile Include="Gatherer.cpp" />
     <ClCompile Include="GuiManager.cpp" />
     <ClCompile Include="Heavy.cpp" />
@@ -182,6 +183,7 @@
     <ClInclude Include="EnemyInfantry.h" />
     <ClInclude Include="Entity.h" />
     <ClInclude Include="EntityManager.h" />
+    <ClInclude Include="FowManager.h" />
     <ClInclude Include="Gatherer.h" />
     <ClInclude Include="GuiManager.h" />
     <ClInclude Include="Heavy.h" />

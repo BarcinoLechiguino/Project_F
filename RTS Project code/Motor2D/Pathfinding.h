@@ -58,10 +58,7 @@ public:
 
 	bool ChangeWalkability(iPoint pos, Entity* entity, uchar walkability);						//Change walkability of a tile in map array
 
-
 private:
-
-	
 	uint width;																					// Width of the map.
 	uint height;																				// Height of the map.
 

@@ -8,9 +8,10 @@ class Animation;
 class UI_Image;
 class UI_Healthbar;
 
-struct Collider;
-struct SDL_Texture;	
+struct SDL_Texture;
 struct SDL_Rect;
+struct Collider;
+struct FOW_Entity;
 
 
 enum class ENTITY_TYPE
@@ -114,6 +115,13 @@ public:
 	Animation*		animation;
 
 	SDL_Rect		selection_collider;
+
+																				// --- ENTITY FOW RELATED VARIABLES ---
+	bool			is_visible;													// Will determine whether or not an entity is currently visible. (See FowManager module)
+	bool			provides_visibility;										// Will determine whether or not an entity will grant the player visibility over the Fog of War.
+
+	FOW_Entity*		fow_entity;
+
 };
 
 #endif // __ENTITY_H__
