@@ -30,6 +30,7 @@ class TransitionManager;
 class SceneManager;
 class Minimap;
 class Movement;
+class FowManager;
 
 class Application
 {
@@ -95,13 +96,14 @@ public:
 	SceneManager*		scene_manager;
 	Minimap*			minimap;
 	Movement*			movement;
+	FowManager*			fow_manager;
 
 	uint				frame_cap;								//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;						//Stores the original frame cap at application start.
 	float				seconds_since_startup;					//Secons that have elapsed since app start.
 
 	bool				frames_are_capped;						//Keeps track whether the frame cap is on or off.
-	bool				vsync_is_active;							//Keeps track whether Vsync is on or off.
+	bool				vsync_is_active;						//Keeps track whether Vsync is on or off.
 	bool				pause;
 
 private:
@@ -119,20 +121,20 @@ private:
 	mutable std::string		save_game;
 
 	//Framerate
-	uint64				frame_count;			
-	Timer				startup_timer;							//Used to keep track of time since app start.
-	Timer				frame_timer;							//Keeps track of everything time related in the span of a frame.
-	PerfTimer			perf_timer;								//Creates a pointer to PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
-	PerfTimer			last_second_timer;						//Creates a pointer to PerfTimer tool. Used to calculate variables in spans of one second.
-	uint32				last_update_ms;							//Calculates the amount of milliseconds that the last update spent running.
-	uint32				frames_last_second;						//Calculates the amount of frames that where processed the last second.
-	uint32				prev_sec_frames;		
+	uint64					frame_count;			
+	Timer					startup_timer;							//Used to keep track of time since app start.
+	Timer					frame_timer;							//Keeps track of everything time related in the span of a frame.
+	PerfTimer				perf_timer;								//Creates a pointer to PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
+	PerfTimer				last_second_timer;						//Creates a pointer to PerfTimer tool. Used to calculate variables in spans of one second.
+	uint32					last_update_ms;							//Calculates the amount of milliseconds that the last update spent running.
+	uint32					frames_last_second;						//Calculates the amount of frames that where processed the last second.
+	uint32					prev_sec_frames;		
 
-	PerfTimer			true_delay_timer;						//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
-	float				dt;										//Keeps track of the amount of time in milliseconds that has passed in a frame. 
-																//Will be used to make everything (update()) be in the same timestep.
-	char*				frame_cap_on_off;							//String that is set to 'On' when the frame cap is on and  'Off' when it is off.
-	char*				vsync_on_off;								//String that is set to 'On' when Vsync is on and 'Off' when it is off.
+	PerfTimer				true_delay_timer;						//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
+	float					dt;										//Keeps track of the amount of time in milliseconds that has passed in a frame. 
+																	//Will be used to make everything (update()) be in the same timestep.
+	char*					frame_cap_on_off;						//String that is set to 'On' when the frame cap is on and  'Off' when it is off.
+	char*					vsync_on_off;							//String that is set to 'On' when Vsync is on and 'Off' when it is off.
 };
 
 extern Application* App; // No student is asking me about that ... odd :-S
