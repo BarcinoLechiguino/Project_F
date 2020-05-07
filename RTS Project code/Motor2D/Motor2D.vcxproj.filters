@@ -220,6 +220,9 @@
     <ClCompile Include="StaticObject.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static</Filter>
     </ClCompile>
+    <ClCompile Include="DialogSystem.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -461,6 +464,9 @@
     </ClInclude>
     <ClInclude Include="Tree.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogSystem.h">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

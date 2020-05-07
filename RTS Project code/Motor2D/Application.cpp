@@ -21,6 +21,7 @@
 #include "TransitionManager.h"
 #include "SceneManager.h"
 #include "Movement.h"
+#include "DialogSystem.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -52,6 +53,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	transition_manager	= new TransitionManager();
 	scene_manager		= new SceneManager();
 	movement			= new Movement();
+	dialog				= new DialogSystem();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -65,6 +67,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(console);
 	AddModule(collisions);
 	AddModule(movement);
+	AddModule(dialog);
 
 	// scene_manager last before render.
 	AddModule(minimap);
