@@ -5,6 +5,7 @@
 #include <vector>
 #include "Module.h"
 
+
 //Options to be chosen
 class DialogOption
 {
@@ -32,6 +33,8 @@ public:
 	std::string text;
 	std::vector <DialogOption*> dialog_options;
 	int node_id;
+
+
 
 };
 
@@ -64,6 +67,9 @@ public:
 public:
 
 	std::vector <DialogTree*> dialog_trees;
+	DialogNode* current_node;
 
+	//SDL_Texture text_box;
+	//SDL_Rect text_box_rect;
 };
 #endif // __DIALOGSYSTEM_H__
