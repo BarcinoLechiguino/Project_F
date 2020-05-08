@@ -46,7 +46,7 @@ bool EnemyInfantry::Update(float dt, bool do_logic)
 
 	DataMapSafetyCheck();
 
-	if (path_full)
+	if (!entity_path.empty())
 	{
 		UpdateUnitSpriteSection();
 	}
@@ -60,7 +60,7 @@ bool EnemyInfantry::Update(float dt, bool do_logic)
 
 	if (do_logic)
 	{
-		if (target == nullptr && !path_full)
+		if (target == nullptr && entity_path.empty())
 		{
 			SetEntityTargetByProximity();
 		}
@@ -74,7 +74,7 @@ bool EnemyInfantry::Update(float dt, bool do_logic)
 		}
 		else
 		{
-			if (!path_full)
+			if (entity_path.empty())
 			{
 				ChaseTarget();
 			}

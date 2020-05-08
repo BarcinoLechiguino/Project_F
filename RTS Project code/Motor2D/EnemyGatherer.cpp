@@ -48,32 +48,27 @@ bool EnemyGatherer::Update(float dt, bool do_logic)
 	BROFILER_CATEGORY("EnemyGatherer Update", Profiler::Color::Black);
 
 	HandleMovement(dt);
-	//HandleFx();
+
 	DataMapSafetyCheck();
 
 	UpdateUnitSpriteSection();
 
 	selection_collider.x = (int)pixel_position.x + 10;
-	selection_collider.y = (int)pixel_position.y + 10;
+	selection_collider.y = (int)pixel_position.y + 10;//magic
 
 	if (do_logic)
 	{
-		if (target == nullptr && !path_full)
+		if (target == nullptr && entity_path.empty())
 		{
-			//SetGatheringTarget(App->player->mouse_tile);
 			SetGatheringTarget(App->player->cursor_tile);
 		}
 	}
 
 	if (target != nullptr)
 	{
-		//path_full = false;
-		if (target != nullptr)
+		if (TargetIsInRange())
 		{
-			if (TargetIsInRange())
-			{
-				GatherResource();
-			}
+			GatherResource();
 		}
 	}
 

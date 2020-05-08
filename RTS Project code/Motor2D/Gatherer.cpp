@@ -48,7 +48,7 @@ bool Gatherer::Update(float dt, bool do_logic)
 	BROFILER_CATEGORY("Gatherer Update", Profiler::Color::Black);
 
 	HandleMovement(dt);
-	//HandleFx();
+	
 	DataMapSafetyCheck();
 
 	UpdateUnitSpriteSection();
@@ -56,24 +56,12 @@ bool Gatherer::Update(float dt, bool do_logic)
 	selection_collider.x = (int)pixel_position.x + 10;
 	selection_collider.y = (int)pixel_position.y + 10;
 
-	//if (do_logic)
-	//{
-	//	if (target == nullptr && !path_full)
-	//	{
-	//		//SetGatheringTarget(App->player->mouse_tile);
-	//		SetGatheringTarget(App->player->cursor_tile);
-	//	}
-	//}
-
 	if (target != nullptr)
 	{
-		//path_full = false;
-		
 		if (TargetIsInRange())
 		{
 			GatherResource();
 		}
-		
 	}
 
 	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);

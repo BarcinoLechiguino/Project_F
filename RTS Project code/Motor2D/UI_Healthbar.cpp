@@ -70,7 +70,7 @@ void UI_Healthbar::UpdateHealthbarValue()
 {
 	int new_width = 0;
 
-	if (App->entity_manager->IsUnit(attached_entity))
+	if (App->entity_manager->IsUnit(attached_entity)) // crash attached_entity access violation
 	{
 		new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_entity->current_health) / attached_entity->max_health;
 	}

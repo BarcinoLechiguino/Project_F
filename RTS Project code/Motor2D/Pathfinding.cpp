@@ -281,53 +281,39 @@ void PathFinding::MoveOrder(const iPoint& pos, std::vector<DynamicObject*> units
 void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> units_selected)
 {
 	iPoint initial_walkable_tile = FindNearbyPoint(pos);
-
-	//LOG(" initial found x %d y %d", initial_walkable_tile.x, initial_walkable_tile.y);
-
-	//DynamicObject sample = *units_selected[0];
 	DynamicObject* sample = units_selected[0];
-
-	//LOG("sample pos x %d y %d", sample->tile_position.x, sample->tile_position.y);
-	//LOG("sample range %d", sample->attack_range);
 
 	CreatePath(units_selected[0]->tile_position, initial_walkable_tile);
 
 	iPoint final_point; //Point just inside range
-
 	Entity* target = units_selected[0]->GetTarget();
-
-	int attack_range = units_selected[0]->GetAttackRange();
 
 	//Find point in range
 	for (int i = 0; i < (int)last_path.size(); ++i)
 	{
-		//LOG("target pos x %d y %d", sample->target->tile_position.x, sample->target->tile_position.y);
-
-		//LOG("Distance is %d range is %d", DistanceInTiles(last_path[i],target->tile_position) , attack_range);
-
-		if ( DistanceInTiles(last_path[i], target->tile_position) <= attack_range)
+		if ( DistanceInTiles(last_path[i], target->tile_position) <= units_selected[0]->GetAttackRange())
 		{
 			final_point = last_path[i]; //Need to get here so that further calculations work
-
 			break;
 		}
 	}
 
-	int loops = 0;
-
 	//Give target tiles
 	if (units_selected.size() != 0)
 	{
-		
-
 		std::vector<DynamicObject*>::iterator units = units_selected.begin();
 
 		if (App->pathfinding->IsWalkable(final_point))
 		{
 			(*units)->GiveNewTargetTile(final_point);
 			units++;
-		}
 
+			if (units_selected.size() == 1)
+			{
+				return;
+			}
+		}
+		
 		PathList frontier;
 		PathList visited;
 
@@ -337,11 +323,13 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 		std::list<PathNode>::iterator current_node = frontier.list.begin();
 
 		PathList neighbours;
+		int loops = 0;
 
-		while ( (frontier.list.size() != 0 || units != units_selected.end()) && loops < 30)
+		while ( frontier.list.size() != 0 && units != units_selected.end() && loops < 50)
 		{
 			loops++;
 
+			int attack_range = (*units)->GetAttackRange();
 			current_node = frontier.list.begin();
 			current_node->FindWalkableAdjacents(neighbours);																//Fill starting node
 
@@ -359,7 +347,7 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 
 						units++;
 					}
-					if ((!IsNonWalkable(neighbour.pos)) && DistanceInTiles(neighbour.pos, target->tile_position) <= attack_range)					//optimization
+					if ((!IsNonWalkable(neighbour.pos)) && DistanceInTiles(neighbour.pos, target->tile_position) <= 7)	// 7 is the maximum range of a unit magic
 					{
 						frontier.list.push_back(neighbour);
 					}

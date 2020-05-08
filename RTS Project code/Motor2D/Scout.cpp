@@ -50,7 +50,7 @@ bool Scout::Update(float dt, bool do_logic)
 
 	DataMapSafetyCheck();
 
-	if (path_full)
+	if (!entity_path.empty())
 	{
 		UpdateUnitSpriteSection();
 	}
@@ -64,7 +64,7 @@ bool Scout::Update(float dt, bool do_logic)
 
 	if (do_logic)
 	{
-		if (target == nullptr && !path_full)
+		if (target == nullptr && entity_path.empty())
 		{
 			SetEntityTargetByProximity();
 		}
@@ -78,7 +78,7 @@ bool Scout::Update(float dt, bool do_logic)
 		}
 		else
 		{
-			if (!path_full)
+			if (entity_path.empty())
 			{
 				ChaseTarget();
 			}
@@ -141,7 +141,7 @@ void Scout::InitEntity()
 	attack_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
 
-	speed = 750.0f;
+	speed = 600.0f;
 
 	max_health = 200;
 	current_health = max_health;
@@ -372,4 +372,14 @@ void Scout::DealDamage()
 void Scout::OnCollision(Collider* C1, Collider* C2)
 {
 	return;
+}
+
+Entity* Scout::GetTarget()
+{
+	return target;
+}
+
+int Scout::GetAttackRange()
+{
+	return attack_range;
 }
