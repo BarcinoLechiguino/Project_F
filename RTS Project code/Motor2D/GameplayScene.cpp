@@ -1292,8 +1292,16 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 
-		HUD_missions_tab->SetScreenPos(iPoint(10, 10));
-		HUD_missions_tab->SetHitbox({ 10,10,30, 81 });
+		//while (HUD_missions_tab->GetScreenPos().x <= 10) //Magic Number
+		//{
+		//	HUD_missions_tab->SetScreenPos(iPoint(N_Lerp(1252, 10, 0.1, false), 503));
+		//}
+
+		HUD_missions_tab->SetScreenPos(iPoint(1000, 503));
+
+		HUD_missions_tab->SetHitbox({ 1000,503,30, 81 });
+
+		
 	}
 }
 
@@ -1576,6 +1584,23 @@ void GameplayScene::DrawPathfindingDebug()
 			App->render->Blit(path_debug_tex, pos.x, pos.y);
 		}
 	}
+}
+
+float GameplayScene::N_Lerp(float start, float end, float rate, bool smash_in)			//Rate goes from 0 to rate*rate || (1 - rate) * (1 - rate)
+{																						//Simillar to Lerp() but allows for ease-ins.
+	float increment = 0;
+
+	if (smash_in)
+	{
+		increment = (end - start) * rate * rate;										// Ease-Out Smash-In --> Slow out, Fast In
+	}
+	else
+	{
+		float r = 1 - ((1 - rate) * (1 - rate));										// Smash-Out Ease-In --> Fast out, Slow In. Full version.
+		increment = (end - start) * r;													// This one accepts the parameters in the same order as Lerp.
+	}
+
+	return start + increment;
 }
 
 // --------------- REQUIRED FOR THE GOLD VERSION ---------------

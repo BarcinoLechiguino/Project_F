@@ -70,6 +70,8 @@ public:
 	void PathfindingDebug();
 	void DrawPathfindingDebug();
 
+	float N_Lerp(float start, float end, float rate, bool smash_in = false);		// Method that will be used to non-linearly interpolate the speed of a given transition.
+
 public:
 	bool transition_to_main_menu_scene;									// Will keep track whether or not the transition to the main menu scene has been triggered.
 	bool transition_to_win_scene;										// Will keep track whether or not the transition to the win scene has been triggered.
@@ -105,6 +107,8 @@ public:
 	
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
+
+	bool					tab_clicked;
 
 	// In-game menu
 
