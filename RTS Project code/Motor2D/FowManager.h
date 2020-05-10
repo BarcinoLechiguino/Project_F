@@ -124,6 +124,7 @@ private:
 	int visibility_map_height;
 
 	uchar* visibility_map;										// 2D container that will store the FOW state of each tile in the map.
+	//FowTile* visibility_map;
 
 	uchar* debug_visibility_map;								// Visibility map used for debug pursposes.	All the tiles will be VISIBLE.
 	uchar* visibility_map_debug_buffer;							// Buffer that will allow to swap between the visibility_map and debug_visibility_without issue.

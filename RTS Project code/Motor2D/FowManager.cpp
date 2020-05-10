@@ -248,7 +248,16 @@ void FowManager::ClearFowEntityLineOfSight(FowEntity* fow_entity_to_clear)					/
 
 	for (; tile != fow_entity_to_clear->line_of_sight.end(); ++tile)
 	{
-		AddTileToTilesToObscure((*tile));
+		if (scouting_trail)
+		{
+			ChangeVisibilityMap((*tile), FOGGED);
+		}
+		else
+		{
+			ChangeVisibilityMap((*tile), UNEXPLORED);
+		}
+		
+		//AddTileToTilesToObscure((*tile));
 	}
 
 }
