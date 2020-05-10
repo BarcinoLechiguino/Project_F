@@ -112,7 +112,7 @@ bool EntityManager::Update(float dt)
 	{
 		entities[i]->Update(dt, do_logic);
 
-		if(InViewport(entities[i])) //Entities to be drawn
+		if(InViewport(entities[i]) && entities[i]->is_visible) //Entities to be drawn
 		{
 			entities_in_screen.push_back(entities[i]);
 			j++;

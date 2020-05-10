@@ -98,7 +98,7 @@ struct ObjectGroup
 struct MapLayer
 {
 	std::string			name;			//Map name.
-	uint*				gid;			//Tile Id.
+	uchar*				gid;			//Tile Id.					// Mind that uchar only allows up to 255 ID's.
 	uint				width;			//Layer width in tiles.
 	uint				height;			//Layer height in tiles.
 	uint				size;			//width * height.
@@ -109,7 +109,7 @@ struct MapLayer
 	~MapLayer();
 
 	//Get id of tile in position x, y from gid[] array
-	inline uint Get(uint x, uint y) const 
+	inline uchar Get(uint x, uint y) const 
 	{
 		return gid[(y * width) + x]; 
 		//return x + y * width;
@@ -123,7 +123,7 @@ struct TileSet
 	SDL_Rect GetTileRect(uint tile_id) const;
 
 	std::string			name;						//Tileset name.
-	int					firstgid;					//First global tile id. Maps to the first id in the tileset.
+	int					firstgid;					//First global tile id. Maps to the first id in the tileset.		// THIS Change to uchar?
 	int					tile_width;					//Maximum width of tiles in a given tileset.
 	int					tile_height;				//Maximum height of tiles in a given tilesset.
 	int					spacing;					//Space in pixels between the tiles in a given tileset.
@@ -188,10 +188,13 @@ public:
 
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);		//Changed to non const because of list unknown problem
 	bool CreateEntityMap(int& width, int& height);							//This method will allocate the necessary memory and initialize the entities map. Not necessary in this case(?).
+	bool CreateVisibilityMap(int& width, int& height, uchar** buffer);
 
 	void DataMapDebug();
 	void Restart_Cam();
 	void GetMapSize(int& w, int& h) const;
+
+	void DrawMapGrid();
 
 	TileSet* GetTilesetFromTileId(int id);									//Changed to non const because of list unknown problem
 
@@ -203,8 +206,8 @@ private:
 	bool LoadLayer(pugi::xml_node& node, MapLayer* layer);
 	bool LoadObjectLayers(pugi::xml_node& node, ObjectGroup* group);
 	bool LoadProperties(pugi::xml_node& node, Properties& properties);
-	void LoadEntityAndWalkabilityMap();
-
+	
+	void LoadMetaDataMaps();												// Will load the walkability, entity and visibility maps.
 
 public:
 

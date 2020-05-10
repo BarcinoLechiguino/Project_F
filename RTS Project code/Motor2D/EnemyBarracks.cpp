@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "UI_CreationBar.h"
+#include "FowManager.h"
 #include "EntityManager.h"
 #include "EnemyScout.h"
 #include "EnemyInfantry.h"
@@ -73,6 +74,9 @@ bool EnemyBarracks::Update(float dt, bool do_logic)
 		creation_bar->is_visible = false;
 	}
 
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;									// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
+
 	return true;
 }
 
@@ -95,6 +99,8 @@ bool EnemyBarracks::CleanUp()
 
 	App->gui_manager->DeleteGuiElement(healthbar);
 	App->gui_manager->DeleteGuiElement(creation_bar);
+
+	App->fow_manager->DeleteFowEntity(fow_entity);
 
 	return true;
 }
@@ -189,32 +195,34 @@ void EnemyBarracks::LevelChanges()
 
 void EnemyBarracks::InitEntity()
 {
+	// POSITION & SIZE
+	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
+
+	pixel_position.x = (float)world_position.x;
+	pixel_position.y = (float)world_position.y;
+
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height);
+	
+	tiles_occupied.x = 2;
+	tiles_occupied.y = 2;
+
+	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetEnemyBarracksTexture();
-
-	is_selected = false;
-
-	// --- SPRITE SECTIONS ---
 	barracks_rect_1 = { 0, 0, 106, 95 };
 	barracks_rect_2 = { 108, 0, 106, 95 };
 	barracks_rect = barracks_rect_1;
 
-	// --- CREATION TIMES ---
+	// FLAGS
+	is_selected = false;
+
+	// UNIT CREATION VARIABLES
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
 
 	enemy_scout_creation_time = 1.0f;
 	enemy_infantry_creation_time = 2.0f;
 	enemy_heavy_creation_time = 5.0f;
 
-	// --- POSITION AND SIZE ---
-	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
-
-	pixel_position.x = (float)world_position.x;
-	pixel_position.y = (float)world_position.y;
-
-	tiles_occupied.x = 2;
-	tiles_occupied.y = 2;
-
-	// --- STATS & HEALTHBAR ---
+	// STATS
 	max_health = 600;
 	current_health = max_health;
 
@@ -222,13 +230,18 @@ void EnemyBarracks::InitEntity()
 	enemy_infantry_level = 1;
 	enemy_heavy_level = 1;
 
+	// HEALTHBAR & CREATION BAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 		AttachCreationBarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height);
+	// FOG OF WAR
+	is_visible = false;
+	provides_visibility = false;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, true);
 }
 
 void EnemyBarracks::AttachHealthbarToEntity()

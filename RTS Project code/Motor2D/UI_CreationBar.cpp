@@ -43,8 +43,11 @@ bool UI_CreationBar::Draw()
 {
 	CheckInput();
 
-	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
-	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &creation_bar, 1.0f, 1.0f);
+	if (attached_entity->is_visible || App->player->god_mode)
+	{
+		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
+		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &creation_bar, 1.0f, 1.0f);
+	}
 	
 	return true;
 }

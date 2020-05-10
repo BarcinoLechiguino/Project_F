@@ -18,6 +18,7 @@
 #include "Console.h"
 #include "SceneManager.h"
 #include "Scene.h"
+#include "FowManager.h"
 
 #include "Map.h"
 
@@ -80,8 +81,8 @@ void Map::Draw()
 			bottom_right_y = -App->render->camera.y + winHeight;
 		}
 
-		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;					//Top Left Corner row
-		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x + 1;			//Down Right Corner row
+		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;						//Top Left Corner row
+		max_x_row = WorldToMap(bottom_right_x + data.tile_width , bottom_right_y ).x + 1;				//Down Right Corner row
 
 		min_y_row = WorldToMap(bottom_right_x, camera_pos_in_pixels.y).y;								//Top-Right Corner
 		max_y_row = WorldToMap(camera_pos_in_pixels.x, bottom_right_y + data.tile_height).y + 1 ;		//Bottom-Left Corner
@@ -101,7 +102,7 @@ void Map::Draw()
 			{
 				if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height  && MapToWorld(x, y).x < bottom_right_x)
 				{
-					int tile_id = (*layer)->Get(x, y);																//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
+					int tile_id = (*layer)->Get(x, y);																	//Gets the tile id from the tile index. Gets the tile index for a given tile. x + y * data.tile_width;
 
 					if (tile_id > 0)																				
 					{
@@ -117,6 +118,23 @@ void Map::Draw()
 							tiles_drawn++;
 						}
 					}
+				}
+			}
+		}
+
+		// Fog of War Draw. Make it a function that is not a loop and add it to the main draw loop.
+		for (int x = min_x_row; x < max_x_row && x < data.width; x++)
+		{
+			for (int y = min_y_row; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
+			{
+				if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height && MapToWorld(x, y).x < bottom_right_x)
+				{
+					iPoint pos = MapToWorld(x, y);
+					iPoint tile_pos = { x, y };
+					uchar fow_state = App->fow_manager->GetVisibilityAt(tile_pos);
+					SDL_Rect r = App->fow_manager->GetFowTileRect(fow_state);
+
+					App->render->Blit(App->fow_manager->fow_tex, pos.x - 5, pos.y - 19, &r);
 				}
 			}
 		}
@@ -358,8 +376,8 @@ bool Map::Load(std::string file_name)
 	}
 
 	LOG("LOADING ENTITY AND WALKABILITY");
-	//Entity and Walkability maps are loaded here. Previously in GameScene.
-	LoadEntityAndWalkabilityMap();
+	//Walkability, Entity and Visibility maps are loaded here. Previously in GameScene.
+	LoadMetaDataMaps();
 	LOG("LOADED ENTITY AND WALKABILITY");
 
 	//Load Object / ObjectGroup / Collider Info ------------------------------------------
@@ -584,7 +602,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	}
 	else
 	{
-		layer->gid = new uint[layer->width * layer->height];
+		layer->gid = new uchar[layer->width * layer->height];
 		memset(layer->gid, 0, layer->width * layer->height);
 
 		int i = 0;
@@ -599,7 +617,7 @@ bool Map::LoadLayer(pugi::xml_node& node, MapLayer* layer)
 	return ret;
 }
 
-void Map::LoadEntityAndWalkabilityMap() 
+void Map::LoadMetaDataMaps() 
 {
 	//Walkability map here.
 
@@ -616,8 +634,10 @@ void Map::LoadEntityAndWalkabilityMap()
 
 	LOG("STARTED LOADING ENTITY MAP");
 	
-	App->entity_manager->SetEntityMap(App->map->data.width, App->map->data.height);
+	App->entity_manager->SetEntityMap(data.width, data.height);
 	LOG("FINISHED LOADING ENTITY MAP");
+
+	App->fow_manager->SetVisibilityMap(data.width, data.height);
 }
 
 //Loads the object layers (colliders) from the xml map. It iterates through  a specific object layer (in the load() it is iterated through to get all the object info).
@@ -822,11 +842,36 @@ bool Map::CreateEntityMap(int& width, int& height)
 		}
 	}
 
-	RELEASE_ARRAY(map);
+	//RELEASE_ARRAY(map);												//THIS HERE
 
 	width	= data.width;
 	height	= data.height;
 	ret		= true;
+
+	return ret;
+}
+
+bool Map::CreateVisibilityMap(int& width, int& height, uchar** buffer)
+{
+	bool ret = false;
+
+	uchar* map = new uchar[data.width * data.height];
+	memset(map, 0, data.width * data.height);								// The base state of the FOW tile is set to UNEXPLORED. (See FowManager's FOW_TILE_STATE enum class)
+
+	/*for (int y = 0; y < data.height; ++y)
+	{
+		for (int x = 0; x < data.width; ++x)
+		{
+			int index = (y * data.width) + x;
+
+			map[index] = 0;
+		}
+	}*/
+
+	width		= data.width;
+	height		= data.height;
+	*buffer		= map;
+	ret			= true;
 
 	return ret;
 }
@@ -841,6 +886,55 @@ void Map::GetMapSize(int& w, int& h) const
 {
 	w = App->map->data.width * App->map->data.tile_width;
 	h = App->map->data.height * App->map->data.tile_height;
+}
+
+void Map::DrawMapGrid()
+{
+	// TMP. Change Later to fit the tiles.
+	
+	int tile_offset_x = 2;
+	int tile_offset_y = 19;
+	
+	// --- RIGHT TO LEFT ---
+	iPoint origin;																									// Origin point of the grid's lines.
+	origin.x = (int)(data.tile_width * 0.5f) - tile_offset_x;
+	origin.y = (int)(data.tile_height * 0.5f) - tile_offset_y;
+
+	/*origin.x = 0;
+	origin.y = 0;*/
+
+	iPoint end;																										//End point of the grid's lines
+	end.x = -((int)(data.width * data.tile_width * 0.5f) + (int)(data.tile_width * 0.5f)) + data.tile_width - tile_offset_x;
+	end.y = (int)(data.height * data.tile_height * 0.5f) + (int)(data.tile_height * 0.5f) - tile_offset_y;
+
+	for (int i = 0; i <= data.width; ++i)
+	{
+		App->render->DrawLine(origin.x, origin.y, end.x, end.y, 255, 255, 255, 100);
+
+		origin.x += (int)(data.tile_width * 0.5f);
+		origin.y += (int)(data.tile_height * 0.5f);
+
+		end.x += (int)(data.tile_width * 0.5f);
+		end.y += (int)(data.tile_height * 0.5f);
+	}
+
+	// --- LEFT TO RIGHT ---
+	origin.x = (int)(data.tile_width * 0.5f);
+	origin.y = (int)(data.tile_height * 0.5f) - tile_offset_y;
+	
+	end.x = (int)(data.width * data.tile_width * 0.5f) + (int)(data.tile_width * 0.5f);
+	end.y = (int)(data.height * data.tile_height * 0.5f) + (int)(data.tile_height * 0.5f) - tile_offset_y;
+
+	for (int i = 0; i <= data.height; ++i)
+	{
+		App->render->DrawLine(origin.x, origin.y, end.x, end.y, 255, 255, 255, 100);
+
+		origin.x -= (int)(data.tile_width * 0.5f);
+		origin.y += (int)(data.tile_height * 0.5f);
+
+		end.x -= (int)(data.tile_width * 0.5f);
+		end.y += (int)(data.tile_height * 0.5f);
+	}
 }
 
 int Properties::Get(std::string name, int default_value)							//Revise how to be able to not have a property without default value being nullptr.

@@ -12,8 +12,9 @@
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
-#include "EntityManager.h"
 #include "SceneManager.h"
+#include "FowManager.h"
+#include "EntityManager.h"
 
 #include "Gatherer.h"
 
@@ -64,7 +65,12 @@ bool Gatherer::Update(float dt, bool do_logic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;
+	
+	fow_entity->SetPos(tile_position);
 
 	return true;
 }
@@ -92,6 +98,8 @@ bool Gatherer::CleanUp()
 	}
 	
 	App->gui_manager->DeleteGuiElement(healthbar);
+
+	App->fow_manager->DeleteFowEntity(fow_entity);
 
 	return true;
 }
@@ -245,9 +253,11 @@ void Gatherer::InitEntity()
 	//config_file.load_file("config.xml");
 	//pugi::xml_node gatherer = config_file.child("config").child("entities").child("units").child("allies").child("gatherer");
 	
+	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetGathererTexture();
 	InitUnitSpriteSections();
 
+	// FLAGS
 	target = nullptr;
 	gather_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
@@ -256,6 +266,7 @@ void Gatherer::InitEntity()
 	is_selected = false;
 	path_full = false;
 
+	// STATS
 	speed = 400.0f;
 
 	max_health = 150;
@@ -269,10 +280,23 @@ void Gatherer::InitEntity()
 
 	attack_range = 2;
 
+	// HEALTHBAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 	}
+
+	// FOG OF WAR
+	is_visible = true;
+	provides_visibility = true;
+	range_of_vision = 4;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, false);
+
+	//fow_entity->frontier = App->fow_manager->CreateRectangularFrontier(range_of_vision, range_of_vision, tile_position);
+	fow_entity->frontier = App->fow_manager->CreateCircularFrontier(range_of_vision, tile_position);
+
+	fow_entity->line_of_sight = App->fow_manager->GetLineOfSight(fow_entity->frontier);
 }
 
 void Gatherer::AttachHealthbarToEntity()

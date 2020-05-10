@@ -7,6 +7,7 @@
 #include "EntityManager.h"
 #include "GuiManager.h"
 #include "Player.h"
+#include "FowManager.h"
 #include "SceneManager.h"
 #include "TransitionManager.h"
 
@@ -99,12 +100,18 @@ void Scene::DebugKeys()
 {
 	if (App->input->GetKey(SDL_SCANCODE_F1) == KEY_STATE::KEY_DOWN)						// Enable/Disable God Mode.
 	{
-
 		if (App->player->CurrentlyInGameplayScene())
 		{
 			App->player->god_mode = !App->player->god_mode;
-		}
-		
+			
+			App->fow_manager->fow_debug = !App->fow_manager->fow_debug;					// TMP
+			App->fow_manager->SwapVisibilityMaps();
+
+			/*if (!App->fow_manager->fow_debug)
+			{
+				App->fow_manager->SwapVisibilityMaps();
+			}*/
+		}	
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F2) == KEY_STATE::KEY_DOWN)						// Switch the frame cap between 60 and 30 FPS.
@@ -188,6 +195,12 @@ void Scene::DebugKeys()
 	if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_STATE::KEY_DOWN)
 	{
 		App->win->ToggleFullscreen();
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_END) == KEY_STATE::KEY_DOWN)
+	{
+		App->fow_manager->fow_debug = !App->fow_manager->fow_debug;
+		App->fow_manager->SwapVisibilityMaps();
 	}
 }
 

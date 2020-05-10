@@ -9,11 +9,12 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Player.h"
-#include "EntityManager.h"
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "SceneManager.h"
+#include "FowManager.h"
+#include "EntityManager.h"
 
 #include "EnemyScout.h"
 
@@ -85,7 +86,12 @@ bool EnemyScout::Update(float dt, bool do_logic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;
+
+	fow_entity->SetPos(tile_position);
 
 	return true;
 };
@@ -114,6 +120,8 @@ bool EnemyScout::CleanUp()
 
 	App->gui_manager->DeleteGuiElement(healthbar);
 
+	App->fow_manager->DeleteFowEntity(fow_entity);
+
 	return true;
 };
 
@@ -129,10 +137,14 @@ void EnemyScout::Draw()
 
 void EnemyScout::InitEntity()
 {
+	// POSITION VARIABLES
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	
+	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetEnemyScoutTexture();
-
 	InitUnitSpriteSections();
 
+	// FLAGS
 	is_selectable = false;
 	is_selected = false;
 	path_full = false;
@@ -141,6 +153,7 @@ void EnemyScout::InitEntity()
 	attack_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
 
+	// STATS
 	speed = 450.0f;
 
 	max_health = 200;
@@ -150,12 +163,17 @@ void EnemyScout::InitEntity()
 	attack_speed = 0.5f;
 	attack_range = 5;
 
+	// HEALTHBAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	// FOG OF WAR
+	is_visible = false;
+	provides_visibility = false;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, false);
 }
 
 void EnemyScout::AttachHealthbarToEntity()
