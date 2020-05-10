@@ -441,6 +441,20 @@ void FowManager::UpdateEntitiesFowManipulation()
 		//Smooth the edges of the fow_tiles.
 	}
 
+	item = fow_entities.begin();
+
+	for (; item != fow_entities.end(); ++item)
+	{
+		if ((*item)->provides_visibility)
+		{
+			std::vector<iPoint>::iterator tile = (*item)->line_of_sight.begin();
+
+			for (; tile < (*item)->line_of_sight.end(); ++tile)
+			{
+				ChangeVisibilityMap((*tile), VISIBLE);
+			}
+		}
+	}
 	// Iterate Static entities.
 }
 
