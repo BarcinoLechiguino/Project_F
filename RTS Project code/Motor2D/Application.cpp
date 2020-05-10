@@ -23,6 +23,7 @@
 #include "Movement.h"
 #include "FowManager.h"
 #include "DialogSystem.h"
+#include "ParticleManager.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -56,6 +57,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	movement			= new Movement();
 	fow_manager			= new FowManager();
 	dialog				= new DialogSystem();
+	particle_manager	= new ParticleManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -72,6 +74,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(dialog);
 
 	// scene_manager last before render.
+	AddModule(particle_manager);
 	AddModule(minimap);
 	AddModule(gui_manager);
 	AddModule(scene_manager);
@@ -224,6 +227,19 @@ pugi::xml_node Application::LoadConfig(pugi::xml_document& config_file) const
 	else
 		ret = config_file.child("config");
 
+	return ret;
+}
+
+pugi::xml_node Application::LoadParticleSystemConfig(pugi::xml_document& ps_file) const
+{
+	pugi::xml_node ret;
+
+	pugi::xml_parse_result result = ps_file.load_file("ps_config");
+
+	if (result == NULL)
+		LOG("Could not load xml file config.xml. pugi error: %s", result.description());
+	else
+		ret = ps_file.child("particlesystem");
 	return ret;
 }
 

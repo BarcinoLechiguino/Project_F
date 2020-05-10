@@ -91,6 +91,7 @@
     <ClCompile Include="Cut.cpp" />
     <ClCompile Include="DialogSystem.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
+    <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="EnemyInfantry.cpp" />
     <ClCompile Include="EnemyGatherer.cpp" />
@@ -119,6 +120,7 @@
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="OptionsScene.cpp" />
+    <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Player.cpp" />
@@ -170,6 +172,7 @@
     <ClInclude Include="Cut.h" />
     <ClInclude Include="DialogSystem.h" />
     <ClInclude Include="DynamicObject.h" />
+    <ClInclude Include="Emitter.h" />
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="EnemyBarracks.h" />
     <ClInclude Include="EnemyGatherer.h" />
@@ -186,6 +189,7 @@
     <ClInclude Include="FowManager.h" />
     <ClInclude Include="Gatherer.h" />
     <ClInclude Include="GuiManager.h" />
+    <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Heavy.h" />
     <ClInclude Include="Infantry.h" />
     <ClInclude Include="Minimap.h" />
@@ -254,6 +258,7 @@
     <Xml Include="..\Game\config.xml">
       <SubType>Designer</SubType>
     </Xml>
+    <Xml Include="..\Game\ps_config.xml" />
     <Xml Include="..\Game\save_game.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

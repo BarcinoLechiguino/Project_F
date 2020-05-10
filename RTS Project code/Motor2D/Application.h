@@ -32,6 +32,7 @@ class Minimap;
 class Movement;
 class FowManager;
 class DialogSystem;
+class ParticleManager;
 
 class Application
 {
@@ -59,6 +60,8 @@ public:
 
 	void GetSaveGames(std::vector<std::string>& list_to_fill);
 
+	
+	pugi::xml_node LoadParticleSystemConfig(pugi::xml_document& ps_file) const; //Loads particle config file
 
 private:
 	
@@ -99,6 +102,7 @@ public:
 	Movement*			movement;
 	FowManager*			fow_manager;
 	DialogSystem*		dialog;
+	ParticleManager*	particle_manager; 
 
 	uint				frame_cap;								//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;						//Stores the original frame cap at application start.

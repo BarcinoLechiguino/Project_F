@@ -201,6 +201,48 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, b
 	return ret;
 }
 
+bool Render::ColoredBlit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, const SDL_Rect* rectSize, SDL_Color color, float speed, double angle, int pivot_x, int pivot_y) const
+{
+	bool ret = true;
+	uint scale = App->win->GetScale();
+
+	SDL_Rect rect;
+	rect.x = (int)(camera.x * speed) + x * scale;
+	rect.y = (int)(camera.y * speed) + y * scale;
+
+	if (rectSize != NULL)
+	{
+		rect.w = rectSize->w;
+		rect.h = rectSize->h;
+	}
+	else
+		SDL_QueryTexture(texture, NULL, NULL, &rect.w, &rect.h);
+
+	rect.w *= scale;
+	rect.h *= scale;
+
+	SDL_Point* p = NULL;
+	SDL_Point pivot;
+
+	if (pivot_x != INT_MAX && pivot_y != INT_MAX)
+	{
+		pivot.x = pivot_x;
+		pivot.y = pivot_y;
+		p = &pivot;
+	}
+
+	SDL_SetTextureColorMod(texture, color.r, color.g, color.b) == 0;
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD) == 0;
+
+	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
+	{
+		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
+		ret = false;
+	}
+
+	return ret;
+}
+
 bool Render::DrawQuad(const SDL_Rect& collider, Uint8 r, Uint8 g, Uint8 b, Uint8 a, bool filled, bool use_camera) const
 {
 	bool ret = true;
