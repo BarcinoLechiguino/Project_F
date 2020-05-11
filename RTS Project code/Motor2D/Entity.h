@@ -11,7 +11,7 @@ class UI_Healthbar;
 struct SDL_Texture;
 struct SDL_Rect;
 struct Collider;
-struct FOW_Entity;
+struct FowEntity;
 
 
 enum class ENTITY_TYPE
@@ -119,8 +119,9 @@ public:
 																				// --- ENTITY FOW RELATED VARIABLES ---
 	bool			is_visible;													// Will determine whether or not an entity is currently visible. (See FowManager module)
 	bool			provides_visibility;										// Will determine whether or not an entity will grant the player visibility over the Fog of War.
+	uint			range_of_vision;											// Radius in which a given entity will grant vision. In tiles.
 
-	FOW_Entity*		fow_entity;
+	FowEntity*		fow_entity;
 
 };
 

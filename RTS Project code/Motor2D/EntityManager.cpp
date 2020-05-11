@@ -112,7 +112,7 @@ bool EntityManager::Update(float dt)
 	{
 		entities[i]->Update(dt, do_logic);
 
-		if(InViewport(entities[i])) //Entities to be drawn
+		if(InViewport(entities[i]) && entities[i]->is_visible) //Entities to be drawn
 		{
 			entities_in_screen.push_back(entities[i]);
 			j++;
@@ -622,14 +622,10 @@ bool EntityManager::InViewport(Entity* entity)
 
 void EntityManager::SetEntityMap(int width, int height)
 {
-	LOG("ENTERED SetEntityMap");
 	entity_map_width = width;
 	entity_map_height = height;
-	LOG("BEFORE RELEASE ARRAY");
-	//RELEASE_ARRAY(entity_map);
-	LOG("ALLOCATING ENTITY ARRAY");
+	//RELEASE_ARRAY(entity_map); //Used to crash
 	entity_map = new Entity* [width * height];
-	LOG("FINISH ALLOCATing ENTITY ARRAY");
 
 	for (int y = 0; y < height; ++y)
 	{

@@ -6,7 +6,6 @@
 class Timer
 {
 public:
-
 	// Constructor
 	Timer();
 
@@ -17,5 +16,4 @@ public:
 private:
 	uint32	started_at;
 };
-
 #endif //__TIMER_H__

@@ -12,8 +12,9 @@
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
-#include "EntityManager.h"
 #include "SceneManager.h"
+#include "FowManager.h"
+#include "EntityManager.h"
 
 #include "EnemyGatherer.h"
 
@@ -74,6 +75,11 @@ bool EnemyGatherer::Update(float dt, bool do_logic)
 
 	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;
+
+	fow_entity->SetPos(tile_position);
+
 	return true;
 }
 
@@ -101,6 +107,8 @@ bool EnemyGatherer::CleanUp()
 
 	App->gui_manager->DeleteGuiElement(healthbar);
 
+	App->fow_manager->DeleteFowEntity(fow_entity);
+
 	return true;
 }
 
@@ -116,10 +124,14 @@ void EnemyGatherer::Draw()
 
 void EnemyGatherer::InitEntity()
 {
+	// POSITION VARIABLES
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	
+	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetEnemyGathererTexture();
-
 	InitUnitSpriteSections();
 
+	// FLAGS
 	is_selectable = false;
 	is_selected = false;
 	path_full = false;
@@ -128,6 +140,7 @@ void EnemyGatherer::InitEntity()
 	gather_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
 
+	// STATS
 	speed = 400.0f;
 
 	max_health = 150;
@@ -139,12 +152,17 @@ void EnemyGatherer::InitEntity()
 
 	attack_range = 1;
 
+	// HEALTHBAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	// FOG OF WAR
+	is_visible = false;
+	provides_visibility = false;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, false);
 }
 
 void EnemyGatherer::AttachHealthbarToEntity()

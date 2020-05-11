@@ -71,7 +71,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(console);
 	AddModule(collisions);
 	AddModule(movement);
-	AddModule(dialog);
+	
 
 	// scene_manager last before render.
 	AddModule(particle_manager);
@@ -81,6 +81,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(transition_manager);
 	AddModule(entity_manager);
 	AddModule(fow_manager);
+	AddModule(dialog);
 	AddModule(player);
 
 	// render last to swap buffer

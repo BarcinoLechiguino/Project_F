@@ -37,10 +37,13 @@ bool UI_Healthbar::Draw()
 	
 	UpdateHealthbarPosition();
 
-	if (attached_entity->current_health != attached_entity->max_health || attached_entity->is_selected || App->player->god_mode)
+	if (attached_entity->is_visible || App->player->god_mode)
 	{
-		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
-		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &healthbar, 1.0f, 1.0f);
+		if (attached_entity->current_health != attached_entity->max_health || attached_entity->is_selected)
+		{
+			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &background, 1.0f, 1.0f);
+			BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &healthbar, 1.0f, 1.0f);
+		}
 	}
 	
 	return true;

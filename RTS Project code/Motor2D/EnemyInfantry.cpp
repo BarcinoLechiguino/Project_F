@@ -10,6 +10,8 @@
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
+#include "SceneManager.h"
+#include "FowManager.h"
 #include "EntityManager.h"
 
 #include "EnemyInfantry.h"
@@ -81,7 +83,12 @@ bool EnemyInfantry::Update(float dt, bool do_logic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;
+
+	fow_entity->SetPos(tile_position);
 
 	return true;
 };
@@ -109,6 +116,8 @@ bool EnemyInfantry::CleanUp()
 	}
 
 	App->gui_manager->DeleteGuiElement(healthbar);
+
+	App->fow_manager->DeleteFowEntity(fow_entity);
 	
 	return true;
 };
@@ -125,10 +134,14 @@ void EnemyInfantry::Draw()
 
 void EnemyInfantry::InitEntity()
 {
+	// POSITION VARIABLES
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	
+	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetEnemyTexture();
-
 	InitUnitSpriteSections();
 
+	// FLAGS
 	is_selectable = false;
 	is_selected = false;
 	path_full = false;
@@ -137,6 +150,7 @@ void EnemyInfantry::InitEntity()
 	attack_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
 
+	// STATS
 	speed = 350.0f;
 
 	max_health = 300;
@@ -146,12 +160,17 @@ void EnemyInfantry::InitEntity()
 	attack_speed = 0.75f;
 	attack_range = 5;
 
+	// HEALTHBAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	// FOG OF WAR
+	is_visible = false;
+	provides_visibility = false;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, false);
 }
 
 void EnemyInfantry::AttachHealthbarToEntity()

@@ -227,10 +227,10 @@
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
     <ClCompile Include="ParticleManager.cpp">
-      <Filter>Engine  ===========\Modules\Multimedia\Particles</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
     <ClCompile Include="Emitter.cpp">
-      <Filter>Engine  ===========\Modules\Multimedia\Particles</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -481,10 +481,10 @@
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
     <ClInclude Include="ParticleManager.h">
-      <Filter>Engine  ===========\Modules\Multimedia\Particles</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
     <ClInclude Include="Emitter.h">
-      <Filter>Engine  ===========\Modules\Multimedia\Particles</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -495,6 +495,9 @@
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
     <Xml Include="..\Game\save_game.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="..\Game\dialog.xml">
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
     <Xml Include="..\Game\ps_config.xml">
@@ -590,9 +593,6 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Static\Resources\Resource Entities">
       <UniqueIdentifier>{3bdfee68-3a18-4461-ba17-615146dd4e9a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine  ===========\Modules\Multimedia\Particles">
-      <UniqueIdentifier>{9925d5e4-d37b-49be-b70a-cd7e206a77fe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

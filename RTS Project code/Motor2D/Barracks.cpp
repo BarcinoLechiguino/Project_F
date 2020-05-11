@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "UI_CreationBar.h"
+#include "FowManager.h"
 #include "EntityManager.h"
 #include "Scout.h"
 #include "Infantry.h"
@@ -73,6 +74,9 @@ bool Barracks::Update(float dt, bool do_logic)
 		creation_bar->is_visible = false;
 	}
 	
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;									// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
+
 	return true;
 }
 
@@ -95,6 +99,8 @@ bool Barracks::CleanUp()
 
 	App->gui_manager->DeleteGuiElement(healthbar);
 	App->gui_manager->DeleteGuiElement(creation_bar);
+
+	App->fow_manager->DeleteFowEntity(fow_entity);
 	
 	return true;
 }
@@ -189,32 +195,34 @@ void Barracks::LevelChanges()				//Updates the building stats when leveling up
 
 void Barracks::InitEntity()
 {
-	entity_sprite = App->entity_manager->GetBarracksTexture();
-
-	is_selected = false;
-
-	created_unit_type = ENTITY_TYPE::UNKNOWN;
-
-	// --- SPRITE SECTIONS ---
-	barracks_rect_1 = { 0, 0, 106, 95 };
-	barracks_rect_2 = { 108, 0, 106, 95 };
-	barracks_rect = barracks_rect_1;
-
-	// --- CREATION TIMERS & VARS ---
-	scout_creation_time = 1.0f;
-	infantry_creation_time = 2.0f;
-	heavy_creation_time = 5.0f;
-
-	// --- POSITION AND SIZE ---
+	// POSITION & SIZE
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
 	pixel_position.x = (float)world_position.x;
 	pixel_position.y = (float)world_position.y;
 
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height);
+
 	tiles_occupied.x = 2;
 	tiles_occupied.y = 2;
 
-	// --- STATS & BARS ---
+	// TEXTURE & SECTIONS
+	entity_sprite = App->entity_manager->GetBarracksTexture();
+	barracks_rect_1 = { 0, 0, 106, 95 };
+	barracks_rect_2 = { 108, 0, 106, 95 };
+	barracks_rect = barracks_rect_1;
+
+	// FLAGS
+	is_selected = false;
+
+	// UNIT CREATION VARIABLES
+	created_unit_type = ENTITY_TYPE::UNKNOWN;
+
+	scout_creation_time = 1.0f;
+	infantry_creation_time = 2.0f;
+	heavy_creation_time = 5.0f;
+
+	// STATS
 	max_health = 600;
 	current_health = max_health;
 
@@ -222,13 +230,24 @@ void Barracks::InitEntity()
 	infantry_level = 1;
 	heavy_level = 1;
 
+	// HEALTHBAR & CREATION BAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 		AttachCreationBarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height);
+	// FOG OF WAR
+	is_visible = true;
+	provides_visibility = true;
+	range_of_vision = 8;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, true);
+
+	//fow_entity->frontier = App->fow_manager->CreateRectangularFrontier(range_of_vision, range_of_vision, tile_position);
+	fow_entity->frontier = App->fow_manager->CreateCircularFrontier(range_of_vision, tile_position);
+
+	fow_entity->line_of_sight = App->fow_manager->GetLineOfSight(fow_entity->frontier);
 }
 
 void Barracks::AttachHealthbarToEntity()

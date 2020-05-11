@@ -16,6 +16,7 @@
 #include "Console.h"
 #include "Player.h"
 #include "Scene.h"
+#include "DialogSystem.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -191,7 +192,7 @@ bool GameplayScene::CleanUp()
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui_manager->DestroyGuiElements();
-
+	App->dialog->CleanUp();
 	return true;
 }
 
@@ -225,6 +226,10 @@ void GameplayScene::InitScene()
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
 	App->audio->PlayMusic(inGame_song, 0.0f);
+
+	App->dialog->LoadDialog();
+	App->dialog->StartDialog(0); 
+	App->dialog->StartDialog(1);
 }
 
 // --- SCENE TRANSITIONS

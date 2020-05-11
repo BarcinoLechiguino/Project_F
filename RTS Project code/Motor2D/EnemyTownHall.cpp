@@ -9,6 +9,7 @@
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "UI_CreationBar.h"
+#include "FowManager.h"
 #include "EntityManager.h"
 #include "EnemyGatherer.h"
 
@@ -71,6 +72,9 @@ bool EnemyTownHall::Update(float dt, bool do_logic)
 		creation_bar->is_visible = false;
 	}
 
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;									// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
+
 	return true;
 }
 
@@ -93,6 +97,8 @@ bool EnemyTownHall::CleanUp()
 
 	App->gui_manager->DeleteGuiElement(healthbar);
 	App->gui_manager->DeleteGuiElement(creation_bar);
+
+	App->fow_manager->DeleteFowEntity(fow_entity);
 
 	return true;
 }
@@ -163,42 +169,48 @@ void EnemyTownHall::LevelChanges()				//Updates the building stats when leveling
 
 void EnemyTownHall::InitEntity()
 {
-	entity_sprite = App->entity_manager->GetEnemyTownHallTexture();
-
-	is_selected = false;
-
-	created_unit_type = ENTITY_TYPE::UNKNOWN;
-
-	// --- SPRITE SECTIONS ---
-	hall_rect_1 = { 0, 0, 155, 138 };
-	hall_rect_2 = { 155, 0, 155, 138 };
-	hall_rect = hall_rect_1;
-
-	// --- CREATION TIMERS ---
-	enemy_gatherer_creation_time = 1.0f;														//Magic
-
-	// --- POSITION AND SIZE ---
+	// POSITION & SIZE
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
 	pixel_position.x = (float)world_position.x;
 	pixel_position.y = (float)world_position.y;
 
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height * 0.5f);
+
 	tiles_occupied.x = 3;
 	tiles_occupied.y = 3;
 
-	// --- STATS & HEALTHBAR ---
+	// TEXTURE & SECTIONS
+	hall_rect_1 = { 0, 0, 155, 138 };
+	hall_rect_2 = { 155, 0, 155, 138 };
+	hall_rect = hall_rect_1;
+	entity_sprite = App->entity_manager->GetEnemyTownHallTexture();
+
+	// FLAGS
+	is_selected = false;
+
+	// UNIT CREATION VARIABLES
+	created_unit_type = ENTITY_TYPE::UNKNOWN;
+	enemy_gatherer_creation_time = 1.0f;														//Magic
+
+	// STATS
 	max_health = 900;
 	current_health = max_health;
 
 	enemy_gatherer_level = 1;
 
+	// HEALTHBAR & CREATION BAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 		AttachCreationBarToEntity();
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height + App->map->data.tile_height * 0.5f);
+	// FOG OF WAR
+	is_visible = false;
+	provides_visibility = false;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, true);
 }
 
 void EnemyTownHall::AttachHealthbarToEntity()
