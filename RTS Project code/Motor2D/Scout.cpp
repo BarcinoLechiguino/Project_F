@@ -9,11 +9,12 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Player.h"
-#include "EntityManager.h"
 #include "GuiManager.h"
 #include "UI.h"
 #include "UI_Healthbar.h"
 #include "SceneManager.h"
+#include "FowManager.h"
+#include "EntityManager.h"
 
 #include "Scout.h"
 
@@ -85,7 +86,12 @@ bool Scout::Update(float dt, bool do_logic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height / 2);
+	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;
+
+	fow_entity->SetPos(tile_position);
 
 	return true;
 };
@@ -114,6 +120,8 @@ bool Scout::CleanUp()
 
 	App->gui_manager->DeleteGuiElement(healthbar);
 
+	App->fow_manager->DeleteFowEntity(fow_entity);
+
 	return true;
 };
 
@@ -129,10 +137,11 @@ void Scout::Draw()
 
 void Scout::InitEntity()
 {
+	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetScoutTexture();
-
 	InitUnitSpriteSections();
 
+	// FLAGS
 	is_selectable = true;
 	is_selected = false;
 	path_full = false;
@@ -141,6 +150,7 @@ void Scout::InitEntity()
 	attack_in_cooldown = false;
 	accumulated_cooldown = 0.0f;
 
+	// STATS
 	speed = 600.0f;
 
 	max_health = 200;
@@ -150,10 +160,23 @@ void Scout::InitEntity()
 	attack_speed = 0.5f;
 	attack_range = 5;
 
+	// HEALTHBAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
 	}
+
+	// FOG OF WAR
+	is_visible = true;
+	provides_visibility = true;
+	range_of_vision = 6;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, false);
+
+	//fow_entity->frontier = App->fow_manager->CreateRectangularFrontier(range_of_vision, range_of_vision, tile_position);
+	fow_entity->frontier = App->fow_manager->CreateCircularFrontier(range_of_vision, tile_position);
+
+	fow_entity->line_of_sight = App->fow_manager->GetLineOfSight(fow_entity->frontier);
 }
 
 void Scout::AttachHealthbarToEntity()

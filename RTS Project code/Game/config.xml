@@ -41,6 +41,10 @@
     </layers>
   </map>
 
+  <fog_of_war>
+    <fow_tex path="maps/FOW_meta_sheet.png"/>
+  </fog_of_war>
+  
   <player>
     <god_mode value="0"/>
     <is_selecting value="0"/>
