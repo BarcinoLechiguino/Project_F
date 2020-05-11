@@ -114,14 +114,10 @@ void SceneManager::SwitchScene(SCENES scene_name)
 		}
 	}
 
-	LOG("LOADING %s SCENE", current_scene->name_tag.c_str());
-
 	if (current_scene != nullptr)
 	{
  		current_scene->Awake(config.child(current_scene->name_tag.c_str()));
-		LOG("FINISHED AWAKING %s SCENE", current_scene->name_tag.c_str());
 		current_scene->Start();
-		LOG("FINISHED LOADING %s SCENE", current_scene->name_tag.c_str());
 	}
 	
 }

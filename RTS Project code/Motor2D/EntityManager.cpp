@@ -622,14 +622,10 @@ bool EntityManager::InViewport(Entity* entity)
 
 void EntityManager::SetEntityMap(int width, int height)
 {
-	LOG("ENTERED SetEntityMap");
 	entity_map_width = width;
 	entity_map_height = height;
-	LOG("BEFORE RELEASE ARRAY");
-	//RELEASE_ARRAY(entity_map);
-	LOG("ALLOCATING ENTITY ARRAY");
+	//RELEASE_ARRAY(entity_map); //Used to crash
 	entity_map = new Entity* [width * height];
-	LOG("FINISH ALLOCATing ENTITY ARRAY");
 
 	for (int y = 0; y < height; ++y)
 	{

@@ -470,7 +470,7 @@
     </ClInclude>
     <ClInclude Include="FowManager.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
-    </ClInclude>      
+    </ClInclude>
     <ClInclude Include="DialogSystem.h">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
@@ -483,6 +483,9 @@
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
     <Xml Include="..\Game\save_game.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="..\Game\dialog.xml">
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
   </ItemGroup>

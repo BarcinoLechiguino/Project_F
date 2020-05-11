@@ -181,7 +181,6 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, b
 	rect.w *= (int)(scale * render_scale);
 	rect.h *= (int)(scale * render_scale);
 
-
 	SDL_Point* p = NULL;
 	SDL_Point pivot;
 
