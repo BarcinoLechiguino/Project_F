@@ -230,6 +230,7 @@ public:
 	// Tab
 
 	UI_Button*				HUD_missions_tab;
+	UI_Image*				HUD_missions_background;
 
 private:
 

@@ -1021,8 +1021,14 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_missions_tab_hover = { 813, 117, 30, 81 };
 	SDL_Rect HUD_missions_tab_clicked = { 846, 117, 30, 81 };
 
-	HUD_missions_tab = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 1252, 503, true, true, false, this, nullptr
+	HUD_missions_tab = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 1252, 389, true, true, false, this, nullptr
 		, &HUD_missions_tab_idle, &HUD_missions_tab_hover, &HUD_missions_tab_clicked);
+
+	
+	//Back
+	SDL_Rect HUD_missions_back_size = { 25, 400, 390, 226 };
+
+	HUD_missions_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 1276, 359, HUD_missions_back_size, true, true, false, this, nullptr);
 
 }
 
@@ -1302,11 +1308,11 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		//	HUD_missions_tab->SetScreenPos(iPoint(N_Lerp(1252, 10, 0.1, false), 503));
 		//}
 
-		HUD_missions_tab->SetScreenPos(iPoint(1000, 503));
+		HUD_missions_tab->SetScreenPos(iPoint(883, 389));
+		HUD_missions_tab->SetHitbox({ 883,389,30, 81 });
 
-		HUD_missions_tab->SetHitbox({ 1000,503,30, 81 });
-
-		
+		HUD_missions_background->SetScreenPos(iPoint(902, 359));
+		HUD_missions_background->SetHitbox({ 902,359,390, 226 });
 	}
 }
 
