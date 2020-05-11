@@ -55,7 +55,7 @@ public:
 
 
 	Emitter* SpawnEmitter(fPoint pos, EMITTER_TYPE type);
-	void LoadData(pugi::xml_node& node, EMITTER_TYPE type);
+	void LoadData(pugi::xml_node& node);
 	bool RemoveEverything();
 
 
