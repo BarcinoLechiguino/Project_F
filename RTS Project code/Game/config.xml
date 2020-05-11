@@ -78,19 +78,22 @@
   <entities>
     <textures>
       <gatherer_texture path="textures/Spritesheets/Entities/gatherer2_lowres.png"/>
-      <scout_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
+      <scout_texture path="textures/Spritesheets/Entities/scout_allied.png"/>
       <infantry_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
-      <heavy_texture path="textures/Spritesheets/Entities/infantry_lowres.png"/>
+      <heavy_texture path="textures/Spritesheets/Entities/heavy.png"/>
       <enemy_gatherer_texture path="textures/Spritesheets/Entities/gatherer_lowres.png"/>
-      <enemy_scout_texture path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
-      <enemy_texture path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
-      <enemy_heavy_texture path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
+      <enemy_scout_texture path="textures/Spritesheets/Entities/scout_enemy.png"/>
+      <enemy_infantry_texture path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
+      <enemy_heavy_texture path="textures/Spritesheets/Entities/heavy_enemy.png"/>
       <townhall_texture path="maps/hall.png"/>
       <barracks_texture path="maps/Barracks.png"/>
+      <wall_texture path="maps/Wall_Placeholder.png"/>
       <enemy_townhall_texture path="maps/Hall_enemy.png"/>
       <enemy_barracks_texture path="maps/Barracks_enemy.png"/>
+      <enemy_wall_texture path ="maps/Enemy_Wall_Placeholder.png"/>
       <rock_texture path="maps/rocks.png"/>
       <tree_texture path="maps/trees.png"/>
+      <bits_texture path="maps/bits_placeholder.png"/>
     </textures>
     
     <units>

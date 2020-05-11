@@ -462,7 +462,7 @@ void Player::SelectionShortcuts()
 	
 	
 	// DEBUG SELECTION SHORTCUTS
-	if (App->input->GetKey(SDL_SCANCODE_W) == KEY_STATE::KEY_DOWN)													// Select All Units
+	if (App->input->GetKey(SDL_SCANCODE_RCTRL) == KEY_STATE::KEY_DOWN)													// Select All Units
 	{																												
 		SelectAllUnits();
 	}

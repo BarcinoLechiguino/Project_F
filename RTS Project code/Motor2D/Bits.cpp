@@ -1,7 +1,6 @@
 #include "Application.h"
 #include "Render.h"
 #include "Textures.h"
-#include "Input.h"
 #include "Audio.h"
 #include "Map.h"
 #include "Pathfinding.h"
@@ -11,55 +10,55 @@
 #include "FowManager.h"
 #include "EntityManager.h"
 
-#include "Rock.h"
+#include "Bits.h"
 
-
-Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Resource(x, y, type, level)
+Bits::Bits(int x, int y, ENTITY_TYPE type, int level) : Resource(x, y, type, level)
 {
 	InitEntity();
 }
 
-Rock::~Rock()
+Bits::~Bits()
 {
 
 }
 
-bool Rock::Awake(pugi::xml_node&)
+bool Bits::Awake(pugi::xml_node& config)
 {
 	return true;
 }
 
-bool Rock::Start()
+bool Bits::Start()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
-
-	return true;
-}
-
-bool Rock::PreUpdate()
-{
-	return true;
-}
-
-bool Rock::Update(float dt, bool do_logic)
-{
-	// FOG OF WAR
-	is_visible = fow_entity->is_visible;									// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
 	
 	return true;
 }
 
-bool Rock::PostUpdate()
+bool Bits::PreUpdate()
+{
+	return true;
+}
+
+bool Bits::Update(float dt, bool do_logic)
+{
+	// FOG OF WAR
+	is_visible = fow_entity->is_visible;										// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
+	
+	return true;
+}
+
+bool Bits::PostUpdate()
 {
 	if (current_health <= 0)
 	{
 		App->entity_manager->DeleteEntity(this);
 		App->audio->PlayFx(App->entity_manager->finished_gather_fx);
 	}
+	
 	return true;
 }
 
-bool Rock::CleanUp()
+bool Bits::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
@@ -70,22 +69,22 @@ bool Rock::CleanUp()
 	{
 		collider->to_delete = true;
 	}
-	
+
 	App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
-	
-	delete blit_section;
 
+	delete blit_section;
+	
 	return true;
 }
 
-void Rock::Draw()
+void Bits::Draw()
 {
-	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y, blit_section);
+	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 20, blit_section);
 }
 
-void Rock::InitEntity()
+void Bits::InitEntity()
 {
 	// POSITION & SIZE
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
@@ -98,12 +97,12 @@ void Rock::InitEntity()
 	tiles_occupied.x = 1;
 	tiles_occupied.y = 1;
 
-	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };		// THIS ???
-	
+	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
+
 	// TEXTURE & SECTIONS
-	entity_sprite = App->entity_manager->GetRockTexture();
-	int rock_version = (rand() % 4) * 54;
-	blit_section = new SDL_Rect{ rock_version, 0, 54, 35 };
+	entity_sprite = App->entity_manager->GetBitsTexture();
+	int bits_version = (rand() % 4) * 54;
+	blit_section = new SDL_Rect{ bits_version, 0, 54, 44 };
 
 	// FLAGS
 	is_selected = false;
@@ -125,16 +124,16 @@ void Rock::InitEntity()
 	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, true);
 }
 
-void Rock::AttachHealthbarToEntity()
+void Bits::AttachHealthbarToEntity()
 {
+	healthbar_position_offset.y = -25;
 	healthbar_position_offset.x = -30;
-	healthbar_position_offset.y = -6;
 
 	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
 	healthbar_rect = { 618, 34, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
 
 	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y - 20;			// The healthbar's position is already calculated in UI_Healthbar.
 
 	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }

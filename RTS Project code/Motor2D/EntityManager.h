@@ -15,25 +15,6 @@ struct SDL_Texture;
 class Entity;
 enum class ENTITY_TYPE;
 
-//class DynamicObject;
-//class Gatherer;
-//class Scout;
-//class Infantry;
-//class Heavy;
-//class EnemyGatherer;
-//class EnemyScout;
-//class EnemyInfantry;
-//class EnemyHeavy;
-//
-//class StaticObject;
-//class TownHall;
-//class Barracks;
-//class EnemyTownHall;
-//class EnemyBarracks;
-//class Rock;
-//class Tree;
-
-
 class EntityManager : public Module
 {
 public:
@@ -65,15 +46,19 @@ public:
 	SDL_Texture* GetHeavyTexture() const;
 	SDL_Texture* GetEnemyGathererTexture() const;
 	SDL_Texture* GetEnemyScoutTexture() const;
-	SDL_Texture* GetEnemyTexture() const;
+	SDL_Texture* GetEnemyInfantryTexture() const;
 	SDL_Texture* GetEnemyHeavyTexture() const;
 	
 	SDL_Texture* GetTownHallTexture() const;
 	SDL_Texture* GetBarracksTexture() const;
+	SDL_Texture* GetWallTexture() const;
 	SDL_Texture* GetEnemyTownHallTexture() const;
 	SDL_Texture* GetEnemyBarracksTexture() const;
+	SDL_Texture* GetEnemyWallTexture() const;
+
 	SDL_Texture* GetRockTexture() const;
 	SDL_Texture* GetTreeTexture() const;
+	SDL_Texture* GetBitsTexture() const;
 
 	SDL_Texture* GetCenterPointTexture() const;
 
@@ -117,15 +102,19 @@ public:
 	SDL_Texture*					heavy_tex;
 	SDL_Texture*					enemy_gatherer_tex;
 	SDL_Texture*					enemy_scout_tex;
-	SDL_Texture*					enemy_tex;
+	SDL_Texture*					enemy_infantry_tex;
 	SDL_Texture*					enemy_heavy_tex;
 	
 	SDL_Texture*					townhall_tex;
 	SDL_Texture*					barracks_tex;
+	SDL_Texture*					wall_tex;
 	SDL_Texture*					enemy_townhall_tex;
 	SDL_Texture*					enemy_barracks_tex;
+	SDL_Texture*					enemy_wall_tex;
+
 	SDL_Texture*					rock_tex;
 	SDL_Texture*					tree_tex;
+	SDL_Texture*					bits_tex;
 	
 	SDL_Texture*					center_point_debug;
 
@@ -142,6 +131,7 @@ public:
 	uint							click_townhall_fx;
 	uint							heavy_shot_fx;
 
+	
 	std::vector<Entity*>			entities;	
 	std::vector<Entity*>			entities_in_screen;
 
@@ -158,5 +148,6 @@ public:
 
 	uint							resource_data;
 	uint							resource_electricity;
+	uint							resource_bits;
 };
 #endif // __ENTITY_MANAGER_H__

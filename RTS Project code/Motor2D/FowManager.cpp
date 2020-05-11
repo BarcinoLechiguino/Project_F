@@ -88,6 +88,15 @@ void FowManager::SetVisibilityMap(const int& width, const int& height)
 		ClearVisibilityMapContainers();
 	}
 
+	/*visibility_map = new FowTile[map_size];
+	//memset(visibility_map, UNEXPLORED, sizeof(FowTile) * map_size);				// Memset can be used to initialize structs so long only one variable type is used.
+
+	for (int i = 0; i < map_size; ++i)
+	{
+		visibility_map[i].visibility = UNEXPLORED;
+		visibility_map[i].sources_of_visibility = 0;
+	}*/
+
 	visibility_map = new uchar[map_size];
 	memset(visibility_map, UNEXPLORED, map_size);									// Will set the state of all the tiles in the container to UNEXPLORED.
 

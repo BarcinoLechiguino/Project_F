@@ -33,10 +33,13 @@
 #include "StaticObject.h"
 #include "TownHall.h"
 #include "Barracks.h"
+#include "Wall.h"
 #include "EnemyTownHall.h"
 #include "EnemyBarracks.h"
+#include "EnemyWall.h"
 #include "Rock.h"
 #include "Tree.h"
+#include "Bits.h"
 
 #include "GuiManager.h"
 #include "UI.h"
@@ -1496,7 +1499,7 @@ void GameplayScene::UnitDebugKeys()
 				(EnemyHeavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_HEAVY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
-			//  BUILDINGS
+			// BUILDINGS
 			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_STATE::KEY_DOWN)
 			{
 				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
@@ -1505,6 +1508,11 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_STATE::KEY_DOWN)
 			{
 				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_STATE::KEY_DOWN)
+			{
+				(Wall*)App->entity_manager->CreateEntity(ENTITY_TYPE::WALL, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_STATE::KEY_DOWN)
@@ -1517,6 +1525,11 @@ void GameplayScene::UnitDebugKeys()
 				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->cursor_tile.x, App->player->cursor_tile.y);
 			}
 
+			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyWall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_WALL, App->player->cursor_tile.x, App->player->cursor_tile.y);
+			}
+
 			// RESOURCES
 			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
 			{
@@ -1526,6 +1539,11 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_STATE::KEY_DOWN)
 			{
 				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_STATE::KEY_DOWN)
+			{
+				(Bits*)App->entity_manager->CreateEntity(ENTITY_TYPE::BITS, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)

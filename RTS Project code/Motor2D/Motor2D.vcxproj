@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="AlternatingBars.cpp" />
     <ClCompile Include="Barracks.cpp" />
+    <ClCompile Include="Bits.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="CameraToMouse.cpp" />
     <ClCompile Include="Collisions.cpp" />
@@ -99,6 +100,7 @@
     <ClCompile Include="EnemyScout.cpp" />
     <ClCompile Include="EnemyTownHall.cpp" />
     <ClCompile Include="EnemyBarracks.cpp" />
+    <ClCompile Include="EnemyWall.cpp" />
     <ClCompile Include="Entity.cpp" />
     <ClCompile Include="EntityManager.cpp" />
     <ClCompile Include="EntityQuadTree.cpp" />
@@ -147,6 +149,7 @@
     <ClCompile Include="UI_CreationBar.cpp" />
     <ClCompile Include="UI_Cursor.cpp" />
     <ClCompile Include="UI_Healthbar.cpp" />
+    <ClCompile Include="Wall.cpp" />
     <ClCompile Include="Window.cpp" />
     <ClCompile Include="PugiXml\src\pugixml.cpp" />
     <ClCompile Include="UI.cpp" />
@@ -164,6 +167,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="Barracks.h" />
+    <ClInclude Include="Bits.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="CameraToMouse.h" />
     <ClInclude Include="Collisions.h" />
@@ -179,6 +183,7 @@
     <ClInclude Include="EnemyHeavy.h" />
     <ClInclude Include="EnemyScout.h" />
     <ClInclude Include="EnemyTownHall.h" />
+    <ClInclude Include="EnemyWall.h" />
     <ClInclude Include="EntityQuadTree.h" />
     <ClInclude Include="ExpandingBars.h" />
     <ClInclude Include="FadeToColour.h" />
@@ -231,6 +236,7 @@
     <ClInclude Include="UI_CreationBar.h" />
     <ClInclude Include="UI_Cursor.h" />
     <ClInclude Include="UI_Healthbar.h" />
+    <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
     <ClInclude Include="p2SString.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
@@ -247,9 +253,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx" />
-    <None Include="..\Game\maps\Test_Map.tmx">
-      <SubType>Designer</SubType>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
