@@ -255,6 +255,7 @@
       <SubType>Designer</SubType>
     </Xml>
     <Xml Include="..\Game\dialog.xml" />
+    <Xml Include="..\Game\ps_config.xml" />
     <Xml Include="..\Game\save_game.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

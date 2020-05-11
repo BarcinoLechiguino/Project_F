@@ -488,6 +488,9 @@
     <Xml Include="..\Game\dialog.xml">
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
+    <Xml Include="..\Game\ps_config.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
