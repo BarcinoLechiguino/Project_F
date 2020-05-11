@@ -370,7 +370,7 @@ bool Map::Load(std::string file_name)
 		data.layers.push_back(set_layer);
 	}
 	//Entity and Walkability maps are loaded here. Previously in GameScene.
-	LoadEntityAndWalkabilityMap();
+	LoadMetaDataMaps();
 
 	//Load Object / ObjectGroup / Collider Info ------------------------------------------
 	pugi::xml_node objectgroup;

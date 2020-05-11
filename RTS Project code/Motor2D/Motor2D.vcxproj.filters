@@ -226,6 +226,12 @@
     <ClCompile Include="DialogSystem.cpp">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
+    <ClCompile Include="Emitter.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -472,6 +478,12 @@
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="DialogSystem.h">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+    </ClInclude>
+    <ClInclude Include="Emitter.h">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
   </ItemGroup>
