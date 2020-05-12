@@ -195,11 +195,11 @@ SDL_Rect FowManager::GetFowTileRect(const uchar& visibility)
 	return ret;
 }
 
-FowEntity* FowManager::CreateFowEntity(const iPoint& tile_position, bool provides_visibility, bool is_static)
+FowEntity* FowManager::CreateFowEntity(const iPoint& tile_position, bool provides_visibility)
 {
 	FowEntity* fow_entity = nullptr;
 
-	fow_entity = new FowEntity(tile_position, provides_visibility, is_static);
+	fow_entity = new FowEntity(tile_position, provides_visibility);
 
 	if (fow_entity != nullptr)
 	{
@@ -244,16 +244,7 @@ void FowManager::ClearFowEntityLineOfSight(FowEntity* fow_entity_to_clear)					/
 
 	for (; tile != fow_entity_to_clear->line_of_sight.end(); ++tile)
 	{
-		tiles_to_reset.push_back((*tile));
-		
-		/*if (scouting_trail)
-		{
-			ChangeVisibilityMap((*tile), FOGGED);
-		}
-		else
-		{
-			ChangeVisibilityMap((*tile), UNEXPLORED);
-		}*/
+		tiles_to_reset.push_back((*tile));													// All the tiles in the line_of_sight of the destroyed entity will be set to be FOGGED or UNEXPLORED.
 	}
 }
 
@@ -274,10 +265,6 @@ std::vector<iPoint> FowManager::CreateRectangularFrontier(const int& width, cons
 			{
 				frontier.push_back(fow_tile);
 			}
-			/*else
-			{
-				line_of_sight.pushback(fow_tile);
-			}*/
 		}
 	}
 
@@ -397,27 +384,11 @@ void FowManager::UpdateEntitiesFowManipulation()
 	{
 		if ((*item)->provides_visibility)
 		{
-			if ((*item)->visibility_initialized)
+			if ((*item)->has_moved)
 			{
-				if ((*item)->has_moved)
-				{
-					UpdateEntityLineOfSight((*item));
-				}
-			}
-			else
-			{
-				std::vector<iPoint>::iterator tile = (*item)->line_of_sight.begin();
-
-				for (; tile < (*item)->line_of_sight.end(); ++tile)
-				{
-					ChangeVisibilityMap((*tile), VISIBLE);
-				}
-
-				(*item)->visibility_initialized = true;
+				UpdateEntityLineOfSight((*item));
 			}
 		}
-
-		//Smooth the edges of the fow_tiles.
 	}
 
 	if (tiles_to_reset.size() != 0)														// To avoid tile conflicts, the tiles that are to be reset are iterated before the second check.
@@ -451,6 +422,9 @@ void FowManager::UpdateEntitiesFowManipulation()
 				ChangeVisibilityMap((*tile), VISIBLE);
 			}
 		}
+
+		//Smooth the edges of the fow_tiles.
+		SmoothEntityFrontierEdges((*item));
 	}
 }
 
@@ -462,7 +436,7 @@ void FowManager::UpdateEntityLineOfSight(FowEntity* entity_to_update)
 
 	for (; tile != entity_to_update->line_of_sight.end(); ++tile)
 	{
-		if (scouting_trail)
+		if (scouting_trail)																				// The current tile is set to FOGGED or UNEXPLORED.
 		{
 			ChangeVisibilityMap((*tile), FOGGED);
 		}
@@ -471,12 +445,47 @@ void FowManager::UpdateEntityLineOfSight(FowEntity* entity_to_update)
 			ChangeVisibilityMap((*tile), UNEXPLORED);
 		}
 
-		(*tile) += entity_to_update->motion;
+		(*tile) += entity_to_update->motion;															// The tile is updated with the fow_entity's motion.
 
-		ChangeVisibilityMap((*tile), VISIBLE);
+		ChangeVisibilityMap((*tile), VISIBLE);															// The new current tile is set to VISIBLE.
 	}
 
-	entity_to_update->has_moved = false;
+	//entity_to_update->has_moved = false;
+}
+
+void FowManager::SmoothEntityFrontierEdges(FowEntity* fow_entity)
+{
+	std::vector<iPoint> previous_frontier = fow_entity->frontier;
+	
+	std::vector<iPoint>::iterator tile = fow_entity->frontier.begin();
+
+	for (; tile != fow_entity->frontier.end(); ++tile)
+	{
+		(*tile) += fow_entity->motion;
+		
+		/*if (fow_entity->has_moved)
+		{
+			(*tile) += fow_entity->motion;
+		}*/
+	}
+
+	//fow_entity->motion = { 0, 0 };
+
+	//fow_entity->has_moved = false;
+
+	SmoothEntityInnerFrontierEdges(fow_entity->frontier);
+
+	SmoothEntityOuterFrontierEdges(previous_frontier);
+}
+
+void FowManager::SmoothEntityInnerFrontierEdges(std::vector<iPoint> frontier)
+{
+
+}
+
+void FowManager::SmoothEntityOuterFrontierEdges(std::vector<iPoint> frontier)
+{
+
 }
 
 bool FowManager::TileIsInsideLineOfSight(const iPoint& tile_position, const std::vector<iPoint>& line_of_sight)
@@ -505,17 +514,16 @@ void FowManager::InitFowManager()
 }
 
 // --- FOW_Entity methods ---
-FowEntity::FowEntity() : position({ 0, 0 }), motion({ 0, 0 }), provides_visibility(false), is_static(false), visibility_initialized(false), has_moved(false)
+FowEntity::FowEntity() : position({ 0, 0 }), motion({ 0, 0 }), is_visible(false), provides_visibility(false), has_moved(false)
 {
 
 }
 
-FowEntity::FowEntity(const iPoint& position, const bool provides_visibility, const bool is_static) 
+FowEntity::FowEntity(const iPoint& position, const bool provides_visibility) 
 	: position(position)
 	, motion({ 0, 0 })
+	, is_visible(false)																	// TMP. Check if it is worth it to make it a constructor parameter.
 	, provides_visibility(provides_visibility)
-	, is_static(is_static)
-	, visibility_initialized(false)
 	, has_moved(false)
 {
 
@@ -544,6 +552,10 @@ void FowEntity::SetPos(const iPoint& new_position)
 		position = new_position;
 
 		has_moved = true;
+	}
+	else
+	{
+		motion = { 0, 0 };
 	}
 }
 

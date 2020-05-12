@@ -133,7 +133,7 @@ void EnemyWall::InitEntity()
 	is_visible = false;
 	provides_visibility = false;
 
-	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, true);
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
 }
 
 void EnemyWall::AttachHealthbarToEntity()
