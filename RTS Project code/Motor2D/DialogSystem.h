@@ -16,8 +16,6 @@ class DialogBubble
 {
 public:
 	DialogBubble();
-	DialogBubble(const char text, int node_id);
-
 public:
 	std::vector<std::string> text; //Different lines in text
 	int active_time;

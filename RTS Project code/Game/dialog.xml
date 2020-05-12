@@ -36,6 +36,6 @@
       <text text="Above the recruit button there's a level up button"/>
       <text text="This will increse the units stats!"/>
     </dialog_bubble>
+    
   </dialog_tree>
-  
 </dialog>

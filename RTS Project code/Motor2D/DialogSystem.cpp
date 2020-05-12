@@ -10,13 +10,8 @@
 DialogBubble::DialogBubble()
 {
 	bubble_id = 0;
-
+	active_time = 0;
 	text.push_back("I have nothing to say");
-}
-
-DialogBubble::DialogBubble(const char text, int node_id)
-{
-	this->bubble_id = node_id;
 }
 
 //Dialog
