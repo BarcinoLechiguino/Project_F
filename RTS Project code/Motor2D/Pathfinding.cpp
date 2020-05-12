@@ -286,7 +286,7 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 	CreatePath(units_selected[0]->tile_position, initial_walkable_tile);
 
 	iPoint final_point; //Point just inside range
-	Entity* target = units_selected[0]->GetTarget();
+	Entity* target = units_selected[0]->GetTarget();			// Maybe make a safety check with nullptr target?
 
 	//Find point in range
 	for (int i = 0; i < (int)last_path.size(); ++i)
