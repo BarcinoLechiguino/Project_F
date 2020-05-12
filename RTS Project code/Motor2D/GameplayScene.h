@@ -233,6 +233,11 @@ public:
 	UI_Button*				HUD_missions_tab_close;
 	UI_Image*				HUD_missions_background;
 
+
+	//Dialogs
+
+	UI_Image*				HUD_dialogs_background;
+
 private:
 
 	//Audio

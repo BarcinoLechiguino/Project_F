@@ -1017,6 +1017,7 @@ void GameplayScene::LoadGuiElements()
 	God_Mode_Activated = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 950, 2, HUD_text_God, HUD_God_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_God_string);
 
 
+
 	// HUD Missions
 	//Tab
 	SDL_Rect HUD_missions_tab_size = { 0, 0, 30, 81 };
@@ -1043,6 +1044,12 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_missions_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 1276, 359, HUD_missions_back_size, true, true, false, this, nullptr);
 
+
+
+	// HUD dialogs
+	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
+
+	HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 40, HUD_dialogs_back_size, true, true, false, this, nullptr);
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
