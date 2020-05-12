@@ -138,7 +138,7 @@ void EnemyInfantry::InitEntity()
 	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 	
 	// TEXTURE & SECTIONS
-	entity_sprite = App->entity_manager->GetEnemyTexture();
+	entity_sprite = App->entity_manager->GetEnemyInfantryTexture();
 	InitUnitSpriteSections();
 
 	// FLAGS

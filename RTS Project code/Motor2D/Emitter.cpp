@@ -53,6 +53,7 @@ bool Emitter::Update(float dt)
 			vec[i].size = vec[i].startSize * vec[i].transparency;
 			vec[i].rectSize.w = vec[i].rectSize.h = vec[i].size;
 
+			//Update particle position
 			vec[i].pos.x += vec[i].speed.x * dt;
 			vec[i].pos.y += vec[i].speed.y * dt;
 
@@ -110,6 +111,8 @@ void Emitter::CreateParticles(fPoint pos, float speed, float angle, float size, 
 	particle_tocreate->endColor = endColor;
 
 	particle_tocreate->fraction = 0.0f;
+
+	//vec. = particle_tocreate
 }
 
 SDL_Color Emitter::InterpolateColors(SDL_Color color1, SDL_Color color2, float fraction)

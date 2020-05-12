@@ -232,6 +232,15 @@
     <ClCompile Include="Emitter.cpp">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
+    <ClCompile Include="Bits.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Wall.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyWall.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -486,6 +495,15 @@
     <ClInclude Include="Emitter.h">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
+    <ClInclude Include="Bits.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Wall.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyWall.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
@@ -506,9 +524,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
-      <Filter>Engine  ===========\XML Files</Filter>
-    </None>
-    <None Include="..\Game\maps\Test_Map.tmx">
       <Filter>Engine  ===========\XML Files</Filter>
     </None>
   </ItemGroup>

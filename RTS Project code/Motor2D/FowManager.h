@@ -28,12 +28,6 @@ enum class UNEXPLORED_TO_FOGGED_SMOOTHING_STATE
 
 };
 
-struct FowTile
-{
-	uchar visibility;
-	uchar sources_of_visibility;
-};
-
 struct FowEntity
 {
 	FowEntity();
@@ -75,7 +69,8 @@ public:
 	void ResetVisibilityMap();																	// Will reset the visibility map and both the other containers and set it back to the first state.
 	void ClearVisibilityMapContainers();														// Will delete all visibility map containers. (visibility_map...)
 
-	uchar GetVisibilityAt(const iPoint& tile_position);											// Will get the current state of the given FOW tile.
+	uchar GetVisibilityAt(const iPoint& tile_position);											// Will return the current visibility state of the given FOW tile.
+	
 	SDL_Rect GetFowTileRect(const uchar& visibility);											// Will get the corresponding FOW sprite section rect for the given visibility state.
 
 	FowEntity* CreateFowEntity(const iPoint& tile_position, bool provides_visibility, bool is_static);
@@ -94,13 +89,6 @@ private:
 	void UpdateEntitiesVisibility();															// Will update the is_visible bool of all FowEntities by checking the fow_state of their tile_pos.
 	void UpdateEntitiesFowManipulation();														// Will update all the tiles affected by the visibility provided by all FowEntities.
 	void UpdateEntityLineOfSight(FowEntity* entity_to_update);									// Will update the line_of_sight of a given fow_entity. Only applicable to non-static entities.
-
-	void UpdateFowTileState();	//																// Change the name. Will iterate tiles_to_update and change their visibility accordingly.
-	
-	void AddTileToTilesToObscure(const iPoint& tile_position);		 //							// Will add the given tile to tiles_to_update if the tile is not already inside the vector.
-	void RemoveTileFromTilesToObscure(const iPoint& tile_position);  //
-	bool TileIsInsideTilesToObscure(const iPoint& tile_position);    //
-	bool TileIsInsideNewVisibleTiles(const iPoint& tile_position);
 
 	void ChangeVisibilityMap(const iPoint& tile_position, const uchar& visibility);
 	bool CheckMapBoundaries(const iPoint& tile_position);
@@ -124,18 +112,13 @@ private:
 	int visibility_map_height;
 
 	uchar* visibility_map;										// 2D container that will store the FOW state of each tile in the map.
-	//FowTile* visibility_map;
-
 	uchar* debug_visibility_map;								// Visibility map used for debug pursposes.	All the tiles will be VISIBLE.
 	uchar* visibility_map_debug_buffer;							// Buffer that will allow to swap between the visibility_map and debug_visibility_without issue.
 
 	FOW_SMOOTHING_STATE smoothing_state;
 	
 	std::vector<FowEntity*> fow_entities;
-	std::vector<iPoint> new_visible_tiles;						// Buffer that will keep track of which tiles need to have their visibility updated to either FOGGED or UNEXPLORED.
-	std::vector<iPoint> tiles_to_obscure;
-	
-	uchar* new_visibility_map;									// Buffer that will store the new tile state after the entities FOW manipulation has been updated.
+	std::vector<iPoint> tiles_to_reset;							// Will store the tiles that need to be set back to FOGGED or UNEXPLORED when an Entity that provided visibility is destroyed.
 
 	SDL_Texture* frontier_debug_tex;
 	SDL_Texture* line_of_sight_debug_tex;

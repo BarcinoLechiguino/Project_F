@@ -1,7 +1,6 @@
 #include "Application.h"
 #include "Render.h"
 #include "Textures.h"
-#include "Input.h"
 #include "Audio.h"
 #include "Map.h"
 #include "Pathfinding.h"
@@ -43,6 +42,7 @@ bool Tree::PreUpdate()
 
 bool Tree::Update(float dt, bool do_logic)
 {
+	// FOG OF WAR
 	is_visible = fow_entity->is_visible;									// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
 	
 	return true;

@@ -99,19 +99,22 @@ void Entity::Draw()
 
 void Entity::ApplyDamage(Entity* target)
 {
-	if (!App->player->god_mode)
+	if (target != nullptr)
 	{
-		target->current_health -= attack_damage;
-
-		target->healthbar->UpdateHealthbarValue();
-	}
-	else
-	{		
-		if (!App->entity_manager->IsAllyEntity(target))
+		if (!App->player->god_mode)
 		{
 			target->current_health -= attack_damage;
 
 			target->healthbar->UpdateHealthbarValue();
+		}
+		else
+		{
+			if (!App->entity_manager->IsAllyEntity(target))
+			{
+				target->current_health -= attack_damage;
+
+				target->healthbar->UpdateHealthbarValue();
+			}
 		}
 	}
 }

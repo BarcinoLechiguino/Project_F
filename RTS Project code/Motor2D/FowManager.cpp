@@ -1,5 +1,7 @@
 #include "Brofiler/Brofiler.h"
 
+#include <map>
+
 #include "Point.h"
 #include "Application.h"
 #include "Textures.h"
@@ -31,10 +33,6 @@ bool FowManager::Start()
 	frontier_debug_tex = App->tex->Load("maps/occupied_tile.png");
 	line_of_sight_debug_tex = App->tex->Load("maps/occupied_by_entity_tile.png");
 
-	int a = sizeof(FowTile);
-
-	int b = a;
-
 	return true;
 }
 
@@ -47,7 +45,7 @@ bool FowManager::Update(float dt)
 {
 	if (App->player->CurrentlyInGameplayScene())
 	{
-		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_STATE::KEY_REPEAT)
+		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_STATE::KEY_REPEAT)		// FOW DEBUG TOOLS
 		{
 			App->map->DrawMapGrid();
 
@@ -87,7 +85,7 @@ void FowManager::SetVisibilityMap(const int& width, const int& height)
 	{
 		ClearVisibilityMapContainers();
 	}
-
+	
 	visibility_map = new uchar[map_size];
 	memset(visibility_map, UNEXPLORED, map_size);									// Will set the state of all the tiles in the container to UNEXPLORED.
 
@@ -112,7 +110,7 @@ void FowManager::SwapVisibilityMaps()
 	}
 	else
 	{
-		visibility_map = visibility_map_debug_buffer;				// If the visibility map is different than the copy in the buffer, then the map is swapped back to normal.
+		visibility_map = visibility_map_debug_buffer;					// If the visibility map is different than the copy in the buffer, then the map is swapped back to normal.
 	}
 
 	/*if (fow_debug)
@@ -248,18 +246,17 @@ void FowManager::ClearFowEntityLineOfSight(FowEntity* fow_entity_to_clear)					/
 
 	for (; tile != fow_entity_to_clear->line_of_sight.end(); ++tile)
 	{
-		if (scouting_trail)
+		tiles_to_reset.push_back((*tile));
+		
+		/*if (scouting_trail)
 		{
 			ChangeVisibilityMap((*tile), FOGGED);
 		}
 		else
 		{
 			ChangeVisibilityMap((*tile), UNEXPLORED);
-		}
-		
-		//AddTileToTilesToObscure((*tile));
+		}*/
 	}
-
 }
 
 std::vector<iPoint> FowManager::CreateRectangularFrontier(const int& width, const int& height, const iPoint& center)
@@ -342,7 +339,7 @@ void FowManager::DebugLineOfSight()
 
 	for (; item != fow_entities.end(); ++item)
 	{
-		if ((*item)->provides_visibility /*&& (*item)->has_moved*/)
+		if ((*item)->provides_visibility)
 		{
 			std::vector<iPoint> LOS = (*item)->line_of_sight;
 
@@ -362,7 +359,7 @@ void FowManager::DebugFrontier()
 
 	for (; item != fow_entities.end(); ++item)
 	{
-		if ((*item)->provides_visibility /*&& (*item)->has_moved*/)
+		if ((*item)->provides_visibility)
 		{
 			std::vector<iPoint> frontier = (*item)->frontier;
 
@@ -402,20 +399,11 @@ void FowManager::UpdateEntitiesFowManipulation()
 	{
 		if ((*item)->provides_visibility)
 		{
-			if ((*item)->visibility_initialized && !(*item)->is_static)
+			if ((*item)->visibility_initialized)
 			{
 				if ((*item)->has_moved)
 				{
 					UpdateEntityLineOfSight((*item));
-				}
-				else
-				{
-					std::vector<iPoint>::iterator tile = (*item)->line_of_sight.begin();
-
-					for (; tile < (*item)->line_of_sight.end(); ++tile)
-					{
-						ChangeVisibilityMap((*tile), VISIBLE);
-					}
 				}
 			}
 			else
@@ -428,28 +416,30 @@ void FowManager::UpdateEntitiesFowManipulation()
 				}
 
 				(*item)->visibility_initialized = true;
-				
-				/*if ((*item)->is_static && (*item)->visibility_initialized)
-				{
-					static_entities.push_back((*item));
-				}
-				else
-				{
-					std::vector<iPoint>::iterator tile = (*item)->line_of_sight.begin();
-
-					for (; tile < (*item)->line_of_sight.end(); ++tile)
-					{
-						ChangeVisibilityMap((*tile), VISIBLE);
-					}
-
-					(*item)->visibility_initialized = true;
-				}*/
 			}
 		}
 
 		//Smooth the edges of the fow_tiles.
 	}
 
+	if (tiles_to_reset.size() != 0)														// To avoid tile conflicts, the tiles that are to be reset are iterated before the second check.
+	{
+		for (int i = 0; i < tiles_to_reset.size(); ++i)
+		{
+			if (scouting_trail)
+			{
+				ChangeVisibilityMap(tiles_to_reset[i], FOGGED);
+			}
+			else
+			{
+				ChangeVisibilityMap(tiles_to_reset[i], UNEXPLORED);
+			}
+		}
+
+		tiles_to_reset.clear();
+	}
+
+	// Revise when to smooth the tile edges.
 	item = fow_entities.begin();
 
 	for (; item != fow_entities.end(); ++item)
@@ -464,11 +454,12 @@ void FowManager::UpdateEntitiesFowManipulation()
 			}
 		}
 	}
-	// Iterate Static entities.
 }
 
 void FowManager::UpdateEntityLineOfSight(FowEntity* entity_to_update)
-{
+{	
+	BROFILER_CATEGORY("UpdateEntityLineOfSight", Profiler::Color::Fuchsia)
+	
 	std::vector<iPoint> previous_line_of_sight = entity_to_update->line_of_sight;
 
 	std::vector<iPoint>::iterator tile = entity_to_update->line_of_sight.begin();
@@ -482,6 +473,7 @@ void FowManager::UpdateEntityLineOfSight(FowEntity* entity_to_update)
 
 	entity_to_update->has_moved = false;
 
+	
 	std::vector<iPoint>::iterator previous_tile = previous_line_of_sight.begin();
 
 	for (; previous_tile != previous_line_of_sight.end(); ++previous_tile)
@@ -498,153 +490,6 @@ void FowManager::UpdateEntityLineOfSight(FowEntity* entity_to_update)
 			}
 		}
 	}
-}
-
-/*void FowManager::UpdateEntitiesFowManipulation()
-{
-	BROFILER_CATEGORY("UpdateEntitiesFowManipulation", Profiler::Color::MediumSeaGreen)
-	
-	std::vector<FowEntity*>::iterator item = fow_entities.begin();
-
-	for (; item != fow_entities.end(); ++item)
-	{
-		if ((*item)->provides_visibility)
-		{
-			if ((*item)->visibility_initialized && !(*item)->is_static)
-			{
-				if ((*item)->has_moved)
-				{
-					UpdateEntityLineOfSight((*item));
-				}
-			}
-			else
-			{
-				std::vector<iPoint>::iterator tile = (*item)->line_of_sight.begin();
-
-				for (; tile < (*item)->line_of_sight.end(); ++tile)
-				{
-					ChangeVisibilityMap((*tile), VISIBLE);
-				}
-
-				(*item)->visibility_initialized = true;
-			}
-		}
-
-		//Smooth the edges of the fow_tiles.
-	}
-
-	UpdateFowTileState();
-}
-
-void FowManager::UpdateEntityLineOfSight(FowEntity* entity_to_update)
-{
-	std::vector<iPoint> previous_line_of_sight = entity_to_update->line_of_sight;
-
-	std::vector<iPoint>::iterator tile = entity_to_update->line_of_sight.begin();
-
-	for (; tile != entity_to_update->line_of_sight.end(); ++tile)
-	{	
-		(*tile) += entity_to_update->motion;
-
-		if (GetVisibilityAt((*tile)) != VISIBLE)
-		{
-			new_visible_tiles.push_back(*tile);
-			ChangeVisibilityMap((*tile), VISIBLE);
-		}
-		else
-		{
-			ChangeVisibilityMap((*tile), VISIBLE);
-		}
-	}
-
-	entity_to_update->has_moved = false;
-
-	std::vector<iPoint>::iterator previous_tile = previous_line_of_sight.begin();
-
-	for (; previous_tile != previous_line_of_sight.end(); ++previous_tile)
-	{
-		if (!TileIsInsideLineOfSight((*previous_tile), entity_to_update->line_of_sight))
-		{
-			AddTileToTilesToObscure((*previous_tile));
-		}
-	}
-}*/
-
-void FowManager::UpdateFowTileState()
-{
-	for (int i = 0; i < tiles_to_obscure.size(); ++i)
-	{
-		if (!TileIsInsideNewVisibleTiles(tiles_to_obscure[i]))
-		{
-			if (scouting_trail)
-			{
-				ChangeVisibilityMap(tiles_to_obscure[i], FOGGED);
-			}
-			else
-			{
-				ChangeVisibilityMap(tiles_to_obscure[i], UNEXPLORED);
-			}
-		}
-	}
-
-	tiles_to_obscure.clear();
-	new_visible_tiles.clear();
-}
-
-void FowManager::AddTileToTilesToObscure(const iPoint& tile_position)
-{
-	if (!TileIsInsideTilesToObscure(tile_position))
-	{
-		tiles_to_obscure.push_back(tile_position);
-	}
-}
-
-void FowManager::RemoveTileFromTilesToObscure(const iPoint& tile_position)
-{
-	std::vector<iPoint>::iterator tile = tiles_to_obscure.begin();
-	
-	for (; tile != tiles_to_obscure.end(); ++tile)
-	{
-		if ((*tile) == tile_position)
-		{
-			tiles_to_obscure.erase(tile);
-			break;
-		}
-	}
-
-	return;
-}
-
-bool FowManager::TileIsInsideTilesToObscure(const iPoint& tile_position)
-{
-	bool ret = false;
-	
-	for (int i = 0; i < tiles_to_obscure.size(); ++i)
-	{
-		if (tiles_to_obscure[i] == tile_position)
-		{
-			ret = true;
-			break;
-		}
-	}
-
-	return ret;
-}
-
-bool FowManager::TileIsInsideNewVisibleTiles(const iPoint& tile_position)
-{
-	bool ret = false;
-
-	for (int i = 0; i < new_visible_tiles.size(); ++i)
-	{
-		if (new_visible_tiles[i] == tile_position)
-		{
-			ret = true;
-			break;
-		}
-	}
-
-	return ret;
 }
 
 bool FowManager::TileIsInsideLineOfSight(const iPoint& tile_position, const std::vector<iPoint>& line_of_sight)
@@ -691,9 +536,12 @@ FowEntity::FowEntity(const iPoint& position, const bool provides_visibility, con
 
 void FowEntity::CleanUp()
 {
-	if (provides_visibility)
+	if (!App->fow_manager->fow_debug)
 	{
-		App->fow_manager->ClearFowEntityLineOfSight(this);
+		if (provides_visibility)
+		{
+			App->fow_manager->ClearFowEntityLineOfSight(this);
+		}
 	}
 
 	frontier.clear();

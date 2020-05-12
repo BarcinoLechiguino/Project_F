@@ -31,10 +31,14 @@
 #include "StaticObject.h"
 #include "TownHall.h"
 #include "Barracks.h"
+#include "Wall.h"
 #include "EnemyTownHall.h"
 #include "EnemyBarracks.h"
+#include "EnemyWall.h"
+
 #include "Rock.h"
 #include "Tree.h"
+#include "Bits.h"
 
 struct {
 	bool operator()(Entity* a, Entity* b) const
@@ -260,12 +264,20 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		entity = new Barracks(x, y, type, level);
 		break;
 
+	case ENTITY_TYPE::WALL:
+		entity = new Wall(x, y, type, level);
+		break;
+
 	case ENTITY_TYPE::ENEMY_TOWNHALL:
 		entity = new EnemyTownHall(x, y, type, level);
 		break;
 
 	case ENTITY_TYPE::ENEMY_BARRACKS:
 		entity = new EnemyBarracks(x, y, type, level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_WALL:
+		entity = new EnemyWall(x, y, type, level);
 		break;
 
 	case ENTITY_TYPE::ROCK:
@@ -276,6 +288,9 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		entity = new Tree(x, y, type, level);
 		break;
 
+	case ENTITY_TYPE::BITS:
+		entity = new Bits(x, y, type, level);
+		break;
 	}
 
 	if (entity != nullptr)
@@ -339,46 +354,74 @@ void EntityManager::LoadEntityTextures()
 
 	pugi::xml_node entity_textures = config_file.child("config").child("entities").child("textures");
 
+	// UNITS
 	gatherer_tex		= App->tex->Load(entity_textures.child("gatherer_texture").attribute("path").as_string());
 	scout_tex			= App->tex->Load(entity_textures.child("scout_texture").attribute("path").as_string());
 	infantry_tex		= App->tex->Load(entity_textures.child("infantry_texture").attribute("path").as_string());
 	heavy_tex			= App->tex->Load(entity_textures.child("heavy_texture").attribute("path").as_string());
 	enemy_gatherer_tex	= App->tex->Load(entity_textures.child("enemy_gatherer_texture").attribute("path").as_string());
 	enemy_scout_tex		= App->tex->Load(entity_textures.child("enemy_scout_texture").attribute("path").as_string());
-	enemy_tex			= App->tex->Load(entity_textures.child("enemy_texture").attribute("path").as_string());
+	enemy_infantry_tex	= App->tex->Load(entity_textures.child("enemy_infantry_texture").attribute("path").as_string());
 	enemy_heavy_tex		= App->tex->Load(entity_textures.child("enemy_heavy_texture").attribute("path").as_string());
 
+	// BUILDINGS
 	townhall_tex		= App->tex->Load(entity_textures.child("townhall_texture").attribute("path").as_string());
 	barracks_tex		= App->tex->Load(entity_textures.child("barracks_texture").attribute("path").as_string());
+	wall_tex			= App->tex->Load(entity_textures.child("wall_texture").attribute("path").as_string());
 	enemy_townhall_tex	= App->tex->Load(entity_textures.child("enemy_townhall_texture").attribute("path").as_string());
 	enemy_barracks_tex	= App->tex->Load(entity_textures.child("enemy_barracks_texture").attribute("path").as_string());
+	enemy_wall_tex		= App->tex->Load(entity_textures.child("enemy_wall_texture").attribute("path").as_string());
+
+	// RESOURCES
 	rock_tex			= App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
 	tree_tex			= App->tex->Load(entity_textures.child("tree_texture").attribute("path").as_string());
+	bits_tex			= App->tex->Load(entity_textures.child("bits_texture").attribute("path").as_string());
 
-	center_point_debug = App->tex->Load("maps/center_position_debug.png");
+	// SPRITE RENDERING ORDER DEBUG TEXTURE
+	center_point_debug	= App->tex->Load("maps/center_position_debug.png");
 }
 
 void EntityManager::UnLoadEntityTextures()
 {
 	App->tex->UnLoad(gatherer_tex);
+	App->tex->UnLoad(scout_tex);
 	App->tex->UnLoad(infantry_tex);
-	App->tex->UnLoad(enemy_tex);
+	App->tex->UnLoad(heavy_tex);
+	App->tex->UnLoad(enemy_gatherer_tex);
+	App->tex->UnLoad(enemy_scout_tex);
+	App->tex->UnLoad(enemy_infantry_tex);
+	App->tex->UnLoad(enemy_heavy_tex);
+
 	App->tex->UnLoad(townhall_tex);
-	App->tex->UnLoad(enemy_townhall_tex);
 	App->tex->UnLoad(barracks_tex);
+	App->tex->UnLoad(wall_tex);
+	App->tex->UnLoad(enemy_townhall_tex);
 	App->tex->UnLoad(enemy_barracks_tex);
+	App->tex->UnLoad(enemy_wall_tex);
+
 	App->tex->UnLoad(rock_tex);
 	App->tex->UnLoad(tree_tex);
+	App->tex->UnLoad(bits_tex);
 
 	gatherer_tex		= nullptr;
+	scout_tex			= nullptr;
 	infantry_tex		= nullptr;
-	enemy_tex			= nullptr;
+	heavy_tex			= nullptr;
+	enemy_gatherer_tex	= nullptr;
+	enemy_scout_tex		= nullptr;
+	enemy_infantry_tex	= nullptr;
+	enemy_heavy_tex		= nullptr;
+
 	townhall_tex		= nullptr;
-	enemy_townhall_tex	= nullptr;
 	barracks_tex		= nullptr;
+	wall_tex			= nullptr;
+	enemy_townhall_tex	= nullptr;
 	enemy_barracks_tex	= nullptr;
+	enemy_wall_tex		= nullptr;
+
 	rock_tex			= nullptr;
 	tree_tex			= nullptr;
+	bits_tex			= nullptr;
 }
 
 // --- ENTITY AUDIO LOAD & UNLOAD ---
@@ -434,9 +477,9 @@ SDL_Texture* EntityManager::GetEnemyScoutTexture() const
 	return enemy_scout_tex;
 }
 
-SDL_Texture* EntityManager::GetEnemyTexture() const
+SDL_Texture* EntityManager::GetEnemyInfantryTexture() const
 {
-	return enemy_tex;
+	return enemy_infantry_tex;
 }
 
 SDL_Texture* EntityManager::GetEnemyHeavyTexture() const
@@ -454,6 +497,11 @@ SDL_Texture* EntityManager::GetBarracksTexture() const
 	return barracks_tex;
 }
 
+SDL_Texture* EntityManager::GetWallTexture() const
+{
+	return wall_tex;
+}
+
 SDL_Texture* EntityManager::GetEnemyTownHallTexture() const
 {
 	return enemy_townhall_tex;
@@ -462,6 +510,11 @@ SDL_Texture* EntityManager::GetEnemyTownHallTexture() const
 SDL_Texture* EntityManager::GetEnemyBarracksTexture() const
 {
 	return enemy_barracks_tex;
+}
+
+SDL_Texture* EntityManager::GetEnemyWallTexture() const
+{
+	return enemy_wall_tex;
 }
 
 SDL_Texture* EntityManager::GetRockTexture() const
@@ -474,6 +527,11 @@ SDL_Texture* EntityManager::GetTreeTexture() const
 	return tree_tex;
 }
 
+SDL_Texture* EntityManager::GetBitsTexture() const
+{
+	return bits_tex;
+}
+
 SDL_Texture* EntityManager::GetCenterPointTexture() const
 {
 	return center_point_debug;
@@ -483,7 +541,7 @@ SDL_Texture* EntityManager::GetCenterPointTexture() const
 bool EntityManager::IsAllyEntity(Entity* entity)
 {
 	if (entity->type == ENTITY_TYPE::GATHERER || entity->type == ENTITY_TYPE::SCOUT || entity->type == ENTITY_TYPE::INFANTRY || entity->type == ENTITY_TYPE::HEAVY
-		|| entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS)
+		|| entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS || entity->type == ENTITY_TYPE::WALL)
 	{
 		return true;
 	}
@@ -495,7 +553,7 @@ bool EntityManager::IsEnemyEntity(Entity* entity)
 {
 	if (entity->type == ENTITY_TYPE::ENEMY_GATHERER || entity->type == ENTITY_TYPE::ENEMY_SCOUT
 		|| entity->type == ENTITY_TYPE::ENEMY_INFANTRY || entity->type == ENTITY_TYPE::ENEMY_HEAVY
-		|| entity->type == ENTITY_TYPE::ENEMY_TOWNHALL || entity->type == ENTITY_TYPE::ENEMY_BARRACKS)
+		|| entity->type == ENTITY_TYPE::ENEMY_TOWNHALL || entity->type == ENTITY_TYPE::ENEMY_BARRACKS || entity->type == ENTITY_TYPE::ENEMY_WALL)
 	{
 		return true;
 	}
@@ -576,8 +634,8 @@ bool EntityManager::IsHeavy(Entity* entity)
 
 bool EntityManager::IsBuilding(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS
-		|| entity->type == ENTITY_TYPE::ENEMY_TOWNHALL || entity->type == ENTITY_TYPE::ENEMY_BARRACKS)
+	if (entity->type == ENTITY_TYPE::TOWNHALL || entity->type == ENTITY_TYPE::BARRACKS || entity->type == ENTITY_TYPE::WALL
+		|| entity->type == ENTITY_TYPE::ENEMY_TOWNHALL || entity->type == ENTITY_TYPE::ENEMY_BARRACKS || entity->type == ENTITY_TYPE::ENEMY_WALL)
 	{
 		return true;
 	}
@@ -587,7 +645,7 @@ bool EntityManager::IsBuilding(Entity* entity)
 
 bool EntityManager::IsResource(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::ROCK || entity->type == ENTITY_TYPE::TREE)
+	if (entity->type == ENTITY_TYPE::ROCK || entity->type == ENTITY_TYPE::TREE || entity->type == ENTITY_TYPE::BITS)
 	{
 		return true;
 	}

@@ -33,12 +33,7 @@ bool ParticleManager::Awake(pugi::xml_node& config)
 
 	for (; info != nullptr; info = info.next_sibling())
 	{
-		int typeNum = info.attribute("type").as_int();
-	
-		if (typeNum == 1)
-			LoadData(info, EMITTER_TYPE::EMITTER_MOUSE);
-		else if (typeNum == 2)
-			LoadData(info, EMITTER_TYPE::EMITTER_FIRE);
+			LoadData(info);
 	}
 
 	return ret;
@@ -97,9 +92,11 @@ Emitter* ParticleManager::SpawnEmitter(fPoint pos, EMITTER_TYPE type)
 	return ret;
 }
 
-void ParticleManager::LoadData(pugi::xml_node& node, EMITTER_TYPE type)
+void ParticleManager::LoadData(pugi::xml_node& node)
 {
 	DataToLoad data;
+
+	int typeNum = node.attribute("type").as_int();
 
 	data.speed = node.child("speed").attribute("value").as_float();
 	data.size = node.child("size").attribute("value").as_float();

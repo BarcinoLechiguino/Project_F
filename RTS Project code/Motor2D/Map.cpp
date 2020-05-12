@@ -115,6 +115,14 @@ void Map::Draw()
 
 							App->render->Blit(tileset->texture, pos.x + tileset->offset_x, pos.y + tileset->offset_y, &tile_rect); //, false, (*layer)->speed)
 
+							
+							// DRAWING THE FOG OF WAR
+							iPoint tile_pos = { x, y };
+							uchar fow_state = App->fow_manager->GetVisibilityAt(tile_pos);
+							SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+
+							App->render->Blit(App->fow_manager->fow_tex, pos.x - 5, pos.y - 19, &fow_tile_rect);
+
 							tiles_drawn++;
 						}
 					}
@@ -123,7 +131,7 @@ void Map::Draw()
 		}
 
 		// Fog of War Draw. Make it a function that is not a loop and add it to the main draw loop.
-		for (int x = min_x_row; x < max_x_row && x < data.width; x++)
+		/*for (int x = min_x_row; x < max_x_row && x < data.width; x++)
 		{
 			for (int y = min_y_row; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
 			{
@@ -132,12 +140,12 @@ void Map::Draw()
 					iPoint pos = MapToWorld(x, y);
 					iPoint tile_pos = { x, y };
 					uchar fow_state = App->fow_manager->GetVisibilityAt(tile_pos);
-					SDL_Rect r = App->fow_manager->GetFowTileRect(fow_state);
+					SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
 
-					App->render->Blit(App->fow_manager->fow_tex, pos.x - 5, pos.y - 19, &r);
+					App->render->Blit(App->fow_manager->fow_tex, pos.x - 5, pos.y - 19, &fow_tile_rect);
 				}
 			}
-		}
+		}*/
 	}
 	//(*data.layers.begin())->tiles_tree->DrawQuadtree();
 	//LOG("Tiles drawn: %d", tiles_drawn);

@@ -33,10 +33,13 @@
 #include "StaticObject.h"
 #include "TownHall.h"
 #include "Barracks.h"
+#include "Wall.h"
 #include "EnemyTownHall.h"
 #include "EnemyBarracks.h"
+#include "EnemyWall.h"
 #include "Rock.h"
 #include "Tree.h"
+#include "Bits.h"
 
 #include "GuiManager.h"
 #include "UI.h"
@@ -1014,6 +1017,7 @@ void GameplayScene::LoadGuiElements()
 	God_Mode_Activated = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 950, 2, HUD_text_God, HUD_God_font, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_God_string);
 
 
+
 	// HUD Missions
 	//Tab
 	SDL_Rect HUD_missions_tab_size = { 0, 0, 30, 81 };
@@ -1021,9 +1025,31 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_missions_tab_hover = { 813, 117, 30, 81 };
 	SDL_Rect HUD_missions_tab_clicked = { 846, 117, 30, 81 };
 
-	HUD_missions_tab = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 1252, 503, true, true, false, this, nullptr
+	HUD_missions_tab = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 1252, 389, true, true, false, this, nullptr
 		, &HUD_missions_tab_idle, &HUD_missions_tab_hover, &HUD_missions_tab_clicked);
 
+	
+	//Tab close 
+	SDL_Rect HUD_missions_tab_close_size = { 0, 0, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_idle = { 780, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_hover = { 813, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_clicked = { 846, 117, 30, 81 };
+
+	HUD_missions_tab_close = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 883, 389, false, true, false, this, nullptr
+		, &HUD_missions_tab_close_idle, &HUD_missions_tab_close_hover, &HUD_missions_tab_close_clicked);
+
+
+	//Back
+	SDL_Rect HUD_missions_back_size = { 25, 400, 390, 226 };
+
+	HUD_missions_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 1276, 359, HUD_missions_back_size, true, true, false, this, nullptr);
+
+
+
+	// HUD dialogs
+	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
+
+	HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 40, HUD_dialogs_back_size, true, true, false, this, nullptr);
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1302,11 +1328,22 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		//	HUD_missions_tab->SetScreenPos(iPoint(N_Lerp(1252, 10, 0.1, false), 503));
 		//}
 
-		HUD_missions_tab->SetScreenPos(iPoint(1000, 503));
+		App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);
+		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, true);
 
-		HUD_missions_tab->SetHitbox({ 1000,503,30, 81 });
+		HUD_missions_background->SetScreenPos(iPoint(902, 359));
+		HUD_missions_background->SetHitbox({ 902,359,390, 226 });
+	}
 
-		
+	if (element == HUD_missions_tab_close && ui_event == UI_EVENT::UNCLICKED)
+	{
+		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+
+		HUD_missions_background->SetScreenPos(iPoint(1276, 359));
+		HUD_missions_background->SetHitbox({ 1276,359,390, 226 });
+
+		App->gui_manager->SetElementsVisibility(HUD_missions_tab, true);
+		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, false);
 	}
 }
 
@@ -1496,7 +1533,7 @@ void GameplayScene::UnitDebugKeys()
 				(EnemyHeavy*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_HEAVY, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
-			//  BUILDINGS
+			// BUILDINGS
 			if (App->input->GetKey(SDL_SCANCODE_H) == KEY_STATE::KEY_DOWN)
 			{
 				(TownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::TOWNHALL, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
@@ -1505,6 +1542,11 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_B) == KEY_STATE::KEY_DOWN)
 			{
 				(Barracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::BARRACKS, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_W) == KEY_STATE::KEY_DOWN)
+			{
+				(Wall*)App->entity_manager->CreateEntity(ENTITY_TYPE::WALL, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_J) == KEY_STATE::KEY_DOWN)
@@ -1517,6 +1559,11 @@ void GameplayScene::UnitDebugKeys()
 				(EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, App->player->cursor_tile.x, App->player->cursor_tile.y);
 			}
 
+			if (App->input->GetKey(SDL_SCANCODE_E) == KEY_STATE::KEY_DOWN)
+			{
+				(EnemyWall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_WALL, App->player->cursor_tile.x, App->player->cursor_tile.y);
+			}
+
 			// RESOURCES
 			if (App->input->GetKey(SDL_SCANCODE_R) == KEY_STATE::KEY_DOWN)
 			{
@@ -1526,6 +1573,11 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_T) == KEY_STATE::KEY_DOWN)
 			{
 				(Tree*)App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+			}
+
+			if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_STATE::KEY_DOWN)
+			{
+				(Bits*)App->entity_manager->CreateEntity(ENTITY_TYPE::BITS, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)

@@ -43,6 +43,7 @@ bool Rock::PreUpdate()
 
 bool Rock::Update(float dt, bool do_logic)
 {
+	// FOG OF WAR
 	is_visible = fow_entity->is_visible;									// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
 	
 	return true;
