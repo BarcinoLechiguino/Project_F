@@ -1,7 +1,5 @@
 #include "Brofiler/Brofiler.h"
 
-#include <map>
-
 #include "Point.h"
 #include "Application.h"
 #include "Textures.h"
@@ -457,39 +455,28 @@ void FowManager::UpdateEntitiesFowManipulation()
 }
 
 void FowManager::UpdateEntityLineOfSight(FowEntity* entity_to_update)
-{	
+{
 	BROFILER_CATEGORY("UpdateEntityLineOfSight", Profiler::Color::Fuchsia)
-	
-	std::vector<iPoint> previous_line_of_sight = entity_to_update->line_of_sight;
 
 	std::vector<iPoint>::iterator tile = entity_to_update->line_of_sight.begin();
 
 	for (; tile != entity_to_update->line_of_sight.end(); ++tile)
 	{
+		if (scouting_trail)
+		{
+			ChangeVisibilityMap((*tile), FOGGED);
+		}
+		else
+		{
+			ChangeVisibilityMap((*tile), UNEXPLORED);
+		}
+
 		(*tile) += entity_to_update->motion;
 
 		ChangeVisibilityMap((*tile), VISIBLE);
 	}
 
 	entity_to_update->has_moved = false;
-
-	
-	std::vector<iPoint>::iterator previous_tile = previous_line_of_sight.begin();
-
-	for (; previous_tile != previous_line_of_sight.end(); ++previous_tile)
-	{
-		if (!TileIsInsideLineOfSight((*previous_tile), entity_to_update->line_of_sight))
-		{
-			if (scouting_trail)
-			{
-				ChangeVisibilityMap((*previous_tile), FOGGED);
-			}
-			else
-			{
-				ChangeVisibilityMap((*previous_tile), UNEXPLORED);
-			}
-		}
-	}
 }
 
 bool FowManager::TileIsInsideLineOfSight(const iPoint& tile_position, const std::vector<iPoint>& line_of_sight)
