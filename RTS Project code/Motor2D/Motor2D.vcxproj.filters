@@ -211,6 +211,9 @@
     <ClCompile Include="UI_CreationBar.cpp">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
+    <ClCompile Include="QuestManager.cpp">
+      <Filter>Engine  ===========\Modules\Quests</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="p2Defs.h">
@@ -444,6 +447,9 @@
     <ClInclude Include="UI_CreationBar.h">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="QuestManager.h">
+      <Filter>Engine  ===========\Modules\Quests</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
@@ -539,6 +545,9 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Multimedia">
       <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Quests">
+      <UniqueIdentifier>{2ce971b9-3493-46b1-86aa-c41541591462}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

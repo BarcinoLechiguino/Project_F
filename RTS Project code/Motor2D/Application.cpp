@@ -21,6 +21,7 @@
 #include "TransitionManager.h"
 #include "SceneManager.h"
 #include "Movement.h"
+#include "QuestManager.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -52,6 +53,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	transition_manager	= new TransitionManager();
 	scene_manager		= new SceneManager();
 	movement			= new Movement();
+	quest_manager		= new QuestManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -73,6 +75,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(transition_manager);
 	AddModule(entity_manager);
 	AddModule(player);
+	//AddModule(quest_manager);
 
 	// render last to swap buffer
 	AddModule(render);
