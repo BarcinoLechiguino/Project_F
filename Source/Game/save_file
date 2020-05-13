@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<game_state>
+	<input />
+	<window />
+	<textures />
+	<audio>
+		<volume />
+	</audio>
+	<map />
+	<pathfinding />
+	<scene>
+		<currentMap num="0" />
+	</scene>
+	<entities>
+		<player>
+			<position x="1601.50061" y="1224.40002" />
+		</player>
+		<player2>
+			<position x="1636.85059" y="1224.40002" />
+		</player2>
+		<mecha />
+		<alien />
+	</entities>
+	<collisions />
+	<:anonymous />
+	<renderer>
+		<camera x="-1145" y="-576" />
+	</renderer>
+</game_state>
