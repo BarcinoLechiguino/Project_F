@@ -1,7 +1,8 @@
 #include "Brofiler\Brofiler.h"
 
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "Definitions.h"
+#include "Log.h"
+
 #include "Application.h"
 #include "Map.h"
 #include "EntityManager.h"

@@ -1,5 +1,5 @@
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "Definitions.h"
+#include "Log.h"
 #include "Application.h"
 #include "Textures.h"
 #include "Fonts.h"

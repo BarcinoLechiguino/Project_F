@@ -1,4 +1,8 @@
 #include "Minimap.h"
+#include "Brofiler/Brofiler.h"
+#include "Log.h"
+
+#include <list>
 
 #include "Application.h"
 #include "Window.h"
@@ -9,13 +13,7 @@
 #include "Entity.h"
 #include "Player.h"
 
-#include "Brofiler/Brofiler.h"
-
 #include "Map.h"
-
-#include "p2Log.h"
-
-#include <list>
 
 Minimap::Minimap() : Module(), minimap_loaded(false)
 {

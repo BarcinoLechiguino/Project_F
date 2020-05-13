@@ -215,6 +215,8 @@ public:
 	UI_Image*				 HUD_resources_bytes_upgrade_barracks;
 	UI_Text*				 HUD_prices_bytes_upgrade_barracks;
 
+	UI_Button*				 HUD_upgrade_barracks;
+
 	// HUD Infantry
 	UI_Text*				 HUD_title_infantry;
 	UI_Text*				 HUD_description_infantry;
@@ -235,12 +237,30 @@ public:
 	UI_Image*				 HUD_resources_bytes_upgrade_unit_barracks_infantry;
 	UI_Text*				 HUD_prices_bytes_upgrade_unit_barracks_infantry;
 							 
-
-
 	UI_Button*				 HUD_unit_upgrade_barracks_infantry;
-	UI_Button*				 HUD_upgrade_barracks;
+	
 
+	// HUD Heavy
+	UI_Text*				 HUD_title_heavy;
+	UI_Text*				 HUD_description_heavy;
 
+	UI_Image*				 HUD_parent_resources_unit_barracks_heavy;
+	UI_Image*				 HUD_resources_data_unit_barracks_heavy;
+	UI_Text*				 HUD_prices_data_unit_townhall_heavy;
+	UI_Image*				 HUD_resources_electricity_unit_barracks_heavy;
+	UI_Text*				 HUD_prices_electricity_unit_townhall_heavy;
+	UI_Image*				 HUD_resources_bytes_unit_barracks_heavy;
+	UI_Text*				 HUD_prices_bytes_unit_townhall_heavy;
+
+	UI_Image*				 HUD_parent_resources_upgrade_unit_barracks_heavy;
+	UI_Image*				 HUD_resources_data_upgrade_unit_barracks_heavy;
+	UI_Text*				 HUD_prices_data_upgrade_unit_barracks_heavy;
+	UI_Image*				 HUD_resources_electricity_upgrade_unit_barracks_heavy;
+	UI_Text*				 HUD_prices_electricity_upgrade_unit_barracks_heavy;
+	UI_Image*				 HUD_resources_bytes_upgrade_unit_barracks_heavy;
+	UI_Text*				 HUD_prices_bytes_upgrade_unit_barracks_heavy;
+
+	UI_Button*				 HUD_unit_upgrade_barracks_heavy;
 
 	UI_Text*				 God_Mode_Activated;
 

@@ -2,7 +2,8 @@
 #include "SDL/include/SDL_gamecontroller.h"
 #include "Brofiler\Brofiler.h"
 
-#include "p2Log.h"
+#include "Log.h"
+
 #include "Application.h"
 #include "Window.h"
 #include "GuiManager.h"

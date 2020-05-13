@@ -2,7 +2,7 @@
 #define __QUADTREE__H_
 
 #include "SDL/include/SDL_rect.h"
-#include "p2Defs.h"
+#include "Definitions.h"
 #include "Point.h"
 
 class QuadTree

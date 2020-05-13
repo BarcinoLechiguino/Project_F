@@ -5,7 +5,7 @@
 
 #include "EntityQuadTree.h"
 
-#include "p2Log.h"
+#include "Log.h"
 #include "Application.h"
 #include "Window.h"
 #include "Render.h"

@@ -1,10 +1,11 @@
 #ifndef __MAP_H__
 #define __MAP_H__
 
+#include "Log.h"					// Added due to ~Properties (#57)
+
 #include "Module.h"
 #include "Point.h"
 #include "Collisions.h"
-#include "p2Log.h"					// Added due to ~Properties (#52)
 #include "TileQuadTree.h"
 
 class Collisions;

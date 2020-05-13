@@ -139,7 +139,7 @@
     <ClCompile Include="Timer.cpp" />
     <ClCompile Include="MainMenuScene.cpp" />
     <ClCompile Include="mmgr\mmgr.cpp" />
-    <ClCompile Include="p2Log.cpp" />
+    <ClCompile Include="Log.cpp" />
     <ClCompile Include="Render.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="TownHall.cpp" />
@@ -218,13 +218,11 @@
     <ClInclude Include="TileQuadTree.h" />
     <ClInclude Include="Timer.h" />
     <ClInclude Include="MainMenuScene.h" />
-    <ClInclude Include="p2DynArray.h" />
     <ClInclude Include="Audio.h" />
     <ClInclude Include="Input.h" />
-    <ClInclude Include="p2Log.h" />
+    <ClInclude Include="Log.h" />
     <ClInclude Include="Application.h" />
-    <ClInclude Include="p2Defs.h" />
-    <ClInclude Include="p2List.h" />
+    <ClInclude Include="Definitions.h" />
     <ClInclude Include="Module.h" />
     <ClInclude Include="Point.h" />
     <ClInclude Include="Render.h" />
@@ -238,7 +236,6 @@
     <ClInclude Include="UI_Healthbar.h" />
     <ClInclude Include="Wall.h" />
     <ClInclude Include="Window.h" />
-    <ClInclude Include="p2SString.h" />
     <ClInclude Include="PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="PugiXml\src\pugixml.hpp" />
     <ClInclude Include="UI.h" />

@@ -1,7 +1,7 @@
 #include <stdlib.h>
 
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "Definitions.h"
+#include "Log.h"
 #include "Application.h"
 
 // This is needed here because SDL redefines main function
