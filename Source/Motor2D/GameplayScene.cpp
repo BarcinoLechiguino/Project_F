@@ -1,7 +1,8 @@
 #include "Brofiler\Brofiler.h"
 //#include "mmgr/mmgr.h"
 
-#include "p2Log.h"
+#include "Log.h"
+
 #include "Application.h"
 #include "Window.h"
 #include "Render.h"

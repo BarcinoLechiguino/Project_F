@@ -1,6 +1,6 @@
 #include "Application.h"
 #include "DialogSystem.h"
-#include "p2Log.h"
+#include "Log.h"
 #include "Render.h"
 #include "SceneManager.h"
 #include "GuiManager.h"

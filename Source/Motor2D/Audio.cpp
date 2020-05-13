@@ -1,9 +1,9 @@
-#include "p2Defs.h"
-#include "p2Log.h"
+#include "Definitions.h"
+#include "Log.h"
+
 #include "Application.h"
 #include "Audio.h"
 #include "Input.h"
-
 
 
 #include "SDL/include/SDL.h"

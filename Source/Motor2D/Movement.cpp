@@ -1,3 +1,5 @@
+#include "Log.h"
+
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Entity.h"
@@ -5,7 +7,6 @@
 #include "Pathfinding.h"
 #include "Application.h"
 #include "Map.h"
-#include "p2Log.h"
 
 #include "Movement.h"
 

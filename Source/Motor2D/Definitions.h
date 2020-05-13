@@ -1,5 +1,5 @@
-#ifndef __P2DEFS_H__
-#define __P2DEFS_H__
+#ifndef __DEFS_H__
+#define __DEFS_H__
 
 #include <stdio.h>
 
@@ -89,4 +89,4 @@ inline const char* const PATH(const char* folder, const char* file)
 
 #define MAX_CREATION_BAR_WIDTH 115
 
-#endif
+#endif // !__DEFS_H__

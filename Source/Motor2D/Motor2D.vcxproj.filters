@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="p2Log.cpp">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClCompile>
     <ClCompile Include="PugiXml\src\pugixml.cpp">
       <Filter>Engine  ===========\Tools\PuguiXML</Filter>
     </ClCompile>
@@ -64,12 +61,6 @@
     <ClCompile Include="Map.cpp">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClCompile>
-    <ClCompile Include="PerfTimer.cpp">
-      <Filter>Engine  ===========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>Engine  ===========\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="Pathfinding.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
@@ -90,9 +81,6 @@
     </ClCompile>
     <ClCompile Include="TransitionManager.cpp">
       <Filter>Engine  ===========\Modules\Transitions</Filter>
-    </ClCompile>
-    <ClCompile Include="Color.cpp">
-      <Filter>Engine  ===========\Tools</Filter>
     </ClCompile>
     <ClCompile Include="AlternatingBars.cpp">
       <Filter>Engine  ===========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
@@ -141,15 +129,6 @@
     </ClCompile>
     <ClCompile Include="Minimap.cpp">
       <Filter>Engine  ===========\Modules\Map</Filter>
-    </ClCompile>
-    <ClCompile Include="EntityQuadTree.cpp">
-      <Filter>Engine  ===========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="TileQuadTree.cpp">
-      <Filter>Engine  ===========\Tools</Filter>
-    </ClCompile>
-    <ClCompile Include="Quadtree.cpp">
-      <Filter>Engine  ===========\Tools</Filter>
     </ClCompile>
     <ClCompile Include="Movement.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
@@ -241,31 +220,34 @@
     <ClCompile Include="EnemyWall.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Color.cpp">
+      <Filter>Engine  ===========\Tools\Color</Filter>
+    </ClCompile>
+    <ClCompile Include="PerfTimer.cpp">
+      <Filter>Engine  ===========\Tools\Timers</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>Engine  ===========\Tools\Timers</Filter>
+    </ClCompile>
+    <ClCompile Include="EntityQuadTree.cpp">
+      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
+    </ClCompile>
+    <ClCompile Include="Quadtree.cpp">
+      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
+    </ClCompile>
+    <ClCompile Include="TileQuadTree.cpp">
+      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
+    </ClCompile>
+    <ClCompile Include="Log.cpp">
+      <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="p2Defs.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2DynArray.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2List.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2Log.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
-    <ClInclude Include="p2SString.h">
-      <Filter>Programacio 2 ===========</Filter>
-    </ClInclude>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
       <Filter>Engine  ===========\Tools\PuguiXML</Filter>
     </ClInclude>
     <ClInclude Include="PugiXml\src\pugixml.hpp">
       <Filter>Engine  ===========\Tools\PuguiXML</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
-      <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
       <Filter>Engine  ===========\Modules\UI</Filter>
@@ -321,20 +303,11 @@
     <ClInclude Include="Map.h">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClInclude>
-    <ClInclude Include="PerfTimer.h">
-      <Filter>Engine  ===========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>Engine  ===========\Tools</Filter>
-    </ClInclude>
     <ClInclude Include="Pathfinding.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>Engine  ===========\Modules\Player</Filter>
-    </ClInclude>
-    <ClInclude Include="Point.h">
-      <Filter>Programacio 2 ===========</Filter>
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Engine  ===========\Core</Filter>
@@ -350,9 +323,6 @@
     </ClInclude>
     <ClInclude Include="TransitionManager.h">
       <Filter>Engine  ===========\Modules\Transitions</Filter>
-    </ClInclude>
-    <ClInclude Include="Color.h">
-      <Filter>Engine  ===========\Tools</Filter>
     </ClInclude>
     <ClInclude Include="AlternatingBars.h">
       <Filter>Engine  ===========\Modules\Transitions\Transition Types\Bar Transitions</Filter>
@@ -404,15 +374,6 @@
     </ClInclude>
     <ClInclude Include="Minimap.h">
       <Filter>Engine  ===========\Modules\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="EntityQuadTree.h">
-      <Filter>Engine  ===========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="TileQuadTree.h">
-      <Filter>Engine  ===========\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="Quadtree.h">
-      <Filter>Engine  ===========\Tools</Filter>
     </ClInclude>
     <ClInclude Include="OptionsScene.h">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
@@ -504,6 +465,36 @@
     <ClInclude Include="EnemyWall.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
     </ClInclude>
+    <ClInclude Include="Color.h">
+      <Filter>Engine  ===========\Tools\Color</Filter>
+    </ClInclude>
+    <ClInclude Include="PerfTimer.h">
+      <Filter>Engine  ===========\Tools\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>Engine  ===========\Tools\Timers</Filter>
+    </ClInclude>
+    <ClInclude Include="EntityQuadTree.h">
+      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
+    </ClInclude>
+    <ClInclude Include="Quadtree.h">
+      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
+    </ClInclude>
+    <ClInclude Include="TileQuadTree.h">
+      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
+    </ClInclude>
+    <ClInclude Include="Animation.h">
+      <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Definitions.h">
+      <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Log.h">
+      <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="Point.h">
+      <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
@@ -528,9 +519,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Programacio 2 ===========">
-      <UniqueIdentifier>{ace2c9ad-ad53-4824-a230-881f6dcabce3}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine  ===========">
       <UniqueIdentifier>{c4e3aa4e-9b07-4230-801a-bf8770816ac9}</UniqueIdentifier>
     </Filter>
@@ -608,6 +596,18 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Static\Resources\Resource Entities">
       <UniqueIdentifier>{3bdfee68-3a18-4461-ba17-615146dd4e9a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Tools\Color">
+      <UniqueIdentifier>{6d8a8b1e-a7db-44c9-aaf8-a9dfa3088e97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Tools\Timers">
+      <UniqueIdentifier>{58a976e7-7720-4064-a0d2-2857590b6742}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Tools\Quadtrees">
+      <UniqueIdentifier>{4fc32383-6edd-443e-acdb-044b3a5faa9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Tools\Utilities">
+      <UniqueIdentifier>{1d648d44-87d1-403a-93c9-16082a74dd74}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
 #include "Brofiler\Brofiler.h"
 
-#include "p2Log.h"
+#include "Log.h"
 
 #include "Application.h"
 #include "Render.h"

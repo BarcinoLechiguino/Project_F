@@ -1,7 +1,7 @@
 #ifndef __PERFTIMER_H__
 #define __PERFTIMER_H__
 
-#include "p2Defs.h"
+#include "Definitions.h"
 
 class PerfTimer
 {

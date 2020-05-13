@@ -5,7 +5,7 @@
 #ifndef __POINT_H__
 #define __POINT_H__
 
-#include "p2Defs.h"
+#include "Definitions.h"
 #include <math.h>
 
 template<class TYPE>
