@@ -51,39 +51,42 @@ public:
 	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed, float render_scale);
 
 public:
-	void SetScreenPos(iPoint position);				// Sets the position of a UI_Element with the Screen as point of reference.
-	iPoint GetScreenPos() const;					// Gets the position of a UI_Element with the Screen as point of reference.
-													   
-	void SetScreenRect(SDL_Rect rect);				// Sets the data members of a UI_Element's rect with the Screen as point of reference.
-	SDL_Rect GetScreenRect() const;					// Gets the data members of a UI_Element's rect with the Screen as point of reference.
-													   
-	void SetHitbox(SDL_Rect hitbox);				// Sets the data members of a UI_Element's hitbox with the Screen as point of reference.
-	SDL_Rect GetHitbox() const;						// Gets the data members of a UI_Element's hitbox with the Screen as point of reference.
-													   
-	void SetLocalPos(iPoint local_position);		// Sets the position of a UI Element with it's Parent as point of reference.
-	iPoint GetLocalPos() const;						// Gets the position of a UI Element with it's Parent as point of reference.
-													   
-	void SetLocalRect(SDL_Rect local_rect);			// Sets the rect of a UI Element with the parent element as point of reference.
-	SDL_Rect GetLocalRect() const;					// Gets the rect of a UI Element with the parent element as point of reference.
-													   
-	void SetLocalHitbox(SDL_Rect local_hitbox);		// Sets the hitbox rect of a UI Element with the parent element as the point of reference.
-	SDL_Rect GetLocalHitbox();
-													   
-	iPoint GetMousePos() /*const*/;					// Gets the mouse's position in pixels. (World Position)
-	iPoint GetCursorPos();							// Gets the UI_Cursor's position in pixels. (World Position)		//TMP CONTROLLER
+	void SetScreenPos(iPoint position);					// Sets the position of a UI_Element with the Screen as point of reference.
+	iPoint GetScreenPos() const;						// Gets the position of a UI_Element with the Screen as point of reference.
+														   
+	void SetScreenRect(SDL_Rect rect);					// Sets the data members of a UI_Element's rect with the Screen as point of reference.
+	SDL_Rect GetScreenRect() const;						// Gets the data members of a UI_Element's rect with the Screen as point of reference.
+														   
+	void SetHitbox(SDL_Rect hitbox);					// Sets the data members of a UI_Element's hitbox with the Screen as point of reference.
+	SDL_Rect GetHitbox() const;							// Gets the data members of a UI_Element's hitbox with the Screen as point of reference.
+														   
+	void SetLocalPos(iPoint local_position);			// Sets the position of a UI Element with it's Parent as point of reference.
+	iPoint GetLocalPos() const;							// Gets the position of a UI Element with it's Parent as point of reference.
+														   
+	void SetLocalRect(SDL_Rect local_rect);				// Sets the rect of a UI Element with the parent element as point of reference.
+	SDL_Rect GetLocalRect() const;						// Gets the rect of a UI Element with the parent element as point of reference.
+														   
+	void SetLocalHitbox(SDL_Rect local_hitbox);			// Sets the hitbox rect of a UI Element with the parent element as the point of reference.
+	SDL_Rect GetLocalHitbox() const;
+	
+	void SetElementPosition(const iPoint& position);	// Will set the element's screen position and hitbox position to the one passed as argument.
+	iPoint GetElementPosition() const;					// Gets the current position of the UI Element.
 
-	iPoint GetMouseTilePosition();					// Gets the mouse's position in tiles. (Map Position)
-	iPoint GetMouseMotion() /*const*/;				// Gets the mouse's motion.
+	iPoint GetMousePos() /*const*/;						// Gets the mouse's position in pixels. (World Position)
+	iPoint GetCursorPos();								// Gets the UI_Cursor's position in pixels. (World Position)		//TMP CONTROLLER
 
-	bool CheckMousePos() const;						// Checks the position of the mouse.
-	bool CheckCursorPos() const;					// Checks if the cursor is inside a UI_Element.						//TMP CONTROLLER
+	iPoint GetMouseTilePosition();						// Gets the mouse's position in tiles. (Map Position)
+	iPoint GetMouseMotion() /*const*/;					// Gets the mouse's motion.
 
-	bool IsHovered() const;							   
-	bool IsFocused() const;							// Centralizing common functionalities.
+	bool CheckMousePos() const;							// Checks the position of the mouse.
+	bool CheckCursorPos() const;						// Checks if the cursor is inside a UI_Element.						//TMP CONTROLLER
 
-	bool IsForemostElement() const;					// Returns true if its the first element in inverse order of draw and has the mouse on it.
-	bool ElementCanBeDragged() const;				// Returns true if all dragging conditions are met.
-	bool ElementRemainedInPlace() const;			// If a UI Element was clicked but not dragged, this will return true.
+	bool IsHovered() const;								   
+	bool IsFocused() const;								// Centralizing common functionalities.
+
+	bool IsForemostElement() const;						// Returns true if its the first element in inverse order of draw and has the mouse on it.
+	bool ElementCanBeDragged() const;					// Returns true if all dragging conditions are met.
+	bool ElementRemainedInPlace() const;				// If a UI Element was clicked but not dragged, this will return true.
 
 	void DragElement();											// Drags a draggable UI Element to the mouse's position.
 	void AxisRestrictedDragElement(bool X_Axis, bool Y_Axis);	// If the UI element is a scrollbar element, then dragging will be limitied to the Y axis.
