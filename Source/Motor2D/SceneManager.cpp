@@ -269,7 +269,7 @@ void SceneManager::ScenePushbacks()
 	CreateScene(SCENES::LOGO_SCENE);
 	CreateScene(SCENES::MAIN_MENU_SCENE);
 	CreateScene(SCENES::OPTIONS_SCENE);
-	CreateScene(SCENES::GAMEPLAY_SCENE);
+	gameplay_scene = (GameplayScene*)CreateScene(SCENES::GAMEPLAY_SCENE);
 	CreateScene(SCENES::WIN_SCENE);
 	CreateScene(SCENES::LOSE_SCENE);
 }

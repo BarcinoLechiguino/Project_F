@@ -299,12 +299,12 @@ public:
 
 	//Dialogs
 
-	//UI_Image*				HUD_dialogs_background;
+	UI_Image*				HUD_dialogs_background;
+	std::vector<UI_Text*>	HUD_dialog_text;	//Lines of dialog text
 
 private:
 
 	//Audio
-
 	uint					inGame_song;
 
 };
