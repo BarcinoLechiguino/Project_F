@@ -12,6 +12,7 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Player.h"
+#include "FowManager.h"
 
 #include "Map.h"
 
@@ -30,53 +31,53 @@ bool Minimap::Awake(pugi::xml_node & config)
 	minimap_position.x = 10;
 	minimap_position.y = 490;
 
+	player_is_moving_camera = false;
+
 	return true;
 }
 
 bool Minimap::Start()
 {
+	minimap_tex			= nullptr;
+	minimap_fow_tex		= nullptr;
+	tex					= nullptr;
+	fow_tex				= nullptr;
+	minimap_bg			= nullptr;
+	map_surface			= nullptr;
+	map_renderer		= nullptr;
+
 	return true;
 }
 
 void Minimap::CreateTexture() 
 {
-
 	BROFILER_CATEGORY("Load MiniMap", Profiler::Color::Khaki);
 
-	// Initialize the variable "map_width" to obtain the width of the map in pixels
-	// Initialize the variable "minimap_scale" to get the relation between the map width and
-	// the minimap width (defined at config.xml and initialized in Awake())
 	map_width = (App->map->data.width * App->map->data.tile_width);
 	minimap_scale = minimap_width / map_width;
 
-	x_offset = App->map->data.tile_width / 2 * minimap_scale;
-	y_offset = App->map->data.tile_height / 2 * minimap_scale;
+	x_offset = App->map->data.tile_width * 0.5f * minimap_scale;
+	y_offset = App->map->data.tile_height * 0.5f * minimap_scale;
 
-	// Use the function SDL_CreateRGBSurface() to allocate a RGB surface to the variable "map_surface"
-	// The last four parameters should be: 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000 in order to be totally transparent
-	// You have to add the x & y offsets
 	map_surface = SDL_CreateRGBSurface(0, minimap_width + x_offset, minimap_height + y_offset, 32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000);
 
-	// TODO 3: Use the function SDL_CreateSoftwareRenderer() to create a 2D software rendering context for a surface
-	// Assign it to the variable "map_renderer"
 	map_renderer = SDL_CreateSoftwareRenderer(map_surface);
 
-	tex = App->tex->Load("maps/Prototileset.png", map_renderer);
-	minimap_bg = App->tex->Load("textures/Spritesheets/UI/Minimap_bg.png");
-
+	tex			= App->tex->Load("maps/Prototileset.png", map_renderer);
+	fow_tex		= App->tex->Load("maps/FOW_meta_sheet.png", map_renderer);
+	minimap_bg	= App->tex->Load("textures/Spritesheets/UI/Minimap_bg.png");
 
 	DrawMinimap();
 
-	// Use the function SDL_CreateTextureFromSurface to create a texture from an existing surface
-	// Assign it to the variable "map_tex". Use the renderer from render.h
 	minimap_tex = SDL_CreateTextureFromSurface(App->render->renderer, map_surface);
-
 }
 
 
 
 bool Minimap::Update(float dt)
 {	
+	BROFILER_CATEGORY("Update Minimap", Profiler::Color::Indigo);
+	
 	if (App->map->map_loaded == true && App->minimap->minimap_loaded == false) 
 	{
 		App->minimap->minimap_loaded = true;
@@ -85,8 +86,18 @@ bool Minimap::Update(float dt)
 
 	if (App->map->map_loaded == true) 
 	{
-		//if (!App->player->is_selecting)
-		//{
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN)
+		{
+			int map_x, map_y;
+
+			if (MinimapCoords(map_x, map_y))
+			{
+				player_is_moving_camera = true;
+			}
+		}
+		
+		if (player_is_moving_camera)
+		{
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)
 			{
 				int map_x, map_y;
@@ -94,11 +105,22 @@ bool Minimap::Update(float dt)
 				if (MinimapCoords(map_x, map_y))
 				{
 					// Assign to the center of the camera, the coordinates "map_x" and "map_y"
-					App->render->camera.x = -map_x + App->win->width / 2;
-					App->render->camera.y = -map_y + App->win->height / 2;
+					App->render->camera.x = -map_x + App->win->width * 0.5f;
+					App->render->camera.y = -map_y + App->win->height * 0.5f;
 				}
 			}
-		//}
+		}
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP)
+		{
+			player_is_moving_camera = false;
+		}
+	}
+
+	// FOG OF WAR
+	if (App->player->CurrentlyInGameplayScene())
+	{
+		DrawFogOfWar();
 	}
 
 	return true;
@@ -111,17 +133,19 @@ bool Minimap::PostUpdate()
 	return true;
 }
 
-void Minimap::BlitMinimap() {
-
+void Minimap::BlitMinimap() 
+{
 	BROFILER_CATEGORY("Mini Map", Profiler::Color::LavenderBlush);
 
 	App->render->Blit(minimap_bg, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
 
 	App->render->Blit(minimap_tex, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
+
+	App->render->Blit(minimap_fow_tex, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
+
 	MinimapBorders();
 	DrawEntities();
 	DrawCamera();
-
 }
 
 
@@ -129,9 +153,12 @@ bool Minimap::CleanUp()
 {
 	App->tex->UnLoad(tex);
 	App->tex->UnLoad(minimap_tex);
+	App->tex->UnLoad(minimap_fow_tex);
 
 	if (SDL_RenderClear(map_renderer) == 0)
+	{
 		map_renderer = nullptr;
+	}
 
 	SDL_DestroyTexture(minimap_tex);
 	SDL_FreeSurface(map_surface);
@@ -149,7 +176,7 @@ bool Minimap::MinimapCoords(int& map_x, int& map_y)
 		// Assign to "map_x" and "map_y" the mouse position respect the minimap, to the
 		// position that corresponds to the map
 		// Take into account that it is an isometric map
-		map_x = (mouse_x - minimap_position.x - minimap_width/2) / minimap_scale;
+		map_x = (mouse_x - minimap_position.x - (minimap_width * 0.5f)) / minimap_scale;
 		map_y = (mouse_y - minimap_position.y) / minimap_scale;
 	}
 	else
@@ -183,11 +210,44 @@ void Minimap::DrawMinimap()
 
 					// Blit the minimap. You need to pass all the parameters until renderer included.
 					// As it is an isometric map, keep in mind that x == 0 is in the middle of the map.
-					App->render->Blit(tex, (pos.x + minimap_width / 2), pos.y, &r, false, 0.0f, minimap_scale, 0.0f, 0, 0,map_renderer);
+					App->render->Blit(tex, (pos.x + minimap_width * 0.5f), pos.y, &r, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
 				}
 			}
 		}
 	}
+}
+
+void Minimap::DrawFogOfWar()
+{
+	BROFILER_CATEGORY("Draw Fog Of War on Minimap", Profiler::Color::Black);
+	
+	SDL_RenderClear(map_renderer);
+	
+	if (minimap_fow_tex != nullptr)
+	{
+		App->tex->UnLoad(minimap_fow_tex);
+		SDL_DestroyTexture(minimap_fow_tex);													// The texture needs to be destroyed as we use SDL_CreateTextureFromSurface().
+	}
+	
+	for (int y = 0; y < App->map->data.height; ++y)
+	{
+		for (int x = 0; x < App->map->data.width; ++x)
+		{
+			iPoint tile_position = { x, y };
+			iPoint world_position = App->map->MapToWorld(x, y);
+
+			world_position.x *= minimap_scale;
+			world_position.y *= minimap_scale;
+			
+			// FOG OF WAR
+			uchar fow_state = App->fow_manager->GetVisibilityAt({ x, y });
+
+			SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+			App->render->Blit(fow_tex, (world_position.x + minimap_width * 0.5f), world_position.y - 2, &fow_tile_rect, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
+		}
+	}
+
+	minimap_fow_tex = SDL_CreateTextureFromSurface(App->render->renderer, map_surface);
 }
 
 void Minimap::DrawCamera()
@@ -200,49 +260,76 @@ void Minimap::DrawCamera()
 
 void Minimap::MinimapBorders()
 {
-	App->render->DrawLine(x_offset + minimap_position.x, minimap_height / 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, y_offset + minimap_position.y, 255, 255, 255, 255, false);
-	App->render->DrawLine(minimap_width + x_offset + minimap_position.x, minimap_height / 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, y_offset + minimap_position.y, 255, 255, 255, 255, false);
-	App->render->DrawLine(minimap_width + x_offset + minimap_position.x, minimap_height / 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, minimap_height + y_offset + minimap_position.y, 255, 255, 255, 255, false);
-	App->render->DrawLine(x_offset + minimap_position.x, minimap_height / 2 + y_offset + minimap_position.y, minimap_width / 2 + x_offset + minimap_position.x, minimap_height + y_offset + minimap_position.y, 255, 255, 255, 255, false);
+	App->render->DrawLine(x_offset + minimap_position.x													// Origin X
+						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
+						, (minimap_width * 0.5f) + x_offset + minimap_position.x						// End X
+						, y_offset + minimap_position.y													// End Y
+						, 255, 255, 255, 255, false);													// Colour, opacity and camera use.
+	
+	App->render->DrawLine(minimap_width + x_offset + minimap_position.x									// Origin X
+						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
+						, (minimap_width * 0.5f) + x_offset + minimap_position.x						// End X
+						, y_offset + minimap_position.y													// End Y
+						, 255, 255, 255, 255, false);													// Colour, opacity and camera use.
+	
+	App->render->DrawLine(minimap_width + x_offset + minimap_position.x									// Origin X
+						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
+						, (minimap_width * 0.5f) + x_offset + minimap_position.x						// End X
+						, minimap_height + y_offset + minimap_position.y								// End Y
+						, 255, 255, 255, 255, false);													// Colour, opacity and camera use.
+	
+	App->render->DrawLine(x_offset + minimap_position.x													// Origin X
+						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
+						, (minimap_width * 0.5f) + x_offset + minimap_position.x						// End X
+						, minimap_height + y_offset + minimap_position.y								// End Y
+						, 255, 255, 255, 255, false);													// Colour, opacity and camera use.
 }
 
 void Minimap::DrawEntities()
 {
 	int pos_x, pos_y;
 
-	for (int i = 0; i < (int)App->entity_manager->entities.size(); ++i)
+	int minimap_x_offset = (int)(minimap_width * 0.5f) + minimap_position.x;
+	int minimap_y_offset = y_offset + minimap_position.y;
+
+	std::vector<Entity*>::iterator entity = App->entity_manager->entities.begin();
+
+	for (; entity != App->entity_manager->entities.end(); ++entity)
 	{
+		if ((*entity)->is_visible)
+		{
+			pos_x = (*entity)->pixel_position.x * minimap_scale;
+			pos_y = (*entity)->pixel_position.y * minimap_scale;
 
-		pos_x = App->entity_manager->entities[i]->pixel_position.x * minimap_scale;
-		pos_y = App->entity_manager->entities[i]->pixel_position.y * minimap_scale;
-
-		switch (App->entity_manager->entities[i]->type) {
+			switch ((*entity)->type) 
+			{
 			case ENTITY_TYPE::BARRACKS:
-				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 204, 0, 204, 255, true, false);
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 204, 0, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::TOWNHALL:
-				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 204, 0, 204, 255, true, false);
-				App->render->DrawQuad({ (pos_x + minimap_width / 2) + 1 + minimap_position.x, pos_y - y_offset + minimap_position.y + 1, 2, 2 }, 204, 153, 204, 255, true, false);
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 204, 0, 204, 255, true, false);
+				App->render->DrawQuad({ (pos_x + (int)(minimap_width * 0.5f)) + 1 + minimap_position.x, pos_y - y_offset + minimap_position.y + 1, 2, 2 }, 204, 153, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::INFANTRY:
-				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::GATHERER:
-				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ENEMY_BARRACKS:
-				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ENEMY_TOWNHALL:
-				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
-				App->render->DrawQuad({(pos_x + minimap_width / 2) + 1 + minimap_position.x, pos_y - y_offset + minimap_position.y +1, 2, 2 }, 153, 204, 204, 255, true, false);
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
+				App->render->DrawQuad({ (pos_x + (int)(minimap_width * 0.5f)) + 1 + minimap_position.x, pos_y - y_offset + minimap_position.y + 1, 2, 2 }, 153, 204, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ENEMY_INFANTRY:
-				App->render->DrawQuad({ pos_x + minimap_width / 2+ minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 0, 204, 204, 255, true, false);
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 0, 204, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ROCK:
-				App->render->DrawQuad({ pos_x + minimap_width / 2 + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 255, 255, 255, 255, true, false);
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 255, 255, 255, 255, true, false);
 				break;
+			}
 		}
 	}
 }

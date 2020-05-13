@@ -28,17 +28,23 @@ private:
 	void DrawCamera();
 	void MinimapBorders();
 	void DrawEntities();
-	void DrawMinimap(); //Blits onto the alternate renderer, not on screen
+	void DrawMinimap();									//Blits onto the alternate renderer, not on screen
+	void DrawFogOfWar();
+
+public:
+	bool			player_is_moving_camera;
 
 private:
-	SDL_Texture*		minimap_tex = nullptr;
-	SDL_Texture*		tex = nullptr;
-	SDL_Texture*		minimap_bg = nullptr; 
+	SDL_Texture*	minimap_tex;
+	SDL_Texture*	minimap_fow_tex;
+	SDL_Texture*	tex;
+	SDL_Texture*	fow_tex;
+	SDL_Texture*	minimap_bg; 
 
 
-	SDL_Surface*		map_surface = nullptr;
+	SDL_Surface*	map_surface;
 
-	SDL_Renderer*		map_renderer = nullptr;
+	SDL_Renderer*	map_renderer;
 
 	float minimap_scale; //value from 
 

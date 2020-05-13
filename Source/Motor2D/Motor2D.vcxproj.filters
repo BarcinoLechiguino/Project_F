@@ -241,6 +241,9 @@
     <ClCompile Include="Log.cpp">
       <Filter>Engine  ===========\Tools\Utilities</Filter>
     </ClCompile>
+    <ClCompile Include="UIAnimations.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
@@ -494,6 +497,9 @@
     </ClInclude>
     <ClInclude Include="Point.h">
       <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnimations.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

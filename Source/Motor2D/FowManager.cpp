@@ -67,7 +67,7 @@ bool FowManager::Update(float dt)
 {
 	if (App->player->CurrentlyInGameplayScene())
 	{
-		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_STATE::KEY_REPEAT)		// FOW DEBUG TOOLS
+		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_STATE::KEY_REPEAT)	// FOW DEBUG TOOLS
 		{
 			App->map->DrawMapGrid();
 
@@ -75,12 +75,25 @@ bool FowManager::Update(float dt)
 			DebugLineOfSight();
 		}
 
-		if (!fow_debug)
+		UpdateEntitiesFowManipulation();
+		
+		/*if (!fow_debug)
 		{
 			UpdateEntitiesFowManipulation();
 		}
+		else
+		{
+			DebugUpdateEntitiesFowManipulation();
+		}*/
 
 		UpdateEntitiesVisibility();
+	}
+	else
+	{
+		if (tiles_to_reset.size() != 0)											// Safety check in case tiles_to_reset is not empty when the scene transitions out of the gameplay scene.
+		{
+			tiles_to_reset.clear();
+		}
 	}
 	
 	return true;
@@ -119,7 +132,14 @@ void FowManager::ChangeVisibilityMap(const iPoint& tile_position, const uchar& v
 {
 	if (CheckMapBoundaries(tile_position))
 	{
-		visibility_map[(tile_position.y * visibility_map_width) + tile_position.x] = visibility;
+		if (!fow_debug)
+		{
+			visibility_map[(tile_position.y * visibility_map_width) + tile_position.x] = visibility;
+		}
+		else
+		{
+			visibility_map_debug_buffer[(tile_position.y * visibility_map_width) + tile_position.x] = visibility;			// DEBUG TOOL
+		}
 	}
 }
 
@@ -207,6 +227,263 @@ uchar FowManager::GetVisibilityAt(const iPoint& tile_position)
 	return VISIBLE;
 }
 
+FOW_SMOOTHING_STATE FowManager::GetSmoothingStateAt(const iPoint& tile_position)
+{
+	FOW_SMOOTHING_STATE smoothing_state = FOW_SMOOTHING_STATE::NONE;
+
+	if (GetVisibilityAt(tile_position) /*!= UNEXPLORED*/  == VISIBLE)		// (?)
+	{
+		smoothing_state = GetInnerSmoothingStateAt(tile_position);
+	}
+	
+	if (GetVisibilityAt(tile_position) == FOGGED)
+	{
+		smoothing_state = GetOuterSmoothingStateAt(tile_position);
+	}
+
+	return smoothing_state;
+}
+
+FOW_SMOOTHING_STATE FowManager::GetInnerSmoothingStateAt(const iPoint& tile_position)
+{
+	bool inner_corner_check = false;
+
+	uchar index = 0;
+	uchar tile_state;
+
+	iPoint top_neighbour	= { tile_position.x, tile_position.y - 1 };					// Neighbour aware tile selection. The neighbours are iterated counter-clockwise.
+	iPoint left_neighbour	= { tile_position.x - 1, tile_position.y };
+	iPoint bottom_neighbour = { tile_position.x, tile_position.y + 1 };
+	iPoint right_neighbour	= { tile_position.x + 1, tile_position.y };
+
+	tile_state = GetVisibilityAt(top_neighbour);										// Checking the TOP neighbour.
+	if (tile_state != VISIBLE)
+	{
+		index += 1;
+	}
+
+	tile_state = GetVisibilityAt(left_neighbour);										// Checking the LEFT neighbour.
+	if (tile_state != VISIBLE)
+	{
+		index += 2;
+	}
+
+	tile_state = GetVisibilityAt(bottom_neighbour);										// Checking the BOTTOM neighbour.
+	if (tile_state != VISIBLE)
+	{
+		index += 4;
+	}
+
+	tile_state = GetVisibilityAt(right_neighbour);										// Checking the RIGHT neigbour.
+	if (tile_state != VISIBLE)
+	{
+		index += 8;
+	}
+
+	switch (index)
+	{
+	case 0:
+		inner_corner_check = true;														// Tile might be a corner tile, so an additional check is made.
+		break;
+	case 1:
+		return FOW_SMOOTHING_STATE::FOGGED_TOP;
+		break;
+	case 2:
+		return FOW_SMOOTHING_STATE::FOGGED_LEFT;
+		break;
+	case 3:
+		return FOW_SMOOTHING_STATE::FOGGED_INNER_TOP_LEFT;
+		break;
+	case 4:
+		return FOW_SMOOTHING_STATE::FOGGED_BOTTOM;
+		break;
+	case 5:
+		return FOW_SMOOTHING_STATE::NONE;												//TMP? (No tile for this state)
+		break;
+	case 6:
+		return FOW_SMOOTHING_STATE::FOGGED_INNER_DOWN_LEFT;
+		break;
+	case 7:
+		return FOW_SMOOTHING_STATE::FOGGED_LEFT_DEAD_END;
+		//return FOW_SMOOTHING_STATE::FOGGED_LEFT;
+		break;
+	case 8:
+		return FOW_SMOOTHING_STATE::FOGGED_RIGHT;
+		break;
+	case 9:
+		return FOW_SMOOTHING_STATE::FOGGED_INNER_TOP_RIGHT;
+		break;
+	case 10:
+		return FOW_SMOOTHING_STATE::NONE;												//TMP? (No tile for this state)
+		break;
+	case 11:
+		return FOW_SMOOTHING_STATE::FOGGED_TOP_DEAD_END;
+		//return FOW_SMOOTHING_STATE::FOGGED_TOP;
+		break;
+	case 12:
+		return FOW_SMOOTHING_STATE::FOGGED_INNER_DOWN_RIGHT;
+		break;
+	case 13:
+		return FOW_SMOOTHING_STATE::FOGGED_RIGHT_DEAD_END;
+		//return FOW_SMOOTHING_STATE::FOGGED_RIGHT;
+		break;
+	case 14:
+		return FOW_SMOOTHING_STATE::FOGGED_BOTTOM_DEAD_END;
+		//return FOW_SMOOTHING_STATE::FOGGED_BOTTOM;
+		break;
+	case 15:
+		return FOW_SMOOTHING_STATE::NONE;												// Maybe use ChangeVisibilityMap(FOGGED/UNEXPLORED)?
+		break;
+	}
+
+	if (inner_corner_check)
+	{
+		iPoint top_right_neighbour		= { tile_position.x + 1, tile_position.y - 1 };		// Neighbour aware tile selection. The neighbours are iterated counter-clockwise.
+		iPoint top_left_neighbour		= { tile_position.x - 1, tile_position.y - 1 };
+		iPoint bottom_right_neighbour	= { tile_position.x + 1, tile_position.y + 1 };
+		iPoint bottom_left_neighbour	= { tile_position.x - 1, tile_position.y + 1 };
+		
+		if (GetVisibilityAt(top_right_neighbour) == UNEXPLORED)								// Checking the TOP neighbour.
+		{
+			return FOW_SMOOTHING_STATE::FOGGED_OUTER_TOP_RIGHT;
+		}
+		else if (GetVisibilityAt(top_left_neighbour) == UNEXPLORED)							// Checking the LEFT neighbour.
+		{
+			return FOW_SMOOTHING_STATE::FOGGED_OUTER_TOP_LEFT;
+		}
+		else if (GetVisibilityAt(bottom_right_neighbour) == UNEXPLORED)						// Checking the BOTTOM neighbour.
+		{
+			return FOW_SMOOTHING_STATE::FOGGED_OUTER_DOWN_RIGHT;
+		}
+		else if (GetVisibilityAt(bottom_left_neighbour) == UNEXPLORED)						// Checking the RIGHT neighbour.
+		{
+			return FOW_SMOOTHING_STATE::FOGGED_OUTER_DOWN_LEFT;
+		}
+		else
+		{
+			return FOW_SMOOTHING_STATE::NONE;
+		}
+	}
+}
+
+FOW_SMOOTHING_STATE FowManager::GetOuterSmoothingStateAt(const iPoint& tile_position)
+{
+	bool outer_corner_check = false;
+	
+	uchar index = 0;
+	uchar tile_state;
+
+	iPoint top_neighbour	= { tile_position.x, tile_position.y - 1 };					// Neighbour aware tile selection. The neighbours are iterated counter-clockwise.
+	iPoint left_neighbour	= { tile_position.x - 1, tile_position.y };
+	iPoint bottom_neighbour = { tile_position.x, tile_position.y + 1 };
+	iPoint right_neighbour	= { tile_position.x + 1, tile_position.y };
+
+	tile_state = GetVisibilityAt(top_neighbour);										// Checking the TOP neighbour.
+	if (tile_state == UNEXPLORED)
+	{
+		index += 1;
+	}
+
+	tile_state = GetVisibilityAt(left_neighbour);										// Checking the LEFT neighbour.
+	if (tile_state == UNEXPLORED)
+	{
+		index += 2;
+	}
+
+	tile_state = GetVisibilityAt(bottom_neighbour);										// Checking the BOTTOM neighbour.
+	if (tile_state == UNEXPLORED)
+	{
+		index += 4;
+	}
+
+	tile_state = GetVisibilityAt(right_neighbour);										// Checking the RIGHT neigbour.
+	if (tile_state == UNEXPLORED)
+	{
+		index += 8;
+	}
+
+	switch (index)
+	{
+	case 0:
+		outer_corner_check = true;														// A tile in the frontier might not be FOGGED, so more checks will be performed.
+		break;
+	case 1:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_TOP;
+		break;
+	case 2:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_LEFT;
+		break;
+	case 3:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_INNER_TOP_LEFT;
+		break;
+	case 4:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_BOTTOM;
+		break;
+	case 5:
+		return FOW_SMOOTHING_STATE::NONE;												// TMP? (No tile for this state)
+		break;
+	case 6:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_INNER_BOTTOM_LEFT;
+		break;
+	case 7:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_LEFT_DEAD_END;
+		break;
+	case 8:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_RIGHT;
+		break;
+	case 9:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_INNER_TOP_RIGHT;
+		break;
+	case 10:
+		return FOW_SMOOTHING_STATE::NONE;												// TMP? (No tile for this state)
+		break;
+	case 11:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_TOP_DEAD_END;
+		break;
+	case 12:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_INNER_BOTTOM_RIGHT;
+		break;
+	case 13:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_RIGHT_DEAD_END;
+		break;
+	case 14:
+		return FOW_SMOOTHING_STATE::UNXTOFOG_LEFT_DEAD_END;
+		break;
+	case 15:
+		return FOW_SMOOTHING_STATE::NONE;												// Maybe use ChangeVisibilityMap(FOGGED/UNEXPLORED)?
+		break;
+	}
+
+	if (outer_corner_check)
+	{
+		iPoint top_right_neighbour		= { tile_position.x + 1, tile_position.y - 1 };
+		iPoint top_left_neighbour		= { tile_position.x - 1, tile_position.y - 1 };
+		iPoint bottom_right_neighbour	= { tile_position.x + 1, tile_position.y + 1 };
+		iPoint bottom_left_neighbour	= { tile_position.x - 1, tile_position.y + 1 };
+		
+		if (GetVisibilityAt(top_right_neighbour) == UNEXPLORED)								// Checking the TOP neighbour.
+		{
+			return FOW_SMOOTHING_STATE::UNXTOFOG_OUTER_TOP_RIGHT;
+		}
+		else if (GetVisibilityAt(top_left_neighbour) == UNEXPLORED)							// Checking the LEFT neighbour.
+		{
+			return FOW_SMOOTHING_STATE::UNXTOFOG_OUTER_TOP_LEFT;
+		}
+		else if (GetVisibilityAt(bottom_right_neighbour) == UNEXPLORED)						// Checking the BOTTOM neighbour.
+		{
+			return FOW_SMOOTHING_STATE::UNXTOFOG_OUTER_BOTTOM_RIGHT;
+		}
+		else if (GetVisibilityAt(bottom_left_neighbour) == UNEXPLORED)						// Checking the RIGHT neighbour.
+		{
+			return FOW_SMOOTHING_STATE::UNXTOFOG_OUTER_BOTTOM_LEFT;
+		}
+		else
+		{
+			return FOW_SMOOTHING_STATE::NONE;
+		}
+	}
+}
+
 SDL_Rect FowManager::GetFowTileRect(const uchar& visibility_state)
 {
 	SDL_Rect ret;
@@ -266,9 +543,19 @@ void FowManager::ClearFowEntityLineOfSight(FowEntity* fow_entity_to_clear)					/
 {
 	std::vector<iPoint>::iterator tile = fow_entity_to_clear->line_of_sight.begin();
 
-	for (; tile != fow_entity_to_clear->line_of_sight.end(); ++tile)
+	if (!fow_debug)
 	{
-		tiles_to_reset.push_back((*tile));													// All the tiles in the line_of_sight of the destroyed entity will be set to be FOGGED or UNEXPLORED.
+		for (; tile != fow_entity_to_clear->line_of_sight.end(); ++tile)
+		{
+			tiles_to_reset.push_back((*tile));													// All the tiles in the line_of_sight of the destroyed entity will be set to be FOGGED or UNEXPLORED.
+		}
+	}
+	else
+	{
+		for (; tile != fow_entity_to_clear->line_of_sight.end(); ++tile)
+		{
+			debug_tiles_to_reset.push_back((*tile));													// All the tiles in the line_of_sight of the destroyed entity will be set to be FOGGED or UNEXPLORED.
+		}
 	}
 }
 
@@ -342,6 +629,35 @@ std::vector<iPoint> FowManager::GetLineOfSight(const std::vector<iPoint>& fronti
 	return line_of_sight;
 }
 
+void FowManager::DebugUpdateEntitiesFowManipulation()
+{
+	std::vector<FowEntity*>::iterator item = fow_entities.begin();
+
+	for (; item != fow_entities.end(); ++item)
+	{
+		if ((*item)->provides_visibility)
+		{
+			if ((*item)->has_moved)
+			{
+				std::vector<iPoint>::iterator tile = (*item)->line_of_sight.begin();
+
+				for (; tile != (*item)->line_of_sight.end(); ++tile)
+				{
+					(*tile) += (*item)->motion;															// The frontier_tile is updated with the fow_entity's motion.
+				}
+
+				
+				tile = (*item)->frontier.begin();
+
+				for (; tile != (*item)->frontier.end(); ++tile)
+				{
+					(*tile) += (*item)->motion;
+				}
+			}
+		}
+	}
+}
+
 void FowManager::DebugLineOfSight()
 {
 	std::vector<FowEntity*>::iterator item = fow_entities.begin();
@@ -401,8 +717,6 @@ void FowManager::UpdateEntitiesFowManipulation()
 	BROFILER_CATEGORY("UpdateEntitiesFowManipulation", Profiler::Color::MediumSeaGreen)
 	
 	std::vector<FowEntity*>::iterator item = fow_entities.begin();
-	
-	std::vector<FowEntity*> static_entities;
 
 	for (; item != fow_entities.end(); ++item)
 	{
@@ -415,25 +729,11 @@ void FowManager::UpdateEntitiesFowManipulation()
 		}
 	}
 
-	if (tiles_to_reset.size() != 0)														// To avoid frontier_tile conflicts, the tiles that are to be reset are iterated before the second check.
-	{
-		for (int i = 0; i < tiles_to_reset.size(); ++i)
-		{
-			if (scouting_trail)
-			{
-				ChangeVisibilityMap(tiles_to_reset[i], FOGGED);
-			}
-			else
-			{
-				ChangeVisibilityMap(tiles_to_reset[i], UNEXPLORED);
-			}
-		}
+	
+	UpdateTilesToReset();
 
-		tiles_to_reset.clear();
-	}
 
-	// Revise when to smooth the frontier_tile edges.
-	item = fow_entities.begin();
+	item = fow_entities.begin();															// The fow_entities vector is iterated again to avoid any visibility errors.
 
 	for (; item != fow_entities.end(); ++item)
 	{
@@ -475,6 +775,41 @@ void FowManager::UpdateEntityLineOfSight(FowEntity* entity_to_update)
 	}
 
 	entity_to_update->has_moved = false;
+}
+
+void FowManager::UpdateTilesToReset()
+{
+	if (tiles_to_reset.size() != 0)														// To avoid frontier_tile conflicts, the tiles that are to be reset are iterated before the second check.
+	{
+		for (int i = 0; i < tiles_to_reset.size(); ++i)
+		{
+			if (scouting_trail)
+			{
+				ChangeVisibilityMap(tiles_to_reset[i], FOGGED);
+			}
+			else
+			{
+				ChangeVisibilityMap(tiles_to_reset[i], UNEXPLORED);
+			}
+		}
+
+		tiles_to_reset.clear();
+	}
+
+	if (debug_tiles_to_reset.size() != 0)												// Will only store tiles when an entity that provided visibility is destroyed in fow_debug mode.
+	{
+		for (int i = 0; i < debug_tiles_to_reset.size(); ++i)
+		{
+			if (GetVisibilityAt(debug_tiles_to_reset[i]) == UNEXPLORED)					// If the given tile in visibility_map is UNEXPLORED. (In fow_debug mode debug_visibility_map is used)
+			{
+				ChangeVisibilityMap(debug_tiles_to_reset[i], UNEXPLORED);
+			}
+			else
+			{
+				ChangeVisibilityMap(debug_tiles_to_reset[i], FOGGED);
+			}
+		}
+	}
 }
 
 void FowManager::SmoothEntityFrontierEdges(FowEntity* fow_entity)
@@ -626,92 +961,7 @@ void FowManager::SmoothEntityOuterFrontierEdges(std::vector<iPoint> outer_fronti
 
 	for (; tile != outer_frontier.end(); ++tile)
 	{
-		uchar index = 0;
-		uchar tile_state;
-
-		iPoint top_neighbour	= { (*tile).x, (*tile).y - 1 };								// Neighbour aware tile selection. The neighbours are iterated counter-clockwise.
-		iPoint left_neighbour	= { (*tile).x - 1, (*tile).y };
-		iPoint bottom_neighbour = { (*tile).x, (*tile).y + 1 };
-		iPoint right_neighbour	= { (*tile).x + 1, (*tile).y };
-
-		tile_state = GetVisibilityAt(top_neighbour);										// Checking the TOP neighbour.
-		if (tile_state == UNEXPLORED)
-		{
-			index += 1;
-		}
-
-		tile_state = GetVisibilityAt(left_neighbour);										// Checking the LEFT neighbour.
-		if (tile_state == UNEXPLORED)
-		{
-			index += 2;
-		}
-
-		tile_state = GetVisibilityAt(bottom_neighbour);										// Checking the BOTTOM neighbour.
-		if (tile_state == UNEXPLORED)
-		{
-			index += 4;
-		}
-
-		tile_state = GetVisibilityAt(right_neighbour);										// Checking the RIGHT neigbour.
-		if (tile_state == UNEXPLORED)
-		{
-			index += 8;
-		}
-
-		if (GetVisibilityAt((*tile)) == FOGGED)
-		{
-			switch (index)
-			{
-			case 0:
-				outer_corners.push_back((*tile));												// A tile in the frontier might not be FOGGED, so more checks will be performed.
-				break;
-			case 1:
-
-				break;
-			case 2:
-
-				break;
-			case 3:
-
-				break;
-			case 4:
-
-				break;
-			case 5:
-
-				break;
-			case 6:
-
-				break;
-			case 7:
-
-				break;
-			case 8:
-
-				break;
-			case 9:
-
-				break;
-			case 10:
-
-				break;
-			case 11:
-
-				break;
-			case 12:
-
-				break;
-			case 13:
-
-				break;
-			case 14:
-
-				break;
-			case 15:
-
-				break;
-			}
-		}
+		
 	}
 		
 
@@ -747,22 +997,6 @@ void FowManager::SmoothEntityOuterFrontierEdges(std::vector<iPoint> outer_fronti
 	}
 }
 
-bool FowManager::TileIsInsideLineOfSight(const iPoint& tile_position, const std::vector<iPoint>& line_of_sight)
-{
-	bool ret = false;
-
-	for (uint i = 0; i < line_of_sight.size(); ++i)
-	{
-		if (line_of_sight[i] == tile_position)
-		{
-			ret = true;
-			break;
-		}
-	}
-
-	return ret;
-}
-
 void FowManager::InitFowManager()
 {
 	config.load_file("config.xml");
@@ -790,12 +1024,9 @@ FowEntity::FowEntity(const iPoint& position, const bool provides_visibility)
 
 void FowEntity::CleanUp()
 {
-	if (!App->fow_manager->fow_debug)
+	if (provides_visibility)
 	{
-		if (provides_visibility)
-		{
-			App->fow_manager->ClearFowEntityLineOfSight(this);
-		}
+		App->fow_manager->ClearFowEntityLineOfSight(this);
 	}
 
 	frontier.clear();

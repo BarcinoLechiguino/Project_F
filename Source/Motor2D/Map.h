@@ -170,25 +170,23 @@ class Map : public Module
 public:
 
 	Map();
-	// Destructor
-	virtual ~Map();
-	// Called before render is available
-	bool Awake(pugi::xml_node& conf);
-	// Called each loop iteration
-	void Draw();
-	// Called before quitting
-	bool CleanUp();
-	// Load new map
-	bool Load(std::string path);
+	virtual ~Map();																	// Destructor
+	
+	bool Awake(pugi::xml_node& conf);												// Called before render is available
+	void Draw();																	// Called each loop iteration
+	bool CleanUp();																	// Called before quitting
 
-	iPoint MapToWorld(int x, int y) const;									//This method translates the position of the tile on the map to its equivalent position on screen.
-	iPoint WorldToMap(int x, int y) const;									//This method translates the position of the tile on the screen to its equivalent position on the map.
+	bool Load(std::string path);													// Load new map
+
+public:
+	iPoint MapToWorld(int x, int y) const;											//This method translates the position of the tile on the map to its equivalent position on screen.
+	iPoint WorldToMap(int x, int y) const;											//This method translates the position of the tile on the screen to its equivalent position on the map.
 	iPoint TiledIsoCoordsToMap(int x, int y) const;
 	
-	bool CheckMapBoundaries(const iPoint& tile_position);					//This method will check whether or not a given tile position is within the map's bounds.
+	bool CheckMapBoundaries(const iPoint& tile_position);							//This method will check whether or not a given tile position is within the map's bounds.
 
-	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);		//Changed to non const because of list unknown problem
-	bool CreateEntityMap(int& width, int& height);							//This method will allocate the necessary memory and initialize the entities map. Not necessary in this case(?).
+	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);				//Changed to non const because of list unknown problem
+	bool CreateEntityMap(int& width, int& height);									//This method will allocate the necessary memory and initialize the entities map. Not need for it to be here.
 	bool CreateVisibilityMap(int& width, int& height, uchar** buffer);
 
 	void DataMapDebug();
@@ -196,8 +194,9 @@ public:
 	void GetMapSize(int& w, int& h) const;
 
 	void DrawMapGrid();
+	void DrawFowTile(const iPoint& tile_position, const iPoint& world_position);	// Will draw the corresponding FOW tile given a tile_position.
 
-	TileSet* GetTilesetFromTileId(int id);									//Changed to non const because of list unknown problem
+	TileSet* GetTilesetFromTileId(int id);											//Changed to non const because of list unknown problem
 
 private:
 
