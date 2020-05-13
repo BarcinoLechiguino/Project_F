@@ -57,6 +57,7 @@ Thumbs.db
 
 # New ignored files
 *.vs
+*.idb
 *.iobj
 *.ipdb
 *.pdb
