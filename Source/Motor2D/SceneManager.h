@@ -3,6 +3,7 @@
 
 #include "Module.h"
 
+class GameplayScene;
 class Scene;
 enum class SCENES;
 
@@ -19,7 +20,6 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 
-
 public:
 	void	ScenePushbacks();										// The pushbacks must be made in the order in which the scenes will appear.
 	void	LoadInitialScene();										// Will load the first scene in the scenes vector.
@@ -35,6 +35,8 @@ public:
 
 	Scene*					current_scene;							// The scene that is being currently loaded.
 	Scene*					next_scene;								// Buffer for the scene that will be loaded next.
+
+	GameplayScene*			gameplay_scene;
 
 private:
 	std::vector<Scene*>		scenes;									// All the scenes of the game.

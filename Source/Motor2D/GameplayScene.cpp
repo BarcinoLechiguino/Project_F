@@ -230,7 +230,6 @@ void GameplayScene::InitScene()
 	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
 	App->audio->PlayMusic(inGame_song, 0.0f);
 
-	App->dialog->LoadDialog();
 	App->dialog->StartDialog(0); 
 	App->dialog->StartDialog(1);
 }
@@ -1176,9 +1175,7 @@ void GameplayScene::LoadGuiElements()
 
 	// HUD dialogs
 
-	//SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
-
-	//HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, true, true, false, this, nullptr);
+	App->dialog->LoadDialog();
 
 }
 

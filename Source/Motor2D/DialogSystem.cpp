@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "GuiManager.h"
 #include "UI_Image.h"
+#include "GameplayScene.h"
 
 #include "Fonts.h"
 
@@ -84,11 +85,7 @@ bool DialogSystem::PostUpdate()
 	if (is_dialog_active)
 	{
 		DrawDialog();
-
-		HUD_dialogs_background->is_visible = true;
 	}
-	
-
 	return true;
 }
 
@@ -126,9 +123,11 @@ void DialogSystem::StartDialog(int tree_id)
 
 				timer->Start();
 				is_dialog_active = true;
-				HUD_dialogs_background->SetScreenPos((*dialog)->position);
+				App->scene_manager->gameplay_scene->HUD_dialogs_background->SetScreenPos((*dialog)->position);
 
 				dialog_queue.push((*dialog));
+
+				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = true;
 
 				return;
 			}
@@ -143,7 +142,6 @@ void DialogSystem::NextBubbleCheck()
 		timer->Start();
 		current_dialog->NextBubble();
 	}
-	
 }
 
 void DialogSystem::NextDialog()
@@ -155,12 +153,14 @@ void DialogSystem::NextDialog()
 	{
 		is_dialog_active = false;
 		current_dialog = nullptr;
+		App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = false;
 	}
 	else
 	{
 		current_dialog = dialog_queue.front();
 		current_dialog->current_bubble = 0;
 		LoadDialogTextures();
+		App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = true;
 	}
 }
 
@@ -188,10 +188,6 @@ void DialogSystem::LoadDialogTextures()
 
 bool DialogSystem::LoadDialog()
 {
-	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
-
-	HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 40, HUD_dialogs_back_size, true, true, false, this, nullptr);
-
 	dialog_font = App->font->Load("fonts/Minecraftia-Regular.ttf", font_size);
 
 	pugi::xml_parse_result result = dialog_file.load_file("dialog.xml");
@@ -216,7 +212,11 @@ bool DialogSystem::LoadDialog()
 			LOG("last id %d", buffer->last_id);
 		}
 	}
+
 	current_dialog = dialogs.front(); //start first dialog
+
+	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
+	App->scene_manager->gameplay_scene->HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, true, true, false, this, nullptr);
 
 	return result;
 }

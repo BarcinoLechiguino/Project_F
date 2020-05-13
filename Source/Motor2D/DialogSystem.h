@@ -66,8 +66,6 @@ public:
 	std::queue<Dialog*> dialog_queue; //queue storing pending dialogs
 	Dialog* current_dialog;
 
-	UI_Image* HUD_dialogs_background;
-
 	std::vector<SDL_Texture*> text_texture;
 	SDL_Color dialog_color;
 	_TTF_Font* dialog_font;
