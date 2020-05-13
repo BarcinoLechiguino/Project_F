@@ -37,7 +37,7 @@ The game is set in a fictional virtual world simulation from which you will need
 - 4 types of Buildings:
 
   - **Town-hall:** Can generate Gatherer units. Can be upgraded.
-  - **Barracks:** Can generate Infantry units. Can be upgraded.
+  - **Barracks:** Can generate Scout, Infantry and Heavy units. Can be upgraded.
   
   - **Enemy Town-hall:** Can generate Enemy Gatherer units. Can be upgraded by the enemy.
   - **Enemy Barracks:** Can generate Enemy Scout, Infantry and Heavy units. Can be upgraded by the enemy.
