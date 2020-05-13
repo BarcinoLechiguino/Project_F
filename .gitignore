@@ -58,6 +58,8 @@ Thumbs.db
 .iobj
 .ipdb
 .pdb
+.tlog
+.exe
 
 [Bb]in
 [Dd]ebug/
