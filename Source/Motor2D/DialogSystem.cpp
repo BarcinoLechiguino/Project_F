@@ -87,10 +87,7 @@ bool DialogSystem::PostUpdate()
 
 		HUD_dialogs_background->is_visible = true;
 	}
-	else
-	{
-		HUD_dialogs_background->is_visible = false;
-	}
+	
 
 	return true;
 }

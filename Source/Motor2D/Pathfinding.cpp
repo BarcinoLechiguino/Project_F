@@ -286,12 +286,11 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 	CreatePath(units_selected[0]->tile_position, initial_walkable_tile);
 
 	iPoint final_point; //Point just inside range
-	Entity* target = units_selected[0]->GetTarget();			// Maybe make a safety check with nullptr target?
 
 	//Find point in range
 	for (int i = 0; i < (int)last_path.size(); ++i)
 	{
-		if ( DistanceInTiles(last_path[i], target->tile_position) <= units_selected[0]->GetAttackRange())
+		if ( DistanceInTiles(last_path[i], pos) <= units_selected[0]->GetAttackRange())
 		{
 			final_point = last_path[i]; //Need to get here so that further calculations work
 			break;
@@ -341,13 +340,13 @@ void PathFinding::AttackOrder(const iPoint& pos, std::vector<DynamicObject*> uni
 
 				if (visited.Find(neighbour.pos) == visited.list.end())														//if not in visited
 				{
-					if (App->pathfinding->IsWalkable(neighbour.pos) && DistanceInTiles(neighbour.pos, target->tile_position) <= attack_range)
+					if (App->pathfinding->IsWalkable(neighbour.pos) && DistanceInTiles(neighbour.pos, pos) <= attack_range)
 					{
 						(*units)->GiveNewTargetTile(neighbour.pos);															// Fix targeting.
 
 						units++;
 					}
-					if ((!IsNonWalkable(neighbour.pos)) && DistanceInTiles(neighbour.pos, target->tile_position) <= 7)	// 7 is the maximum range of a unit magic
+					if ((!IsNonWalkable(neighbour.pos)) && DistanceInTiles(neighbour.pos, pos) <= 7)	// 7 is the maximum range of a unit magic
 					{
 						frontier.list.push_back(neighbour);
 					}

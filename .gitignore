@@ -54,12 +54,15 @@ Thumbs.db
 *.cache
 *.ilk
 *.log
-.vs
-.iobj
-.ipdb
-.pdb
-.tlog
-.exe
+
+# New ignored files
+*.vs
+*.iobj
+*.ipdb
+*.pdb
+*.tlog
+*.exe
+Source\Game\Motor 2D.tlog.*
 
 [Bb]in
 [Dd]ebug/
