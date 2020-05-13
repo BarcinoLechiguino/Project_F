@@ -21,6 +21,7 @@
 #include "TransitionManager.h"
 #include "SceneManager.h"
 #include "Movement.h"
+#include "QuestManager.h"
 #include "FowManager.h"
 #include "DialogSystem.h"
 #include "ParticleManager.h"
@@ -55,6 +56,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	transition_manager	= new TransitionManager();
 	scene_manager		= new SceneManager();
 	movement			= new Movement();
+	quest_manager		= new QuestManager();
 	fow_manager			= new FowManager();
 	dialog				= new DialogSystem();
 	particle_manager	= new ParticleManager();
@@ -83,6 +85,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fow_manager);
 	AddModule(dialog);
 	AddModule(player);
+	//AddModule(quest_manager);
 
 	// render last to swap buffer
 	AddModule(render);
