@@ -10,22 +10,75 @@
 
 enum class FOW_SMOOTHING_STATE
 {
+	NONE,
+	UNKNOWN,
 
-};
+	SM_UNEXPLORED,
+	SM_FOGGED,
+	SM_VISIBLE,
 
-enum class UNEXPLORED_SMOOTHING_STATE
-{
+	// UNEXPLORED SMOOTHING
+	UNEXPLORED_TOP,
+	UNEXPLORED_BOTTOM,
+	UNEXPLORED_RIGHT,
+	UNEXPLORED_LEFT,
 
-};
+	UNEXPLORED_INNER_TOP_RIGHT,				// Inner Top-Right Corner
+	UNEXPLORED_INNER_TOP_LEFT,				// Inner Top-Left Corner
+	UNEXPLORED_INNER_BOTTOM_RIGHT,			// Inner Bottom-Right Corner
+	UNEXPLORED_INNER_BOTTOM_LEFT,			// Inner Bottom-Left Corner
 
-enum class FOGGED_SMOOTHING_STATE
-{
+	UNEXPLORED_TOP_DEAD_END,
+	UNEXPLORED_BOTTOM_DEAD_END,
+	UNEXPLORED_RIGHT_DEAD_END,
+	UNEXPLORED_LEFT_DEAD_END,
 
-};
+	UNEXPLORED_OUTER_TOP_RIGHT,				// Outer Top-Right Corner
+	UNEXPLORED_OUTER_TOP_LEFT,				// Outer Top-Left Corner
+	UNEXPLORED_OUTER_BOTTOM_RIGHT,			// Outer Bottom-Right Corner
+	UNEXPLORED_OUTER_BOTTOM_LEFT,			// Outer Bottom-Left Corner
 
-enum class UNEXPLORED_TO_FOGGED_SMOOTHING_STATE
-{
+	// FOGGED SMOOTHING
+	FOGGED_TOP,
+	FOGGED_BOTTOM,
+	FOGGED_RIGHT,
+	FOGGED_LEFT,
 
+	FOGGED_INNER_TOP_RIGHT,					// Inner Top-Right Corner
+	FOGGED_INNER_TOP_LEFT,					// Inner Top-Left Corner
+	FOGGED_INNER_DOWN_RIGHT,				// Inner Bottom-Right Corner
+	FOGGED_INNER_DOWN_LEFT,					// Inner Bottom-Left Corner
+
+	FOGGED_TOP_DEAD_END,
+	FOGGED_BOTTOM_DEAD_END,
+	FOGGED_RIGHT_DEAD_END,
+	FOGGED_LEFT_DEAD_END,
+
+	FOGGED_OUTER_TOP_RIGHT,					// Outer Top-Right Corner
+	FOGGED_OUTER_TOP_LEFT,					// Outer Top-Left Corner
+	FOGGED_OUTER_DOWN_RIGHT,				// Outer Bottom-Right Corner
+	FOGGED_OUTER_DOWN_LEFT,					// Outer Bottom-Left Corner
+	
+	// UNEXPLORED TO FOGGED SMOOTHING
+	UN_TO_FO_TOP,
+	UN_TO_FO_BOTTOM,
+	UN_TO_FO_RIGHT,
+	UN_TO_FO_LEFT,
+
+	UN_TO_FO_INNER_TOP_RIGHT,				// Inner Top-Right Corner
+	UN_TO_FO_INNER_TOP_LEFT,				// Inner Top-Left Corner
+	UN_TO_FO_INNER_BOTTOM_RIGHT,			// Inner Bottom-Right Corner
+	UN_TO_FO_INNER_BOTTOM_LEFT,				// Inner Bottom-Left Corner
+
+	UN_TO_FO_TOP_DEAD_END,
+	UN_TO_FO_BOTTOM_DEAD_END,
+	UN_TO_FO_RIGHT_DEAD_END,
+	UN_TO_FO_LEFT_DEAD_END,
+
+	UN_TO_FO_OUTER_TOP_RIGHT,				// Outer Top-Right Corner
+	UN_TO_FO_OUTER_TOP_LEFT,				// Outer Top-Left Corner
+	UN_TO_FO_OUTER_BOTTOM_RIGHT,			// Outer Bottom-Right Corner
+	UN_TO_FO_OUTER_BOTTOM_LEFT,				// Outer Bottom-Left Corner
 };
 
 struct FowEntity
@@ -69,7 +122,7 @@ public:
 
 	uchar GetVisibilityAt(const iPoint& tile_position);															// Will return the current visibility state of the given FOW tile.
 	
-	SDL_Rect GetFowTileRect(const uchar& visibility);															// Will get the corresponding FOW tile section rect for a given visibility state.
+	SDL_Rect GetFowTileRect(const uchar& visibility_state);														// Will get the corresponding FOW tile section rect for a given visibility state.
 
 	FowEntity* CreateFowEntity(const iPoint& tile_position, bool provides_visibility);
 	void DeleteFowEntity(FowEntity* fow_entity_to_delete);														// Will delete the given FowEntity from the fow_entities vector.
@@ -88,9 +141,9 @@ private:
 	void UpdateEntitiesFowManipulation();														// Will update all the tiles affected by the visibility provided by all FowEntities.
 	void UpdateEntityLineOfSight(FowEntity* entity_to_update);									// Will update the line_of_sight of a given fow_entity. Only applicable to non-static entities.
 
-	void SmoothEntityFrontierEdges(FowEntity* fow_entity);														//
-	void SmoothEntityInnerFrontierEdges(std::vector<iPoint> frontier);											//
-	void SmoothEntityOuterFrontierEdges(std::vector<iPoint> frontier);											//
+	void SmoothEntityFrontierEdges(FowEntity* fow_entity);										//
+	void SmoothEntityInnerFrontierEdges(std::vector<iPoint> inner_frontier);					//
+	void SmoothEntityOuterFrontierEdges(std::vector<iPoint> outer_frontier);					//
 
 	void ChangeVisibilityMap(const iPoint& tile_position, const uchar& visibility);
 	bool CheckMapBoundaries(const iPoint& tile_position);
