@@ -6,11 +6,6 @@
 *.lo
 *.o
 *.obj
-*.suo
-*.ipch
-*.tlog
-*.suo
-
 
 # Precompiled Headers
 *.gch
@@ -20,7 +15,6 @@
 *.so
 *.dylib
 
-
 # Fortran module files
 *.mod
 *.smod
@@ -29,51 +23,57 @@
 *.lai
 *.la
 *.a
-
+*.lib
 
 # Executables
 *.exe
 *.out
 *.app
-.vs/RTS Solution/v15/Browse.VC.opendb
-.vs/RTS Solution/v15/Browse.VC.db
 
-.vs/RTS Solution/v16/Browse.VC.opendb
-.vs/RTS Solution/v16/Browse.VC.db
+# Ignore thumbnails created by windows
+Thumbs.db
 
-RTS Project code/Game/vc141.pdb
-RTS Project code/Game/vc141.idb
-.vs/RTS Solution/v15/Browse.VC.db
-Debug/Motor 2D.ilk
-Debug/Motor 2D.pdb
-.vs/RTS Solution/v15/Browse.VC.db
+# Ignore files build by Visual Studio
+*.obj
+*.pdb
+*.aps
+*.user
+# *.vcproj
+# *.vcxproj*
+# *.sln
+*.vspscc
+*_i.c
+*.i
+*.icf
+*_p.c
+*.ncb
+*.suo
+*.tlb
+*.tlh
+*.bak
+*.cache
+*.ilk
+*.log
 
-.vs/RTS Solution/v16/Browse.VC.opendb
-.vs/RTS Solution/v16/Browse.VC.db
-.vs/RTS Solution/v16/Browse.VC.db
-RTS Project code/Game/vc142.pdb
-RTS Project code/Game/vc142.idb
+# New ignored files
+*.vs
+*.iobj
+*.ipdb
+*.pdb
+*.tlog
+*.exe
+Source\Game\Motor 2D.tlog.*
 
-RTS Project code\Game\Motor 2D.tlog\Motor 2D.lastbuildstate
-RTS Project/Development Platformer/Debug/Motor 2D.ilk
-RTS Project/Development Platformer/Debug/Motor 2D.pdb
-RTS Project/Development Platformer/Game/Motor2D.log
-RTS Project/Development Platformer/Game/vc141.pdb
-RTS Project/Development Platformer/Game/vc142.pdb
-RTS Project code/Game/vc141.idb
-RTS Project code/Game/vc141.pdb
-RTS Project code/Game/vc141.idb
-RTS Project code/Game/Motor2D.log
-RTS Project code/Game/Motor 2D.tlog/Motor 2D.lastbuildstate
-RTS Project code/Game/Motor 2D.tlog/link.write.1.tlog
-RTS Project code/Game/Motor 2D.tlog/link.read.1.tlog
-RTS Project code/Game/Motor 2D.tlog/link.command.1.tlog
-RTS Project code/Game/Motor 2D.tlog/CL.write.1.tlog
-RTS Project code/Game/Motor 2D.tlog/CL.read.1.tlog
-RTS Project code/Game/Motor 2D.tlog/CL.command.1.tlog
-Debug/Motor 2D.pdb
-Debug/Motor 2D.ilk
-RTS Project code/Game/Motor 2D.tlog/Motor 2D.lastbuildstate
-RTS Project code/Game/Motor 2D.tlog/Motor 2D.lastbuildstate
-RTS Project code/Game/Motor 2D.tlog/Motor 2D.lastbuildstate
-RTS Project code/Game/Motor 2D.tlog/Motor 2D.lastbuildstate
+[Bb]in
+[Dd]ebug/
+*.sbr
+*.sdf
+obj/
+[R]elease/
+_ReSharper*/
+[Tt]est[Rr]esult*
+ipch/
+*.opensdf
+*.db
+*.opendb
+packages/
