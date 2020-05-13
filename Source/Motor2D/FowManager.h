@@ -31,7 +31,7 @@ enum class UNEXPLORED_TO_FOGGED_SMOOTHING_STATE
 struct FowEntity
 {
 	FowEntity();
-	FowEntity(const iPoint& position, const bool provides_visibility, const bool is_static);
+	FowEntity(const iPoint& position, const bool provides_visibility);
 
 	void CleanUp();
 
@@ -41,9 +41,7 @@ struct FowEntity
 	iPoint motion;
 
 	bool is_visible;
-	bool is_static;
 	bool provides_visibility;
-	bool visibility_initialized;
 	bool has_moved;
 
 	std::vector<iPoint> frontier;
@@ -64,24 +62,24 @@ public:
 	bool CleanUp();
 
 public:
-	void SetVisibilityMap(const int& width, const int& height);									// Will create the the visibility_map along the debug_visibility_map.
-	void SwapVisibilityMaps();																	// Will swap the visibility_map with the debug_visibility_map.
-	void ResetVisibilityMap();																	// Will reset the visibility map and both the other containers and set it back to the first state.
-	void ClearVisibilityMapContainers();														// Will delete all visibility map containers. (visibility_map...)
+	void SetVisibilityMap(const int& width, const int& height);													// Will create the the visibility_map along the debug_visibility_map.
+	void SwapVisibilityMaps();																					// Will swap the visibility_map with the debug_visibility_map.
+	void ResetVisibilityMap();																					// Will reset the all map containers and set them back to their original state.
+	void ClearVisibilityMapContainers();																		// Will delete all visibility map containers. (visibility_map...)
 
-	uchar GetVisibilityAt(const iPoint& tile_position);											// Will return the current visibility state of the given FOW tile.
+	uchar GetVisibilityAt(const iPoint& tile_position);															// Will return the current visibility state of the given FOW tile.
 	
-	SDL_Rect GetFowTileRect(const uchar& visibility);											// Will get the corresponding FOW sprite section rect for the given visibility state.
+	SDL_Rect GetFowTileRect(const uchar& visibility);															// Will get the corresponding FOW tile section rect for a given visibility state.
 
-	FowEntity* CreateFowEntity(const iPoint& tile_position, bool provides_visibility, bool is_static);
-	void DeleteFowEntity(FowEntity* fow_entity_to_delete);										// Will delete the given FowEntity from the fow_entities vector.
-	void DestroyFowEntities();																	// Will delete all fow_entities and will clear the fow_entities vector.
-	void ClearFowEntityLineOfSight(FowEntity* fow_entity_to_clear);
+	FowEntity* CreateFowEntity(const iPoint& tile_position, bool provides_visibility);
+	void DeleteFowEntity(FowEntity* fow_entity_to_delete);														// Will delete the given FowEntity from the fow_entities vector.
+	void DestroyFowEntities();																					// Will delete all fow_entities and will clear the fow_entities vector.
+
+	void ClearFowEntityLineOfSight(FowEntity* fow_entity_to_clear);												// Will add the tiles inside the line_of_sight of an entity to tiles_to_reset.
 
 	std::vector<iPoint> CreateRectangularFrontier(const int& width, const int& height, const iPoint& center);	// Will create a rectangular frontier outside which visibility won't be provided.
-	
-	std::vector<iPoint> CreateCircularFrontier(const uint& radius, const iPoint& center);		// Will create a circular frontier where a given entity will stop providing visibility.
-	std::vector<iPoint> GetLineOfSight(const std::vector<iPoint>& frontier);					// Will fill the tiles inside a given frontier and return the vector with all those tiles.
+	std::vector<iPoint> CreateCircularFrontier(const uint& radius, const iPoint& center);						// Will create a circular frontier which visibility won't be provided.
+	std::vector<iPoint> GetLineOfSight(const std::vector<iPoint>& frontier);									// Will fill the tiles inside a given frontier and return a vector with them.
 
 private:
 	void InitFowManager();
@@ -89,6 +87,10 @@ private:
 	void UpdateEntitiesVisibility();															// Will update the is_visible bool of all FowEntities by checking the fow_state of their tile_pos.
 	void UpdateEntitiesFowManipulation();														// Will update all the tiles affected by the visibility provided by all FowEntities.
 	void UpdateEntityLineOfSight(FowEntity* entity_to_update);									// Will update the line_of_sight of a given fow_entity. Only applicable to non-static entities.
+
+	void SmoothEntityFrontierEdges(FowEntity* fow_entity);														//
+	void SmoothEntityInnerFrontierEdges(std::vector<iPoint> frontier);											//
+	void SmoothEntityOuterFrontierEdges(std::vector<iPoint> frontier);											//
 
 	void ChangeVisibilityMap(const iPoint& tile_position, const uchar& visibility);
 	bool CheckMapBoundaries(const iPoint& tile_position);

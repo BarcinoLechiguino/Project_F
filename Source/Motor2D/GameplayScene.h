@@ -145,61 +145,102 @@ public:
 	UI_Image*				 HUD_townhall_bar;
 	UI_Text*				 HUD_title_townhall;
 	UI_Text*				 HUD_description_townhall;
-	UI_Button*				 HUD_unit_townhall;
+	UI_Button*				 HUD_unit_gatherer_townhall;
+	UI_Button*				 HUD_unit_scout_townhall;
 
-	UI_Image*				 HUD_parent_resources_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources2_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices2_unit_townhall_gatherer;
+	UI_Image*				 HUD_parent_resources_upgrade_townhall;
+	UI_Image*				 HUD_resources_data_upgrade_townhall;
+	UI_Text*				 HUD_prices_data_upgrade_townhall;
+	UI_Image*				 HUD_resources_electricity_upgrade_townhall;
+	UI_Text*				 HUD_prices_electricity_upgrade_townhall;
+	UI_Image*				 HUD_resources_bytes_upgrade_townhall;
+	UI_Text*				 HUD_prices_bytes_upgrade_townhall;
 
+	UI_Button*				 HUD_upgrade_townhall;
+
+	//HUD gatherer
 	UI_Text*				 HUD_title_gatherer;
 	UI_Text*				 HUD_description_gatherer;
 
-	UI_Image*				 HUD_parent_resources_upgrade_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources_upgrade_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices_upgrade_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources2_upgrade_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices2_upgrade_unit_townhall_gatherer;
+	UI_Image*				 HUD_parent_resources_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources_data_unit_townhall_gatherer;
+	UI_Text*				 HUD_prices_data_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources_electricity_unit_townhall_gatherer;
+	UI_Text*				 HUD_prices_electricity_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources_bytes_unit_townhall_gatherer;
+	UI_Text*				 HUD_prices_bytes_unit_townhall_gatherer;
 
-	UI_Image*				 HUD_parent_resources_upgrade_townhall;
-	UI_Image*				 HUD_resources_upgrade_townhall;
-	UI_Text*				 HUD_prices_upgrade_townhall;
-	UI_Image*				 HUD_resources2_upgrade_townhall;
-	UI_Text*				 HUD_prices2_upgrade_townhall;
+	UI_Image*				 HUD_parent_resources_upgrade_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources_data_upgrade_unit_townhall_gatherer;
+	UI_Text*				 HUD_prices_upgrade_data_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources_electricity_upgrade_unit_townhall_gatherer;
+	UI_Text*				 HUD_prices_electricity_upgrade_unit_townhall_gatherer;
+	UI_Image*				 HUD_resources_bytes_upgrade_unit_townhall_gatherer;
 
 	UI_Button*				 HUD_unit_upgrade_townhall_gatherer;
-	UI_Button*				 HUD_upgrade_townhall;
+
+	//HUD scout
+	UI_Text*				 HUD_title_scout;
+	UI_Text*				 HUD_description_scout;
+							 
+	UI_Image*				 HUD_parent_resources_unit_townhall_scout;
+	UI_Image*				 HUD_resources_data_unit_townhall_scout;
+	UI_Text*				 HUD_prices_data_unit_townhall_scout;
+	UI_Image*				 HUD_resources_electricity_unit_townhall_scout;
+	UI_Text*				 HUD_prices_electricity_unit_townhall_scout;
+	UI_Image*				 HUD_resources_bytes_unit_townhall_scout;
+	UI_Text*				 HUD_prices_bytes_unit_townhall_scout;
+
+	UI_Image*				 HUD_parent_resources_upgrade_unit_townhall_scout;
+	UI_Image*				 HUD_resources_data_upgrade_unit_townhall_scout;
+	UI_Text*				 HUD_prices_upgrade_data_unit_townhall_scout;
+	UI_Image*				 HUD_resources_electricity_upgrade_unit_townhall_scout;
+	UI_Text*				 HUD_prices_electricity_upgrade_unit_townhall_scout;
+	UI_Image*				 HUD_resources_bytes_upgrade_unit_townhall_scout;
+
+	UI_Button*				 HUD_unit_upgrade_townhall_scout;
 
 	// HUD Barracks
 	UI_Image*				 HUD_barracks_bar;
 	UI_Text*				 HUD_title_barracks;
 	UI_Text*				 HUD_description_barracks;
-	UI_Button*				 HUD_unit_barracks;
+	UI_Button*				 HUD_unit_infantry_barracks;
+	UI_Button*				 HUD_unit_heavy_barracks;
 
-	UI_Image*				 HUD_parent_resources_unit_barracks_infantry;
-	UI_Image*				 HUD_resources_unit_barracks_infantry;
-	UI_Text*				 HUD_prices_unit_townhall_infantry;
-	UI_Image*				 HUD_resources2_unit_barracks_infantry;
-	UI_Text*				 HUD_prices2_unit_townhall_infantry;
+	UI_Image*				 HUD_parent_resources_upgrade_barracks;
+	UI_Image*				 HUD_resources_data_upgrade_barracks;
+	UI_Text*				 HUD_prices_data_upgrade_barracks;
+	UI_Image*				 HUD_resources_electricity_upgrade_barracks;
+	UI_Text*				 HUD_prices_electricity_upgrade_barracks;
+	UI_Image*				 HUD_resources_bytes_upgrade_barracks;
+	UI_Text*				 HUD_prices_bytes_upgrade_barracks;
 
+	// HUD Infantry
 	UI_Text*				 HUD_title_infantry;
 	UI_Text*				 HUD_description_infantry;
-							 
+
+	UI_Image*				 HUD_parent_resources_unit_barracks_infantry;
+	UI_Image*				 HUD_resources_data_unit_barracks_infantry;
+	UI_Text*				 HUD_prices_data_unit_townhall_infantry;
+	UI_Image*				 HUD_resources_electricity_unit_barracks_infantry;
+	UI_Text*				 HUD_prices_electricity_unit_townhall_infantry;
+	UI_Image*				 HUD_resources_bytes_unit_barracks_infantry;
+	UI_Text*				 HUD_prices_bytes_unit_townhall_infantry;
+							
 	UI_Image*				 HUD_parent_resources_upgrade_unit_barracks_infantry;
-	UI_Image*				 HUD_resources_upgrade_unit_barracks_infantry;
-	UI_Text*				 HUD_prices_upgrade_unit_barracks_infantry;
-	UI_Image*				 HUD_resources2_upgrade_unit_barracks_infantry;
-	UI_Text*				 HUD_prices2_upgrade_unit_barracks_infantry;
+	UI_Image*				 HUD_resources_data_upgrade_unit_barracks_infantry;
+	UI_Text*				 HUD_prices_data_upgrade_unit_barracks_infantry;
+	UI_Image*				 HUD_resources_electricity_upgrade_unit_barracks_infantry;
+	UI_Text*				 HUD_prices_electricity_upgrade_unit_barracks_infantry;
+	UI_Image*				 HUD_resources_bytes_upgrade_unit_barracks_infantry;
+	UI_Text*				 HUD_prices_bytes_upgrade_unit_barracks_infantry;
 							 
-	UI_Image*				 HUD_parent_resources_upgrade_barracks;
-	UI_Image*				 HUD_resources_upgrade_barracks;
-	UI_Text*				 HUD_prices_upgrade_barracks;
-	UI_Image*				 HUD_resources2_upgrade_barracks;
-	UI_Text*				 HUD_prices2_upgrade_barracks;
+
 
 	UI_Button*				 HUD_unit_upgrade_barracks_infantry;
 	UI_Button*				 HUD_upgrade_barracks;
+
+
 
 	UI_Text*				 God_Mode_Activated;
 
@@ -207,12 +248,15 @@ public:
 
 	UI_Text*				HUD_data_resource_text;
 	UI_Text*				HUD_electricity_resource_text;
+	UI_Text*				HUD_bytes_resource_text;
 
 	UI_Image*				HUD_data_resource;
 	UI_Image*				HUD_electricity_resource;
+	UI_Image*				HUD_bytes_resources;
 
 	std::string				HUD_data_resource_string;
 	std::string				HUD_electricity_resource_string;
+	std::string				HUD_bytes_resource_string;
 
 	//Enemy HUD 
 	// Townhall
@@ -227,12 +271,11 @@ public:
 
 
 	//Missions HUD
-	// Tab
 
 	UI_Button*				HUD_missions_tab;
 	UI_Button*				HUD_missions_tab_close;
 	UI_Image*				HUD_missions_background;
-
+	UI_Text*				HUD_missions_title;
 
 	//Dialogs
 

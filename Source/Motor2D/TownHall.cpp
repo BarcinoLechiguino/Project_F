@@ -210,7 +210,7 @@ void TownHall::InitEntity()
 	provides_visibility = true;
 	range_of_vision = 8;
 
-	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility, true);
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
 
 	//fow_entity->frontier = App->fow_manager->CreateRectangularFrontier(range_of_vision, range_of_vision, tile_position + iPoint(1, 1));		// Getting the center of the hall.
 	fow_entity->frontier = App->fow_manager->CreateCircularFrontier(range_of_vision, tile_position);

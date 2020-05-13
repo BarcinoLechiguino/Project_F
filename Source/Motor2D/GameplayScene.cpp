@@ -559,12 +559,11 @@ bool GameplayScene::CheckResources(uint required_data, uint required_electricity
 // --------------- UI & HUD ---------------
 void GameplayScene::LoadGuiElements()
 {
-	// In-game menu
+	// *****_____In-game menu_____*****
 
 	// Back
 	SDL_Rect background = { 780, 451, 514, 403 };
 	in_game_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 380, 135, background, false, false, false, this, nullptr);
-
 
 	// Continue Button
 	SDL_Rect in_game_continue_button_size = { 0, 0, 158, 23 };
@@ -575,7 +574,6 @@ void GameplayScene::LoadGuiElements()
 	in_game_continue_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 555, 241, false, true, false, this, in_game_background
 		, &in_game_continue_button_idle, &in_game_continue_button_hover, &in_game_continue_button_clicked);
 
-
 	// Options Button
 	SDL_Rect in_game_options_button_size = { 0, 0, 133, 24 };
 	SDL_Rect in_game_options_button_idle = { 1, 52, 133, 24 };
@@ -584,7 +582,6 @@ void GameplayScene::LoadGuiElements()
 
 	in_game_options_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 567, 281, false, true, false, this, in_game_background
 		, &in_game_options_button_idle, &in_game_options_button_hover, &in_game_options_button_clicked);
-
 
 	// Back to menu Button
 	SDL_Rect in_game_back_to_menu_size = { 0, 0, 189, 23 };
@@ -595,7 +592,6 @@ void GameplayScene::LoadGuiElements()
 	in_game_back_to_menu = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 541, 321, false, true, false, this, in_game_background
 		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
 
-
 	// Exit Button
 	SDL_Rect in_game_exit_button_size = { 0, 0, 74, 23 };
 	SDL_Rect in_game_exit_button_idle = { 1, 77, 74, 23 };
@@ -604,7 +600,6 @@ void GameplayScene::LoadGuiElements()
 
 	in_game_exit_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 596, 361, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
-
 
 	// Title
 	SDL_Rect in_game_text_rect = { 0, 0, 100, 20 };
@@ -618,9 +613,9 @@ void GameplayScene::LoadGuiElements()
 
 
 
-	// HUD
+	// ****____HUD____*****
 
-	// Up Bar
+	// ****____Up Bar_____******
 	// Group Up
 	SDL_Rect HUD_group_button_size = { 0, 0, 63, 38 };
 	SDL_Rect HUD_group_button_idle = { 759, 48, 63, 38 };
@@ -659,7 +654,7 @@ void GameplayScene::LoadGuiElements()
 
 
 
-	//Down Bar
+	//*****______Down Bar_____*****
 
 	//Resource Bar
 	SDL_Rect HUD_resource_bar_size = { 884, 223, 188, 150 };
@@ -675,22 +670,32 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_data_resource = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 1115, 634, HUD_data_resource_size, true, true, false, this, HUD_resource_bar);
 
+	SDL_Rect HUD_byte_resource_size = { 687, 54, 16, 25 };
+
+	HUD_bytes_resources = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 1115, 664, HUD_byte_resource_size, true, true, false, this, HUD_resource_bar);
 
 	//Data Store
-
 	SDL_Rect HUD_text_data_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_data_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_data_resource_string = "0";
 	HUD_data_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 604, HUD_text_data_resource_rect, HUD_data_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_data_resource_string);
 
 	//Electricity Store
-
 	SDL_Rect HUD_text_electricity_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_electricity_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_electricity_resource_string = "0";
 	HUD_electricity_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 634, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_electricity_resource_string);
 
+	// Falta Fran
+	//Bytes Store
+	SDL_Rect HUD_text_bytes_resource_rect = { 737, 54, 13, 25 };
+	_TTF_Font* HUD_byte_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	HUD_bytes_resource_string = "0";
+	HUD_bytes_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 664, HUD_text_bytes_resource_rect, HUD_byte_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_bytes_resource_string);
 
+
+
+	//*****______TOWNHALL______******
 	//Townhall Bar
 	SDL_Rect HUD_townhall_bar_size = { 20, 209, 798, 160 };
 
@@ -701,12 +706,6 @@ void GameplayScene::LoadGuiElements()
 	_TTF_Font* HUD_townhall_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
 	std::string HUD_title_townhall_string = "TOWNHALL";
 	HUD_title_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 360, 582, HUD_text_townhall_rect, HUD_townhall_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_title_townhall_string);
-
-	// Title Gatherer
-	SDL_Rect HUD_text_gatherer_rect = { 0, 0, 100, 20 };
-	_TTF_Font* HUD_gatherer_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
-	std::string HUD_title_gatherer_string = "GATHERER";
-	HUD_title_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_gatherer_rect, HUD_gatherer_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_gatherer_string);
 
 	// HP Townhall
 
@@ -721,6 +720,57 @@ void GameplayScene::LoadGuiElements()
 	HUD_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 362, 649, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_townhall, &HUD_townhall_descp_string2);
 	HUD_description_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 379, 662, HUD_text_townhall_descp_rect, HUD_townhall_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_townhall, &HUD_townhall_descp_string3);
 
+	// Resources Upgrade Townhall
+	HUD_parent_resources_upgrade_townhall = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	SDL_Rect HUD_townhall_res_upg_townhall_size = { 707, 54, 13, 25 };
+
+	HUD_resources_data_upgrade_townhall = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 780, 685, HUD_townhall_res_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
+
+	SDL_Rect HUD_townhall_res2_upg_townhall_size = { 687, 54, 16, 25 };
+
+	HUD_resources_electricity_upgrade_townhall = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res2_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
+
+	// Falta Fran
+	SDL_Rect HUD_townhall_res3_upg_townhall_size = { 687, 54, 16, 25 };
+
+	HUD_resources_bytes_upgrade_townhall = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res3_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
+
+	// Price Upgrade Townhall Data
+	SDL_Rect HUD_text_townhall_price_upgrade_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_townhall_price_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_townhall_price_upgrade_string = "200";
+	HUD_prices_data_upgrade_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 800, 687, HUD_text_townhall_price_upgrade_rect, HUD_townhall_price_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_townhall, &HUD_townhall_price_upgrade_string);
+
+	// Price Upgrade Townhall Electricity
+	SDL_Rect HUD_text_townhall_price2_upgrade_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_townhall_price2_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_townhall_price2_upgrade_string = "175";
+	HUD_prices_electricity_upgrade_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price2_upgrade_rect, HUD_townhall_price2_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_townhall, &HUD_townhall_price2_upgrade_string);
+
+	// Price Upgrade Townhall Bytes
+	SDL_Rect HUD_text_townhall_price3_upgrade_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_townhall_price3_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_townhall_price3_upgrade_string = "4";
+	HUD_prices_bytes_upgrade_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_townhall_price3_upgrade_rect, HUD_townhall_price3_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_townhall, &HUD_townhall_price3_upgrade_string);
+
+	// Upgrade Building
+	SDL_Rect HUD_upgrade_townhall_size = { 0, 0, 117, 24 };
+	SDL_Rect HUD_upgrade_townhall_idle = { 960, 99, 117, 24 };
+	SDL_Rect HUD_upgrade_townhall_hover = { 960, 125, 117, 24 };
+	SDL_Rect HUD_upgrade_townhall_clicked = { 960, 154, 117, 24 };
+
+	HUD_upgrade_townhall = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 975, 577, false, true, false, this, HUD_townhall_bar
+		, &HUD_upgrade_townhall_idle, &HUD_upgrade_townhall_hover, &HUD_upgrade_townhall_clicked);
+
+
+	//******______GATHERER______******
+	// Title Gatherer
+	SDL_Rect HUD_text_gatherer_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_gatherer_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_title_gatherer_string = "GATHERER";
+	HUD_title_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_gatherer_rect, HUD_gatherer_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_gatherer_string);
+
 	// Description Gatherer
 	SDL_Rect HUD_text_getherer_descp_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_gatherer_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
@@ -731,86 +781,87 @@ void GameplayScene::LoadGuiElements()
 	HUD_description_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 337, 649, HUD_text_getherer_descp_rect, HUD_gatherer_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string2);
 	HUD_description_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 355, 662, HUD_text_getherer_descp_rect, HUD_gatherer_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string3);
 
-	// Unit Townhall
-	SDL_Rect HUD_unit_townhall_size = { 0, 0, 53, 50 };
-	SDL_Rect HUD_unit_townhall_idle = { 1095, 140, 53, 50 };
-	SDL_Rect HUD_unit_townhall_hover = { 1152, 140, 53, 50 };
-	SDL_Rect HUD_unit_townhall_clicked = { 1207, 140, 53, 50 };
+	//Gatherer Recruit Button
+	SDL_Rect HUD_unit_gatherer_townhall_size = { 0, 0, 53, 50 };
+	SDL_Rect HUD_unit_gatherer_townhall_idle = { 1095, 140, 53, 50 };
+	SDL_Rect HUD_unit_gatherer_townhall_hover = { 1152, 140, 53, 50 };
+	SDL_Rect HUD_unit_gatherer_townhall_clicked = { 1207, 140, 53, 50 };
 
-	HUD_unit_townhall = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 556, 610, false, true, false, this, HUD_townhall_bar
-		, &HUD_unit_townhall_idle, &HUD_unit_townhall_hover, &HUD_unit_townhall_clicked);
+	HUD_unit_gatherer_townhall = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 556, 610, false, true, false, this, HUD_townhall_bar
+		, &HUD_unit_gatherer_townhall_idle, &HUD_unit_gatherer_townhall_hover, &HUD_unit_gatherer_townhall_clicked);
 
-	// Resources1
+
+	// Resources Recruit Gatherer
 	HUD_parent_resources_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
 
 	SDL_Rect HUD_townhall_res_unit_size = { 707, 54, 13, 25 };
 
-	HUD_resources_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
+	HUD_resources_data_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 780, 685, HUD_townhall_res_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
 
 	SDL_Rect HUD_townhall_res2_unit_size = { 687, 54, 16, 25 };
 
-	HUD_resources2_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
+	HUD_resources_electricity_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
+
+	//Falta Fran
+	SDL_Rect HUD_townhall_res3_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources_bytes_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res3_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
+
 
 	// Price Gatherer Data
 	SDL_Rect HUD_text_townhall_price_unit_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price_unit_string = "20";
-	HUD_prices_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price_unit_rect, HUD_townhall_price_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_townhall_gatherer, &HUD_townhall_price_unit_string);
+	HUD_prices_data_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 800, 687, HUD_text_townhall_price_unit_rect, HUD_townhall_price_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_townhall_gatherer, &HUD_townhall_price_unit_string);
 
 	// Price Gatherer Electricity
 	SDL_Rect HUD_text_townhall_price2_unit_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price2_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price2_unit_string = "0";
-	HUD_prices2_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_townhall_price2_unit_rect, HUD_townhall_price2_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_townhall_gatherer, &HUD_townhall_price2_unit_string);
+	HUD_prices_electricity_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price2_unit_rect, HUD_townhall_price2_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_townhall_gatherer, &HUD_townhall_price2_unit_string);
 
-	// Resources2
+	// Price Gatherer Bytes
+	SDL_Rect HUD_text_townhall_price3_unit_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_townhall_price3_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_townhall_price3_unit_string = "0";
+	HUD_prices_bytes_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_townhall_price3_unit_rect, HUD_townhall_price3_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_townhall_gatherer, &HUD_townhall_price3_unit_string);
+
+	// Resources Upgrade Gatherer
 	HUD_parent_resources_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	SDL_Rect HUD_townhall_res_upg_unit_size = { 707, 54, 13, 25 };
 
-	HUD_resources_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
+	HUD_resources_data_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 780, 685, HUD_townhall_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
 
 	SDL_Rect HUD_townhall_res2_upg_unit_size = { 687, 54, 16, 25 };
 
-	HUD_resources2_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
+	HUD_resources_electricity_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
+
+	//Falta Fran
+	SDL_Rect HUD_townhall_res3_upg_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources_bytes_upgrade_unit_townhall_gatherer = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res3_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
 
 	// Price Upgrade Gatherer Data
 	SDL_Rect HUD_text_townhall_price_unit_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price_unit_upgrade_string = "100";
-	HUD_prices_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price_unit_upgrade_rect, HUD_townhall_price_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer, &HUD_townhall_price_unit_upgrade_string);
+	HUD_prices_upgrade_data_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 800, 687, HUD_text_townhall_price_unit_upgrade_rect, HUD_townhall_price_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer, &HUD_townhall_price_unit_upgrade_string);
 
 	// Price Upgrade Gatherer Electricity
 	SDL_Rect HUD_text_townhall_price2_unit_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_townhall_price2_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_townhall_price2_unit_upgrade_string = "50";
-	HUD_prices2_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_townhall_price2_unit_upgrade_rect, HUD_townhall_price2_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer, &HUD_townhall_price2_unit_upgrade_string);
+	HUD_prices_electricity_upgrade_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price2_unit_upgrade_rect, HUD_townhall_price2_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer, &HUD_townhall_price2_unit_upgrade_string);
 
-	// Resources3
-	HUD_parent_resources_upgrade_townhall = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+	// Price Upgrade Gatherer Bytes
+	SDL_Rect HUD_text_townhall_price3_unit_upgrade_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_townhall_price3_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_townhall_price3_unit_upgrade_string = "1";
+	HUD_prices_electricity_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_townhall_price3_unit_upgrade_rect, HUD_townhall_price3_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer, &HUD_townhall_price3_unit_upgrade_string);
 
-	SDL_Rect HUD_townhall_res_upg_townhall_size = { 707, 54, 13, 25 };
-
-	HUD_resources_upgrade_townhall = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_townhall_res_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
-
-	SDL_Rect HUD_townhall_res2_upg_townhall_size = { 687, 54, 16, 25 };
-
-	HUD_resources2_upgrade_townhall = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_townhall_res2_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
-
-	// Price Upgrade Townhall Data
-	SDL_Rect HUD_text_townhall_price_upgrade_rect = { 0, 0, 100, 20 };
-	_TTF_Font* HUD_townhall_price_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
-	std::string HUD_townhall_price_upgrade_string = "200";
-	HUD_prices_upgrade_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_townhall_price_upgrade_rect, HUD_townhall_price_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_townhall, &HUD_townhall_price_upgrade_string);
-
-	// Price Upgrade Townhall Electricity
-	SDL_Rect HUD_text_townhall_price2_upgrade_rect = { 0, 0, 100, 20 };
-	_TTF_Font* HUD_townhall_price2_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
-	std::string HUD_townhall_price2_upgrade_string = "175";
-	HUD_prices2_upgrade_townhall = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_townhall_price2_upgrade_rect, HUD_townhall_price2_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_townhall, &HUD_townhall_price2_upgrade_string);
-
-
-	// Upgrade Unit
+	// Upgrade Unit Button
 	SDL_Rect HUD_unit_upgrade_townhall_size = { 0, 0, 50, 16 };
 	SDL_Rect HUD_unit_upgrade_townhall_idle = { 899, 129, 50, 16 };
 	SDL_Rect HUD_unit_upgrade_townhall_hover = { 899, 148, 50, 16 };
@@ -819,14 +870,38 @@ void GameplayScene::LoadGuiElements()
 	HUD_unit_upgrade_townhall_gatherer = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_townhall_bar
 		, &HUD_unit_upgrade_townhall_idle, &HUD_unit_upgrade_townhall_hover, &HUD_unit_upgrade_townhall_clicked);
 
-	// Upgrade Building
-	SDL_Rect HUD_upgrade_townhall_size = { 0, 0, 117, 24 };
-	SDL_Rect HUD_upgrade_townhall_idle = { 960, 99, 117, 24 };
-	SDL_Rect HUD_upgrade_townhall_hover = { 960, 125, 117, 24 };
-	SDL_Rect HUD_upgrade_townhall_clicked = { 960, 154, 117, 24 };
 
-	HUD_upgrade_townhall = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 975, 577, false, true, false, this, HUD_townhall_bar
-		, &HUD_upgrade_townhall_idle, &HUD_upgrade_townhall_hover, &HUD_upgrade_townhall_clicked);
+
+	//*****_____SCOUT_____******
+	// Title Gatherer
+	SDL_Rect HUD_text_scout_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_scout_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_title_scout_string = "SCOUT";
+	HUD_title_scout = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_scout_rect, HUD_scout_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_scout_string);
+
+	// Description Gatherer
+	SDL_Rect HUD_text_scout_descp_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_scout_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
+	std::string HUD_scout_descp_string = "Secondary resource unit.";
+	std::string HUD_scout_descp_string2 = "It is very fast. It is useful";
+	std::string HUD_scout_descp_string3 = "for exploring new areas.";
+	HUD_description_scout = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 360, 635, HUD_text_scout_descp_rect, HUD_scout_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_scout, &HUD_scout_descp_string);
+	HUD_description_scout = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 337, 649, HUD_text_scout_descp_rect, HUD_scout_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_scout, &HUD_scout_descp_string2);
+	HUD_description_scout = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 355, 662, HUD_text_scout_descp_rect, HUD_scout_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_scout, &HUD_scout_descp_string3);
+
+	//Falta Fran
+	//Scout
+	SDL_Rect HUD_unit_scout_townhall_size = { 0, 0, 53, 50 };
+	SDL_Rect HUD_unit_scout_townhall_idle = { 1095, 140, 53, 50 };
+	SDL_Rect HUD_unit_scout_townhall_hover = { 1152, 140, 53, 50 };
+	SDL_Rect HUD_unit_scout_townhall_clicked = { 1207, 140, 53, 50 };
+
+	HUD_unit_scout_townhall = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 616, 610, false, true, false, this, HUD_townhall_bar
+		, &HUD_unit_scout_townhall_idle, &HUD_unit_scout_townhall_hover, &HUD_unit_scout_townhall_clicked);
+
+	//TE HAS QUEDADO AQUI
+
+	//*****_____BARRACKS_____******
 
 	//Barracks Bar
 	SDL_Rect HUD_barracks_bar_size = { 20, 209, 798, 160 };
@@ -838,12 +913,6 @@ void GameplayScene::LoadGuiElements()
 	_TTF_Font* HUD_barracks_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
 	std::string HUD_title_barracks_string = "BARRACKS";
 	HUD_title_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 362, 582, HUD_text_barracks_rect, HUD_barracks_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_title_barracks_string);
-
-	// Title Infantry
-	SDL_Rect HUD_text_infantry_rect = { 0, 0, 100, 20 };
-	_TTF_Font* HUD_infantry_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
-	std::string HUD_title_infantry_string = "INFANTRY";
-	HUD_title_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_infantry_rect, HUD_infantry_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_infantry_string);
 
 	// HP Barracks
 
@@ -857,6 +926,58 @@ void GameplayScene::LoadGuiElements()
 	HUD_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 341, 649, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_barracks, &HUD_barracks_descp_string2);
 	HUD_description_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 359, 662, HUD_text_barracks_descp_rect, HUD_barracks_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_barracks, &HUD_barracks_descp_string3);
 
+	// Resources Upgrade Barracks
+	HUD_parent_resources_upgrade_barracks = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	SDL_Rect HUD_res_upg_barracks_size = { 707, 54, 13, 25 };
+
+	HUD_resources_data_upgrade_barracks = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 780, 685, HUD_res_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
+
+	SDL_Rect HUD_res2_upg_barracks_size = { 687, 54, 16, 25 };
+
+	HUD_resources_electricity_upgrade_barracks = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_res2_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
+
+	//Falta Fran
+	SDL_Rect HUD_res3_upg_barracks_size = { 687, 54, 16, 25 };
+
+	HUD_resources_bytes_upgrade_barracks = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_res3_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
+
+	// Price Upgrade Barracks Data
+	SDL_Rect HUD_text_barracks_price_upgrade_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_barracks_price_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_barracks_price_upgrade_string = "170";
+	HUD_prices_data_upgrade_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 800, 687, HUD_text_barracks_price_upgrade_rect, HUD_barracks_price_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_barracks, &HUD_barracks_price_upgrade_string);
+
+	// Price Upgrade Barracks Electricity
+	SDL_Rect HUD_text_barracks_price2_upgrade_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_barracks_price2_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_barracks_price2_upgrade_string = "120";
+	HUD_prices_electricity_upgrade_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price2_upgrade_rect, HUD_barracks_price2_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_barracks, &HUD_barracks_price2_upgrade_string);
+
+	// Price Upgrade Barracks Bytes
+	SDL_Rect HUD_text_barracks_price3_upgrade_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_barracks_price3_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_barracks_price3_upgrade_string = "3";
+	HUD_prices_bytes_upgrade_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_barracks_price3_upgrade_rect, HUD_barracks_price3_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_barracks, &HUD_barracks_price3_upgrade_string);
+
+	// Upgrade Building
+	SDL_Rect HUD_upgrade_barracks_size = { 0, 0, 117, 24 };
+	SDL_Rect HUD_upgrade_barracks_idle = { 960, 99, 117, 24 };
+	SDL_Rect HUD_upgrade_barracks_hover = { 960, 125, 117, 24 };
+	SDL_Rect HUD_upgrade_barracks_clicked = { 960, 154, 117, 24 };
+
+	HUD_upgrade_barracks = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 975, 577, false, true, false, this, HUD_barracks_bar
+		, &HUD_upgrade_barracks_idle, &HUD_upgrade_barracks_hover, &HUD_upgrade_barracks_clicked);
+
+
+	//*****_____INFANTRY_____*****
+	
+	// Title Infantry
+	SDL_Rect HUD_text_infantry_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_infantry_font = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	std::string HUD_title_infantry_string = "INFANTRY";
+	HUD_title_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 370, 582, HUD_text_infantry_rect, HUD_infantry_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_infantry_string);
+
 	// Description Infantry
 	SDL_Rect HUD_text_infranty_descp_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_infantry_descp_font = App->font->Load("fonts/borgsquadcond.ttf", 12);
@@ -867,86 +988,84 @@ void GameplayScene::LoadGuiElements()
 	HUD_description_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 347, 649, HUD_text_infranty_descp_rect, HUD_infantry_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_infantry, &HUD_infantry_descp_string2);
 	HUD_description_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 329, 662, HUD_text_infranty_descp_rect, HUD_infantry_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_infantry, &HUD_infantry_descp_string3);
 
-	// Unit Barracks
-	SDL_Rect HUD_unit_barracks_size = { 0, 0, 53, 50 };
-	SDL_Rect HUD_unit_barracks_idle = { 1095, 90, 53, 50 };
-	SDL_Rect HUD_unit_barracks_hover = { 1152, 90, 53, 50 };
-	SDL_Rect HUD_unit_barracks_clicked = { 1207, 90, 53, 50 };
+	// Unit Barracks Infantry Recruit Button
+	SDL_Rect HUD_unit_infantry_barracks_size = { 0, 0, 53, 50 };
+	SDL_Rect HUD_unit_infantry_barracks_idle = { 1095, 90, 53, 50 };
+	SDL_Rect HUD_unit_infantry_barracks_hover = { 1152, 90, 53, 50 };
+	SDL_Rect HUD_unit_infantry_barracks_clicked = { 1207, 90, 53, 50 };
 
-	HUD_unit_barracks = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 556, 610, false, true, false, this, HUD_barracks_bar
-		, &HUD_unit_barracks_idle, &HUD_unit_barracks_hover, &HUD_unit_barracks_clicked);
+	HUD_unit_infantry_barracks = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 556, 610, false, true, false, this, HUD_barracks_bar
+		, &HUD_unit_infantry_barracks_idle, &HUD_unit_infantry_barracks_hover, &HUD_unit_infantry_barracks_clicked);
 
-
-	// Resources1
+	// Resources Recruit Infantry
 	HUD_parent_resources_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	SDL_Rect HUD_barracks_res_unit_size = { 707, 54, 13, 25 };
 
-	HUD_resources_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
+	HUD_resources_data_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 780, 685, HUD_barracks_res_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
 
 	SDL_Rect HUD_barracks_res2_unit_size = { 687, 54, 16, 25 };
 
-	HUD_resources2_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
+	HUD_resources_electricity_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
+
+	//Falta Fran
+	SDL_Rect HUD_barracks_res3_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources_bytes_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res3_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
 
 	// Price Infantry Data
 	SDL_Rect HUD_text_barracks_price_unit_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price_unit_string = "0";
-	HUD_prices_unit_townhall_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price_unit_rect, HUD_barracks_price_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_barracks_infantry, &HUD_barracks_price_unit_string);
+	HUD_prices_data_unit_townhall_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 800, 687, HUD_text_barracks_price_unit_rect, HUD_barracks_price_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_barracks_infantry, &HUD_barracks_price_unit_string);
 
 	// Price Infantry Electricity
 	SDL_Rect HUD_text_barracks_price2_unit_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price2_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price2_unit_string = "10";
-	HUD_prices2_unit_townhall_gatherer = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_barracks_price2_unit_rect, HUD_barracks_price2_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_barracks_infantry, &HUD_barracks_price2_unit_string);
+	HUD_prices_electricity_unit_townhall_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price2_unit_rect, HUD_barracks_price2_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_barracks_infantry, &HUD_barracks_price2_unit_string);
 
-	// Resources2
+	// Price Infantry Bytes
+	SDL_Rect HUD_text_barracks_price3_unit_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_barracks_price3_unit_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_barracks_price3_unit_string = "0";
+	HUD_prices_bytes_unit_townhall_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_barracks_price3_unit_rect, HUD_barracks_price3_unit_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_barracks_infantry, &HUD_barracks_price3_unit_string);
+
+	// Resources Upgrade Infantry
 	HUD_parent_resources_upgrade_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	SDL_Rect HUD_barracks_res_upg_unit_size = { 707, 54, 13, 25 };
 
-	HUD_resources_upgrade_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
+	HUD_resources_data_upgrade_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 780, 685, HUD_barracks_res_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
 
 	SDL_Rect HUD_barracks_res2_upg_unit_size = { 687, 54, 16, 25 };
 
-	HUD_resources2_upgrade_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
+	HUD_resources_electricity_upgrade_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_barracks_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
+
+	// Falta Fran
+	SDL_Rect HUD_barracks_res3_upg_unit_size = { 687, 54, 16, 25 };
+
+	HUD_resources_bytes_upgrade_unit_barracks_infantry = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_barracks_res3_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
 
 	// Price Upgrade Infantry Data
 	SDL_Rect HUD_text_barracks_price_unit_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price_unit_upgrade_string = "50";
-	HUD_prices_upgrade_unit_barracks_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price_unit_upgrade_rect, HUD_barracks_price_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry, &HUD_barracks_price_unit_upgrade_string);
+	HUD_prices_data_upgrade_unit_barracks_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 800, 687, HUD_text_barracks_price_unit_upgrade_rect, HUD_barracks_price_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry, &HUD_barracks_price_unit_upgrade_string);
 
 	// Price Upgrade Infantry Electricity
 	SDL_Rect HUD_text_barracks_price2_unit_upgrade_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_barracks_price2_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	std::string HUD_barracks_price2_unit_upgrade_string = "100";
-	HUD_prices2_upgrade_unit_barracks_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_barracks_price2_unit_upgrade_rect, HUD_barracks_price2_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry, &HUD_barracks_price2_unit_upgrade_string);
+	HUD_prices_electricity_upgrade_unit_barracks_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price2_unit_upgrade_rect, HUD_barracks_price2_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry, &HUD_barracks_price2_unit_upgrade_string);
 
-	// Resources3
-	HUD_parent_resources_upgrade_barracks = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+	// Price Upgrade Infantry Bytes
+	SDL_Rect HUD_text_barracks_price3_unit_upgrade_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_barracks_price3_unit_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_barracks_price3_unit_upgrade_string = "1";
+	HUD_prices_bytes_upgrade_unit_barracks_infantry = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_barracks_price3_unit_upgrade_rect, HUD_barracks_price3_unit_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry, &HUD_barracks_price3_unit_upgrade_string);
 
-	SDL_Rect HUD_res_upg_barracks_size = { 707, 54, 13, 25 };
-
-	HUD_resources_upgrade_barracks = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 880, 685, HUD_res_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
-
-	SDL_Rect HUD_res2_upg_barracks_size = { 687, 54, 16, 25 };
-
-	HUD_resources2_upgrade_barracks = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 980, 685, HUD_res2_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
-
-	// Price Upgrade Barracks Data
-	SDL_Rect HUD_text_barracks_price_upgrade_rect = { 0, 0, 100, 20 };
-	_TTF_Font* HUD_barracks_price_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
-	std::string HUD_barracks_price_upgrade_string = "170";
-	HUD_prices_upgrade_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 900, 687, HUD_text_barracks_price_upgrade_rect, HUD_barracks_price_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_barracks, &HUD_barracks_price_upgrade_string);
-
-	// Price Upgrade Barracks Electricity
-	SDL_Rect HUD_text_barracks_price2_upgrade_rect = { 0, 0, 100, 20 };
-	_TTF_Font* HUD_barracks_price2_upgrade_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
-	std::string HUD_barracks_price2_upgrade_string = "120";
-	HUD_prices2_upgrade_barracks = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1000, 687, HUD_text_barracks_price2_upgrade_rect, HUD_barracks_price2_upgrade_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_upgrade_barracks, &HUD_barracks_price2_upgrade_string);
-
-	// Upgrade Unit
+	// Upgrade Unit Button
 	SDL_Rect HUD_unit_upgrade_barracks_size = { 0, 0, 50, 16 };
 	SDL_Rect HUD_unit_upgrade_barracks_idle = { 899, 129, 50, 16 };
 	SDL_Rect HUD_unit_upgrade_barracks_hover = { 899, 148, 50, 16 };
@@ -955,14 +1074,18 @@ void GameplayScene::LoadGuiElements()
 	HUD_unit_upgrade_barracks_infantry = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_barracks_bar
 		, &HUD_unit_upgrade_barracks_idle, &HUD_unit_upgrade_barracks_hover, &HUD_unit_upgrade_barracks_clicked);
 
-	// Upgrade Building
-	SDL_Rect HUD_upgrade_barracks_size = { 0, 0, 117, 24 };
-	SDL_Rect HUD_upgrade_barracks_idle = { 960, 99, 117, 24 };
-	SDL_Rect HUD_upgrade_barracks_hover = { 960, 125, 117, 24 };
-	SDL_Rect HUD_upgrade_barracks_clicked = { 960, 154, 117, 24 };
+	
+	//*****____HEAVY_____*****
+	// Falta Fran
+	// Unit Barracks Heavy
+	SDL_Rect HUD_unit_heavy_barracks_size = { 0, 0, 53, 50 };
+	SDL_Rect HUD_unit_heavy_barracks_idle = { 1095, 90, 53, 50 };
+	SDL_Rect HUD_unit_heavy_barracks_hover = { 1152, 90, 53, 50 };
+	SDL_Rect HUD_unit_heavy_barracks_clicked = { 1207, 90, 53, 50 };
 
-	HUD_upgrade_barracks = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 975, 577, false, true, false, this, HUD_barracks_bar
-		, &HUD_upgrade_barracks_idle, &HUD_upgrade_barracks_hover, &HUD_upgrade_barracks_clicked);
+	HUD_unit_heavy_barracks = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 616, 610, false, true, false, this, HUD_barracks_bar
+		, &HUD_unit_heavy_barracks_idle, &HUD_unit_heavy_barracks_hover, &HUD_unit_heavy_barracks_clicked);
+
 
 
 
@@ -1018,7 +1141,7 @@ void GameplayScene::LoadGuiElements()
 
 
 
-	// HUD Missions
+	// *****______HUD Missions_____*****
 	//Tab
 	SDL_Rect HUD_missions_tab_size = { 0, 0, 30, 81 };
 	SDL_Rect HUD_missions_tab_idle = { 780, 117, 30, 81 };
@@ -1042,12 +1165,21 @@ void GameplayScene::LoadGuiElements()
 	//Back
 	SDL_Rect HUD_missions_back_size = { 25, 400, 390, 226 };
 
-	HUD_missions_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 1276, 359, HUD_missions_back_size, true, true, false, this, nullptr);
+	HUD_missions_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 902, 359, HUD_missions_back_size, false, true, false, this, nullptr);
 
+	//Title 
+	SDL_Rect HUD_missions_text_title_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_missions_text_title_font = App->font->Load("fonts/borgsquadcond.ttf", 25);
+	std::string HUD_missions_title_string = "QUESTS";
+	HUD_missions_title = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 945, 372, HUD_missions_text_title_rect, HUD_missions_text_title_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_title_string);
 
 
 	// HUD dialogs
-	
+
+	//SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
+
+	//HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, true, true, false, this, nullptr);
+
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1197,7 +1329,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	// Townhall bar
 
-	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNCLICKED)
+	if (element == HUD_unit_gatherer_townhall && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::GATHERER);
@@ -1205,14 +1337,14 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
 	}
 
-	if (element == HUD_unit_townhall && ui_event == UI_EVENT::HOVER)
+	if (element == HUD_unit_gatherer_townhall && ui_event == UI_EVENT::HOVER)
 	{
 		// Price to recruit
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_townhall, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_gatherer, true);
 	}
-	if (element == HUD_unit_townhall && ui_event == UI_EVENT::UNHOVER)
+	if (element == HUD_unit_gatherer_townhall && ui_event == UI_EVENT::UNHOVER)
 	{
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_townhall, true);
@@ -1254,24 +1386,23 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	}
 
 
-
 	// Barracks Bar
 
-	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNCLICKED)
+	if (element == HUD_unit_infantry_barracks && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::INFANTRY);
 		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
 	}
 
-	if (element == HUD_unit_barracks && ui_event == UI_EVENT::HOVER)
+	if (element == HUD_unit_infantry_barracks && ui_event == UI_EVENT::HOVER)
 	{
 		// Price to recruit
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_barracks, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_infantry, true);
 	}
-	if (element == HUD_unit_barracks && ui_event == UI_EVENT::UNHOVER)
+	if (element == HUD_unit_infantry_barracks && ui_event == UI_EVENT::UNHOVER)
 	{
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_barracks, true);
@@ -1329,16 +1460,14 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, true);
 
-		HUD_missions_background->SetScreenPos(iPoint(902, 359));
-		HUD_missions_background->SetHitbox({ 902,359,390, 226 });
+		App->gui_manager->SetElementsVisibility(HUD_missions_background, true);
 	}
 
 	if (element == HUD_missions_tab_close && ui_event == UI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 
-		HUD_missions_background->SetScreenPos(iPoint(1276, 359));
-		HUD_missions_background->SetHitbox({ 1276,359,390, 226 });
+		App->gui_manager->SetElementsVisibility(HUD_missions_background, false);
 
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab, true);
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, false);
