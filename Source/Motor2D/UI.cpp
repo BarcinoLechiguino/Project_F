@@ -124,6 +124,25 @@ void UI::SetLocalHitbox(SDL_Rect local_hitbox)
 	this->local_hitbox = newLocalHitbox;
 }
 
+SDL_Rect UI::GetLocalHitbox() const
+{
+	return local_hitbox;
+}
+
+void UI::SetElementPosition(const iPoint& position)
+{
+	this->position = position;
+
+	SDL_Rect hitbox = GetHitbox();
+
+	SetHitbox({ position.x, position.y, hitbox.w, hitbox.h });
+}
+
+iPoint UI::GetElementPosition() const
+{
+	return position;
+}
+
 // -------------------------------- UI ELEMENT INTERACTIONS --------------------------------
 iPoint UI::GetMousePos() /*const*/
 {
