@@ -1,0 +1,31 @@
+<particlesystem>
+	<info>
+		<emitter type ="1">
+			<speed value ="70"/>
+			<size value ="100"/>
+			<angle min ="50" max ="130"/>
+			<emission value ="1"/>
+			<rnd value ="1"/>
+			<particleLife value ="300"/>
+			<emitterLife value ="-1"/>
+			<startColor r ="255" g="50" b="200" a="255"/>
+			<endColor r ="0" g="255" b="0" a ="255"/>
+			<rect x="0" y="0" w="512" h="512"/>
+      <texture_path path="textures/Particles/smoke_05.png" />
+		</emitter>
+	  
+		<emitter type ="2">
+			<speed value ="50"/>
+			<size value ="130"/>
+			<angle min ="60" max ="120"/>
+			<emission value ="1"/>
+			<rnd value ="1"/>
+			<particleLife value ="400"/>
+			<emitterLife value ="-1"/>
+			<startColor r ="255" g="102" b="0" a="255"/>
+			<endColor r ="255" g="255" b="255" a="255"/>
+			<rect x="0" y="0" w="512" h="512"/>
+      <texture_path path="textures/Particles/star_04.png" />
+		</emitter>
+	</info>
+</particlesystem>
