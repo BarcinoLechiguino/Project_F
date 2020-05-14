@@ -139,7 +139,7 @@ void Map::DrawFowTile(const iPoint& tile_position, const iPoint& world_position)
 	// NO FOW TILE SMOOTHING
 	fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
 	App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-	
+
 	// --- First tile out of line_of_sight is FOGGED
 	/*if (fow_state == UNEXPLORED && !App->fow_manager->CheckNeighbourTilesVisibility(tile_position))
 	{

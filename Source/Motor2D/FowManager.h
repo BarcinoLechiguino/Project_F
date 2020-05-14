@@ -177,7 +177,6 @@ private:
 	
 	std::vector<FowEntity*> fow_entities;
 	std::vector<iPoint> tiles_to_reset;							// Will store the tiles that need to be set back to FOGGED or UNEXPLORED when an Entity that provided visibility is destroyed.
-	std::vector<iPoint> debug_tiles_to_reset;					// Will store the tiles that need to be set back to UNEXPLORED when an Entity that provided visibility is destroyed in debug mode.
 
 	SDL_Texture* frontier_debug_tex;
 	SDL_Texture* line_of_sight_debug_tex;
