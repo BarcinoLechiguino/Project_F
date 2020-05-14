@@ -171,7 +171,7 @@ void FowManager::SwapVisibilityMaps()
 void FowManager::ResetVisibilityMap()
 {
 	SetVisibilityMap(visibility_map_width, visibility_map_width);
-
+	
 	if (fow_debug)
 	{
 		fow_debug = false;
@@ -809,6 +809,8 @@ void FowManager::UpdateTilesToReset()
 				ChangeVisibilityMap(debug_tiles_to_reset[i], FOGGED);
 			}
 		}
+		
+		debug_tiles_to_reset.clear();
 	}
 }
 

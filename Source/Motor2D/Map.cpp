@@ -665,7 +665,7 @@ void Map::LoadMetaDataMaps()
 
 	App->entity_manager->SetEntityMap(data.width, data.height);
 
-	App->fow_manager->SetVisibilityMap(data.width, data.height);
+	App->fow_manager->SetVisibilityMap(data.width, data.height);				//
 }
 
 //Loads the object layers (colliders) from the xml map. It iterates through  a specific object layer (in the load() it is iterated through to get all the object info).

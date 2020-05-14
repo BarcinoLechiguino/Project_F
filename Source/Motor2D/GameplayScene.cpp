@@ -197,8 +197,12 @@ bool GameplayScene::CleanUp()
 	App->player->ClearEntityBuffers();						//Clears the entity list
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
-	App->gui_manager->DestroyGuiElements();
-	App->dialog->CleanUp();
+	App->gui_manager->DestroyGuiElements();					//Deletes all the Gui Elements of the Gameplay Scene.
+	App->dialog->CleanUp();									//Deletes everything related with dialog in the Gameplay Scene.
+
+	App->player->god_mode = false;							//Will disable the God Mode upon exiting the Gameplay Scene.
+	App->fow_manager->fow_debug = false;					//Will disable the FOW Debug Mode upon exiting the Gameplay Scene.
+
 	return true;
 }
 
@@ -228,10 +232,12 @@ void GameplayScene::InitScene()
 	path_debug_tex = App->tex->Load("maps/path_tile.png");
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
 	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
-
+	
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
 	App->audio->PlayMusic(inGame_song, 0.0f);
+
+	//App->fow_manager->ResetVisibilityMap();
 
 	App->dialog->StartDialog(0); 
 	App->dialog->StartDialog(1);
