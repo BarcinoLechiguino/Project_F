@@ -106,11 +106,6 @@ void Scene::DebugKeys()
 			
 			App->fow_manager->fow_debug = !App->fow_manager->fow_debug;					// TMP
 			App->fow_manager->SwapVisibilityMaps();
-
-			/*if (!App->fow_manager->fow_debug)
-			{
-				App->fow_manager->SwapVisibilityMaps();
-			}*/
 		}	
 	}
 

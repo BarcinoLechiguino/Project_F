@@ -110,45 +110,79 @@ void Map::Draw()
 						
 						if (tileset != nullptr)																			
 						{
-							SDL_Rect tile_rect = tileset->GetTileRect(tile_id);											//Gets the position on the world and the dimensions of the rect of the given tile_id 
-							iPoint pos = MapToWorld(x, y);																//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map pos: x = 1 --> World pos: x = 32...
+							SDL_Rect tile_rect		= tileset->GetTileRect(tile_id);									//Gets the position on the world and the dimensions of the rect of the given tile_id 
+							iPoint tile_position	= { x, y };
+							iPoint world_position	= MapToWorld(x, y);													//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map world_position: x = 1 --> World world_position: x = 32...
 
-							App->render->Blit(tileset->texture, pos.x + tileset->offset_x, pos.y + tileset->offset_y, &tile_rect); //, false, (*layer)->speed)
-
-							
-							// DRAWING THE FOG OF WAR
-							iPoint tile_pos = { x, y };
-							uchar fow_state = App->fow_manager->GetVisibilityAt(tile_pos);
-							SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-
-							App->render->Blit(App->fow_manager->fow_tex, pos.x - 5, pos.y - 19, &fow_tile_rect);
+							App->render->Blit(tileset->texture, world_position.x + tileset->offset_x, world_position.y + tileset->offset_y, &tile_rect); //, false, (*layer)->speed)
 
 							tiles_drawn++;
+
+							// DRAWING THE FOG OF WAR							
+							DrawFowTile(tile_position, world_position);
 						}
 					}
 				}
 			}
 		}
-
-		// Fog of War Draw. Make it a function that is not a loop and add it to the main draw loop.
-		/*for (int x = min_x_row; x < max_x_row && x < data.width; x++)
-		{
-			for (int y = min_y_row; y < max_y_row && y < data.height && MapToWorld(x, y).y < bottom_right_y && MapToWorld(x, y).x > camera_pos_in_pixels.x - data.tile_width; y++)
-			{
-				if (MapToWorld(x, y).y > camera_pos_in_pixels.y - data.tile_height && MapToWorld(x, y).x < bottom_right_x)
-				{
-					iPoint pos = MapToWorld(x, y);
-					iPoint tile_pos = { x, y };
-					uchar fow_state = App->fow_manager->GetVisibilityAt(tile_pos);
-					SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-
-					App->render->Blit(App->fow_manager->fow_tex, pos.x - 5, pos.y - 19, &fow_tile_rect);
-				}
-			}
-		}*/
 	}
 	//(*data.layers.begin())->tiles_tree->DrawQuadtree();
 	//LOG("Tiles drawn: %d", tiles_drawn);
+}
+
+void Map::DrawFowTile(const iPoint& tile_position, const iPoint& world_position)
+{
+	uchar fow_state			= App->fow_manager->GetVisibilityAt(tile_position);																// Can be either UNEXPLORED, FOGGED or VISIBLE.
+	uchar smoothing_state	= 0;																											// Smoothing state of the tile (if it is the case).
+	SDL_Rect fow_tile_rect	= { 0, 0, 0, 0 };																								// Fow Tile Sprite Section.
+	//SDL_Rect fow_tile_rect	= App->fow_manager->GetFowTileRect(fow_state);																	// Fow Tile Sprite Section.
+
+	/*if (fow_state == FOGGED)
+	{
+		smoothing_state = (uchar)App->fow_manager->GetSmoothingStateAt(tile_position);
+
+		if (smoothing_state >= (uchar)FOW_SMOOTHING_STATE::UNXTOFOG_TOP)																	// UNEXPLORED TO FOGGED CASE
+		{
+			fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);																		// First a FOGGED tile is printed.
+			App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+
+			smoothing_state = smoothing_state - ((uchar)FOW_SMOOTHING_STATE::UNXTOFOG_TOP - (uchar)FOW_SMOOTHING_STATE::UNEXPLORED_TOP);	// Gets the corresponding UNEXPLORED smoothing state.
+
+			fow_tile_rect = App->fow_manager->GetFowTileRect(smoothing_state);																// Gets the correct UNEXPLORED sprite section.
+			App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+
+			return;
+		}
+		else
+		{
+			if (smoothing_state == (uchar)FOW_SMOOTHING_STATE::NONE)																		// If this is not a smoothing case.
+			{
+				fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);
+				App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+				return;
+			}
+			else
+			{
+				fow_tile_rect = App->fow_manager->GetFowTileRect(smoothing_state);															// Gets the correct FOGGED smoothing sprite section.
+				App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+				return;
+			}
+		}	
+	}
+	else if (fow_state == UNEXPLORED)																										// If this is an UNEXPLORED case.
+	{
+		fow_tile_rect = App->fow_manager->GetFowTileRect(UNEXPLORED);
+		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+		return;
+	}
+	else
+	{
+		return;
+	}*/
+
+
+	fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+	App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
 }
 
 void Map::DataMapDebug()

@@ -127,6 +127,7 @@
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Quadtree.cpp" />
+    <ClCompile Include="QuestManager.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -146,6 +147,7 @@
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="TransitionManager.cpp" />
     <ClCompile Include="Tree.cpp" />
+    <ClCompile Include="UIAnimations.cpp" />
     <ClCompile Include="UI_CreationBar.cpp" />
     <ClCompile Include="UI_Cursor.cpp" />
     <ClCompile Include="UI_Healthbar.cpp" />
@@ -207,6 +209,7 @@
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Quadtree.h" />
+    <ClInclude Include="QuestManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Scene.h" />
@@ -231,6 +234,7 @@
     <ClInclude Include="Transition.h" />
     <ClInclude Include="TransitionManager.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="UIAnimations.h" />
     <ClInclude Include="UI_CreationBar.h" />
     <ClInclude Include="UI_Cursor.h" />
     <ClInclude Include="UI_Healthbar.h" />
@@ -261,6 +265,7 @@
     <Xml Include="..\Game\dialog.xml" />
     <Xml Include="..\Game\ps_config.xml" />
     <Xml Include="..\Game\save_game.xml" />
+    <Xml Include="quest_data.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

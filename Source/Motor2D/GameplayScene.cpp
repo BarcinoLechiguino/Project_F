@@ -49,6 +49,8 @@
 #include "UI_Scrollbar.h"
 #include "UI_Image.h"
 
+#include "FowManager.h"
+
 #include "SceneManager.h"
 #include "TransitionManager.h"
 

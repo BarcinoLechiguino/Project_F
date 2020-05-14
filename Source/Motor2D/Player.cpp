@@ -320,47 +320,50 @@ void Player::DragSelection()
 {
 	if (CurrentlyInGameplayScene())
 	{
-		if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN 
-			|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN
-			|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
+		if (!App->minimap->player_is_moving_camera)
 		{
-			if (!App->gui_manager->VisibleElementIsUnderCursor())
+			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN
+				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
 			{
-				is_selecting = true;
-
-				//selection_start = mouse_position;
-				selection_start = cursor_position;
-
-				ClearEntityBuffers();
-			}
-		}
-
-		if (is_selecting)
-		{
-			if (selection_start != cursor_position )
-			{
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)
+				if (!App->gui_manager->VisibleElementIsUnderCursor())
 				{
-					UpdateSelectionRect();
-				}
+					is_selecting = true;
 
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP
-					|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
-					|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP
-					/*|| App->gui_manager->VisibleElementIsUnderMouse()*/)															//TMP FIX. Talk about what to do with this.
-				{
-					is_selecting = false;
+					//selection_start = mouse_position;
+					selection_start = cursor_position;
 
-					SelectEntitiesInSelectionRect();
+					ClearEntityBuffers();
 				}
 			}
-			else
+
+			if (is_selecting)
 			{
-				if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP
-					|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
-					|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
+				if (selection_start != cursor_position)
 				{
-					SelectEntityAt(cursor_tile);
+					if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)
+					{
+						UpdateSelectionRect();
+					}
+
+					if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP
+						|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
+						|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP
+						/*|| App->gui_manager->VisibleElementIsUnderMouse()*/)															//TMP FIX. Talk about what to do with this.
+					{
+						is_selecting = false;
+
+						SelectEntitiesInSelectionRect();
+					}
+				}
+				else
+				{
+					if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP
+						|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
+						|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
+					{
+						SelectEntityAt(cursor_tile);
+					}
 				}
 			}
 		}

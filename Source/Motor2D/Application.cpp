@@ -24,6 +24,7 @@
 #include "FowManager.h"
 #include "DialogSystem.h"
 #include "ParticleManager.h"
+#include "QuestManager.h"
 
 #include "Brofiler\Brofiler.h"
 
@@ -58,6 +59,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	fow_manager			= new FowManager();
 	dialog				= new DialogSystem();
 	particle_manager	= new ParticleManager();
+	quest_manager		= new QuestManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -83,6 +85,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(fow_manager);
 	AddModule(dialog);
 	AddModule(player);
+	AddModule(quest_manager);
 
 	// render last to swap buffer
 	AddModule(render);
