@@ -127,6 +127,7 @@
     <ClCompile Include="PerfTimer.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Quadtree.cpp" />
+    <ClCompile Include="QuestManager.cpp" />
     <ClCompile Include="Resource.cpp" />
     <ClCompile Include="Rock.cpp" />
     <ClCompile Include="Scene.cpp" />
@@ -208,6 +209,7 @@
     <ClInclude Include="PerfTimer.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Quadtree.h" />
+    <ClInclude Include="QuestManager.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Rock.h" />
     <ClInclude Include="Scene.h" />
@@ -263,6 +265,7 @@
     <Xml Include="..\Game\dialog.xml" />
     <Xml Include="..\Game\ps_config.xml" />
     <Xml Include="..\Game\save_game.xml" />
+    <Xml Include="quest_data.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -33,6 +33,7 @@ class Movement;
 class FowManager;
 class DialogSystem;
 class ParticleManager;
+class QuestManager;
 
 class Application
 {
@@ -102,7 +103,8 @@ public:
 	Movement*			movement;
 	FowManager*			fow_manager;
 	DialogSystem*		dialog;
-	ParticleManager*	particle_manager; 
+	ParticleManager*	particle_manager;
+	QuestManager*		quest_manager;
 
 	uint				frame_cap;								//Stores the frames per second cap to be applied.
 	uint				original_frame_cap;						//Stores the original frame cap at application start.

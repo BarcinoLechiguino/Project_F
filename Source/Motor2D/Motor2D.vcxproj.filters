@@ -244,6 +244,9 @@
     <ClCompile Include="UIAnimations.cpp">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
+    <ClCompile Include="QuestManager.cpp">
+      <Filter>Engine  ===========\Modules\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
@@ -501,6 +504,9 @@
     <ClInclude Include="UIAnimations.h">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
+    <ClInclude Include="QuestManager.h">
+      <Filter>Engine  ===========\Modules\Player</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Xml Include="..\Game\animations.xml">
@@ -516,6 +522,9 @@
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
     <Xml Include="..\Game\ps_config.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="quest_data.xml">
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
   </ItemGroup>
