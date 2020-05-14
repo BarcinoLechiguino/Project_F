@@ -325,3 +325,13 @@ void EnemyGatherer::OnCollision(Collider* C1, Collider* C2)
 {
 
 }
+
+Entity* EnemyGatherer::GetTarget()
+{
+	return target;
+}
+
+int  EnemyGatherer::GetAttackRange()
+{
+	return attack_range;
+}
