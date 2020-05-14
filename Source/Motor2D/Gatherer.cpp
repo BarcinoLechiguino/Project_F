@@ -381,13 +381,3 @@ void Gatherer::OnCollision(Collider* C1, Collider* C2)
 {
 
 }
-
-Entity* Gatherer::GetTarget()
-{
-	return target;
-}
-
-int Gatherer::GetAttackRange()
-{
-	return attack_range;
-}
