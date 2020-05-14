@@ -303,6 +303,11 @@ void EnemyGatherer::GatherResource()
 				App->entity_manager->resource_electricity += gathering_amount_electricity;
 				LOG("Electricity gathered: %d", App->entity_manager->resource_electricity);
 			}
+			else if (target->type == ENTITY_TYPE::BITS)
+			{
+				App->entity_manager->resource_bits += gathering_amount_bits;
+				LOG("Electricity gathered: %d", App->entity_manager->resource_bits);
+			}
 		}
 		if (target->current_health <= 0)
 		{

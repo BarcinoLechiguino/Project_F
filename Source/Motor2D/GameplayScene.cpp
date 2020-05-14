@@ -125,6 +125,9 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	std::string HUD_electricity_resource_string = std::to_string(App->entity_manager->resource_electricity);
 	HUD_electricity_resource_text->RefreshTextInput(HUD_electricity_resource_string.c_str());
 
+	std::string HUD_bits_resource_string = std::to_string(App->entity_manager->resource_bits);
+	HUD_bytes_resource_text->RefreshTextInput(HUD_bits_resource_string.c_str());
+
 	return true;
 }
 

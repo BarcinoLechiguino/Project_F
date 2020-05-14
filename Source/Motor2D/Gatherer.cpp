@@ -220,6 +220,11 @@ void Gatherer::GatherResource()
 				App->entity_manager->resource_electricity += gathering_amount_electricity;
 				LOG("Electricity gathered: %d", App->entity_manager->resource_electricity);
 			}
+			else if (target->type == ENTITY_TYPE::BITS && target->current_health <= 0 )
+			{
+				App->entity_manager->resource_bits += gathering_amount_bits;
+				LOG("Electricity gathered: %d", App->entity_manager->resource_bits);
+			}
 		}
 		if (target->current_health <= 0)
 		{
@@ -275,6 +280,7 @@ void Gatherer::InitEntity()
 	gathering_speed = 1.0f;
 	gathering_amount_data = 30;
 	gathering_amount_electricity = 15;
+	gathering_amount_bits = 1;
 
 	attack_damage = 10; //temporary use of these variables to check if it works
 
