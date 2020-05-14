@@ -752,8 +752,13 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 		}
 		else if (object_type == "tree")
 		{
-			//objectgroup->object[index].type = ROCK;
+			objectgroup->object[index].type = TREE;
 			App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, tile_coords.x, tile_coords.y);
+		}
+		else if (object_type == "bit")
+		{
+			objectgroup->object[index].type = BITS;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::BITS, tile_coords.x, tile_coords.y);
 		}
 
 		index++;
