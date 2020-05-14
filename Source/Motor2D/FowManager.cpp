@@ -227,19 +227,56 @@ uchar FowManager::GetVisibilityAt(const iPoint& tile_position)
 	return VISIBLE;
 }
 
+bool FowManager::CheckNeighbourTilesVisibility(const iPoint& tile_position)
+{
+	iPoint top_neighbour	= { tile_position.x, tile_position.y - 1 };
+	iPoint bottom_neighbour = { tile_position.x, tile_position.y + 1 };
+	iPoint right_neighbour	= { tile_position.x + 1, tile_position.y };
+	iPoint left_neighbour	= { tile_position.x - 1, tile_position.y };
+
+	if (!AllNeighbourTilesAreInBounds(tile_position))
+	{
+		return true;
+	}
+	else
+	{
+		return (GetVisibilityAt(top_neighbour) != VISIBLE && GetVisibilityAt(bottom_neighbour) != VISIBLE
+			&& GetVisibilityAt(right_neighbour) != VISIBLE && GetVisibilityAt(left_neighbour) != VISIBLE);
+	}
+}
+
+bool FowManager::AllNeighbourTilesAreInBounds(const iPoint& tile_position)
+{
+	iPoint top_neighbour	= { tile_position.x, tile_position.y - 1 };
+	iPoint bottom_neighbour = { tile_position.x, tile_position.y + 1 };
+	iPoint right_neighbour	= { tile_position.x + 1, tile_position.y };
+	iPoint left_neighbour	= { tile_position.x - 1, tile_position.y };
+
+	return (CheckMapBoundaries(top_neighbour) && CheckMapBoundaries(left_neighbour)
+			&& CheckMapBoundaries(bottom_neighbour) && CheckMapBoundaries(right_neighbour));
+}
+
 FOW_SMOOTHING_STATE FowManager::GetSmoothingStateAt(const iPoint& tile_position)
 {
 	FOW_SMOOTHING_STATE smoothing_state = FOW_SMOOTHING_STATE::NONE;
 
-	if (GetVisibilityAt(tile_position) /*!= UNEXPLORED*/  == VISIBLE)		// (?)
+	if (GetVisibilityAt(tile_position) != UNEXPLORED)
 	{
-		smoothing_state = GetInnerSmoothingStateAt(tile_position);
+		smoothing_state = GetInnerSmoothingStateAt(tile_position);					// To get the inner smoothing right visibility (UNEXPLORED...) and FOW_SMOOTHING_STATE need to be merged.
 	}
 	
-	if (GetVisibilityAt(tile_position) == FOGGED)
+	if (smoothing_state == FOW_SMOOTHING_STATE::NONE)
 	{
-		smoothing_state = GetOuterSmoothingStateAt(tile_position);
+		if (GetVisibilityAt(tile_position) == FOGGED)
+		{
+			smoothing_state = GetOuterSmoothingStateAt(tile_position);
+		}
 	}
+
+	/*if (smoothing_state != FOW_SMOOTHING_STATE::NONE)
+	{
+		ChangeVisibilityMap(tile_position, (uchar)smoothing_state);
+	}*/
 
 	return smoothing_state;
 }
@@ -251,31 +288,33 @@ FOW_SMOOTHING_STATE FowManager::GetInnerSmoothingStateAt(const iPoint& tile_posi
 	uchar index = 0;
 	uchar tile_state;
 
-	iPoint top_neighbour	= { tile_position.x, tile_position.y - 1 };					// Neighbour aware tile selection. The neighbours are iterated counter-clockwise.
+	iPoint top_neighbour	= { tile_position.x, tile_position.y - 1 };						// Neighbour aware tile selection. The neighbours are iterated counter-clockwise.
 	iPoint left_neighbour	= { tile_position.x - 1, tile_position.y };
 	iPoint bottom_neighbour = { tile_position.x, tile_position.y + 1 };
 	iPoint right_neighbour	= { tile_position.x + 1, tile_position.y };
 
-	tile_state = GetVisibilityAt(top_neighbour);										// Checking the TOP neighbour.
-	if (tile_state != VISIBLE)
+	if (!CheckMapBoundaries(top_neighbour) || !CheckMapBoundaries(left_neighbour)			// In case one of the neighbour tiles is outside the map's bounds.
+		|| !CheckMapBoundaries(bottom_neighbour) || !CheckMapBoundaries(right_neighbour))
+	{
+		return FOW_SMOOTHING_STATE::NONE;													// Quick Fix FOGGED tile smoothing at the border of the map.
+	}
+
+	if (GetVisibilityAt(top_neighbour) != VISIBLE)											// Checking the TOP neighbour.
 	{
 		index += 1;
 	}
 
-	tile_state = GetVisibilityAt(left_neighbour);										// Checking the LEFT neighbour.
-	if (tile_state != VISIBLE)
+	if (GetVisibilityAt(left_neighbour) != VISIBLE)											// Checking the LEFT neighbour.
 	{
 		index += 2;
 	}
 
-	tile_state = GetVisibilityAt(bottom_neighbour);										// Checking the BOTTOM neighbour.
-	if (tile_state != VISIBLE)
+	if (GetVisibilityAt(bottom_neighbour) != VISIBLE)										// Checking the BOTTOM neighbour.
 	{
 		index += 4;
 	}
 
-	tile_state = GetVisibilityAt(right_neighbour);										// Checking the RIGHT neigbour.
-	if (tile_state != VISIBLE)
+	if (GetVisibilityAt(right_neighbour) != VISIBLE)										// Checking the RIGHT neigbour.
 	{
 		index += 8;
 	}
@@ -283,7 +322,7 @@ FOW_SMOOTHING_STATE FowManager::GetInnerSmoothingStateAt(const iPoint& tile_posi
 	switch (index)
 	{
 	case 0:
-		inner_corner_check = true;														// Tile might be a corner tile, so an additional check is made.
+		inner_corner_check = true;															// Tile might be a corner tile, so an additional check is made.
 		break;
 	case 1:
 		return FOW_SMOOTHING_STATE::FOGGED_TOP;
@@ -298,7 +337,7 @@ FOW_SMOOTHING_STATE FowManager::GetInnerSmoothingStateAt(const iPoint& tile_posi
 		return FOW_SMOOTHING_STATE::FOGGED_BOTTOM;
 		break;
 	case 5:
-		return FOW_SMOOTHING_STATE::NONE;												//TMP? (No tile for this state)
+		return FOW_SMOOTHING_STATE::NONE;													//TMP? (No tile for this state)
 		break;
 	case 6:
 		return FOW_SMOOTHING_STATE::FOGGED_INNER_DOWN_LEFT;
@@ -314,7 +353,7 @@ FOW_SMOOTHING_STATE FowManager::GetInnerSmoothingStateAt(const iPoint& tile_posi
 		return FOW_SMOOTHING_STATE::FOGGED_INNER_TOP_RIGHT;
 		break;
 	case 10:
-		return FOW_SMOOTHING_STATE::NONE;												//TMP? (No tile for this state)
+		return FOW_SMOOTHING_STATE::NONE;													//TMP? (No tile for this state)
 		break;
 	case 11:
 		return FOW_SMOOTHING_STATE::FOGGED_TOP_DEAD_END;
@@ -332,7 +371,7 @@ FOW_SMOOTHING_STATE FowManager::GetInnerSmoothingStateAt(const iPoint& tile_posi
 		//return FOW_SMOOTHING_STATE::FOGGED_BOTTOM;
 		break;
 	case 15:
-		return FOW_SMOOTHING_STATE::NONE;												// Maybe use ChangeVisibilityMap(FOGGED/UNEXPLORED)?
+		return FOW_SMOOTHING_STATE::NONE;													// Maybe use ChangeVisibilityMap(FOGGED/UNEXPLORED)?
 		break;
 	}
 
