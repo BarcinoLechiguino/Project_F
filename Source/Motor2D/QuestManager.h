@@ -32,15 +32,17 @@ public:
 
 	bool Awake(pugi::xml_node& file);
 	bool Start();
+	bool Update(float dt);
+
+	void CheckQuests();
 
 	pugi::xml_node LoadQuests(pugi::xml_document& quest_file) const;
-	//Event* createEvent(pugi::xml_node& xmlReader);
 
 	pugi::xml_document quest_data;
 
-	std::list<Quest*> loaded_quests;
-	std::list<Quest*> active_quests;
-	std::list<Quest*> finished_quests;
+	std::vector<Quest*> loaded_quests;
+	std::vector<Quest*> active_quests;
+	std::vector<Quest*> finished_quests;
 };
 
 

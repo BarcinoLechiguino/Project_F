@@ -223,7 +223,7 @@ void Gatherer::GatherResource()
 			else if (target->type == ENTITY_TYPE::BITS && target->current_health <= 0 )
 			{
 				App->entity_manager->resource_bits += gathering_amount_bits;
-				LOG("Electricity gathered: %d", App->entity_manager->resource_bits);
+				LOG("Bits gathered: %d", App->entity_manager->resource_bits);
 			}
 		}
 		if (target->current_health <= 0)

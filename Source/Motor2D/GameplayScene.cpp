@@ -159,7 +159,7 @@ bool GameplayScene::PostUpdate()
 
 	ExecuteDebugTransition();
 
-	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_STATE::KEY_DOWN  
+	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_STATE::KEY_DOWN
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_B) == BUTTON_STATE::BUTTON_DOWN)
 	{
 		if (!App->transition_manager->is_transitioning)
@@ -168,8 +168,8 @@ bool GameplayScene::PostUpdate()
 
 			App->gui_manager->SetElementsVisibility(in_game_background, !in_game_background->is_visible);
 			App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
-			App->audio->PlayFx(App->gui_manager->appear_menu_fx, 0);		
-			
+			App->audio->PlayFx(App->gui_manager->appear_menu_fx, 0);
+
 			//Mix_HaltMusic();
 		}
 	}
@@ -235,14 +235,14 @@ void GameplayScene::InitScene()
 	path_debug_tex = App->tex->Load("maps/path_tile.png");
 	occupied_debug = App->tex->Load("maps/occupied_tile.png");
 	occupied_by_entity_debug = App->tex->Load("maps/occupied_by_entity_tile.png");
-	
+
 	//App->audio->PlayMusic(App->scene->music_path2.c_str());
 	inGame_song = App->audio->LoadMusic("audio/music/3_Music_Gameplay.ogg");
 	App->audio->PlayMusic(inGame_song, 0.0f);
 
 	//App->fow_manager->ResetVisibilityMap();
 
-	App->dialog->StartDialog(0); 
+	App->dialog->StartDialog(0);
 	App->dialog->StartDialog(1);
 }
 
@@ -320,8 +320,8 @@ void GameplayScene::CheckForWinLose()
 		bool exists_allyunits = false;
 		for (int i = 0; i < (int)App->entity_manager->entities.size(); ++i)
 		{
-			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::BARRACKS 
-				|| App->entity_manager->entities[i]->type == ENTITY_TYPE::INFANTRY 
+			if (App->entity_manager->entities[i]->type == ENTITY_TYPE::BARRACKS
+				|| App->entity_manager->entities[i]->type == ENTITY_TYPE::INFANTRY
 				|| App->entity_manager->entities[i]->type == ENTITY_TYPE::GATHERER)
 			{
 				exists_allyunits = true;
@@ -334,6 +334,23 @@ void GameplayScene::CheckForWinLose()
 			return;
 		}
 	}
+}
+
+bool GameplayScene::CheckForTownHall()
+{
+
+	//Check for an enemy townhall alive
+	bool exists_enemytownhall = false;
+	for (int i = 0; i < (int)App->entity_manager->entities.size(); ++i)
+	{
+		if (App->entity_manager->entities[i]->type == ENTITY_TYPE::ENEMY_TOWNHALL)
+		{
+			exists_enemytownhall = true;
+			break;
+		}
+	}
+
+	return exists_enemytownhall;
 }
 
 // ------------------- ENTITY SPAWN METHODS -------------------
@@ -1160,7 +1177,7 @@ void GameplayScene::LoadGuiElements()
 	HUD_unit_upgrade_barracks_infantry = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 556, 594, false, true, false, this, HUD_barracks_bar
 		, &HUD_unit_upgrade_barracks_idle, &HUD_unit_upgrade_barracks_hover, &HUD_unit_upgrade_barracks_clicked);
 
-	
+
 	//*****____HEAVY_____*****
 	// Title Infantry
 	SDL_Rect HUD_text_heavy_rect = { 0, 0, 100, 20 };
@@ -1329,7 +1346,7 @@ void GameplayScene::LoadGuiElements()
 	HUD_missions_tab = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 1252, 389, true, true, false, this, nullptr
 		, &HUD_missions_tab_idle, &HUD_missions_tab_hover, &HUD_missions_tab_clicked);
 
-	
+
 	//Tab close 
 	SDL_Rect HUD_missions_tab_close_size = { 0, 0, 30, 81 };
 	SDL_Rect HUD_missions_tab_close_idle = { 780, 117, 30, 81 };
@@ -1968,6 +1985,7 @@ void GameplayScene::UnitDebugKeys()
 			{
 				App->entity_manager->resource_data += 300;
 				App->entity_manager->resource_electricity += 300;
+				App->entity_manager->resource_bits += 300;
 			}
 		}
 	}

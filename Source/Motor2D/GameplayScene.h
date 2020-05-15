@@ -33,13 +33,15 @@ public:
 
 	//bool Load(pugi::xml_node& data);
 	//bool Save(pugi::xml_node& data) const;
-	void CheckForWinLose();
-
+	
 
 public:
 	void InitScene();
 
 	void ExecuteTransition();
+
+	void CheckForWinLose();
+	bool CheckForTownHall();
 
 	// --- Entity Spawn Methods.
 	void SpawnAllyUnit(ENTITY_TYPE type);
