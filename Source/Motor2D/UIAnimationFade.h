@@ -14,6 +14,8 @@ public:
 	void CleanUp();
 
 public:
+	void FinishAnimation();
+	
 	void ApplyFade();
 	
 	void GetTexturesToFade();

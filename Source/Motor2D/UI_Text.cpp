@@ -52,15 +52,15 @@ UI_Text::UI_Text(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* f
 		this->listener = nullptr;																//This Text element's listener is set to the App->gui module (For OnCallEvent()).
 	}
 
-	//if (parent != nullptr)																	//If a parent is passed as argument.
-	//{
-	//	int localPosX = x - parent->GetScreenPos().x;											//Gets the local position of the Text element in the X Axis.
-	//	int localPosY = y - parent->GetScreenPos().y;											//Gets the local position of the Text element in the Y Axis.
+	if (parent != nullptr)																	//If a parent is passed as argument.
+	{
+		int localPosX = x - parent->GetScreenPos().x;											//Gets the local position of the Text element in the X Axis.
+		int localPosY = y - parent->GetScreenPos().y;											//Gets the local position of the Text element in the Y Axis.
 
-	//	iPoint localPos = { localPosX, localPosY };												//Buffer iPoint to pass it as argument to SetLocalPos().
+		iPoint localPos = { localPosX, localPosY };												//Buffer iPoint to pass it as argument to SetLocalPos().
 
-	//	SetLocalPos(localPos);																	//Sets the local poisition of this Text Element to the given localPos.
-	//}
+		SetLocalPos(localPos);																	//Sets the local poisition of this Text Element to the given localPos.
+	}
 
 	this->font = font;
 	this->font_colour = fontColour;

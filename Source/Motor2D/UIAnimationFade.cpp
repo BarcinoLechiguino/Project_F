@@ -7,7 +7,7 @@
 #include "UIAnimationFade.h"
 
 UIAnimationFade::UIAnimationFade(UI* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha) 
-	: UIAnimation(element, animation_duration, hide_on_completion)
+	: UIAnimation(element, UI_ANIMATION_TYPE::FADE,  animation_duration, hide_on_completion)
 	, start_alpha(start_alpha)
 	, end_alpha(end_alpha)
 {
@@ -47,6 +47,11 @@ void UIAnimationFade::StepAnimation()
 void UIAnimationFade::CleanUp()
 {
 	return;
+}
+
+void UIAnimationFade::FinishAnimation()
+{
+
 }
 
 void UIAnimationFade::ApplyFade()

@@ -21,6 +21,9 @@ public:
 
 	void BlitMinimap(); //Prints all elements of the minimap; Analogous to map->Draw() in practical uses
 
+public:
+	bool InteractingWithMinimap();						// Will return true if the cursor is over the minimap or the player is moving the minimap camera.
+
 private:
 
 	void CreateTexture(); 

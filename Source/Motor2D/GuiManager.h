@@ -17,6 +17,7 @@ class UI;
 enum class UI_ELEMENT;
 
 class UIAnimation;
+enum class UI_ANIMATION_TYPE;
 
 class GuiManager : public Module
 {
@@ -73,8 +74,9 @@ public:																		// -------- GUI ELEMENT ANIMATION CREATION/DESTRUCTION 
 	UIAnimation* CreateFadeAnimation(UI* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha);
 	UIAnimation* CreateSlideAnimation(UI* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position);
 
-	void DeleteUIAnimation(UIAnimation* ui_animation_to_delete);
-	void CancelUIAnimation(UI* element_being_animated);
+	void DeleteUIAnimation(UIAnimation* ui_animation_to_delete);							// Will iterate ui_animations searching for the given UIAnimation*.
+	void DeleteUIAnimation(std::vector<UIAnimation*>::iterator animation_item);				// Will delete a ui_animation directly without needing to iterate the ui_animations vector.
+	void CancelUIAnimation(UI* element_being_animated, UI_ANIMATION_TYPE animation_type);	// Will cancel an animation of the specified type. Only one of each type can be active.
 	void DestroyUIAnimations();
 
 public:																		// ------------------ GUI ELEMENT MANAGEMENT METHODS ------------------

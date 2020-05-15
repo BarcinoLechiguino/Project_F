@@ -313,7 +313,7 @@ void Player::DrawCursor()
 	{
 		if (App->map->CheckMapBoundaries(cursor_tile))
 		{
-			if (!App->gui_manager->VisibleElementIsUnderCursor())															//TMP. Dirty Fix(?)
+			if (!App->gui_manager->VisibleElementIsUnderCursor() && !App->minimap->InteractingWithMinimap())
 			{
 				App->render->Blit(mouse_tile_debug, cursor_map_position.x, cursor_map_position.y, nullptr, false, 1.f);
 			}

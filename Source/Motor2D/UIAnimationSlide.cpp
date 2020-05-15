@@ -5,7 +5,7 @@
 #include "UIAnimationSlide.h"
 
 UIAnimationSlide::UIAnimationSlide(UI* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position) 
-	: UIAnimation(element, animation_duration, hide_on_completion)
+	: UIAnimation(element, UI_ANIMATION_TYPE::SLIDE, animation_duration, hide_on_completion)
 	, initial_position(initial_position)
 	, final_position(final_position)
 {
@@ -30,15 +30,7 @@ void UIAnimationSlide::StepAnimation()
 	{
 		to_delete = true;
 
-		for (int i = 0; i < elements_to_slide.size(); ++i)
-		{	
-			elements_to_slide[i]->is_transitioning = false;
-
-			if (hide_on_completion)
-			{
-				elements_to_slide[i]->is_visible = false;
-			}
-		}
+		FinishAnimation();
 
 		elements_to_slide.clear();
 	}
@@ -50,7 +42,34 @@ void UIAnimationSlide::StepAnimation()
 
 void UIAnimationSlide::CleanUp()
 {
+	if (element->is_transitioning)															// In case the animation was cancelled halfway through.
+	{
+		FinishAnimation();
+	}
+}
 
+void UIAnimationSlide::FinishAnimation()
+{
+	element->SetElementPosition(final_position);
+	element->is_transitioning = false;
+
+	if (hide_on_completion)
+	{
+		element->is_visible = false;
+	}
+
+	for (int i = 0; i < elements_to_slide.size(); ++i)
+	{
+		iPoint local_position = elements_to_slide[i]->GetLocalPos();
+
+		elements_to_slide[i]->SetElementPosition(final_position + local_position);
+		elements_to_slide[i]->is_transitioning = false;
+
+		if (hide_on_completion)
+		{
+			elements_to_slide[i]->is_visible = false;
+		}
+	}
 }
 
 void UIAnimationSlide::TranslateSlide()
@@ -60,11 +79,13 @@ void UIAnimationSlide::TranslateSlide()
 	
 	iPoint new_position = { x_displacement, y_displacement };
 
-	
+	element->SetElementPosition(new_position);
 	
 	for (int i = 0; i < elements_to_slide.size(); ++i)
 	{	
-		elements_to_slide[i]->SetElementPosition(new_position);
+		iPoint local_position = elements_to_slide[i]->GetLocalPos();
+		
+		elements_to_slide[i]->SetElementPosition(new_position + local_position);
 	}
 }
 
@@ -72,7 +93,9 @@ void UIAnimationSlide::InitSlide()
 {	
 	elements_to_slide = App->gui_manager->GetElementChilds(element);
 
-	elements_to_slide.push_back(element);
+	//elements_to_slide.push_back(element);											// The parent element will be handled independently from it's childs.
+
+	element->is_transitioning = true;
 
 	for (int i = 0; i < elements_to_slide.size(); ++i)
 	{
