@@ -166,7 +166,7 @@ void DialogSystem::StartDialog(int tree_id)
 				dialog_state = DialogState::SLIDING_IN;
 
 				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = true;
-				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_interactible = false;
+				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_interactible = true;
 				App->scene_manager->gameplay_scene->HUD_dialogs_background->SetElementPosition((*dialog)->position);
 
 				dialog_queue.push((*dialog));

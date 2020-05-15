@@ -311,7 +311,6 @@ public:
 	UI_Image*				HUD_missions_checkbox_in_progress_side_quest3;
 
 	//Dialogs
-
 	UI_Image*				HUD_dialogs_background;
 	std::vector<UI_Text*>	HUD_dialog_text;	//Lines of dialog text
 

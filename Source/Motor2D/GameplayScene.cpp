@@ -1817,10 +1817,6 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		App->dialog->is_clicked = true;
 	}
-	/*else
-	{
-		App->dialog->is_clicked = false;
-	}*/
 }
 
 // --- ENTITY HUD METHODS ---

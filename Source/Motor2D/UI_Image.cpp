@@ -79,6 +79,11 @@ void UI_Image::CheckInput()
 			ui_event = UI_EVENT::IDLE;
 		}
 
+		if (IsHovered())
+		{
+			ui_event = UI_EVENT::HOVER;
+		}
+
 		if (is_draggable)																		//If the image element is draggable.
 		{
 			if (IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN)		//If the mouse is on the image and the left mouse button is pressed.
@@ -130,6 +135,14 @@ void UI_Image::CheckInput()
 					initial_position = GetScreenPos();
 				}
 
+				ui_event = UI_EVENT::UNCLICKED;
+			}
+		}
+
+		if (IsHovered() && App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP)
+		{
+			if (IsForemostElement())
+			{
 				ui_event = UI_EVENT::UNCLICKED;
 			}
 		}
