@@ -147,7 +147,10 @@
     <ClCompile Include="Transition.cpp" />
     <ClCompile Include="TransitionManager.cpp" />
     <ClCompile Include="Tree.cpp" />
-    <ClCompile Include="UIAnimations.cpp" />
+    <ClCompile Include="UIAnFade.cpp" />
+    <ClCompile Include="UIAnimation.cpp" />
+    <ClCompile Include="UIAnimationManager.cpp" />
+    <ClCompile Include="UIAnSlide.cpp" />
     <ClCompile Include="UI_CreationBar.cpp" />
     <ClCompile Include="UI_Cursor.cpp" />
     <ClCompile Include="UI_Healthbar.cpp" />
@@ -234,7 +237,10 @@
     <ClInclude Include="Transition.h" />
     <ClInclude Include="TransitionManager.h" />
     <ClInclude Include="Tree.h" />
-    <ClInclude Include="UIAnimations.h" />
+    <ClInclude Include="UIAnimation.h" />
+    <ClInclude Include="UIAnimationManager.h" />
+    <ClInclude Include="UIAnFade.h" />
+    <ClInclude Include="UIAnSlide.h" />
     <ClInclude Include="UI_CreationBar.h" />
     <ClInclude Include="UI_Cursor.h" />
     <ClInclude Include="UI_Healthbar.h" />

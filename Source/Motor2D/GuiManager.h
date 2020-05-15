@@ -16,29 +16,20 @@ class Entity;
 class UI;
 enum class UI_ELEMENT;
 
-class UI_Image;
-class UI_Text;
-class UI_Button;
-class UI_InputBox;
-class UI_Scrollbar;
-class UI_Healthbar;
-
-class UI_Cursor;
-
 class GuiManager : public Module
 {
 public:
 
 	GuiManager();
-	virtual ~GuiManager();											// Destructor
+	~GuiManager();															// Destructor
 
-	bool Awake(pugi::xml_node&);							// Called when before render is available
-	bool Start();											// Call before first frame
-	bool PreUpdate();										// Called before all Updates
-	bool PostUpdate();										// Called after all Updates
-	bool CleanUp();											// Called before quitting
+	bool Awake(pugi::xml_node&);											// Called when before render is available
+	bool Start();															// Call before first frame
+	bool PreUpdate();														// Called before all Updates
+	bool PostUpdate();														// Called after all Updates
+	bool CleanUp();															// Called before quitting
 
-public:
+public:																		//  ------------------ GUI ELEMENT CREATION/DESTRUCTION METHODS ------------------ 
 	/*const*/ SDL_Texture* GetAtlas() const;
 
 	UI* CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect rect, bool is_visible = false, bool is_interactible = false, bool is_draggable = false
@@ -76,7 +67,10 @@ public:
 	void LoadGuiElementsAudio();
 	void UnLoadGuiElementsAudio();
 
-																			// ------------------ GUI ELEMENTS MANAGEMENT ------------------
+public:																		// -------- GUI ELEMENT ANIMATION CREATION/DESTRUCTION METHODS --------
+
+
+public:																		// ------------------ GUI ELEMENT MANAGEMENT METHODS ------------------
 	void OnEventCall(UI* element, UI_EVENT ui_event);						//This function is called whenever an new event happens, it receives the pointer of the element that caused the event and the kind of event it is.
 	void PassFocus();														//Method that passes the focus from an interactible and able to focused element to another with the same conditions.
 	bool ElementCanBeFocused(UI* focusElement) const;						//If an element fulfills all requirements (is a button or a scrollbar), then this method returns true. Used to filter which UI elements can or cannot have focus.
@@ -97,7 +91,7 @@ public:
 	void CreateGuiCommands();												//Creates all Gui relevant commands.
 	void OnCommand(const char* command, const char* subCommand = nullptr);	//Gui OnCommand() method overload.
 
-public:
+public:																		// --- GUI PUBLIC VARIABLES ---
 	UI*							focused_element;							//Change to list item
 	std::vector<UI*>::iterator	iterated_element;
 
@@ -109,7 +103,9 @@ public:
 	const char*					enable_ui_debug;
 	const char*					disable_ui_debug;
 
-public:
+public:																		// --- GUI AUDIO VARIABLES ---
+	bool						audio_already_loaded;
+	
 	uint						new_game_fx;
 	uint						options_fx;
 	uint						back_fx;
@@ -119,15 +115,12 @@ public:
 	uint						upgrade_fx;
 	uint						recruit_fx;
 
-private:
+private:																	// --- GUI PRIVATE VARIABLES ---
 	SDL_Texture*				atlas;										//Texture of the atlas (UI Spritesheet)
 	std::string					atlas_file_name;							//Name of the atlas in the xml file.
 
 	std::vector<UI*>			elements;									//List where all the UI elements in a scene will be stored at.
-
-public:
-	bool						audio_already_loaded;
-
+	//std::vector
 };
 
 #endif // __GUI_H__

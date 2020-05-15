@@ -204,31 +204,41 @@ void Gatherer::GatherResource()
 {
 	if (!gather_in_cooldown)
 	{
-		if (App->entity_manager->IsResource(target))
+		if (target->current_health > 0)
 		{
-			ApplyDamage(target);
-			App->audio->PlayFx(App->entity_manager->gather_fx);
-			gather_in_cooldown = true;
+			if (App->entity_manager->IsResource(target))
+			{
+				if (target->current_health < 0)
+				{
+					target = nullptr;
+					return;
+				}
 
-			if (target->type == ENTITY_TYPE::ROCK)
-			{
-				App->entity_manager->resource_data += gathering_amount_data;
-				LOG("Data gathered: %d", App->entity_manager->resource_data);
-			}
-			else if (target->type == ENTITY_TYPE::TREE)
-			{
-				App->entity_manager->resource_electricity += gathering_amount_electricity;
-				LOG("Electricity gathered: %d", App->entity_manager->resource_electricity);
-			}
-			else if (target->type == ENTITY_TYPE::BITS && target->current_health <= 0 )
-			{
-				App->entity_manager->resource_bits += gathering_amount_bits;
-				LOG("Electricity gathered: %d", App->entity_manager->resource_bits);
+				ApplyDamage(target);
+				App->audio->PlayFx(App->entity_manager->gather_fx);
+				gather_in_cooldown = true;
+
+				if (target->type == ENTITY_TYPE::ROCK)
+				{
+					App->entity_manager->resource_data += gathering_amount_data;
+					LOG("Data gathered: %d", App->entity_manager->resource_data);
+				}
+				else if (target->type == ENTITY_TYPE::TREE)
+				{
+					App->entity_manager->resource_electricity += gathering_amount_electricity;
+					LOG("Electricity gathered: %d", App->entity_manager->resource_electricity);
+				}
+				else if (target->type == ENTITY_TYPE::BITS && target->current_health <= 0)
+				{
+					App->entity_manager->resource_bits += gathering_amount_bits;
+					LOG("Electricity gathered: %d", App->entity_manager->resource_bits);
+				}
 			}
 		}
-		if (target->current_health <= 0)
+		else
 		{
 			target = nullptr;
+			return;
 		}
 	}
 	else

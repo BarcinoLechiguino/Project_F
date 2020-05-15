@@ -241,11 +241,20 @@
     <ClCompile Include="Log.cpp">
       <Filter>Engine  ===========\Tools\Utilities</Filter>
     </ClCompile>
-    <ClCompile Include="UIAnimations.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="QuestManager.cpp">
       <Filter>Engine  ===========\Modules\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnimationManager.cpp">
+      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnimation.cpp">
+      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnFade.cpp">
+      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnSlide.cpp">
+      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -501,11 +510,20 @@
     <ClInclude Include="Point.h">
       <Filter>Engine  ===========\Tools\Utilities</Filter>
     </ClInclude>
-    <ClInclude Include="UIAnimations.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
     <ClInclude Include="QuestManager.h">
       <Filter>Engine  ===========\Modules\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnimationManager.h">
+      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnimation.h">
+      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnFade.h">
+      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnSlide.h">
+      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -623,6 +641,9 @@
     </Filter>
     <Filter Include="Engine  ===========\Tools\Utilities">
       <UniqueIdentifier>{1d648d44-87d1-403a-93c9-16082a74dd74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\UI\UI Animations">
+      <UniqueIdentifier>{05449ae4-8867-4971-b974-2edc1cc72bbe}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
