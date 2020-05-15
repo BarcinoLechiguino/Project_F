@@ -1790,6 +1790,15 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab, true);
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, false);
 	}
+
+	if (element == HUD_dialogs_background && ui_event == UI_EVENT::UNCLICKED)
+	{
+		App->dialog->is_clicked = true;
+	}
+	/*else
+	{
+		App->dialog->is_clicked = false;
+	}*/
 }
 
 // --- ENTITY HUD METHODS ---

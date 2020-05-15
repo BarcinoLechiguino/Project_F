@@ -37,13 +37,9 @@ void Dialog::NextBubble() //Next bubble in dialog
 	}
 	else
 	{
-		//App->dialog->text_texture = App->font->Print(dialog_bubbles[current_bubble]->text.c_str(), App->dialog->dialog_color, App->dialog->dialog_font);
-		//App->dialog->LoadDialogTextures();
-
 		App->dialog->dialog_state = DialogState::TEXT_TYPING;
 		App->dialog->current_text.clear();
 	}
-
 }
 
 //Dialog System
@@ -51,11 +47,11 @@ DialogSystem::DialogSystem()
 {
 	current_dialog = nullptr;
 	dialog_font = nullptr;
-
 	font_size = 20;
 
 	dialog_state = DialogState::NOT_ACTIVE;
 
+	is_clicked = false;
 }
 
 bool DialogSystem::Awake(pugi::xml_node&)
@@ -137,7 +133,6 @@ bool DialogSystem::CleanUp()
 	}
 
 	dialogs.clear();
-
 	App->scene_manager->gameplay_scene->HUD_dialog_text.clear();
 
 	return true;
@@ -184,7 +179,7 @@ void DialogSystem::StartDialog(int tree_id)
 
 void DialogSystem::NextBubbleCheck()
 {
-	if (timer->Read() >= current_dialog->dialog_bubbles[current_dialog->current_bubble]->active_time)
+	if (timer->Read() >= current_dialog->dialog_bubbles[current_dialog->current_bubble]->active_time || is_clicked)
 	{
 		timer->Start();
 		current_dialog->NextBubble();
@@ -243,13 +238,23 @@ void DialogSystem::TypeText()
 	for (std::vector<std::string>::iterator text = current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.begin(); text != current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.end(); ++text)
 	{
 		App->scene_manager->gameplay_scene->HUD_dialog_text[i]->RefreshTextInput((*text).c_str());
-
 		i++;
 	}
 
 	dialog_state = DialogState::ACTIVE;
-
 	timer->Start();
+}
+
+void DialogSystem::SetTextPosition(iPoint position)
+{
+	int y_position = position.y + 14; //Magic
+
+	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
+	{
+		(*text)->SetElementPosition(iPoint(position.x + 20, y_position));
+
+		y_position += font_size;
+	}
 }
 
 void DialogSystem::SlideIn()
@@ -257,8 +262,8 @@ void DialogSystem::SlideIn()
 	dialog_state = DialogState::TEXT_TYPING;
 
 	EnableText();
-
 	App->scene_manager->gameplay_scene->HUD_dialogs_background->SetElementPosition(current_dialog->position);
+	SetTextPosition(current_dialog->position);
 }
 
 void DialogSystem::SlideOut()
@@ -272,9 +277,6 @@ void DialogSystem::SlideOut()
 
 bool DialogSystem::LoadDialog()
 {
-	dialog_font = App->font->Load("fonts/Minecraftia-Regular.ttf", font_size);
-	dialog_color = { 255,255,100,255 };
-
 	timer = new Timer;
 
 	pugi::xml_parse_result result = dialog_file.load_file("dialog.xml");
@@ -286,6 +288,12 @@ bool DialogSystem::LoadDialog()
 	}
 	else
 	{
+		pugi::xml_node dialog_font_node = dialog_file.child("dialog").child("dialog_font");
+
+		font_size = dialog_font_node.attribute("font_size").as_int();
+		dialog_font = App->font->Load(dialog_font_node.attribute("font").as_string(), font_size);
+		dialog_color = { (Uint8)dialog_font_node.attribute("r").as_uint(),(Uint8)dialog_font_node.attribute("g").as_uint(),(Uint8)dialog_font_node.attribute("b").as_uint(),(Uint8)dialog_font_node.attribute("a").as_uint() };
+
 		for (pugi::xml_node tree = dialog_file.child("dialog").child("dialog_tree"); tree != nullptr; tree = tree.next_sibling("dialog_tree"))
 		{
 			Dialog* buffer = new Dialog;
@@ -303,7 +311,7 @@ bool DialogSystem::LoadDialog()
 	current_dialog = nullptr; //start first dialog
 
 	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
-	App->scene_manager->gameplay_scene->HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, false, true, false, this, nullptr);
+	App->scene_manager->gameplay_scene->HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, false,true, false, App->scene_manager->gameplay_scene, nullptr);
 
 	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
 	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));

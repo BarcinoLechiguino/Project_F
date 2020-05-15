@@ -68,6 +68,7 @@ public:
 
 	void TypeText();
 	void EmptyText();
+	void SetTextPosition(iPoint position);
 	void DisableText();
 	void EnableText();
 
@@ -88,6 +89,8 @@ public:
 	Timer* timer;
 
 	DialogState dialog_state;
+
+	bool is_clicked;
 
 public:
 	pugi::xml_document dialog_file;
