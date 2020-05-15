@@ -202,9 +202,9 @@ void Gatherer::PathToGatheringTarget()
 
 void Gatherer::GatherResource()
 {
-	if (!gather_in_cooldown)
+	if (target->current_health > 0)
 	{
-		if (target->current_health > 0)
+		if (!gather_in_cooldown)
 		{
 			if (App->entity_manager->IsResource(target))
 			{
@@ -231,19 +231,23 @@ void Gatherer::GatherResource()
 		}
 		else
 		{
-			target = nullptr;
-			return;
+			accumulated_cooldown += App->GetDt();
+
+			if (accumulated_cooldown >= gathering_speed)
+			{
+				gather_in_cooldown = false;
+				accumulated_cooldown = 0.0f;
+			}
 		}
 	}
 	else
 	{
-		accumulated_cooldown += App->GetDt();
+		target = nullptr;
 
-		if (accumulated_cooldown >= gathering_speed)
-		{
-			gather_in_cooldown = false;
-			accumulated_cooldown = 0.0f;
-		}
+		gather_in_cooldown = false;											// Reseting the attack for the next time the unit has a target.
+		accumulated_cooldown = 0.0f;
+
+		return;
 	}
 }
 
