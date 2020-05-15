@@ -243,7 +243,7 @@ void GameplayScene::InitScene()
 	//App->fow_manager->ResetVisibilityMap();
 
 	App->dialog->StartDialog(0);
-	App->dialog->StartDialog(1);
+
 }
 
 // --- SCENE TRANSITIONS

@@ -56,6 +56,14 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
+	if (CurrentlyInGameplayScene())
+	{
+		SDL_SetRelativeMouseMode(SDL_TRUE);
+	}
+	else
+	{
+		SDL_SetRelativeMouseMode(SDL_FALSE);
+	}
 	return true;
 }
 
@@ -978,7 +986,7 @@ bool Player::CheckSelectionRectBorders(DynamicObject* unit)
 
 void Player::InitializePlayer()
 {
-	SDL_SetRelativeMouseMode(SDL_TRUE);
+	SDL_ShowCursor(SDL_DISABLE);
 
 	selection_rect = { 0, 0, 0, 0 };
 

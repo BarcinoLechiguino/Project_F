@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <dialog>
-  <dialog_tree tree_id="0" position_x="200" position_y="200">
+  <dialog_tree tree_id="0" position_x="50" position_y="150">
     
     <dialog_bubble bubble_id="0" active_time="4000">
         <text text="Oh hello cutie"/>

@@ -52,12 +52,10 @@ DialogSystem::DialogSystem()
 	current_dialog = nullptr;
 	dialog_font = nullptr;
 
-	dialog_color = { 255,255,100,255 };
 	font_size = 20;
 
 	dialog_state = DialogState::NOT_ACTIVE;
 
-	timer = new Timer;
 }
 
 bool DialogSystem::Awake(pugi::xml_node&)
@@ -77,9 +75,10 @@ bool DialogSystem::PreUpddate()
 
 bool DialogSystem::Update(float dt)
 {
-	
-	switch (dialog_state)
+	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)
 	{
+		switch (dialog_state)
+		{
 		case DialogState::NOT_ACTIVE:
 
 			break;
@@ -90,15 +89,15 @@ bool DialogSystem::Update(float dt)
 
 			break;
 
-		case DialogState::ACTIVE:
-				
-			NextBubbleCheck();
-
-			break;
-
 		case DialogState::TEXT_TYPING:
 
 			TypeText();
+
+			break;
+
+		case DialogState::ACTIVE:
+
+			NextBubbleCheck();
 
 			break;
 
@@ -107,6 +106,7 @@ bool DialogSystem::Update(float dt)
 			SlideOut();
 
 			break;
+		}
 	}
 
 	return true;
@@ -120,6 +120,26 @@ bool DialogSystem::PostUpdate()
 bool DialogSystem::CleanUp()
 {
 	//TODO cleanup
+
+	delete(timer);
+
+	if (current_dialog != nullptr)
+		delete(current_dialog);
+
+	while (!dialog_queue.empty())
+	{
+		dialog_queue.pop();
+	}
+
+	for (std::vector<Dialog*>::iterator dialog = dialogs.begin(); dialog != dialogs.end(); ++dialog)
+	{
+		(*dialog)->dialog_bubbles.clear();
+	}
+
+	dialogs.clear();
+
+	App->scene_manager->gameplay_scene->HUD_dialog_text.clear();
+
 	return true;
 }
 
@@ -152,7 +172,7 @@ void DialogSystem::StartDialog(int tree_id)
 
 				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = true;
 				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_interactible = false;
-				App->scene_manager->gameplay_scene->HUD_dialogs_background->SetScreenPos((*dialog)->position);
+				App->scene_manager->gameplay_scene->HUD_dialogs_background->SetElementPosition((*dialog)->position);
 
 				dialog_queue.push((*dialog));
 
@@ -175,7 +195,23 @@ void DialogSystem::EmptyText()
 {
 	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin() ; text != App->scene_manager->gameplay_scene->HUD_dialog_text.end() ; ++text)
 	{
-		(*text)->GetString()->clear();
+		(*text)->DeleteCurrentStringTex();
+	}
+}
+
+void DialogSystem::DisableText()
+{
+	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
+	{
+		(*text)->is_visible = false;
+	}
+}
+
+void DialogSystem::EnableText()
+{
+	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
+	{
+		(*text)->is_visible = true;
 	}
 }
 
@@ -203,22 +239,43 @@ void DialogSystem::NextDialog()
 
 void DialogSystem::TypeText()
 {
+	int i = 0;
+	for (std::vector<std::string>::iterator text = current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.begin(); text != current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.end(); ++text)
+	{
+		App->scene_manager->gameplay_scene->HUD_dialog_text[i]->RefreshTextInput((*text).c_str());
 
+		i++;
+	}
+
+	dialog_state = DialogState::ACTIVE;
+
+	timer->Start();
 }
 
 void DialogSystem::SlideIn()
 {
+	dialog_state = DialogState::TEXT_TYPING;
 
+	EnableText();
+
+	App->scene_manager->gameplay_scene->HUD_dialogs_background->SetElementPosition(current_dialog->position);
 }
 
 void DialogSystem::SlideOut()
 {
-
+	EmptyText();
+	DisableText();
+	current_dialog = nullptr;
+	App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = false;
+	dialog_state = DialogState::NOT_ACTIVE;
 }
 
 bool DialogSystem::LoadDialog()
 {
 	dialog_font = App->font->Load("fonts/Minecraftia-Regular.ttf", font_size);
+	dialog_color = { 255,255,100,255 };
+
+	timer = new Timer;
 
 	pugi::xml_parse_result result = dialog_file.load_file("dialog.xml");
 
@@ -243,7 +300,7 @@ bool DialogSystem::LoadDialog()
 		}
 	}
 
-	current_dialog = dialogs.front(); //start first dialog
+	current_dialog = nullptr; //start first dialog
 
 	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
 	App->scene_manager->gameplay_scene->HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, false, true, false, this, nullptr);
@@ -251,6 +308,8 @@ bool DialogSystem::LoadDialog()
 	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
 	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
 	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+
+	dialog_state = DialogState::NOT_ACTIVE;
 
 	return result;
 }
