@@ -29,15 +29,15 @@ Quest::~Quest()
 
 }
 
-Event::Event(EVENT_TYPE m_type)
-{
-	type = m_type;
-}
-
-Event::~Event()
-{
-
-}
+//Event::Event(EVENT_TYPE m_type)
+//{
+//	type = m_type;
+//}
+//
+//Event::~Event()
+//{
+//
+//}
 
 bool QuestManager::Awake(pugi::xml_node& config)
 {
@@ -59,9 +59,8 @@ bool QuestManager::Awake(pugi::xml_node& config)
 		new_quest->id = quest_node.attribute("id").as_int();
 		new_quest->title = quest_node.attribute("title").as_string();
 		new_quest->trigger = quest_node.attribute("trigger").as_int();
+		new_quest->requisites = quest_node.attribute("requisites").as_int();
 		new_quest->description = quest_node.attribute("description").as_string();
-		new_quest->reward = quest_node.attribute("reward").as_int();
-
 
 		
 		if (new_quest->trigger == 1)
@@ -103,26 +102,3 @@ pugi::xml_node QuestManager::LoadQuests(pugi::xml_document& file) const
 	return ret;
 }
 
-Event* QuestManager::createEvent(pugi::xml_node& xmlReader) {
-
-	/*TODO 4:
-	See how the createEvent() function works
-	*/
-	Event* ret = nullptr;
-
-	int type = xmlReader.attribute("type").as_int();
-
-	switch (type)
-	{
-	case 1:
-		//int count = xmlReader.child("requisites").attribute("count").as_int;
-
-		ret = new KillEvent();
-		break;
-	default:
-		ret = nullptr;
-		break;
-	}
-
-	return ret;
-}
