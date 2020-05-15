@@ -183,6 +183,7 @@ void DialogSystem::NextBubbleCheck()
 	{
 		timer->Start();
 		current_dialog->NextBubble();
+		is_clicked = false;
 	}
 }
 
