@@ -83,6 +83,9 @@ bool EntityManager::Start()
 	{
 		entities[i]->Start();
 	}
+
+	kill_count = 0;
+
 	return true;
 }
 

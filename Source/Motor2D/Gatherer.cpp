@@ -208,12 +208,6 @@ void Gatherer::GatherResource()
 		{
 			if (App->entity_manager->IsResource(target))
 			{
-				if (target->current_health < 0)
-				{
-					target = nullptr;
-					return;
-				}
-
 				ApplyDamage(target);
 				App->audio->PlayFx(App->entity_manager->gather_fx);
 				gather_in_cooldown = true;
@@ -228,7 +222,7 @@ void Gatherer::GatherResource()
 					App->entity_manager->resource_electricity += gathering_amount_electricity;
 					LOG("Electricity gathered: %d", App->entity_manager->resource_electricity);
 				}
-				else if (target->type == ENTITY_TYPE::BITS && target->current_health <= 0)
+				else if (target->type == ENTITY_TYPE::BITS)
 				{
 					App->entity_manager->resource_bits += gathering_amount_bits;
 					LOG("Electricity gathered: %d", App->entity_manager->resource_bits);

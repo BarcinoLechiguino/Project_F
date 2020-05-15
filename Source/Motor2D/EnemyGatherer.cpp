@@ -87,6 +87,7 @@ bool EnemyGatherer::PostUpdate()
 {
 	if (current_health <= 0)
 	{
+		App->entity_manager->kill_count++;
 		App->entity_manager->DeleteEntity(this);
 	}
 

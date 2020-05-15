@@ -542,7 +542,7 @@
     <Xml Include="..\Game\ps_config.xml">
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
-    <Xml Include="quest_data.xml">
+    <Xml Include="..\Game\quest_data.xml">
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
   </ItemGroup>
