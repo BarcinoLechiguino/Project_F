@@ -194,38 +194,32 @@ iPoint UI::GetMouseMotion() /*const*/
 	return mouse_motion;
 }
 
-// --- This method checks whether a UI Element is being hovered (The mouse is inside it's hitbox).
-bool UI::IsHovered() const
+bool UI::IsHovered() const																					// Returns true if a UI Element is being hovered (The mouse is inside it's hitbox).
 {
 	return CheckMousePos();
 }
 
-// --- This method checks whether the focused element is the same as the element that called the method.
-bool UI::IsFocused() const
+bool UI::IsFocused() const																					// Returns true if the focused element is the same as the one that called the method.
 {
 	return App->gui_manager->focused_element == this;
 }
 
-// --- This method checks whether the element that called the method is the foremost element under the mouse.
-bool UI::IsForemostElement() const
+bool UI::IsForemostElement() const																			// Return true if the element that called the method is the first under the mouse.
 {
 	return App->gui_manager->FirstInteractibleElementUnderCursor() == this;
 }
 
-// --- This method checks whether or not the element that called the method fulfills the conditions to be dragged.
-bool UI::ElementCanBeDragged() const
+bool UI::ElementCanBeDragged() const																		// Returns true if the element that called the method meets the dragging conditions.
 {
 	return ((is_draggable && is_drag_target && App->gui_manager->FirstInteractibleElementUnderCursor() == this) || is_drag_target);
 }
 
-// --- This method checks whetheror not the element that called the method has been clicked but not dragged anywhere.
-bool UI::ElementRemainedInPlace() const
+bool UI::ElementRemainedInPlace() const																		// Returns true if the element that called the method has remained in place.
 {
 	return (GetScreenPos() == initial_position);
 }
 
-// --- Drags an element around taking into account where the mouse was and where it currently is.
-void UI::DragElement()
+void UI::DragElement()																			// Will drag an element around taking into account where the mouse was and where it currently is.
 {	
 																								// --- Updating the UI Element's position when it is being dragged.
 	iPoint origin(0, 0);																		//This prevents sending undragged elements to undesired places when passing 
@@ -238,9 +232,9 @@ void UI::DragElement()
 	}
 
 																								// --- Updating the UI Element's hitbox rect when it is being dragged.
-	SDL_Rect newPosRect = { position.x, position.y, rect.w, rect.h };
+	SDL_Rect new_position_rect = { position.x, position.y, rect.w, rect.h };
 
-	this->SetHitbox(newPosRect);
+	this->SetHitbox(new_position_rect);
 
 	//iPoint draggingPos = position + GetMouseMotion();
 }

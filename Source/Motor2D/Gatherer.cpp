@@ -202,39 +202,52 @@ void Gatherer::PathToGatheringTarget()
 
 void Gatherer::GatherResource()
 {
-	if (!gather_in_cooldown)
+	if (target->current_health > 0)
 	{
-		if (App->entity_manager->IsResource(target))
+		if (!gather_in_cooldown)
 		{
-			ApplyDamage(target);
-			App->audio->PlayFx(App->entity_manager->gather_fx);
-			gather_in_cooldown = true;
+			if (App->entity_manager->IsResource(target))
+			{
+				ApplyDamage(target);
+				App->audio->PlayFx(App->entity_manager->gather_fx);
+				gather_in_cooldown = true;
 
-			if (target->type == ENTITY_TYPE::ROCK)
-			{
-				App->entity_manager->resource_data += gathering_amount_data;
-				LOG("Data gathered: %d", App->entity_manager->resource_data);
-			}
-			else if (target->type == ENTITY_TYPE::TREE)
-			{
-				App->entity_manager->resource_electricity += gathering_amount_electricity;
-				LOG("Electricity gathered: %d", App->entity_manager->resource_electricity);
+				if (target->type == ENTITY_TYPE::ROCK)
+				{
+					App->entity_manager->resource_data += gathering_amount_data;
+					LOG("Data gathered: %d", App->entity_manager->resource_data);
+				}
+				else if (target->type == ENTITY_TYPE::TREE)
+				{
+					App->entity_manager->resource_electricity += gathering_amount_electricity;
+					LOG("Electricity gathered: %d", App->entity_manager->resource_electricity);
+				}
+				else if (target->type == ENTITY_TYPE::BITS)
+				{
+					App->entity_manager->resource_bits += gathering_amount_bits;
+					LOG("Electricity gathered: %d", App->entity_manager->resource_bits);
+				}
 			}
 		}
-		if (target->current_health <= 0)
+		else
 		{
-			target = nullptr;
+			accumulated_cooldown += App->GetDt();
+
+			if (accumulated_cooldown >= gathering_speed)
+			{
+				gather_in_cooldown = false;
+				accumulated_cooldown = 0.0f;
+			}
 		}
 	}
 	else
 	{
-		accumulated_cooldown += App->GetDt();
+		target = nullptr;
 
-		if (accumulated_cooldown >= gathering_speed)
-		{
-			gather_in_cooldown = false;
-			accumulated_cooldown = 0.0f;
-		}
+		gather_in_cooldown = false;											// Reseting the attack for the next time the unit has a target.
+		accumulated_cooldown = 0.0f;
+
+		return;
 	}
 }
 
@@ -275,6 +288,7 @@ void Gatherer::InitEntity()
 	gathering_speed = 1.0f;
 	gathering_amount_data = 30;
 	gathering_amount_electricity = 15;
+	gathering_amount_bits = 1;
 
 	attack_damage = 10; //temporary use of these variables to check if it works
 

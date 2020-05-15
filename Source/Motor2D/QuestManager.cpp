@@ -3,6 +3,10 @@
 #include "Point.h"
 #include "Log.h"
 #include <vector>
+#include "EntityManager.h"
+#include "SceneManager.h"
+#include "Scene.h"
+#include "GameplayScene.h"
 #include "Application.h"
 
 QuestManager::QuestManager() {}
@@ -10,31 +14,21 @@ QuestManager::QuestManager() {}
 
 QuestManager::~QuestManager()
 {
-	for (std::list <Quest*>::iterator it = loaded_quests.begin(); it != loaded_quests.end(); it++)
+	for (std::vector <Quest*>::iterator it = loaded_quests.begin(); it != loaded_quests.end(); it++)
 	{
 		loaded_quests.erase(it);
 	}
-	for (std::list <Quest*>::iterator it = active_quests.begin(); it != active_quests.end(); it++)
+	for (std::vector <Quest*>::iterator it = active_quests.begin(); it != active_quests.end(); it++)
 	{
 		active_quests.erase(it);
 	}
-	for (std::list <Quest*>::iterator it = finished_quests.begin(); it != finished_quests.end(); it++)
+	for (std::vector <Quest*>::iterator it = finished_quests.begin(); it != finished_quests.end(); it++)
 	{
 		finished_quests.erase(it);
 	}
 }
 
 Quest::~Quest()
-{
-
-}
-
-Event::Event(EVENT_TYPE m_type)
-{
-	type = m_type;
-}
-
-Event::~Event()
 {
 
 }
@@ -59,11 +53,10 @@ bool QuestManager::Awake(pugi::xml_node& config)
 		new_quest->id = quest_node.attribute("id").as_int();
 		new_quest->title = quest_node.attribute("title").as_string();
 		new_quest->trigger = quest_node.attribute("trigger").as_int();
+		new_quest->requisites = quest_node.attribute("requisites").as_int();
 		new_quest->description = quest_node.attribute("description").as_string();
-		new_quest->reward = quest_node.attribute("reward").as_int();
 
 
-		
 		if (new_quest->trigger == 1)
 		{
 			active_quests.push_back(new_quest);
@@ -80,6 +73,16 @@ bool QuestManager::Awake(pugi::xml_node& config)
 
 bool QuestManager::Start()
 {
+
+	return true;
+}
+
+bool QuestManager::Update(float dt)
+{
+	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)
+	{
+		CheckQuests();
+	}
 
 	return true;
 }
@@ -103,26 +106,47 @@ pugi::xml_node QuestManager::LoadQuests(pugi::xml_document& file) const
 	return ret;
 }
 
-Event* QuestManager::createEvent(pugi::xml_node& xmlReader) {
-
-	/*TODO 4:
-	See how the createEvent() function works
-	*/
-	Event* ret = nullptr;
-
-	int type = xmlReader.attribute("type").as_int();
-
-	switch (type)
+void QuestManager::CheckQuests()
+{
+	for (std::vector<Quest*>::iterator it = active_quests.begin(); it != active_quests.end(); it++)
 	{
-	case 1:
-		//int count = xmlReader.child("requisites").attribute("count").as_int;
+		int quest_id = (*it)->id;
 
-		ret = new KillEvent();
-		break;
-	default:
-		ret = nullptr;
-		break;
+		switch (quest_id)
+		{
+		case 0:
+			if (App->scene_manager->gameplay_scene->CheckForTownHall() == false && ((*it)->requisites == 0))
+			{
+				(*it)->completed = true;
+				LOG("QUEST #1 COMPLETED");
+			}
+			break;
+
+		case 1:
+			if (App->entity_manager->resource_data > 0 && App->entity_manager->resource_electricity > 0 && ((*it)->requisites == 0))
+			{
+				(*it)->completed = true;
+				LOG("QUEST #2 COMPLETED");
+			}
+			break;
+
+		case 2:
+			if (App->entity_manager->resource_bits >= 3 && ((*it)->requisites == 0))
+			{
+				(*it)->completed = true;
+				LOG("QUEST #3 COMPLETED");
+			}
+			break;
+
+		case 3:
+			if (App->entity_manager->kill_count >= 10)
+			{
+				(*it)->completed = true;
+				LOG("QUEST #4 COMPLETED");
+			}
+			break;
+		default:
+			break;
+		}
 	}
-
-	return ret;
 }

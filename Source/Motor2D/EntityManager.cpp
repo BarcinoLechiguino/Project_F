@@ -47,11 +47,9 @@ struct {
 	}
 } customLess;
 
-EntityManager::EntityManager()	//Sets the j1Player1* pointers declared in the header to nullptr
+EntityManager::EntityManager() : entity_map(nullptr)
 {
 	name = ("entities");
-
-	entity_map = nullptr;
 }
 
 EntityManager::~EntityManager()
@@ -85,6 +83,9 @@ bool EntityManager::Start()
 	{
 		entities[i]->Start();
 	}
+
+	kill_count = 0;
+
 	return true;
 }
 
@@ -680,9 +681,15 @@ bool EntityManager::InViewport(Entity* entity)
 
 void EntityManager::SetEntityMap(int width, int height)
 {
+	if (entity_map != nullptr)
+	{
+		RELEASE_ARRAY(entity_map);
+	}
+
 	entity_map_width = width;
 	entity_map_height = height;
 	//RELEASE_ARRAY(entity_map); //Used to crash
+
 	entity_map = new Entity* [width * height];
 
 	for (int y = 0; y < height; ++y)

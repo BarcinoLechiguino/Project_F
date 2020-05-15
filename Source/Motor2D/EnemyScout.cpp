@@ -100,6 +100,7 @@ bool EnemyScout::PostUpdate()
 {
 	if (current_health <= 0)
 	{
+		App->entity_manager->kill_count++;
 		App->entity_manager->DeleteEntity(this);
 	}
 
@@ -363,26 +364,33 @@ void EnemyScout::ChaseTarget()
 
 void EnemyScout::DealDamage()
 {
-	if (!attack_in_cooldown)
+	if (target->current_health > 0)
 	{
-		ApplyDamage(target);
-		App->audio->PlayFx(App->entity_manager->infantry_shot_fx);
-		attack_in_cooldown = true;
+		if (!attack_in_cooldown)
+		{
+			ApplyDamage(target);
+			App->audio->PlayFx(App->entity_manager->infantry_shot_fx);
+			attack_in_cooldown = true;
+		}
+		else
+		{
+			accumulated_cooldown += App->GetDt();
+
+			if (accumulated_cooldown >= attack_speed)
+			{
+				attack_in_cooldown = false;
+				accumulated_cooldown = 0.0f;
+			}
+		}
 	}
 	else
 	{
-		accumulated_cooldown += App->GetDt();
-
-		if (accumulated_cooldown >= attack_speed)
-		{
-			attack_in_cooldown = false;
-			accumulated_cooldown = 0.0f;
-		}
-	}
-
-	if (target->current_health <= 0)
-	{
 		target = nullptr;
+
+		attack_in_cooldown = false;
+		accumulated_cooldown = 0.0f;
+
+		return;
 	}
 }
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.3.3" orientation="isometric" renderorder="right-down" compressionlevel="0" width="50" height="50" tilewidth="54" tileheight="40" infinite="0" nextlayerid="7" nextobjectid="54">
+<map version="1.2" tiledversion="1.2.5" orientation="isometric" renderorder="right-down" width="50" height="50" tilewidth="54" tileheight="40" infinite="0" nextlayerid="8" nextobjectid="55">
  <tileset firstgid="1" name="Prototileset" tilewidth="54" tileheight="44" tilecount="12" columns="4">
   <image source="Prototileset.png" width="216" height="153"/>
  </tileset>
@@ -2557,6 +2557,7 @@
   <object id="51" name="enemy" type="enemy" x="760" y="1160" width="40" height="40"/>
   <object id="52" name="enemy" type="enemy" x="200" y="920" width="40" height="40"/>
   <object id="53" name="enemy" type="enemy" x="1000" y="120" width="40" height="40"/>
+  <object id="54" name="bit" type="bit" x="437.58" y="1877.09" width="40" height="40"/>
  </objectgroup>
  <layer id="3" name="walkability" width="50" height="50">
   <data>

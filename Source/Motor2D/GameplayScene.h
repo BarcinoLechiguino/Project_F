@@ -33,13 +33,15 @@ public:
 
 	//bool Load(pugi::xml_node& data);
 	//bool Save(pugi::xml_node& data) const;
-	void CheckForWinLose();
-
+	
 
 public:
 	void InitScene();
 
 	void ExecuteTransition();
+
+	void CheckForWinLose();
+	bool CheckForTownHall();
 
 	// --- Entity Spawn Methods.
 	void SpawnAllyUnit(ENTITY_TYPE type);
@@ -296,6 +298,17 @@ public:
 	UI_Button*				HUD_missions_tab_close;
 	UI_Image*				HUD_missions_background;
 	UI_Text*				HUD_missions_title;
+	UI_Text*				HUD_missions_title_primary;
+	UI_Text*				HUD_missions_primary_quest;
+	UI_Text*				HUD_missions_title_side;
+	UI_Text*				HUD_missions_side_quest;
+	UI_Text*				HUD_missions_side_quest2;
+	UI_Text*				HUD_missions_side_quest3;
+
+	UI_Image*				HUD_missions_checkbox_in_progress_main_quest;
+	UI_Image*				HUD_missions_checkbox_in_progress_side_quest;
+	UI_Image*				HUD_missions_checkbox_in_progress_side_quest2;
+	UI_Image*				HUD_missions_checkbox_in_progress_side_quest3;
 
 	//Dialogs
 

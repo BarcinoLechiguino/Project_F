@@ -125,6 +125,7 @@
           <gathering_range range="2"/>
           <gathering_amount_data amount="30"/>
           <gathering_amount_electricity amount="15"/>
+          <gathering_amount_bits amount="1"/>
           <gathering_amount_chunks amount="10"/>
           
           <healthbar_background_section x="618" y="12" w="115" h="9"/>

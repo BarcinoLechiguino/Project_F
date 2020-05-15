@@ -51,6 +51,7 @@ public:
 	float	gathering_speed;
 	int		gathering_amount_data;
 	int		gathering_amount_electricity;
+	int		gathering_amount_bits;
 	bool	gather_in_cooldown;
 
 };

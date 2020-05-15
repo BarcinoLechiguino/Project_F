@@ -149,5 +149,7 @@ public:
 	uint							resource_data;
 	uint							resource_electricity;
 	uint							resource_bits;
+	
+	uint							kill_count;
 };
 #endif // __ENTITY_MANAGER_H__

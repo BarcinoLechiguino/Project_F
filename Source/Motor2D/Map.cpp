@@ -135,8 +135,24 @@ void Map::DrawFowTile(const iPoint& tile_position, const iPoint& world_position)
 	uchar fow_state			= App->fow_manager->GetVisibilityAt(tile_position);																// Can be either UNEXPLORED, FOGGED or VISIBLE.
 	uchar smoothing_state	= 0;																											// Smoothing state of the tile (if it is the case).
 	SDL_Rect fow_tile_rect	= { 0, 0, 0, 0 };																								// Fow Tile Sprite Section.
-	//SDL_Rect fow_tile_rect	= App->fow_manager->GetFowTileRect(fow_state);																	// Fow Tile Sprite Section.
 
+	// NO FOW TILE SMOOTHING
+	fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+	App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+
+	// --- First tile out of line_of_sight is FOGGED
+	/*if (fow_state == UNEXPLORED && !App->fow_manager->CheckNeighbourTilesVisibility(tile_position))
+	{
+		fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);
+		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+	}
+	else
+	{
+		fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+	}*/
+
+	// FOW TILE SMOOTHING
 	/*if (fow_state == FOGGED)
 	{
 		smoothing_state = (uchar)App->fow_manager->GetSmoothingStateAt(tile_position);
@@ -179,10 +195,6 @@ void Map::DrawFowTile(const iPoint& tile_position, const iPoint& world_position)
 	{
 		return;
 	}*/
-
-
-	fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-	App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
 }
 
 void Map::DataMapDebug()
@@ -665,7 +677,7 @@ void Map::LoadMetaDataMaps()
 
 	App->entity_manager->SetEntityMap(data.width, data.height);
 
-	App->fow_manager->SetVisibilityMap(data.width, data.height);
+	App->fow_manager->SetVisibilityMap(data.width, data.height);				//
 }
 
 //Loads the object layers (colliders) from the xml map. It iterates through  a specific object layer (in the load() it is iterated through to get all the object info).
@@ -752,8 +764,13 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 		}
 		else if (object_type == "tree")
 		{
-			//objectgroup->object[index].type = ROCK;
+			objectgroup->object[index].type = TREE;
 			App->entity_manager->CreateEntity(ENTITY_TYPE::TREE, tile_coords.x, tile_coords.y);
+		}
+		else if (object_type == "bit")
+		{
+			objectgroup->object[index].type = BITS;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::BITS, tile_coords.x, tile_coords.y);
 		}
 
 		index++;
