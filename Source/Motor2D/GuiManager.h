@@ -16,6 +16,8 @@ class Entity;
 class UI;
 enum class UI_ELEMENT;
 
+class UIAnimation;
+
 class GuiManager : public Module
 {
 public:
@@ -68,23 +70,29 @@ public:																		//  ------------------ GUI ELEMENT CREATION/DESTRUCTION
 	void UnLoadGuiElementsAudio();
 
 public:																		// -------- GUI ELEMENT ANIMATION CREATION/DESTRUCTION METHODS --------
+	UIAnimation* CreateFadeAnimation(UI* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha);
+	UIAnimation* CreateSlideAnimation(UI* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position);
 
+	void DeleteUIAnimation(UIAnimation* ui_animation_to_delete);
+	void CancelUIAnimation(UI* element_being_animated);
+	void DestroyUIAnimations();
 
 public:																		// ------------------ GUI ELEMENT MANAGEMENT METHODS ------------------
 	void OnEventCall(UI* element, UI_EVENT ui_event);						//This function is called whenever an new event happens, it receives the pointer of the element that caused the event and the kind of event it is.
 	void PassFocus();														//Method that passes the focus from an interactible and able to focused element to another with the same conditions.
-	bool ElementCanBeFocused(UI* focusElement) const;						//If an element fulfills all requirements (is a button or a scrollbar), then this method returns true. Used to filter which UI elements can or cannot have focus.
+	bool ElementCanBeFocused(UI* focus_element) const;						//If an element fulfills all requirements (is a button or a scrollbar), then this method returns true. Used to filter which UI elements can or cannot have focus.
 	
 	//bool VisibleElementIsUnderMouse() const;								//Returns true if the mouse is over a visible UI_Element.
 	bool VisibleElementIsUnderCursor() const;								//Returns true if the mouse is over a visible UI_Element.		//TMP CONTROLLER
 
-	//UI* FirstInteractibleElementUnderMouse() const;							//Returs the first interactible element under the mouse.
+	//UI* FirstInteractibleElementUnderMouse() const;						//Returs the first interactible element under the mouse.
 	UI* FirstInteractibleElementUnderCursor() const;						//Returs the first interactible element under the mouse.		//TMP CONTROLLER
-	bool ElementCanBeClicked(UI* clickedElement) const;
+	bool ElementCanBeClicked(UI* clicked_element) const;
 
-	bool ElementHasChilds(UI* parentElement) const;							//Returns true if the element passed as argument has at least one child.
-	void UpdateChilds(UI* parentElement);									//Updates all UI Elements that have the element passed as argument as a parent.
-	void SetElementsVisibility(UI* parentElement, bool state);				//Enables/Disables the isVisible bool of a UI Element and its childs according to the passed arguments.
+	bool ElementHasChilds(UI* parent_element) const;						//Returns true if the element passed as argument has at least one child.
+	void UpdateChilds(UI* parent_element);									//Updates all UI Elements that have the element passed as argument as a parent.
+	void SetElementsVisibility(UI* parent_element, bool state);				//Enables/Disables the isVisible bool of a UI Element and its childs according to the passed arguments.
+	std::vector<UI*> GetElementChilds(UI* parent_element);
 
 	void Debug_UI();														//Shows on screen the different rects that compose the UI Display.
 
@@ -120,7 +128,7 @@ private:																	// --- GUI PRIVATE VARIABLES ---
 	std::string					atlas_file_name;							//Name of the atlas in the xml file.
 
 	std::vector<UI*>			elements;									//List where all the UI elements in a scene will be stored at.
-	//std::vector
+	std::vector<UIAnimation*>	ui_animations;
 };
 
 #endif // __GUI_H__

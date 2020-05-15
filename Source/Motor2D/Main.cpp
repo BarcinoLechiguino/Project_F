@@ -35,7 +35,7 @@ int main(int argc, char* args[])
 
 	while(state != MainState::EXIT)
 	{
-		BROFILER_FRAME("MUTUAL COOP. Brofiler Test");
+		BROFILER_FRAME("PROJECT F Brofiler Test");
 		switch(state)
 		{
 

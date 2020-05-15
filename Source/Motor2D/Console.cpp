@@ -348,7 +348,7 @@ void Console::OnCommand(const char* command, const char* subCommand)
 	// --- CONSOLE COMMANDS
 	if (App->input->CmpStr(command, command_list))
 	{
-		ShellExecuteA(NULL, "open", "https://gromeu2000.wixsite.com/mutualcooperation", NULL, NULL, SW_SHOWNORMAL);
+		//ShellExecuteA(NULL, "open", "https://gromeu2000.wixsite.com/mutualcooperation", NULL, NULL, SW_SHOWNORMAL);
 	}
 	
 	// --- APP COMMANDS

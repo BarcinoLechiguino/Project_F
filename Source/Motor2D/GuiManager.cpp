@@ -1,3 +1,5 @@
+#include "Brofiler\Brofiler.h"
+
 #include "Log.h"
 
 #include "Application.h"
@@ -21,7 +23,9 @@
 #include "UI_CreationBar.h"
 #include "UI_Cursor.h"
 
-#include "Brofiler\Brofiler.h"
+#include "UIAnimation.h"
+#include "UIAnimationFade.h"
+#include "UIAnimationSlide.h"
 
 GuiManager::GuiManager() : Module()
 {
@@ -119,6 +123,18 @@ bool GuiManager::PostUpdate()
 	BROFILER_CATEGORY("GUI_PostUpdate", Profiler::Color::NavajoWhite);
 	
 	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
+
+	for (int i = 0; i < (int)ui_animations.size(); ++i)
+	{
+		if (!ui_animations[i]->to_delete)
+		{
+			ui_animations[i]->StepAnimation();
+		}
+		else
+		{
+			DeleteUIAnimation(ui_animations[i]);
+		}
+	}
 
 	for (int i = 0; i < (int)elements.size(); ++i)
 	{
@@ -333,7 +349,78 @@ void GuiManager::UnLoadGuiElementsAudio()
 
 }
 
-//--------------------------------- INPUT PROCESSING METHODS ---------------------------------
+// --------------------------------- UI ANIMATION METHODS ---------------------------------
+UIAnimation* GuiManager::CreateFadeAnimation(UI* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha)
+{
+	UIAnimation* ui_animation = nullptr;
+
+	ui_animation = new UIAnimationFade(element, animation_duration, hide_on_completion, start_alpha, end_alpha);
+
+	if (ui_animation != nullptr)
+	{
+		ui_animations.push_back(ui_animation);
+	}
+
+	return ui_animation;
+}
+
+UIAnimation* GuiManager::CreateSlideAnimation(UI* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position)
+{
+	UIAnimation* ui_animation = nullptr;
+
+	ui_animation = new UIAnimationSlide(element, animation_duration, hide_on_completion, initial_position, final_position);
+
+	if (ui_animation != nullptr)
+	{
+		ui_animations.push_back(ui_animation);
+	}
+
+	return ui_animation;
+}
+
+void GuiManager::DeleteUIAnimation(UIAnimation* ui_animation_to_delete)
+{
+	std::vector<UIAnimation*>::iterator ui_animation = ui_animations.begin();
+
+	for (; ui_animation != ui_animations.end(); ++ui_animation)
+	{
+		if ((*ui_animation) == ui_animation_to_delete)
+		{
+			(*ui_animation)->CleanUp();
+			RELEASE((*ui_animation));
+
+			ui_animations.erase(ui_animation);
+
+			break;
+		}
+	}
+}
+
+void GuiManager::CancelUIAnimation(UI* element_being_animated)
+{
+	for (int i = 0; i < ui_animations.size(); ++i)
+	{
+		if (ui_animations[i]->element == element_being_animated)					// If the element of the UIAnimation* is the element passed as argument.
+		{
+			DeleteUIAnimation(ui_animations[i]);
+		}
+	}
+}
+
+void GuiManager::DestroyUIAnimations()
+{
+	std::vector<UIAnimation*>::iterator ui_animation = ui_animations.begin();
+
+	for (; ui_animation != ui_animations.end(); ++ui_animation)
+	{
+		(*ui_animation)->CleanUp();
+		RELEASE((*ui_animation));
+	}
+
+	ui_animations.clear();
+}
+
+// --------------------------------- INPUT PROCESSING METHODS ---------------------------------
 void GuiManager::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	BROFILER_CATEGORY("GUI_OnEventCall", Profiler::Color::NavajoWhite);
@@ -460,15 +547,15 @@ void GuiManager::PassFocus()
 }
 
 // --- Method that returns true if the passed element is a visible BUTTON, INPUTBOX or a SCROLLBAR
-bool GuiManager::ElementCanBeFocused(UI* focusElement) const
+bool GuiManager::ElementCanBeFocused(UI* focus_element) const
 {
 	bool ret = false;
 
-	if (focusElement->is_visible
-		/*&& focusElement->isInteractible */
-			&& (focusElement->element == UI_ELEMENT::BUTTON
-			|| focusElement->element == UI_ELEMENT::SCROLLBAR
-			|| focusElement->element == UI_ELEMENT::INPUTBOX))
+	if (focus_element->is_visible
+		/*&& focus_element->isInteractible */
+			&& (focus_element->element == UI_ELEMENT::BUTTON
+			|| focus_element->element == UI_ELEMENT::SCROLLBAR
+			|| focus_element->element == UI_ELEMENT::INPUTBOX))
 	{
 		ret = true;
 	}
@@ -478,7 +565,7 @@ bool GuiManager::ElementCanBeFocused(UI* focusElement) const
 
 // --------------------------- PARENT/CHILD UI ELEMENTS METHODS --------------------------
 // --- 
-bool GuiManager::ElementHasChilds(UI* parentElement) const
+bool GuiManager::ElementHasChilds(UI* parent_element) const
 {
 	bool ret = false;
 
@@ -486,7 +573,7 @@ bool GuiManager::ElementHasChilds(UI* parentElement) const
 
 	for (; elem != elements.cend(); ++elem)
 	{
-		if ((*elem)->parent == parentElement)
+		if ((*elem)->parent == parent_element)
 		{
 			ret = true;
 			break;
@@ -496,43 +583,65 @@ bool GuiManager::ElementHasChilds(UI* parentElement) const
 	return ret;
 }
 
-void GuiManager::UpdateChilds(UI* parentElement)
+void GuiManager::UpdateChilds(UI* parent_element)
 {
 	std::vector<UI*>::iterator child = elements.begin();
 
 	for (; child != elements.end(); ++child)
 	{
-		if ((*child)->parent == parentElement)
+		if ((*child)->parent == parent_element)
 		{
-			(*child)->previous_mouse_position = (*child)->parent->previous_mouse_position;				//The prevMousePos of the element being iterated is set with the parent's prev mouse pos.
-			(*child)->DragElement();												//The child is also dragged, just as the parent.
+			(*child)->previous_mouse_position = (*child)->parent->previous_mouse_position;		//The prevMousePos of the element being iterated is set with the parent's prev mouse pos.
+			(*child)->DragElement();															//The child is also dragged, just as the parent.
 
-			if (ElementHasChilds((*child)))											//If the first child also has child elements, then they are updated the same way.
+			if (ElementHasChilds((*child)))														//If the first child also has child elements, then they are updated the same way.
 			{
-				UpdateChilds((*child));												//Recursive function, maybe avoid?
+				UpdateChilds((*child));															//Recursive function, maybe avoid?
 			}
 		}
 	}
 }
 
-void GuiManager::SetElementsVisibility(UI* parentElement, bool state)
+void GuiManager::SetElementsVisibility(UI* parent_element, bool state)
 {
 	std::vector<UI*>::iterator child = elements.begin();
 
 	for (; child != elements.end(); ++child)
 	{
-		if ((*child)->parent == parentElement)										//If the parent of the iterated element is parentElement.
-		{
-			(*child)->is_visible = state;											//Enables/Disables the iterated child's visibility. Changes isVisible from true to false and viceversa.
-
-			if (ElementHasChilds((*child)))											//If the first child also has child elements, then they are updated the same way.
-			{
-				SetElementsVisibility((*child), state);								//Recursive function, maybe avoid?
+		if ((*child)->parent == parent_element)										// If the parent of the iterated element is parent_element.
+		{																			   
+			(*child)->is_visible = state;											// Enables/Disables the iterated child's visibility. Changes isVisible from true to false and viceversa.
+																					   
+			if (ElementHasChilds((*child)))											// If the first child also has child elements, then they are updated the same way.
+			{																		   
+				SetElementsVisibility((*child), state);								// Recursive function, maybe avoid?
 			}
 		}
 	}
 
-	parentElement->is_visible = state;												//Enables/Disables the parent element's visibility. Changes isVisible from true to false and viceversa.	
+	parent_element->is_visible = state;												// Enables/Disables the parent element's visibility. Changes isVisible from true to false and viceversa.	
+}																					   
+																					   
+std::vector<UI*> GuiManager::GetElementChilds(UI* parent_element)					   
+{																					   
+	std::vector<UI*> childs;														   
+																					   
+	std::vector<UI*>::iterator element = elements.begin();							   
+																					   
+	for (; element != elements.end(); ++element)									   
+	{																				   
+		if ((*element)->parent == parent_element)									   
+		{																			   
+			childs.push_back((*element));											   
+																					   
+			if (ElementHasChilds((*element)))										// If the first child also has child elements, then they are updated the same way.
+			{																		   
+				GetElementChilds((*element));										// Recursive function, maybe avoid?
+			}
+		}
+	}
+
+	return childs;
 }
 
 //----------------------------------- UI DEBUG METHOD -----------------------------------

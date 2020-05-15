@@ -385,6 +385,7 @@ void Infantry::DealDamage()
 			}
 		}
 	}
+	else
 	{
 		target = nullptr;
 

@@ -10,21 +10,6 @@
     <ClCompile Include="UI.cpp">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Button.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Image.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_InputBox.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Scrollbar.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Text.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
@@ -124,9 +109,6 @@
     <ClCompile Include="LoseScene.cpp">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClCompile>
-    <ClCompile Include="UI_Healthbar.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Minimap.cpp">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClCompile>
@@ -141,9 +123,6 @@
     </ClCompile>
     <ClCompile Include="MainMenuScene.cpp">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Cursor.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="Scout.cpp">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
@@ -162,9 +141,6 @@
     </ClCompile>
     <ClCompile Include="EnemyInfantry.cpp">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_CreationBar.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="EnemyAI.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
@@ -244,17 +220,41 @@
     <ClCompile Include="QuestManager.cpp">
       <Filter>Engine  ===========\Modules\Player</Filter>
     </ClCompile>
-    <ClCompile Include="UIAnimationManager.cpp">
-      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
-    </ClCompile>
     <ClCompile Include="UIAnimation.cpp">
       <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
     </ClCompile>
-    <ClCompile Include="UIAnFade.cpp">
+    <ClCompile Include="UIAnimationFade.cpp">
+      <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
+    </ClCompile>
+    <ClCompile Include="UIAnimationManager.cpp">
       <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
     </ClCompile>
-    <ClCompile Include="UIAnSlide.cpp">
-      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
+    <ClCompile Include="UIAnimationSlide.cpp">
+      <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Button.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_CreationBar.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Cursor.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Healthbar.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Image.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_InputBox.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Scrollbar.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="UI_Text.cpp">
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -265,21 +265,6 @@
       <Filter>Engine  ===========\Tools\PuguiXML</Filter>
     </ClInclude>
     <ClInclude Include="UI.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Button.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Image.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_InputBox.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Scrollbar.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Text.h">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Module.h">
@@ -384,9 +369,6 @@
     <ClInclude Include="LoseScene.h">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
     </ClInclude>
-    <ClInclude Include="UI_Healthbar.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Minimap.h">
       <Filter>Engine  ===========\Modules\Map</Filter>
     </ClInclude>
@@ -401,9 +383,6 @@
     </ClInclude>
     <ClInclude Include="MainMenuScene.h">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Cursor.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Scout.h">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
@@ -422,9 +401,6 @@
     </ClInclude>
     <ClInclude Include="EnemyInfantry.h">
       <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_CreationBar.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="EnemyAI.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
@@ -513,17 +489,41 @@
     <ClInclude Include="QuestManager.h">
       <Filter>Engine  ===========\Modules\Player</Filter>
     </ClInclude>
-    <ClInclude Include="UIAnimationManager.h">
-      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
-    </ClInclude>
     <ClInclude Include="UIAnimation.h">
       <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
     </ClInclude>
-    <ClInclude Include="UIAnFade.h">
+    <ClInclude Include="UIAnimationFade.h">
+      <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
+    </ClInclude>
+    <ClInclude Include="UIAnimationManager.h">
       <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
     </ClInclude>
-    <ClInclude Include="UIAnSlide.h">
-      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
+    <ClInclude Include="UIAnimationSlide.h">
+      <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Button.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_CreationBar.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Cursor.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Healthbar.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Image.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_InputBox.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Scrollbar.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="UI_Text.h">
+      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -644,6 +644,9 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\UI\UI Animations">
       <UniqueIdentifier>{05449ae4-8867-4971-b974-2edc1cc72bbe}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\UI\UI Animations\UI Animation Types">
+      <UniqueIdentifier>{2094fca3-f9b9-483b-81dd-f3e64e3e6a18}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

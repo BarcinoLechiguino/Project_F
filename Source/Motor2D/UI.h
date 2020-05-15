@@ -37,9 +37,7 @@ class UI
 {
 public:
 	UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener = nullptr, UI* parent = nullptr);
-
 	UI();
-
 	virtual ~UI();
 
 	virtual bool Draw();
@@ -113,6 +111,8 @@ public:
 	iPoint		initial_position;					// Keeps track of the initial position of a UI Element. Create Get/Set Methods?
 	
 	bool		is_filled;							// Determines if an empty UI Element will have its rect drawn or not.
+
+	bool		is_transitioning;					// 
 
 private:
 

@@ -129,14 +129,16 @@ void UI_Image::CheckInput()
 					is_drag_target = false;
 					initial_position = GetScreenPos();
 				}
-			}
 
-			if (is_interactible)																	//If the image element is interactible.
+				ui_event = UI_EVENT::UNCLICKED;
+			}
+		}
+
+		if (is_interactible)																	//If the image element is interactible.
+		{
+			if (listener != nullptr)
 			{
-				if (listener != nullptr)
-				{
-					listener->OnEventCall(this, ui_event);											//The listener call the OnEventCall() method passing this UI_Image and it's event as arguments.
-				}
+				listener->OnEventCall(this, ui_event);											//The listener call the OnEventCall() method passing this UI_Image and it's event as arguments.
 			}
 		}
 	}

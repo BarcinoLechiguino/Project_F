@@ -11,14 +11,14 @@
 
 UI::UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
 	element(element), position(x, y), rect(rect), listener(listener), parent(parent), drag_x_axis(false), drag_y_axis(false), is_draggable(false), is_drag_target(false), is_filled(false),
-	 is_visible(false), is_interactible(false), local_hitbox({ 0, 0, 0, 0 }), local_rect({ 0, 0, 0, 0 }), ui_event(UI_EVENT::IDLE), hitbox({ 0, 0, 0, 0 })
+	 is_visible(false), is_interactible(false), local_hitbox({ 0, 0, 0, 0 }), local_rect({ 0, 0, 0, 0 }), ui_event(UI_EVENT::IDLE), hitbox({ 0, 0, 0, 0 }), is_transitioning(false)
 {
 	//hitbox = {GetPosition().x, GetPosition().y, GetRect().w, GetRect().h };
 	hitbox = {position.x, position.y, rect.w, rect.h };
 }
 
-UI::UI() : element(UI_ELEMENT::EMPTY), position(0, 0), rect({ 0,0,0,0 }), listener(nullptr), parent(nullptr), drag_x_axis(false), drag_y_axis(false), is_draggable(false),
-	is_drag_target(false), is_filled(false), is_interactible(false), is_visible(false), local_hitbox({ 0,0,0,0 }), local_rect({ 0,0,0,0 }), ui_event(UI_EVENT::IDLE),hitbox({0,0,0,0})
+UI::UI() : element(UI_ELEMENT::EMPTY), position(0, 0), rect({ 0,0,0,0 }), listener(nullptr), parent(nullptr), drag_x_axis(false), drag_y_axis(false), is_draggable(false),is_drag_target(false)
+	, is_filled(false), is_interactible(false), is_visible(false), local_hitbox({ 0,0,0,0 }), local_rect({ 0,0,0,0 }), ui_event(UI_EVENT::IDLE),hitbox({0,0,0,0}), is_transitioning(false)
 {
 
 }
