@@ -50,10 +50,10 @@ enum class FOW_SMOOTHING_STATE
 	FOGGED_RIGHT_DEAD_END,
 	FOGGED_LEFT_DEAD_END,
 
-	FOGGED_OUTER_TOP_RIGHT,					// Outer Top-Right Corner
-	FOGGED_OUTER_TOP_LEFT,					// Outer Top-Left Corner
-	FOGGED_OUTER_DOWN_RIGHT,				// Outer Bottom-Right Corner
+	FOGGED_OUTER_TOP_LEFT,					// Outer Top-Left Corner				// Ordered by order of apparition in the fow_tile spritesheet (from left to right)
 	FOGGED_OUTER_DOWN_LEFT,					// Outer Bottom-Left Corner
+	FOGGED_OUTER_DOWN_RIGHT,				// Outer Bottom-Right Corner
+	FOGGED_OUTER_TOP_RIGHT,					// Outer Top-Right Corner
 	
 	// UNEXPLORED TO FOGGED SMOOTHING
 	UNXTOFOG_TOP,
@@ -71,10 +71,10 @@ enum class FOW_SMOOTHING_STATE
 	UNXTOFOG_RIGHT_DEAD_END,
 	UNXTOFOG_LEFT_DEAD_END,
 
-	UNXTOFOG_OUTER_TOP_RIGHT,				// Outer Top-Right Corner
-	UNXTOFOG_OUTER_TOP_LEFT,				// Outer Top-Left Corner
-	UNXTOFOG_OUTER_BOTTOM_RIGHT,			// Outer Bottom-Right Corner
+	UNXTOFOG_OUTER_TOP_LEFT,				// Outer Top-Left Corner				// Ordered by order of apparition in the fow_tile spritesheet (from left to right)
 	UNXTOFOG_OUTER_BOTTOM_LEFT,				// Outer Bottom-Left Corner
+	UNXTOFOG_OUTER_BOTTOM_RIGHT,			// Outer Bottom-Right Corner
+	UNXTOFOG_OUTER_TOP_RIGHT,				// Outer Top-Right Corner
 };
 
 struct FowEntity
@@ -118,6 +118,9 @@ public:
 
 	uchar GetVisibilityAt(const iPoint& tile_position);															// Will return the current visibility state of the given FOW tile.
 	
+	bool CheckNeighbourTilesVisibility(const iPoint& tile_position);
+	bool AllNeighbourTilesAreInBounds(const iPoint& tile_position);
+
 	FOW_SMOOTHING_STATE GetSmoothingStateAt(const iPoint& tile_position);
 	FOW_SMOOTHING_STATE GetInnerSmoothingStateAt(const iPoint& tile_position);
 	FOW_SMOOTHING_STATE GetOuterSmoothingStateAt(const iPoint& tile_position);
@@ -126,9 +129,8 @@ public:
 
 	FowEntity* CreateFowEntity(const iPoint& tile_position, bool provides_visibility);
 	void DeleteFowEntity(FowEntity* fow_entity_to_delete);														// Will delete the given FowEntity from the fow_entities vector.
-	void DestroyFowEntities();																					// Will delete all fow_entities and will clear the fow_entities vector.
-
 	void ClearFowEntityLineOfSight(FowEntity* fow_entity_to_clear);												// Will add the tiles inside the line_of_sight of an entity to tiles_to_reset.
+	void DestroyFowEntities();																					// Will delete all fow_entities and will clear the fow_entities vector.
 
 	std::vector<iPoint> CreateRectangularFrontier(const int& width, const int& height, const iPoint& center);	// Will create a rectangular frontier outside which visibility won't be provided.
 	std::vector<iPoint> CreateCircularFrontier(const uint& radius, const iPoint& center);						// Will create a circular frontier which visibility won't be provided.
@@ -175,7 +177,6 @@ private:
 	
 	std::vector<FowEntity*> fow_entities;
 	std::vector<iPoint> tiles_to_reset;							// Will store the tiles that need to be set back to FOGGED or UNEXPLORED when an Entity that provided visibility is destroyed.
-	std::vector<iPoint> debug_tiles_to_reset;					// Will store the tiles that need to be set back to UNEXPLORED when an Entity that provided visibility is destroyed in debug mode.
 
 	SDL_Texture* frontier_debug_tex;
 	SDL_Texture* line_of_sight_debug_tex;

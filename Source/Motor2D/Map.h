@@ -25,6 +25,8 @@ enum Object_Type					//Care with enum class. If enum class-> Object_Type::HAZARD
 	HALL,
 	ENEMY_HALL,
 	ROCK,
+	TREE,
+	BITS,
 	NONE,
 	UNKNOWN = -1
 };

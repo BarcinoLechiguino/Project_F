@@ -5,7 +5,6 @@
 
 enum class SCENES;
 
-
 #define MAX_CUTOFF 1.0f
 #define MIN_CUTOFF 0.0f
 
