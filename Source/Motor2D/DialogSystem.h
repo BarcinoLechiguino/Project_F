@@ -12,6 +12,15 @@
 struct _TTF_Font;
 class UI_Image;
 
+enum class DialogState
+{
+	NOT_ACTIVE,
+	SLIDING_IN,
+	TEXT_TYPING,
+	ACTIVE,
+	SLIDING_OUT
+};
+
 //NPC phrase
 class DialogBubble
 {
@@ -51,27 +60,31 @@ public:
 
 	void StartDialog(int tree_id);
 	void NextDialog();
-	void DrawDialog();
 
 	void NextBubbleCheck(); //checks if time or input to go to next dialog
-	void LoadDialogTextures();
+	void EmptyText();
+
+	void TypeText();
+	void SlideIn();
+	void SlideOut();
 
 	bool LoadDialog();
 	bool LoadTextBubbles(Dialog* dialog_tree, pugi::xml_node tree);
 
 public:
-	bool is_dialog_active;
 
 	std::vector <Dialog*> dialogs; //Dialogs loaded available
 	std::queue<Dialog*> dialog_queue; //queue storing pending dialogs
 	Dialog* current_dialog;
+	std::string current_text;
 
-	std::vector<SDL_Texture*> text_texture;
 	SDL_Color dialog_color;
 	_TTF_Font* dialog_font;
 	int font_size;
 
 	Timer* timer;
+
+	DialogState dialog_state;
 public:
 	pugi::xml_document dialog_file;
 };

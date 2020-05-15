@@ -249,6 +249,11 @@ void UI_Text::DeleteCurrentStringTex()
 	current_texture = NULL;
 }
 
+std::string* UI_Text::GetString()
+{
+	return string;
+}
+
 // ----------------------------------------- INPUT TEXT METHODS -----------------------------------------
 void UI_Text::RefreshTextInput(const char* newString)
 {

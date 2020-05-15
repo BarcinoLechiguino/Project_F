@@ -21,6 +21,7 @@ public:
 public:
 	SDL_Texture* GetCurrentStringTex();
 	void DeleteCurrentStringTex();
+	std::string* GetString();
 
 	void RefreshTextInput(const char* newString);
 

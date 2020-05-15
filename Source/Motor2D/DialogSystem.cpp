@@ -5,6 +5,7 @@
 #include "SceneManager.h"
 #include "GuiManager.h"
 #include "UI_Image.h"
+#include "UI_Text.h"
 #include "GameplayScene.h"
 
 #include "Fonts.h"
@@ -37,7 +38,10 @@ void Dialog::NextBubble() //Next bubble in dialog
 	else
 	{
 		//App->dialog->text_texture = App->font->Print(dialog_bubbles[current_bubble]->text.c_str(), App->dialog->dialog_color, App->dialog->dialog_font);
-		App->dialog->LoadDialogTextures();
+		//App->dialog->LoadDialogTextures();
+
+		App->dialog->dialog_state = DialogState::TEXT_TYPING;
+		App->dialog->current_text.clear();
 	}
 
 }
@@ -46,11 +50,12 @@ void Dialog::NextBubble() //Next bubble in dialog
 DialogSystem::DialogSystem()
 {
 	current_dialog = nullptr;
-	is_dialog_active = false;
 	dialog_font = nullptr;
 
 	dialog_color = { 255,255,100,255 };
 	font_size = 20;
+
+	dialog_state = DialogState::NOT_ACTIVE;
 
 	timer = new Timer;
 }
@@ -72,9 +77,36 @@ bool DialogSystem::PreUpddate()
 
 bool DialogSystem::Update(float dt)
 {
-	if (is_dialog_active)
+	
+	switch (dialog_state)
 	{
-		NextBubbleCheck();
+		case DialogState::NOT_ACTIVE:
+
+			break;
+
+		case DialogState::SLIDING_IN:
+
+			SlideIn();
+
+			break;
+
+		case DialogState::ACTIVE:
+				
+			NextBubbleCheck();
+
+			break;
+
+		case DialogState::TEXT_TYPING:
+
+			TypeText();
+
+			break;
+
+		case DialogState::SLIDING_OUT:
+
+			SlideOut();
+
+			break;
 	}
 
 	return true;
@@ -82,10 +114,6 @@ bool DialogSystem::Update(float dt)
 
 bool DialogSystem::PostUpdate()
 {
-	if (is_dialog_active)
-	{
-		DrawDialog();
-	}
 	return true;
 }
 
@@ -98,7 +126,7 @@ bool DialogSystem::CleanUp()
 //This starts or queues a new dialog
 void DialogSystem::StartDialog(int tree_id) 
 {
-	if (is_dialog_active) //Add dialog to queue
+	if (dialog_state != DialogState::NOT_ACTIVE) //Add dialog to queue
 	{
 		for (std::vector<Dialog*>::iterator dialog = dialogs.begin(); dialog != dialogs.end(); ++dialog)
 		{
@@ -118,16 +146,15 @@ void DialogSystem::StartDialog(int tree_id)
 			{
 				current_dialog = (*dialog);
 				current_dialog->current_bubble = 0; //set current bubble to first bubble
+				current_text.clear();
 
-				LoadDialogTextures();
+				dialog_state = DialogState::SLIDING_IN;
 
-				timer->Start();
-				is_dialog_active = true;
+				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = true;
+				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_interactible = false;
 				App->scene_manager->gameplay_scene->HUD_dialogs_background->SetScreenPos((*dialog)->position);
 
 				dialog_queue.push((*dialog));
-
-				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = true;
 
 				return;
 			}
@@ -144,6 +171,14 @@ void DialogSystem::NextBubbleCheck()
 	}
 }
 
+void DialogSystem::EmptyText()
+{
+	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin() ; text != App->scene_manager->gameplay_scene->HUD_dialog_text.end() ; ++text)
+	{
+		(*text)->GetString()->clear();
+	}
+}
+
 void DialogSystem::NextDialog()
 {
 	//end it for now
@@ -151,39 +186,34 @@ void DialogSystem::NextDialog()
 
 	if (dialog_queue.empty())
 	{
-		is_dialog_active = false;
-		current_dialog = nullptr;
-		App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = false;
+		dialog_state = DialogState::SLIDING_OUT;
+		//current_dialog = nullptr;
+		App->scene_manager->gameplay_scene->HUD_dialogs_background->is_interactible = false;
+
 	}
 	else
 	{
 		current_dialog = dialog_queue.front();
 		current_dialog->current_bubble = 0;
-		LoadDialogTextures();
-		App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = true;
+		//LoadDialogTextures();
+		current_text.clear();
+		dialog_state = DialogState::TEXT_TYPING;
 	}
 }
 
-void DialogSystem::DrawDialog()
+void DialogSystem::TypeText()
 {
-	int y_position = current_dialog->position.y +20; //magic
-	for(std::vector<SDL_Texture*>::iterator textures = text_texture.begin(); textures != text_texture.end(); ++textures)
-	{
-		App->render->Blit((*textures), current_dialog->position.x + 20, y_position, nullptr, false, 0.f);
-		y_position += font_size + 5;
-	}
+
 }
 
-void DialogSystem::LoadDialogTextures()
+void DialogSystem::SlideIn()
 {
-	text_texture.clear();
 
-	std::vector<std::string>::iterator text = current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.begin();
+}
 
-	for( text ; text != current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.end(); ++text)
-	{
-		App->dialog->text_texture.push_back(App->font->Print(text->c_str(), dialog_color, dialog_font));
-	}
+void DialogSystem::SlideOut()
+{
+
 }
 
 bool DialogSystem::LoadDialog()
@@ -216,7 +246,11 @@ bool DialogSystem::LoadDialog()
 	current_dialog = dialogs.front(); //start first dialog
 
 	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
-	App->scene_manager->gameplay_scene->HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, true, true, false, this, nullptr);
+	App->scene_manager->gameplay_scene->HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, false, true, false, this, nullptr);
+
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
 
 	return result;
 }
