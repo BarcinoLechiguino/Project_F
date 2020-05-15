@@ -1368,6 +1368,50 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_missions_title_string = "QUESTS";
 	HUD_missions_title = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 945, 372, HUD_missions_text_title_rect, HUD_missions_text_title_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_title_string);
 
+	//Primary Title
+	SDL_Rect HUD_missions_title_primary_title_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_missions_title_primary_title_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_missions_title_primary_string = "MAIN QUEST";
+	HUD_missions_title_primary = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 945, 397, HUD_missions_title_primary_title_rect, HUD_missions_title_primary_title_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_title_primary_string);
+
+	//Main Quest
+	SDL_Rect HUD_missions_primary_quest_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_missions_primary_quest_font = App->font->Load("fonts/borgsquadcond.ttf", 15);
+	std::string HUD_missions_primary_quest_string = "Destroy the enemy base";
+	HUD_missions_primary_quest = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 965, 425, HUD_missions_primary_quest_rect, HUD_missions_primary_quest_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_primary_quest_string);
+
+	//Secondary Title
+	SDL_Rect HUD_missions_title_secondary_title_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_missions_title_secondary_title_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
+	std::string HUD_missions_title_secondary_string = "SIDE QUESTS";
+	HUD_missions_title_side = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 950, 450, HUD_missions_title_secondary_title_rect, HUD_missions_title_secondary_title_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_title_secondary_string);
+
+	//Side Quests
+	SDL_Rect HUD_missions_side_quest_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_missions_side_quest_font = App->font->Load("fonts/borgsquadcond.ttf", 15);
+	std::string HUD_missions_side_quest_string = "Recollect X Data & X Electricty";
+	HUD_missions_title_side = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 965, 475, HUD_missions_side_quest_rect, HUD_missions_side_quest_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_side_quest_string);
+
+	SDL_Rect HUD_missions_side_quest2_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_missions_side_quest2_font = App->font->Load("fonts/borgsquadcond.ttf", 15);
+	std::string HUD_missions_side_quest2_string = "Recollect 3 bytes";
+	HUD_missions_title_side = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 965, 500, HUD_missions_side_quest2_rect, HUD_missions_side_quest2_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_side_quest2_string);
+
+	SDL_Rect HUD_missions_side_quest3_rect = { 0, 0, 100, 20 };
+	_TTF_Font* HUD_missions_side_quest3_font = App->font->Load("fonts/borgsquadcond.ttf", 15);
+	std::string HUD_missions_side_quest3_string = "Destroy 10 enemies";
+	HUD_missions_title_side = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 965, 525, HUD_missions_side_quest3_rect, HUD_missions_side_quest3_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_side_quest3_string);
+
+	//Checkbox in-progress
+	SDL_Rect HUD_missions_checkbox_in_progress_bar_size = { 642, 112, 16, 16 };
+
+	HUD_missions_checkbox_in_progress_main_quest = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 425, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
+
+	HUD_missions_checkbox_in_progress_side_quest = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 475, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
+
+	HUD_missions_checkbox_in_progress_side_quest2 = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 500, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
+
+	HUD_missions_checkbox_in_progress_side_quest3 = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 525, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
 
 	// HUD dialogs
 

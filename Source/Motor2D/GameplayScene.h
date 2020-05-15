@@ -298,6 +298,17 @@ public:
 	UI_Button*				HUD_missions_tab_close;
 	UI_Image*				HUD_missions_background;
 	UI_Text*				HUD_missions_title;
+	UI_Text*				HUD_missions_title_primary;
+	UI_Text*				HUD_missions_primary_quest;
+	UI_Text*				HUD_missions_title_side;
+	UI_Text*				HUD_missions_side_quest;
+	UI_Text*				HUD_missions_side_quest2;
+	UI_Text*				HUD_missions_side_quest3;
+
+	UI_Image*				HUD_missions_checkbox_in_progress_main_quest;
+	UI_Image*				HUD_missions_checkbox_in_progress_side_quest;
+	UI_Image*				HUD_missions_checkbox_in_progress_side_quest2;
+	UI_Image*				HUD_missions_checkbox_in_progress_side_quest3;
 
 	//Dialogs
 
