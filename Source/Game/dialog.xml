@@ -1,19 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <dialog>
-  <dialog_tree tree_id="0" position_x="200" position_y="200">
+  <dialog_font font="fonts/Minecraftia-Regular.ttf" font_size="16" r="255" g="255" b="100" a="255"/>
+  <dialog_tree tree_id="0" position_x="50" position_y="150">
     
-    <dialog_bubble bubble_id="0" active_time="4000">
-        <text text="Oh hello cutie"/>
-        <text text="I'll be your instructor for today"/>
+    <dialog_bubble bubble_id="0" active_time="6000">
+        <text text="Oh hello cutie I'll be your instructor"/>
+        <text text="for today"/>
     </dialog_bubble>
     
-    <dialog_bubble bubble_id="1" active_time="4000"> 
+    <dialog_bubble bubble_id="1" active_time="6000"> 
         <text text="Your first lesson will be on how to gather resources"/>
         <text text="First select some gatherer units using left click"/>
     </dialog_bubble>
     
-    <dialog_bubble bubble_id="2" active_time="4000"> 
+    <dialog_bubble bubble_id="2" active_time="6000"> 
         <text text="Now that they are selected rifht click on a resource"/>
         <text text="And they should get there and start working for you!"/>
     </dialog_bubble>

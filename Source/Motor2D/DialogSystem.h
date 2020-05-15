@@ -59,21 +59,25 @@ public:
 	bool CleanUp();
 
 	void StartDialog(int tree_id);
+
 	void NextDialog();
-
 	void NextBubbleCheck(); //checks if time or input to go to next dialog
-	void EmptyText();
 
-	void TypeText();
 	void SlideIn();
 	void SlideOut();
+
+	void TypeText();
+	void EmptyText();
+	void SetTextPosition(iPoint position);
+	void DisableText();
+	void EnableText();
 
 	bool LoadDialog();
 	bool LoadTextBubbles(Dialog* dialog_tree, pugi::xml_node tree);
 
 public:
 
-	std::vector <Dialog*> dialogs; //Dialogs loaded available
+	std::vector<Dialog*> dialogs; //Dialogs loaded available
 	std::queue<Dialog*> dialog_queue; //queue storing pending dialogs
 	Dialog* current_dialog;
 	std::string current_text;
@@ -85,6 +89,9 @@ public:
 	Timer* timer;
 
 	DialogState dialog_state;
+
+	bool is_clicked;
+
 public:
 	pugi::xml_document dialog_file;
 };

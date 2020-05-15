@@ -34,6 +34,8 @@ Input::Input() : Module()
 	game_controller.index = CONTROLLER_INDEX;
 	game_controller.max_axis_input_threshold = 0.5f;
 	game_controller.min_axis_input_threshold = 0.2f;
+
+	windowEvents[WE_QUIT] = false;
 }
 
 // Destructor
