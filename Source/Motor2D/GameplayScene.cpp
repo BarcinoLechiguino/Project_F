@@ -418,9 +418,9 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 		case ENTITY_TYPE::SCOUT:
 			if (CheckResources(0, 10))
 			{
-				barrack = (Barracks*)App->player->building_selected;
+				townhall = (TownHall*)App->player->building_selected;
 
-				barrack->creation_queue.push_back(ENTITY_TYPE::SCOUT);
+				townhall->creation_queue.push_back(ENTITY_TYPE::SCOUT);
 			}
 			break;
 

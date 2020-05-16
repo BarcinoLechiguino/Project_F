@@ -11,7 +11,6 @@
 #include "UI_CreationBar.h"
 #include "FowManager.h"
 #include "EntityManager.h"
-#include "Scout.h"
 #include "Infantry.h"
 #include "Heavy.h"
 
@@ -120,10 +119,6 @@ void Barracks::StartUnitCreation()
 	
 	switch (created_unit_type)
 	{
-	case ENTITY_TYPE::SCOUT:
-		creation_bar->SetNewCreationTime(scout_creation_time);
-		break;
-
 	case ENTITY_TYPE::INFANTRY:
 		creation_bar->SetNewCreationTime(infantry_creation_time);
 		break;
@@ -140,10 +135,6 @@ void Barracks::GenerateUnit(ENTITY_TYPE type, int level)
 
 	switch (type)
 	{
-	case ENTITY_TYPE::SCOUT:
-		(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, level);
-		break;
-
 	case ENTITY_TYPE::INFANTRY:
 		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, level);
 		break;
@@ -160,10 +151,6 @@ void Barracks::GenerateUnitByType(ENTITY_TYPE type)
 
 	switch (type)
 	{
-	case ENTITY_TYPE::SCOUT:
-		(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, scout_level);
-		break;
-
 	case ENTITY_TYPE::INFANTRY:
 		(Infantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::INFANTRY, pos.x, pos.y, infantry_level);
 		break;
@@ -218,7 +205,6 @@ void Barracks::InitEntity()
 	// UNIT CREATION VARIABLES
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
 
-	scout_creation_time = 1.0f;
 	infantry_creation_time = 2.0f;
 	heavy_creation_time = 5.0f;
 
@@ -226,11 +212,9 @@ void Barracks::InitEntity()
 	max_health = 600;
 	current_health = max_health;
 
-	scout_level = 1;
 	infantry_level = 1;
 	heavy_level = 1;
 
-	max_scout_level = 2;
 	max_infantry_level = 2;
 	max_heavy_level = 2;
 
