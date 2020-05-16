@@ -10,8 +10,8 @@ Color GetRandomColour()
 	return color;
 }
 
-Color Black = Color(0, 0, 0);
-Color White = Color(255, 255, 255);
+Color Black		= Color(0, 0, 0);
+Color White		= Color(255, 255, 255);
 
 Color Red		= Color(255, 0, 0);
 Color Green		= Color(0, 255, 0);

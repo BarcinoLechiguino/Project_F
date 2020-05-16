@@ -2,6 +2,7 @@
 //#include "mmgr/mmgr.h"
 
 #include "Log.h"
+#include "EasingFunctions.h"
 
 #include "Application.h"
 #include "Window.h"
@@ -164,10 +165,13 @@ bool GameplayScene::PostUpdate()
 	{
 		if (!App->transition_manager->is_transitioning)
 		{
-			App->pause = !App->pause;
-
 			if (!in_game_background->is_visible)
 			{
+				if (!in_game_background->is_transitioning)
+				{
+					App->pause = true;
+				}
+				
 				// Slide in from the left
 				iPoint current_pos	= in_game_background->GetScreenPos();
 				
@@ -179,6 +183,11 @@ bool GameplayScene::PostUpdate()
 			}
 			else
 			{
+				if (!in_game_background->is_transitioning)
+				{
+					App->pause = false;
+				}
+				
 				// Slide out to the right.
 				iPoint origin		= { 380, in_game_background->GetScreenPos().y };
 				iPoint destination	= { 1281, in_game_background->GetScreenPos().y };
@@ -1498,7 +1507,10 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 			App->pause = false;
 		}
 
-		App->gui_manager->SetElementsVisibility(in_game_background, false);
+		iPoint origin		= { 380, in_game_background->GetScreenPos().y };
+		iPoint destination	= { 1281, in_game_background->GetScreenPos().y };
+
+		App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
 
 		App->audio->PlayFx(App->gui_manager->new_game_fx, 0);
 	}
@@ -1508,7 +1520,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		// Options
 		App->audio->PlayFx(App->gui_manager->options_fx, 0);
 
-		App->gui_manager->SetElementsVisibility(in_game_continue_button, false);							// Deactivate Pause Menu
+		App->gui_manager->SetElementsVisibility(in_game_continue_button, false);							// Deactivate Pause Menu // THIS (?)
 		App->gui_manager->SetElementsVisibility(in_game_options_button, false);
 		App->gui_manager->SetElementsVisibility(in_game_exit_button, false);
 		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, false);
@@ -1521,7 +1533,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->back_fx, 0);
 
-		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu
+		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu	// THIS (?)
 		App->gui_manager->SetElementsVisibility(in_game_options_button, true);
 		App->gui_manager->SetElementsVisibility(in_game_exit_button, true);
 		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, true);
@@ -1558,7 +1570,38 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		if (!App->transition_manager->is_transitioning)
 		{
 			// Pause
-			App->pause = !App->pause;
+			//App->pause = !App->pause;
+
+			if (!in_game_background->is_visible)
+			{
+				if (!in_game_background->is_transitioning)
+				{
+					App->pause = true;
+				}
+				
+				// Slide in from the left
+				iPoint current_pos = in_game_background->GetScreenPos();
+
+				iPoint origin = { -600, current_pos.y };
+				iPoint destination = { 380, current_pos.y };
+
+				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, origin, destination);
+				App->gui_manager->SetElementsVisibility(in_game_background, true);
+			}
+			else
+			{
+				if (!in_game_background->is_transitioning)
+				{
+					App->pause = false;
+				}
+				
+				// Slide out to the right.
+				iPoint origin = { 380, in_game_background->GetScreenPos().y };
+				iPoint destination = { 1281, in_game_background->GetScreenPos().y };
+
+				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
+			}
+
 			App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 			//App->gui->SetElementsVisibility(HUD_pause_button, false);			
 			//App->gui->SetElementsVisibility(HUD_play_button, true);	
@@ -1579,8 +1622,8 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Home
-		App->render->camera.x = 1550;
-		App->render->camera.y = -600;
+		App->render->camera.x = App->player->original_camera_position.x;										// Use N_Lerp?
+		App->render->camera.y = App->player->original_camera_position.y;
 
 		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 	}

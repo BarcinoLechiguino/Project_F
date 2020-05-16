@@ -1,4 +1,5 @@
 #include "Log.h"
+#include "EasingFunctions.h"
 
 #include "Input.h"
 #include "Render.h"
