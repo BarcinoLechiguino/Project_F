@@ -108,7 +108,7 @@ void Tree::InitEntity()
 	is_selected = false;
 
 	// STATS
-	max_health = 300;
+	max_health = 50;
 	current_health = max_health;
 
 	// HEALTHBAR

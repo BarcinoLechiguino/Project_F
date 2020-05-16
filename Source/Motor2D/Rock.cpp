@@ -109,7 +109,7 @@ void Rock::InitEntity()
 	is_selected = false;
 
 	// STATS
-	max_health = 300;
+	max_health = 40;
 	current_health = max_health;
 
 	// HEALTHBAR
