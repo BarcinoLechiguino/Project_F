@@ -33,6 +33,7 @@ struct Particle
 	SDL_Color endColor;
 	float transparency;
 	float fraction;
+	float rotation;
 
 };
 
@@ -78,9 +79,10 @@ public:
 	float randomSpeed;
 	float randomAngle;
 	float randomSize;
+	float randomRotation;
 
 	//POOL related
-	void CreateParticles(fPoint pos, float speed, float angle, float size, int life, SDL_Rect tex, SDL_Color startColor, SDL_Color endColor);
+	void CreateParticles(fPoint pos, float speed, float angle, float size, int life, float rotation, SDL_Rect tex, SDL_Color startColor, SDL_Color endColor);
 
 	std::vector<Particle*> particle_vec; 
 

@@ -12,6 +12,7 @@
 #include "FowManager.h"
 #include "EntityManager.h"
 #include "Gatherer.h"
+#include "Scout.h"
 
 #include "TownHall.h"
 
@@ -121,6 +122,10 @@ void TownHall::StartUnitCreation()
 	case ENTITY_TYPE::GATHERER:
 		creation_bar->SetNewCreationTime(gatherer_creation_time);
 		break;
+
+	case ENTITY_TYPE::SCOUT:
+		creation_bar->SetNewCreationTime(scout_creation_time);
+		break;
 	}
 }
 
@@ -133,6 +138,10 @@ void TownHall::GenerateUnit(ENTITY_TYPE type, int level)
 	case ENTITY_TYPE::GATHERER:
 		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, pos.x, pos.y, level);
 		break;
+
+	case ENTITY_TYPE::SCOUT:
+		(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, level);
+		break;
 	}
 }
 
@@ -144,6 +153,10 @@ void TownHall::GenerateUnitByType(ENTITY_TYPE type)
 	{
 	case ENTITY_TYPE::GATHERER:
 		(Gatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::GATHERER, pos.x, pos.y, gatherer_level);
+		break;
+
+	case ENTITY_TYPE::SCOUT:
+		(Scout*)App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, pos.x, pos.y, scout_level);
 		break;
 	}
 }
@@ -190,15 +203,19 @@ void TownHall::InitEntity()
 
 	// UNIT CREATION VARIABLES
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
+	
 	gatherer_creation_time = 1.0f;														//Magic
+	scout_creation_time = 2.0f;
 
 	// STATS
 	max_health = 900;
 	current_health = max_health;
 
 	gatherer_level = 1;
+	scout_level = 1;
 
 	max_gatherer_level = 2;
+	max_scout_level = 2;
 
 	max_level = 2;
 
