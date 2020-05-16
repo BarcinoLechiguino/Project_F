@@ -2,6 +2,7 @@
 //#include "mmgr/mmgr.h"
 
 #include "Log.h"
+#include "EasingFunctions.h"
 
 #include "Application.h"
 #include "Window.h"
@@ -20,6 +21,8 @@
 #include "DialogSystem.h"
 #include "ParticleManager.h"
 #include "Emitter.h"
+#include "QuestManager.h"
+
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -168,33 +171,44 @@ bool GameplayScene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_STATE::KEY_DOWN
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_B) == BUTTON_STATE::BUTTON_DOWN)
-	{
+	{	
 		if (!App->transition_manager->is_transitioning)
 		{
-			App->pause = !App->pause;
+			if (!in_game_background->is_visible)
+			{
+				if (!in_game_background->is_transitioning)
+				{
+					App->pause = true;
+				}
+				
+				// Slide in from the left
+				iPoint current_pos = in_game_background->GetScreenPos();
 
-			//if (!in_game_background->is_transitioning)
-			//{
-			//	if (!in_game_background->is_visible)
-			//	{
-			//		// Slide in from the left
-			//		App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, iPoint(-500, in_game_background->GetScreenPos().y), iPoint(780, in_game_background->GetScreenPos().y));
-			//	}
-			//	else
-			//	{
-			//		// Slide out to the right
-			//		App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, iPoint(780, in_game_background->GetScreenPos().y), iPoint(1281, in_game_background->GetScreenPos().y));
-			//	}
-			//}
-			//else
-			//{
-			//	App->gui_manager->CancelUIAnimation(in_game_background);
-			//}
+				iPoint origin = { -600, current_pos.y };
+				iPoint destination = { 380, current_pos.y };
 
-			App->gui_manager->SetElementsVisibility(in_game_background, !in_game_background->is_visible);
+				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, origin, destination);
+				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, false, 0.0f, 255.0f);*/
+
+				App->gui_manager->SetElementsVisibility(in_game_background, true);
+			}
+			else
+			{
+				if (!in_game_background->is_transitioning)
+				{
+					App->pause = false;
+				}
+				
+				// Slide out to the right.
+				iPoint origin = { 380, in_game_background->GetScreenPos().y };
+				iPoint destination = { 1281, in_game_background->GetScreenPos().y };
+
+				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
+				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, true, 255.0f, 0.0f);*/
+			}
+
+			// If we want to move the pause menu elsewhere than the center of the screen, the options menu has to change locations or be animated.
 			App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
-
-			//{780, 451, 514, 403}
 
 			App->audio->PlayFx(App->gui_manager->appear_menu_fx, 0);
 
@@ -1364,7 +1378,7 @@ void GameplayScene::LoadGuiElements()
 
 
 
-	// *****______HUD Missions_____*****
+	// *****______HUD Quests_____*****
 	//Tab
 	SDL_Rect HUD_missions_tab_size = { 0, 0, 30, 81 };
 	SDL_Rect HUD_missions_tab_idle = { 780, 117, 30, 81 };
@@ -1431,15 +1445,8 @@ void GameplayScene::LoadGuiElements()
 	HUD_missions_title_side = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 965, 525, HUD_missions_side_quest3_rect, HUD_missions_side_quest3_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_missions_background, &HUD_missions_side_quest3_string);
 
 	//Checkbox in-progress
-	SDL_Rect HUD_missions_checkbox_in_progress_bar_size = { 642, 112, 16, 16 };
 
-	HUD_missions_checkbox_in_progress_main_quest = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 425, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
-
-	HUD_missions_checkbox_in_progress_side_quest = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 475, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
-
-	HUD_missions_checkbox_in_progress_side_quest2 = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 500, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
-
-	HUD_missions_checkbox_in_progress_side_quest3 = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 525, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
+	CheckCompletedQuests();
 
 	// HUD dialogs
 
@@ -1505,7 +1512,10 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 			App->pause = false;
 		}
 
-		App->gui_manager->SetElementsVisibility(in_game_background, false);
+		iPoint origin		= { 380, in_game_background->GetScreenPos().y };
+		iPoint destination	= { 1281, in_game_background->GetScreenPos().y };
+
+		App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
 
 		App->audio->PlayFx(App->gui_manager->new_game_fx, 0);
 	}
@@ -1515,7 +1525,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		// Options
 		App->audio->PlayFx(App->gui_manager->options_fx, 0);
 
-		App->gui_manager->SetElementsVisibility(in_game_continue_button, false);							// Deactivate Pause Menu
+		App->gui_manager->SetElementsVisibility(in_game_continue_button, false);							// Deactivate Pause Menu // THIS (?)
 		App->gui_manager->SetElementsVisibility(in_game_options_button, false);
 		App->gui_manager->SetElementsVisibility(in_game_exit_button, false);
 		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, false);
@@ -1528,7 +1538,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->back_fx, 0);
 
-		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu
+		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu	// THIS (?)
 		App->gui_manager->SetElementsVisibility(in_game_options_button, true);
 		App->gui_manager->SetElementsVisibility(in_game_exit_button, true);
 		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, true);
@@ -1565,7 +1575,40 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		if (!App->transition_manager->is_transitioning)
 		{
 			// Pause
-			App->pause = !App->pause;
+			//App->pause = !App->pause;
+
+			if (!in_game_background->is_visible)
+			{
+				if (!in_game_background->is_transitioning)
+				{
+					App->pause = true;
+				}
+				
+				// Slide in from the left
+				iPoint current_pos = in_game_background->GetScreenPos();
+
+				iPoint origin = { -600, current_pos.y };
+				iPoint destination = { 380, current_pos.y };
+
+				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, origin, destination);
+				App->gui_manager->SetElementsVisibility(in_game_background, true);
+			}
+			else
+			{
+				if (!in_game_background->is_transitioning)
+				{
+					App->pause = false;
+				}
+				
+				// Slide out to the right.
+				iPoint origin = { 380, in_game_background->GetScreenPos().y };
+				iPoint destination = { 1281, in_game_background->GetScreenPos().y };
+
+				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
+			}
+
+			App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
+
 			App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 			//App->gui->SetElementsVisibility(HUD_pause_button, false);			
 			//App->gui->SetElementsVisibility(HUD_play_button, true);	
@@ -1586,8 +1629,8 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == HUD_home_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Home
-		App->render->camera.x = 1550;
-		App->render->camera.y = -600;
+		App->render->camera.x = App->player->original_camera_position.x;										// Use N_Lerp?
+		App->render->camera.y = App->player->original_camera_position.y;
 
 		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 	}
@@ -2139,6 +2182,70 @@ float GameplayScene::N_Lerp(float start, float end, float rate, bool smash_in)		
 
 	return start + increment;
 }
+
+
+void GameplayScene::CheckCompletedQuests()
+{
+	SDL_Rect HUD_missions_checkbox_in_progress_bar_size = { 642, 112, 16, 16 };
+	SDL_Rect HUD_missions_checkbox_in_progress_bar_size_on = { 624, 112, 16, 16 };
+	
+	for (std::vector <Quest*>::iterator it = App->quest_manager->quests.begin(); it != App->quest_manager->quests.end(); it++)
+	{
+		int quest_id = (*it)->id;
+
+		switch (quest_id)
+		{
+		case 0:
+			if ((*it)->completed)
+			{
+				HUD_missions_checkbox_in_progress_main_quest = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 425, HUD_missions_checkbox_in_progress_bar_size_on, false, true, false, this, HUD_missions_background);
+			}
+			else
+			{
+				HUD_missions_checkbox_in_progress_main_quest = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 425, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
+			}
+			break;
+
+		case 1:
+			if ((*it)->completed)
+			{
+				HUD_missions_checkbox_in_progress_side_quest = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 475, HUD_missions_checkbox_in_progress_bar_size_on, false, true, false, this, HUD_missions_background);
+			}
+			else
+			{
+				HUD_missions_checkbox_in_progress_side_quest = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 475, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
+			}
+			break;
+
+		case 2:
+			if ((*it)->completed)
+			{
+				HUD_missions_checkbox_in_progress_side_quest2 = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 500, HUD_missions_checkbox_in_progress_bar_size_on, false, true, false, this, HUD_missions_background);
+			}
+			else
+			{
+				HUD_missions_checkbox_in_progress_side_quest2 = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 500, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
+			}
+			break;
+
+		case 3:
+			if ((*it)->completed)
+			{
+				HUD_missions_checkbox_in_progress_side_quest3 = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 525, HUD_missions_checkbox_in_progress_bar_size_on, false, true, false, this, HUD_missions_background);
+			}
+			else
+			{
+				HUD_missions_checkbox_in_progress_side_quest3 = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 945, 525, HUD_missions_checkbox_in_progress_bar_size, false, true, false, this, HUD_missions_background);
+			}
+			break;
+
+		default:
+			break;
+		}
+	}
+}
+
+
 
 // --------------- REQUIRED FOR THE GOLD VERSION ---------------
 //bool Scene1::Load(pugi::xml_node& data)

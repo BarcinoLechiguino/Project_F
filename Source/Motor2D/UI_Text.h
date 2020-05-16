@@ -13,13 +13,13 @@ public:
 		Module* listener = nullptr, UI* parent = nullptr, std::string* string = nullptr, std::string* hoverString = nullptr, std::string* leftClickString = nullptr, std::string* rightClickString = nullptr);
 
 	bool Draw();
-
 	void CheckInput();
-
 	void CleanUp();
 
+	SDL_Texture* GetTexture() const;
+
 public:
-	SDL_Texture* GetCurrentStringTex();
+	SDL_Texture* GetCurrentStringTex();				//Overlaps with GetTexture(), erase later (?)
 	void DeleteCurrentStringTex();
 	std::string* GetString();
 

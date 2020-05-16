@@ -13,10 +13,10 @@ public:
 		SDL_Rect* scroll_mask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
 
 	bool Draw();
-
 	void CheckInput();
-
 	void CleanUp();
+
+	SDL_Texture* GetTexture() const;
 
 public:
 	void DrawScrollbarElements();

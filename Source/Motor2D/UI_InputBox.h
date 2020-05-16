@@ -17,10 +17,10 @@ public:
 		std::string* defaultString = nullptr, bool emptyElements = false);
 
 	bool Draw();
-
 	void CheckInput();
-
 	void CleanUp();
+
+	SDL_Texture* GetTexture() const;
 
 public:
 	void DrawInputBoxElements();

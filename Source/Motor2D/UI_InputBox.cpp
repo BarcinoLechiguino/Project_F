@@ -197,6 +197,11 @@ void UI_InputBox::CleanUp()
 	text.CleanUp();
 }
 
+SDL_Texture* UI_InputBox::GetTexture() const
+{
+	return nullptr;																			// This method will return nothing, as the element itself has no texture.
+}
+
 // --- DRAW INPUT BOX ELEMENTS
 void UI_InputBox::DrawInputBoxElements()													// --------------------------------------------------------------------------
 {

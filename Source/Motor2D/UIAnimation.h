@@ -6,10 +6,16 @@
 
 class UI;
 
+enum class UI_ANIMATION_TYPE									// Will be managed internally. There are no empty animations, so type will always be the same for each animation.
+{
+	FADE,
+	SLIDE
+};
+
 class UIAnimation
 {
 public:
-	UIAnimation(UI* element, float animation_duration, bool hide_on_completion);
+	UIAnimation(UI* element, UI_ANIMATION_TYPE type, float animation_duration, bool hide_on_completion);
 	virtual ~UIAnimation();
 
 	virtual void Start();
@@ -17,6 +23,8 @@ public:
 	virtual void CleanUp();
 
 public:
+	virtual void FinishAnimation();										// Will end the animation by making the animated element reach the goal state (end_alpha, final_position...)
+	
 	float Lerp(float start, float end, float rate);
 	float N_Lerp(float start, float end, float rate);
 
@@ -24,6 +32,8 @@ public:
 
 public:
 	UI*		element;
+
+	UI_ANIMATION_TYPE type;
 
 	float	animation_duration;
 	float	current_animation_step_rate;

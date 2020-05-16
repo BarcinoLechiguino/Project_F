@@ -15,6 +15,8 @@ public:
 	void CleanUp();
 
 public:
+	void FinishAnimation();
+	
 	void TranslateSlide();
 
 	void InitSlide();

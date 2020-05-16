@@ -2,8 +2,9 @@
 
 #include "UIAnimation.h"
 
-UIAnimation::UIAnimation(UI* element, float animation_duration, bool hide_on_completion) 
+UIAnimation::UIAnimation(UI* element, UI_ANIMATION_TYPE type, float animation_duration, bool hide_on_completion) 
 	: element(element)
+	, type(type)
 	, animation_duration(animation_duration)
 	, hide_on_completion(hide_on_completion)
 	, animation_step_rate(0.0f)
@@ -29,6 +30,11 @@ void UIAnimation::StepAnimation()
 }
 
 void UIAnimation::CleanUp()
+{
+	return;
+}
+
+void UIAnimation::FinishAnimation()
 {
 	return;
 }

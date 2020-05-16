@@ -353,12 +353,19 @@ void GuiManager::UnLoadGuiElementsAudio()
 UIAnimation* GuiManager::CreateFadeAnimation(UI* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha)
 {
 	UIAnimation* ui_animation = nullptr;
-
-	ui_animation = new UIAnimationFade(element, animation_duration, hide_on_completion, start_alpha, end_alpha);
-
-	if (ui_animation != nullptr)
+	
+	if (!element->is_transitioning)
 	{
-		ui_animations.push_back(ui_animation);
+		ui_animation = new UIAnimationFade(element, animation_duration, hide_on_completion, start_alpha, end_alpha);
+
+		if (ui_animation != nullptr)
+		{
+			ui_animations.push_back(ui_animation);
+		}
+	}
+	else
+	{
+		CancelUIAnimation(element, UI_ANIMATION_TYPE::FADE);
 	}
 
 	return ui_animation;
@@ -367,12 +374,19 @@ UIAnimation* GuiManager::CreateFadeAnimation(UI* element, float animation_durati
 UIAnimation* GuiManager::CreateSlideAnimation(UI* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position)
 {
 	UIAnimation* ui_animation = nullptr;
-
-	ui_animation = new UIAnimationSlide(element, animation_duration, hide_on_completion, initial_position, final_position);
-
-	if (ui_animation != nullptr)
+	
+	if (!element->is_transitioning)
 	{
-		ui_animations.push_back(ui_animation);
+		ui_animation = new UIAnimationSlide(element, animation_duration, hide_on_completion, initial_position, final_position);
+
+		if (ui_animation != nullptr)
+		{
+			ui_animations.push_back(ui_animation);
+		}
+	}
+	else
+	{
+		CancelUIAnimation(element, UI_ANIMATION_TYPE::SLIDE);
 	}
 
 	return ui_animation;
@@ -396,13 +410,24 @@ void GuiManager::DeleteUIAnimation(UIAnimation* ui_animation_to_delete)
 	}
 }
 
-void GuiManager::CancelUIAnimation(UI* element_being_animated)
+void GuiManager::DeleteUIAnimation(std::vector<UIAnimation*>::iterator animation_item)
 {
-	for (int i = 0; i < ui_animations.size(); ++i)
+	(*animation_item)->CleanUp();
+	RELEASE((*animation_item));
+
+	ui_animations.erase(animation_item);
+}
+
+void GuiManager::CancelUIAnimation(UI* element_being_animated, UI_ANIMATION_TYPE animation_type)
+{
+	std::vector<UIAnimation*>::iterator ui_animation = ui_animations.begin();
+
+	for (; ui_animation != ui_animations.end(); ++ui_animation)
 	{
-		if (ui_animations[i]->element == element_being_animated)					// If the element of the UIAnimation* is the element passed as argument.
+		if ((*ui_animation)->element == element_being_animated && (*ui_animation)->type == animation_type)	// If the element of the UIAnimation* is the element passed as argument.
 		{
-			DeleteUIAnimation(ui_animations[i]);
+			DeleteUIAnimation(ui_animation);
+			break;
 		}
 	}
 }

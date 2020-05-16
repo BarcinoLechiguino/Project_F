@@ -166,6 +166,13 @@ bool Minimap::CleanUp()
 	return true;
 }
 
+bool Minimap::InteractingWithMinimap()
+{	
+	int x, y;
+
+	return (MinimapCoords(x, y) || player_is_moving_camera);
+}
+
 bool Minimap::MinimapCoords(int& map_x, int& map_y)
 {
 	int mouse_x, mouse_y;

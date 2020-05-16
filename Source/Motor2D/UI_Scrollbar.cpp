@@ -584,23 +584,17 @@ void UI_Scrollbar::CheckScrollbarBounds()
 
 void UI_Scrollbar::CleanUp()
 {
-	bar = nullptr;
-	thumb = nullptr;
+	bar			= nullptr;
+	thumb		= nullptr;
 	scroll_mask = nullptr;
 	
 	// Only use this if bar, thumb and scroll_mask are not pointers.
-	/*if (bar != nullptr)
-	{
-		bar->CleanUp();
-	}
+	/*bar.CleanUp();
+	thumb.CleanUp();
+	scroll_mask.CleanUp();*/
+}
 
-	if (thumb != nullptr)
-	{
-		thumb->CleanUp();
-	}
-
-	if (scroll_mask != nullptr)
-	{
-		scroll_mask->CleanUp();
-	}*/
+SDL_Texture* UI_Scrollbar::GetTexture() const
+{
+	return nullptr;
 }

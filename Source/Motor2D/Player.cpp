@@ -1,4 +1,5 @@
 #include "Log.h"
+#include "EasingFunctions.h"
 
 #include "Input.h"
 #include "Render.h"
@@ -313,7 +314,7 @@ void Player::DrawCursor()
 	{
 		if (App->map->CheckMapBoundaries(cursor_tile))
 		{
-			if (!App->gui_manager->VisibleElementIsUnderCursor())															//TMP. Dirty Fix(?)
+			if (!App->gui_manager->VisibleElementIsUnderCursor() && !App->minimap->InteractingWithMinimap())
 			{
 				App->render->Blit(mouse_tile_debug, cursor_map_position.x, cursor_map_position.y, nullptr, false, 1.f);
 			}
@@ -1080,6 +1081,6 @@ void Player::InitializePlayer()
 	iPoint mouse_pos;
 	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
 
-	cursor = UI_Cursor(UI_ELEMENT::CURSOR, mouse_pos.x, mouse_pos.y, true, &idle, &cursor_clicked_idle, &cursor_hover_ally, &cursor_hover_enemy, &cursor_hover_resource, &cursor_hover_UI
-		, &cursor_clicked_ally, &cursor_clicked_enemy, &cursor_clicked_resource, &cursor_clicked_UI);
+	cursor = UI_Cursor(UI_ELEMENT::CURSOR, mouse_pos.x, mouse_pos.y, true, &idle, &cursor_clicked_idle, &cursor_hover_ally, &cursor_hover_enemy, &cursor_hover_resource, nullptr
+		, &cursor_clicked_ally, &cursor_clicked_enemy, &cursor_clicked_resource, nullptr);
 }

@@ -256,6 +256,9 @@
     <ClCompile Include="UI_Text.cpp">
       <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
+    <ClCompile Include="EasingFunctions.cpp">
+      <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PugiXml\src\pugiconfig.hpp">
@@ -524,6 +527,9 @@
     </ClInclude>
     <ClInclude Include="UI_Text.h">
       <Filter>Engine  ===========\Modules\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="EasingFunctions.h">
+      <Filter>Engine  ===========\Tools\Utilities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -193,7 +193,14 @@ void UI_Cursor::CheckHoverEvent(iPoint mouse_tile_position)
 {	
 	if (App->gui_manager->VisibleElementIsUnderCursor())
 	{
-		current_section = hover_UI;
+		if (ui_cursor_event_enabled)
+		{
+			current_section = hover_UI;
+		}
+		else
+		{
+			current_section = idle;
+		}
 
 		if (game_controller_mode)
 		{
@@ -233,7 +240,14 @@ void UI_Cursor::CheckLeftClickEvent(iPoint mouse_tile_position)
 {
 	if (App->gui_manager->FirstInteractibleElementUnderCursor() != nullptr)								// If there is an interactible UI_Element under the mouse.
 	{
-		current_section = clicked_UI;
+		if (ui_cursor_event_enabled)
+		{
+			current_section = clicked_UI;
+		}
+		else
+		{
+			current_section = clicked_idle;
+		}
 	}
 	else
 	{
@@ -270,7 +284,14 @@ void UI_Cursor::CheckRightClickEvent(iPoint mouse_tile_position)
 {
 	if (App->gui_manager->FirstInteractibleElementUnderCursor() != nullptr)								// If there is an interactible UI_Element under the mouse.
 	{
-		current_section = clicked_UI;
+		if (ui_cursor_event_enabled)
+		{
+			current_section = clicked_UI;
+		}
+		else
+		{
+			current_section = clicked_idle;
+		}
 	}
 	else
 	{

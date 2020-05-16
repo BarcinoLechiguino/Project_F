@@ -41,8 +41,7 @@ public:
 	pugi::xml_document quest_data;
 
 	std::vector<Quest*> loaded_quests;
-	std::vector<Quest*> active_quests;
-	std::vector<Quest*> finished_quests;
+	std::vector<Quest*> quests;
 };
 
 
