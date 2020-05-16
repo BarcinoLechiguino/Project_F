@@ -89,7 +89,7 @@ void WinScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	if (element == win_main_menu && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->audio->PlayFx(App->gui_manager->exit_fx, 0);
+		App->audio->PlayFx(App->gui_manager->exit_button_clicked_fx, 0);
 
 		transition_to_main_menu_scene = true;
 	}

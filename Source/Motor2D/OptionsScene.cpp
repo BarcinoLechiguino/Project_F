@@ -101,7 +101,7 @@ void OptionsScene::OnEventCall(UI* element, UI_EVENT ui_event)
 {
 	if (element == back_button && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->audio->PlayFx(App->gui_manager->back_fx, 0);
+		App->audio->PlayFx(App->gui_manager->back_button_clicked_fx, 0);
 
 		transition_to_main_menu_scene = true;
 	}

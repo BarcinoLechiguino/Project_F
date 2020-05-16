@@ -61,7 +61,7 @@
 
 #include "GameplayScene.h"
 
-GameplayScene::GameplayScene() : Scene(SCENES::GAMEPLAY_SCENE), background_rect({ 0,0,0,0 }), background_texture(nullptr)
+GameplayScene::GameplayScene() : Scene(SCENES::GAMEPLAY_SCENE), background_rect({ 0, 0, 0, 0 }), background_texture(nullptr)
 {
 	name_tag = ("Gameplay");
 }
@@ -151,7 +151,7 @@ bool GameplayScene::PostUpdate()
 
 	if (App->player->god_mode)
 	{
-		CameraDebugMovement(App->GetDt());
+		CameraDebugMovement(App->GetUnpausableDt());
 		UnitDebugKeys();
 	}
 
@@ -183,8 +183,8 @@ bool GameplayScene::PostUpdate()
 				// Slide in from the left
 				iPoint current_pos = in_game_background->GetScreenPos();
 
-				iPoint origin = { -600, current_pos.y };
-				iPoint destination = { 380, current_pos.y };
+				iPoint origin		= { -600, current_pos.y };
+				iPoint destination	= { 380, current_pos.y };
 
 				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, origin, destination);
 				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, false, 0.0f, 255.0f);*/
@@ -199,8 +199,8 @@ bool GameplayScene::PostUpdate()
 				}
 				
 				// Slide out to the right.
-				iPoint origin = { 380, in_game_background->GetScreenPos().y };
-				iPoint destination = { 1281, in_game_background->GetScreenPos().y };
+				iPoint origin		= { 380, in_game_background->GetScreenPos().y };
+				iPoint destination	= { 1281, in_game_background->GetScreenPos().y };
 
 				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
 				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, true, 255.0f, 0.0f);*/
@@ -209,7 +209,7 @@ bool GameplayScene::PostUpdate()
 			// If we want to move the pause menu elsewhere than the center of the screen, the options menu has to change locations or be animated.
 			App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
 
-			App->audio->PlayFx(App->gui_manager->appear_menu_fx, 0);
+			App->audio->PlayFx(App->gui_manager->pause_menu_button_clicked_fx, 0);
 
 			//Mix_HaltMusic();
 		}
@@ -1534,13 +1534,13 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 		App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
 
-		App->audio->PlayFx(App->gui_manager->new_game_fx, 0);
+		App->audio->PlayFx(App->gui_manager->new_game_button_clicked_fx, 0);
 	}
 
 	if (element == in_game_options_button && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Options
-		App->audio->PlayFx(App->gui_manager->options_fx, 0);
+		App->audio->PlayFx(App->gui_manager->options_button_clicked_fx, 0);
 
 		App->gui_manager->SetElementsVisibility(in_game_continue_button, false);							// Deactivate Pause Menu // THIS (?)
 		App->gui_manager->SetElementsVisibility(in_game_options_button, false);
@@ -1553,7 +1553,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == in_game_back_button && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->audio->PlayFx(App->gui_manager->back_fx, 0);
+		App->audio->PlayFx(App->gui_manager->back_button_clicked_fx, 0);
 
 		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu	// THIS (?)
 		App->gui_manager->SetElementsVisibility(in_game_options_button, true);
@@ -1567,7 +1567,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	if (element == in_game_back_to_menu && ui_event == UI_EVENT::UNCLICKED)
 	{
 		// Back to menu
-		App->audio->PlayFx(App->gui_manager->exit_fx, 0);
+		App->audio->PlayFx(App->gui_manager->exit_button_clicked_fx, 0);
 
 		transition_to_main_menu_scene = true;
 	}
@@ -1584,7 +1584,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Group
 		App->player->SelectAllyUnits();
-		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 	}
 
 	if (element == HUD_pause_button && ui_event == UI_EVENT::UNCLICKED)
@@ -1626,7 +1626,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 			App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
 
-			App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+			App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 			//App->gui->SetElementsVisibility(HUD_pause_button, false);			
 			//App->gui->SetElementsVisibility(HUD_play_button, true);	
 			//element->ui_event = UI_EVENT::IDLE;
@@ -1637,7 +1637,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	//{
 	//	// Play
 	//	App->pause = false;
-	//	App->audio->PlayFx(App->gui->standard_fx, 0);
+	//	App->audio->PlayFx(App->gui->standard_button_clicked_fx, 0);
 	//	App->gui->SetElementsVisibility(HUD_play_button, false);
 	//	App->gui->SetElementsVisibility(HUD_pause_button, true);
 	//	
@@ -1649,7 +1649,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		App->render->camera.x = App->player->original_camera_position.x;										// Use N_Lerp?
 		App->render->camera.y = App->player->original_camera_position.y;
 
-		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 	}
 
 
@@ -1659,7 +1659,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Upgrade Townhall
 		BuildingUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price Upgrade Townhall
 	if (element == HUD_upgrade_townhall && ui_event == UI_EVENT::HOVER)
@@ -1679,7 +1679,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::GATHERER);
 
-		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
+		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 	}
 	//Price to recruit
 	if (element == HUD_unit_gatherer_townhall && ui_event == UI_EVENT::HOVER)
@@ -1700,7 +1700,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Upgrade Unit
 		UnitUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price to upgrade Gatherer
 	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == UI_EVENT::HOVER)
@@ -1720,7 +1720,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::SCOUT);
 
-		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
+		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 	}
 	//Price to recruit
 	if (element == HUD_unit_scout_townhall && ui_event == UI_EVENT::HOVER)
@@ -1741,7 +1741,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Upgrade Unit
 		UnitUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price to upgrade scout
 	if (element == HUD_unit_upgrade_townhall_scout && ui_event == UI_EVENT::HOVER)
@@ -1760,7 +1760,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		// Upgrade Barracks
 		// Code to upgrade barracks
 		BuildingUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 
 	if (element == HUD_upgrade_barracks && ui_event == UI_EVENT::HOVER)
@@ -1779,7 +1779,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::INFANTRY);
-		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
+		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 	}
 	//Price Recruit Heavy
 	if (element == HUD_unit_infantry_barracks && ui_event == UI_EVENT::HOVER)
@@ -1800,7 +1800,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Upgrade Unit
 		UnitUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price Upgrade Infantry
 	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == UI_EVENT::HOVER)
@@ -1819,7 +1819,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::HEAVY);
-		App->audio->PlayFx(App->gui_manager->recruit_fx, 0);
+		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 	}
 	//Price Recruit Heavy
 	if (element == HUD_unit_heavy_barracks && ui_event == UI_EVENT::HOVER)
@@ -1840,7 +1840,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	{
 		// Upgrade Unit
 		UnitUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_fx, 0);
+		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price Upgrade Heavy
 	if (element == HUD_unit_upgrade_barracks_heavy && ui_event == UI_EVENT::HOVER)
@@ -1857,7 +1857,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	// *****_____Missions HUD_____*****
 	if (element == HUD_missions_tab && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
 		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(1300, HUD_missions_background->GetScreenPos().y), iPoint(902, HUD_missions_background->GetScreenPos().y));
 		
@@ -1872,7 +1872,7 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 	if (element == HUD_missions_tab_close && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->audio->PlayFx(App->gui_manager->standard_fx, 0);
+		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
 		/*App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(902, HUD_missions_background->GetScreenPos().y), iPoint(1300, HUD_missions_background->GetScreenPos().y));
 		
@@ -1903,7 +1903,7 @@ void GameplayScene::DebugHUDSpawn()
 			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
 			if (!HUD_townhall_bar->is_visible)
 			{
-				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
+				App->audio->PlayFx(App->entity_manager->townhall_clicked_fx, 0);
 				App->gui_manager->SetElementsVisibility(HUD_townhall_bar, true);
 			}
 
@@ -1915,7 +1915,7 @@ void GameplayScene::DebugHUDSpawn()
 			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
 			if (!HUD_enemy_townhall_bar->is_visible)
 			{
-				App->audio->PlayFx(App->entity_manager->click_townhall_fx, 0);
+				App->audio->PlayFx(App->entity_manager->townhall_clicked_fx, 0);
 				App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, true);
 			}
 
@@ -1928,7 +1928,7 @@ void GameplayScene::DebugHUDSpawn()
 			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
 			if (!HUD_barracks_bar->is_visible)
 			{
-				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
+				App->audio->PlayFx(App->entity_manager->barracks_clicked_fx, 0);
 				App->gui_manager->SetElementsVisibility(HUD_barracks_bar, true);
 
 				if (HUD_townhall_bar->is_visible)
@@ -1957,7 +1957,7 @@ void GameplayScene::DebugHUDSpawn()
 			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
 			if (!HUD_enemy_barracks_bar->is_visible)
 			{
-				App->audio->PlayFx(App->entity_manager->click_barracks_fx, 0);
+				App->audio->PlayFx(App->entity_manager->barracks_clicked_fx, 0);
 				App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, true);
 
 				if (HUD_enemy_townhall_bar->is_visible)

@@ -293,7 +293,7 @@ void EnemyGatherer::GatherResource()
 			if (App->entity_manager->IsResource(target))
 			{
 				ApplyDamage(target);
-				App->audio->PlayFx(App->entity_manager->gather_fx);
+				App->audio->PlayFx(App->entity_manager->gatherer_gathering_fx);
 				gather_in_cooldown = true;
 
 				if (target->type == ENTITY_TYPE::ROCK)

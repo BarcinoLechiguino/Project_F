@@ -42,7 +42,8 @@
 #include "Tree.h"
 #include "Bits.h"
 
-struct {
+struct 
+{
 	bool operator()(Entity* a, Entity* b) const
 	{
 		return a->center_point.y < b->center_point.y;
@@ -61,9 +62,9 @@ EntityManager::~EntityManager()
 
 bool EntityManager::Awake(pugi::xml_node& config)
 {
-	this->config = config;
+	pugi::xml_node entity_units = App->entities_file.child("entites").child("units");
 
-	cycle_length = config.child("units").child("update_cycle_length").attribute("length").as_float();		//Fix pathfinding so it works with do_logic
+	cycle_length = entity_units.child("update_cycle_length").attribute("length").as_float();		//Fix pathfinding so it works with do_logic
 
 	for (int i = 0; i < (int)entities.size(); ++i)
 	{
@@ -357,9 +358,7 @@ void EntityManager::DeleteEntity(Entity* entity)
 // --- ENTITY TEXTURE LOAD & UNLOAD ---
 void EntityManager::LoadEntityTextures()
 {
-	config_file.load_file("config.xml");
-
-	pugi::xml_node entity_textures = config_file.child("config").child("entities").child("textures");
+	pugi::xml_node entity_textures = App->entities_file.child("entities").child("textures");
 
 	// UNITS
 	gatherer_tex		= App->tex->Load(entity_textures.child("gatherer_texture").attribute("path").as_string());
@@ -434,18 +433,20 @@ void EntityManager::UnLoadEntityTextures()
 // --- ENTITY AUDIO LOAD & UNLOAD ---
 void EntityManager::LoadEntityAudios()
 {
-	//Pass to xml
-	gatherer_movement_fx	= App->audio->LoadFx("audio/fx/Gatherer_movement.wav");
-	gather_fx				= App->audio->LoadFx("audio/fx/Gathering.wav");
-	finished_gather_fx		= App->audio->LoadFx("audio/fx/Finnished_gathering.wav");
-	infantry_movement_fx	= App->audio->LoadFx("audio/fx/Infantry_movement.wav");
-	infantry_shot_fx		= App->audio->LoadFx("audio/fx/Infantry_shot.wav");
-	click_barracks_fx		= App->audio->LoadFx("audio/fx/Click Barracks.wav");
-	building_fx				= App->audio->LoadFx("audio/fx/Building.wav");
-	finished_building_fx	= App->audio->LoadFx("audio/fx/Finished_building.wav");
-	finished_recruiting_fx	= App->audio->LoadFx("audio/fx/Finished_recruiting.wav");
-	finished_upgrading_fx	= App->audio->LoadFx("audio/fx/Finished_Upgrading.wav");
-	click_townhall_fx		= App->audio->LoadFx("audio/fx/Click_Townhall.wav");
+	pugi::xml_node entity_fx = App->entities_file.child("entities").child("fx");
+
+	gatherer_moving_fx					= App->audio->LoadFx(entity_fx.child("gatherer_moving").attribute("path").as_string());
+	gatherer_gathering_fx				= App->audio->LoadFx(entity_fx.child("gatherer_gathering").attribute("path").as_string());
+	gatherer_finished_gathering_fx		= App->audio->LoadFx(entity_fx.child("gatherer_finished_gathering").attribute("path").as_string());
+	infantry_moving_fx					= App->audio->LoadFx(entity_fx.child("infantry_moving").attribute("path").as_string());
+	infantry_shooting_fx				= App->audio->LoadFx(entity_fx.child("infantry_shooting").attribute("path").as_string());
+	//heavy_shooting_fx					= App->audio->LoadFx(entity_fx.child("heavy_shooting").attribute("path").as_string());
+	townhall_clicked_fx					= App->audio->LoadFx(entity_fx.child("townhall_clicked").attribute("path").as_string());
+	barracks_clicked_fx					= App->audio->LoadFx(entity_fx.child("barracks_clicked").attribute("path").as_string());
+	building_constructing_fx			= App->audio->LoadFx(entity_fx.child("building_constructing").attribute("path").as_string());
+	building_finished_constructing_fx	= App->audio->LoadFx(entity_fx.child("building_finished_constructing").attribute("path").as_string());
+	building_finished_recruiting_fx		= App->audio->LoadFx(entity_fx.child("building_finished_recruiting").attribute("path").as_string());
+	building_finished_upgrading_fx		= App->audio->LoadFx(entity_fx.child("building_finished_upgrading").attribute("path").as_string());
 }
 
 void EntityManager::UnLoadEntityAudios()

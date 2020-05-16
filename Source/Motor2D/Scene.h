@@ -43,16 +43,16 @@ public:
 	void ExecuteDebugTransition();								// Method that will trigger a new transition given a debug input (1 to 6 on the keyboard)
 
 public:
-	std::string		name_tag;
+	std::string			name_tag;
 
-	SCENES			scene_name;									// SCENE will be both the name and the index of the scene.
+	SCENES				scene_name;									// SCENE will be both the name and the index of the scene.
 
-	SDL_Texture*	occupied_debug;
-	SDL_Texture*	occupied_by_entity_debug;
+	SDL_Texture*		occupied_debug;
+	SDL_Texture*		occupied_by_entity_debug;
 
-	int				map_width;									// Width of the map loaded on the scene.
-	int				map_height;									// Height of the map loaded on the scene.
-	bool			escape;		
+	int					map_width;									// Width of the map loaded on the scene.
+	int					map_height;									// Height of the map loaded on the scene.
+	bool				escape;		
 };
 
 #endif // !__SCENE_H__

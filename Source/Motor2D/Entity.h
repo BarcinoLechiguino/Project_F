@@ -85,11 +85,7 @@ public:
 
 	void ApplyDamage(Entity* target);											//Applies the current unit damage to the referenced target, also handles the target health bar.
 
-public:
-	pugi::xml_document	config_file;
-	pugi::xml_node		config;
-	
-	//Entity Variables
+public:																			// --- ENTITY VARIABLES ---
 	std::string		name_tag;													//Name of the entity in the xml file.
 	ENTITY_TYPE		type;
 

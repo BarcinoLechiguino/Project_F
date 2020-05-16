@@ -375,7 +375,7 @@ void Heavy::DealDamage()
 			// For AoE damage just look for the entities in the immediately adjacent tiles to the target and apply damage to them too.
 
 			ApplyDamage(target);
-			App->audio->PlayFx(App->entity_manager->infantry_shot_fx);
+			App->audio->PlayFx(App->entity_manager->infantry_shooting_fx);
 			attack_in_cooldown = true;
 		}
 		else

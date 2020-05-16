@@ -38,12 +38,12 @@ GuiManager::~GuiManager()
 {}
 
 // Called before render is available
-bool GuiManager::Awake(pugi::xml_node& conf)
+bool GuiManager::Awake(pugi::xml_node& config)
 {
 	LOG("Loading GUI atlas");
 	bool ret = true;
 
-	atlas_file_name = conf.child("atlas").attribute("file").as_string("");
+	atlas_file_name = config.child("atlas").attribute("file").as_string("");
 
 	return ret;
 }
@@ -56,7 +56,6 @@ bool GuiManager::Start()
 	ui_debug = false;
 	escape = true;
 
-	
 	if (!audio_already_loaded)
 	{
 		LoadGuiElementsAudio();
@@ -80,7 +79,7 @@ bool GuiManager::PreUpdate()
 			PassFocus();
 		}
 
-		//App->audio->PlayFx(new_game_fx, 0);
+		//App->audio->PlayFx(new_game_button_clicked_fx, 0);
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_RETURN) == KEY_STATE::KEY_DOWN 
@@ -334,14 +333,16 @@ void GuiManager::DeleteGuiElement(UI* element_to_delete)
 
 void GuiManager::LoadGuiElementsAudio()
 {
-	new_game_fx		= App->audio->LoadFx("audio/fx/UI/New Game_Continue.wav");
-	options_fx		= App->audio->LoadFx("audio/fx/UI/Options.wav");
-	back_fx			= App->audio->LoadFx("audio/fx/UI/Back.wav");
-	exit_fx			= App->audio->LoadFx("audio/fx/UI/Back to menu.wav");
-	appear_menu_fx	= App->audio->LoadFx("audio/fx/UI/Appear Pause Menu.wav");
-	standard_fx		= App->audio->LoadFx("audio/fx/UI/Standard.wav");
-	upgrade_fx		= App->audio->LoadFx("audio/fx/UI/Upgrade Button.wav");
-	recruit_fx		= App->audio->LoadFx("audio/fx/UI/Recruit_Unit.wav");
+	pugi::xml_node gui_fx = App->config_file.child("config").child("gui").child("fx");
+	
+	new_game_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("new_game_button_clicked").attribute("path").as_string());
+	options_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("options_button_clicked").attribute("path").as_string());
+	back_button_clicked_fx			= App->audio->LoadFx(gui_fx.child("back_button_clicked").attribute("path").as_string());
+	exit_button_clicked_fx			= App->audio->LoadFx(gui_fx.child("exit_button_clicked").attribute("path").as_string());
+	pause_menu_button_clicked_fx	= App->audio->LoadFx(gui_fx.child("pause_menu_button_clicked").attribute("path").as_string());
+	standard_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("standard_button_clicked").attribute("path").as_string());
+	upgrade_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("upgrade_button_clicked").attribute("path").as_string());
+	recruit_unit_button_clicked_fx	= App->audio->LoadFx(gui_fx.child("recruit_unit_button_clicked").attribute("path").as_string());
 }
 
 void GuiManager::UnLoadGuiElementsAudio()

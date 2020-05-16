@@ -116,14 +116,14 @@ public:																		// --- GUI PUBLIC VARIABLES ---
 public:																		// --- GUI AUDIO VARIABLES ---
 	bool						audio_already_loaded;
 	
-	uint						new_game_fx;
-	uint						options_fx;
-	uint						back_fx;
-	uint						appear_menu_fx;
-	uint						exit_fx;
-	uint						standard_fx;
-	uint						upgrade_fx;
-	uint						recruit_fx;
+	uint						new_game_button_clicked_fx;
+	uint						options_button_clicked_fx;
+	uint						back_button_clicked_fx;
+	uint						exit_button_clicked_fx;
+	uint						pause_menu_button_clicked_fx;
+	uint						standard_button_clicked_fx;
+	uint						upgrade_button_clicked_fx;
+	uint						recruit_unit_button_clicked_fx;
 
 private:																	// --- GUI PRIVATE VARIABLES ---
 	SDL_Texture*				atlas;										//Texture of the atlas (UI Spritesheet)

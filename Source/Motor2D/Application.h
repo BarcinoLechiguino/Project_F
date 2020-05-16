@@ -67,15 +67,12 @@ public:
 private:
 	
 	pugi::xml_node LoadConfig(pugi::xml_document&) const;		// Load config file
+	void LoadXMLFiles();
 
 	void PrepareUpdate();										// Call modules before each loop iteration
-
 	void FinishUpdate();										// Call modules before each loop iteration
-
 	bool PreUpdate();											// Call modules before each loop iteration
-
 	bool DoUpdate();											// Call modules on each loop iteration
-
 	bool PostUpdate();											// Call modules after each loop iteration
 
 	bool LoadGameNow();											// Load / Save
@@ -106,13 +103,20 @@ public:
 	ParticleManager*	particle_manager;
 	QuestManager*		quest_manager;
 
-	uint				frame_cap;								//Stores the frames per second cap to be applied.
-	uint				original_frame_cap;						//Stores the original frame cap at application start.
-	float				seconds_since_startup;					//Secons that have elapsed since app start.
+	uint				frame_cap;								// Stores the frames per second cap to be applied.
+	uint				original_frame_cap;						// Stores the original frame cap at application start.
+	float				seconds_since_startup;					// Secons that have elapsed since app start.
 
-	bool				frames_are_capped;						//Keeps track whether the frame cap is on or off.
-	bool				vsync_is_active;						//Keeps track whether Vsync is on or off.
+	bool				frames_are_capped;						// Keeps track whether the frame cap is on or off.
+	bool				vsync_is_active;						// Keeps track whether Vsync is on or off.
 	bool				pause;
+
+	pugi::xml_document	config_file;							// Will be loaded with the config.xml file and will allow access to the data stored in it.
+	pugi::xml_document	animations_file;						// Will be loaded with the animations.xml file and will allow access to the data stored in it.
+	pugi::xml_document	particle_system_file;					// Will be loaded with the ps_config.xml file and will allow access to the data stored in it.
+	pugi::xml_document	dialog_system_file;						// Will be loaded with the dialog.xml file and will allow access to the data stored in it.
+	pugi::xml_document	quest_manager_file;						// Will be loaded with the quest_data.xml file and will allow access to the data stored in it.
+	pugi::xml_document	entities_file;							// Will be loaded with the entities.xml file and will allow access to the data stored in it.
 
 private:
 
@@ -130,19 +134,19 @@ private:
 
 	//Framerate
 	uint64					frame_count;			
-	Timer					startup_timer;							//Used to keep track of time since app start.
-	Timer					frame_timer;							//Keeps track of everything time related in the span of a frame.
-	PerfTimer				perf_timer;								//Creates a pointer to PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
-	PerfTimer				last_second_timer;						//Creates a pointer to PerfTimer tool. Used to calculate variables in spans of one second.
-	uint32					last_update_ms;							//Calculates the amount of milliseconds that the last update spent running.
-	uint32					frames_last_second;						//Calculates the amount of frames that where processed the last second.
+	Timer					startup_timer;							// Used to keep track of time since app start.
+	Timer					frame_timer;							// Keeps track of everything time related in the span of a frame.
+	PerfTimer				perf_timer;								// Creates a pointer to PerfTimer tool. Gives access to j1PerfTimer's elements. Used to keep track of time since app start.
+	PerfTimer				last_second_timer;						// Creates a pointer to PerfTimer tool. Used to calculate variables in spans of one second.
+	uint32					last_update_ms;							// Calculates the amount of milliseconds that the last update spent running.
+	uint32					frames_last_second;						// Calculates the amount of frames that where processed the last second.
 	uint32					prev_sec_frames;		
 
-	PerfTimer				true_delay_timer;						//Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
-	float					dt;										//Keeps track of the amount of time in milliseconds that has passed in a frame. 
-																	//Will be used to make everything (update()) be in the same timestep.
-	char*					frame_cap_on_off;						//String that is set to 'On' when the frame cap is on and  'Off' when it is off.
-	char*					vsync_on_off;							//String that is set to 'On' when Vsync is on and 'Off' when it is off.
+	PerfTimer				true_delay_timer;						// Timer that will be used to see the actual amount of delay that was applied to cap the framerate.
+	float					dt;										// Keeps track of the amount of time in milliseconds that has passed in a frame. 
+																	// Will be used to make everything (update()) be in the same timestep.
+	char*					frame_cap_on_off;						// String that is set to 'On' when the frame cap is on and  'Off' when it is off.
+	char*					vsync_on_off;							// String that is set to 'On' when Vsync is on and 'Off' when it is off.
 };
 
 extern Application* App; // No student is asking me about that ... odd :-S

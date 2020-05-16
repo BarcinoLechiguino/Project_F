@@ -85,12 +85,9 @@ public:
 
 
 public:
-	pugi::xml_document	config_file;
-	
-	bool				god_mode;
-	bool				is_selecting;
-
-	SDL_Texture*		mouse_tile_debug;
+	bool				god_mode;									// Will keep track of whether the god_mode has been activated or not.
+	bool				has_saved;									// Will keep track of whether the player has saved since application start or not.
+	bool				is_selecting;								// Will keep track of whether the player is currently selecting units or not.
 
 	iPoint				original_camera_position;
 	iPoint				scene_camera_x_limit;						// x = left limit, y = right limit.
@@ -109,6 +106,14 @@ public:
 	
 	iPoint				selection_start;							// Position where unit selection will start (Selection rect's anchor point).
 	SDL_Rect			selection_rect;
+
+	StaticObject*		building_selected;
+	StaticObject*		resource_selected;
+
+	std::vector<DynamicObject*>	units_selected;
+	
+public:																// ---------- CURSOR VARIABLES ----------
+	SDL_Texture*		mouse_tile_debug;							// Texture that will be drawn on top of the tile where the cursor is currently at.
 	
 	UI_Cursor			cursor;										// For whatever reason only a pointer works with the forward declaration.
 	
@@ -124,12 +129,6 @@ public:
 	SDL_Rect			cursor_clicked_enemy;						// CLICKED Sprite for when the cursor hovers an enemy entity.
 	SDL_Rect			cursor_clicked_resource;					// CLICKED Sprite for when the cursor hovers a resource entity.
 	SDL_Rect			cursor_clicked_UI;							// CLICKED Sprite for when the cursor hovers an interactible UI_Element.
-
-
-	std::vector<DynamicObject*>	units_selected;
-
-	StaticObject*					building_selected;
-	StaticObject*					resource_selected;
 };
 
 #endif // !__PLAYER_H__

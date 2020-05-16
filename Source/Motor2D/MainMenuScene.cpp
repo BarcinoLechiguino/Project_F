@@ -113,7 +113,7 @@ void MainMenuScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		/*iPoint mousepos;
 		App->input->GetMousePosition(mousepos.x, mousepos.y);*/
 
-		App->audio->PlayFx(App->gui_manager->new_game_fx,0);
+		App->audio->PlayFx(App->gui_manager->new_game_button_clicked_fx,0);
 
 		transition_to_gameplay_scene = true;
 	}
@@ -125,7 +125,7 @@ void MainMenuScene::OnEventCall(UI* element, UI_EVENT ui_event)
 	
 	if (element == options_button && ui_event == UI_EVENT::UNCLICKED)
 	{
-		App->audio->PlayFx(App->gui_manager->options_fx, 0);
+		App->audio->PlayFx(App->gui_manager->options_button_clicked_fx, 0);
 
 		transition_to_options_scene = true;
 	}	

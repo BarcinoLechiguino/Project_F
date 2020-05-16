@@ -3,6 +3,10 @@
 
 #include "Module.h"
 
+class Entity;
+class EnemyTownHall;
+class EnemyBarracks;
+
 class EnemyAI : public Module
 {
 public:
@@ -18,6 +22,12 @@ public:
 
 public:
 	void SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount);
+
+public:
+	EnemyTownHall* enemy_townhall;
+	EnemyBarracks* enemy_barracks;
+
+	std::vector<Entity*> enemy_entities;
 
 private:
 

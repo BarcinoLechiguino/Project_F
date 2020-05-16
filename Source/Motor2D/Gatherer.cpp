@@ -209,7 +209,7 @@ void Gatherer::GatherResource()
 			if (App->entity_manager->IsResource(target))
 			{
 				ApplyDamage(target);
-				App->audio->PlayFx(App->entity_manager->gather_fx);
+				App->audio->PlayFx(App->entity_manager->gatherer_gathering_fx);
 				gather_in_cooldown = true;
 
 				if (target->type == ENTITY_TYPE::ROCK)
@@ -263,8 +263,7 @@ int Gatherer::GetAttackRange()
 
 void Gatherer::InitEntity()
 {
-	//config_file.load_file("config.xml");
-	//pugi::xml_node gatherer = config_file.child("config").child("entities").child("units").child("allies").child("gatherer");
+	//pugi::xml_node gatherer = App->config_file.child("config").child("entities").child("units").child("allies").child("gatherer");
 	
 	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetGathererTexture();
@@ -348,7 +347,7 @@ void Gatherer::InitUnitSpriteSections()
 	entity_sprite_section		= pathing_down_right_section;
 
 	// --- LOADING FROM XML ---
-	//pugi::xml_node sections = config_file.child("config").child("entities").child("units").child("allies").child("gatherer").child("sprite_sections");
+	//pugi::xml_node sections = App->config_file.child("config").child("entities").child("units").child("allies").child("gatherer").child("sprite_sections");
 
 	/*pathing_up_section.x = sections.child("pathing_up").attribute("x").as_int();
 	pathing_up_section.y = sections.child("pathing_up").attribute("y").as_int();

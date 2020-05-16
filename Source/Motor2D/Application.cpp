@@ -159,6 +159,8 @@ bool Application::Awake()
 		}
 	}
 	
+	LoadXMLFiles();
+
 	PERF_PEEK(perf_timer);
 
 	return ret;
@@ -240,10 +242,63 @@ pugi::xml_node Application::LoadParticleSystemConfig(pugi::xml_document& ps_file
 	pugi::xml_parse_result result = ps_file.load_file("ps_config");
 
 	if (result == NULL)
-		LOG("Could not load xml file config.xml. pugi error: %s", result.description());
+		LOG("Could not load xml file ps_config.xml. pugi error: %s", result.description());
 	else
 		ret = ps_file.child("particlesystem");
 	return ret;
+}
+
+void Application::LoadXMLFiles()
+{
+	pugi::xml_parse_result result;
+
+	// --- config.xml ---
+	result = config_file.load_file("config.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file config.xml. pugi error: %s", result.description());
+	}
+
+	// --- animations.xml ---
+	result = animations_file.load_file("animations.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file animations.xml. pugi error: %s", result.description());
+	}
+
+	// --- ps_config.xml ---
+	result = particle_system_file.load_file("ps_config");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file ps_config.xml. pugi error: %s", result.description());
+	}
+
+	// --- dialog.xml ---
+	result = dialog_system_file.load_file("dialog.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file dialog.xml. pugi error: %s", result.description());
+	}
+
+	// --- quest_data.xml ---
+	result = quest_manager_file.load_file("quest_data.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file quest_data.xml. pugi error: %s", result.description());
+	}
+
+	// --- entities.xml ---
+	result = entities_file.load_file("entities.xml");
+
+	if (result == NULL)
+	{
+		LOG("Could not load map xml file entities.xml. pugi error: %s", result.description());
+	}
 }
 
 // ---------------------------------------------

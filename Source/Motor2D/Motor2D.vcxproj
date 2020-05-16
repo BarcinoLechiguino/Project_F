@@ -272,6 +272,7 @@
     <Xml Include="..\Game\ps_config.xml" />
     <Xml Include="..\Game\quest_data.xml" />
     <Xml Include="..\Game\save_game.xml" />
+    <Xml Include="entities.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

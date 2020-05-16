@@ -223,7 +223,7 @@ void DynamicObject::HandleFx()
 	{
 		if (!fx_playing)
 		{
-			channel = App->audio->PlayFx(App->entity_manager->gatherer_movement_fx, -1);
+			channel = App->audio->PlayFx(App->entity_manager->gatherer_moving_fx, -1);
 			fx_playing = true;
 		}
 	}

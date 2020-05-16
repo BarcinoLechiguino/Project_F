@@ -73,8 +73,7 @@ bool Player::Update(float dt)
 {
 	CursorCalculations();
 	
-	//CameraController(dt);
-	CameraController(App->GetUnpausableDt());
+	CameraController(dt);
 	
 	if (!App->pause && !App->gui_manager->VisibleElementIsUnderCursor())			//TMP. Dirty Fix(?)
 	{
@@ -89,9 +88,15 @@ bool Player::Update(float dt)
 
 	SelectionShortcuts();
 
-	DebugUnitSpawn();
+	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_STATE::KEY_DOWN)
+	{
+		DebugUnitSpawn();
+	}
 
-	DebugUnitUpgrade();
+	if (App->input->GetKey(SDL_SCANCODE_U) == KEY_STATE::KEY_DOWN)
+	{
+		DebugUnitUpgrade();
+	}
 
 	return true;
 }
@@ -187,7 +192,7 @@ void Player::MoveCameraWithGameController()
 	{
 		if (App->render->camera.x < scene_camera_x_limit.y)
 		{
-			App->render->camera.x += (int)(camera_speed.x * App->GetUnpausableDt());
+			App->render->camera.x += (int)(camera_speed.x * App->GetDt());
 		}
 	}
 
@@ -195,7 +200,7 @@ void Player::MoveCameraWithGameController()
 	{
 		if (App->render->camera.x > scene_camera_x_limit.x)
 		{
-			App->render->camera.x -= (int)(camera_speed.x * App->GetUnpausableDt());
+			App->render->camera.x -= (int)(camera_speed.x * App->GetDt());
 		}
 	}
 
@@ -203,7 +208,7 @@ void Player::MoveCameraWithGameController()
 	{
 		if (App->render->camera.y > scene_camera_y_limit.x)
 		{
-			App->render->camera.y -= (int)(camera_speed.y * App->GetUnpausableDt());
+			App->render->camera.y -= (int)(camera_speed.y * App->GetDt());
 		}
 	}
 
@@ -211,7 +216,7 @@ void Player::MoveCameraWithGameController()
 	{
 		if (App->render->camera.y < scene_camera_y_limit.y)
 		{
-			App->render->camera.y += (int)(camera_speed.y * App->GetUnpausableDt());
+			App->render->camera.y += (int)(camera_speed.y * App->GetDt());
 		}
 	}
 }
@@ -889,35 +894,32 @@ void Player::DebugUnitSpawn()
 {
 	if (building_selected != nullptr)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_A) == KEY_STATE::KEY_DOWN)
+		TownHall* townhall				= nullptr;
+		Barracks* barrack				= nullptr;
+		EnemyTownHall* enemy_townhall	= nullptr;
+		EnemyBarracks* enemy_barrack	= nullptr;
+
+		switch (building_selected->type)
 		{
-			TownHall* townhall = nullptr;
-			EnemyTownHall* enemy_townhall = nullptr;
-			Barracks* barrack = nullptr;
-			EnemyBarracks* enemy_barrack = nullptr;
+		case ENTITY_TYPE::TOWNHALL:
+			townhall = (TownHall*)building_selected;
+			townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->level);
+			break;
 
-			switch (building_selected->type)
-			{
-			case ENTITY_TYPE::TOWNHALL:
-				townhall = (TownHall*)building_selected;
-				townhall->GenerateUnit(ENTITY_TYPE::GATHERER, townhall->level);
-				break;
-
-			case ENTITY_TYPE::ENEMY_TOWNHALL:
-				enemy_townhall = (EnemyTownHall*)building_selected;
-				enemy_townhall->GenerateUnit(ENTITY_TYPE::GATHERER, enemy_townhall->level);
-				break;
-				
 			case ENTITY_TYPE::BARRACKS:
-				barrack = (Barracks*)building_selected;
-				barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->level);
-				break;
+			barrack = (Barracks*)building_selected;
+			barrack->GenerateUnit(ENTITY_TYPE::INFANTRY, barrack->level);
+			break;
 
-			case ENTITY_TYPE::ENEMY_BARRACKS:
-				enemy_barrack = (EnemyBarracks*)building_selected;
-				enemy_barrack->GenerateUnit(ENTITY_TYPE::ENEMY_INFANTRY, enemy_barrack->level);
-				break;
-			}
+		case ENTITY_TYPE::ENEMY_TOWNHALL:
+			enemy_townhall = (EnemyTownHall*)building_selected;
+			enemy_townhall->GenerateUnit(ENTITY_TYPE::ENEMY_GATHERER, enemy_townhall->level);
+			break;
+
+		case ENTITY_TYPE::ENEMY_BARRACKS:
+			enemy_barrack = (EnemyBarracks*)building_selected;
+			enemy_barrack->GenerateUnit(ENTITY_TYPE::ENEMY_INFANTRY, enemy_barrack->level);
+			break;
 		}
 	}
 }
@@ -928,39 +930,36 @@ void Player::DebugUnitUpgrade()
 {
 	if (building_selected != nullptr)
 	{
-		if (App->input->GetKey(SDL_SCANCODE_U) == KEY_STATE::KEY_DOWN)
+		TownHall* townhall				= nullptr;
+		Barracks* barrack				= nullptr;
+		EnemyTownHall* enemy_townhall	= nullptr;
+		EnemyBarracks* enemy_barrack	= nullptr;
+
+		switch (building_selected->type)
 		{
-			TownHall* townhall = nullptr;
-			EnemyTownHall* enemy_townhall = nullptr;
-			Barracks* barrack = nullptr;
-			EnemyBarracks* enemy_barrack = nullptr;
+		case ENTITY_TYPE::TOWNHALL:
+			townhall = (TownHall*)building_selected;
+			townhall->level++;
+			townhall->LevelChanges();
+			break;
 
-			switch (building_selected->type)	
-			{
-			case ENTITY_TYPE::TOWNHALL:
-				townhall = (TownHall*)building_selected;
-				townhall->level++;
-				townhall->LevelChanges();
-				break;
-			
-			case ENTITY_TYPE::ENEMY_TOWNHALL:
-				enemy_townhall = (EnemyTownHall*)building_selected;
-				enemy_townhall->level++;
-				enemy_townhall->LevelChanges();
-				break;
+		case ENTITY_TYPE::BARRACKS:
+			barrack = (Barracks*)building_selected;
+			barrack->level++;
+			barrack->LevelChanges();
+			break;
 
-			case ENTITY_TYPE::BARRACKS:
-				barrack = (Barracks*)building_selected;
-				barrack->level++;
-				barrack->LevelChanges();
-				break;
+		case ENTITY_TYPE::ENEMY_TOWNHALL:
+			enemy_townhall = (EnemyTownHall*)building_selected;
+			enemy_townhall->level++;
+			enemy_townhall->LevelChanges();
+			break;
 
-			case ENTITY_TYPE::ENEMY_BARRACKS:
-				enemy_barrack = (EnemyBarracks*)building_selected;
-				enemy_barrack->level++;
-				enemy_barrack->LevelChanges();
-				break;
-			}
+		case ENTITY_TYPE::ENEMY_BARRACKS:
+			enemy_barrack = (EnemyBarracks*)building_selected;
+			enemy_barrack->level++;
+			enemy_barrack->LevelChanges();
+			break;
 		}
 	}
 }
@@ -993,9 +992,7 @@ void Player::InitializePlayer()
 	selection_rect = { 0, 0, 0, 0 };
 
 	// --- Loading from xml ---
-	config_file.load_file("config.xml");
-
-	pugi::xml_node player = config_file.child("config").child("player");
+	pugi::xml_node player = App->config_file.child("config").child("player");
 
 	god_mode					= player.child("god_mode").attribute("value").as_bool();
 	is_selecting				= player.child("is_selecting").attribute("value").as_bool();

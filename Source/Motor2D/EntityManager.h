@@ -93,9 +93,6 @@ public:
 	void OnCollision(Collider* C1, Collider* C2);
 
 public:
-	pugi::xml_document				config_file;
-	pugi::xml_node					config;
-
 	SDL_Texture*					gatherer_tex;
 	SDL_Texture*					scout_tex;
 	SDL_Texture*					infantry_tex;
@@ -118,24 +115,24 @@ public:
 	
 	SDL_Texture*					center_point_debug;
 
-	uint							gatherer_movement_fx;
-	uint							gather_fx;
-	uint							finished_gather_fx;
-	uint							infantry_movement_fx;
-	uint							infantry_shot_fx;
-	uint							click_barracks_fx;
-	uint							building_fx;
-	uint							finished_building_fx;
-	uint							finished_recruiting_fx;
-	uint							finished_upgrading_fx;
-	uint							click_townhall_fx;
-	uint							heavy_shot_fx;
-
+	uint							gatherer_moving_fx;
+	uint							gatherer_gathering_fx;
+	uint							gatherer_finished_gathering_fx;
+	uint							infantry_moving_fx;
+	uint							infantry_shooting_fx;
+	uint							heavy_shooting_fx;
+	uint							townhall_clicked_fx;
+	uint							barracks_clicked_fx;
+	uint							building_constructing_fx;
+	uint							building_finished_constructing_fx;
+	uint							building_finished_recruiting_fx;
+	uint							building_finished_upgrading_fx;
+	
 	
 	std::vector<Entity*>			entities;	
 	std::vector<Entity*>			entities_in_screen;
 
-
+	
 	Entity**						entity_map;			//Array that will be used to keep track at which position are all entities at all times.
 	int								entity_map_width;	//Width of the entity_map.
 	int								entity_map_height;	//Height of the entity_map.

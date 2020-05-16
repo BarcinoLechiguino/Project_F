@@ -78,15 +78,15 @@ void EnemyAI::SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry
 		{
 			enemy_townhall->creation_queue.push_back(ENTITY_TYPE::ENEMY_GATHERER);
 		}
+
+		for (int i = 0; i < scout_amount; ++i)
+		{
+			enemy_townhall->creation_queue.push_back(ENTITY_TYPE::ENEMY_SCOUT);
+		}
 	}
 
 	if (enemy_barracks != nullptr)
 	{
-		for (int i = 0; i < scout_amount; ++i)
-		{
-			enemy_barracks->creation_queue.push_back(ENTITY_TYPE::ENEMY_SCOUT);
-		}
-
 		for (int i = 0; i < infantry_amount; ++i)
 		{
 			enemy_barracks->creation_queue.push_back(ENTITY_TYPE::ENEMY_INFANTRY);

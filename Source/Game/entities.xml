@@ -1,0 +1,404 @@
+<entities>
+  <textures>
+    <gatherer_texture                 path="textures/Spritesheets/Entities/gatherer2_lowres.png"/>
+    <scout_texture                    path="textures/Spritesheets/Entities/scout_allied.png"/>
+    <infantry_texture                 path="textures/Spritesheets/Entities/infantry_lowres.png"/>
+    <heavy_texture                    path="textures/Spritesheets/Entities/heavy.png"/>
+    <enemy_gatherer_texture           path="textures/Spritesheets/Entities/gatherer_lowres.png"/>
+    <enemy_scout_texture              path="textures/Spritesheets/Entities/scout_enemy.png"/>
+    <enemy_infantry_texture           path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
+    <enemy_heavy_texture              path="textures/Spritesheets/Entities/heavy_enemy.png"/>
+    <townhall_texture                 path="maps/hall.png"/>
+    <barracks_texture                 path="maps/Barracks.png"/>
+    <wall_texture                     path="maps/Wall_Placeholder.png"/>
+    <enemy_townhall_texture           path="maps/Hall_enemy.png"/>
+    <enemy_barracks_texture           path="maps/Barracks_enemy.png"/>
+    <enemy_wall_texture               path="maps/Enemy_Wall_Placeholder.png"/>
+    <rock_texture                     path="maps/rocks.png"/>
+    <tree_texture                     path="maps/trees.png"/>
+    <bits_texture                     path="maps/bits_placeholder.png"/>
+  </textures>
+
+  <fx>
+    <gatherer_moving                  path="audio/fx/Gatherer_movement.wav"/>
+    <gatherer_gathering               path="audio/fx/Gathering.wav"/>
+    <gatherer_finished_gathering      path="audio/fx/Finnished_gathering.wav"/>
+    <infantry_moving                  path="audio/fx/Infantry_movement.wav"/>
+    <infantry_shooting                path="audio/fx/Infantry_shot.wav"/>
+    <heavy_shooting                   path=""/>
+    <townhall_clicked                 path="audio/fx/Click_Townhall.wav"/>
+    <barracks_clicked                 path="audio/fx/Click Barracks.wav"/>
+    <building_constructing            path="audio/fx/Building.wav"/>
+    <building_finished_constructing   path="audio/fx/Finished_building.wav"/>
+    <building_finished_recruiting     path="audio/fx/Finished_recruiting.wav"/>
+    <building_finished_upgrading      path="audio/fx/Finished_Upgrading.wav"/>
+  </fx>
+  
+  <units>
+    <update_cycle_length length="0.1f"/>
+    <speed_factor x="0.803f" y="0.59f"/>
+
+    <allies>
+      <gatherer>
+        <sprite_sections>
+          <pathing_up         x="0"   y="49" w="39" h="42"/>
+          <pathing_down       x="39"  y="49" w="38" h="45"/>
+          <pathing_right      x="123" y="49" w="43" h="42"/>
+          <pathing_left       x="78"  y="49" w="43" h="42"/>
+          <pathing_up_right   x="104" y="0"  w="52" h="49"/>
+          <pathing_up_left    x="156" y="0"  w="52" h="49"/>
+          <pathing_down_right x="52"  y="0"  w="52" h="49"/>
+          <pathing_down_left  x="0"   y="0"  w="52" h="49"/>
+        </sprite_sections>
+
+        <sprite_size w="58" h="45"/>
+        <max_health health="150"/>
+        <damage damage="0"/>
+        <speed speed="400.0f"/>
+        <is_selectable value="true"/>
+        <is_selected value="false"/>
+        <path_full value="false"/>
+        <gather_in_cooldown value="false"/>
+        <gathering_speed speed="1.0f"/>
+        <gathering_range range="2"/>
+        <gathering_amount_data amount="30"/>
+        <gathering_amount_electricity amount="15"/>
+        <gathering_amount_bits amount="1"/>
+        <gathering_amount_chunks amount="10"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </gatherer>
+
+      <scout>
+        <sprite_sections>
+          <pathing_up x="0" y="0" w="0" h="0"/>
+          <pathing_down x="0" y="0" w="0" h="0"/>
+          <pathing_right x="0" y="0" w="0" h="0"/>
+          <pathing_left x="0" y="0" w="0" h="0"/>
+          <pathing_up_right x="0" y="0" w="0" h="0"/>
+          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_right x="0" y="0" w="0" h="0"/>
+          <pathing_down_left x="0" y="0" w="0" h="0"/>
+        </sprite_sections>
+
+        <sprite_size w="58" h="45"/>
+        <max_health health="300"/>
+        <damage damage="30"/>
+        <speed speed="500.0f"/>
+        <is_selectable value="true"/>
+        <is_selected value="false"/>
+        <path_full value="false"/>
+        <attack_range range="5"/>
+        <attack_speed speed="0.5f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </scout>
+
+      <infantry>
+        <sprite_sections>
+          <pathing_up x="0" y="0" w="0" h="0"/>
+          <pathing_down x="0" y="0" w="0" h="0"/>
+          <pathing_right x="0" y="0" w="0" h="0"/>
+          <pathing_left x="0" y="0" w="0" h="0"/>
+          <pathing_up_right x="0" y="0" w="0" h="0"/>
+          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_right x="0" y="0" w="0" h="0"/>
+          <pathing_down_left x="0" y="0" w="0" h="0"/>
+        </sprite_sections>
+
+        <sprite_size w="58" h="45"/>
+        <max_health health="300"/>
+        <damage damage="30"/>
+        <speed speed="500.0f"/>
+        <is_selectable value="true"/>
+        <is_selected value="false"/>
+        <path_full value="false"/>
+        <attack_range range="5"/>
+        <attack_speed speed="0.5f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </infantry>
+
+      <heavy>
+        <sprite_sections>
+          <pathing_up x="0" y="0" w="0" h="0"/>
+          <pathing_down x="0" y="0" w="0" h="0"/>
+          <pathing_right x="0" y="0" w="0" h="0"/>
+          <pathing_left x="0" y="0" w="0" h="0"/>
+          <pathing_up_right x="0" y="0" w="0" h="0"/>
+          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_right x="0" y="0" w="0" h="0"/>
+          <pathing_down_left x="0" y="0" w="0" h="0"/>
+        </sprite_sections>
+
+        <sprite_size w="58" h="45"/>
+        <max_health health="300"/>
+        <damage damage="30"/>
+        <speed speed="500.0f"/>
+        <is_selectable value="true"/>
+        <is_selected value="false"/>
+        <path_full value="false"/>
+        <attack_range range="5"/>
+        <attack_speed speed="0.5f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </heavy>
+    </allies>
+
+    <enemies>
+      <enemy_gatherer>
+        <sprite_sections>
+          <pathing_up x="0" y="49" w="39" h="42"/>
+          <pathing_down x="39" y="49" w="38" h="45"/>
+          <pathing_right x="123" y="49" w="43" h="42"/>
+          <pathing_left x="78" y="49" w="43" h="42"/>
+          <pathing_up_right x="104" y="0" w="52" h="49"/>
+          <pathing_up_left x="156" y="0" w="52" h="49"/>
+          <pathing_down_right x="52" y="0" w="52" h="49"/>
+          <pathing_down_left x="0" y="0" w="52" h="49"/>
+        </sprite_sections>
+
+        <sprite_size w="58" h="45"/>
+        <max_health health="150"/>
+        <damage damage="0"/>
+        <speed speed="400.0f"/>
+        <is_selectable value="true"/>
+        <is_selected value="false"/>
+        <path_full value="false"/>
+        <gather_in_cooldown value="false"/>
+        <gathering_speed speed="1.0f"/>
+        <gathering_range range="2"/>
+        <gathering_amount_data amount="30"/>
+        <gathering_amount_electricity amount="15"/>
+        <gathering_amount_chunks amount="10"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </enemy_gatherer>
+
+      <enemy_scout>
+        <sprite_sections>
+          <pathing_up x="0" y="0" w="0" h="0"/>
+          <pathing_down x="0" y="0" w="0" h="0"/>
+          <pathing_right x="0" y="0" w="0" h="0"/>
+          <pathing_left x="0" y="0" w="0" h="0"/>
+          <pathing_up_right x="0" y="0" w="0" h="0"/>
+          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_right x="0" y="0" w="0" h="0"/>
+          <pathing_down_left x="0" y="0" w="0" h="0"/>
+        </sprite_sections>
+
+        <sprite_size w="58" h="45"/>
+        <max_health health="300"/>
+        <damage damage="30"/>
+        <speed speed="500.0f"/>
+        <is_selectable value="true"/>
+        <is_selected value="false"/>
+        <path_full value="false"/>
+        <attack_range range="5"/>
+        <attack_speed speed="0.5f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </enemy_scout>
+
+      <enemy_infantry>
+        <sprite_sections>
+          <pathing_up x="0" y="0" w="0" h="0"/>
+          <pathing_down x="0" y="0" w="0" h="0"/>
+          <pathing_right x="0" y="0" w="0" h="0"/>
+          <pathing_left x="0" y="0" w="0" h="0"/>
+          <pathing_up_right x="0" y="0" w="0" h="0"/>
+          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_right x="0" y="0" w="0" h="0"/>
+          <pathing_down_left x="0" y="0" w="0" h="0"/>
+        </sprite_sections>
+
+        <sprite_size w="58" h="45"/>
+        <max_health health="300"/>
+        <damage damage="30"/>
+        <speed speed="500.0f"/>
+        <is_selectable value="true"/>
+        <is_selected value="false"/>
+        <path_full value="false"/>
+        <attack_range range="5"/>
+        <attack_speed speed="0.5f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </enemy_infantry>
+
+      <enemy_heavy>
+        <sprite_sections>
+          <pathing_up x="0" y="0" w="0" h="0"/>
+          <pathing_down x="0" y="0" w="0" h="0"/>
+          <pathing_right x="0" y="0" w="0" h="0"/>
+          <pathing_left x="0" y="0" w="0" h="0"/>
+          <pathing_up_right x="0" y="0" w="0" h="0"/>
+          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_right x="0" y="0" w="0" h="0"/>
+          <pathing_down_left x="0" y="0" w="0" h="0"/>
+        </sprite_sections>
+
+        <sprite_size w="58" h="45"/>
+        <max_health health="300"/>
+        <damage damage="30"/>
+        <speed speed="500.0f"/>
+        <is_selectable value="true"/>
+        <is_selected value="false"/>
+        <path_full value="false"/>
+        <attack_range range="5"/>
+        <attack_speed speed="0.5f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </enemy_heavy>
+    </enemies>
+  </units>
+
+  <buildings>
+    <allied>
+      <townhall>
+        <sprite_section_level_1 x="0" y="0" w="0" h="0"/>
+        <sprite_section_level_2 x="0" y="0" w="0" h="0"/>
+        <tiles_occupied x="3" y="3"/>
+
+        <is_selected value="false"/>
+        <max_health health="900"/>
+        <unit_level level ="1"/>
+
+        <gatherer_creation_time time="1.0f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+
+        <creation_bar_background_section x="618" y="12" w="115" h="9"/>
+        <creation_bar_section x="618" y="23" w="115" h="9"/>
+        <creation_bar_position_offset x="-6" y="16"/>
+      </townhall>
+
+      <barracks>
+        <sprite_section_level_1 x="0" y="0" w="0" h="0"/>
+        <sprite_section_level_2 x="0" y="0" w="0" h="0"/>
+        <tiles_occupied x="2" y="2"/>
+
+        <is_selected value="false"/>
+        <max_health health="600"/>
+        <unit_level level ="1"/>
+
+        <scout_creation_time time="1.0f"/>
+        <infantry_creation_time time="2.0f"/>
+        <heavy_creation_time time="5.0f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+
+        <creation_bar_background_section x="618" y="12" w="115" h="9"/>
+        <creation_bar_section x="618" y="23" w="115" h="9"/>
+        <creation_bar_position_offset x="-6" y="16"/>
+      </barracks>
+    </allied>
+
+    <enemy>
+      <enemy_townhall>
+        <sprite_section_level_1 x="0" y="0" w="0" h="0"/>
+        <sprite_section_level_2 x="0" y="0" w="0" h="0"/>
+        <tiles_occupied x="3" y="3"/>
+
+        <is_selected value="false"/>
+        <max_health health="900"/>
+        <unit_level level ="1"/>
+
+        <gatherer_creation_time time="1.0f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+
+        <creation_bar_background_section x="618" y="12" w="115" h="9"/>
+        <creation_bar_section x="618" y="23" w="115" h="9"/>
+        <creation_bar_position_offset x="-6" y="16"/>
+      </enemy_townhall>
+
+      <enemy_barracks>
+        <sprite_section_level_1 x="0" y="0" w="0" h="0"/>
+        <sprite_section_level_2 x="0" y="0" w="0" h="0"/>
+        <tiles_occupied x="2" y="2"/>
+
+        <is_selected value="false"/>
+        <max_health health="600"/>
+        <unit_level level ="1"/>
+
+        <enemy_scout_creation_time time="1.0f"/>
+        <enemy_infantry_creation_time time="2.0f"/>
+        <enemy_heavy_creation_time time="5.0f"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+
+        <creation_bar_background_section x="618" y="12" w="115" h="9"/>
+        <creation_bar_section x="618" y="23" w="115" h="9"/>
+        <creation_bar_position_offset x="-6" y="16"/>
+      </enemy_barracks>
+    </enemy>
+  </buildings>
+
+  <resources>
+    <rock>
+      <sprite_section_1 x="0" y="0" w="0" h="0"/>
+      <sprite_section_2 x="0" y="0" w="0" h="0"/>
+      <sprite_section_3 x="0" y="0" w="0" h="0"/>
+      <sprite_section_4 x="0" y="0" w="0" h="0"/>
+      <tiles_occupied x="1" y="1"/>
+
+      <max_health health="300"/>
+
+      <healthbar_background_section x="618" y="12" w="115" h="9"/>
+      <healthbar_section x="618" y="23" w="115" h="9"/>
+      <healthbar_position_offset x="-30" y="0"/>
+    </rock>
+
+    <tree>
+      <sprite_section_1 x="0" y="0" w="0" h="0"/>
+      <sprite_section_2 x="0" y="0" w="0" h="0"/>
+      <sprite_section_3 x="0" y="0" w="0" h="0"/>
+      <sprite_section_4 x="0" y="0" w="0" h="0"/>
+      <tiles_occupied x="1" y="1"/>
+
+      <max_health health="300"/>
+
+      <healthbar_background_section x="618" y="12" w="115" h="9"/>
+      <healthbar_section x="618" y="23" w="115" h="9"/>
+      <healthbar_position_offset x="-30" y="-25"/>
+    </tree>
+
+    <chunks>
+      <sprite_section_1 x="0" y="0" w="0" h="0"/>
+      <sprite_section_2 x="0" y="0" w="0" h="0"/>
+      <sprite_section_3 x="0" y="0" w="0" h="0"/>
+      <sprite_section_4 x="0" y="0" w="0" h="0"/>
+      <tiles_occupied x="1" y="1"/>
+
+      <max_health health="300"/>
+
+      <healthbar_background_section x="618" y="12" w="115" h="9"/>
+      <healthbar_section x="618" y="23" w="115" h="9"/>
+      <healthbar_position_offset x="-6" y="-6"/>
+    </chunks>
+  </resources>
+</entities>
