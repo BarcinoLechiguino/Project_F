@@ -2,16 +2,16 @@
 	<info>
 		<emitter type ="1" name="background">
 			<speed value ="0"/>
-			<size value ="50"/>
+			<size value ="200"/>
 			<cone_angle min ="50" max ="130"/>
-			<emission value ="1"/>
+			<emission value ="10"/>
 			<rnd value ="1"/>
 			<particleLife value ="100"/>
 			<emitterLife value ="-1"/>
 			<startColor r ="51" g="250" b="250" a="255"/>
 			<endColor r ="102" g="0" b="204" a ="255"/>
 			<rect x="0" y="0" w="1280" h="720"/>
-      <texture_path path="textures/Particles/star_07.png" />
+      <texture_path path="textures/Particles/spark_01.png" />
       <camera_speed speed="0.0f" />
       <layer value="0" />
       <spread_direction a = "45"/>
@@ -19,7 +19,7 @@
 	  
 		<emitter type ="2" name="explosion">
 			<speed value ="30"/>
-			<size value ="50"/>
+			<size value ="70"/>
       <cone_angle min ="60" max ="120"/>
 			<emission value ="0.1"/>
 			<rnd value ="1"/>
@@ -27,11 +27,28 @@
 			<emitterLife value ="-1"/>
 			<startColor r ="104" g="104" b="132" a="255"/>
 			<endColor r ="255" g="128" b="0" a="255"/>
-			<rect x="0" y="0" w="50" h="50"/>
+			<rect x="0" y="0" w="20" h="20"/>
+      <texture_path path="textures/Particles/scorch_03.png" />
+      <camera_speed speed="1.0f" />
+      <layer value="1" />
+      <spread_direction a = "180"/>
+		</emitter>
+
+    <emitter type ="2" name="gatherer smoke">
+      <speed value ="30"/>
+      <size value ="70"/>
+      <cone_angle min ="60" max ="120"/>
+      <emission value ="0.1"/>
+      <rnd value ="1"/>
+      <particleLife value ="80"/>
+      <emitterLife value ="-1"/>
+      <startColor r ="104" g="104" b="132" a="255"/>
+      <endColor r ="255" g="128" b="0" a="255"/>
+      <rect x="0" y="0" w="20" h="20"/>
       <texture_path path="textures/Particles/scorch_03.png" />
       <camera_speed speed="1.0f" />
       <layer value="1" />
       <spread_direction a = "90"/>
-		</emitter>
+    </emitter>
 	</info>
 </particlesystem>
