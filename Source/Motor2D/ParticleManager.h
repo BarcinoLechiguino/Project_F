@@ -1,5 +1,5 @@
-//#ifndef __J1PARTICLEMANAGER_H__
-//#define __J1PARTICLEMANAGER_H__
+#ifndef __PARTICLEMANAGER_H__
+#define __PARTICLEMANAGER_H__
 
 #include "Application.h"
 #include "Point.h"
@@ -13,7 +13,7 @@
 #include "SDL/include/SDL_rect.h"
 
 class Emitter;
-enum class EMITTER_TYPE;
+enum EMITTER_TYPE;
 
 #define NUM_EMITTERS 20
 
@@ -29,11 +29,14 @@ private:
 
 		float speed;
 		int emission;
-		fPoint angle;
+		fPoint coneAngle;
+		float spreadDirection;
 		int particleLife;
 		double emitterLife;
 		float size;
 		int rnd;
+		float cameraspeed;
+		uint layer;
 
 		SDL_Color startColor;
 		SDL_Color endColor;
@@ -41,6 +44,7 @@ private:
 		std::string path;
 	};
 
+	float dt_stored; 
 
 public:
 
@@ -55,14 +59,16 @@ public:
 
 
 	Emitter* SpawnEmitter(fPoint pos, EMITTER_TYPE type);
-	void LoadData(pugi::xml_node& node);
+	void LoadData();
 	bool RemoveEverything();
 
 
 	EMITTER_TYPE type;
-	std::list<Emitter*> emittersList;
+	std::vector<Emitter*> emittersList;
 	
 	//Loads Emitter characteristics at Awake, to avoid reopening xml file
 	DataToLoad vecData[NUM_EMITTERS];
 
 };
+
+#endif // __PARTICLEMANAGER_H__

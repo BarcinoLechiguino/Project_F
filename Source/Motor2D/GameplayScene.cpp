@@ -18,6 +18,8 @@
 #include "Player.h"
 #include "Scene.h"
 #include "DialogSystem.h"
+#include "ParticleManager.h"
+#include "Emitter.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -78,6 +80,8 @@ bool GameplayScene::Start()
 
 	InitScene();
 
+	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_BACKGROUND);
+
 	return ret;
 }
 
@@ -98,7 +102,10 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 {
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
 
-	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
+	//App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
+
+
+
 
 	App->map->Draw();																		//Map Draw
 

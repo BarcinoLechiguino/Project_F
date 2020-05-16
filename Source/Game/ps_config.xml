@@ -1,17 +1,20 @@
 <particlesystem>
 	<info>
-		<emitter type ="1">
-			<speed value ="70"/>
-			<size value ="100"/>
-			<angle min ="50" max ="130"/>
+		<emitter type ="1" name="background">
+			<speed value ="0"/>
+			<size value ="50"/>
+			<cone_angle min ="50" max ="130"/>
 			<emission value ="1"/>
 			<rnd value ="1"/>
-			<particleLife value ="300"/>
+			<particleLife value ="100"/>
 			<emitterLife value ="-1"/>
-			<startColor r ="255" g="50" b="200" a="255"/>
-			<endColor r ="0" g="255" b="0" a ="255"/>
-			<rect x="0" y="0" w="512" h="512"/>
-      <texture_path path="textures/Particles/smoke_05.png" />
+			<startColor r ="51" g="250" b="250" a="255"/>
+			<endColor r ="51" g="250" b="250" a ="255"/>
+			<rect x="0" y="0" w="1280" h="720"/>
+      <texture_path path="textures/Particles/star_07.png" />
+      <camera_speed speed="0.0f" />
+      <layer value="0" />
+      <spread_direction a = "45"/>
 		</emitter>
 	  
 		<emitter type ="2">

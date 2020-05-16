@@ -7,14 +7,16 @@
 #include "PerfTimer.h"
 #include "SDL/include/SDL_rect.h"
 
+#include <vector>
+
 struct SDL_Texture;
 class Pool;
 
-enum class EMITTER_TYPE
+enum EMITTER_TYPE
 {
 	EMITTER_NONE,
-	EMITTER_MOUSE,
-	EMITTER_FIRE
+	EMITTER_BACKGROUND,
+	EMITTER_EXPLOSION
 };
 
 struct Particle
@@ -38,10 +40,11 @@ class Emitter
 {
 private:
 
-	EMITTER_TYPE type = EMITTER_TYPE::EMITTER_NONE;
+	EMITTER_TYPE type = EMITTER_NONE;
 
 	fPoint pos;
 	fPoint angle;
+	int spreadDirection;
 	float speed;
 	float emitterSize;
 	int emission;
@@ -49,6 +52,8 @@ private:
 	int particleLife;
 	SDL_Rect rect;
 	double emitterLife;
+	float cameraspeed;
+	uint layer; 
 
 	SDL_Color startColor;
 	SDL_Color endColor;
@@ -57,10 +62,11 @@ private:
 
 public:
 
-	Emitter(fPoint pos, float maxSpeed, float maxSize, fPoint angleRange, int emitVariance, int emitNumber, int maxParticleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect textureRect, const char* path);
+	Emitter(fPoint pos, float maxSpeed, float maxSize, fPoint angleRange, int emitVariance, int emitNumber, int maxParticleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect textureRect, const char* path, float cameraspeed, int spreadDirection, uint layer);
 	~Emitter();
 
 	bool Update(float dt);
+	bool PostUpdate();
 	float RandomizeParticles(float min, float max);
 	int GetSize() const { return size; }
 	void UpdatePos(fPoint newPos) { pos = newPos; }
@@ -75,8 +81,8 @@ public:
 
 	//POOL related
 	void CreateParticles(fPoint pos, float speed, float angle, float size, int life, SDL_Rect tex, SDL_Color startColor, SDL_Color endColor);
-	Particle* startParticle;
-	Particle* vec = nullptr;
+
+	std::vector<Particle*> particle_vec; 
 
 	int poolsize = 0;
 

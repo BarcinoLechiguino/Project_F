@@ -1,11 +1,10 @@
 #include "ParticleManager.h"
-#include "Log.h"
 #include "Application.h"
 
 #include "Render.h"
 #include "Emitter.h"
 
-
+#include "Textures.h"
 
 ParticleManager::ParticleManager() : Module()
 {
@@ -27,33 +26,38 @@ bool ParticleManager::Awake(pugi::xml_node& config)
 {
 	bool ret = true;
 
+	
 	pugi::xml_document config_ps;
-	pugi::xml_node* node = &App->LoadParticleSystemConfig(config_ps);
-	pugi::xml_node info = node->child("info").child("emitter");
+	pugi::xml_node node = App->LoadParticleSystemConfig(config_ps);
+	pugi::xml_node info = node.child("info").child("emitter");
 
-	for (; info != nullptr; info = info.next_sibling())
-	{
-			LoadData(info);
-	}
+	
+	
+	LoadData();
 
 	return ret;
 }
 
 bool ParticleManager::Update(float dt)
 {
-	for (std::list<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
-	{
-		if ((*it) != nullptr) {
-			(*it)->Update(dt);
-		}
-	}
+	 dt_stored = dt;
+
+	 for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
+	 {
+		 if ((*it) != nullptr) {
+			 (*it)->Update(dt_stored);
+		 }
+	 }
 
 	return true;
 }
 
 bool ParticleManager::PostUpdate()
 {
-	for (std::list<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
+
+
+
+	for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	{
 		if ((*it)->remove)
 		{
@@ -68,7 +72,7 @@ bool ParticleManager::PostUpdate()
 bool ParticleManager::CleanUp()
 {
 
-	for (std::list<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
+	for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	{
 		if ((*it) != nullptr)
 			delete (*it);
@@ -83,8 +87,8 @@ Emitter* ParticleManager::SpawnEmitter(fPoint pos, EMITTER_TYPE type)
 {
 	Emitter* ret = nullptr;
 
-	ret = new Emitter(pos, vecData[(int)type].speed, vecData[(int)type].size, vecData[(int)type].angle, vecData[(int)type].rnd, vecData[(int)type].emission,
-			vecData[(int)type].particleLife, vecData[(int)type].emitterLife, vecData[(int)type].startColor, vecData[(int)type].endColor, vecData[(int)type].r, vecData[(int)type].path.c_str());
+	ret = new Emitter(pos, vecData[(int)type].speed, vecData[(int)type].size, vecData[(int)type].coneAngle, vecData[(int)type].rnd, vecData[(int)type].emission,
+			vecData[(int)type].particleLife, vecData[(int)type].emitterLife, vecData[(int)type].startColor, vecData[(int)type].endColor, vecData[(int)type].r, vecData[(int)type].path.c_str(), vecData[(int)type].cameraspeed, vecData[(int)type].spreadDirection, vecData[(int)type].layer);
 
 	
 	emittersList.push_back(ret);
@@ -92,41 +96,52 @@ Emitter* ParticleManager::SpawnEmitter(fPoint pos, EMITTER_TYPE type)
 	return ret;
 }
 
-void ParticleManager::LoadData(pugi::xml_node& node)
+void ParticleManager::LoadData()
 {
 	DataToLoad data;
 
-	int typeNum = node.attribute("type").as_int();
+	pugi::xml_document config_ps;
 
-	data.speed = node.child("speed").attribute("value").as_float();
-	data.size = node.child("size").attribute("value").as_float();
-	data.angle.x = node.child("angle").attribute("min").as_float();
-	data.angle.y = node.child("angle").attribute("max").as_float();
-	data.emission = node.child("emission").attribute("value").as_int();
-	data.rnd = node.child("rnd").attribute("value").as_int();
-	data.particleLife = node.child("particleLife").attribute("value").as_int();
-	data.emitterLife = node.child("emitterLife").attribute("value").as_float();
+	config_ps.load_file("ps_config.xml");
 
-	data.startColor.r = node.child("startColor").attribute("r").as_uint();
-	data.startColor.g = node.child("startColor").attribute("g").as_uint();
-	data.startColor.b = node.child("startColor").attribute("b").as_uint();
-	data.startColor.a = node.child("startColor").attribute("a").as_uint();
+	pugi::xml_node node = config_ps.child("particlesystem").child("info").child("emitter");
 
-	data.endColor.r = node.child("endColor").attribute("r").as_uint();
-	data.endColor.g = node.child("endColor").attribute("g").as_uint();
-	data.endColor.b = node.child("endColor").attribute("b").as_uint();
-	data.endColor.a = node.child("endColor").attribute("a").as_uint();
+	for(; node != nullptr; node = node.next_sibling())
+	{
+		int typeNum = node.attribute("type").as_int();
 
-	data.r.x = node.child("rect").attribute("x").as_int();
-	data.r.y = node.child("rect").attribute("y").as_int();
-	data.r.w = node.child("rect").attribute("w").as_int();
-	data.r.h = node.child("rect").attribute("h").as_int();
+		data.speed = node.child("speed").attribute("value").as_float();
+		data.size = node.child("size").attribute("value").as_float();
+		data.coneAngle.x = node.child("cone_angle").attribute("min").as_float();
+		data.coneAngle.y = node.child("cone_angle").attribute("max").as_float();
+		data.emission = node.child("emission").attribute("value").as_int();
+		data.rnd = node.child("rnd").attribute("value").as_int();
+		data.particleLife = node.child("particleLife").attribute("value").as_int();
+		data.emitterLife = node.child("emitterLife").attribute("value").as_float();
 
-	vecData[(int)type] = data;
+		data.startColor.r = node.child("startColor").attribute("r").as_uint();
+		data.startColor.g = node.child("startColor").attribute("g").as_uint();
+		data.startColor.b = node.child("startColor").attribute("b").as_uint();
+		data.startColor.a = node.child("startColor").attribute("a").as_uint();
 
-	data.path = node.child("texture_path").attribute("path").as_string();
-	//Expand Here
-	//particle_tex = App->tex->Load("textures/particle_small.png");
+		data.endColor.r = node.child("endColor").attribute("r").as_uint();
+		data.endColor.g = node.child("endColor").attribute("g").as_uint();
+		data.endColor.b = node.child("endColor").attribute("b").as_uint();
+		data.endColor.a = node.child("endColor").attribute("a").as_uint();
+
+		data.r.x = node.child("rect").attribute("x").as_int();
+		data.r.y = node.child("rect").attribute("y").as_int();
+		data.r.w = node.child("rect").attribute("w").as_int();
+		data.r.h = node.child("rect").attribute("h").as_int();
+
+		data.cameraspeed = node.child("camera_speed").attribute("speed").as_float();
+		data.spreadDirection = node.child("spread_direction").attribute("a").as_float();
+		data.layer = node.child("layer").attribute("value").as_uint();
+
+		data.path = node.child("texture_path").attribute("path").as_string();
+
+		vecData[typeNum] = data;
+	}
 }
 
 
@@ -135,7 +150,7 @@ bool ParticleManager::RemoveEverything()
 {
 	bool ret = false;
 
-	for (std::list<Emitter*>::const_iterator it = emittersList.begin(); it != emittersList.end(); ++it)
+	for (std::vector<Emitter*>::const_iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	{
 		if ((*it) != nullptr) {
 			(*it)->remove = true;
