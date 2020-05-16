@@ -9,7 +9,7 @@
 			<particleLife value ="100"/>
 			<emitterLife value ="-1"/>
 			<startColor r ="51" g="250" b="250" a="255"/>
-			<endColor r ="51" g="250" b="250" a ="255"/>
+			<endColor r ="102" g="0" b="204" a ="255"/>
 			<rect x="0" y="0" w="1280" h="720"/>
       <texture_path path="textures/Particles/star_07.png" />
       <camera_speed speed="0.0f" />
@@ -17,18 +17,21 @@
       <spread_direction a = "45"/>
 		</emitter>
 	  
-		<emitter type ="2">
-			<speed value ="50"/>
-			<size value ="130"/>
-			<angle min ="60" max ="120"/>
-			<emission value ="1"/>
+		<emitter type ="2" name="explosion">
+			<speed value ="30"/>
+			<size value ="50"/>
+      <cone_angle min ="60" max ="120"/>
+			<emission value ="0.1"/>
 			<rnd value ="1"/>
-			<particleLife value ="400"/>
+			<particleLife value ="80"/>
 			<emitterLife value ="-1"/>
-			<startColor r ="255" g="102" b="0" a="255"/>
-			<endColor r ="255" g="255" b="255" a="255"/>
-			<rect x="0" y="0" w="512" h="512"/>
-      <texture_path path="textures/Particles/star_04.png" />
+			<startColor r ="104" g="104" b="132" a="255"/>
+			<endColor r ="255" g="128" b="0" a="255"/>
+			<rect x="0" y="0" w="50" h="50"/>
+      <texture_path path="textures/Particles/scorch_03.png" />
+      <camera_speed speed="1.0f" />
+      <layer value="1" />
+      <spread_direction a = "90"/>
 		</emitter>
 	</info>
 </particlesystem>

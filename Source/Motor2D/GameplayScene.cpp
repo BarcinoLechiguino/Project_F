@@ -83,7 +83,9 @@ bool GameplayScene::Start()
 
 	InitScene();
 
-	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_BACKGROUND);
+	//App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_BACKGROUND);
+
+	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_EXPLOSION);
 
 	return ret;
 }

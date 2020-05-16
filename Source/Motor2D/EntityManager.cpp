@@ -14,6 +14,8 @@
 #include "Collisions.h"
 #include "Map.h"
 #include "Audio.h"
+#include "ParticleManager.h"
+#include "Emitter.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -336,6 +338,10 @@ void EntityManager::DeleteEntity(Entity* entity)
 	{
 		if ((*item) == entity)
 		{	
+			if (1) {
+				App->particle_manager->SpawnEmitter(entity->pixel_position, EMITTER_EXPLOSION);
+			}
+			
 			(*item)->CleanUp();
 			RELEASE((*item));
 

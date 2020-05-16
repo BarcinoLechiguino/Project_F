@@ -44,8 +44,6 @@ private:
 		std::string path;
 	};
 
-	float dt_stored; 
-
 public:
 
 	ParticleManager();
