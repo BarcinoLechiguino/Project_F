@@ -193,7 +193,7 @@ void DialogSystem::EmptyText()
 {
 	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin() ; text != App->scene_manager->gameplay_scene->HUD_dialog_text.end() ; ++text)
 	{
-		(*text)->DeleteCurrentStringTex();
+		(*text)->RefreshTextInput("");
 	}
 }
 
@@ -239,6 +239,8 @@ void DialogSystem::NextDialog()
 
 void DialogSystem::TypeText()
 {
+	EmptyText();
+
 	int i = 0;
 	for (std::vector<std::string>::iterator text = current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.begin(); text != current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.end(); ++text)
 	{
@@ -264,8 +266,6 @@ void DialogSystem::SetTextPosition(iPoint position)
 
 void DialogSystem::SlideIn()
 {
-	
-
 	if (!App->scene_manager->gameplay_scene->HUD_dialogs_background->is_transitioning)
 	{
 		dialog_state = DialogState::TEXT_TYPING;
@@ -313,10 +313,10 @@ bool DialogSystem::LoadDialog()
 			buffer->dialog_id = tree.attribute("tree_id").as_int();
 			buffer->position.x = tree.attribute("position_x").as_int();
 			buffer->position.y = tree.attribute("position_y").as_int();
-			//LOG("Loaded tree with id %d", buffer->dialog_id);
+			LOG("Loaded tree with id %d", buffer->dialog_id);
 			LoadTextBubbles(buffer, tree);
 			dialogs.push_back(buffer);
-			//LOG("last id %d", buffer->last_id);
+			LOG("last id %d", buffer->last_id);
 		}
 	}
 
@@ -347,7 +347,7 @@ bool DialogSystem::LoadTextBubbles(Dialog* dialog_tree, pugi::xml_node tree)
 		for (pugi::xml_node text = node.child("text"); text != nullptr; text = text.next_sibling("text"))
 		{
 			buffer->text.push_back(text.attribute("text").as_string());
-			//LOG("Loaded bubble with text: %s", text.attribute("text").as_string());
+			LOG("Loaded bubble with text: %s", text.attribute("text").as_string());
 		}
 		dialog_tree->dialog_bubbles.push_back(buffer);
 	}
