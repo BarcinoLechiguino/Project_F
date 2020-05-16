@@ -314,9 +314,9 @@ bool DialogSystem::LoadDialog()
 	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
 	App->scene_manager->gameplay_scene->HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, false,true, false, App->scene_manager->gameplay_scene, nullptr);
 
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false, nullptr));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr));
 
 	dialog_state = DialogState::NOT_ACTIVE;
 
