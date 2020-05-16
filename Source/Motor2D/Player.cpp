@@ -57,7 +57,7 @@ bool Player::Start()
 
 bool Player::PreUpdate()
 {
-	if (CurrentlyInGameplayScene())
+	if (CurrentlyInGameplayScene() && !App->pause)
 	{
 		SDL_SetRelativeMouseMode(SDL_TRUE);
 	}
@@ -65,6 +65,7 @@ bool Player::PreUpdate()
 	{
 		SDL_SetRelativeMouseMode(SDL_FALSE);
 	}
+
 	return true;
 }
 

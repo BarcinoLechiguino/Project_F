@@ -74,7 +74,6 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(movement);
 	
-
 	// scene_manager last before render.
 	AddModule(particle_manager);
 	AddModule(minimap);
