@@ -218,17 +218,20 @@ void UI_Cursor::CheckHoverEvent(iPoint mouse_tile_position)
 
 		if (entity != nullptr)																			// If there is an entity under the mouse.
 		{
-			if (App->entity_manager->IsAllyEntity(entity))
+			if (entity->is_visible)
 			{
-				current_section = hover_ally;
-			}
-			else if (App->entity_manager->IsEnemyEntity(entity))
-			{
-				current_section = hover_enemy;
-			}
-			else
-			{
-				current_section = hover_resource;
+				if (App->entity_manager->IsAllyEntity(entity))
+				{
+					current_section = hover_ally;
+				}
+				else if (App->entity_manager->IsEnemyEntity(entity))
+				{
+					current_section = hover_enemy;
+				}
+				else
+				{
+					current_section = hover_resource;
+				}
 			}
 		}
 
@@ -255,22 +258,25 @@ void UI_Cursor::CheckLeftClickEvent(iPoint mouse_tile_position)
 		
 		if (entity != nullptr)																			// If there is an entity under the mouse.
 		{
-			if (App->entity_manager->IsAllyEntity(entity))
+			if (entity->is_visible)
 			{
-				current_section = clicked_ally;
-			}
-			else if (App->entity_manager->IsEnemyEntity(entity))
-			{
-				current_section = clicked_enemy;
-			}
-			else
-			{
-				current_section = clicked_resource;
+				if (App->entity_manager->IsAllyEntity(entity))
+				{
+					current_section = clicked_ally;
+				}
+				else if (App->entity_manager->IsEnemyEntity(entity))
+				{
+					current_section = clicked_enemy;
+				}
+				else
+				{
+					current_section = clicked_resource;
+				}
 			}
 		}
 		else
 		{
-			if (!App->gui_manager->VisibleElementIsUnderCursor())									// If there is nothing under the mouse inside the map.								
+			if (!App->gui_manager->VisibleElementIsUnderCursor() || !ui_cursor_event_enabled)			// If there is nothing under the mouse inside the map.								
 			{
 				current_section = clicked_idle;
 			}
@@ -299,22 +305,25 @@ void UI_Cursor::CheckRightClickEvent(iPoint mouse_tile_position)
 		
 		if (entity != nullptr)																			// If there is an entity under the mouse.
 		{
-			if (App->entity_manager->IsAllyEntity(entity))
+			if (entity->is_visible)
 			{
-				current_section = clicked_ally;
-			}
-			else if (App->entity_manager->IsEnemyEntity(entity))
-			{
-				current_section = clicked_enemy;
-			}
-			else
-			{
-				current_section = clicked_resource;
+				if (App->entity_manager->IsAllyEntity(entity))
+				{
+					current_section = clicked_ally;
+				}
+				else if (App->entity_manager->IsEnemyEntity(entity))
+				{
+					current_section = clicked_enemy;
+				}
+				else
+				{
+					current_section = clicked_resource;
+				}
 			}
 		}
 		else
 		{
-			if (!App->gui_manager->VisibleElementIsUnderCursor())									// If there is nothing under the mouse inside the map.								
+			if (!App->gui_manager->VisibleElementIsUnderCursor() || !ui_cursor_event_enabled)			// If there is nothing under the mouse inside the map.								
 			{
 				current_section = clicked_idle;
 			}
@@ -328,7 +337,14 @@ void UI_Cursor::CheckLeftUnclickEvent(iPoint mouse_tile_position)
 {
 	if (App->gui_manager->VisibleElementIsUnderCursor())												// Cursor is over a UI_Element
 	{
-		current_section = hover_UI;
+		if (ui_cursor_event_enabled)
+		{
+			current_section = hover_UI;
+		}
+		else
+		{
+			current_section = idle;
+		}
 	}
 	else
 	{
@@ -336,17 +352,20 @@ void UI_Cursor::CheckLeftUnclickEvent(iPoint mouse_tile_position)
 		
 		if (entity != nullptr)																		// Cursor is over an Entity.
 		{
-			if (App->entity_manager->IsAllyEntity(entity))
+			if (entity->is_visible)
 			{
-				current_section = hover_ally;
-			}
-			else if (App->entity_manager->IsEnemyEntity(entity))
-			{
-				current_section = hover_enemy;
-			}
-			else
-			{
-				current_section = hover_resource;
+				if (App->entity_manager->IsAllyEntity(entity))
+				{
+					current_section = hover_ally;
+				}
+				else if (App->entity_manager->IsEnemyEntity(entity))
+				{
+					current_section = hover_enemy;
+				}
+				else
+				{
+					current_section = hover_resource;
+				}
 			}
 		}
 		else
@@ -361,8 +380,15 @@ void UI_Cursor::CheckLeftUnclickEvent(iPoint mouse_tile_position)
 void UI_Cursor::CheckRightUnclickEvent(iPoint mouse_tile_position)
 {
 	if (App->gui_manager->VisibleElementIsUnderCursor())												// Cursor is over a UI_Element
-	{
-		current_section = hover_UI;
+	{	
+		if (ui_cursor_event_enabled)
+		{
+			current_section = hover_UI;
+		}
+		else
+		{
+			current_section = idle;
+		}
 	}
 	else
 	{
@@ -370,17 +396,20 @@ void UI_Cursor::CheckRightUnclickEvent(iPoint mouse_tile_position)
 		
 		if (entity != nullptr)																		// Cursor is over an Entity.
 		{
-			if (App->entity_manager->IsAllyEntity(entity))
+			if (entity->is_visible)
 			{
-				current_section = hover_ally;
-			}
-			else if (App->entity_manager->IsEnemyEntity(entity))
-			{
-				current_section = hover_enemy;
-			}
-			else
-			{
-				current_section = hover_resource;
+				if (App->entity_manager->IsAllyEntity(entity))
+				{
+					current_section = hover_ally;
+				}
+				else if (App->entity_manager->IsEnemyEntity(entity))
+				{
+					current_section = hover_enemy;
+				}
+				else
+				{
+					current_section = hover_resource;
+				}
 			}
 		}
 		else
