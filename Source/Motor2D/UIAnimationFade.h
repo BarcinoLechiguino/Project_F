@@ -18,7 +18,7 @@ public:
 	
 	void ApplyFade();
 	
-	void GetTexturesToFade();
+	void GetAndInitializeTexturesToFade();
 
 	void InitFade();
 
@@ -26,9 +26,11 @@ private:
 	float start_alpha;
 	float end_alpha;
 
-	bool fading_to_max_alpha;
-	bool fading_to_zero_alpha;
+	bool fade_from_higher_to_lower;
 
+	SDL_Texture* element_texture;
+
+	std::vector<UI*> child_elements;
 	std::vector<SDL_Texture*> textures_to_fade;
 };
 

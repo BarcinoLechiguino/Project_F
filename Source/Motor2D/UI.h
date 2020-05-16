@@ -41,11 +41,11 @@ public:
 	virtual ~UI();
 
 	virtual bool Draw();
-
 	virtual void CheckInput();
-
 	virtual void CleanUp();
 
+	virtual SDL_Texture* GetTexture() const;			// Mainly used for UIAnimationFade.
+	
 	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed, float render_scale);
 
 public:
@@ -70,6 +70,7 @@ public:
 	void SetElementPosition(const iPoint& position);	// Will set the element's screen position and hitbox position to the one passed as argument.
 	iPoint GetElementPosition() const;					// Gets the current position of the UI Element.
 
+public:
 	iPoint GetMousePos() /*const*/;						// Gets the mouse's position in pixels. (World Position)
 	iPoint GetCursorPos();								// Gets the UI_Cursor's position in pixels. (World Position)		//TMP CONTROLLER
 
@@ -112,7 +113,7 @@ public:
 	
 	bool		is_filled;							// Determines if an empty UI Element will have its rect drawn or not.
 
-	bool		is_transitioning;					// 
+	bool		is_transitioning;					// Determines whether a UI Element is currently going through an animation/transition.
 
 private:
 

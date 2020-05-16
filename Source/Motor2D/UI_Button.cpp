@@ -160,3 +160,8 @@ void UI_Button::CleanUp()
 {
 	tex = nullptr;
 }
+
+SDL_Texture* UI_Button::GetTexture() const
+{
+	return tex;
+}

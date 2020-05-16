@@ -163,3 +163,8 @@ void UI_Image::CleanUp()
 
 	tex = nullptr;
 }
+
+SDL_Texture* UI_Image::GetTexture() const
+{
+	return tex;
+}

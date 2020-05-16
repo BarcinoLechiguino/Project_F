@@ -11,10 +11,10 @@ public:
 			SDL_Rect* idle = nullptr, SDL_Rect* hover = nullptr, SDL_Rect* clicked = nullptr);
 
 	bool Draw();
-
 	void CheckInput();				//If any UI element can be interactible, then this function needs to be declared at UI as virtual void.
-
 	void CleanUp();
+
+	SDL_Texture* GetTexture() const;
 
 private:
 	/*const*/ SDL_Texture*	tex;		//Texture of the button. Its set with the UI Atlas/Spritesheet.

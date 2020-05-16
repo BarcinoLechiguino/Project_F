@@ -239,6 +239,11 @@ void UI_Text::CleanUp()
 	}
 }
 
+SDL_Texture* UI_Text::GetTexture() const
+{
+	return current_texture;
+}
+
 SDL_Texture* UI_Text::GetCurrentStringTex()
 {
 	return current_texture;

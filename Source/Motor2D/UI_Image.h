@@ -10,10 +10,10 @@ public:
 	UI_Image(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool is_visible = true, bool is_interactible = false, bool is_draggable = false, Module* listener = nullptr, UI* parent = nullptr);
 
 	bool Draw();
-
 	void CheckInput();
-
 	void CleanUp();
+
+	SDL_Texture* GetTexture() const;
 
 private:
 	/*const*/ SDL_Texture*	tex;					//Texture of the UI_Image.

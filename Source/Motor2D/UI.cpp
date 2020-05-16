@@ -43,6 +43,12 @@ void UI::CleanUp()
 	return;
 }
 
+SDL_Texture* UI::GetTexture() const
+{
+	return nullptr;
+	//return App->gui_manager->GetAtlas();
+}
+
 void UI::BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed, float render_scale)
 {
 	App->render->Blit(texture, x, y, rect, false, speed, render_scale);		//Setting the blit's speed argument to 0 will make the UI Element remain static in relation to the camera.

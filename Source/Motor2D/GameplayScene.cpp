@@ -162,7 +162,7 @@ bool GameplayScene::PostUpdate()
 
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_STATE::KEY_DOWN
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_B) == BUTTON_STATE::BUTTON_DOWN)
-	{
+	{	
 		if (!App->transition_manager->is_transitioning)
 		{
 			if (!in_game_background->is_visible)
@@ -179,6 +179,8 @@ bool GameplayScene::PostUpdate()
 				iPoint destination	= { 380, current_pos.y };
 				
 				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, origin, destination);
+				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, false, 0.0f, 255.0f);*/
+
 				App->gui_manager->SetElementsVisibility(in_game_background, true);
 			}
 			else
@@ -193,6 +195,7 @@ bool GameplayScene::PostUpdate()
 				iPoint destination	= { 1281, in_game_background->GetScreenPos().y };
 
 				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
+				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, true, 255.0f, 0.0f);*/
 			}
 
 			// If we want to move the pause menu elsewhere than the center of the screen, the options menu has to change locations or be animated.
@@ -1601,6 +1604,8 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 
 				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
 			}
+
+			App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
 
 			App->audio->PlayFx(App->gui_manager->standard_fx, 0);
 			//App->gui->SetElementsVisibility(HUD_pause_button, false);			

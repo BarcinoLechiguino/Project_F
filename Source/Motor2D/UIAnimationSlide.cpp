@@ -31,8 +31,6 @@ void UIAnimationSlide::StepAnimation()
 		to_delete = true;
 
 		FinishAnimation();
-
-		elements_to_slide.clear();
 	}
 	else
 	{
@@ -70,6 +68,8 @@ void UIAnimationSlide::FinishAnimation()
 			elements_to_slide[i]->is_visible = false;
 		}
 	}
+
+	elements_to_slide.clear();
 }
 
 void UIAnimationSlide::TranslateSlide()

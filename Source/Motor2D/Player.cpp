@@ -1081,6 +1081,6 @@ void Player::InitializePlayer()
 	iPoint mouse_pos;
 	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
 
-	cursor = UI_Cursor(UI_ELEMENT::CURSOR, mouse_pos.x, mouse_pos.y, true, &idle, &cursor_clicked_idle, &cursor_hover_ally, &cursor_hover_enemy, &cursor_hover_resource, &cursor_hover_UI
-		, &cursor_clicked_ally, &cursor_clicked_enemy, &cursor_clicked_resource, &cursor_clicked_UI);
+	cursor = UI_Cursor(UI_ELEMENT::CURSOR, mouse_pos.x, mouse_pos.y, true, &idle, &cursor_clicked_idle, &cursor_hover_ally, &cursor_hover_enemy, &cursor_hover_resource, nullptr
+		, &cursor_clicked_ally, &cursor_clicked_enemy, &cursor_clicked_resource, nullptr);
 }
