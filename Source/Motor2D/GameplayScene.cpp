@@ -109,9 +109,6 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 
 	//App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 
-
-
-
 	App->map->Draw();																		//Map Draw
 
 	App->minimap->BlitMinimap();
@@ -287,7 +284,7 @@ void GameplayScene::InitScene()
 	//App->fow_manager->ResetVisibilityMap();
 
 	App->dialog->StartDialog(0);
-
+	App->dialog->StartDialog(1);
 }
 
 // --- SCENE TRANSITIONS
