@@ -83,7 +83,7 @@ bool GameplayScene::Start()
 
 	InitScene();
 
-	//App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_BACKGROUND);
+	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_BACKGROUND);
 
 	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_EXPLOSION);
 
@@ -108,9 +108,6 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	BROFILER_CATEGORY("Scene Update", Profiler::Color::LavenderBlush);
 
 	//App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
-
-
-
 
 	App->map->Draw();																		//Map Draw
 
@@ -246,6 +243,7 @@ bool GameplayScene::CleanUp()
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui_manager->DestroyGuiElements();					//Deletes all the Gui Elements of the Gameplay Scene.
 	App->dialog->CleanUp();									//Deletes everything related with dialog in the Gameplay Scene.
+	App->particle_manager->RemoveEverything();
 
 	App->player->god_mode = false;							//Will disable the God Mode upon exiting the Gameplay Scene.
 	App->fow_manager->fow_debug = false;					//Will disable the FOW Debug Mode upon exiting the Gameplay Scene.
@@ -271,8 +269,8 @@ void GameplayScene::InitScene()
 	ret = App->map->Load("New_Tilesete_Map.tmx");
 
 	//test background
-	background_rect = { 0, 0, 1280, 720 };
-	background_texture = App->tex->Load("maps/hacker_background.png");
+	//background_rect = { 0, 0, 1280, 720 };
+	//background_texture = App->tex->Load("maps/hacker_background.png");
 
 	LoadGuiElements();
 
