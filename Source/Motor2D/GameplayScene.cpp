@@ -1849,10 +1849,15 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		//	HUD_missions_tab->SetScreenPos(iPoint(N_Lerp(1252, 10, 0.1, false), 503));
 		//}
 
-		App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);
-		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, true);
-
+		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(1300, HUD_missions_background->GetScreenPos().y), iPoint(902, HUD_missions_background->GetScreenPos().y));
 		App->gui_manager->SetElementsVisibility(HUD_missions_background, true);
+		
+		App->gui_manager->CreateSlideAnimation(HUD_missions_tab, 0.5f, false, iPoint(1252, HUD_missions_tab->GetScreenPos().y), iPoint(883, HUD_missions_tab->GetScreenPos().y));
+
+		/*App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);
+		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, true);*/
+
+		
 	}
 
 	if (element == HUD_missions_tab_close && ui_event == UI_EVENT::UNCLICKED)
