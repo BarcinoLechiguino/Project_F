@@ -1391,9 +1391,9 @@ void GameplayScene::LoadGuiElements()
 
 	//Tab close 
 	SDL_Rect HUD_missions_tab_close_size = { 0, 0, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_idle = { 780, 117, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_hover = { 813, 117, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_clicked = { 846, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_idle = { 677, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_hover = { 710, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_clicked = { 743, 117, 30, 81 };
 
 	HUD_missions_tab_close = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 883, 389, false, true, false, this, nullptr
 		, &HUD_missions_tab_close_idle, &HUD_missions_tab_close_hover, &HUD_missions_tab_close_clicked);
