@@ -226,9 +226,6 @@
     <ClCompile Include="UIAnimationFade.cpp">
       <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
     </ClCompile>
-    <ClCompile Include="UIAnimationManager.cpp">
-      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
-    </ClCompile>
     <ClCompile Include="UIAnimationSlide.cpp">
       <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
     </ClCompile>
@@ -497,9 +494,6 @@
     </ClInclude>
     <ClInclude Include="UIAnimationFade.h">
       <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
-    </ClInclude>
-    <ClInclude Include="UIAnimationManager.h">
-      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
     </ClInclude>
     <ClInclude Include="UIAnimationSlide.h">
       <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>

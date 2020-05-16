@@ -150,7 +150,6 @@
     <ClCompile Include="Tree.cpp" />
     <ClCompile Include="UIAnimationFade.cpp" />
     <ClCompile Include="UIAnimation.cpp" />
-    <ClCompile Include="UIAnimationManager.cpp" />
     <ClCompile Include="UIAnimationSlide.cpp" />
     <ClCompile Include="UI_CreationBar.cpp" />
     <ClCompile Include="UI_Cursor.cpp" />
@@ -240,7 +239,6 @@
     <ClInclude Include="TransitionManager.h" />
     <ClInclude Include="Tree.h" />
     <ClInclude Include="UIAnimation.h" />
-    <ClInclude Include="UIAnimationManager.h" />
     <ClInclude Include="UIAnimationFade.h" />
     <ClInclude Include="UIAnimationSlide.h" />
     <ClInclude Include="UI_CreationBar.h" />
