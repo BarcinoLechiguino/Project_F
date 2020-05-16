@@ -40,12 +40,11 @@ bool ParticleManager::Awake(pugi::xml_node& config)
 
 bool ParticleManager::Update(float dt)
 {
-	 dt_stored = dt;
 
 	 for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	 {
 		 if ((*it) != nullptr) {
-			 (*it)->Update(dt_stored);
+			 (*it)->Update(dt);
 		 }
 	 }
 
@@ -55,7 +54,12 @@ bool ParticleManager::Update(float dt)
 bool ParticleManager::PostUpdate()
 {
 
-
+	for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
+	{
+		if ((*it) != nullptr) {
+			(*it)->PostUpdate();
+		}
+	}
 
 	for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	{

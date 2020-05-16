@@ -75,9 +75,10 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(movement);
 	
 	// scene_manager last before render.
-	AddModule(particle_manager);
+
 	AddModule(minimap);
 	AddModule(gui_manager);
+	AddModule(particle_manager);
 	AddModule(scene_manager);
 	AddModule(transition_manager);
 	AddModule(entity_manager);

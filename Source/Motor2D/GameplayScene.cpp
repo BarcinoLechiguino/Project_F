@@ -83,7 +83,9 @@ bool GameplayScene::Start()
 
 	InitScene();
 
-	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_BACKGROUND);
+	//App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_BACKGROUND);
+
+	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_EXPLOSION);
 
 	return ret;
 }
@@ -1408,9 +1410,9 @@ void GameplayScene::LoadGuiElements()
 
 	//Tab close 
 	SDL_Rect HUD_missions_tab_close_size = { 0, 0, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_idle = { 780, 117, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_hover = { 813, 117, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_clicked = { 846, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_idle = { 677, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_hover = { 710, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_clicked = { 743, 117, 30, 81 };
 
 	HUD_missions_tab_close = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 883, 389, false, true, false, this, nullptr
 		, &HUD_missions_tab_close_idle, &HUD_missions_tab_close_hover, &HUD_missions_tab_close_clicked);
@@ -1864,10 +1866,15 @@ void GameplayScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		//	HUD_missions_tab->SetScreenPos(iPoint(N_Lerp(1252, 10, 0.1, false), 503));
 		//}
 
-		App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);
-		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, true);
-
+		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(1300, HUD_missions_background->GetScreenPos().y), iPoint(902, HUD_missions_background->GetScreenPos().y));
 		App->gui_manager->SetElementsVisibility(HUD_missions_background, true);
+		
+		App->gui_manager->CreateSlideAnimation(HUD_missions_tab, 0.5f, false, iPoint(1252, HUD_missions_tab->GetScreenPos().y), iPoint(883, HUD_missions_tab->GetScreenPos().y));
+
+		/*App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);
+		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, true);*/
+
+		
 	}
 
 	if (element == HUD_missions_tab_close && ui_event == UI_EVENT::UNCLICKED)
