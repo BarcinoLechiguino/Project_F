@@ -99,6 +99,7 @@ public:
 	int				current_health;
 	int				attack_damage;
 	int				level;
+	int				max_level;
 	
 	fPoint			pixel_position;												// The entity's world position (pixels).
 	fPoint			center_point;												// Used for sprite ordering

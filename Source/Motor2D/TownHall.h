@@ -41,6 +41,7 @@ public:
 	SDL_Rect	hall_rect_2;
 
 	int			gatherer_level;
+	int			max_gatherer_level;
 
 	float		gatherer_creation_time;
 

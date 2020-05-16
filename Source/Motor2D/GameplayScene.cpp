@@ -561,50 +561,67 @@ void GameplayScene::BuildingUpgrade()
 		{
 		case ENTITY_TYPE::TOWNHALL:
 
-			if (CheckResources(200, 175))
+			townhall = (TownHall*)App->player->building_selected;
+
+			if (townhall->level < townhall->max_level)
 			{
-				townhall = (TownHall*)App->player->building_selected;
-				townhall->level++;
-				townhall->LevelChanges();
+				if (CheckResources(200, 175))
+				{
+					townhall->level++;
+					townhall->LevelChanges();
+				}
 			}
 			break;
 
 		case ENTITY_TYPE::BARRACKS:
 
-			if (CheckResources(170, 120))
+			barrack = (Barracks*)App->player->building_selected;
+
+			if (barrack->level < barrack->max_level)
 			{
-				barrack = (Barracks*)App->player->building_selected;
-				barrack->level++;
-				barrack->LevelChanges();
+				if (CheckResources(170, 120))
+				{
+					barrack->level++;
+					barrack->LevelChanges();
+				}
 			}
 			break;
 		}
 	}
-
 }
 
 void GameplayScene::UnitUpgrade()
 {
 	if (App->player->building_selected != nullptr)
 	{
-		TownHall* townhall = nullptr;
 		Barracks* barrack = nullptr;
+		TownHall* townhall = nullptr;
 
 		switch (App->player->building_selected->type)
 		{
 		case ENTITY_TYPE::TOWNHALL:
-			if (CheckResources(100, 50))
+
+			townhall = (TownHall*)App->player->building_selected;
+
+			if (townhall->gatherer_level < townhall->max_gatherer_level)
 			{
-				townhall = (TownHall*)App->player->building_selected;
-				townhall->gatherer_level++;
+				if (CheckResources(100, 50))
+				{
+					townhall->gatherer_level++;
+				}
 			}
 			break;
 
 		case ENTITY_TYPE::BARRACKS:
-			if (CheckResources(50, 100))
+
+			barrack = (Barracks*)App->player->building_selected;
+
+			if (barrack->infantry_level < barrack->max_infantry_level)
 			{
-				barrack = (Barracks*)App->player->building_selected;
-				barrack->infantry_level++;
+				if (CheckResources(50, 100))
+				{
+					barrack->infantry_level++;
+				}
 			}
 			break;
 		}

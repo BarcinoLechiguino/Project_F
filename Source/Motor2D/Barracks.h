@@ -39,6 +39,10 @@ public:
 	int			infantry_level;
 	int			heavy_level;
 
+	int			max_scout_level;
+	int			max_infantry_level;
+	int			max_heavy_level;
+
 	float		scout_creation_time;
 	float		infantry_creation_time;
 	float		heavy_creation_time;

@@ -76,10 +76,10 @@ bool Player::Update(float dt)
 	//CameraController(dt);
 	CameraController(App->GetUnpausableDt());
 	
-	DragSelection();
-
 	if (!App->pause && !App->gui_manager->VisibleElementIsUnderCursor())			//TMP. Dirty Fix(?)
 	{
+		DragSelection();
+
 		SelectOnClick();
 
 		DeleteOnInput();
@@ -398,7 +398,7 @@ void Player::UpdateSelectionRect()
 		selection_rect.h = selection_start.y - cursor_position.y;
 	}
 
-	//App->render->DrawQuad(selection_rect, 150, 150, 255, 100, true, false);
+	//App->render->DrawQuad(selection_rect, 150, 150, 255, 100, false, false);
 
 	App->render->DrawLine(selection_rect.x, selection_rect.y, selection_rect.x + selection_rect.w, selection_rect.y, 150, 150, 255, 255,false); //Top line
 	App->render->DrawLine(selection_rect.x + selection_rect.w , selection_rect.y, selection_rect.x + selection_rect.w, selection_rect.y + selection_rect.h, 150, 150, 255, 255, false); //Right line
