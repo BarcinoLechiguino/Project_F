@@ -62,16 +62,16 @@
     </game_controller>
 
     <cursor_sections>
-      <idle x="1095" y="232" w="20" h="24"/>
-      <hover_ally x="1115" y="232" w="20" h="24"/>
-      <hover_enemy x="1135" y="232" w="20" h="24"/>
-      <hover_resource x="1155" y="232" w="20" h="24"/>
-      <hover_UI x="1175" y="232" w="20" h="24"/>
-      <clicked_idle x="1095" y="256" w="20" h="24"/>
-      <clicked_ally x="1115" y="256" w="20" h="24"/>
-      <clicked_enemy x="1135" y="256" w="20" h="24"/>
-      <clicked_resource x="1155" y="256" w="20" h="24"/>
-      <clicked_UI x="1175" y="256" w="20" h="24"/>
+      <idle x="501" y="54" w="20" h="24"/>
+      <hover_ally x="581" y="54" w="20" h="24"/>
+      <hover_enemy x="541" y="54" w="20" h="24"/>
+      <hover_resource x="561" y="54" w="20" h="24"/>
+      <hover_UI x="541" y="54" w="20" h="24"/>
+      <clicked_idle x="501" y="78" w="20" h="24"/>
+      <clicked_ally x="581" y="78" w="20" h="24"/>
+      <clicked_enemy x="541" y="78" w="20" h="24"/>
+      <clicked_resource x="561" y="78" w="20" h="24"/>
+      <clicked_UI x="541" y="78" w="78" h="24"/>
     </cursor_sections>
   </player>
 
