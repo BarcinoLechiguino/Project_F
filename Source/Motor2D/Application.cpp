@@ -404,7 +404,9 @@ bool Application::CleanUp()
 	{
 		if ((*item)->name.empty())
 		{
+			LOG("STARTING THE CLEANUP");
 			ret = (*item)->CleanUp();
+			LOG("FINISHING THE CLEANUP");
 		}
 	}
 
