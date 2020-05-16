@@ -92,6 +92,7 @@
     <ClCompile Include="Cut.cpp" />
     <ClCompile Include="DialogSystem.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
+    <ClCompile Include="EasingFunctions.cpp" />
     <ClCompile Include="Emitter.cpp" />
     <ClCompile Include="EnemyAI.cpp" />
     <ClCompile Include="EnemyInfantry.cpp" />
@@ -181,6 +182,7 @@
     <ClInclude Include="Cut.h" />
     <ClInclude Include="DialogSystem.h" />
     <ClInclude Include="DynamicObject.h" />
+    <ClInclude Include="EasingFunctions.h" />
     <ClInclude Include="Emitter.h" />
     <ClInclude Include="EnemyAI.h" />
     <ClInclude Include="EnemyBarracks.h" />
