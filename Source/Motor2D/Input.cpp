@@ -36,6 +36,9 @@ Input::Input() : Module()
 	game_controller.min_axis_input_threshold = 0.2f;
 
 	windowEvents[WE_QUIT] = false;
+	windowEvents[WE_HIDE] = false;
+	windowEvents[WE_SHOW] = false;
+	windowEvents[WE_COUNT] = false;
 }
 
 // Destructor

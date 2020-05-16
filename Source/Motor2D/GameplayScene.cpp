@@ -750,20 +750,20 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_text_data_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_data_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_data_resource_string = "0";
-	HUD_data_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 604, HUD_text_data_resource_rect, HUD_data_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_data_resource_string);
+	HUD_data_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 604, HUD_text_data_resource_rect, HUD_data_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_resource_bar, &HUD_data_resource_string);
 
 	//Electricity Store
 	SDL_Rect HUD_text_electricity_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_electricity_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_electricity_resource_string = "0";
-	HUD_electricity_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 634, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_electricity_resource_string);
+	HUD_electricity_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 634, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_resource_bar, &HUD_electricity_resource_string);
 
 	// Falta Fran
 	//Bytes Store
 	SDL_Rect HUD_text_bytes_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_byte_resource_font = App->font->Load("fonts/borgsquadcond.ttf", 20);
 	HUD_bytes_resource_string = "0";
-	HUD_bytes_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 664, HUD_text_bytes_resource_rect, HUD_byte_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_townhall_bar, &HUD_bytes_resource_string);
+	HUD_bytes_resource_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 1145, 664, HUD_text_bytes_resource_rect, HUD_byte_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_resource_bar, &HUD_bytes_resource_string);
 
 
 
@@ -1393,9 +1393,9 @@ void GameplayScene::LoadGuiElements()
 
 	//Tab close 
 	SDL_Rect HUD_missions_tab_close_size = { 0, 0, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_idle = { 780, 117, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_hover = { 813, 117, 30, 81 };
-	SDL_Rect HUD_missions_tab_close_clicked = { 846, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_idle = { 677, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_hover = { 710, 117, 30, 81 };
+	SDL_Rect HUD_missions_tab_close_clicked = { 743, 117, 30, 81 };
 
 	HUD_missions_tab_close = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 883, 389, false, true, false, this, nullptr
 		, &HUD_missions_tab_close_idle, &HUD_missions_tab_close_hover, &HUD_missions_tab_close_clicked);

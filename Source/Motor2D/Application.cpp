@@ -74,7 +74,6 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(collisions);
 	AddModule(movement);
 	
-
 	// scene_manager last before render.
 
 	AddModule(minimap);
@@ -405,7 +404,9 @@ bool Application::CleanUp()
 	{
 		if ((*item)->name.empty())
 		{
+			LOG("STARTING THE CLEANUP");
 			ret = (*item)->CleanUp();
+			LOG("FINISHING THE CLEANUP");
 		}
 	}
 
