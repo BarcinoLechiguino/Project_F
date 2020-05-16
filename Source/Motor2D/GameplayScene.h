@@ -42,6 +42,7 @@ public:
 
 	void CheckForWinLose();
 	bool CheckForTownHall();
+	void CheckCompletedQuests();
 
 	// --- Entity Spawn Methods.
 	void SpawnAllyUnit(ENTITY_TYPE type);

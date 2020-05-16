@@ -18,13 +18,9 @@ QuestManager::~QuestManager()
 	{
 		loaded_quests.erase(it);
 	}
-	for (std::vector <Quest*>::iterator it = active_quests.begin(); it != active_quests.end(); it++)
+	for (std::vector <Quest*>::iterator it = quests.begin(); it != quests.end(); it++)
 	{
-		active_quests.erase(it);
-	}
-	for (std::vector <Quest*>::iterator it = finished_quests.begin(); it != finished_quests.end(); it++)
-	{
-		finished_quests.erase(it);
+		quests.erase(it);
 	}
 }
 
@@ -59,7 +55,7 @@ bool QuestManager::Awake(pugi::xml_node& config)
 
 		if (new_quest->trigger == 1)
 		{
-			active_quests.push_back(new_quest);
+			quests.push_back(new_quest);
 		}
 		else
 		{
@@ -108,7 +104,7 @@ pugi::xml_node QuestManager::LoadQuests(pugi::xml_document& file) const
 
 void QuestManager::CheckQuests()
 {
-	for (std::vector<Quest*>::iterator it = active_quests.begin(); it != active_quests.end(); it++)
+	for (std::vector<Quest*>::iterator it = quests.begin(); it != quests.end(); it++)
 	{
 		int quest_id = (*it)->id;
 
@@ -117,16 +113,14 @@ void QuestManager::CheckQuests()
 		case 0:
 			if (App->scene_manager->gameplay_scene->CheckForTownHall() == false && ((*it)->requisites == 0))
 			{
-				(*it)->completed = true;
-				LOG("QUEST #1 COMPLETED");
+				(*it)->completed = true;	
 			}
 			break;
 
 		case 1:
 			if (App->entity_manager->resource_data > 0 && App->entity_manager->resource_electricity > 0 && ((*it)->requisites == 0))
 			{
-				(*it)->completed = true;
-				LOG("QUEST #2 COMPLETED");
+				(*it)->completed = true;				
 			}
 			break;
 
@@ -134,7 +128,6 @@ void QuestManager::CheckQuests()
 			if (App->entity_manager->resource_bits >= 3 && ((*it)->requisites == 0))
 			{
 				(*it)->completed = true;
-				LOG("QUEST #3 COMPLETED");
 			}
 			break;
 
@@ -142,7 +135,6 @@ void QuestManager::CheckQuests()
 			if (App->entity_manager->kill_count >= 10)
 			{
 				(*it)->completed = true;
-				LOG("QUEST #4 COMPLETED");
 			}
 			break;
 		default:
@@ -150,3 +142,4 @@ void QuestManager::CheckQuests()
 		}
 	}
 }
+
