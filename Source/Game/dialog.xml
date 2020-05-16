@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <dialog>
-  <dialog_font font="fonts/Minecraftia-Regular.ttf" font_size="16" r="255" g="255" b="100" a="255"/>
+  <dialog_font font="fonts/borgsquadcond.ttf" font_size="14" r="255" g="255" b="100" a="255"/>
   <dialog_tree tree_id="0" position_x="50" position_y="150">
     
     <dialog_bubble bubble_id="0" active_time="6000">
         <text text="Oh hello cutie I'll be your instructor"/>
         <text text="for today"/>
+        <text text="bruh"/>
+        <text text="bruuh"/>
+        <text text="BRUH"/>
     </dialog_bubble>
     
     <dialog_bubble bubble_id="1" active_time="6000"> 

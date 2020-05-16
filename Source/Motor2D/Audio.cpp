@@ -105,11 +105,15 @@ bool Audio::CleanUp()
 		Mix_FreeMusic(*stl_item);
 	}
 
+	LOG("after free music");
+
 	std::vector<Mix_Chunk*>::iterator stl_item2 = fx.begin(); //Release fx list
 	for (; stl_item2 != fx.end(); stl_item2++)
 	{
 		Mix_FreeChunk(*stl_item2);
 	}
+
+	LOG("after free music");
 
 	fx.clear();
 	music.clear();

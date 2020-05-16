@@ -198,6 +198,10 @@ void TownHall::InitEntity()
 
 	gatherer_level = 1;
 
+	max_gatherer_level = 2;
+
+	max_level = 2;
+
 	// HEALTHBAR & CREATION BAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{

@@ -91,6 +91,7 @@ public:
 	DialogState dialog_state;
 
 	bool is_clicked;
+	bool finished_typing;
 
 public:
 	pugi::xml_document dialog_file;

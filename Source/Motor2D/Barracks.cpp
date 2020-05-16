@@ -230,6 +230,12 @@ void Barracks::InitEntity()
 	infantry_level = 1;
 	heavy_level = 1;
 
+	max_scout_level = 2;
+	max_infantry_level = 2;
+	max_heavy_level = 2;
+
+	max_level = 2;
+
 	// HEALTHBAR & CREATION BAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
