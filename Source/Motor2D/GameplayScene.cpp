@@ -46,6 +46,7 @@
 #include "Rock.h"
 #include "Tree.h"
 #include "Obelisk.h"
+#include "Boulder.h"
 
 #include "GuiManager.h"
 #include "GuiElement.h"
@@ -2156,6 +2157,12 @@ void GameplayScene::UnitDebugKeys()
 				App->entity_manager->resource_data += 300;
 				App->entity_manager->resource_electricity += 300;
 				App->entity_manager->resource_bits += 300;
+			}
+
+			// OBSTACLES
+			if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_STATE::KEY_DOWN)
+			{
+				(Boulder*)App->entity_manager->CreateEntity(ENTITY_TYPE::BOULDER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 		}
 	}

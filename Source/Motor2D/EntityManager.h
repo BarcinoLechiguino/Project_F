@@ -58,7 +58,9 @@ public:
 
 	SDL_Texture* GetRockTexture() const;
 	SDL_Texture* GetTreeTexture() const;
-	SDL_Texture* GetBitsTexture() const;
+	SDL_Texture* GetObeliskTexture() const;
+
+	SDL_Texture* GetBoulderTexture() const;
 
 	SDL_Texture* GetCenterPointTexture() const;
 
@@ -76,6 +78,7 @@ public:
 	
 	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
 	bool IsResource(Entity* entity);													//Method that will return true if the entity passed as argument is a resource.
+	bool IsObstacle(Entity* entity);
 	
 	bool InViewport(Entity* entity);
 
@@ -111,7 +114,9 @@ public:
 
 	SDL_Texture*					rock_tex;
 	SDL_Texture*					tree_tex;
-	SDL_Texture*					bits_tex;
+	SDL_Texture*					obelisk_tex;
+
+	SDL_Texture*					boulder_tex;
 	
 	SDL_Texture*					center_point_debug;
 

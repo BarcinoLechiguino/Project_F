@@ -134,7 +134,7 @@ bool PathFinding::ChangeWalkability(iPoint pos, Entity* entity, uchar walkabilit
 			map[(pos.y * App->map->data.width) + pos.x] = walkability;
 		}
 
-		if (App->entity_manager->IsBuilding(entity) || App->entity_manager->IsResource(entity))
+		if (App->entity_manager->IsBuilding(entity) || App->entity_manager->IsResource(entity) || App->entity_manager->IsObstacle(entity))
 		{
 			for (int y = 0; y != entity->tiles_occupied.y; ++y)
 			{

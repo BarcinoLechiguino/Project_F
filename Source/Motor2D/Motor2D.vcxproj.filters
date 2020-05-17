@@ -259,6 +259,9 @@
     <ClCompile Include="Obstacle.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Obstacles</Filter>
     </ClCompile>
+    <ClCompile Include="Boulder.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Obstacles\Obstacle Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -531,6 +534,9 @@
     <ClInclude Include="Obstacle.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Obstacles</Filter>
     </ClInclude>
+    <ClInclude Include="Boulder.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Obstacles\Obstacle Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
@@ -642,6 +648,9 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Static\Obstacles">
       <UniqueIdentifier>{4fae6b27-4019-4f85-924e-c8dcad5158ec}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Static\Obstacles\Obstacle Entities">
+      <UniqueIdentifier>{292b83a2-1222-4205-bbff-3e41d50efb9c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

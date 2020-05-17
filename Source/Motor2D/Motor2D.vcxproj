@@ -83,6 +83,7 @@
   <ItemGroup>
     <ClCompile Include="AlternatingBars.cpp" />
     <ClCompile Include="Barracks.cpp" />
+    <ClCompile Include="Boulder.cpp" />
     <ClCompile Include="Dependencies\mmgr\mmgr.cpp" />
     <ClCompile Include="Dependencies\PugiXml\src\pugixml.cpp" />
     <ClCompile Include="Obelisk.cpp" />
@@ -173,6 +174,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="Barracks.h" />
+    <ClInclude Include="Boulder.h" />
     <ClInclude Include="Dependencies\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="Dependencies\PugiXml\src\pugixml.hpp" />
     <ClInclude Include="Obelisk.h" />

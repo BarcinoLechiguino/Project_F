@@ -829,7 +829,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 		//	continue;																//If the value mentioned above is 0, jump to the next iteration (of layers list).
 		//}
 		
-		if ( layer->name != "walkability")
+		if (layer->name != "walkability")
 		{
 			continue;
 		}

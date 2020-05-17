@@ -42,6 +42,8 @@
 #include "Tree.h"
 #include "Obelisk.h"
 
+#include "Boulder.h"
+
 struct 
 {
 	bool operator()(Entity* a, Entity* b) const
@@ -219,11 +221,6 @@ void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision 
 Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 {
 	//static_assert?
-	if (abs(x) > App->map->data.width || abs(y) > App->map->data.height)
-	{
-		LOG("but why doe :(");
-	}
-
 	Entity* entity = nullptr;
 
 	switch (type)
@@ -294,6 +291,10 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 
 	case ENTITY_TYPE::OBELISK:
 		entity = new Obelisk(x, y, type, level);
+		break;
+
+	case ENTITY_TYPE::BOULDER:
+		entity = new Boulder(x, y, type, level);
 		break;
 	}
 
@@ -381,7 +382,10 @@ void EntityManager::LoadEntityTextures()
 	// RESOURCES
 	rock_tex			= App->tex->Load(entity_textures.child("rock_texture").attribute("path").as_string());
 	tree_tex			= App->tex->Load(entity_textures.child("tree_texture").attribute("path").as_string());
-	bits_tex			= App->tex->Load(entity_textures.child("bits_texture").attribute("path").as_string());
+	obelisk_tex			= App->tex->Load(entity_textures.child("obelisk_texture").attribute("path").as_string());
+
+	// OBSTACLES
+	boulder_tex			= App->tex->Load(entity_textures.child("boulder_texture").attribute("path").as_string());
 
 	// SPRITE RENDERING ORDER DEBUG TEXTURE
 	center_point_debug	= App->tex->Load(App->config_file.child("config").child("debug").child("center_position_debug").attribute("path").as_string());
@@ -407,7 +411,9 @@ void EntityManager::UnLoadEntityTextures()
 
 	App->tex->UnLoad(rock_tex);
 	App->tex->UnLoad(tree_tex);
-	App->tex->UnLoad(bits_tex);
+	App->tex->UnLoad(obelisk_tex);
+
+	App->tex->UnLoad(boulder_tex);
 
 	gatherer_tex		= nullptr;
 	scout_tex			= nullptr;
@@ -427,7 +433,9 @@ void EntityManager::UnLoadEntityTextures()
 
 	rock_tex			= nullptr;
 	tree_tex			= nullptr;
-	bits_tex			= nullptr;
+	obelisk_tex			= nullptr;
+
+	boulder_tex			= nullptr;
 }
 
 // --- ENTITY AUDIO LOAD & UNLOAD ---
@@ -535,9 +543,14 @@ SDL_Texture* EntityManager::GetTreeTexture() const
 	return tree_tex;
 }
 
-SDL_Texture* EntityManager::GetBitsTexture() const
+SDL_Texture* EntityManager::GetObeliskTexture() const
 {
-	return bits_tex;
+	return obelisk_tex;
+}
+
+SDL_Texture* EntityManager::GetBoulderTexture() const
+{
+	return boulder_tex;
 }
 
 SDL_Texture* EntityManager::GetCenterPointTexture() const
@@ -661,6 +674,16 @@ bool EntityManager::IsResource(Entity* entity)
 	return false;
 }
 
+bool EntityManager::IsObstacle(Entity* entity)
+{
+	if (entity->type == ENTITY_TYPE::BOULDER)
+	{
+		return true;
+	}
+
+	return false;
+}
+
 bool EntityManager::InViewport(Entity* entity)
 {
 	SDL_Rect window;
@@ -729,7 +752,7 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 				return;
 			}
 
-			if (IsBuilding(entity) || IsResource(entity))
+			if (IsBuilding(entity) || IsResource(entity) || IsObstacle(entity))
 			{
 				for (int y = 0; y != entity->tiles_occupied.y; ++y)
 				{
@@ -751,7 +774,7 @@ void EntityManager::ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_
 				return;
 			}
 
-			if (IsBuilding(entity) || IsResource(entity))
+			if (IsBuilding(entity) || IsResource(entity) || IsObstacle(entity))
 			{
 				StaticObject* item = (StaticObject*)entity;
 
