@@ -2,7 +2,7 @@
 
 <dialog>
   <dialog_font font="Assets/gui/fonts/borgsquadcond.ttf" font_size="14" r="255" g="255" b="100" a="255"/>
-  <dialog_tree tree_id="0" position_x="50" position_y="150">
+  <dialog_tree tree_id="0" position_x="100" position_y="20">
     
     <dialog_bubble bubble_id="0" active_time="6000">
         <text text="Oh hello cutie I'll be your instructor"/>

@@ -314,6 +314,8 @@ public:
 	//Dialogs
 	GuiImage*				HUD_dialogs_background;
 	std::vector<GuiText*>	HUD_dialog_text;	//Lines of dialog text
+	GuiImage*				HUD_dialogs_character_no_talking;
+	GuiImage*				HUD_dialogs_character_talking;
 
 private:
 

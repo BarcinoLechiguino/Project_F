@@ -757,7 +757,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_data_resource = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1115, 634, HUD_data_resource_size, true, true, false, this, HUD_resource_bar);
 
-	SDL_Rect HUD_byte_resource_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_byte_resource_size = { 667, 55, 15, 24 };
 
 	HUD_bytes_resources = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1115, 664, HUD_byte_resource_size, true, true, false, this, HUD_resource_bar);
 
@@ -773,7 +773,6 @@ void GameplayScene::LoadGuiElements()
 	HUD_electricity_resource_string = "0";
 	HUD_electricity_resource_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1145, 634, HUD_text_electricity_resource_rect, HUD_electricity_resource_font, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_resource_bar, &HUD_electricity_resource_string);
 
-	// Falta Fran
 	//Bytes Store
 	SDL_Rect HUD_text_bytes_resource_rect = { 737, 54, 13, 25 };
 	_TTF_Font* HUD_byte_resource_font = App->font->Load(borgsquadcond.c_str(), 20);
@@ -818,8 +817,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_upgrade_townhall = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_townhall_res2_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
 
-	// Falta Fran
-	SDL_Rect HUD_townhall_res3_upg_townhall_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_townhall_res3_upg_townhall_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_upgrade_townhall = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_townhall_res3_upg_townhall_size, false, true, false, this, HUD_parent_resources_upgrade_townhall);
 
@@ -872,9 +870,9 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_unit_gatherer_townhall_size = { 0, 0, 53, 50 };
 	SDL_Rect HUD_unit_gatherer_townhall_idle = { 1095, 140, 53, 50 };
 	SDL_Rect HUD_unit_gatherer_townhall_hover = { 1152, 140, 53, 50 };
-	SDL_Rect HUD_unit_gatherer_townhall_clicked = { 1207, 140, 53, 50 };
+	SDL_Rect HUD_unit_gatherer_townhall_clicked = { 1207, 140, 53, 50 }; 
 
-	HUD_unit_gatherer_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 556, 610, false, true, false, this, HUD_townhall_bar
+	HUD_unit_gatherer_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 616, 610, false, true, false, this, HUD_townhall_bar
 		, &HUD_unit_gatherer_townhall_idle, &HUD_unit_gatherer_townhall_hover, &HUD_unit_gatherer_townhall_clicked);
 
 
@@ -890,8 +888,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_unit_townhall_gatherer = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_townhall_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
 
-	//Falta Fran
-	SDL_Rect HUD_townhall_res3_unit_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_townhall_res3_unit_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_unit_townhall_gatherer = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_townhall_res3_unit_size, false, true, false, this, HUD_parent_resources_unit_townhall_gatherer);
 
@@ -925,8 +922,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_upgrade_unit_townhall_gatherer = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_townhall_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
 
-	//Falta Fran
-	SDL_Rect HUD_townhall_res3_upg_unit_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_townhall_res3_upg_unit_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_upgrade_unit_townhall_gatherer = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_townhall_res3_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_gatherer);
 
@@ -960,13 +956,13 @@ void GameplayScene::LoadGuiElements()
 
 
 	//*****_____SCOUT_____******
-	// Title Gatherer
+	// Title Scout
 	SDL_Rect HUD_text_scout_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_scout_font = App->font->Load(borgsquadcond.c_str(), 30);
 	std::string HUD_title_scout_string = "SCOUT";
 	HUD_title_scout = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 385, 582, HUD_text_scout_rect, HUD_scout_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_scout_string);
 
-	// Description Gatherer
+	// Description Scout
 	SDL_Rect HUD_text_scout_descp_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_scout_descp_font = App->font->Load(borgsquadcond.c_str(), 12);
 	std::string HUD_scout_descp_string = "Primary explore unit.";
@@ -976,14 +972,13 @@ void GameplayScene::LoadGuiElements()
 	HUD_description_scout = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 337, 649, HUD_text_scout_descp_rect, HUD_scout_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_scout, &HUD_scout_descp_string2);
 	HUD_description_scout = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 345, 662, HUD_text_scout_descp_rect, HUD_scout_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_scout, &HUD_scout_descp_string3);
 
-	//Falta Fran
 	//Scout
-	SDL_Rect HUD_unit_scout_townhall_size = { 0, 0, 53, 50 };
-	SDL_Rect HUD_unit_scout_townhall_idle = { 1095, 140, 53, 50 };
-	SDL_Rect HUD_unit_scout_townhall_hover = { 1152, 140, 53, 50 };
-	SDL_Rect HUD_unit_scout_townhall_clicked = { 1207, 140, 53, 50 };
+	SDL_Rect HUD_unit_scout_townhall_size = { 0, 0, 49, 50 };
+	SDL_Rect HUD_unit_scout_townhall_idle = { 1095, 239, 49, 50 };
+	SDL_Rect HUD_unit_scout_townhall_hover = { 1152, 239, 49, 50 };
+	SDL_Rect HUD_unit_scout_townhall_clicked = { 1207, 239, 49, 50 };
 
-	HUD_unit_scout_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 616, 610, false, true, false, this, HUD_townhall_bar
+	HUD_unit_scout_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 556, 610, false, true, false, this, HUD_townhall_bar
 		, &HUD_unit_scout_townhall_idle, &HUD_unit_scout_townhall_hover, &HUD_unit_scout_townhall_clicked);
 
 	// Resources Recruit Scout
@@ -998,8 +993,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_unit_townhall_scout = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_townhall_res2_unit2_size, false, true, false, this, HUD_parent_resources_unit_townhall_scout);
 
-	//Falta Fran
-	SDL_Rect HUD_townhall_res3_unit2_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_townhall_res3_unit2_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_unit_townhall_scout = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_townhall_res3_unit2_size, false, true, false, this, HUD_parent_resources_unit_townhall_scout);
 
@@ -1032,8 +1026,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_upgrade_unit_townhall_scout = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_townhall_res2_upg_unit2_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_scout);
 
-	//Falta Fran
-	SDL_Rect HUD_townhall_res3_upg_unit2_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_townhall_res3_upg_unit2_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_upgrade_unit_townhall_scout = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_townhall_res3_upg_unit2_size, false, true, false, this, HUD_parent_resources_upgrade_unit_townhall_scout);
 
@@ -1100,8 +1093,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_upgrade_barracks = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_res2_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
 
-	//Falta Fran
-	SDL_Rect HUD_res3_upg_barracks_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_res3_upg_barracks_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_upgrade_barracks = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_res3_upg_barracks_size, false, true, false, this, HUD_parent_resources_upgrade_barracks);
 
@@ -1170,8 +1162,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_unit_barracks_infantry = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_barracks_res2_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
 
-	//Falta Fran
-	SDL_Rect HUD_barracks_res3_unit_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_barracks_res3_unit_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_unit_barracks_infantry = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_barracks_res3_unit_size, false, true, false, this, HUD_parent_resources_unit_barracks_infantry);
 
@@ -1204,8 +1195,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_upgrade_unit_barracks_infantry = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_barracks_res2_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
 
-	// Falta Fran
-	SDL_Rect HUD_barracks_res3_upg_unit_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_barracks_res3_upg_unit_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_upgrade_unit_barracks_infantry = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_barracks_res3_upg_unit_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_infantry);
 
@@ -1238,13 +1228,13 @@ void GameplayScene::LoadGuiElements()
 
 
 	//*****____HEAVY_____*****
-	// Title Infantry
+	// Title Heavy
 	SDL_Rect HUD_text_heavy_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_heavy_font = App->font->Load(borgsquadcond.c_str(), 30);
 	std::string HUD_title_heavy_string = "HEAVY";
 	HUD_title_heavy = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 385, 582, HUD_text_heavy_rect, HUD_heavy_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, nullptr, &HUD_title_heavy_string);
 
-	// Description Infantry
+	// Description Heavy
 	SDL_Rect HUD_text_heavy_descp_rect = { 0, 0, 100, 20 };
 	_TTF_Font* HUD_heavy_descp_font = App->font->Load(borgsquadcond.c_str(), 12);
 	std::string HUD_heavy_descp_string = "Primary combat unit.";
@@ -1254,12 +1244,11 @@ void GameplayScene::LoadGuiElements()
 	HUD_description_heavy = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 327, 649, HUD_text_heavy_descp_rect, HUD_heavy_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_heavy, &HUD_heavy_descp_string2);
 	HUD_description_heavy = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 325, 662, HUD_text_heavy_descp_rect, HUD_heavy_descp_font, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_heavy, &HUD_heavy_descp_string3);
 
-	// Falta Fran
 	// Unit Barracks Heavy
-	SDL_Rect HUD_unit_heavy_barracks_size = { 0, 0, 53, 50 };
-	SDL_Rect HUD_unit_heavy_barracks_idle = { 1095, 90, 53, 50 };
-	SDL_Rect HUD_unit_heavy_barracks_hover = { 1152, 90, 53, 50 };
-	SDL_Rect HUD_unit_heavy_barracks_clicked = { 1207, 90, 53, 50 };
+	SDL_Rect HUD_unit_heavy_barracks_size =     { 0, 0, 49, 50 };
+	SDL_Rect HUD_unit_heavy_barracks_idle =     { 1095, 190, 49, 50 };
+	SDL_Rect HUD_unit_heavy_barracks_hover =    { 1152, 190, 49, 50 };
+	SDL_Rect HUD_unit_heavy_barracks_clicked =  { 1207, 190, 49, 50 };
 
 	HUD_unit_heavy_barracks = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 616, 610, false, true, false, this, HUD_barracks_bar
 		, &HUD_unit_heavy_barracks_idle, &HUD_unit_heavy_barracks_hover, &HUD_unit_heavy_barracks_clicked);
@@ -1276,8 +1265,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_unit_barracks_heavy = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_barracks_res2_unit2_size, false, true, false, this, HUD_parent_resources_unit_barracks_heavy);
 
-	//Falta Fran
-	SDL_Rect HUD_barracks_res3_unit2_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_barracks_res3_unit2_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_unit_barracks_heavy = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_barracks_res3_unit2_size, false, true, false, this, HUD_parent_resources_unit_barracks_heavy);
 
@@ -1310,8 +1298,7 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_resources_electricity_upgrade_unit_barracks_heavy = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 880, 685, HUD_barracks_res2_upg_unit2_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_heavy);
 
-	// Falta Fran
-	SDL_Rect HUD_barracks_res3_upg_unit2_size = { 687, 54, 16, 25 };
+	SDL_Rect HUD_barracks_res3_upg_unit2_size = { 667, 55, 15, 24 };
 
 	HUD_resources_bytes_upgrade_unit_barracks_heavy = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 980, 685, HUD_barracks_res3_upg_unit2_size, false, true, false, this, HUD_parent_resources_upgrade_unit_barracks_heavy);
 
@@ -1466,9 +1453,19 @@ void GameplayScene::LoadGuiElements()
 
 	CheckCompletedQuests();
 
-	// HUD dialogs
+	// *****_____HUD dialogs_____****
 
 	App->dialog->LoadDialog();
+
+	//Character
+	SDL_Rect HUD_dialogs_char_size = { 18, 777, 91, 165 };
+
+	HUD_dialogs_character_no_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 5, 30, HUD_dialogs_char_size, true, true, false, this, nullptr);
+
+	SDL_Rect HUD_dialogs_char_talk_size = { 138, 777, 91, 165 };
+
+	HUD_dialogs_character_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 5, 30, HUD_dialogs_char_talk_size, false, true, false, this, nullptr);
+
 
 }
 

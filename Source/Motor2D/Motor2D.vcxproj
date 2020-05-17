@@ -124,6 +124,7 @@
     <ClCompile Include="Input.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="Movement.cpp" />
+    <ClCompile Include="Obstacle.cpp" />
     <ClCompile Include="OptionsScene.cpp" />
     <ClCompile Include="ParticleManager.cpp" />
     <ClCompile Include="Pathfinding.cpp" />
@@ -209,6 +210,7 @@
     <ClInclude Include="LoseScene.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="Movement.h" />
+    <ClInclude Include="Obstacle.h" />
     <ClInclude Include="OptionsScene.h" />
     <ClInclude Include="ParticleManager.h" />
     <ClInclude Include="Pathfinding.h" />
