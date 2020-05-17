@@ -8,8 +8,8 @@
 			<rnd value ="1"/>
 			<particleLife value ="100"/>
 			<emitterLife value ="-1"/>
-			<startColor r ="51" g="250" b="250" a="255"/>
-			<endColor r ="102" g="0" b="204" a ="255"/>
+			<startColor r ="0" g="102" b="102" a="0"/>
+			<endColor r ="51" g="51" b="102" a ="0"/>
 			<rect x="0" y="0" w="1280" h="720"/>
       <texture_path path="Assets/particles/spark_01.png" />
       <camera_speed speed="0.0f" />
@@ -34,7 +34,7 @@
       <spread_direction a = "180"/>
 		</emitter>
 
-    <emitter type ="2" name="gatherer smoke">
+    <emitter type ="3" name="gatherer smoke">
       <speed value ="30"/>
       <size value ="70"/>
       <cone_angle min ="60" max ="120"/>
@@ -46,6 +46,23 @@
       <endColor r ="255" g="128" b="0" a="255"/>
       <rect x="0" y="0" w="20" h="20"/>
       <texture_path path="Assets/particles/scorch_03.png" />
+      <camera_speed speed="1.0f" />
+      <layer value="1" />
+      <spread_direction a = "90"/>
+    </emitter>
+
+    <emitter type ="4" name="obelisk sparks">
+      <speed value ="20"/>
+      <size value ="60"/>
+      <cone_angle min ="60" max ="120"/>
+      <emission value ="0.1"/>
+      <rnd value ="1"/>
+      <particleLife value ="80"/>
+      <emitterLife value ="-1"/>
+      <startColor r ="51" g="250" b="250" a="255"/>
+      <endColor r ="0" g="128" b="255" a="128"/>
+      <rect x="0" y="0" w="55" h="40"/>
+      <texture_path path="Assets/particles/spark_03.png" />
       <camera_speed speed="1.0f" />
       <layer value="1" />
       <spread_direction a = "90"/>

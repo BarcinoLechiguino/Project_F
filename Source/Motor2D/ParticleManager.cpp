@@ -118,7 +118,7 @@ void ParticleManager::LoadData()
 		data.size = node.child("size").attribute("value").as_float();
 		data.coneAngle.x = node.child("cone_angle").attribute("min").as_float();
 		data.coneAngle.y = node.child("cone_angle").attribute("max").as_float();
-		data.emission = node.child("emission").attribute("value").as_int();
+		data.emission = node.child("emission").attribute("value").as_float();
 		data.rnd = node.child("rnd").attribute("value").as_int();
 		data.particleLife = node.child("particleLife").attribute("value").as_int();
 		data.emitterLife = node.child("emitterLife").attribute("value").as_float();
@@ -163,4 +163,23 @@ bool ParticleManager::RemoveEverything()
 	}
 
 	return ret;
+}
+
+void ParticleManager::DeleteEmitter(Emitter* todelete) {
+
+	std::vector<Emitter*>::iterator item = emittersList.begin();
+
+	for (; item != emittersList.end(); ++item)
+	{
+		if ((*item) == todelete)
+		{
+			RELEASE(*item);
+
+			emittersList.erase(item);
+
+			emittersList.resize(emittersList.size());
+
+			break;
+		}
+	}
 }

@@ -62,9 +62,9 @@
 
     <camera>
       <speed x="700.0f" y="700.0f"/>
-      <original_position x="1550" y="-600"/>
-      <x_axis_limit left="-600" right="1700"/>
-      <y_axis_limit top="-1430" bottom="200"/>
+      <original_position x="2800" y="-3150"/>
+      <x_axis_limit left="-50" right="3200"/>
+      <y_axis_limit top="-3650" bottom="-1000"/>
     </camera>
 
     <game_controller>
@@ -123,19 +123,18 @@
 
       <cursor_click path=""/>
     </fx>
-  </gui>
-  
-  <scene_menu>
-    <audio path="Background music.ogg"/>
-  </scene_menu>
-    
+  </gui>    
   <scenes>
-    <map_name name="New_Tilesete_Map.tmx"/>
+    <map_name name="gameplay_map.tmx"/>
 
+    <fx>
+      <logo_scene_background_noise  path="Assets/audio/fx/scenes/logo_scene_background_noise.wav"/>
+    </fx>
+      
     <music>
       <logo_scene       path=""/>
       <main_menu_scene  path="Assets/audio/music/main_menu_theme.ogg"/>
-      <options_scene    path="Assets/audio/music/main_menu_theme.ogg"/>
+      <options_scene    path="Assets/audio/music/options_scene_theme.ogg"/>
       <gameplay_scene   path="Assets/audio/music/gameplay_scene_theme_3.ogg"/>
       <win_scene        path="Assets/audio/music/win_scene_theme.ogg"/>
       <lose_scene       path="Assets/audio/music/lose_scene_theme.ogg"/>
