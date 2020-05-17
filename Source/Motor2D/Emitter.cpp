@@ -3,6 +3,8 @@
 #include "ParticleManager.h"
 #include "Textures.h"
 #include "Log.h"
+#include "FowManager.h"
+#include "Map.h"
 
 #include <time.h>
 #include <assert.h>
@@ -118,7 +120,7 @@ bool Emitter::PostUpdate()
 {
 	for (int i = 0; i < (int)particle_vec.size(); ++i)
 	{
-		if (layer == 1) {
+		if (layer == 1 && App->fow_manager->GetVisibilityAt(App->map->WorldToMap(particle_vec[i]->pos.x, particle_vec[i]->pos.y))) {
 			particle_vec[i]->fraction += (RandomizeParticleColor(0.0f, 1.5f) / particle_vec[i]->startLife);
 
 			SDL_Rect drawRect = { (int)particle_vec[i]->startSize, (int)particle_vec[i]->startSize };
