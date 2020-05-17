@@ -1,10 +1,9 @@
-#include "ParticleManager.h"
 #include "Application.h"
-
 #include "Render.h"
+#include "Textures.h"
 #include "Emitter.h"
 
-#include "Textures.h"
+#include "ParticleManager.h"
 
 ParticleManager::ParticleManager() : Module()
 {
@@ -116,37 +115,37 @@ void ParticleManager::LoadData()
 
 	for(; node != nullptr; node = node.next_sibling())
 	{
-		int typeNum = node.attribute("type").as_int();
+		int typeNum				= node.attribute("type").as_int();										// Heh~
 
-		data.speed = node.child("speed").attribute("value").as_float();
-		data.size = node.child("size").attribute("value").as_float();
-		data.coneAngle.x = node.child("cone_angle").attribute("min").as_float();
-		data.coneAngle.y = node.child("cone_angle").attribute("max").as_float();
-		data.emission = node.child("emission").attribute("value").as_float();
-		data.rnd = node.child("rnd").attribute("value").as_int();
-		data.particleLife = node.child("particleLife").attribute("value").as_int();
-		data.emitterLife = node.child("emitterLife").attribute("value").as_float();
+		data.speed				= node.child("speed").attribute("value").as_float();
+		data.size				= node.child("size").attribute("value").as_float();
+		data.coneAngle.x		= node.child("cone_angle").attribute("min").as_float();
+		data.coneAngle.y		= node.child("cone_angle").attribute("max").as_float();
+		data.emission			= node.child("emission").attribute("value").as_float();
+		data.rnd				= node.child("rnd").attribute("value").as_int();
+		data.particleLife		= node.child("particleLife").attribute("value").as_int();
+		data.emitterLife		= node.child("emitterLife").attribute("value").as_float();
 
-		data.startColor.r = node.child("startColor").attribute("r").as_uint();
-		data.startColor.g = node.child("startColor").attribute("g").as_uint();
-		data.startColor.b = node.child("startColor").attribute("b").as_uint();
-		data.startColor.a = node.child("startColor").attribute("a").as_uint();
+		data.startColor.r		= node.child("startColor").attribute("r").as_uint();
+		data.startColor.g		= node.child("startColor").attribute("g").as_uint();
+		data.startColor.b		= node.child("startColor").attribute("b").as_uint();
+		data.startColor.a		= node.child("startColor").attribute("a").as_uint();
 
-		data.endColor.r = node.child("endColor").attribute("r").as_uint();
-		data.endColor.g = node.child("endColor").attribute("g").as_uint();
-		data.endColor.b = node.child("endColor").attribute("b").as_uint();
-		data.endColor.a = node.child("endColor").attribute("a").as_uint();
+		data.endColor.r			= node.child("endColor").attribute("r").as_uint();
+		data.endColor.g			= node.child("endColor").attribute("g").as_uint();
+		data.endColor.b			= node.child("endColor").attribute("b").as_uint();
+		data.endColor.a			= node.child("endColor").attribute("a").as_uint();
 
-		data.r.x = node.child("rect").attribute("x").as_int();
-		data.r.y = node.child("rect").attribute("y").as_int();
-		data.r.w = node.child("rect").attribute("w").as_int();
-		data.r.h = node.child("rect").attribute("h").as_int();
+		data.r.x				= node.child("rect").attribute("x").as_int();
+		data.r.y				= node.child("rect").attribute("y").as_int();
+		data.r.w				= node.child("rect").attribute("w").as_int();
+		data.r.h				= node.child("rect").attribute("h").as_int();
 
-		data.cameraspeed = node.child("camera_speed").attribute("speed").as_float();
-		data.spreadDirection = node.child("spread_direction").attribute("a").as_float();
-		data.layer = node.child("layer").attribute("value").as_uint();
+		data.cameraspeed		= node.child("camera_speed").attribute("speed").as_float();
+		data.spreadDirection	= node.child("spread_direction").attribute("a").as_float();
+		data.layer				= node.child("layer").attribute("value").as_uint();
 
-		data.path = node.child("texture_path").attribute("path").as_string();
+		data.path				= node.child("texture_path").attribute("path").as_string();
 
 		vecData[typeNum] = data;
 	}

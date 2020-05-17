@@ -4,7 +4,6 @@
 #include "Dependencies\SDL\include\SDL_pixels.h"
 
 #include <queue>
-
 #include "Module.h"
 #include "Point.h"
 

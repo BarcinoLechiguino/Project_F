@@ -1,16 +1,10 @@
 #ifndef __PARTICLE_MANAGER_H__
 #define __PARTICLE_MANAGER_H__
 
-#include "Application.h"
+#include "Dependencies/SDL/include/SDL_rect.h"
+
 #include "Point.h"
 #include "Module.h"
-//#include "Emitter.h"
-//#include "j1Pool.h"
-
-#include <list>
-#include <string>
-
-#include "Dependencies/SDL/include/SDL_rect.h"
 
 class Emitter;
 enum EMITTER_TYPE;

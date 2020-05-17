@@ -166,12 +166,6 @@
     <ClCompile Include="FowManager.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
-    <ClCompile Include="ParticleManager.cpp">
-      <Filter>Engine  ===========\Modules\Multimedia</Filter>
-    </ClCompile>
-    <ClCompile Include="Emitter.cpp">
-      <Filter>Engine  ===========\Modules\Multimedia</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
     </ClCompile>
@@ -259,8 +253,14 @@
     <ClCompile Include="Boulder.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Obstacles\Obstacle Entities</Filter>
     </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia\Particle Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Emitter.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia\Particle Manager</Filter>
+    </ClCompile>
     <ClCompile Include="DialogManager.cpp">
-      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia\Dialog Manager</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -432,12 +432,6 @@
     <ClInclude Include="FowManager.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
-    <ClInclude Include="ParticleManager.h">
-      <Filter>Engine  ===========\Modules\Multimedia</Filter>
-    </ClInclude>
-    <ClInclude Include="Emitter.h">
-      <Filter>Engine  ===========\Modules\Multimedia</Filter>
-    </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
     </ClInclude>
@@ -534,8 +528,14 @@
     <ClInclude Include="Boulder.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Obstacles\Obstacle Entities</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Engine  ===========\Modules\Multimedia\Particle Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Emitter.h">
+      <Filter>Engine  ===========\Modules\Multimedia\Particle Manager</Filter>
+    </ClInclude>
     <ClInclude Include="DialogManager.h">
-      <Filter>Engine  ===========\Modules\Multimedia</Filter>
+      <Filter>Engine  ===========\Modules\Multimedia\Dialog Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -651,6 +651,12 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Static\Obstacles\Obstacle Entities">
       <UniqueIdentifier>{292b83a2-1222-4205-bbff-3e41d50efb9c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Multimedia\Particle Manager">
+      <UniqueIdentifier>{7a4ac6e4-7f9c-4f96-af2d-24f3ed8ac075}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Multimedia\Dialog Manager">
+      <UniqueIdentifier>{ca768f60-5d42-4856-83f5-4e4c96edd0ea}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
