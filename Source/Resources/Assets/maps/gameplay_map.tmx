@@ -15011,7 +15011,7 @@
   </data>
  </layer>
  <objectgroup id="5" name="Entities">
-  <object id="3" name="infantry" type="infantry" x="1798.74" y="5277.26" width="40" height="40"/>
+  <object id="3" name="infantry" type="infantry" x="1798.99" y="5317.01" width="40" height="40"/>
   <object id="18" name="gatherer" type="gatherer" x="2039.74" y="5278.26" width="40" height="40"/>
   <object id="19" name="hall" type="hall" x="1959" y="5119" width="120" height="120"/>
   <object id="22" name="enemy_hall" type="enemy_hall" x="2082.45" y="690.887" width="120" height="120"/>

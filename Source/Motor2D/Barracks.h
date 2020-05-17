@@ -44,6 +44,12 @@ public:
 	float		infantry_creation_time;
 	float		heavy_creation_time;
 
+	int			infantry_data_cost;
+	int			infantry_electricity_cost;
+
+	int			heavy_data_cost;
+	int			heavy_electricity_cost;
+
 	ENTITY_TYPE created_unit_type;
 	bool		creating_unit;
 };
