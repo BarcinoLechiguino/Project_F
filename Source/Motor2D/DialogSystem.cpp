@@ -7,7 +7,6 @@
 #include "GuiImage.h"
 #include "GuiText.h"
 #include "GameplayScene.h"
-
 #include "Fonts.h"
 
 //Dialog Bubble
@@ -62,6 +61,8 @@ DialogSystem::DialogSystem()
 
 	last_dialog = 0;
 }
+
+DialogSystem::~DialogSystem() {};
 
 bool DialogSystem::Awake(pugi::xml_node&)
 {
@@ -129,9 +130,7 @@ bool DialogSystem::PostUpdate()
 bool DialogSystem::CleanUp()
 {
 	timer = 0;
-
-	if (current_dialog != nullptr)
-		delete(current_dialog);
+	current_dialog = nullptr;
 
 	while (!dialog_queue.empty())
 	{
@@ -146,6 +145,7 @@ bool DialogSystem::CleanUp()
 	dialogs.clear();
 	App->scene_manager->gameplay_scene->HUD_dialog_text.clear();
 	text_buffer.clear();
+	steps_in_typing = 0;
 
 	return true;
 }

@@ -51,6 +51,7 @@ class DialogSystem : public Module
 {
 public: 
 	DialogSystem();
+	~DialogSystem();
 
 	bool Awake(pugi::xml_node&);
 	bool Start();
