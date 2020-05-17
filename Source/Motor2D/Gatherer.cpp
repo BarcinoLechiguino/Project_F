@@ -355,11 +355,11 @@ void Gatherer::InitUnitSpriteSections()
 	entity_sprite_section		= pathing_down_right_section;
 
 	// --- LOADING FROM XML ---
-	//pugi::xml_node sections = App->config_file.child("config").child("entities").child("units").child("allies").child("gatherer").child("sprite_sections");
+	//pugi::xml_node sections = App->entities_file.child("entities").child("units").child("allies").child("gatherer").child("sprite_sections");
 
 	/*pathing_up_section.x = sections.child("pathing_up").attribute("x").as_int();
 	pathing_up_section.y = sections.child("pathing_up").attribute("y").as_int();
-	pathing_up_section.w = sections.child("pathing_up").attribute("w").as_int();
+	pathing_up_section.w = sections.child("pathing_up").attribute("w").as_int(); 
 	pathing_up_section.h = sections.child("pathing_up").attribute("h").as_int();
 
 	pathing_down_section.x = sections.child("pathing_down").attribute("x").as_int();

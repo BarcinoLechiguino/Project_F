@@ -74,14 +74,14 @@
 
       <scout>
         <sprite_sections>
-          <pathing_up x="0" y="0" w="0" h="0"/>
-          <pathing_down x="0" y="0" w="0" h="0"/>
-          <pathing_right x="0" y="0" w="0" h="0"/>
-          <pathing_left x="0" y="0" w="0" h="0"/>
-          <pathing_up_right x="0" y="0" w="0" h="0"/>
-          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_up         x="0" y="0" w="0" h="0"/>
+          <pathing_down       x="0" y="0" w="0" h="0"/>
+          <pathing_right      x="0" y="0" w="0" h="0"/>
+          <pathing_left       x="0" y="0" w="0" h="0"/>
+          <pathing_up_right   x="0" y="0" w="0" h="0"/>
+          <pathing_up_left    x="0" y="0" w="0" h="0"/>
           <pathing_down_right x="0" y="0" w="0" h="0"/>
-          <pathing_down_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_left  x="0" y="0" w="0" h="0"/>
         </sprite_sections>
 
         <sprite_size w="58" h="45"/>
@@ -101,14 +101,14 @@
 
       <infantry>
         <sprite_sections>
-          <pathing_up x="0" y="0" w="0" h="0"/>
-          <pathing_down x="0" y="0" w="0" h="0"/>
-          <pathing_right x="0" y="0" w="0" h="0"/>
-          <pathing_left x="0" y="0" w="0" h="0"/>
-          <pathing_up_right x="0" y="0" w="0" h="0"/>
-          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_up         x="0" y="0" w="0" h="0"/>
+          <pathing_down       x="0" y="0" w="0" h="0"/>
+          <pathing_right      x="0" y="0" w="0" h="0"/>
+          <pathing_left       x="0" y="0" w="0" h="0"/>
+          <pathing_up_right   x="0" y="0" w="0" h="0"/>
+          <pathing_up_left    x="0" y="0" w="0" h="0"/>
           <pathing_down_right x="0" y="0" w="0" h="0"/>
-          <pathing_down_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_left  x="0" y="0" w="0" h="0"/>
         </sprite_sections>
 
         <sprite_size w="58" h="45"/>
@@ -128,14 +128,14 @@
 
       <heavy>
         <sprite_sections>
-          <pathing_up x="0" y="0" w="0" h="0"/>
-          <pathing_down x="0" y="0" w="0" h="0"/>
-          <pathing_right x="0" y="0" w="0" h="0"/>
-          <pathing_left x="0" y="0" w="0" h="0"/>
-          <pathing_up_right x="0" y="0" w="0" h="0"/>
-          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_up         x="0" y="0" w="0" h="0"/>
+          <pathing_down       x="0" y="0" w="0" h="0"/>
+          <pathing_right      x="0" y="0" w="0" h="0"/>
+          <pathing_left       x="0" y="0" w="0" h="0"/>
+          <pathing_up_right   x="0" y="0" w="0" h="0"/>
+          <pathing_up_left    x="0" y="0" w="0" h="0"/>
           <pathing_down_right x="0" y="0" w="0" h="0"/>
-          <pathing_down_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_left  x="0" y="0" w="0" h="0"/>
         </sprite_sections>
 
         <sprite_size w="58" h="45"/>
@@ -157,14 +157,14 @@
     <enemies>
       <enemy_gatherer>
         <sprite_sections>
-          <pathing_up x="0" y="49" w="39" h="42"/>
-          <pathing_down x="39" y="49" w="38" h="45"/>
-          <pathing_right x="123" y="49" w="43" h="42"/>
-          <pathing_left x="78" y="49" w="43" h="42"/>
-          <pathing_up_right x="104" y="0" w="52" h="49"/>
-          <pathing_up_left x="156" y="0" w="52" h="49"/>
+          <pathing_up         x="0" y="49" w="39" h="42"/>
+          <pathing_down       x="39" y="49" w="38" h="45"/>
+          <pathing_right      x="123" y="49" w="43" h="42"/>
+          <pathing_left       x="78" y="49" w="43" h="42"/>
+          <pathing_up_right   x="104" y="0" w="52" h="49"/>
+          <pathing_up_left    x="156" y="0" w="52" h="49"/>
           <pathing_down_right x="52" y="0" w="52" h="49"/>
-          <pathing_down_left x="0" y="0" w="52" h="49"/>
+          <pathing_down_left  x="0" y="0" w="52" h="49"/>
         </sprite_sections>
 
         <sprite_size w="58" h="45"/>
@@ -188,14 +188,14 @@
 
       <enemy_scout>
         <sprite_sections>
-          <pathing_up x="0" y="0" w="0" h="0"/>
-          <pathing_down x="0" y="0" w="0" h="0"/>
-          <pathing_right x="0" y="0" w="0" h="0"/>
-          <pathing_left x="0" y="0" w="0" h="0"/>
-          <pathing_up_right x="0" y="0" w="0" h="0"/>
-          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_up         x="0" y="0" w="0" h="0"/>
+          <pathing_down       x="0" y="0" w="0" h="0"/>
+          <pathing_right      x="0" y="0" w="0" h="0"/>
+          <pathing_left       x="0" y="0" w="0" h="0"/>
+          <pathing_up_right   x="0" y="0" w="0" h="0"/>
+          <pathing_up_left    x="0" y="0" w="0" h="0"/>
           <pathing_down_right x="0" y="0" w="0" h="0"/>
-          <pathing_down_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_left  x="0" y="0" w="0" h="0"/>
         </sprite_sections>
 
         <sprite_size w="58" h="45"/>
@@ -215,14 +215,14 @@
 
       <enemy_infantry>
         <sprite_sections>
-          <pathing_up x="0" y="0" w="0" h="0"/>
-          <pathing_down x="0" y="0" w="0" h="0"/>
-          <pathing_right x="0" y="0" w="0" h="0"/>
-          <pathing_left x="0" y="0" w="0" h="0"/>
-          <pathing_up_right x="0" y="0" w="0" h="0"/>
-          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_up         x="0" y="0" w="0" h="0"/>
+          <pathing_down       x="0" y="0" w="0" h="0"/>
+          <pathing_right      x="0" y="0" w="0" h="0"/>
+          <pathing_left       x="0" y="0" w="0" h="0"/>
+          <pathing_up_right   x="0" y="0" w="0" h="0"/>
+          <pathing_up_left    x="0" y="0" w="0" h="0"/>
           <pathing_down_right x="0" y="0" w="0" h="0"/>
-          <pathing_down_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_left  x="0" y="0" w="0" h="0"/>
         </sprite_sections>
 
         <sprite_size w="58" h="45"/>
@@ -242,14 +242,14 @@
 
       <enemy_heavy>
         <sprite_sections>
-          <pathing_up x="0" y="0" w="0" h="0"/>
-          <pathing_down x="0" y="0" w="0" h="0"/>
-          <pathing_right x="0" y="0" w="0" h="0"/>
-          <pathing_left x="0" y="0" w="0" h="0"/>
-          <pathing_up_right x="0" y="0" w="0" h="0"/>
-          <pathing_up_left x="0" y="0" w="0" h="0"/>
+          <pathing_up         x="0" y="0" w="0" h="0"/>
+          <pathing_down       x="0" y="0" w="0" h="0"/>
+          <pathing_right      x="0" y="0" w="0" h="0"/>
+          <pathing_left       x="0" y="0" w="0" h="0"/>
+          <pathing_up_right   x="0" y="0" w="0" h="0"/>
+          <pathing_up_left    x="0" y="0" w="0" h="0"/>
           <pathing_down_right x="0" y="0" w="0" h="0"/>
-          <pathing_down_left x="0" y="0" w="0" h="0"/>
+          <pathing_down_left  x="0" y="0" w="0" h="0"/>
         </sprite_sections>
 
         <sprite_size w="58" h="45"/>
@@ -318,6 +318,20 @@
         <creation_bar_section x="618" y="23" w="115" h="9"/>
         <creation_bar_position_offset x="-6" y="16"/>
       </barracks>
+
+      <wall>
+        <sprite_section_level_1 x="0" y="0" w="0" h="0"/>
+        <sprite_section_level_2 x="0" y="0" w="0" h="0"/>
+        <tiles_occupied x="1" y="1"/>
+
+        <is_selected value="false"/>
+        <max_health health="900"/>
+        <unit_level level ="1"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </wall>
     </allied>
 
     <enemy>
@@ -362,6 +376,20 @@
         <creation_bar_section x="618" y="23" w="115" h="9"/>
         <creation_bar_position_offset x="-6" y="16"/>
       </enemy_barracks>
+
+      <enemy_wall>
+        <sprite_section_level_1 x="0" y="0" w="0" h="0"/>
+        <sprite_section_level_2 x="0" y="0" w="0" h="0"/>
+        <tiles_occupied x="1" y="1"/>
+
+        <is_selected value="false"/>
+        <max_health health="900"/>
+        <unit_level level ="1"/>
+
+        <healthbar_background_section x="618" y="12" w="115" h="9"/>
+        <healthbar_section x="618" y="23" w="115" h="9"/>
+        <healthbar_position_offset x="-6" y="-6"/>
+      </enemy_wall>
     </enemy>
   </buildings>
 
@@ -394,11 +422,8 @@
       <healthbar_position_offset x="-30" y="-25"/>
     </tree>
 
-    <chunks>
-      <sprite_section_1 x="0" y="0" w="0" h="0"/>
-      <sprite_section_2 x="0" y="0" w="0" h="0"/>
-      <sprite_section_3 x="0" y="0" w="0" h="0"/>
-      <sprite_section_4 x="0" y="0" w="0" h="0"/>
+    <obelisk>
+      <sprite_section x="0" y="0" w="0" h="0"/>
       <tiles_occupied x="1" y="1"/>
 
       <max_health health="300"/>
@@ -406,6 +431,19 @@
       <healthbar_background_section x="618" y="12" w="115" h="9"/>
       <healthbar_section x="618" y="23" w="115" h="9"/>
       <healthbar_position_offset x="-6" y="-6"/>
-    </chunks>
+    </obelisk>
   </resources>
+
+  <obstacles>
+    <boulder>
+      <sprite_section x="0" y="0" w="0" h="0"/>
+      <tiles_occupied x="1" y="1"/>
+
+      <max_health health="300"/>
+
+      <healthbar_background_section x="618" y="12" w="115" h="9"/>
+      <healthbar_section x="618" y="23" w="115" h="9"/>
+      <healthbar_position_offset x="-6" y="-6"/>
+    </boulder>
+  </obstacles>
 </entities>
