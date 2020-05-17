@@ -257,7 +257,7 @@ void OptionsScene::InitScene()
 
 	transition_to_main_menu_scene = false;
 	
-	menu_song = App->audio->LoadMusic(App->config_file.child("config").child("scenes").child("music").child("main_menu_scene").attribute("path").as_string());
+	menu_song = App->audio->LoadMusic(App->config_file.child("config").child("scenes").child("music").child("options_scene").attribute("path").as_string());
 	App->audio->PlayMusic(menu_song, 0.0f);
 	LoadGuiElements();
 
