@@ -23,7 +23,6 @@
 #include "Emitter.h"
 #include "QuestManager.h"
 
-
 #include "EntityManager.h"
 #include "Entity.h"
 
@@ -170,59 +169,22 @@ bool GameplayScene::PostUpdate()
 	if (App->input->GetKey(SDL_SCANCODE_ESCAPE) == KEY_STATE::KEY_DOWN
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_B) == BUTTON_STATE::BUTTON_DOWN)
 	{	
-		if (!App->transition_manager->is_transitioning)
-		{
-			if (!in_game_background->is_visible)
-			{
-				if (!in_game_background->is_transitioning)
-				{
-					App->pause = true;
-				}
-				
-				// Slide in from the left
-				iPoint current_pos = in_game_background->GetScreenPos();
-
-				iPoint origin		= { -600, current_pos.y };
-				iPoint destination	= { 380, current_pos.y };
-
-				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, origin, destination);
-				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, false, 0.0f, 255.0f);*/
-
-				App->gui_manager->SetElementsVisibility(in_game_background, true);
-
-			}
-			else
-			{
-				if (!in_game_background->is_transitioning)
-				{
-					App->pause = false;
-					
-				}
-				
-				// Slide out to the right.
-				iPoint origin		= { 380, in_game_background->GetScreenPos().y };
-				iPoint destination	= { 1281, in_game_background->GetScreenPos().y };
-
-				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
-				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, true, 255.0f, 0.0f);*/
-			}
-
-			// If we want to move the pause menu elsewhere than the center of the screen, the options menu has to change locations or be animated.
-			App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
-
-			App->audio->PlayFx(App->gui_manager->pause_menu_button_clicked_fx, 0);
-
-			//Mix_HaltMusic();
-		}
+		SwitchPauseMenuMode();
 	}
 
 	if (App->player->god_mode)
 	{
-		App->gui_manager->SetElementsVisibility(God_Mode_Activated, true);
+		if (!God_Mode_Activated->is_visible)
+		{
+			App->gui_manager->SetElementsVisibility(God_Mode_Activated, true);
+		}
 	}
-	if (App->player->god_mode == false)
+	else
 	{
-		App->gui_manager->SetElementsVisibility(God_Mode_Activated, false);
+		if (God_Mode_Activated->is_visible)
+		{
+			App->gui_manager->SetElementsVisibility(God_Mode_Activated, false);
+		}
 	}
 
 	if (App->pause)
@@ -1486,16 +1448,6 @@ void GameplayScene::LoadGuiElements()
 
 	App->dialog->LoadDialog();
 
-	//Character
-	SDL_Rect HUD_dialogs_char_size = { 18, 777, 91, 165 };
-
-	HUD_dialogs_character_no_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 5, 30, HUD_dialogs_char_size, true, true, false, this, nullptr);
-
-	SDL_Rect HUD_dialogs_char_talk_size = { 138, 777, 91, 165 };
-
-	HUD_dialogs_character_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 5, 30, HUD_dialogs_char_talk_size, false, true, false, this, nullptr);
-
-
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1916,6 +1868,61 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_dialogs_background && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->dialog->is_clicked = true;
+	}
+
+	if (element == HUD_dialogs_screen_block && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->dialog->is_clicked = true;
+	}
+}
+
+void GameplayScene::SwitchPauseMenuMode()
+{
+	if (!in_game_background->is_visible)
+	{
+		if (!in_game_background->is_transitioning)
+		{
+			App->pause = true;
+		}
+
+		// Slide in from the left
+		iPoint current_pos = in_game_background->GetScreenPos();
+
+		iPoint origin = { -600, current_pos.y };
+		iPoint destination = { 380, current_pos.y };
+
+		App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, origin, destination);
+		/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, false, 0.0f, 255.0f);*/
+
+		App->gui_manager->SetElementsVisibility(in_game_background, true);
+
+	}
+	else
+	{
+		if (!in_game_background->is_transitioning)
+		{
+			App->pause = false;
+
+		}
+
+		// Slide out to the right.
+		iPoint origin = { 380, in_game_background->GetScreenPos().y };
+		iPoint destination = { 1281, in_game_background->GetScreenPos().y };
+
+		App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
+		/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, true, 255.0f, 0.0f);*/
+	}
+
+	// If we want to move the pause menu elsewhere than the center of the screen, the options menu has to change locations or be animated.
+	App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
+
+	App->audio->PlayFx(App->gui_manager->pause_menu_button_clicked_fx, 0);
+
+	//Mix_HaltMusic();
+
+	if (!App->transition_manager->is_transitioning)
+	{
+
 	}
 }
 

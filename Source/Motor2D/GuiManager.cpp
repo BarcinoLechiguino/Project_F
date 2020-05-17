@@ -711,6 +711,14 @@ void GuiManager::Debug_UI()
 				case GUI_ELEMENT_TYPE::HEALTHBAR:
 					App->render->DrawQuad((*elem)->GetHitbox(), 0, 255, 255, 255, false, true);			//GuiHealthbar will be CYAN.
 					break;
+
+				case GUI_ELEMENT_TYPE::CREATIONBAR:
+					App->render->DrawQuad((*elem)->GetHitbox(), 0, 0, 0, 255, false, true);
+					break;
+
+				case GUI_ELEMENT_TYPE::CURSOR:
+					App->render->DrawQuad((*elem)->GetHitbox(), 255, 102, 0, false, false);
+					break;
 				}
 			}
 		}
@@ -719,7 +727,7 @@ void GuiManager::Debug_UI()
 
 void GuiManager::CreateGuiCommands()
 {
-	quit_command			= "quit";
+	quit_command		= "quit";
 	enable_ui_debug		= "enable_ui_debug";
 	disable_ui_debug	= "disable_ui_debug";
 

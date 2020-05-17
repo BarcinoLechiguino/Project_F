@@ -18,7 +18,6 @@ enum class ENTITY_TYPE;
 class EntityManager : public Module
 {
 public:
-
 	EntityManager();
 	~EntityManager();
 
@@ -28,18 +27,20 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+
 	void DrawEntities();
 
-public:
-	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0, int level = 1);		//Crates a new entity depending on the ENTITY_TYPE passed as argument. 
-	void DestroyEntities();																//Calls the CleanUp() method of each entity and then it clears the entities list.
-	void DeleteEntity(Entity* entity_to_delete);
+public:																					// -------------- ENTITY CREATION & DESTRUCTION METHODS --------------
+	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0, int level = 1);		// Crates a new entity depending on the ENTITY_TYPE passed as argument. 
+	void DestroyEntities();																// Calls the CleanUp() method of each entity and then it clears the entities list.
+	void DeleteEntity(Entity* entity_to_delete);										// Will delete and destroy the entity passed as argument.
 
-	void LoadEntityTextures();
-	void UnLoadEntityTextures();
-	void LoadEntityAudios();
-	void UnLoadEntityAudios();
+	void LoadEntityTextures();															// Will load all entity textures.
+	void UnLoadEntityTextures();														// Will unload and delete all entity textures.
+	void LoadEntityAudios();															// Will load all entity sfxs.
+	void UnLoadEntityAudios();															// Will unload all entity sfxs.
 
+public:																					// -------------- ENTITY GET TEXTURE METHODS --------------
 	SDL_Texture* GetGathererTexture() const;
 	SDL_Texture* GetScoutTexture() const;
 	SDL_Texture* GetInfantryTexture() const;
@@ -64,34 +65,36 @@ public:
 
 	SDL_Texture* GetCenterPointTexture() const;
 
-	bool IsAllyEntity(Entity* entity);													//Method that will return true if the entity passed as argument is a enemy entity.
-	bool IsEnemyEntity(Entity* entity);													//Method that will return true if the entity passed as argument is a enemy entity.
+public:																					// -------------- ENTITY CONDITIONAL CHECK METHODS --------------
+	bool IsAllyEntity(Entity* entity);													// Method that will return true if the entity passed as argument is a enemy entity.
+	bool IsEnemyEntity(Entity* entity);													// Method that will return true if the entity passed as argument is a enemy entity.
 
-	bool IsUnit(Entity* entity);														//Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
+	bool IsUnit(Entity* entity);														// Method that will return true if the entity passed as argument is a unit. (Expand to IsAllyUnit())
 	bool IsAllyUnit(Entity* entity);													// Temporal methods, might be unnecessary down the line.
 	bool IsEnemyUnit(Entity* entity);													// Temporal methods, might be unnecessary down the line.
 
-	bool IsGatherer(Entity* enitity);
-	bool IsScout(Entity* enitity);
-	bool IsInfantry(Entity* entity);
-	bool IsHeavy(Entity* enitity);
+	bool IsGatherer(Entity* enitity);													// Method that will return true if the entity passed as argument is an Ally Gatherer Unit.
+	bool IsScout(Entity* enitity);														// Method that will return true if the entity passed as argument is an Ally Scout Unit.
+	bool IsInfantry(Entity* entity);													// Method that will return true if the entity passed as argument is an Ally Infantry Unit.
+	bool IsHeavy(Entity* enitity);														// Method that will return true if the entity passed as argument is an Ally Heavy Unit.
 	
-	bool IsBuilding(Entity* entity);													//Method that will return true if the entity passed as argument is a building.
-	bool IsResource(Entity* entity);													//Method that will return true if the entity passed as argument is a resource.
-	bool IsObstacle(Entity* entity);
+	bool IsBuilding(Entity* entity);													// Method that will return true if the entity passed as argument is a building entity.
+	bool IsResource(Entity* entity);													// Method that will return true if the entity passed as argument is a resource entity.
+	bool IsObstacle(Entity* entity);													// Method that will return true if the entity passed as argument is an obstacle entity.
 	
-	bool InViewport(Entity* entity);
+	bool InViewport(Entity* entity);													// Method that will return true if the entity passed as argument is currently inside the viewport.
 
-	void SetEntityMap(int width, int height);											//Method that will allocate the necessary memory for the entity_map.
-	void ChangeEntityMap(const iPoint& pos, Entity* entity, bool set_to_null = false);	//Method that will modify the entity map when a unit or building is spawned.
+public:																								// -------------- ENTITY MAP METHODS -------------- 
+	void SetEntityMap(int width, int height);														// Method that will allocate the necessary memory for the entity_map.
+	void ChangeEntityMap(const iPoint& tile_position, Entity* entity, bool set_to_null = false);	// Method that will modify the entity map when a unit or building is spawned.
 	void OrderEntities();
 
-	bool CheckEntityMapBoundaries(const iPoint& pos) const;								//Method that will check whether or not the position passed as argument is inside the entity_map's bounds.
+	bool CheckEntityMapBoundaries(const iPoint& tile_position) const;								// Method that will return true if the tile passed as argument is inside the entity_map.
 
-	Entity* GetEntityAt(const iPoint& pos) const;										//Method that will return whichever entity is at the given position.
+	Entity* GetEntityAt(const iPoint& tile_position) const;											// Method that will return whichever entity is at the given position.
 	iPoint GetEntityPos(Entity* entity);
 
-	bool CheckTileAvailability(const iPoint& pos, Entity* entity);						//Method that will return true whenever the space required by an entity to spawn is available.
+	bool CheckTileAvailability(const iPoint& tile_position, Entity* entity);						// Method that will return true whenever the space required by an entity is available.
 
 	void OnCollision(Collider* C1, Collider* C2);
 
@@ -120,6 +123,7 @@ public:
 	
 	SDL_Texture*					center_point_debug;
 
+
 	uint							gatherer_moving_fx;
 	uint							gatherer_gathering_fx;
 	uint							gatherer_gathering_finished_fx;
@@ -133,6 +137,7 @@ public:
 	uint							building_recruiting_finished_fx;
 	uint							building_upgrading_finished_fx;
 	
+
 	std::vector<Entity*>			entities;	
 	std::vector<Entity*>			entities_in_screen;
 	

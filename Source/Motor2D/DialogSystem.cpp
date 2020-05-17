@@ -24,6 +24,7 @@ Dialog::Dialog()
 	dialog_id = 0;
 	current_bubble = 0;
 	last_id = 0;
+	pause_game = false;
 }
 
 void Dialog::NextBubble() //Next bubble in dialog
@@ -54,10 +55,12 @@ DialogSystem::DialogSystem()
 	is_clicked = false;
 	finished_typing = false;
 
-	timer = nullptr;
+	timer = 0;
 	dialog_color = { 0,0,0,0 };
 
 	steps_in_typing = 0;
+
+	last_dialog = 0;
 }
 
 bool DialogSystem::Awake(pugi::xml_node&)
@@ -77,6 +80,8 @@ bool DialogSystem::PreUpddate()
 
 bool DialogSystem::Update(float dt)
 {
+	timer += App->GetUnpausableDt();
+
 	if (App->scene_manager->current_scene->scene_name == SCENES::GAMEPLAY_SCENE)
 	{
 		switch (dialog_state)
@@ -111,6 +116,8 @@ bool DialogSystem::Update(float dt)
 		}
 	}
 
+	is_clicked = false;
+
 	return true;
 }
 
@@ -121,9 +128,7 @@ bool DialogSystem::PostUpdate()
 
 bool DialogSystem::CleanUp()
 {
-	//TODO cleanup
-
-	delete(timer);
+	timer = 0;
 
 	if (current_dialog != nullptr)
 		delete(current_dialog);
@@ -140,6 +145,7 @@ bool DialogSystem::CleanUp()
 
 	dialogs.clear();
 	App->scene_manager->gameplay_scene->HUD_dialog_text.clear();
+	text_buffer.clear();
 
 	return true;
 }
@@ -182,13 +188,15 @@ void DialogSystem::StartDialog(int tree_id)
 			}
 		}
 	}
+
+	last_dialog = tree_id;
 }
 
 void DialogSystem::NextBubbleCheck()
 {
-	if (timer->Read() >= current_dialog->dialog_bubbles[current_dialog->current_bubble]->active_time || is_clicked)
+	if (timer*1000 >= current_dialog->dialog_bubbles[current_dialog->current_bubble]->active_time || is_clicked)
 	{
-		timer->Start();
+		timer=0;
 		current_dialog->NextBubble();
 		is_clicked = false;
 	}
@@ -244,8 +252,7 @@ void DialogSystem::NextDialog()
 void DialogSystem::TypeText()
 {
 	int i = 0;
-	
-	if (timer->Read() >= 50)
+	if (timer >= 0.025f)
 	{
 		//type new letter
 		for (std::vector<std::string>::iterator text = current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.begin(); text != current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.end(); ++text)
@@ -260,7 +267,6 @@ void DialogSystem::TypeText()
 						{
 							text_buffer.push_back((*text)[j]);
 							App->scene_manager->gameplay_scene->HUD_dialog_text[i]->RefreshTextInput(text_buffer.c_str());
-							LOG("%s", text_buffer.c_str());
 							break;
 						}
 					}
@@ -275,12 +281,11 @@ void DialogSystem::TypeText()
 						finished_typing = true;
 					}
 				}
-				i++;
 				break;
 			}
 			i++;
 		}
-		timer->Start();
+		timer = 0;
 	}
 
 	if (is_clicked)
@@ -297,13 +302,12 @@ void DialogSystem::TypeText()
 	if (finished_typing)
 	{
 		dialog_state = DialogState::ACTIVE;
-		timer->Start();
+		timer = 0;
 		text_buffer.clear();
 		finished_typing = false;
 		is_clicked = false;
 		steps_in_typing = 0;
 	}
-	
 }
 
 void DialogSystem::SetTextPosition(iPoint position)
@@ -313,7 +317,6 @@ void DialogSystem::SetTextPosition(iPoint position)
 	for (std::vector<GuiText*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
 	{
 		(*text)->SetElementPosition(iPoint(position.x + 20, y_position));
-
 		y_position += font_size;
 	}
 }
@@ -343,7 +346,7 @@ void DialogSystem::SlideOut()
 
 bool DialogSystem::LoadDialog()
 {
-	timer = new Timer;
+	timer = 0;
 
 	pugi::xml_parse_result result = dialog_file.load_file("dialog.xml");
 
@@ -367,6 +370,7 @@ bool DialogSystem::LoadDialog()
 			buffer->dialog_id = tree.attribute("tree_id").as_int();
 			buffer->position.x = tree.attribute("position_x").as_int();
 			buffer->position.y = tree.attribute("position_y").as_int();
+			buffer->pause_game = tree.attribute("pause").as_bool();
 			LOG("Loaded tree with id %d", buffer->dialog_id);
 			LoadTextBubbles(buffer, tree);
 			dialogs.push_back(buffer);
@@ -376,14 +380,24 @@ bool DialogSystem::LoadDialog()
 
 	current_dialog = nullptr; //start first dialog
 
-	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
-	App->scene_manager->gameplay_scene->HUD_dialogs_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 30, 30, HUD_dialogs_back_size, false,true, false, App->scene_manager->gameplay_scene, nullptr);
+	App->scene_manager->gameplay_scene->HUD_dialogs_screen_block = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, { 0,0,1280,720 }, false, true, false, App->scene_manager->gameplay_scene, nullptr);
 
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false,nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
+	App->scene_manager->gameplay_scene->HUD_dialogs_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 0, 0, HUD_dialogs_back_size, false,true, false, App->scene_manager->gameplay_scene, nullptr);
+
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 0, 0, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false,nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 0, 0, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 0, 0, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 0, 0, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 0, 0, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 0, 0, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+
+	SDL_Rect HUD_dialogs_char_size = { 15, 770, 105, 175 };
+	App->scene_manager->gameplay_scene->HUD_dialogs_character_no_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 0, 0, HUD_dialogs_char_size, true, true, false, this, nullptr);
+
+	SDL_Rect HUD_dialogs_char_talk_size = { 130, 770, 105, 175 };
+	App->scene_manager->gameplay_scene->HUD_dialogs_character_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 0, 0, HUD_dialogs_char_talk_size, false, false, false, this, nullptr);
+
 	dialog_state = DialogState::NOT_ACTIVE;
 
 	return result;

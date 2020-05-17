@@ -62,7 +62,7 @@ bool GuiCursor::Draw()
 
 	if (GetMousePos() != previous_mouse_position)											// Will move the cursor to the mouse position only if the mouse was moved the last frame.
 	{
-		SetScreenPos(GetMousePos());
+		SetElementPosition(GetMousePos());
 		previous_mouse_position = GetMousePos();
 		
 		if (game_controller_mode)

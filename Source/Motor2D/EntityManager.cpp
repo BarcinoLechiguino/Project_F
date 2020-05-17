@@ -319,14 +319,24 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 
 void EntityManager::DestroyEntities()
 {
-	BROFILER_CATEGORY("EntityManager PostUpdate", Profiler::Color::FireBrick);
+	BROFILER_CATEGORY("EntityManager DestroyEntities", Profiler::Color::FireBrick);
 
-	std::vector<Entity*>::iterator item = entities.begin();
+	//std::vector<Entity*>::iterator item = entities.begin();
 
-	for (; item != entities.end(); ++item)
+	//for (; item != entities.end(); ++item)
+	//{
+	//	(*item)->CleanUp();						//Calls the CleanUp() method of the iterated entity (an enemy entity).
+	//	RELEASE((*item));						//Deletes the data buffer
+	//}
+
+	for (int i = 0; i < entities.size(); ++i)
 	{
-		(*item)->CleanUp();						//Calls the CleanUp() method of the iterated entity (an enemy entity).
-		RELEASE((*item));						//Deletes the data buffer
+		entities[i]->CleanUp();
+		
+		if (entities[i] != nullptr)
+		{
+			RELEASE(entities[i]);
+		}
 	}
 
 	entities.clear();
@@ -388,7 +398,7 @@ void EntityManager::LoadEntityTextures()
 	boulder_tex			= App->tex->Load(entity_textures.child("boulder_texture").attribute("path").as_string());
 
 	// SPRITE RENDERING ORDER DEBUG TEXTURE
-	center_point_debug	= App->tex->Load(App->config_file.child("config").child("debug").child("center_position_debug").attribute("path").as_string());
+	center_point_debug	= App->tex->Load("Assets/maps/center_position_debug.png");//App->config_file.child("config").child("debug").child("center_position_debug").attribute("path").as_string()
 }
 
 void EntityManager::UnLoadEntityTextures()

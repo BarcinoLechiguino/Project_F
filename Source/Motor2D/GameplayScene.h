@@ -51,17 +51,17 @@ public:
 	void SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount);		// TMP. Put in EnemyAI module.
 
 	void BuildingUpgrade();
-
 	void UnitUpgrade(int unit);
 
 	bool CheckResources(uint required_data, uint required_electricity);
 
 	// --- UI & HUD
 	void LoadGuiElements();
-
 	void LoadInGameOptionsMenu();
 
 	void OnEventCall(GuiElement* element, GUI_EVENT ui_event);
+
+	void SwitchPauseMenuMode();																// Will switch between enabling and disabling the pause menu.
 
 	void DebugHUDSpawn();																	// HUD SPAWN
 
@@ -316,6 +316,7 @@ public:
 	std::vector<GuiText*>	HUD_dialog_text;	//Lines of dialog text
 	GuiImage*				HUD_dialogs_character_no_talking;
 	GuiImage*				HUD_dialogs_character_talking;
+	GuiImage*				HUD_dialogs_screen_block;
 
 private:
 
