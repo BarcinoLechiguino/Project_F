@@ -3,9 +3,9 @@
 #include "Fonts.h"
 #include "Input.h"
 #include "GuiManager.h"
-#include "UI.h"
+#include "GuiElement.h"
 #include "Audio.h"
-#include "UI_Button.h"
+#include "GuiButton.h"
 #include "SceneManager.h"
 #include "TransitionManager.h"
 #include "Textures.h"
@@ -81,13 +81,13 @@ void WinScene::LoadGuiElements()
 	SDL_Rect win_back_to_menu_hover = { 204, 137, 189, 23 };
 	SDL_Rect win_back_to_menu_clicked = { 408, 137, 189, 23 };
 
-	win_main_menu = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 555, 621, true, true, false, this, nullptr
+	win_main_menu = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 555, 621, true, true, false, this, nullptr
 		, &win_back_to_menu_idle, &win_back_to_menu_hover, &win_back_to_menu_clicked);
 }
 
-void WinScene::OnEventCall(UI* element, UI_EVENT ui_event)
+void WinScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 {
-	if (element == win_main_menu && ui_event == UI_EVENT::UNCLICKED)
+	if (element == win_main_menu && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->exit_button_clicked_fx, 0);
 

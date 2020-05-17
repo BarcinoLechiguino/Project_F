@@ -3,14 +3,14 @@
 #include "Application.h"
 #include "Input.h"
 #include "GuiManager.h"
-#include "UI_Image.h"
+#include "GuiImage.h"
 
-#include "UI_Scrollbar.h"
+#include "GuiScrollbar.h"
 
 
-UI_Scrollbar::UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect drag_area, float drag_factor, bool drag_x_axis, bool drag_y_axis,
-				bool inverted_scrolling, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent , SDL_Rect* scroll_mask, iPoint maskOffset,
-				bool emptyElements) : UI(element, x, y, hitbox, listener, parent)
+GuiScrollbar::GuiScrollbar(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect drag_area, float drag_factor, bool drag_x_axis, bool drag_y_axis,
+				bool inverted_scrolling, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent , SDL_Rect* scroll_mask, iPoint maskOffset,
+				bool emptyElements) : GuiElement(type, x, y, hitbox, listener, parent)
 {
 	//tex = App->gui->GetAtlas();
 
@@ -41,23 +41,23 @@ UI_Scrollbar::UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SD
 	initial_position			= GetScreenPos();									//Records the initial position where the element is at at app execution start.											//Records the initial position where the input box is at app execution start.
 
 	// --- Scrollbar Elements
-	/*bar = UI_Image(UI_Element::IMAGE, x, y, hitbox, true, false, false, this);
-	thumb = UI_Image(UI_Element::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, true, true, true, this);*/
+	/*bar = GuiImage(UI_Element::IMAGE, x, y, hitbox, true, false, false, this);
+	thumb = GuiImage(UI_Element::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, true, true, true, this);*/
 
 	if (!emptyElements)
 	{
-		bar = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, x, y, hitbox, is_visible, false, false, nullptr, this);
-		thumb = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, is_visible, true, true, nullptr, this);
+		bar = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, x, y, hitbox, is_visible, false, false, nullptr, this);
+		thumb = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, is_visible, true, true, nullptr, this);
 	}
 	else
 	{
-		bar = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, x, y, hitbox, is_visible, false, false, nullptr, this);
-		thumb = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, is_visible, true, true, nullptr, this);
+		bar = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, x, y, hitbox, is_visible, false, false, nullptr, this);
+		thumb = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, x + thumbOffset.x, y + thumbOffset.y, thumbSize, is_visible, true, true, nullptr, this);
 	}
 
 	if (scroll_mask != nullptr)
 	{
-		this->scroll_mask = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, x + maskOffset.x, y + maskOffset.y, *scroll_mask, false, false, false, nullptr, this);
+		this->scroll_mask = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, x + maskOffset.x, y + maskOffset.y, *scroll_mask, false, false, false, nullptr, this);
 	}
 
 	// --- Other Scrollbar Variables
@@ -80,7 +80,7 @@ UI_Scrollbar::UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SD
 	// -----------------------------------------------------------------------------------
 }
 
-bool UI_Scrollbar::Draw()
+bool GuiScrollbar::Draw()
 {
 	CheckInput();
 
@@ -93,7 +93,7 @@ bool UI_Scrollbar::Draw()
 	return true;
 }
 
-void UI_Scrollbar::CheckInput()
+void GuiScrollbar::CheckInput()
 {
 	BROFILER_CATEGORY("Scrollbar_CheckInput", Profiler::Color::LightGoldenRodYellow);
 
@@ -103,7 +103,7 @@ void UI_Scrollbar::CheckInput()
 
 		if (!IsHovered())																		//If the mouse is not on the image.
 		{
-			ui_event = UI_EVENT::IDLE;
+			ui_event = GUI_EVENT::IDLE;
 		}
 		
 		if (IsHovered() || LinkedElementsBeingHovered() || MouseWithinDragArea())
@@ -152,7 +152,7 @@ void UI_Scrollbar::CheckInput()
 		{
 			if (IsForemostElement() || is_drag_target)															//If it is the first element under the mouse (in inverse order of draw)
 			{
-				ui_event = UI_EVENT::CLICKED;
+				ui_event = GUI_EVENT::CLICKED;
 
 				if (ElementCanBeDragged() && is_draggable)									//If the UI Image element is draggable and is the foremost element under the mouse.
 				{
@@ -178,31 +178,31 @@ void UI_Scrollbar::CheckInput()
 		{
 			if (listener != nullptr)
 			{
-				listener->OnEventCall(this, ui_event);										//The listener call the OnEventCall() method passing this UI_Image and it's event as arguments.
+				listener->OnEventCall(this, ui_event);										//The listener call the OnEventCall() method passing this GuiImage and it's event as arguments.
 			}
 		}
 	}
 }
 
-void UI_Scrollbar::DrawScrollbarElements()
+void GuiScrollbar::DrawScrollbarElements()
 {
 	//bar.Draw();
 	//thumb.Draw();
 	//scrollMask->isVisible = false;
 }
 
-void UI_Scrollbar::LinkScroll(UI* element)
+void GuiScrollbar::LinkScroll(GuiElement* element)
 {
 	linked_elements.push_back(element);
 }
 
-void UI_Scrollbar::UpdateLinkedElements()
+void GuiScrollbar::UpdateLinkedElements()
 {
 	BROFILER_CATEGORY("Scrollbar_UpdateLinkedElements", Profiler::Color::LightGoldenRodYellow);
 
-	for (std::vector<UI*>::iterator element = linked_elements.begin(); element != linked_elements.end(); element++)
+	for (std::vector<GuiElement*>::iterator element = linked_elements.begin(); element != linked_elements.end(); element++)
 	{
-		UI* elem = (*element);
+		GuiElement* elem = (*element);
 
 		if (thumb->GetScreenPos() != thumb->initial_position)
 		{
@@ -244,9 +244,9 @@ void UI_Scrollbar::UpdateLinkedElements()
 	}
 }
 
-bool UI_Scrollbar::LinkedElementsBeingHovered()
+bool GuiScrollbar::LinkedElementsBeingHovered()
 {	
-	for (std::vector<UI*>::iterator element = linked_elements.begin(); element != linked_elements.end(); element++)
+	for (std::vector<GuiElement*>::iterator element = linked_elements.begin(); element != linked_elements.end(); element++)
 	{
 		if ((*element)->IsHovered())
 		{
@@ -257,7 +257,7 @@ bool UI_Scrollbar::LinkedElementsBeingHovered()
 	return false;
 }
 
-bool UI_Scrollbar::MouseWithinDragArea()
+bool GuiScrollbar::MouseWithinDragArea()
 {
 	iPoint scrollMousePos = GetMousePos();
 	
@@ -265,7 +265,7 @@ bool UI_Scrollbar::MouseWithinDragArea()
 		&& scrollMousePos.y > drag_area.y && scrollMousePos.y < drag_area.y + drag_area.h);
 }
 
-float UI_Scrollbar::GetDragFactor(UI* element)
+float GuiScrollbar::GetDragFactor(GuiElement* element)
 {
 	if (drag_x_axis == drag_y_axis)
 	{
@@ -288,32 +288,32 @@ float UI_Scrollbar::GetDragFactor(UI* element)
 	return drag_factor;
 }
 
-bool UI_Scrollbar::GetDragXAxis() const
+bool GuiScrollbar::GetDragXAxis() const
 {
 	return drag_x_axis;
 }
 
-bool UI_Scrollbar::GetDragYAxis() const
+bool GuiScrollbar::GetDragYAxis() const
 {
 	return drag_y_axis;
 }
 
-iPoint UI_Scrollbar::GetThumbLocalPos()
+iPoint GuiScrollbar::GetThumbLocalPos()
 {
 	return thumb->GetLocalPos();
 }
 
-SDL_Rect UI_Scrollbar::GetThumbHitbox()
+SDL_Rect GuiScrollbar::GetThumbHitbox()
 {
 	return thumb->GetHitbox();
 }
 
-void UI_Scrollbar::SetThumbHitbox(SDL_Rect hitbox)
+void GuiScrollbar::SetThumbHitbox(SDL_Rect hitbox)
 {
 	thumb->SetHitbox(hitbox);
 }
 
-void UI_Scrollbar::PlaceThumbOnMousePos()
+void GuiScrollbar::PlaceThumbOnMousePos()
 {
 	if (drag_x_axis /*&& !drag_y_axis*/)
 	{
@@ -336,7 +336,7 @@ void UI_Scrollbar::PlaceThumbOnMousePos()
 	}
 }
 
-void UI_Scrollbar::PlaceThumbOnCursorPos()
+void GuiScrollbar::PlaceThumbOnCursorPos()
 {
 	if (drag_x_axis /*&& !drag_y_axis*/)
 	{
@@ -359,7 +359,7 @@ void UI_Scrollbar::PlaceThumbOnCursorPos()
 	}
 }
 
-void UI_Scrollbar::CheckKeyboardInputs()
+void GuiScrollbar::CheckKeyboardInputs()
 {
 	if (drag_x_axis)
 	{
@@ -450,7 +450,7 @@ void UI_Scrollbar::CheckKeyboardInputs()
 	CheckScrollbarBounds();
 }
 
-void UI_Scrollbar::DragThumbWithMousewheel()																							// ----------------------------------------------
+void GuiScrollbar::DragThumbWithMousewheel()																							// ----------------------------------------------
 {
 	App->input->GetMousewheelScrolling(mouse_wheel_scroll.x, mouse_wheel_scroll.y);
 
@@ -509,39 +509,39 @@ void UI_Scrollbar::DragThumbWithMousewheel()																							// ----------
 	}
 }
 
-bool UI_Scrollbar::ThumbIsWithinVerticalScrollbarBounds()
+bool GuiScrollbar::ThumbIsWithinVerticalScrollbarBounds()
 {
 	return (thumb->GetScreenPos().y != this->GetScreenPos().y 
 			&& thumb->GetScreenPos().y + thumb->GetHitbox().h != this->GetScreenPos().y + this->GetHitbox().h);
 }
 
-bool UI_Scrollbar::ThumbIsAtUpperBound()
+bool GuiScrollbar::ThumbIsAtUpperBound()
 {
 	return (thumb->GetScreenPos().y <= this->GetScreenPos().y);
 }
 
-bool UI_Scrollbar::ThumbIsAtLowerBound()
+bool GuiScrollbar::ThumbIsAtLowerBound()
 {
 	return (thumb->GetScreenPos().y + thumb->GetHitbox().h >= this->GetScreenPos().y + this->GetHitbox().h);
 }
 
-bool UI_Scrollbar::ThumbIsWithinHorizontalScrollbarBounds()
+bool GuiScrollbar::ThumbIsWithinHorizontalScrollbarBounds()
 {
 	return (thumb->GetScreenPos().x != this->GetScreenPos().x
 		&& thumb->GetScreenPos().x + thumb->GetHitbox().w != this->GetScreenPos().x + this->GetHitbox().w);
 }
 
-bool UI_Scrollbar::ThumbIsAtLeftBound()
+bool GuiScrollbar::ThumbIsAtLeftBound()
 {
 	return (thumb->GetScreenPos().x <= this->GetScreenPos().x);
 }
 
-bool UI_Scrollbar::ThumbIsAtRightBound()
+bool GuiScrollbar::ThumbIsAtRightBound()
 {
 	return (thumb->GetScreenPos().x + thumb->GetHitbox().w >= this->GetScreenPos().x + this->GetHitbox().w);
 }
 
-void UI_Scrollbar::CheckScrollbarBounds()
+void GuiScrollbar::CheckScrollbarBounds()
 {
 	if (drag_x_axis)
 	{
@@ -582,7 +582,7 @@ void UI_Scrollbar::CheckScrollbarBounds()
 	}
 }
 
-void UI_Scrollbar::CleanUp()
+void GuiScrollbar::CleanUp()
 {
 	bar			= nullptr;
 	thumb		= nullptr;
@@ -594,7 +594,7 @@ void UI_Scrollbar::CleanUp()
 	scroll_mask.CleanUp();*/
 }
 
-SDL_Texture* UI_Scrollbar::GetTexture() const
+SDL_Texture* GuiScrollbar::GetTexture() const
 {
 	return nullptr;
 }

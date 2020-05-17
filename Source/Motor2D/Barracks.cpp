@@ -6,9 +6,9 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "GuiManager.h"
-#include "UI.h"
-#include "UI_Healthbar.h"
-#include "UI_CreationBar.h"
+#include "GuiElement.h"
+#include "GuiHealthbar.h"
+#include "GuiCreationBar.h"
 #include "FowManager.h"
 #include "EntityManager.h"
 #include "Infantry.h"
@@ -249,9 +249,9 @@ void Barracks::AttachHealthbarToEntity()
 	healthbar_rect = { 618, 23, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
 
 	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in GuiHealthbar.
 
-	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+	healthbar = (GuiHealthbar*)App->gui_manager->CreateHealthbar(GUI_ELEMENT_TYPE::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }
 
 void Barracks::AttachCreationBarToEntity()
@@ -265,6 +265,6 @@ void Barracks::AttachCreationBarToEntity()
 	int creation_bar_position_x = (int)pixel_position.x + creation_bar_position_offset.x;
 	int creation_bar_position_y = (int)pixel_position.y + creation_bar_position_offset.y;
 
-	creation_bar = (UI_CreationBar*)App->gui_manager->CreateCreationBar(UI_ELEMENT::CREATIONBAR, creation_bar_position_x, creation_bar_position_y, false
+	creation_bar = (GuiCreationBar*)App->gui_manager->CreateCreationBar(GUI_ELEMENT_TYPE::CREATIONBAR, creation_bar_position_x, creation_bar_position_y, false
 																		, &creation_bar_rect, &creation_bar_background_rect, this);
 }

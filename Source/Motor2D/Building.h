@@ -5,7 +5,7 @@
 
 #define MAX_BUILDING_LEVEL 2									//TMP. Right now all buildings have the same level cap.
 
-class UI_CreationBar;
+class GuiCreationBar;
 
 class Building : public StaticObject
 {
@@ -25,7 +25,7 @@ public:
 public:
 	std::vector<ENTITY_TYPE>	creation_queue;
 
-	UI_CreationBar*				creation_bar;
+	GuiCreationBar*				creation_bar;
 
 	SDL_Rect					creation_bar_background_rect;						// The background sprite of an entity's healthbar.
 	SDL_Rect					creation_bar_rect;									// The foremost sprite of an entity's healthbar.

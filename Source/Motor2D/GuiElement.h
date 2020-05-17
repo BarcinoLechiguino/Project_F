@@ -1,5 +1,5 @@
-#ifndef __UI_H__
-#define __UI_H__
+#ifndef __GUI_ELEMENT_H__
+#define __GUI_ELEMENT_H__
 
 #include "SDL/include/SDL.h"
 #include "Module.h"
@@ -7,7 +7,7 @@
 
 class Entity;
 
-enum class UI_ELEMENT 
+enum class GUI_ELEMENT_TYPE 
 {
 	EMPTY,
 	IMAGE,
@@ -20,7 +20,7 @@ enum class UI_ELEMENT
 	CURSOR
 };
 
-enum class UI_EVENT
+enum class GUI_EVENT
 {
 	IDLE,
 	HOVER,
@@ -33,18 +33,18 @@ enum class UI_EVENT
 	TEXT_EXECUTION
 };
 
-class UI
+class GuiElement
 {
 public:
-	UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener = nullptr, UI* parent = nullptr);
-	UI();
-	virtual ~UI();
+	GuiElement(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect rect, Module* listener = nullptr, GuiElement* parent = nullptr);
+	GuiElement();
+	virtual ~GuiElement();
 
 	virtual bool Draw();
 	virtual void CheckInput();
 	virtual void CleanUp();
 
-	virtual SDL_Texture* GetTexture() const;			// Mainly used for UIAnimationFade.
+	virtual SDL_Texture* GetTexture() const;			// Mainly used for GuiAnimationFade.
 	
 	void BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed, float render_scale);
 
@@ -72,7 +72,7 @@ public:
 
 public:
 	iPoint GetMousePos() /*const*/;						// Gets the mouse's position in pixels. (World Position)
-	iPoint GetCursorPos();								// Gets the UI_Cursor's position in pixels. (World Position)		//TMP CONTROLLER
+	iPoint GetCursorPos();								// Gets the GuiCursor's position in pixels. (World Position)		//TMP CONTROLLER
 
 	iPoint GetMouseTilePosition();						// Gets the mouse's position in tiles. (Map Position)
 	iPoint GetMouseMotion() /*const*/;					// Gets the mouse's motion.
@@ -92,43 +92,41 @@ public:
 	void CheckElementChilds();									// Checks if a UI Element has childs and updates them in case the parent element had changed its position (dragged)
 
 public:
-	bool		is_visible;							// Keeps track of whether or not a UI Element is visible or not. Can be overlapped with isInteractible.
-	bool		is_interactible;					// Keeps track of whether a UI Element is interactible or not.
-	bool		is_draggable;						// Keeps track of whether a UI Element is draggable or not.
-	iPoint		previous_mouse_position;			// Keeps track of the previous position of the mouse in the screen before starting to drag anything.
+	bool				is_visible;						// Keeps track of whether or not a UI Element is visible or not. Can be overlapped with isInteractible.
+	bool				is_interactible;				// Keeps track of whether a UI Element is interactible or not.
+	bool				is_draggable;					// Keeps track of whether a UI Element is draggable or not.
 
-	bool		is_drag_target;						// Keeps track whether or not an element susceptible to be dragged is the element wanted to be dragged. Set on KEY_DOWN / KEY_UP.
-													// Used to avoid dragging the window after moving the mouse outside an element while keeping the mouse button clicked (button to window...).
-	bool		drag_x_axis;						// Keeps track of which axis an element can be dragged in, in this case the X axis. If both bools are true or false, drag will be free.
-	bool		drag_y_axis;						// Keeps track of which axis an element can be dragged in, in this case the Y axis. If both bools are true or false, drag will be free.
+	bool				is_drag_target;					// Keeps track whether or not an element susceptible to be dragged is the element wanted to be dragged. Set on KEY_DOWN / KEY_UP.
+														// Used to avoid dragging the window after moving the mouse outside an element while keeping the mouse button clicked (button to window...).
+	bool				drag_x_axis;					// Keeps track of which axis an element can be dragged in, in this case the X axis. If both bools are true or false, drag will be free.
+	bool				drag_y_axis;					// Keeps track of which axis an element can be dragged in, in this case the Y axis. If both bools are true or false, drag will be free.
 
-	UI_EVENT	ui_event;							// Defines which events will the UI_Elements send when interacted with.
-	UI_ELEMENT	element;							// Enum that defines which kind of element a UI element is.
+	bool				is_filled;						// Determines if an empty UI Element will have its rect drawn or not.
+	bool				is_transitioning;				// Determines whether a UI Element is currently going through an animation/transition.
 
-	Module*		listener;							// Callback to Module, maybe need to make a virtual event detection function. Whenever an event is triggered, this calls the right module for the event.
+	iPoint				initial_position;				// Keeps track of the initial position of a UI Element. Create Get/Set Methods?
+	iPoint				previous_mouse_position;		// Keeps track of the previous position of the mouse in the screen before starting to drag anything.
 
-	UI*			parent;								// Keeps track of the dependencies between UI elements.
-	
-	iPoint		initial_position;					// Keeps track of the initial position of a UI Element. Create Get/Set Methods?
-	
-	bool		is_filled;							// Determines if an empty UI Element will have its rect drawn or not.
+	GUI_EVENT			ui_event;						// Defines which events will the UI_Elements send when interacted with.
+	GUI_ELEMENT_TYPE	element;						// Enum that defines which kind of element a UI element is.
 
-	bool		is_transitioning;					// Determines whether a UI Element is currently going through an animation/transition.
+	Module*				listener;						// Callback to Module, maybe need to make a virtual event detection function. Whenever an event is triggered, this calls the right module for the event.
+	GuiElement*			parent;							// Keeps track of the dependencies between UI elements.
 
 private:
 
-	iPoint		position;							// Position of the UI element in the world.
-	iPoint		local_position;						// Position of the UI element relative to its parent's position in the world.
+	iPoint				position;						// Position of the UI element in the world.
+	iPoint				local_position;					// Position of the UI element relative to its parent's position in the world.
 
-	SDL_Rect	rect;								// Rectangle that represents the UI element in the world. Used for textures.
-	SDL_Rect	local_rect;							// Rectangle coordinates and size of the UI Element taking the parent element as point of reference.
+	SDL_Rect			rect;							// Rectangle that represents the UI element in the world. Used for textures.
+	SDL_Rect			local_rect;						// Rectangle coordinates and size of the UI Element taking the parent element as point of reference.
 
-	SDL_Rect	hitbox;								// Rectangle that represents the UI element's hitbox. Used for interactions.
-	SDL_Rect	local_hitbox;						// Data members of hitbox (position) according to the parent's world position.
+	SDL_Rect			hitbox;							// Rectangle that represents the UI element's hitbox. Used for interactions.
+	SDL_Rect			local_hitbox;					// Data members of hitbox (position) according to the parent's world position.
 
-	iPoint		mouse_position;						// Position of the mouse in pixels.
-	iPoint		mouse_tile_position;				// Position of the mouse in tiles.
-	iPoint		mouse_motion;						// Motion of the mouse. Used to move a dragged element around.
+	iPoint				mouse_position;					// Position of the mouse in pixels.
+	iPoint				mouse_tile_position;			// Position of the mouse in tiles.
+	iPoint				mouse_motion;					// Motion of the mouse. Used to move a dragged element around.
 };
 
-#endif // !__UI_IMAGE_H__
+#endif // !__GUI_ELEMENT_H__

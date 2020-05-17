@@ -4,11 +4,11 @@
 #include "Entity.h"
 #include "GuiManager.h"
 
-#include "UI_Healthbar.h"
+#include "GuiHealthbar.h"
 
 
-UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_entity)
-	: UI(element, x, y, *healthbar, nullptr, nullptr)
+GuiHealthbar::GuiHealthbar(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_entity)
+	: GuiElement(type, x, y, *healthbar, nullptr, nullptr)
 {
 	tex = App->gui_manager->GetAtlas();
 	
@@ -26,12 +26,12 @@ UI_Healthbar::UI_Healthbar(UI_ELEMENT element, int x, int y, bool is_visible, SD
 	}
 }
 
-UI_Healthbar::~UI_Healthbar()
+GuiHealthbar::~GuiHealthbar()
 {
 
 }
 
-bool UI_Healthbar::Draw()
+bool GuiHealthbar::Draw()
 {
 	CheckInput();
 	
@@ -55,17 +55,17 @@ bool UI_Healthbar::Draw()
 	return true;
 }
 
-void UI_Healthbar::CheckInput()
+void GuiHealthbar::CheckInput()
 {
 
 }
 
-void UI_Healthbar::CleanUp()
+void GuiHealthbar::CleanUp()
 {	
 	tex = nullptr;
 }
 
-void UI_Healthbar::UpdateHealthbarPosition()
+void GuiHealthbar::UpdateHealthbarPosition()
 {
 	int position_x = (int)attached_entity->pixel_position.x + attached_entity->healthbar_position_offset.x;
 	int position_y = (int)attached_entity->pixel_position.y + attached_entity->healthbar_position_offset.y;
@@ -75,7 +75,7 @@ void UI_Healthbar::UpdateHealthbarPosition()
 	SetHitbox({ position_x, position_y, GetHitbox().w, GetHitbox().h });
 }
 
-void UI_Healthbar::UpdateHealthbarValue()
+void GuiHealthbar::UpdateHealthbarValue()
 {
 	int new_width = 0;
 

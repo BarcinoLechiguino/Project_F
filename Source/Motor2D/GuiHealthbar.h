@@ -1,15 +1,15 @@
-#ifndef __UI_HEALTHBAR_H__
-#define __UI_HEALTHBAR_H__
+#ifndef __GUI_HEALTHBAR_H__
+#define __GUI_HEALTHBAR_H__
 
-#include "UI.h"
+#include "GuiElement.h"
 
 class Entity;
 
-class UI_Healthbar : public UI
+class GuiHealthbar : public GuiElement
 {
 public:
-	UI_Healthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_entity);
-	~UI_Healthbar();
+	GuiHealthbar(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_entity);
+	~GuiHealthbar();
 
 	bool Draw();
 
@@ -30,4 +30,4 @@ private:
 	Entity*			attached_entity;				// Entity to which the healthbar will be attached to.
 };
 
-#endif // !__UI_HEALTHBAR_H__
+#endif // !__GUI_HEALTHBAR_H__

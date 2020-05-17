@@ -445,6 +445,7 @@ bool Application::PostUpdate()
 
 		ret = (*item)->PostUpdate();
 	}
+
 	return ret;
 }
 

@@ -5,8 +5,8 @@
 #include "Fonts.h"
 #include "Input.h"
 #include "GuiManager.h"
-#include "UI.h"
-#include "UI_Button.h"
+#include "GuiElement.h"
+#include "GuiButton.h"
 #include "SceneManager.h"
 #include "TransitionManager.h"
 #include "Textures.h"
@@ -85,7 +85,7 @@ void LogoScene::ExecuteTransition()
 	}
 }
 
-void LogoScene::OnEventCall(UI* element, UI_EVENT ui_event)
+void LogoScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 {
 
 }

@@ -6,13 +6,13 @@
 #include "Fonts.h"
 #include "GuiManager.h"
 
-#include "UI_Text.h"
+#include "GuiText.h"
 
 
-//UI_Text can be interactible and draggable. Can potentially have all events.
+//GuiText can be interactible and draggable. Can potentially have all events.
 //This element can receive up to 5 different strings (one for each possible event).
-UI_Text::UI_Text(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent,
-			std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString): UI(element, x, y, hitbox, listener, parent),
+GuiText::GuiText(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent,
+			std::string* string, std::string* hoverString, std::string* leftClickString, std::string* rightClickString): GuiElement(type, x, y, hitbox, listener, parent),
 			idle_texture(nullptr), hover_texture(nullptr), left_click_texture(nullptr), right_click_texture(nullptr), input_text_texture (nullptr), current_texture (nullptr)
 {	
 	// --- Setting this element's flags to the ones passed as argument.
@@ -68,10 +68,10 @@ UI_Text::UI_Text(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* f
 	text_rect = { 0, 0, 0, 0 };			//
 }
 
-UI_Text::UI_Text() : UI ()		//Default Constructor
+GuiText::GuiText() : GuiElement ()		//Default Constructor
 {}
 
-bool UI_Text::Draw()
+bool GuiText::Draw()
 {	
 	CheckInput();
 
@@ -87,8 +87,8 @@ bool UI_Text::Draw()
 	return true;
 }
 
-// --- This Method checks for any inputs that the UI_Text element might have received and "returns" an event.
-void UI_Text::CheckInput()
+// --- This Method checks for any inputs that the GuiText element might have received and "returns" an event.
+void GuiText::CheckInput()
 {	
 	BROFILER_CATEGORY("Text_CheckInput", Profiler::Color::Indigo);
 
@@ -102,9 +102,9 @@ void UI_Text::CheckInput()
 		GetMousePos();																					//Gets the mouse's position on the screen.
 
 		// --- IDLE EVENT
-		if (!IsHovered() && ui_event != UI_EVENT::FOCUSED)												//If the mouse is not on the text.
+		if (!IsHovered() && ui_event != GUI_EVENT::FOCUSED)												//If the mouse is not on the text.
 		{
-			ui_event = UI_EVENT::IDLE;
+			ui_event = GUI_EVENT::IDLE;
 
 			if (input_text_texture == NULL)																//This sometimes crashes the Query_texture.
 			{
@@ -126,7 +126,7 @@ void UI_Text::CheckInput()
 			// --- HOVER EVENT
 			if ((IsHovered() && IsForemostElement()) /*|| IsFocused()*/)								//If the mouse is on the text.
 			{
-				ui_event = UI_EVENT::HOVER;
+				ui_event = GUI_EVENT::HOVER;
 
 				if (hover_texture != NULL)
 				{
@@ -149,7 +149,7 @@ void UI_Text::CheckInput()
 			{
 				if (IsForemostElement() || is_drag_target)												//If the UI Text element is the foremost element under the mouse. 
 				{
-					ui_event = UI_EVENT::CLICKED;
+					ui_event = GUI_EVENT::CLICKED;
 
 					if (left_click_texture != NULL)
 					{
@@ -172,7 +172,7 @@ void UI_Text::CheckInput()
 			{
 				if (IsForemostElement() && ElementRemainedInPlace())									//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 				{
-					ui_event = UI_EVENT::UNCLICKED;
+					ui_event = GUI_EVENT::UNCLICKED;
 				}
 
 				if (is_drag_target)
@@ -189,7 +189,7 @@ void UI_Text::CheckInput()
 			{
 				if (IsForemostElement())																//If the UI Text element is the foremost element under the mouse. 
 				{
-					ui_event = UI_EVENT::CLICKED;
+					ui_event = GUI_EVENT::CLICKED;
 
 					if (right_click_texture != NULL)
 					{
@@ -206,7 +206,7 @@ void UI_Text::CheckInput()
 	}
 }
 
-void UI_Text::CleanUp()
+void GuiText::CleanUp()
 {
 	if (idle_texture != nullptr)
 	{
@@ -239,28 +239,28 @@ void UI_Text::CleanUp()
 	}
 }
 
-SDL_Texture* UI_Text::GetTexture() const
+SDL_Texture* GuiText::GetTexture() const
 {
 	return current_texture;
 }
 
-SDL_Texture* UI_Text::GetCurrentStringTex()
+SDL_Texture* GuiText::GetCurrentStringTex()
 {
 	return current_texture;
 }
 
-void UI_Text::DeleteCurrentStringTex()
+void GuiText::DeleteCurrentStringTex()
 {
 	current_texture = NULL;
 }
 
-std::string* UI_Text::GetString()
+std::string* GuiText::GetString()
 {
 	return string;
 }
 
 // ----------------------------------------- INPUT TEXT METHODS -----------------------------------------
-void UI_Text::RefreshTextInput(const char* newString)
+void GuiText::RefreshTextInput(const char* newString)
 {
 	if (input_text_texture == NULL)
 	{

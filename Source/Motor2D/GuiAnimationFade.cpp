@@ -2,29 +2,29 @@
 #include "Render.h"
 #include "GuiManager.h"
 
-#include "UI.h"
+#include "GuiElement.h"
 
-#include "UIAnimationFade.h"
+#include "GuiAnimationFade.h"
 
-UIAnimationFade::UIAnimationFade(UI* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha) 
-	: UIAnimation(element, UI_ANIMATION_TYPE::FADE,  animation_duration, hide_on_completion)
+GuiAnimationFade::GuiAnimationFade(GuiElement* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha) 
+	: GuiAnimation(element, GUI_ANIMATION_TYPE::FADE,  animation_duration, hide_on_completion)
 	, start_alpha(start_alpha)
 	, end_alpha(end_alpha)
 {
 	InitFade();
 }
 
-UIAnimationFade::~UIAnimationFade()
+GuiAnimationFade::~GuiAnimationFade()
 {
 
 }
 
-void UIAnimationFade::Start()
+void GuiAnimationFade::Start()
 {
 
 }
 
-void UIAnimationFade::StepAnimation()
+void GuiAnimationFade::StepAnimation()
 {
 	if (!fade_from_higher_to_lower)
 	{
@@ -58,7 +58,7 @@ void UIAnimationFade::StepAnimation()
 	}
 }
 
-void UIAnimationFade::CleanUp()
+void GuiAnimationFade::CleanUp()
 {
 	if (element->is_transitioning)
 	{
@@ -68,7 +68,7 @@ void UIAnimationFade::CleanUp()
 	return;
 }
 
-void UIAnimationFade::FinishAnimation()
+void GuiAnimationFade::FinishAnimation()
 {
 	element->is_transitioning = false;
 	
@@ -102,7 +102,7 @@ void UIAnimationFade::FinishAnimation()
 	child_elements.clear();
 }
 
-void UIAnimationFade::ApplyFade()
+void GuiAnimationFade::ApplyFade()
 {
 	if (element_texture != nullptr)
 	{
@@ -130,7 +130,7 @@ void UIAnimationFade::ApplyFade()
 	}
 }
 
-void UIAnimationFade::InitFade()
+void GuiAnimationFade::InitFade()
 {
 	SDL_SetRenderDrawBlendMode(App->render->renderer, SDL_BLENDMODE_BLEND);
 
@@ -147,7 +147,7 @@ void UIAnimationFade::InitFade()
 	GetAndInitializeTexturesToFade();
 }
 
-void UIAnimationFade::GetAndInitializeTexturesToFade()
+void GuiAnimationFade::GetAndInitializeTexturesToFade()
 {	
 	element->is_transitioning = true;
 	element_texture = element->GetTexture();

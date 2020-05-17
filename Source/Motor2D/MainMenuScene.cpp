@@ -10,11 +10,11 @@
 #include "Fonts.h"
 #include "Input.h"
 #include "GuiManager.h"
-#include "UI.h"
-#include "UI_Image.h"
-#include "UI_Text.h"
-#include "UI_Button.h"
-#include "UI_Scrollbar.h"
+#include "GuiElement.h"
+#include "GuiImage.h"
+#include "GuiText.h"
+#include "GuiButton.h"
+#include "GuiScrollbar.h"
 #include "SceneManager.h"
 #include "TransitionManager.h"
 
@@ -105,10 +105,10 @@ void MainMenuScene::ExecuteTransition()
 	}
 }
 
-void MainMenuScene::OnEventCall(UI* element, UI_EVENT ui_event)
+void MainMenuScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 {
 
-	if (element == new_game_button && ui_event == UI_EVENT::UNCLICKED)
+	if (element == new_game_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		/*iPoint mousepos;
 		App->input->GetMousePosition(mousepos.x, mousepos.y);*/
@@ -118,12 +118,12 @@ void MainMenuScene::OnEventCall(UI* element, UI_EVENT ui_event)
 		transition_to_gameplay_scene = true;
 	}
 
-	if (element == exit_button && ui_event == UI_EVENT::UNCLICKED)
+	if (element == exit_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		escape = false;
 	}
 	
-	if (element == options_button && ui_event == UI_EVENT::UNCLICKED)
+	if (element == options_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->options_button_clicked_fx, 0);
 
@@ -136,7 +136,7 @@ void MainMenuScene::LoadGuiElements()
 	//LOG("STARTED GUI LOAD");
 
 	// Main Screen
-	main_parent = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+	main_parent = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	// New Game Button
 	SDL_Rect new_game_button_size = { 0, 0, 175, 28 };
@@ -144,7 +144,7 @@ void MainMenuScene::LoadGuiElements()
 	SDL_Rect new_game_button_hover = { 179, 24, 175, 28 };
 	SDL_Rect new_game_button_clicked = { 357, 24, 175, 28 };
 
-	new_game_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 420, 274, true, true, false, this, main_parent
+	new_game_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 420, 274, true, true, false, this, main_parent
 		, &new_game_button_idle, &new_game_button_hover, &new_game_button_clicked);
 
 	// Continue Button
@@ -153,7 +153,7 @@ void MainMenuScene::LoadGuiElements()
 	SDL_Rect continue_button_hover = { 178, 0, 158, 23 };
 	SDL_Rect continue_button_clicked = { 356, 0, 158, 23 };
 
-	continue_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 425, 306, true, true, false, this, main_parent
+	continue_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 425, 306, true, true, false, this, main_parent
 		, &continue_button_idle, &continue_button_hover, &continue_button_clicked);
 
 	// Options Button
@@ -162,7 +162,7 @@ void MainMenuScene::LoadGuiElements()
 	SDL_Rect options_button_hover = { 178, 52, 133, 24 };
 	SDL_Rect options_button_clicked = { 356, 52, 133, 24 };
 
-	options_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 439, 336, true, true, false, this, main_parent
+	options_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 439, 336, true, true, false, this, main_parent
 		, &options_button_idle, &options_button_hover, &options_button_clicked);
 
 	// Exit Button
@@ -171,7 +171,7 @@ void MainMenuScene::LoadGuiElements()
 	SDL_Rect exit_button_hover = { 178, 77, 74, 23 };
 	SDL_Rect exit_button_clicked = { 356, 77, 74, 23 };
 
-	exit_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 465, 366, true, true, false, this, main_parent
+	exit_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 465, 366, true, true, false, this, main_parent
 		, &exit_button_idle, &exit_button_hover, &exit_button_clicked);
 
 	LOG("FINISHED GUI LOAD");

@@ -11,10 +11,10 @@
 #include "EntityManager.h"
 
 #include "GuiManager.h"
-#include "UI_Image.h"
-#include "UI_Text.h"
-#include "UI_InputBox.h"
-#include "UI_Scrollbar.h"
+#include "GuiImage.h"
+#include "GuiText.h"
+#include "GuiInputBox.h"
+#include "GuiScrollbar.h"
 
 #include "Console.h"
 
@@ -249,16 +249,16 @@ void Console::CreateConsoleElements()
 
 	std::string defaultString = "DefaultString";
 
-	console_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, bg_position.x, bg_position.y, bg_rect, bg_is_visible, bg_is_interactible, bg_is_draggable, nullptr, nullptr);
+	console_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, bg_position.x, bg_position.y, bg_rect, bg_is_visible, bg_is_interactible, bg_is_draggable, nullptr, nullptr);
 	
-	console_output = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, output_position.x, output_position.y, output_rect, output_font, output_font_colour
+	console_output = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, output_position.x, output_position.y, output_rect, output_font, output_font_colour
 												, output_is_visible, output_is_interactible, output_is_draggable, nullptr, console_background);
 
-	console_input = (UI_InputBox*)App->gui_manager->CreateInputBox(UI_ELEMENT::INPUTBOX, input_position.x, (console_background->GetHitbox().h - input_rect.h), input_rect, input_font, input_font_colour
+	console_input = (GuiInputBox*)App->gui_manager->CreateInputBox(GUI_ELEMENT_TYPE::INPUTBOX, input_position.x, (console_background->GetHitbox().h - input_rect.h), input_rect, input_font, input_font_colour
 												, cursor_rect, cursor_colour, input_text_offset, cursor_blink_frequency, input_is_visible, input_is_interactible, input_is_draggable
 												, nullptr, console_background, &defaultString, true);
 
-	console_scroll = (UI_Scrollbar*)App->gui_manager->CreateScrollbar(UI_ELEMENT::SCROLLBAR, scroll_position.x, scroll_position.y, scrollbar_rect, thumb_rect, thumb_offset, drag_area, drag_factor
+	console_scroll = (GuiScrollbar*)App->gui_manager->CreateScrollbar(GUI_ELEMENT_TYPE::SCROLLBAR, scroll_position.x, scroll_position.y, scrollbar_rect, thumb_rect, thumb_offset, drag_area, drag_factor
 												, drag_x_axis, drag_y_axis, inverted_scrolling, scroll_is_visible, scroll_is_draggable, scroll_is_interactible, nullptr, console_background
 												, NULL, iPoint(0, 0), true);
 

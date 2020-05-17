@@ -8,7 +8,7 @@
 #include "Map.h"
 #include "Player.h"
 #include "EntityManager.h"
-#include "UI_Healthbar.h"
+#include "GuiHealthbar.h"
 #include "SceneManager.h"
 
 #include "Entity.h"

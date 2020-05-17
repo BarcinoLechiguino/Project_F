@@ -7,9 +7,6 @@
     <ClCompile Include="mmgr\mmgr.cpp">
       <Filter>Engine  ===========\Sources</Filter>
     </ClCompile>
-    <ClCompile Include="UI.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
@@ -24,9 +21,6 @@
     </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
-    </ClCompile>
-    <ClCompile Include="Console.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClCompile>
     <ClCompile Include="Window.cpp">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
@@ -116,7 +110,7 @@
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
     <ClCompile Include="GuiManager.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\Gui</Filter>
     </ClCompile>
     <ClCompile Include="OptionsScene.cpp">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
@@ -220,41 +214,47 @@
     <ClCompile Include="QuestManager.cpp">
       <Filter>Engine  ===========\Modules\Player</Filter>
     </ClCompile>
-    <ClCompile Include="UIAnimation.cpp">
-      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
-    </ClCompile>
-    <ClCompile Include="UIAnimationFade.cpp">
-      <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
-    </ClCompile>
-    <ClCompile Include="UIAnimationSlide.cpp">
-      <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Button.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_CreationBar.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Cursor.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Healthbar.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Image.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_InputBox.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Scrollbar.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
-    <ClCompile Include="UI_Text.cpp">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClCompile>
     <ClCompile Include="EasingFunctions.cpp">
       <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiElement.cpp">
+      <Filter>Engine  ===========\Modules\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiButton.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiCreationBar.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiCursor.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiHealthbar.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiImage.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiInputBox.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiScrollbar.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiText.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClCompile>
+    <ClCompile Include="Console.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Console</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiAnimation.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Animations</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiAnimationFade.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Animations\Gui Animation Types</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiAnimationSlide.cpp">
+      <Filter>Engine  ===========\Modules\Gui\Gui Animations\Gui Animation Types</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -263,9 +263,6 @@
     </ClInclude>
     <ClInclude Include="PugiXml\src\pugixml.hpp">
       <Filter>Engine  ===========\Tools\PuguiXML</Filter>
-    </ClInclude>
-    <ClInclude Include="UI.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Engine  ===========\Core</Filter>
@@ -281,9 +278,6 @@
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
-    </ClInclude>
-    <ClInclude Include="Console.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
     </ClInclude>
     <ClInclude Include="Window.h">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
@@ -379,7 +373,7 @@
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="GuiManager.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
+      <Filter>Engine  ===========\Modules\Gui</Filter>
     </ClInclude>
     <ClInclude Include="MainMenuScene.h">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
@@ -489,41 +483,47 @@
     <ClInclude Include="QuestManager.h">
       <Filter>Engine  ===========\Modules\Player</Filter>
     </ClInclude>
-    <ClInclude Include="UIAnimation.h">
-      <Filter>Engine  ===========\Modules\UI\UI Animations</Filter>
-    </ClInclude>
-    <ClInclude Include="UIAnimationFade.h">
-      <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
-    </ClInclude>
-    <ClInclude Include="UIAnimationSlide.h">
-      <Filter>Engine  ===========\Modules\UI\UI Animations\UI Animation Types</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Button.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_CreationBar.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Cursor.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Healthbar.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Image.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_InputBox.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Scrollbar.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
-    <ClInclude Include="UI_Text.h">
-      <Filter>Engine  ===========\Modules\UI</Filter>
-    </ClInclude>
     <ClInclude Include="EasingFunctions.h">
       <Filter>Engine  ===========\Tools\Utilities</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiElement.h">
+      <Filter>Engine  ===========\Modules\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiButton.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiCreationBar.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiCursor.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiHealthbar.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiImage.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiInputBox.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiScrollbar.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiText.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
+    </ClInclude>
+    <ClInclude Include="Console.h">
+      <Filter>Engine  ===========\Modules\Gui\Console</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiAnimation.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Animations</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiAnimationFade.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Animations\Gui Animation Types</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiAnimationSlide.h">
+      <Filter>Engine  ===========\Modules\Gui\Gui Animations\Gui Animation Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -575,9 +575,6 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Interactions">
       <UniqueIdentifier>{cf73c846-5205-46c2-b047-e3046a31911b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine  ===========\Modules\UI">
-      <UniqueIdentifier>{9568892c-efcc-4eec-89c1-d01ef8e2d712}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine  ===========\Modules\Scenes">
       <UniqueIdentifier>{cfefb632-29cd-4a89-a8bf-15893c12df0a}</UniqueIdentifier>
@@ -645,11 +642,20 @@
     <Filter Include="Engine  ===========\Tools\Utilities">
       <UniqueIdentifier>{1d648d44-87d1-403a-93c9-16082a74dd74}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine  ===========\Modules\UI\UI Animations">
+    <Filter Include="Engine  ===========\Modules\Gui">
+      <UniqueIdentifier>{9568892c-efcc-4eec-89c1-d01ef8e2d712}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Gui\Gui Animations">
       <UniqueIdentifier>{05449ae4-8867-4971-b974-2edc1cc72bbe}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine  ===========\Modules\UI\UI Animations\UI Animation Types">
+    <Filter Include="Engine  ===========\Modules\Gui\Gui Animations\Gui Animation Types">
       <UniqueIdentifier>{2094fca3-f9b9-483b-81dd-f3e64e3e6a18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Gui\Gui Elements">
+      <UniqueIdentifier>{c2435af3-f09d-455b-ab4b-859dd5daf90c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Gui\Console">
+      <UniqueIdentifier>{51ed0ee9-06de-4b6f-b7cb-42d8f01e37b0}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

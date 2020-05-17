@@ -3,12 +3,12 @@
 
 #include "Scene.h"
 
-class UI;
-class UI_Image;
-class UI_Text;
-class UI_Button;
-class UI_InputBox;
-class UI_Scrollbar;
+class GuiElement;
+class GuiImage;
+class GuiText;
+class GuiButton;
+class GuiInputBox;
+class GuiScrollbar;
 
 class LogoScene : public Scene 
 {
@@ -28,7 +28,7 @@ public:
 
 	void LoadGuiElements();
 
-	void OnEventCall(UI* element, UI_EVENT ui_event);
+	void OnEventCall(GuiElement* element, GUI_EVENT ui_event);
 
 	void ExecuteTransition();
 

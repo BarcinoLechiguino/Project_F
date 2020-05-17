@@ -5,9 +5,8 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "GuiManager.h"
-#include "UI.h"
-#include "UI_Healthbar.h"
-#include "UI_CreationBar.h"
+#include "GuiElement.h"
+#include "GuiHealthbar.h"
 #include "FowManager.h"
 #include "EntityManager.h"
 
@@ -66,7 +65,6 @@ bool EnemyWall::CleanUp()
 	entity_sprite = nullptr;
 
 	App->gui_manager->DeleteGuiElement(healthbar);
-	App->gui_manager->DeleteGuiElement(creation_bar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
 
@@ -145,7 +143,7 @@ void EnemyWall::AttachHealthbarToEntity()
 	healthbar_rect = { 618, 12, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
 
 	int healthbar_position_x = (int)pixel_position.x + healthbar_position_offset.x;					// X and Y position of the healthbar's hitbox.
-	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in UI_Healthbar.
+	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in GuiHealthbar.
 
-	healthbar = (UI_Healthbar*)App->gui_manager->CreateHealthbar(UI_ELEMENT::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+	healthbar = (GuiHealthbar*)App->gui_manager->CreateHealthbar(GUI_ELEMENT_TYPE::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
 }

@@ -5,12 +5,12 @@
 #include "Input.h"
 #include "GuiManager.h"
 
-#include "UI_Button.h"
+#include "GuiButton.h"
 
-//UI_Button can be interactible (will almost always be) and draggable. Can potentially receive all events.
+//GuiButton can be interactible (will almost always be) and draggable. Can potentially receive all events.
 //This element can receive up to 3 rects containing the coordinates of the sprites for each event (IDLE, HOVER & CLICKED).
-UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent,
-				SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked) : UI(element, x, y, *idle, listener, parent)
+GuiButton::GuiButton(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent,
+				SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked) : GuiElement(type, x, y, *idle, listener, parent)
 {
 	tex = App->gui_manager->GetAtlas();
 
@@ -55,14 +55,14 @@ UI_Button::UI_Button(UI_ELEMENT element, int x, int y, bool is_visible, bool is_
 		SetLocalPos(localPos);													//Sets the local poisition of this Button element to the given localPos.
 	}
 
-	ui_event = UI_EVENT::IDLE;
+	ui_event = GUI_EVENT::IDLE;
 	current_rect = this->idle;
 }
 
-UI_Button::UI_Button() : UI()
+GuiButton::GuiButton() : GuiElement()
 {}
 
-bool UI_Button::Draw()
+bool GuiButton::Draw()
 {
 	CheckInput();																				//Calling "Update" and Draw at the same time. 
 
@@ -71,8 +71,8 @@ bool UI_Button::Draw()
 	return true;
 }
 
-// --- This Method checks for any inputs that the UI_Text element might have received and "returns" an event.
-void UI_Button::CheckInput()
+// --- This Method checks for any inputs that the GuiText element might have received and "returns" an event.
+void GuiButton::CheckInput()
 {
 	BROFILER_CATEGORY("Button_CheckInput", Profiler::Color::GhostWhite);
 
@@ -81,23 +81,23 @@ void UI_Button::CheckInput()
 		GetMousePos();																			//Gets the mouse's position on the screen.
 
 		// --- IDLE EVENT
-		if (!IsHovered() && (ui_event != UI_EVENT::HOVER))										//If the mouse is not on the button and event is not HOVER. TMP fix to have UNHOVER event.
+		if (!IsHovered() && (ui_event != GUI_EVENT::HOVER))										//If the mouse is not on the button and event is not HOVER. TMP fix to have UNHOVER event.
 		{
-			ui_event = UI_EVENT::IDLE;
+			ui_event = GUI_EVENT::IDLE;
 			current_rect = idle;																//Button Idle sprite.
 		}
 
 		// --- HOVER EVENT
 		if ((IsHovered() && IsForemostElement()) || IsFocused())								//If the mouse is on the button.
 		{
-			ui_event = UI_EVENT::HOVER;															//Button Hover sprite.
+			ui_event = GUI_EVENT::HOVER;															//Button Hover sprite.
 			current_rect = hover;
 		}
 
 		// --- UNHOVER EVENT
-		if ((!IsHovered() && (ui_event == UI_EVENT::HOVER) && !IsFocused()))									//If the mouse is on the button.
+		if ((!IsHovered() && (ui_event == GUI_EVENT::HOVER) && !IsFocused()))									//If the mouse is on the button.
 		{		
-			ui_event = UI_EVENT::UNHOVER;
+			ui_event = GUI_EVENT::UNHOVER;
 			current_rect = idle;
 		}
 
@@ -116,7 +116,7 @@ void UI_Button::CheckInput()
 		{
 			if (IsForemostElement() || is_drag_target)															//If the UI Text element is the foremost element under the mouse. 
 			{
-				ui_event = UI_EVENT::CLICKED;
+				ui_event = GUI_EVENT::CLICKED;
 				current_rect = clicked;															//Button Clicked sprite is maintained.
 
 				if (ElementCanBeDragged() && is_draggable)										//If the UI Button element is draggable and is the foremost element under the mouse.
@@ -135,11 +135,11 @@ void UI_Button::CheckInput()
 		{
 			if (IsForemostElement() && ElementRemainedInPlace())								//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 			{
-				ui_event = UI_EVENT::UNCLICKED;
+				ui_event = GUI_EVENT::UNCLICKED;
 			}
 			else
 			{
-				ui_event = UI_EVENT::UNHOVER;
+				ui_event = GUI_EVENT::UNHOVER;
 			}
 
 			if (is_drag_target)
@@ -156,12 +156,12 @@ void UI_Button::CheckInput()
 	}
 }
 
-void UI_Button::CleanUp()
+void GuiButton::CleanUp()
 {
 	tex = nullptr;
 }
 
-SDL_Texture* UI_Button::GetTexture() const
+SDL_Texture* GuiButton::GetTexture() const
 {
 	return tex;
 }

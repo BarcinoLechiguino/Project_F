@@ -13,19 +13,19 @@
 #include "Player.h"									// TMP CONTROLLER
 
 #include "GuiManager.h"
-#include "UI.h"
-#include "UI_Image.h"
-#include "UI_Text.h"
-#include "UI_Button.h"
-#include "UI_InputBox.h"
-#include "UI_Scrollbar.h"
-#include "UI_Healthbar.h"
-#include "UI_CreationBar.h"
-#include "UI_Cursor.h"
+#include "GuiElement.h"
+#include "GuiImage.h"
+#include "GuiText.h"
+#include "GuiButton.h"
+#include "GuiInputBox.h"
+#include "GuiScrollbar.h"
+#include "GuiHealthbar.h"
+#include "GuiCreationBar.h"
+#include "GuiCursor.h"
 
-#include "UIAnimation.h"
-#include "UIAnimationFade.h"
-#include "UIAnimationSlide.h"
+#include "GuiAnimation.h"
+#include "GuiAnimationFade.h"
+#include "GuiAnimationSlide.h"
 
 GuiManager::GuiManager() : Module()
 {
@@ -87,7 +87,7 @@ bool GuiManager::PreUpdate()
 	{
 		if (focused_element != nullptr && focused_element->is_interactible)
 		{
-			focused_element->ui_event = UI_EVENT::UNCLICKED;
+			focused_element->ui_event = GUI_EVENT::UNCLICKED;
 			
 			if (focused_element->listener != nullptr)
 			{
@@ -170,12 +170,12 @@ bool GuiManager::CleanUp()
 }
 
 // ----------------------------------- UI ELEMENT CREATION METHODS -----------------------------------
-UI* GuiManager::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent)
+GuiElement* GuiManager::CreateImage(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent)
 {
 	BROFILER_CATEGORY("GUI_Image", Profiler::Color::NavajoWhite);
-	UI* elem = nullptr;
+	GuiElement* elem = nullptr;
 
-	elem = new UI_Image(element, x, y, hitbox, is_visible, is_interactible, is_draggable, listener, parent);
+	elem = new GuiImage(type, x, y, hitbox, is_visible, is_interactible, is_draggable, listener, parent);
 
 	if (elem != nullptr)
 	{
@@ -185,13 +185,13 @@ UI* GuiManager::CreateImage(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, b
 	return elem;
 }
 
-UI* GuiManager::CreateText(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color font_colour, bool is_visible, bool is_interactible, bool is_draggable
-	, Module* listener, UI* parent, std::string* string, std::string* hover_string, std::string* left_click_string, std::string* right_click_string)
+GuiElement* GuiManager::CreateText(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color font_colour, bool is_visible, bool is_interactible, bool is_draggable
+	, Module* listener, GuiElement* parent, std::string* string, std::string* hover_string, std::string* left_click_string, std::string* right_click_string)
 {
 	BROFILER_CATEGORY("GUI_Text", Profiler::Color::NavajoWhite);
-	UI* elem = nullptr;
+	GuiElement* elem = nullptr;
 
-	elem = new UI_Text(element, x, y, hitbox, font, font_colour, is_visible, is_interactible, is_draggable, listener, parent, string, hover_string, left_click_string, right_click_string);
+	elem = new GuiText(type, x, y, hitbox, font, font_colour, is_visible, is_interactible, is_draggable, listener, parent, string, hover_string, left_click_string, right_click_string);
 
 	if (elem != nullptr)
 	{
@@ -201,12 +201,12 @@ UI* GuiManager::CreateText(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _T
 	return elem;
 }
 
-UI* GuiManager::CreateButton(UI_ELEMENT element, int x, int y, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
+GuiElement* GuiManager::CreateButton(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent, SDL_Rect* idle, SDL_Rect* hover, SDL_Rect* clicked)
 {
 	BROFILER_CATEGORY("GUI_Button", Profiler::Color::NavajoWhite);
-	UI* elem = nullptr;
+	GuiElement* elem = nullptr;
 
-	elem = new UI_Button(element, x, y, is_visible, is_interactible, is_draggable, listener, parent, idle, hover, clicked);
+	elem = new GuiButton(type, x, y, is_visible, is_interactible, is_draggable, listener, parent, idle, hover, clicked);
 
 	if (elem != nullptr)
 	{
@@ -216,13 +216,13 @@ UI* GuiManager::CreateButton(UI_ELEMENT element, int x, int y, bool is_visible, 
 	return elem;
 }
 
-UI* GuiManager::CreateInputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color font_colour, SDL_Rect cursor, SDL_Color cursor_colour, iPoint text_offset, 
-					float blink_frequency, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent, std::string* default_string, bool empty_elements)
+GuiElement* GuiManager::CreateInputBox(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color font_colour, SDL_Rect cursor, SDL_Color cursor_colour, iPoint text_offset, 
+					float blink_frequency, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent, std::string* default_string, bool empty_elements)
 {
 	BROFILER_CATEGORY("GUI_InputBox", Profiler::Color::NavajoWhite);
-	UI* elem = nullptr;
+	GuiElement* elem = nullptr;
 
-	elem = new UI_InputBox(element, x, y, hitbox, font, font_colour, cursor, cursor_colour, text_offset, blink_frequency, is_visible, is_interactible, is_draggable, listener, parent,
+	elem = new GuiInputBox(type, x, y, hitbox, font, font_colour, cursor, cursor_colour, text_offset, blink_frequency, is_visible, is_interactible, is_draggable, listener, parent,
 					default_string, empty_elements);
 
 	if (elem != nullptr)
@@ -233,14 +233,14 @@ UI* GuiManager::CreateInputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox
 	return elem;
 }
 
-UI* GuiManager::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumb_size, iPoint thumb_offset , SDL_Rect drag_area, float drag_factor
-								, bool drag_x_axis, bool drag_y_axis, bool inverted_scrolling, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent
+GuiElement* GuiManager::CreateScrollbar(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, SDL_Rect thumb_size, iPoint thumb_offset , SDL_Rect drag_area, float drag_factor
+								, bool drag_x_axis, bool drag_y_axis, bool inverted_scrolling, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent
 								, SDL_Rect* scroll_mask, iPoint mask_offset, bool empty_elements)
 {
 	BROFILER_CATEGORY("GUI_ScrollBar", Profiler::Color::NavajoWhite);
-	UI* elem = nullptr;
+	GuiElement* elem = nullptr;
 
-	elem = new UI_Scrollbar(element, x, y, hitbox, thumb_size, thumb_offset, drag_area, drag_factor, drag_x_axis, drag_y_axis, inverted_scrolling,
+	elem = new GuiScrollbar(type, x, y, hitbox, thumb_size, thumb_offset, drag_area, drag_factor, drag_x_axis, drag_y_axis, inverted_scrolling,
 					is_visible, is_interactible, is_draggable, listener, parent, scroll_mask, mask_offset, empty_elements);
 
 	if (elem != nullptr)
@@ -251,11 +251,11 @@ UI* GuiManager::CreateScrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbo
 	return elem;
 }
 
-UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_entity)
+GuiElement* GuiManager::CreateHealthbar(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, SDL_Rect* healthbar, SDL_Rect* background, Entity* attached_entity)
 {
-	UI* elem = nullptr;
+	GuiElement* elem = nullptr;
 
-	elem = new UI_Healthbar(element, x, y, is_visible, healthbar, background, attached_entity);
+	elem = new GuiHealthbar(type, x, y, is_visible, healthbar, background, attached_entity);
 
 	if (elem != nullptr)
 	{
@@ -265,11 +265,11 @@ UI* GuiManager::CreateHealthbar(UI_ELEMENT element, int x, int y, bool is_visibl
 	return elem;
 }
 
-UI* GuiManager::CreateCreationBar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* creation_bar, SDL_Rect* background, Entity* attached_entity)
+GuiElement* GuiManager::CreateCreationBar(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, SDL_Rect* creation_bar, SDL_Rect* background, Entity* attached_entity)
 {
-	UI* elem = nullptr;
+	GuiElement* elem = nullptr;
 
-	elem = new UI_CreationBar(element, x, y, is_visible, creation_bar, background, attached_entity);
+	elem = new GuiCreationBar(type, x, y, is_visible, creation_bar, background, attached_entity);
 
 	if (elem != nullptr)
 	{
@@ -279,13 +279,13 @@ UI* GuiManager::CreateCreationBar(UI_ELEMENT element, int x, int y, bool is_visi
 	return elem;
 }
 
-UI* GuiManager::CreateCursor(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* idle, SDL_Rect* clicked_idle
+GuiElement* GuiManager::CreateCursor(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, SDL_Rect* idle, SDL_Rect* clicked_idle
 							, SDL_Rect* hover_ally, SDL_Rect* hover_enemy, SDL_Rect* hover_resource, SDL_Rect* hover_UI
 							, SDL_Rect* clicked_ally, SDL_Rect* clicked_enemy, SDL_Rect* clicked_resource, SDL_Rect* clicked_UI)
 {
-	UI* elem = nullptr;
+	GuiElement* elem = nullptr;
 
-	elem = new UI_Cursor(element, x, y, is_visible, idle, clicked_idle, hover_ally, hover_enemy, hover_resource, clicked_ally, clicked_enemy, clicked_resource);
+	elem = new GuiCursor(type, x, y, is_visible, idle, clicked_idle, hover_ally, hover_enemy, hover_resource, clicked_ally, clicked_enemy, clicked_resource);
 
 	if (elem != nullptr)
 	{
@@ -313,9 +313,9 @@ void GuiManager::DestroyGuiElements()
 	elements.clear();
 }
 
-void GuiManager::DeleteGuiElement(UI* element_to_delete)
+void GuiManager::DeleteGuiElement(GuiElement* element_to_delete)
 {
-	std::vector<UI*>::iterator item = elements.begin();
+	std::vector<GuiElement*>::iterator item = elements.begin();
 	
 	for (; item != elements.end(); ++item)
 	{
@@ -351,13 +351,13 @@ void GuiManager::UnLoadGuiElementsAudio()
 }
 
 // --------------------------------- UI ANIMATION METHODS ---------------------------------
-UIAnimation* GuiManager::CreateFadeAnimation(UI* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha)
+GuiAnimation* GuiManager::CreateFadeAnimation(GuiElement* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha)
 {
-	UIAnimation* ui_animation = nullptr;
+	GuiAnimation* ui_animation = nullptr;
 	
 	if (!element->is_transitioning)
 	{
-		ui_animation = new UIAnimationFade(element, animation_duration, hide_on_completion, start_alpha, end_alpha);
+		ui_animation = new GuiAnimationFade(element, animation_duration, hide_on_completion, start_alpha, end_alpha);
 
 		if (ui_animation != nullptr)
 		{
@@ -366,19 +366,19 @@ UIAnimation* GuiManager::CreateFadeAnimation(UI* element, float animation_durati
 	}
 	else
 	{
-		CancelUIAnimation(element, UI_ANIMATION_TYPE::FADE);
+		CancelUIAnimation(element, GUI_ANIMATION_TYPE::FADE);
 	}
 
 	return ui_animation;
 }
 
-UIAnimation* GuiManager::CreateSlideAnimation(UI* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position)
+GuiAnimation* GuiManager::CreateSlideAnimation(GuiElement* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position)
 {
-	UIAnimation* ui_animation = nullptr;
+	GuiAnimation* ui_animation = nullptr;
 	
 	if (!element->is_transitioning)
 	{
-		ui_animation = new UIAnimationSlide(element, animation_duration, hide_on_completion, initial_position, final_position);
+		ui_animation = new GuiAnimationSlide(element, animation_duration, hide_on_completion, initial_position, final_position);
 
 		if (ui_animation != nullptr)
 		{
@@ -387,15 +387,15 @@ UIAnimation* GuiManager::CreateSlideAnimation(UI* element, float animation_durat
 	}
 	else
 	{
-		CancelUIAnimation(element, UI_ANIMATION_TYPE::SLIDE);
+		CancelUIAnimation(element, GUI_ANIMATION_TYPE::SLIDE);
 	}
 
 	return ui_animation;
 }
 
-void GuiManager::DeleteUIAnimation(UIAnimation* ui_animation_to_delete)
+void GuiManager::DeleteUIAnimation(GuiAnimation* ui_animation_to_delete)
 {
-	std::vector<UIAnimation*>::iterator ui_animation = ui_animations.begin();
+	std::vector<GuiAnimation*>::iterator ui_animation = ui_animations.begin();
 
 	for (; ui_animation != ui_animations.end(); ++ui_animation)
 	{
@@ -411,7 +411,7 @@ void GuiManager::DeleteUIAnimation(UIAnimation* ui_animation_to_delete)
 	}
 }
 
-void GuiManager::DeleteUIAnimation(std::vector<UIAnimation*>::iterator animation_item)
+void GuiManager::DeleteUIAnimation(std::vector<GuiAnimation*>::iterator animation_item)
 {
 	(*animation_item)->CleanUp();
 	RELEASE((*animation_item));
@@ -419,13 +419,13 @@ void GuiManager::DeleteUIAnimation(std::vector<UIAnimation*>::iterator animation
 	ui_animations.erase(animation_item);
 }
 
-void GuiManager::CancelUIAnimation(UI* element_being_animated, UI_ANIMATION_TYPE animation_type)
+void GuiManager::CancelUIAnimation(GuiElement* element_being_animated, GUI_ANIMATION_TYPE animation_type)
 {
-	std::vector<UIAnimation*>::iterator ui_animation = ui_animations.begin();
+	std::vector<GuiAnimation*>::iterator ui_animation = ui_animations.begin();
 
 	for (; ui_animation != ui_animations.end(); ++ui_animation)
 	{
-		if ((*ui_animation)->element == element_being_animated && (*ui_animation)->type == animation_type)	// If the element of the UIAnimation* is the element passed as argument.
+		if ((*ui_animation)->element == element_being_animated && (*ui_animation)->type == animation_type)	// If the element of the GuiAnimation* is the element passed as argument.
 		{
 			DeleteUIAnimation(ui_animation);
 			break;
@@ -435,7 +435,7 @@ void GuiManager::CancelUIAnimation(UI* element_being_animated, UI_ANIMATION_TYPE
 
 void GuiManager::DestroyUIAnimations()
 {
-	std::vector<UIAnimation*>::iterator ui_animation = ui_animations.begin();
+	std::vector<GuiAnimation*>::iterator ui_animation = ui_animations.begin();
 
 	for (; ui_animation != ui_animations.end(); ++ui_animation)
 	{
@@ -447,7 +447,7 @@ void GuiManager::DestroyUIAnimations()
 }
 
 // --------------------------------- INPUT PROCESSING METHODS ---------------------------------
-void GuiManager::OnEventCall(UI* element, UI_EVENT ui_event)
+void GuiManager::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 {
 	BROFILER_CATEGORY("GUI_OnEventCall", Profiler::Color::NavajoWhite);
 
@@ -475,9 +475,9 @@ bool GuiManager::VisibleElementIsUnderCursor() const
 }
 
 // --- Method that will return the foremost element of the UI under the Mouse. (First in inverse order of draw)
-UI* GuiManager::FirstInteractibleElementUnderCursor() const
+GuiElement* GuiManager::FirstInteractibleElementUnderCursor() const
 {
-	UI* first_element = nullptr;
+	GuiElement* first_element = nullptr;
 
 	/*std::vector<UI*>::const_iterator item = elements.cbegin();
 
@@ -489,7 +489,7 @@ UI* GuiManager::FirstInteractibleElementUnderCursor() const
 		}
 	}*/
 
-	std::vector<UI*>::const_reverse_iterator item = elements.crbegin();							// As what is looked for is the first element in inverse order of draw,
+	std::vector<GuiElement*>::const_reverse_iterator item = elements.crbegin();							// As what is looked for is the first element in inverse order of draw,
 																								// we use a reverse_iterator to start from the end of the elements vector.
 	for (; item != elements.crend(); ++item)
 	{
@@ -503,7 +503,7 @@ UI* GuiManager::FirstInteractibleElementUnderCursor() const
 	return first_element;
 }
 
-bool GuiManager::ElementCanBeClicked(UI* clickedElement) const
+bool GuiManager::ElementCanBeClicked(GuiElement* clickedElement) const
 {
 	bool ret = false;
 
@@ -573,15 +573,15 @@ void GuiManager::PassFocus()
 }
 
 // --- Method that returns true if the passed element is a visible BUTTON, INPUTBOX or a SCROLLBAR
-bool GuiManager::ElementCanBeFocused(UI* focus_element) const
+bool GuiManager::ElementCanBeFocused(GuiElement* focus_element) const
 {
 	bool ret = false;
 
 	if (focus_element->is_visible
 		/*&& focus_element->isInteractible */
-			&& (focus_element->element == UI_ELEMENT::BUTTON
-			|| focus_element->element == UI_ELEMENT::SCROLLBAR
-			|| focus_element->element == UI_ELEMENT::INPUTBOX))
+			&& (focus_element->element == GUI_ELEMENT_TYPE::BUTTON
+			|| focus_element->element == GUI_ELEMENT_TYPE::SCROLLBAR
+			|| focus_element->element == GUI_ELEMENT_TYPE::INPUTBOX))
 	{
 		ret = true;
 	}
@@ -591,11 +591,11 @@ bool GuiManager::ElementCanBeFocused(UI* focus_element) const
 
 // --------------------------- PARENT/CHILD UI ELEMENTS METHODS --------------------------
 // --- 
-bool GuiManager::ElementHasChilds(UI* parent_element) const
+bool GuiManager::ElementHasChilds(GuiElement* parent_element) const
 {
 	bool ret = false;
 
-	std::vector<UI*>::const_iterator elem = elements.cbegin();
+	std::vector<GuiElement*>::const_iterator elem = elements.cbegin();
 
 	for (; elem != elements.cend(); ++elem)
 	{
@@ -609,9 +609,9 @@ bool GuiManager::ElementHasChilds(UI* parent_element) const
 	return ret;
 }
 
-void GuiManager::UpdateChilds(UI* parent_element)
+void GuiManager::UpdateChilds(GuiElement* parent_element)
 {
-	std::vector<UI*>::iterator child = elements.begin();
+	std::vector<GuiElement*>::iterator child = elements.begin();
 
 	for (; child != elements.end(); ++child)
 	{
@@ -628,9 +628,9 @@ void GuiManager::UpdateChilds(UI* parent_element)
 	}
 }
 
-void GuiManager::SetElementsVisibility(UI* parent_element, bool state)
+void GuiManager::SetElementsVisibility(GuiElement* parent_element, bool state)
 {
-	std::vector<UI*>::iterator child = elements.begin();
+	std::vector<GuiElement*>::iterator child = elements.begin();
 
 	for (; child != elements.end(); ++child)
 	{
@@ -648,11 +648,11 @@ void GuiManager::SetElementsVisibility(UI* parent_element, bool state)
 	parent_element->is_visible = state;												// Enables/Disables the parent element's visibility. Changes isVisible from true to false and viceversa.	
 }																					   
 																					   
-std::vector<UI*> GuiManager::GetElementChilds(UI* parent_element)					   
+std::vector<GuiElement*> GuiManager::GetElementChilds(GuiElement* parent_element)					   
 {																					   
-	std::vector<UI*> childs;														   
+	std::vector<GuiElement*> childs;														   
 																					   
-	std::vector<UI*>::iterator element = elements.begin();							   
+	std::vector<GuiElement*>::iterator element = elements.begin();							   
 																					   
 	for (; element != elements.end(); ++element)									   
 	{																				   
@@ -675,41 +675,41 @@ void GuiManager::Debug_UI()
 {
 	if (ui_debug == true)
 	{
-		for (std::vector<UI*>::iterator elem = elements.begin(); elem != elements.end(); ++elem)
+		for (std::vector<GuiElement*>::iterator elem = elements.begin(); elem != elements.end(); ++elem)
 		{
 			if ((*elem)->is_visible)
 			{
 				switch ((*elem)->element)
 				{
-				case UI_ELEMENT::EMPTY:
+				case GUI_ELEMENT_TYPE::EMPTY:
 					App->render->DrawQuad((*elem)->GetHitbox(), 255, 255, 255, 255, false, false);		//UI_Empty will be WHITE.
 					break;
 
-				case UI_ELEMENT::IMAGE:
-					App->render->DrawQuad((*elem)->GetHitbox(), 0, 0, 255, 255, false, false);			//UI_Image will be BLUE.
+				case GUI_ELEMENT_TYPE::IMAGE:
+					App->render->DrawQuad((*elem)->GetHitbox(), 0, 0, 255, 255, false, false);			//GuiImage will be BLUE.
 
 					break;
 
-				case UI_ELEMENT::TEXT:
-					App->render->DrawQuad((*elem)->GetHitbox(), 0, 255, 0, 255, false, false);			//UI_Text will be GREEN.
+				case GUI_ELEMENT_TYPE::TEXT:
+					App->render->DrawQuad((*elem)->GetHitbox(), 0, 255, 0, 255, false, false);			//GuiText will be GREEN.
 
 					break;
 
-				case UI_ELEMENT::BUTTON:
-					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 0, 255, false, false);			//UI_Button will be RED.
+				case GUI_ELEMENT_TYPE::BUTTON:
+					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 0, 255, false, false);			//GuiButton will be RED.
 
 					break;
 
-				case UI_ELEMENT::INPUTBOX:
+				case GUI_ELEMENT_TYPE::INPUTBOX:
 					App->render->DrawQuad((*elem)->GetHitbox(), 255, 0, 255, 255, false, false);		//UI_Input Box will be PURPLE.
 					break;
 
-				case UI_ELEMENT::SCROLLBAR:
-					App->render->DrawQuad((*elem)->GetHitbox(), 255, 255, 0, 255, false, false);		//UI_Scrollbar will be YELLOW.
+				case GUI_ELEMENT_TYPE::SCROLLBAR:
+					App->render->DrawQuad((*elem)->GetHitbox(), 255, 255, 0, 255, false, false);		//GuiScrollbar will be YELLOW.
 					break;
 
-				case UI_ELEMENT::HEALTHBAR:
-					App->render->DrawQuad((*elem)->GetHitbox(), 0, 255, 255, 255, false, true);			//UI_Healthbar will be CYAN.
+				case GUI_ELEMENT_TYPE::HEALTHBAR:
+					App->render->DrawQuad((*elem)->GetHitbox(), 0, 255, 255, 255, false, true);			//GuiHealthbar will be CYAN.
 					break;
 				}
 			}

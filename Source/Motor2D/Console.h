@@ -5,11 +5,11 @@
 
 struct _TTF_Font;
 
-class UI;
-class UI_Image;
-class UI_Text;
-class UI_InputBox;
-class UI_Scrollbar;
+class GuiElement;
+class GuiImage;
+class GuiText;
+class GuiInputBox;
+class GuiScrollbar;
 
 class Command
 {
@@ -56,10 +56,10 @@ public:
 	//void DrawConsoleElements();
 
 public:
-	UI_Image*				console_background;
-	UI_Text*				console_output;
-	UI_InputBox*			console_input;
-	UI_Scrollbar*			console_scroll;
+	GuiImage*				console_background;
+	GuiText*				console_output;
+	GuiInputBox*			console_input;
+	GuiScrollbar*			console_scroll;
 
 	iPoint					bg_position;
 	SDL_Rect				bg_rect;

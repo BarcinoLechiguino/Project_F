@@ -3,12 +3,12 @@
 
 #include "Scene.h"
 
-class UI;
-class UI_Image;
-class UI_Text;
-class UI_Button;
-class UI_InputBox;
-class UI_Scrollbar;
+class GuiElement;
+class GuiImage;
+class GuiText;
+class GuiButton;
+class GuiInputBox;
+class GuiScrollbar;
 
 class MainMenuScene : public Scene
 {
@@ -29,7 +29,7 @@ public:
 
 	void LoadGuiElements();
 
-	void OnEventCall(UI* element, UI_EVENT ui_event);
+	void OnEventCall(GuiElement* element, GUI_EVENT ui_event);
 
 	void ExecuteTransition();
 
@@ -42,11 +42,11 @@ public:
 	SDL_Texture*	background_texture;
 
 	// Main Screen
-	UI_Image*		main_parent;
-	UI_Button*		new_game_button;
-	UI_Button*		continue_button;
-	UI_Button*		options_button;
-	UI_Button*		exit_button;
+	GuiImage*		main_parent;
+	GuiButton*		new_game_button;
+	GuiButton*		continue_button;
+	GuiButton*		options_button;
+	GuiButton*		exit_button;
 
 	//Audio
 	uint				menu_song;

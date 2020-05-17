@@ -1,16 +1,16 @@
-#ifndef __UI_CREATION_BAR_H__
-#define __UI_CREATION_BAR_H__
+#ifndef __GUI_CREATION_BAR_H__
+#define __GUI_CREATION_BAR_H__
 
-#include "UI.h"
+#include "GuiElement.h"
 
 //class Entity;
 class StaticObject;
 
-class UI_CreationBar : public UI
+class GuiCreationBar : public GuiElement
 {
 public:
-	UI_CreationBar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* creation_bar, SDL_Rect* background, Entity* attached_entity);
-	UI_CreationBar();
+	GuiCreationBar(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, SDL_Rect* creation_bar, SDL_Rect* background, Entity* attached_entity);
+	GuiCreationBar();
 
 	bool Draw();
 
@@ -38,4 +38,4 @@ private:
 	float			accumulated_time;						// The total amount of time that has elapsed since creation started.
 };
 
-#endif // !__UI_CREATION_BAR_H
+#endif // !__GUI_CREATION_BAR_H

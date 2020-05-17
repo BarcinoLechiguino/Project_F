@@ -1,13 +1,13 @@
-#ifndef __UI_CURSOR_H__
-#define __UI_CURSOR_H__
+#ifndef __GUI_CURSOR_H__
+#define __GUI_CURSOR_H__
 
-#include "UI.h"
+#include "GuiElement.h"
 
-class UI_Cursor : public UI
+class GuiCursor : public GuiElement
 {
 public:
-	UI_Cursor();
-	UI_Cursor(UI_ELEMENT element, int x, int y, bool is_visible = true, SDL_Rect* idle = nullptr, SDL_Rect* clicked_idle = nullptr
+	GuiCursor();
+	GuiCursor(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible = true, SDL_Rect* idle = nullptr, SDL_Rect* clicked_idle = nullptr
 			, SDL_Rect* hover_ally = nullptr, SDL_Rect* hover_enemy = nullptr, SDL_Rect* hover_resource = nullptr, SDL_Rect* hover_UI = nullptr
 			, SDL_Rect* clicked_ally = nullptr, SDL_Rect* clicked_enemy = nullptr, SDL_Rect* clicked_resource = nullptr, SDL_Rect* clicked_UI = nullptr);
 
@@ -35,7 +35,7 @@ public:
 	bool game_controller_mode;			// Will track whether the cursor is following the mouse or it's being moved by a game controller.
 
 private:
-	SDL_Texture* tex;					//Texture of the UI_Image.
+	SDL_Texture* tex;					//Texture of the GuiImage.
 
 	SDL_Rect current_section;			// Current sprite section of the cursor.
 
@@ -52,7 +52,7 @@ private:
 	SDL_Rect clicked_resource;			// CLICKED Sprite for when the cursor hovers a resource entity.
 	SDL_Rect clicked_UI;				// CLICKED Sprite for when the cursor hovers an interactible UI_Element.
 
-	bool ui_cursor_event_enabled;		// Will track whether or not the cursor has a ui event for when it hovers or clicks a UI_ELEMENT
+	bool ui_cursor_event_enabled;		// Will track whether or not the cursor has a ui event for when it hovers or clicks a GUI_ELEMENT_TYPE
 };
 
-#endif // !__UI_CURSOR_H__
+#endif // !__GUI_CURSOR_H__

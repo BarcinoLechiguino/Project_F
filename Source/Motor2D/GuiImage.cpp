@@ -8,14 +8,14 @@
 #include "Input.h"
 #include "GuiManager.h"
 
-#include "UI_Image.h"
+#include "GuiImage.h"
 
 
-//UI_Image will always be uninteractible and will have 2 events: IDLE & CLICKED (CLICKED when the image is clicked and can be dragged).
-//UI_Image can be draggable and can have a parent element.
-//hitbox argument serves the purpose of both setting the UI_Image's "input collider" and locating the right sprite in the Atlas(tex).
-UI_Image::UI_Image(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent)
-	: UI(element, x, y, hitbox, listener, parent)								//When a UI_Image's constructor is called, a UI element is initialized as a IMAGE element.
+//GuiImage will always be uninteractible and will have 2 events: IDLE & CLICKED (CLICKED when the image is clicked and can be dragged).
+//GuiImage can be draggable and can have a parent element.
+//hitbox argument serves the purpose of both setting the GuiImage's "input collider" and locating the right sprite in the Atlas(tex).
+GuiImage::GuiImage(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent)
+	: GuiElement(type, x, y, hitbox, listener, parent)								//When a GuiImage's constructor is called, a UI element is initialized as a IMAGE element.
 {
 	tex = App->gui_manager->GetAtlas();													//The atlas already has the path to the atlas spritesheet. Check how to work around the const
 
@@ -50,23 +50,23 @@ UI_Image::UI_Image(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, bool is_vi
 	}
 }
 
-UI_Image::UI_Image() : UI()	//Default Constructor
+GuiImage::GuiImage() : GuiElement()	//Default Constructor
 {}
 
-bool UI_Image::Draw()
+bool GuiImage::Draw()
 {
 	CheckInput();
 	
-	if (this->element == UI_ELEMENT::IMAGE)														// This element can be a UI_ELEMENT::EMPTY
+	if (this->element == GUI_ELEMENT_TYPE::IMAGE)														// This element can be a GUI_ELEMENT_TYPE::EMPTY
 	{
-		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &GetScreenRect(), 0.0f, 1.0f);		//GetPosition() is used as the position variable in the UI parent class will be initialized with the values of the UI_Image instance at constructor call
+		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &GetScreenRect(), 0.0f, 1.0f);		//GetPosition() is used as the position variable in the UI parent class will be initialized with the values of the GuiImage instance at constructor call
 	}
 	
 	return true;
 }
 
-// --- This Method checks for any inputs that the UI_Image element might have received and "returns" an event.
-void UI_Image::CheckInput()
+// --- This Method checks for any inputs that the GuiImage element might have received and "returns" an event.
+void GuiImage::CheckInput()
 {
 	BROFILER_CATEGORY("Image_CheckInput", Profiler::Color::Gold);
 
@@ -76,12 +76,12 @@ void UI_Image::CheckInput()
 
 		if (!IsHovered())																		//If the mouse is not on the image.
 		{
-			ui_event = UI_EVENT::IDLE;
+			ui_event = GUI_EVENT::IDLE;
 		}
 
 		if (IsHovered())
 		{
-			ui_event = UI_EVENT::HOVER;
+			ui_event = GUI_EVENT::HOVER;
 		}
 
 		if (is_draggable)																		//If the image element is draggable.
@@ -100,13 +100,13 @@ void UI_Image::CheckInput()
 			{
 				if (IsForemostElement() || is_drag_target)												//If it is the first element under the mouse (in inverse order of draw) or is the drag target.
 				{
-					ui_event = UI_EVENT::CLICKED;
+					ui_event = GUI_EVENT::CLICKED;
 					
 					if (ElementCanBeDragged())															//If the UI Image element meets all drag conditions or is the drag target.
 					{
 						if (this->parent != NULL)														//If this UI Image has a parent.
 						{
-							if (this->parent->element != UI_ELEMENT::SCROLLBAR)							//If this element is not the scrollbar's thumb.
+							if (this->parent->element != GUI_ELEMENT_TYPE::SCROLLBAR)							//If this element is not the scrollbar's thumb.
 							{
 								DragElement();															//The element is dragged around.
 							}
@@ -135,7 +135,7 @@ void UI_Image::CheckInput()
 					initial_position = GetScreenPos();
 				}
 
-				ui_event = UI_EVENT::UNCLICKED;
+				ui_event = GUI_EVENT::UNCLICKED;
 			}
 		}
 
@@ -143,7 +143,7 @@ void UI_Image::CheckInput()
 		{
 			if (IsForemostElement())
 			{
-				ui_event = UI_EVENT::UNCLICKED;
+				ui_event = GUI_EVENT::UNCLICKED;
 			}
 		}
 
@@ -151,20 +151,20 @@ void UI_Image::CheckInput()
 		{
 			if (listener != nullptr)
 			{
-				listener->OnEventCall(this, ui_event);											//The listener call the OnEventCall() method passing this UI_Image and it's event as arguments.
+				listener->OnEventCall(this, ui_event);											//The listener call the OnEventCall() method passing this GuiImage and it's event as arguments.
 			}
 		}
 	}
 }
 
-void UI_Image::CleanUp()
+void GuiImage::CleanUp()
 {
-	LOG("Unloading UI_Image Textures");
+	LOG("Unloading GuiImage Textures");
 
 	tex = nullptr;
 }
 
-SDL_Texture* UI_Image::GetTexture() const
+SDL_Texture* GuiImage::GetTexture() const
 {
 	return tex;
 }

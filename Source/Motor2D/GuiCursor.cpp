@@ -6,14 +6,14 @@
 #include "Entity.h"
 #include "GuiManager.h"
 
-#include "UI_Cursor.h"
+#include "GuiCursor.h"
 
 // Has neither a parent nor a listener argument as this element will represent the cursor on screen.
-// Will not use any of the UI_EVENTS as its state will be dictated by whatever the UI_Cursor is on top of.
+// Will not use any of the UI_EVENTS as its state will be dictated by whatever the GuiCursor is on top of.
 // UI_Elements will get the priority over all other things refering to which section is shown.
-UI_Cursor::UI_Cursor(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* idle, SDL_Rect* clicked_idle
+GuiCursor::GuiCursor(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, SDL_Rect* idle, SDL_Rect* clicked_idle
 					, SDL_Rect* hover_ally, SDL_Rect* hover_enemy, SDL_Rect* hover_resource, SDL_Rect* hover_UI
-					, SDL_Rect* clicked_ally, SDL_Rect* clicked_enemy, SDL_Rect* clicked_resource, SDL_Rect* clicked_UI) : UI(element, x, y, *idle, nullptr, nullptr)
+					, SDL_Rect* clicked_ally, SDL_Rect* clicked_enemy, SDL_Rect* clicked_resource, SDL_Rect* clicked_UI) : GuiElement(type, x, y, *idle, nullptr, nullptr)
 {
 	tex = App->gui_manager->GetAtlas();													//The atlas already has the path to the atlas spritesheet. Check how to work around the const
 
@@ -23,10 +23,10 @@ UI_Cursor::UI_Cursor(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect
 	}
 
 	// --- Initializing the element's flags.
-	this->is_visible	= is_visible;											//The UI_Cursor will always be visible (Or most of the times at least).
+	this->is_visible	= is_visible;											//The GuiCursor will always be visible (Or most of the times at least).
 	
-	is_interactible		= false;												//The UI_Cursor will never be interactible itself, it will only follow the mouse (or the controller). 
-	is_draggable		= false;												//The UI_Cursor will never be draggable itself, it will just follow the mouse (or the controller).
+	is_interactible		= false;												//The GuiCursor will never be interactible itself, it will only follow the mouse (or the controller). 
+	is_draggable		= false;												//The GuiCursor will never be draggable itself, it will just follow the mouse (or the controller).
 	drag_x_axis			= is_draggable;											//Same as is_draggable.
 	drag_y_axis			= is_draggable;											//Same as is_draggable.
 	
@@ -41,22 +41,22 @@ UI_Cursor::UI_Cursor(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect
 		current_section = *idle;
 	}
 
-	ui_event = UI_EVENT::IDLE;
+	ui_event = GUI_EVENT::IDLE;
 
 	// --- Initializing unnecessary variables, just for safety.
-	this->is_filled = false;													// The UI_Cursor will always have a sprite section.
+	this->is_filled = false;													// The GuiCursor will always have a sprite section.
 	
-	this->listener = nullptr;													// As the UI_Cursor will never really be interacted with, the listener will not be needed.
+	this->listener = nullptr;													// As the GuiCursor will never really be interacted with, the listener will not be needed.
 
-	SetLocalPos(iPoint(0, 0));													// As UI_Cursor will never have a parent element, the local position will never be used.
+	SetLocalPos(iPoint(0, 0));													// As GuiCursor will never have a parent element, the local position will never be used.
 }
 
-UI_Cursor::UI_Cursor()
+GuiCursor::GuiCursor()
 {
 
 }
 
-bool UI_Cursor::Draw()
+bool GuiCursor::Draw()
 {
 	CheckInput();
 
@@ -84,7 +84,7 @@ bool UI_Cursor::Draw()
 	return true;
 }
 
-void UI_Cursor::CheckInput()
+void GuiCursor::CheckInput()
 {
 	if (is_visible)
 	{
@@ -92,19 +92,19 @@ void UI_Cursor::CheckInput()
 		{
 			iPoint mouse_tile_position = GetMouseTilePosition();
 
-			// --- UI_EVENT::IDLE
-			if (ui_event != UI_EVENT::CLICKED)
+			// --- GUI_EVENT::IDLE
+			if (ui_event != GUI_EVENT::CLICKED)
 			{
 				CheckIdleEvent(mouse_tile_position);
 			}
 
-			// --- UI_EVENT::HOVER
-			if (ui_event != UI_EVENT::CLICKED)																		// If the cursor is not currently being clicked.
+			// --- GUI_EVENT::HOVER
+			if (ui_event != GUI_EVENT::CLICKED)																		// If the cursor is not currently being clicked.
 			{
 				CheckHoverEvent(mouse_tile_position);
 			}
 
-			// --- UI_EVENT::CLICKED
+			// --- GUI_EVENT::CLICKED
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_DOWN)
 			{
 				CheckLeftClickEvent(mouse_tile_position);
@@ -115,7 +115,7 @@ void UI_Cursor::CheckInput()
 				CheckRightClickEvent(mouse_tile_position);
 			}
 
-			// --- UI_EVENT::UNCLICKED
+			// --- GUI_EVENT::UNCLICKED
 			if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_UP)
 			{
 				CheckLeftUnclickEvent(mouse_tile_position);
@@ -130,19 +130,19 @@ void UI_Cursor::CheckInput()
 		{
 			iPoint cursor_tile_position = GetScreenPos();
 
-			// --- UI_EVENT::IDLE
-			if (ui_event != UI_EVENT::CLICKED)
+			// --- GUI_EVENT::IDLE
+			if (ui_event != GUI_EVENT::CLICKED)
 			{
 				CheckIdleEvent(cursor_tile_position);
 			}
 
-			// --- UI_EVENT::HOVER
-			if (ui_event != UI_EVENT::CLICKED)																		// If the cursor is not currently being clicked.
+			// --- GUI_EVENT::HOVER
+			if (ui_event != GUI_EVENT::CLICKED)																		// If the cursor is not currently being clicked.
 			{
 				CheckHoverEvent(cursor_tile_position);
 			}
 
-			// --- UI_EVENT::CLICKED
+			// --- GUI_EVENT::CLICKED
 			if (App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN
 				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN)
 			{
@@ -154,7 +154,7 @@ void UI_Cursor::CheckInput()
 				CheckRightClickEvent(cursor_tile_position);
 			}
 
-			// --- UI_EVENT::UNCLICKED
+			// --- GUI_EVENT::UNCLICKED
 			if (App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
 				|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
 			{
@@ -169,18 +169,18 @@ void UI_Cursor::CheckInput()
 	}
 }
 
-void UI_Cursor::CleanUp()
+void GuiCursor::CleanUp()
 {
 	tex = nullptr;
 }
 
 // ---  MOUSE CURSOR EVENTS --
-void UI_Cursor::CheckIdleEvent(iPoint mouse_tile_position)
+void GuiCursor::CheckIdleEvent(iPoint mouse_tile_position)
 {
 	if (!App->gui_manager->VisibleElementIsUnderCursor() && App->entity_manager->GetEntityAt(mouse_tile_position) == nullptr)//crash
 	{
 		current_section = idle;
-		ui_event = UI_EVENT::IDLE;
+		ui_event = GUI_EVENT::IDLE;
 
 		if (game_controller_mode)
 		{
@@ -189,7 +189,7 @@ void UI_Cursor::CheckIdleEvent(iPoint mouse_tile_position)
 	}
 }
 
-void UI_Cursor::CheckHoverEvent(iPoint mouse_tile_position)
+void GuiCursor::CheckHoverEvent(iPoint mouse_tile_position)
 {	
 	if (App->gui_manager->VisibleElementIsUnderCursor())
 	{
@@ -210,7 +210,7 @@ void UI_Cursor::CheckHoverEvent(iPoint mouse_tile_position)
 			}
 		}
 
-		ui_event = UI_EVENT::HOVER;
+		ui_event = GUI_EVENT::HOVER;
 	}
 	else
 	{
@@ -235,11 +235,11 @@ void UI_Cursor::CheckHoverEvent(iPoint mouse_tile_position)
 			}
 		}
 
-		ui_event = UI_EVENT::HOVER;
+		ui_event = GUI_EVENT::HOVER;
 	}
 }
 
-void UI_Cursor::CheckLeftClickEvent(iPoint mouse_tile_position)
+void GuiCursor::CheckLeftClickEvent(iPoint mouse_tile_position)
 {
 	if (App->gui_manager->FirstInteractibleElementUnderCursor() != nullptr)								// If there is an interactible UI_Element under the mouse.
 	{
@@ -283,10 +283,10 @@ void UI_Cursor::CheckLeftClickEvent(iPoint mouse_tile_position)
 		}
 	}
 
-	ui_event = UI_EVENT::CLICKED;
+	ui_event = GUI_EVENT::CLICKED;
 }
 
-void UI_Cursor::CheckRightClickEvent(iPoint mouse_tile_position)
+void GuiCursor::CheckRightClickEvent(iPoint mouse_tile_position)
 {
 	if (App->gui_manager->FirstInteractibleElementUnderCursor() != nullptr)								// If there is an interactible UI_Element under the mouse.
 	{
@@ -330,10 +330,10 @@ void UI_Cursor::CheckRightClickEvent(iPoint mouse_tile_position)
 		}
 	}
 
-	ui_event = UI_EVENT::CLICKED;
+	ui_event = GUI_EVENT::CLICKED;
 }
 
-void UI_Cursor::CheckLeftUnclickEvent(iPoint mouse_tile_position)
+void GuiCursor::CheckLeftUnclickEvent(iPoint mouse_tile_position)
 {
 	if (App->gui_manager->VisibleElementIsUnderCursor())												// Cursor is over a UI_Element
 	{
@@ -374,10 +374,10 @@ void UI_Cursor::CheckLeftUnclickEvent(iPoint mouse_tile_position)
 		}
 	}
 
-	ui_event = UI_EVENT::UNCLICKED;
+	ui_event = GUI_EVENT::UNCLICKED;
 }
 
-void UI_Cursor::CheckRightUnclickEvent(iPoint mouse_tile_position)
+void GuiCursor::CheckRightUnclickEvent(iPoint mouse_tile_position)
 {
 	if (App->gui_manager->VisibleElementIsUnderCursor())												// Cursor is over a UI_Element
 	{	
@@ -418,24 +418,24 @@ void UI_Cursor::CheckRightUnclickEvent(iPoint mouse_tile_position)
 		}
 	}
 
-	ui_event = UI_EVENT::UNCLICKED;
+	ui_event = GUI_EVENT::UNCLICKED;
 }
 
-bool UI_Cursor::ControllerInteractionButtonsPressed()
+bool GuiCursor::ControllerInteractionButtonsPressed()
 {
 	return (App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_DOWN
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_DOWN
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == BUTTON_STATE::BUTTON_DOWN);
 }
 
-bool UI_Cursor::ControllerInteractionButtonsReleased()
+bool GuiCursor::ControllerInteractionButtonsReleased()
 {
 	return (App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_UP
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP
 		|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_RIGHTSHOULDER) == BUTTON_STATE::BUTTON_UP);
 }
 
-void UI_Cursor::InitializeCursorSections(SDL_Rect* idle, SDL_Rect* clicked_idle, SDL_Rect* hover_ally, SDL_Rect* hover_enemy, SDL_Rect* hover_resource, SDL_Rect* hover_UI
+void GuiCursor::InitializeCursorSections(SDL_Rect* idle, SDL_Rect* clicked_idle, SDL_Rect* hover_ally, SDL_Rect* hover_enemy, SDL_Rect* hover_resource, SDL_Rect* hover_UI
 										, SDL_Rect* clicked_ally, SDL_Rect* clicked_enemy, SDL_Rect* clicked_resource, SDL_Rect* clicked_UI)
 {
 	if (idle != nullptr)

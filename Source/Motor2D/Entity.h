@@ -5,8 +5,8 @@
 #include "Point.h"						//Required. For some reason the iPoint namespace does not work without it, even with a forward declaration like class iPoint.
 
 class Animation;
-class UI_Image;
-class UI_Healthbar;
+class GuiImage;
+class GuiHealthbar;
 
 struct SDL_Texture;
 struct SDL_Rect;
@@ -106,7 +106,7 @@ public:																			// --- ENTITY VARIABLES ---
 	SDL_Rect		healthbar_rect;												// The foremost sprite of an entity's healthbar.
 	iPoint			healthbar_position_offset;									// Value that will affect where around the entity the healthbar will appear.
 
-	UI_Healthbar*	healthbar;
+	GuiHealthbar*	healthbar;
 
 	SDL_Texture*	entity_sprite;
 

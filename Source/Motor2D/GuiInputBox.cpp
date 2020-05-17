@@ -7,16 +7,16 @@
 #include "Input.h"
 #include "Fonts.h"
 #include "GuiManager.h"
-#include "UI_Image.h"
-#include "UI_Text.h"
+#include "GuiImage.h"
+#include "GuiText.h"
 
-#include "UI_InputBox.h"
+#include "GuiInputBox.h"
 
-//UI_InputBox will always be interactible (although it can be set to not be), and can be draggable. Can potentially receive all events.
-//The element receives as arguments all the requiered elements to create a UI_Image (Background), a UI_Text (input text) and another UI_Image (cursor).
-UI_InputBox::UI_InputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursor_colour, iPoint text_offset,
-				float blink_frequency, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, UI* parent, std::string* defaultString, bool emptyElements) 
-				: UI(element, x, y, hitbox, listener, parent)
+//GuiInputBox will always be interactible (although it can be set to not be), and can be draggable. Can potentially receive all events.
+//The element receives as arguments all the requiered elements to create a GuiImage (Background), a GuiText (input text) and another GuiImage (cursor).
+GuiInputBox::GuiInputBox(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursor_colour, iPoint text_offset,
+				float blink_frequency, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent, std::string* defaultString, bool emptyElements) 
+				: GuiElement(type, x, y, hitbox, listener, parent)
 {	
 	if (is_interactible)															//If the Input Box element is interactible.
 	{
@@ -46,16 +46,16 @@ UI_InputBox::UI_InputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF
 	// --- Input Box Elements
 	if (!emptyElements)
 	{
-		this->background = UI_Image(UI_ELEMENT::IMAGE, x, y, hitbox, is_visible, false, false, nullptr, this);
-		//this->cursor = UI_Image(UI_Element::IMAGE, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, this);
+		this->background = GuiImage(GUI_ELEMENT_TYPE::IMAGE, x, y, hitbox, is_visible, false, false, nullptr, this);
+		//this->cursor = GuiImage(UI_Element::IMAGE, x + textOffset.x, y + textOffset.y, cursorSize, isVisible, false, false, this);
 	}
 	else
 	{
-		this->background = UI_Image(UI_ELEMENT::EMPTY, x, y, hitbox, is_visible, false, false, nullptr, this);
+		this->background = GuiImage(GUI_ELEMENT_TYPE::EMPTY, x, y, hitbox, is_visible, false, false, nullptr, this);
 	}
 
-	this->cursor = UI_Image(UI_ELEMENT::EMPTY, x + text_offset.x, y + text_offset.y, cursorSize, is_visible, false, false, nullptr, this);
-	this->text = UI_Text(UI_ELEMENT::TEXT, x + text_offset.x, y + text_offset.y, hitbox, font, fontColour, is_visible, false, false, nullptr, this, defaultString);
+	this->cursor = GuiImage(GUI_ELEMENT_TYPE::EMPTY, x + text_offset.x, y + text_offset.y, cursorSize, is_visible, false, false, nullptr, this);
+	this->text = GuiText(GUI_ELEMENT_TYPE::TEXT, x + text_offset.x, y + text_offset.y, hitbox, font, fontColour, is_visible, false, false, nullptr, this, defaultString);
 	
 	// --- Text Variables
 	this->font = font;																//Sets the UI input box font to the one being passed as argument.
@@ -78,10 +78,10 @@ UI_InputBox::UI_InputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF
 	// --------------------------------------------------------------------------------------
 }
 
-UI_InputBox::UI_InputBox() : UI()
+GuiInputBox::GuiInputBox() : GuiElement()
 {}
 
-bool UI_InputBox::Draw()
+bool GuiInputBox::Draw()
 {
 	CheckInput();
 
@@ -92,7 +92,7 @@ bool UI_InputBox::Draw()
 	return true;
 }
 
-void UI_InputBox::CheckInput()
+void GuiInputBox::CheckInput()
 {
 	if (is_visible)
 	{
@@ -103,7 +103,7 @@ void UI_InputBox::CheckInput()
 		// --- IDLE EVENT
 		if (!IsHovered())																			//If the mouse is not on the text.
 		{
-			ui_event = UI_EVENT::IDLE;
+			ui_event = GUI_EVENT::IDLE;
 		}
 
 		if (is_interactible)																		//If the Text element is interactible.
@@ -111,7 +111,7 @@ void UI_InputBox::CheckInput()
 			// --- HOVER EVENT
 			if ((IsHovered() && IsForemostElement()) /*|| IsFocused()*/)							//If the mouse is on the text.
 			{
-				ui_event = UI_EVENT::HOVER;
+				ui_event = GUI_EVENT::HOVER;
 			}
 
 			
@@ -141,7 +141,7 @@ void UI_InputBox::CheckInput()
 				{
 					if (IsForemostElement() || is_drag_target)											//If the UI Text element is the foremost element under the mouse. 
 					{
-						ui_event = UI_EVENT::CLICKED;
+						ui_event = GUI_EVENT::CLICKED;
 
 						if (ElementCanBeDragged())														//If the UI Text element is draggable and is the foremost element under the mouse. 
 						{
@@ -160,7 +160,7 @@ void UI_InputBox::CheckInput()
 			{
 				if (IsForemostElement() && ElementRemainedInPlace())								//If the UI Text element is the foremost element under the mouse and has not been dragged. 
 				{
-					ui_event = UI_EVENT::UNCLICKED;
+					ui_event = GUI_EVENT::UNCLICKED;
 				}
 
 				if (is_drag_target)
@@ -190,27 +190,27 @@ void UI_InputBox::CheckInput()
 	return;
 }
 
-void UI_InputBox::CleanUp()
+void GuiInputBox::CleanUp()
 {
 	background.CleanUp();
 	cursor.CleanUp();
 	text.CleanUp();
 }
 
-SDL_Texture* UI_InputBox::GetTexture() const
+SDL_Texture* GuiInputBox::GetTexture() const
 {
 	return nullptr;																			// This method will return nothing, as the element itself has no texture.
 }
 
 // --- DRAW INPUT BOX ELEMENTS
-void UI_InputBox::DrawInputBoxElements()													// --------------------------------------------------------------------------
+void GuiInputBox::DrawInputBoxElements()													// --------------------------------------------------------------------------
 {
 	background.Draw();																		//Calls Background's Draw() method.
 	text.Draw();																			//Calls Text's Draw() method.
 	DrawCursor();																			//Calls the DrawCursor() method. If the conditions are met, the cursor will be drawn on screen.
 }
 
-void UI_InputBox::DrawCursor()																// --------------------------------------------------------------------------
+void GuiInputBox::DrawCursor()																// --------------------------------------------------------------------------
 {
 	if (IsFocused() && this->is_visible && cursor.is_visible)								//If input box is focused, input box is visible and the cursor is visible.
 	{
@@ -226,19 +226,19 @@ void UI_InputBox::DrawCursor()																// -------------------------------
 
 // --- GETTERS / SETTERS -------
 // --- This method returns the current input text length.
-int UI_InputBox::TextLength()																// --------------------------------------------------------------------------
+int GuiInputBox::TextLength()																// --------------------------------------------------------------------------
 {
 	return App->input->GetInputTextLength();												//Gets the current input text's length in characters.
 }
 
-int UI_InputBox::GetCurrentCursorIndex()													// --------------------------------------------------------------------------
+int GuiInputBox::GetCurrentCursorIndex()													// --------------------------------------------------------------------------
 {
 	return App->input->GetCursorIndex();													//Gets the current cursor's index.
 }
 // -----------------------------
 
 // --- INPUT BOX ELEMENTS STATE
-void UI_InputBox::CheckInputBoxState()														// --------------------------------------------------------------------------
+void GuiInputBox::CheckInputBoxState()														// --------------------------------------------------------------------------
 {
 	UpdateInputBoxElementsPos();															//Calls UpdateInputBoxE...() If input box has changed positions, all its elements will be actualized.
 	CheckFocus();																			//Calls CheckFocus(). If the input box has the focus and is visible, text input will be received and sent to Print().
@@ -254,7 +254,7 @@ void UI_InputBox::CheckInputBoxState()														// -------------------------
 	}
 }
 
-void UI_InputBox::UpdateInputBoxElementsPos()												// --------------------------------------------------------------------------
+void GuiInputBox::UpdateInputBoxElementsPos()												// --------------------------------------------------------------------------
 {
 	if (this->GetScreenPos() != this->initial_position)										//If the input box has changed positions. (Dragged, updated as a child...)
 	{
@@ -278,11 +278,11 @@ void UI_InputBox::UpdateInputBoxElementsPos()												// --------------------
 	}
 }
 
-void UI_InputBox::CheckFocus()																// --------------------------------------------------------------------------
+void GuiInputBox::CheckFocus()																// --------------------------------------------------------------------------
 {
 	if (IsFocused() && is_visible)															//If the input box has the focus and is visible.
 	{
-		text.ui_event = UI_EVENT::FOCUSED;													//The text's ui_event will be set to FOCUSED.
+		text.ui_event = GUI_EVENT::FOCUSED;													//The text's ui_event will be set to FOCUSED.
 
 		if (blink_frequency != 0.0f)														//If the cursor's blinkFrequency is different than 0;
 		{
@@ -304,12 +304,12 @@ void UI_InputBox::CheckFocus()																// -------------------------------
 	}
 	else
 	{
-		text.ui_event = UI_EVENT::UNFOCUSED;												//If the input box is not focused or visible, it will lose focus. (ui_event set to UNFOCUSED)
+		text.ui_event = GUI_EVENT::UNFOCUSED;												//If the input box is not focused or visible, it will lose focus. (ui_event set to UNFOCUSED)
 		cursor.is_visible = false;															//Sets the cursor's isVisible bool to false. (The cursor will no longer show on screen.
 	}
 }
 
-void UI_InputBox::CheckCursorInputs()														// --------------------------------------------------------------------------
+void GuiInputBox::CheckCursorInputs()														// --------------------------------------------------------------------------
 {	
 	if (App->input->GetKey(SDL_SCANCODE_LEFT) == KEY_STATE::KEY_DOWN)									// --------------------------------------------------------------------------
 	{
@@ -385,7 +385,7 @@ void UI_InputBox::CheckCursorInputs()														// --------------------------
 }
 
 // ------------------------------ REFRESH TEXT AND CURSOR METHODS ------------------------------
-void UI_InputBox::RefreshInputText()														// --------------------------------------------------------------------------
+void GuiInputBox::RefreshInputText()														// --------------------------------------------------------------------------
 {
 	text.DeleteCurrentStringTex();															//Sets to NULL the text's currentTex.
 	text.RefreshTextInput(App->input->GetInputText());										//Refreshes text's string and texture with the string received from the input.
@@ -399,7 +399,7 @@ void UI_InputBox::RefreshInputText()														// ---------------------------
 	}
 }
 
-void UI_InputBox::RefreshCursorPos()														// --------------------------------------------------------------------------
+void GuiInputBox::RefreshCursorPos()														// --------------------------------------------------------------------------
 {
 	current_index = GetCurrentCursorIndex();												//Gets the current cursor index.
 
@@ -418,7 +418,7 @@ void UI_InputBox::RefreshCursorPos()														// ---------------------------
 }
 
 // --- Sets the cursor's position to the position stored in the cursorPositions array for the index passed as argument.
-void UI_InputBox::SetCursorPosWithCursorIndex(int index)									// --------------------------------------------------------------------------
+void GuiInputBox::SetCursorPosWithCursorIndex(int index)									// --------------------------------------------------------------------------
 {
 	cursor.SetHitbox({ cursor_positions[index]												//Sets the cursor hitbox's  position to the one stored at the cursor's index in the positions array. 
 		, cursor.GetScreenPos().y
@@ -427,7 +427,7 @@ void UI_InputBox::SetCursorPosWithCursorIndex(int index)									// ------------
 }
 
 // --- Sets the cursor's position to the cursor's origin position + textWidth.
-void UI_InputBox::SetCursorPosWithTextWidth(const char* string)								// --------------------------------------------------------------------------												
+void GuiInputBox::SetCursorPosWithTextWidth(const char* string)								// --------------------------------------------------------------------------												
 {
 	App->font->CalcSize(string, text_width, text_height, font);								//CalcSize calculates the current width and height of the current string/text.
 	cursor.SetHitbox({ cursor.GetScreenPos().x + text_width									//Sets the cursor's hitbox's position addind the new textWidth to it.
@@ -436,7 +436,7 @@ void UI_InputBox::SetCursorPosWithTextWidth(const char* string)								// ------
 		, cursor.GetHitbox().h });
 }
 
-void UI_InputBox::ResetCursorPositions(int index)											// --------------------------------------------------------------------------
+void GuiInputBox::ResetCursorPositions(int index)											// --------------------------------------------------------------------------
 {
 	const char* inputString = App->input->GetInputText();									//Gets the current input string.
 	char tmp[MAX_SIZE];																		//Buffer string that will be used to store different chunks of the string.
@@ -456,7 +456,7 @@ void UI_InputBox::ResetCursorPositions(int index)											// -----------------
 }
 // -------------------------------------------------------------------------------------------
 
-void UI_InputBox::SetInputBoxVisibility()
+void GuiInputBox::SetInputBoxVisibility()
 {
 	if (this->is_visible != background.is_visible || this->is_visible != text.is_visible)
 	{

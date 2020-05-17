@@ -1,13 +1,13 @@
 #ifndef __UI_ANIMATION_FADE_H__
 #define __UI_ANIMATION_FADE_H__
 
-#include "UIAnimation.h"
+#include "GuiAnimation.h"
 
-class UIAnimationFade : public UIAnimation
+class GuiAnimationFade : public GuiAnimation
 {
 public:
-	UIAnimationFade(UI* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha);
-	~UIAnimationFade();
+	GuiAnimationFade(GuiElement* element, float animation_duration, bool hide_on_completion, float start_alpha, float end_alpha);
+	~GuiAnimationFade();
 
 	void Start();
 	void StepAnimation();
@@ -30,7 +30,7 @@ private:
 
 	SDL_Texture* element_texture;
 
-	std::vector<UI*> child_elements;
+	std::vector<GuiElement*> child_elements;
 	std::vector<SDL_Texture*> textures_to_fade;
 };
 

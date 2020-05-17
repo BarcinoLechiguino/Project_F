@@ -5,10 +5,10 @@
 #include "StaticObject.h"
 #include "GuiManager.h"
 
-#include "UI_CreationBar.h"
+#include "GuiCreationBar.h"
 
-UI_CreationBar::UI_CreationBar(UI_ELEMENT element, int x, int y, bool is_visible, SDL_Rect* creation_bar, SDL_Rect* background, Entity* attached_entity) 
-	: UI(element, x, y, *creation_bar, nullptr, nullptr)
+GuiCreationBar::GuiCreationBar(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible, SDL_Rect* creation_bar, SDL_Rect* background, Entity* attached_entity) 
+	: GuiElement(type, x, y, *creation_bar, nullptr, nullptr)
 {
 	tex = App->gui_manager->GetAtlas();
 
@@ -33,13 +33,13 @@ UI_CreationBar::UI_CreationBar(UI_ELEMENT element, int x, int y, bool is_visible
 	creation_finished = false;
 }
 
-UI_CreationBar::UI_CreationBar() : tex(nullptr), creation_bar({ 0, 0, 0, 0 }), background({ 0, 0, 0, 0 }), attached_entity(nullptr)
+GuiCreationBar::GuiCreationBar() : tex(nullptr), creation_bar({ 0, 0, 0, 0 }), background({ 0, 0, 0, 0 }), attached_entity(nullptr)
 									, creation_time(0.0f), accumulated_time(0.0f), creation_finished(false)
 {
 
 }
 
-bool UI_CreationBar::Draw()
+bool GuiCreationBar::Draw()
 {
 	CheckInput();
 
@@ -52,17 +52,17 @@ bool UI_CreationBar::Draw()
 	return true;
 }
 
-void UI_CreationBar::CheckInput()
+void GuiCreationBar::CheckInput()
 {
 
 }
 
-void UI_CreationBar::CleanUp()
+void GuiCreationBar::CleanUp()
 {
 	tex = nullptr;
 }
 
-void UI_CreationBar::UpdateCreationBarValue()
+void GuiCreationBar::UpdateCreationBarValue()
 {
 	accumulated_time += App->GetDt();
 
@@ -86,13 +86,13 @@ void UI_CreationBar::UpdateCreationBarValue()
 	//creation_bar.w = new_width;
 }
 
-void UI_CreationBar::SetNewCreationTime(float new_creation_time)
+void GuiCreationBar::SetNewCreationTime(float new_creation_time)
 {
 	creation_time = new_creation_time;
 	creation_finished = false;
 }
 
-void UI_CreationBar::ResetCreationBar()
+void GuiCreationBar::ResetCreationBar()
 {
 	creation_bar.w = 0;
 	creation_finished = false;

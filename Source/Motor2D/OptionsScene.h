@@ -3,12 +3,12 @@
 
 #include "Scene.h"
 
-class UI;
-class UI_Image;
-class UI_Text;
-class UI_Button;
-class UI_InputBox;
-class UI_Scrollbar;
+class GuiElement;
+class GuiImage;
+class GuiText;
+class GuiButton;
+class GuiInputBox;
+class GuiScrollbar;
 
 class OptionsScene : public Scene
 {
@@ -29,7 +29,7 @@ public:
 
 	void LoadGuiElements();
 
-	void OnEventCall(UI* element, UI_EVENT ui_event);
+	void OnEventCall(GuiElement* element, GUI_EVENT ui_event);
 
 	void UpdateVolumeThumbPosition();
 	void UpdateFXVolumeThumbPosition();
@@ -47,20 +47,20 @@ public:
 
 	// Options
 
-	UI_Image* options_parent;
+	GuiImage* options_parent;
 
 	//bool			options_created;
-	UI_Button*		fullscreen_off;
-	UI_Button*		fullscreen_on;
-	UI_Button*		back_button;
-	UI_Scrollbar*	music_scrollbar;
-	UI_Scrollbar*	sfx_scrollbar;
+	GuiButton*		fullscreen_off;
+	GuiButton*		fullscreen_on;
+	GuiButton*		back_button;
+	GuiScrollbar*	music_scrollbar;
+	GuiScrollbar*	sfx_scrollbar;
 
 	//Text:
-	UI_Text*		resolution_text;
-	UI_Text*		sfx_text;
-	UI_Text*		music_text;
-	UI_Text*		options_text;
+	GuiText*		resolution_text;
+	GuiText*		sfx_text;
+	GuiText*		music_text;
+	GuiText*		options_text;
 
 	//Audio
 	uint			menu_song;

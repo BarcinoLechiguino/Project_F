@@ -10,12 +10,12 @@ class PerfTimer;
 
 enum class ENTITY_TYPE;
 
-class UI;
-class UI_Image;
-class UI_Text;
-class UI_Button;
-class UI_InputBox;
-class UI_Scrollbar;
+class GuiElement;
+class GuiImage;
+class GuiText;
+class GuiButton;
+class GuiInputBox;
+class GuiScrollbar;
 
 class GameplayScene : public Scene
 {
@@ -61,7 +61,7 @@ public:
 
 	void LoadInGameOptionsMenu();
 
-	void OnEventCall(UI* element, UI_EVENT ui_event);
+	void OnEventCall(GuiElement* element, GUI_EVENT ui_event);
 
 	void DebugHUDSpawn();																	// HUD SPAWN
 
@@ -80,7 +80,7 @@ public:
 	bool transition_to_win_scene;										// Will keep track whether or not the transition to the win scene has been triggered.
 	bool transition_to_lose_scene;										// Will keep track whether or not the transition to the lose scene has been triggered.
 	
-	UI_Image*				background;
+	GuiImage*				background;
 	SDL_Rect				background_rect;
 
 	//SDL_Texture*			mouse_debug_tex;							//Texture that will appear at mouse position when pathfinding is being debugged.
@@ -89,21 +89,21 @@ public:
 	
 
 	// In-game menu
-	UI_Image*				main_in_menu2;
-	UI_Image*				label_1_in;
+	GuiImage*				main_in_menu2;
+	GuiImage*				label_1_in;
 	
-	UI_Text*				in_text;
-	UI_Text*				button_in_text;
+	GuiText*				in_text;
+	GuiText*				button_in_text;
 	
 	
-	UI_Button*				in_buttons_resume;
-	UI_Button*				in_buttons_save;
-	UI_Button*				in_buttons_load;
-	UI_Button*				in_buttons_exit;
-	UI_Button*				unmute_in;
-	UI_Button*				mute_in;
+	GuiButton*				in_buttons_resume;
+	GuiButton*				in_buttons_save;
+	GuiButton*				in_buttons_load;
+	GuiButton*				in_buttons_exit;
+	GuiButton*				unmute_in;
+	GuiButton*				mute_in;
 	
-	UI_Scrollbar*			scrollbar_in;
+	GuiScrollbar*			scrollbar_in;
 
 	iPoint					firstOriginalPos;
 	iPoint					secondOrigianlPos;
@@ -115,167 +115,167 @@ public:
 
 	// In-game menu
 
-	UI_Image*				in_game_background;
-	UI_Button*				in_game_continue_button;
-	UI_Button*				in_game_options_button;
-	UI_Button*				in_game_exit_button;
-	UI_Button*				in_game_back_to_menu;
-	UI_Text*				in_game_title_text;
+	GuiImage*				in_game_background;
+	GuiButton*				in_game_continue_button;
+	GuiButton*				in_game_options_button;
+	GuiButton*				in_game_exit_button;
+	GuiButton*				in_game_back_to_menu;
+	GuiText*				in_game_title_text;
 
 	// In-game options
-	UI_Image*				in_game_options_parent;
+	GuiImage*				in_game_options_parent;
 	
-	UI_Button*				in_game_back_button;
-	UI_Scrollbar*			in_game_music_scrollbar;
-	UI_Scrollbar*			in_game_sfx_scrollbar;
+	GuiButton*				in_game_back_button;
+	GuiScrollbar*			in_game_music_scrollbar;
+	GuiScrollbar*			in_game_sfx_scrollbar;
 
 	// Text:
-	UI_Text*				in_game_resolution_text;
-	UI_Text*				in_game_sfx_text;
-	UI_Text*				in_game_music_text;
-	UI_Text*				in_game_options_text;
+	GuiText*				in_game_resolution_text;
+	GuiText*				in_game_sfx_text;
+	GuiText*				in_game_music_text;
+	GuiText*				in_game_options_text;
 
 
 	// HUD
-	UI_Button*				 HUD_group_button;
-	UI_Button*				 HUD_home_button;
-	UI_Button*				 HUD_pause_button;
-	UI_Button*				 HUD_play_button;
-	UI_Image*				 HUD_resource_bar;
+	GuiButton*				 HUD_group_button;
+	GuiButton*				 HUD_home_button;
+	GuiButton*				 HUD_pause_button;
+	GuiButton*				 HUD_play_button;
+	GuiImage*				 HUD_resource_bar;
 
 
 	// HUD townhall
-	UI_Image*				 HUD_townhall_bar;
-	UI_Text*				 HUD_title_townhall;
-	UI_Text*				 HUD_description_townhall;
-	UI_Button*				 HUD_unit_gatherer_townhall;
-	UI_Button*				 HUD_unit_scout_townhall;
+	GuiImage*				 HUD_townhall_bar;
+	GuiText*				 HUD_title_townhall;
+	GuiText*				 HUD_description_townhall;
+	GuiButton*				 HUD_unit_gatherer_townhall;
+	GuiButton*				 HUD_unit_scout_townhall;
 
-	UI_Image*				 HUD_parent_resources_upgrade_townhall;
-	UI_Image*				 HUD_resources_data_upgrade_townhall;
-	UI_Text*				 HUD_prices_data_upgrade_townhall;
-	UI_Image*				 HUD_resources_electricity_upgrade_townhall;
-	UI_Text*				 HUD_prices_electricity_upgrade_townhall;
-	UI_Image*				 HUD_resources_bytes_upgrade_townhall;
-	UI_Text*				 HUD_prices_bytes_upgrade_townhall;
+	GuiImage*				 HUD_parent_resources_upgrade_townhall;
+	GuiImage*				 HUD_resources_data_upgrade_townhall;
+	GuiText*				 HUD_prices_data_upgrade_townhall;
+	GuiImage*				 HUD_resources_electricity_upgrade_townhall;
+	GuiText*				 HUD_prices_electricity_upgrade_townhall;
+	GuiImage*				 HUD_resources_bytes_upgrade_townhall;
+	GuiText*				 HUD_prices_bytes_upgrade_townhall;
 
-	UI_Button*				 HUD_upgrade_townhall;
+	GuiButton*				 HUD_upgrade_townhall;
 
 	//HUD gatherer
-	UI_Text*				 HUD_title_gatherer;
-	UI_Text*				 HUD_description_gatherer;
+	GuiText*				 HUD_title_gatherer;
+	GuiText*				 HUD_description_gatherer;
 
-	UI_Image*				 HUD_parent_resources_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources_data_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices_data_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources_electricity_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices_electricity_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources_bytes_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices_bytes_unit_townhall_gatherer;
+	GuiImage*				 HUD_parent_resources_unit_townhall_gatherer;
+	GuiImage*				 HUD_resources_data_unit_townhall_gatherer;
+	GuiText*				 HUD_prices_data_unit_townhall_gatherer;
+	GuiImage*				 HUD_resources_electricity_unit_townhall_gatherer;
+	GuiText*				 HUD_prices_electricity_unit_townhall_gatherer;
+	GuiImage*				 HUD_resources_bytes_unit_townhall_gatherer;
+	GuiText*				 HUD_prices_bytes_unit_townhall_gatherer;
 
-	UI_Image*				 HUD_parent_resources_upgrade_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources_data_upgrade_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices_upgrade_data_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources_electricity_upgrade_unit_townhall_gatherer;
-	UI_Text*				 HUD_prices_electricity_upgrade_unit_townhall_gatherer;
-	UI_Image*				 HUD_resources_bytes_upgrade_unit_townhall_gatherer;
+	GuiImage*				 HUD_parent_resources_upgrade_unit_townhall_gatherer;
+	GuiImage*				 HUD_resources_data_upgrade_unit_townhall_gatherer;
+	GuiText*				 HUD_prices_upgrade_data_unit_townhall_gatherer;
+	GuiImage*				 HUD_resources_electricity_upgrade_unit_townhall_gatherer;
+	GuiText*				 HUD_prices_electricity_upgrade_unit_townhall_gatherer;
+	GuiImage*				 HUD_resources_bytes_upgrade_unit_townhall_gatherer;
 
-	UI_Button*				 HUD_unit_upgrade_townhall_gatherer;
+	GuiButton*				 HUD_unit_upgrade_townhall_gatherer;
 
 	//HUD scout
-	UI_Text*				 HUD_title_scout;
-	UI_Text*				 HUD_description_scout;
+	GuiText*				 HUD_title_scout;
+	GuiText*				 HUD_description_scout;
 							 
-	UI_Image*				 HUD_parent_resources_unit_townhall_scout;
-	UI_Image*				 HUD_resources_data_unit_townhall_scout;
-	UI_Text*				 HUD_prices_data_unit_townhall_scout;
-	UI_Image*				 HUD_resources_electricity_unit_townhall_scout;
-	UI_Text*				 HUD_prices_electricity_unit_townhall_scout;
-	UI_Image*				 HUD_resources_bytes_unit_townhall_scout;
-	UI_Text*				 HUD_prices_bytes_unit_townhall_scout;
+	GuiImage*				 HUD_parent_resources_unit_townhall_scout;
+	GuiImage*				 HUD_resources_data_unit_townhall_scout;
+	GuiText*				 HUD_prices_data_unit_townhall_scout;
+	GuiImage*				 HUD_resources_electricity_unit_townhall_scout;
+	GuiText*				 HUD_prices_electricity_unit_townhall_scout;
+	GuiImage*				 HUD_resources_bytes_unit_townhall_scout;
+	GuiText*				 HUD_prices_bytes_unit_townhall_scout;
 
-	UI_Image*				 HUD_parent_resources_upgrade_unit_townhall_scout;
-	UI_Image*				 HUD_resources_data_upgrade_unit_townhall_scout;
-	UI_Text*				 HUD_prices_upgrade_data_unit_townhall_scout;
-	UI_Image*				 HUD_resources_electricity_upgrade_unit_townhall_scout;
-	UI_Text*				 HUD_prices_electricity_upgrade_unit_townhall_scout;
-	UI_Image*				 HUD_resources_bytes_upgrade_unit_townhall_scout;
+	GuiImage*				 HUD_parent_resources_upgrade_unit_townhall_scout;
+	GuiImage*				 HUD_resources_data_upgrade_unit_townhall_scout;
+	GuiText*				 HUD_prices_upgrade_data_unit_townhall_scout;
+	GuiImage*				 HUD_resources_electricity_upgrade_unit_townhall_scout;
+	GuiText*				 HUD_prices_electricity_upgrade_unit_townhall_scout;
+	GuiImage*				 HUD_resources_bytes_upgrade_unit_townhall_scout;
 
-	UI_Button*				 HUD_unit_upgrade_townhall_scout;
+	GuiButton*				 HUD_unit_upgrade_townhall_scout;
 
 	// HUD Barracks
-	UI_Image*				 HUD_barracks_bar;
-	UI_Text*				 HUD_title_barracks;
-	UI_Text*				 HUD_description_barracks;
-	UI_Button*				 HUD_unit_infantry_barracks;
-	UI_Button*				 HUD_unit_heavy_barracks;
+	GuiImage*				 HUD_barracks_bar;
+	GuiText*				 HUD_title_barracks;
+	GuiText*				 HUD_description_barracks;
+	GuiButton*				 HUD_unit_infantry_barracks;
+	GuiButton*				 HUD_unit_heavy_barracks;
 
-	UI_Image*				 HUD_parent_resources_upgrade_barracks;
-	UI_Image*				 HUD_resources_data_upgrade_barracks;
-	UI_Text*				 HUD_prices_data_upgrade_barracks;
-	UI_Image*				 HUD_resources_electricity_upgrade_barracks;
-	UI_Text*				 HUD_prices_electricity_upgrade_barracks;
-	UI_Image*				 HUD_resources_bytes_upgrade_barracks;
-	UI_Text*				 HUD_prices_bytes_upgrade_barracks;
+	GuiImage*				 HUD_parent_resources_upgrade_barracks;
+	GuiImage*				 HUD_resources_data_upgrade_barracks;
+	GuiText*				 HUD_prices_data_upgrade_barracks;
+	GuiImage*				 HUD_resources_electricity_upgrade_barracks;
+	GuiText*				 HUD_prices_electricity_upgrade_barracks;
+	GuiImage*				 HUD_resources_bytes_upgrade_barracks;
+	GuiText*				 HUD_prices_bytes_upgrade_barracks;
 
-	UI_Button*				 HUD_upgrade_barracks;
+	GuiButton*				 HUD_upgrade_barracks;
 
 	// HUD Infantry
-	UI_Text*				 HUD_title_infantry;
-	UI_Text*				 HUD_description_infantry;
+	GuiText*				 HUD_title_infantry;
+	GuiText*				 HUD_description_infantry;
 
-	UI_Image*				 HUD_parent_resources_unit_barracks_infantry;
-	UI_Image*				 HUD_resources_data_unit_barracks_infantry;
-	UI_Text*				 HUD_prices_data_unit_townhall_infantry;
-	UI_Image*				 HUD_resources_electricity_unit_barracks_infantry;
-	UI_Text*				 HUD_prices_electricity_unit_townhall_infantry;
-	UI_Image*				 HUD_resources_bytes_unit_barracks_infantry;
-	UI_Text*				 HUD_prices_bytes_unit_townhall_infantry;
+	GuiImage*				 HUD_parent_resources_unit_barracks_infantry;
+	GuiImage*				 HUD_resources_data_unit_barracks_infantry;
+	GuiText*				 HUD_prices_data_unit_townhall_infantry;
+	GuiImage*				 HUD_resources_electricity_unit_barracks_infantry;
+	GuiText*				 HUD_prices_electricity_unit_townhall_infantry;
+	GuiImage*				 HUD_resources_bytes_unit_barracks_infantry;
+	GuiText*				 HUD_prices_bytes_unit_townhall_infantry;
 							
-	UI_Image*				 HUD_parent_resources_upgrade_unit_barracks_infantry;
-	UI_Image*				 HUD_resources_data_upgrade_unit_barracks_infantry;
-	UI_Text*				 HUD_prices_data_upgrade_unit_barracks_infantry;
-	UI_Image*				 HUD_resources_electricity_upgrade_unit_barracks_infantry;
-	UI_Text*				 HUD_prices_electricity_upgrade_unit_barracks_infantry;
-	UI_Image*				 HUD_resources_bytes_upgrade_unit_barracks_infantry;
-	UI_Text*				 HUD_prices_bytes_upgrade_unit_barracks_infantry;
+	GuiImage*				 HUD_parent_resources_upgrade_unit_barracks_infantry;
+	GuiImage*				 HUD_resources_data_upgrade_unit_barracks_infantry;
+	GuiText*				 HUD_prices_data_upgrade_unit_barracks_infantry;
+	GuiImage*				 HUD_resources_electricity_upgrade_unit_barracks_infantry;
+	GuiText*				 HUD_prices_electricity_upgrade_unit_barracks_infantry;
+	GuiImage*				 HUD_resources_bytes_upgrade_unit_barracks_infantry;
+	GuiText*				 HUD_prices_bytes_upgrade_unit_barracks_infantry;
 							 
-	UI_Button*				 HUD_unit_upgrade_barracks_infantry;
+	GuiButton*				 HUD_unit_upgrade_barracks_infantry;
 	
 
 	// HUD Heavy
-	UI_Text*				 HUD_title_heavy;
-	UI_Text*				 HUD_description_heavy;
+	GuiText*				 HUD_title_heavy;
+	GuiText*				 HUD_description_heavy;
 
-	UI_Image*				 HUD_parent_resources_unit_barracks_heavy;
-	UI_Image*				 HUD_resources_data_unit_barracks_heavy;
-	UI_Text*				 HUD_prices_data_unit_townhall_heavy;
-	UI_Image*				 HUD_resources_electricity_unit_barracks_heavy;
-	UI_Text*				 HUD_prices_electricity_unit_townhall_heavy;
-	UI_Image*				 HUD_resources_bytes_unit_barracks_heavy;
-	UI_Text*				 HUD_prices_bytes_unit_townhall_heavy;
+	GuiImage*				 HUD_parent_resources_unit_barracks_heavy;
+	GuiImage*				 HUD_resources_data_unit_barracks_heavy;
+	GuiText*				 HUD_prices_data_unit_townhall_heavy;
+	GuiImage*				 HUD_resources_electricity_unit_barracks_heavy;
+	GuiText*				 HUD_prices_electricity_unit_townhall_heavy;
+	GuiImage*				 HUD_resources_bytes_unit_barracks_heavy;
+	GuiText*				 HUD_prices_bytes_unit_townhall_heavy;
 
-	UI_Image*				 HUD_parent_resources_upgrade_unit_barracks_heavy;
-	UI_Image*				 HUD_resources_data_upgrade_unit_barracks_heavy;
-	UI_Text*				 HUD_prices_data_upgrade_unit_barracks_heavy;
-	UI_Image*				 HUD_resources_electricity_upgrade_unit_barracks_heavy;
-	UI_Text*				 HUD_prices_electricity_upgrade_unit_barracks_heavy;
-	UI_Image*				 HUD_resources_bytes_upgrade_unit_barracks_heavy;
-	UI_Text*				 HUD_prices_bytes_upgrade_unit_barracks_heavy;
+	GuiImage*				 HUD_parent_resources_upgrade_unit_barracks_heavy;
+	GuiImage*				 HUD_resources_data_upgrade_unit_barracks_heavy;
+	GuiText*				 HUD_prices_data_upgrade_unit_barracks_heavy;
+	GuiImage*				 HUD_resources_electricity_upgrade_unit_barracks_heavy;
+	GuiText*				 HUD_prices_electricity_upgrade_unit_barracks_heavy;
+	GuiImage*				 HUD_resources_bytes_upgrade_unit_barracks_heavy;
+	GuiText*				 HUD_prices_bytes_upgrade_unit_barracks_heavy;
 
-	UI_Button*				 HUD_unit_upgrade_barracks_heavy;
+	GuiButton*				 HUD_unit_upgrade_barracks_heavy;
 
-	UI_Text*				 God_Mode_Activated;
+	GuiText*				 God_Mode_Activated;
 
 	//Resources HUD
 
-	UI_Text*				HUD_data_resource_text;
-	UI_Text*				HUD_electricity_resource_text;
-	UI_Text*				HUD_bytes_resource_text;
+	GuiText*				HUD_data_resource_text;
+	GuiText*				HUD_electricity_resource_text;
+	GuiText*				HUD_bytes_resource_text;
 
-	UI_Image*				HUD_data_resource;
-	UI_Image*				HUD_electricity_resource;
-	UI_Image*				HUD_bytes_resources;
+	GuiImage*				HUD_data_resource;
+	GuiImage*				HUD_electricity_resource;
+	GuiImage*				HUD_bytes_resources;
 
 	std::string				HUD_data_resource_string;
 	std::string				HUD_electricity_resource_string;
@@ -283,37 +283,37 @@ public:
 
 	//Enemy HUD 
 	// Townhall
-	UI_Image*			    HUD_enemy_townhall_bar;
-	UI_Text*				HUD_enemy_title_townhall;
-	UI_Text*				HUD_enemy_description_townhall;
+	GuiImage*			    HUD_enemy_townhall_bar;
+	GuiText*				HUD_enemy_title_townhall;
+	GuiText*				HUD_enemy_description_townhall;
 
 	// Barracks
-	UI_Image*				HUD_enemy_barracks_bar;
-	UI_Text*				HUD_enemy_title_barracks;
-	UI_Text*				HUD_enemy_description_barracks;
+	GuiImage*				HUD_enemy_barracks_bar;
+	GuiText*				HUD_enemy_title_barracks;
+	GuiText*				HUD_enemy_description_barracks;
 
 
 	//Missions HUD
 
-	UI_Button*				HUD_missions_tab;
-	UI_Button*				HUD_missions_tab_close;
-	UI_Image*				HUD_missions_background;
-	UI_Text*				HUD_missions_title;
-	UI_Text*				HUD_missions_title_primary;
-	UI_Text*				HUD_missions_primary_quest;
-	UI_Text*				HUD_missions_title_side;
-	UI_Text*				HUD_missions_side_quest;
-	UI_Text*				HUD_missions_side_quest2;
-	UI_Text*				HUD_missions_side_quest3;
+	GuiButton*				HUD_missions_tab;
+	GuiButton*				HUD_missions_tab_close;
+	GuiImage*				HUD_missions_background;
+	GuiText*				HUD_missions_title;
+	GuiText*				HUD_missions_title_primary;
+	GuiText*				HUD_missions_primary_quest;
+	GuiText*				HUD_missions_title_side;
+	GuiText*				HUD_missions_side_quest;
+	GuiText*				HUD_missions_side_quest2;
+	GuiText*				HUD_missions_side_quest3;
 
-	UI_Image*				HUD_missions_checkbox_in_progress_main_quest;
-	UI_Image*				HUD_missions_checkbox_in_progress_side_quest;
-	UI_Image*				HUD_missions_checkbox_in_progress_side_quest2;
-	UI_Image*				HUD_missions_checkbox_in_progress_side_quest3;
+	GuiImage*				HUD_missions_checkbox_in_progress_main_quest;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest2;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest3;
 
 	//Dialogs
-	UI_Image*				HUD_dialogs_background;
-	std::vector<UI_Text*>	HUD_dialog_text;	//Lines of dialog text
+	GuiImage*				HUD_dialogs_background;
+	std::vector<GuiText*>	HUD_dialog_text;	//Lines of dialog text
 
 private:
 

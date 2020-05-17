@@ -1,14 +1,14 @@
 #ifndef __UI_ANIMATION_SLIDE_H__
 #define __UI_ANIMATION_SLIDE_H__
 
-#include "UIAnimation.h"
+#include "GuiAnimation.h"
 #include "Point.h"
 
-class UIAnimationSlide : public UIAnimation
+class GuiAnimationSlide : public GuiAnimation
 {
 public:
-	UIAnimationSlide(UI* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position);
-	~UIAnimationSlide();
+	GuiAnimationSlide(GuiElement* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position);
+	~GuiAnimationSlide();
 
 	void Start();
 	void StepAnimation();
@@ -25,7 +25,7 @@ private:
 	iPoint initial_position;
 	iPoint final_position;
 
-	std::vector<UI*> elements_to_slide;
+	std::vector<GuiElement*> elements_to_slide;
 };
 
 #endif // !__UI_ANIMATION_SLIDE_H__

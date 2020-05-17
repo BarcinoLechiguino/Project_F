@@ -18,18 +18,18 @@
 #include "Movement.h"
 
 #include "GuiManager.h"
-#include "UI.h"
-#include "UI_Cursor.h"
+#include "GuiElement.h"
+//#include "GuiCursor.h"
 
 #include "EntityManager.h"
 #include "DynamicObject.h"
-#include "StaticObject.h"
-#include "TownHall.h"
-#include "EnemyTownHall.h"
-#include "Barracks.h"
-#include "EnemyBarracks.h"
 #include "Gatherer.h"
 #include "Infantry.h"
+#include "StaticObject.h"
+#include "TownHall.h"
+#include "Barracks.h"
+#include "EnemyTownHall.h"
+#include "EnemyBarracks.h"
 
 #include "Player.h"
 
@@ -1079,6 +1079,6 @@ void Player::InitializePlayer()
 	iPoint mouse_pos;
 	App->input->GetMousePosition(mouse_pos.x, mouse_pos.y);
 
-	cursor = UI_Cursor(UI_ELEMENT::CURSOR, mouse_pos.x, mouse_pos.y, true, &idle, &cursor_clicked_idle, &cursor_hover_ally, &cursor_hover_enemy, &cursor_hover_resource, nullptr
+	cursor = GuiCursor(GUI_ELEMENT_TYPE::CURSOR, mouse_pos.x, mouse_pos.y, true, &idle, &cursor_clicked_idle, &cursor_hover_ally, &cursor_hover_enemy, &cursor_hover_resource, nullptr
 		, &cursor_clicked_ally, &cursor_clicked_enemy, &cursor_clicked_resource, nullptr);
 }

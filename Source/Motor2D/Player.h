@@ -4,7 +4,7 @@
 #include "SDL/include/SDL_rect.h"
 #include "Module.h"
 #include "Point.h"
-#include "UI_Cursor.h"
+#include "GuiCursor.h"
 
 class Pathfinding;
 
@@ -12,7 +12,7 @@ class Entity;
 class DynamicObject;
 class StaticObject;
 
-class UI_Cursor;
+class GuiCursor;
 
 class Player : public Module
 {
@@ -115,7 +115,7 @@ public:
 public:																// ---------- CURSOR VARIABLES ----------
 	SDL_Texture*		mouse_tile_debug;							// Texture that will be drawn on top of the tile where the cursor is currently at.
 	
-	UI_Cursor			cursor;										// For whatever reason only a pointer works with the forward declaration.
+	GuiCursor			cursor;										// For whatever reason only a pointer works with the forward declaration.
 	
 	SDL_Rect			idle;										// IDLE Sprite of the cursor.
 

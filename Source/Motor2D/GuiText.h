@@ -1,16 +1,16 @@
-#ifndef __UI_TEXT_H__
-#define __UI_TEXT_H__
+#ifndef __GUI_TEXT_H__
+#define __GUI_TEXT_H__
 
-#include "UI.h"
+#include "GuiElement.h"
 
 struct _TTF_Font;
 
-class UI_Text : public UI
+class GuiText : public GuiElement
 {
 public:
-	UI_Text();
-	UI_Text(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool is_visible = true, bool is_interactible = false, bool is_draggable = false,
-		Module* listener = nullptr, UI* parent = nullptr, std::string* string = nullptr, std::string* hoverString = nullptr, std::string* leftClickString = nullptr, std::string* rightClickString = nullptr);
+	GuiText();
+	GuiText(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, bool is_visible = true, bool is_interactible = false, bool is_draggable = false,
+		Module* listener = nullptr, GuiElement* parent = nullptr, std::string* string = nullptr, std::string* hoverString = nullptr, std::string* leftClickString = nullptr, std::string* rightClickString = nullptr);
 
 	bool Draw();
 	void CheckInput();
@@ -41,4 +41,4 @@ private:
 	SDL_Rect		text_rect;
 };
 
-#endif // !__UI_TEXT_H__
+#endif // !__GUI_TEXT_H__

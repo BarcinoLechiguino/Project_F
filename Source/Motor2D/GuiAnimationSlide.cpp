@@ -1,28 +1,28 @@
 #include "Application.h"
 #include "GuiManager.h"
-#include "UI.h"
+#include "GuiElement.h"
 
-#include "UIAnimationSlide.h"
+#include "GuiAnimationSlide.h"
 
-UIAnimationSlide::UIAnimationSlide(UI* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position) 
-	: UIAnimation(element, UI_ANIMATION_TYPE::SLIDE, animation_duration, hide_on_completion)
+GuiAnimationSlide::GuiAnimationSlide(GuiElement* element, float animation_duration, bool hide_on_completion, iPoint initial_position, iPoint final_position) 
+	: GuiAnimation(element, GUI_ANIMATION_TYPE::SLIDE, animation_duration, hide_on_completion)
 	, initial_position(initial_position)
 	, final_position(final_position)
 {
 	InitSlide();
 }
 
-UIAnimationSlide::~UIAnimationSlide()
+GuiAnimationSlide::~GuiAnimationSlide()
 {
 
 }
 
-void UIAnimationSlide::Start()
+void GuiAnimationSlide::Start()
 {
 
 }
 
-void UIAnimationSlide::StepAnimation()
+void GuiAnimationSlide::StepAnimation()
 {
 	current_animation_step_rate += GetAnimationStepRate(animation_duration);
 
@@ -38,7 +38,7 @@ void UIAnimationSlide::StepAnimation()
 	}
 }
 
-void UIAnimationSlide::CleanUp()
+void GuiAnimationSlide::CleanUp()
 {
 	if (element->is_transitioning)															// In case the animation was cancelled halfway through.
 	{
@@ -46,7 +46,7 @@ void UIAnimationSlide::CleanUp()
 	}
 }
 
-void UIAnimationSlide::FinishAnimation()
+void GuiAnimationSlide::FinishAnimation()
 {
 	element->SetElementPosition(final_position);
 	element->is_transitioning = false;
@@ -72,7 +72,7 @@ void UIAnimationSlide::FinishAnimation()
 	elements_to_slide.clear();
 }
 
-void UIAnimationSlide::TranslateSlide()
+void GuiAnimationSlide::TranslateSlide()
 {
 	int x_displacement = (int)N_Lerp((float)initial_position.x, (float)final_position.x, current_animation_step_rate);
 	int y_displacement = (int)N_Lerp((float)initial_position.y, (float)final_position.y, current_animation_step_rate);
@@ -89,7 +89,7 @@ void UIAnimationSlide::TranslateSlide()
 	}
 }
 
-void UIAnimationSlide::InitSlide()
+void GuiAnimationSlide::InitSlide()
 {	
 	elements_to_slide = App->gui_manager->GetElementChilds(element);
 

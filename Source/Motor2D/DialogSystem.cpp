@@ -4,8 +4,8 @@
 #include "Render.h"
 #include "SceneManager.h"
 #include "GuiManager.h"
-#include "UI_Image.h"
-#include "UI_Text.h"
+#include "GuiImage.h"
+#include "GuiText.h"
 #include "GameplayScene.h"
 
 #include "Fonts.h"
@@ -191,7 +191,7 @@ void DialogSystem::NextBubbleCheck()
 
 void DialogSystem::EmptyText()
 {
-	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin() ; text != App->scene_manager->gameplay_scene->HUD_dialog_text.end() ; ++text)
+	for (std::vector<GuiText*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin() ; text != App->scene_manager->gameplay_scene->HUD_dialog_text.end() ; ++text)
 	{
 		(*text)->RefreshTextInput("");
 	}
@@ -199,7 +199,7 @@ void DialogSystem::EmptyText()
 
 void DialogSystem::DisableText()
 {
-	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
+	for (std::vector<GuiText*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
 	{
 		(*text)->is_visible = false;
 	}
@@ -207,7 +207,7 @@ void DialogSystem::DisableText()
 
 void DialogSystem::EnableText()
 {
-	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
+	for (std::vector<GuiText*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
 	{
 		(*text)->is_visible = true;
 	}
@@ -256,7 +256,7 @@ void DialogSystem::SetTextPosition(iPoint position)
 {
 	int y_position = position.y + 14; //Magic
 
-	for (std::vector<UI_Text*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
+	for (std::vector<GuiText*>::iterator text = App->scene_manager->gameplay_scene->HUD_dialog_text.begin(); text != App->scene_manager->gameplay_scene->HUD_dialog_text.end(); ++text)
 	{
 		(*text)->SetElementPosition(iPoint(position.x + 20, y_position));
 
@@ -323,13 +323,13 @@ bool DialogSystem::LoadDialog()
 	current_dialog = nullptr; //start first dialog
 
 	SDL_Rect HUD_dialogs_back_size = { 11, 643, 414, 124 };
-	App->scene_manager->gameplay_scene->HUD_dialogs_background = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::IMAGE, 30, 30, HUD_dialogs_back_size, false,true, false, App->scene_manager->gameplay_scene, nullptr);
+	App->scene_manager->gameplay_scene->HUD_dialogs_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 30, 30, HUD_dialogs_back_size, false,true, false, App->scene_manager->gameplay_scene, nullptr);
 
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false,nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
-	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false ,false,nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
+	App->scene_manager->gameplay_scene->HUD_dialog_text.push_back((GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 30, 30, { 0,0,0,0 }, dialog_font, dialog_color, false, false, false, nullptr, App->scene_manager->gameplay_scene->HUD_dialogs_background));
 	dialog_state = DialogState::NOT_ACTIVE;
 
 	return result;

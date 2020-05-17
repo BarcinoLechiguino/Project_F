@@ -17,8 +17,8 @@ class		Application;
 
 struct		Collider;
 
-class		UI;
-enum class	UI_EVENT;
+class		GuiElement;
+enum class	GUI_EVENT;
 
 class Module
 {
@@ -98,7 +98,7 @@ public:
 
 	virtual void OnCollision(Collider* C1, Collider* C2) {}							//Collision handling
 
-	virtual void OnEventCall(UI* element, UI_EVENT ui_event)
+	virtual void OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		return;
 	}

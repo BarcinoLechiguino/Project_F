@@ -1,13 +1,13 @@
-#ifndef __UI_BUTTON_H__
-#define __UI_BUTTON_H__
+#ifndef __GUI_BUTTON_H__
+#define __GUI_BUTTON_H__
 
-#include "UI.h"
+#include "GuiElement.h"
 
-class UI_Button : public UI
+class GuiButton : public GuiElement
 {
 public:
-	UI_Button();
-	UI_Button(UI_ELEMENT element, int x, int y, bool is_visible = true, bool is_interactible = true, bool is_draggable = false, Module* listener = nullptr, UI* parent = nullptr,
+	GuiButton();
+	GuiButton(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible = true, bool is_interactible = true, bool is_draggable = false, Module* listener = nullptr, GuiElement* parent = nullptr,
 			SDL_Rect* idle = nullptr, SDL_Rect* hover = nullptr, SDL_Rect* clicked = nullptr);
 
 	bool Draw();
@@ -24,4 +24,4 @@ private:
 	SDL_Rect		current_rect;	//Buffer SDL_Rect that will hold the position and measures of the correspoinding sprite for each event.
 };
 
-#endif // !__UI_BUTTON_H__
+#endif // !__GUI_BUTTON_H__

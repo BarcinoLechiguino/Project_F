@@ -1,15 +1,15 @@
-#ifndef __UI_SCROLLBAR_H__
-#define __UI_SCROLLBAR_H__
+#ifndef __GUI_SCROLLBAR_H__
+#define __GUI_SCROLLBAR_H__
 
-#include "UI.h"
+#include "GuiElement.h"
 
-class UI_Image;
+class GuiImage;
 
-class UI_Scrollbar : public UI
+class GuiScrollbar : public GuiElement
 {
 public:
-	UI_Scrollbar(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect drag_area, float drag_factor, bool drag_x_axis = false, bool drag_y_axis = true,
-		bool inverted_scrolling = false, bool is_visible = true, bool is_interactible = false, bool is_draggable = false, Module* listener = nullptr, UI* parent = nullptr,
+	GuiScrollbar(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect drag_area, float drag_factor, bool drag_x_axis = false, bool drag_y_axis = true,
+		bool inverted_scrolling = false, bool is_visible = true, bool is_interactible = false, bool is_draggable = false, Module* listener = nullptr, GuiElement* parent = nullptr,
 		SDL_Rect* scroll_mask = nullptr, iPoint maskOffset = iPoint(0, 0), bool emptyElements = false);
 
 	bool Draw();
@@ -20,11 +20,11 @@ public:
 
 public:
 	void DrawScrollbarElements();
-	void LinkScroll(UI* element);
+	void LinkScroll(GuiElement* element);
 	void UpdateLinkedElements();
 	bool LinkedElementsBeingHovered();
 	bool MouseWithinDragArea();
-	float GetDragFactor(UI* element);
+	float GetDragFactor(GuiElement* element);
 
 	bool GetDragXAxis() const;
 	bool GetDragYAxis() const;
@@ -46,9 +46,9 @@ public:
 	void CheckScrollbarBounds();
 
 private:
-	UI_Image* bar;
-	UI_Image* thumb;
-	UI_Image* scroll_mask;
+	GuiImage* bar;
+	GuiImage* thumb;
+	GuiImage* scroll_mask;
 	
 	int scrollbar_width;
 	int scrollbar_height;
@@ -61,6 +61,6 @@ private:
 	float		arrow_position_factor;
 	iPoint		new_thumb_position;
 
-	std::vector<UI*> linked_elements;
+	std::vector<GuiElement*> linked_elements;
 };
-#endif // !__UI_SCROLLBAR_H__
+#endif // !__GUI_SCROLLBAR_H__

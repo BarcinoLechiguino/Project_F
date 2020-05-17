@@ -1,19 +1,19 @@
-#ifndef __UI_INPUTBOX_H__
-#define __UI_INPUTBOX_H__
+#ifndef __GUI_INPUTBOX_H__
+#define __GUI_INPUTBOX_H__
 
-#include "UI.h"
+#include "GuiElement.h"
 
 struct _TTF_Font;
 
-class UI_Image;
-class UI_Text;
+class GuiImage;
+class GuiText;
 
-class UI_InputBox : public UI
+class GuiInputBox : public GuiElement
 {
 public:
-	UI_InputBox();
-	UI_InputBox(UI_ELEMENT element, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColor, iPoint text_offset,
-		float blink_frequency = 0.0f, bool is_visible = true, bool is_interactible = true, bool is_draggable = false, Module* listener = nullptr, UI* parent = nullptr,
+	GuiInputBox();
+	GuiInputBox(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color fontColour, SDL_Rect cursorSize, SDL_Color cursorColor, iPoint text_offset,
+		float blink_frequency = 0.0f, bool is_visible = true, bool is_interactible = true, bool is_draggable = false, Module* listener = nullptr, GuiElement* parent = nullptr,
 		std::string* defaultString = nullptr, bool emptyElements = false);
 
 	bool Draw();
@@ -44,9 +44,9 @@ public:
 	int GetCurrentCursorIndex();							//Gets the current cursor index.
 
 private:
-	UI_Image		background;								//Background element of the Input Box.
-	UI_Text			text;									//Text element of the Input Box.
-	UI_Image		cursor;									//Cursor element of the Input Box.
+	GuiImage		background;								//Background element of the Input Box.
+	GuiText			text;									//Text element of the Input Box.
+	GuiImage		cursor;									//Cursor element of the Input Box.
 
 	_TTF_Font*		font;									//Loaded font.
 	int				text_width;								//Current width of the text.
@@ -61,4 +61,4 @@ private:
 	int				cursor_positions[MAX_SIZE];				//Array that will keep track of all the positions that the cursor has been in. Each postion correspond with a cursor index.
 };
 
-#endif // !__UI_INPUTBOX_H__
+#endif // !__GUI_INPUTBOX_H__

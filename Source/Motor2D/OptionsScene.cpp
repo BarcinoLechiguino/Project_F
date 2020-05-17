@@ -10,11 +10,11 @@
 #include "Fonts.h"
 #include "Input.h"
 #include "GuiManager.h"
-#include "UI.h"
-#include "UI_Image.h"
-#include "UI_Text.h"
-#include "UI_Button.h"
-#include "UI_Scrollbar.h"
+#include "GuiElement.h"
+#include "GuiImage.h"
+#include "GuiText.h"
+#include "GuiButton.h"
+#include "GuiScrollbar.h"
 #include "SceneManager.h"
 #include "TransitionManager.h"
 
@@ -97,22 +97,22 @@ void OptionsScene::ExecuteTransition()
 	}
 }
 
-void OptionsScene::OnEventCall(UI* element, UI_EVENT ui_event)
+void OptionsScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 {
-	if (element == back_button && ui_event == UI_EVENT::UNCLICKED)
+	if (element == back_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->back_button_clicked_fx, 0);
 
 		transition_to_main_menu_scene = true;
 	}
 
-	if (element == fullscreen_off && ui_event == UI_EVENT::UNCLICKED)
+	if (element == fullscreen_off && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->gui_manager->SetElementsVisibility(fullscreen_on, true);
 		App->gui_manager->SetElementsVisibility(fullscreen_off, false);
 	}
 
-	if (element == fullscreen_on && ui_event == UI_EVENT::UNCLICKED)
+	if (element == fullscreen_on && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->win->ToggleFullscreen();
 		App->gui_manager->SetElementsVisibility(fullscreen_on, false);
@@ -186,15 +186,15 @@ void OptionsScene::LoadGuiElements()
 	SDL_Rect text_rect = { 0, 0, 100, 20 };
 	_TTF_Font* font = App->font->Load("fonts/borgsquadcond.ttf", 40);
 	_TTF_Font* font2 = App->font->Load("fonts/borgsquadcond.ttf", 30);
-	options_parent = (UI_Image*)App->gui_manager->CreateImage(UI_ELEMENT::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+	options_parent = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	//Options
 	std::string title_string = "Options";
-	options_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 370, 150, text_rect, font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &title_string);
+	options_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 370, 150, text_rect, font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &title_string);
 
 	//Music
 	std::string music_string = "Music";
-	music_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &music_string);
+	music_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &music_string);
 
 	SDL_Rect scrollbar_rect = { 743,3,180,15 };
 	SDL_Rect thumb_rect = { 930,2,18,31 };
@@ -203,20 +203,20 @@ void OptionsScene::LoadGuiElements()
 	float drag_factor = 0.2f;
 
 	//MUSIC
-	music_scrollbar = (UI_Scrollbar*)App->gui_manager->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 260, scrollbar_rect, thumb_rect, thumb_offset
+	music_scrollbar = (GuiScrollbar*)App->gui_manager->CreateScrollbar(GUI_ELEMENT_TYPE::SCROLLBAR, 570, 260, scrollbar_rect, thumb_rect, thumb_offset
 		, drag_area, drag_factor, true, false, false, true, false, false);
 	music_scrollbar->parent = options_parent;
 
 	//SFX
 	std::string sfx_string = "SFX";
-	sfx_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &sfx_string);
-	sfx_scrollbar = (UI_Scrollbar*)App->gui_manager->CreateScrollbar(UI_ELEMENT::SCROLLBAR, 570, 300, scrollbar_rect, thumb_rect, thumb_offset
+	sfx_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &sfx_string);
+	sfx_scrollbar = (GuiScrollbar*)App->gui_manager->CreateScrollbar(GUI_ELEMENT_TYPE::SCROLLBAR, 570, 300, scrollbar_rect, thumb_rect, thumb_offset
 		, drag_area, drag_factor, true, false, false, true, false, false);
 	sfx_scrollbar->parent = options_parent;
 
 	//screen size
 	std::string resolution_string = "fullscreen";
-	resolution_text = (UI_Text*)App->gui_manager->CreateText(UI_ELEMENT::TEXT, 380, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
+	resolution_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 380, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
 
 	// Fullscreen options
 
@@ -225,7 +225,7 @@ void OptionsScene::LoadGuiElements()
 	SDL_Rect opt_fullscreen_off_hover = { 744, 18, 29, 24 };
 	SDL_Rect opt_fullscreen_off_clicked = { 744, 18, 29, 24 };
 
-	fullscreen_off = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 580, 334, true, true, false, this, options_parent
+	fullscreen_off = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 580, 334, true, true, false, this, options_parent
 		, &opt_fullscreen_off_idle, &opt_fullscreen_off_hover, &opt_fullscreen_off_clicked);
 
 	SDL_Rect opt_fullscreen_on_size = { 0, 0, 29, 24 };
@@ -233,7 +233,7 @@ void OptionsScene::LoadGuiElements()
 	SDL_Rect opt_fullscreen_on_hover = { 788, 18, 29, 24 };
 	SDL_Rect opt_fullscreen_on_clicked = { 788, 18, 29, 24 };
 
-	fullscreen_on = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 580, 334, false, true, false, this, nullptr
+	fullscreen_on = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 580, 334, false, true, false, this, nullptr
 		, &opt_fullscreen_on_idle, &opt_fullscreen_on_hover, &opt_fullscreen_on_clicked);
 
 	//Remapping
@@ -244,7 +244,7 @@ void OptionsScene::LoadGuiElements()
 	SDL_Rect back_button_hover = { 57, 103, 45, 33 };
 	SDL_Rect back_button_clicked = { 114, 103, 45, 33 };
 
-	back_button = (UI_Button*)App->gui_manager->CreateButton(UI_ELEMENT::BUTTON, 400, 470, true, true, false, this, options_parent
+	back_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 400, 470, true, true, false, this, options_parent
 		, &back_button_idle, &back_button_hover, &back_button_clicked);
 	LOG("FINISHED GUI LOAD");
 }

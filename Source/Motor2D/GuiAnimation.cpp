@@ -1,8 +1,8 @@
 #include "Application.h"
 
-#include "UIAnimation.h"
+#include "GuiAnimation.h"
 
-UIAnimation::UIAnimation(UI* element, UI_ANIMATION_TYPE type, float animation_duration, bool hide_on_completion) 
+GuiAnimation::GuiAnimation(GuiElement* element, GUI_ANIMATION_TYPE type, float animation_duration, bool hide_on_completion) 
 	: element(element)
 	, type(type)
 	, animation_duration(animation_duration)
@@ -14,39 +14,39 @@ UIAnimation::UIAnimation(UI* element, UI_ANIMATION_TYPE type, float animation_du
 
 }
 
-UIAnimation::~UIAnimation()
+GuiAnimation::~GuiAnimation()
 {
 
 }
 
-void UIAnimation::Start()
-{
-	return;
-}
-
-void UIAnimation::StepAnimation()
+void GuiAnimation::Start()
 {
 	return;
 }
 
-void UIAnimation::CleanUp()
+void GuiAnimation::StepAnimation()
 {
 	return;
 }
 
-void UIAnimation::FinishAnimation()
+void GuiAnimation::CleanUp()
 {
 	return;
 }
 
-float UIAnimation::Lerp(float start, float end, float rate)
+void GuiAnimation::FinishAnimation()
+{
+	return;
+}
+
+float GuiAnimation::Lerp(float start, float end, float rate)
 {
 	float increment = (end - start) * rate;
 
 	return start + increment;
 }
 
-float UIAnimation::N_Lerp(float start, float end, float rate)
+float GuiAnimation::N_Lerp(float start, float end, float rate)
 {
 	float r = 1 - ((1 - rate) * (1 - rate));
 	float increment = (end - start) * r;
@@ -54,7 +54,7 @@ float UIAnimation::N_Lerp(float start, float end, float rate)
 	return start + increment;
 }
 
-float UIAnimation::GetAnimationStepRate(float animation_duration)
+float GuiAnimation::GetAnimationStepRate(float animation_duration)
 {
 	animation_step_rate = App->GetUnpausableDt() / animation_duration;
 

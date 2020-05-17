@@ -7,95 +7,95 @@
 
 #include "GuiManager.h"
 
-#include "UI.h"
+#include "GuiElement.h"
 
-UI::UI(UI_ELEMENT element, int x, int y, SDL_Rect rect, Module* listener, UI* parent) :
-	element(element), position(x, y), rect(rect), listener(listener), parent(parent), drag_x_axis(false), drag_y_axis(false), is_draggable(false), is_drag_target(false), is_filled(false),
-	 is_visible(false), is_interactible(false), local_hitbox({ 0, 0, 0, 0 }), local_rect({ 0, 0, 0, 0 }), ui_event(UI_EVENT::IDLE), hitbox({ 0, 0, 0, 0 }), is_transitioning(false)
+GuiElement::GuiElement(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect rect, Module* listener, GuiElement* parent) :
+	element(type), position(x, y), rect(rect), listener(listener), parent(parent), drag_x_axis(false), drag_y_axis(false), is_draggable(false), is_drag_target(false), is_filled(false),
+	 is_visible(false), is_interactible(false), local_hitbox({ 0, 0, 0, 0 }), local_rect({ 0, 0, 0, 0 }), ui_event(GUI_EVENT::IDLE), hitbox({ 0, 0, 0, 0 }), is_transitioning(false)
 {
 	//hitbox = {GetPosition().x, GetPosition().y, GetRect().w, GetRect().h };
 	hitbox = {position.x, position.y, rect.w, rect.h };
 }
 
-UI::UI() : element(UI_ELEMENT::EMPTY), position(0, 0), rect({ 0,0,0,0 }), listener(nullptr), parent(nullptr), drag_x_axis(false), drag_y_axis(false), is_draggable(false),is_drag_target(false)
-	, is_filled(false), is_interactible(false), is_visible(false), local_hitbox({ 0,0,0,0 }), local_rect({ 0,0,0,0 }), ui_event(UI_EVENT::IDLE),hitbox({0,0,0,0}), is_transitioning(false)
+GuiElement::GuiElement() : element(GUI_ELEMENT_TYPE::EMPTY), position(0, 0), rect({ 0,0,0,0 }), listener(nullptr), parent(nullptr), drag_x_axis(false), drag_y_axis(false), is_draggable(false),is_drag_target(false)
+	, is_filled(false), is_interactible(false), is_visible(false), local_hitbox({ 0,0,0,0 }), local_rect({ 0,0,0,0 }), ui_event(GUI_EVENT::IDLE),hitbox({0,0,0,0}), is_transitioning(false)
 {
 
 }
 
-UI::~UI()
+GuiElement::~GuiElement()
 {
 
 }
 
-bool UI::Draw()
+bool GuiElement::Draw()
 {	
 	return true;
 }
 
-void UI::CheckInput()
+void GuiElement::CheckInput()
 {
 	return;
 }
 
-void UI::CleanUp()
+void GuiElement::CleanUp()
 {
 	return;
 }
 
-SDL_Texture* UI::GetTexture() const
+SDL_Texture* GuiElement::GetTexture() const
 {
 	return nullptr;
 	//return App->gui_manager->GetAtlas();
 }
 
-void UI::BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed, float render_scale)
+void GuiElement::BlitElement(SDL_Texture* texture, int x, int y, SDL_Rect* rect, float speed, float render_scale)
 {
 	App->render->Blit(texture, x, y, rect, false, speed, render_scale);		//Setting the blit's speed argument to 0 will make the UI Element remain static in relation to the camera.
 }
 
 // ----------------------------------------- SET/GET METHODS -----------------------------------------
-void UI::SetScreenPos(iPoint position)
+void GuiElement::SetScreenPos(iPoint position)
 {
 	this->position = position;							//this-> Allows to overload the position variable name as it declares that the "position" we are setting is the one declared in UI.h.
 }
 
-iPoint UI::GetScreenPos() const
+iPoint GuiElement::GetScreenPos() const
 {
 	return position;									//Returns the position of a UI element.
 }
 
-void UI::SetScreenRect(SDL_Rect rect)
+void GuiElement::SetScreenRect(SDL_Rect rect)
 {
 	this->rect = rect;									//this-> Sets the pointer of a UI_Element so only that UI element's rect is changed. Moreover it allows to overload the rect variable name.
 }
 
-SDL_Rect UI::GetScreenRect() const
+SDL_Rect GuiElement::GetScreenRect() const
 {
 	return rect;										//Returns the rect of a UI element.
 }
 
-void UI::SetHitbox(SDL_Rect hitbox)
+void GuiElement::SetHitbox(SDL_Rect hitbox)
 {
 	this->hitbox = hitbox;								//this-> Sets the pointer of a UI_Element so only that UI element's hitbox is changed. Moreover it allows to overload the hitbox variable name.
 }
 
-SDL_Rect UI::GetHitbox() const
+SDL_Rect GuiElement::GetHitbox() const
 {
 	return hitbox;										//Returns the hitbox of a UI element.
 }
 
-void UI::SetLocalPos(iPoint local_position)
+void GuiElement::SetLocalPos(iPoint local_position)
 {
 	this->local_position = local_position;
 }
 
-iPoint UI::GetLocalPos() const
+iPoint GuiElement::GetLocalPos() const
 {
 	return local_position;
 }
 
-void UI::SetLocalRect(SDL_Rect local_rect)
+void GuiElement::SetLocalRect(SDL_Rect local_rect)
 {
 	int localPosX = local_rect.x - this->parent->rect.x;
 	int localPosY = local_rect.y - this->parent->rect.y;
@@ -107,7 +107,7 @@ void UI::SetLocalRect(SDL_Rect local_rect)
 	//SetScreenRect(newLocalRect);
 }
 
-SDL_Rect UI::GetLocalRect() const
+SDL_Rect GuiElement::GetLocalRect() const
 {
 	if (parent != NULL)
 	{
@@ -120,7 +120,7 @@ SDL_Rect UI::GetLocalRect() const
 	return { 0,0,0,0 };
 }
 
-void UI::SetLocalHitbox(SDL_Rect local_hitbox)
+void GuiElement::SetLocalHitbox(SDL_Rect local_hitbox)
 {
 	int localPosX = local_rect.x - this->parent->rect.x;
 	int localPosY = local_rect.y - this->parent->rect.y;
@@ -130,12 +130,12 @@ void UI::SetLocalHitbox(SDL_Rect local_hitbox)
 	this->local_hitbox = newLocalHitbox;
 }
 
-SDL_Rect UI::GetLocalHitbox() const
+SDL_Rect GuiElement::GetLocalHitbox() const
 {
 	return local_hitbox;
 }
 
-void UI::SetElementPosition(const iPoint& position)
+void GuiElement::SetElementPosition(const iPoint& position)
 {
 	this->position = position;
 
@@ -144,27 +144,27 @@ void UI::SetElementPosition(const iPoint& position)
 	SetHitbox({ position.x, position.y, hitbox.w, hitbox.h });
 }
 
-iPoint UI::GetElementPosition() const
+iPoint GuiElement::GetElementPosition() const
 {
 	return position;
 }
 
 // -------------------------------- UI ELEMENT INTERACTIONS --------------------------------
-iPoint UI::GetMousePos() /*const*/
+iPoint GuiElement::GetMousePos() /*const*/
 {
 	App->input->GetMousePosition(mouse_position.x, mouse_position.y);
 
 	return mouse_position;
 }
 
-iPoint UI::GetCursorPos() /*const*/
+iPoint GuiElement::GetCursorPos() /*const*/
 {
 	iPoint cursor_pos = App->player->cursor.GetScreenPos();							//TMP CONTROLLER
 
 	return cursor_pos;
 }
 
-iPoint UI::GetMouseTilePosition()
+iPoint GuiElement::GetMouseTilePosition()
 {
 	App->input->GetMousePosition(mouse_position.x, mouse_position.y);
 
@@ -179,13 +179,13 @@ iPoint UI::GetMouseTilePosition()
 	return mouse_tile_position;
 }
 
-bool UI::CheckMousePos() const
+bool GuiElement::CheckMousePos() const
 {
 	return(mouse_position.x > hitbox.x && mouse_position.x < hitbox.x + hitbox.w
 		&& mouse_position.y > hitbox.y && mouse_position.y < hitbox.y + hitbox.h);
 }
 
-bool UI::CheckCursorPos() const																				// TMP CONTROLLER
+bool GuiElement::CheckCursorPos() const																				// TMP CONTROLLER
 {
 	iPoint cursor_pos = App->player->cursor.GetScreenPos();
 	
@@ -193,39 +193,39 @@ bool UI::CheckCursorPos() const																				// TMP CONTROLLER
 			&& cursor_pos.y > hitbox.y && cursor_pos.y < hitbox.y + hitbox.h);
 }
 
-iPoint UI::GetMouseMotion() /*const*/
+iPoint GuiElement::GetMouseMotion() /*const*/
 {
 	App->input->GetMouseMotion(mouse_motion.x, mouse_motion.y);
 
 	return mouse_motion;
 }
 
-bool UI::IsHovered() const																					// Returns true if a UI Element is being hovered (The mouse is inside it's hitbox).
+bool GuiElement::IsHovered() const																					// Returns true if a UI Element is being hovered (The mouse is inside it's hitbox).
 {
 	return CheckMousePos();
 }
 
-bool UI::IsFocused() const																					// Returns true if the focused element is the same as the one that called the method.
+bool GuiElement::IsFocused() const																					// Returns true if the focused element is the same as the one that called the method.
 {
 	return App->gui_manager->focused_element == this;
 }
 
-bool UI::IsForemostElement() const																			// Return true if the element that called the method is the first under the mouse.
+bool GuiElement::IsForemostElement() const																			// Return true if the element that called the method is the first under the mouse.
 {
 	return App->gui_manager->FirstInteractibleElementUnderCursor() == this;
 }
 
-bool UI::ElementCanBeDragged() const																		// Returns true if the element that called the method meets the dragging conditions.
+bool GuiElement::ElementCanBeDragged() const																		// Returns true if the element that called the method meets the dragging conditions.
 {
 	return ((is_draggable && is_drag_target && App->gui_manager->FirstInteractibleElementUnderCursor() == this) || is_drag_target);
 }
 
-bool UI::ElementRemainedInPlace() const																		// Returns true if the element that called the method has remained in place.
+bool GuiElement::ElementRemainedInPlace() const																		// Returns true if the element that called the method has remained in place.
 {
 	return (GetScreenPos() == initial_position);
 }
 
-void UI::DragElement()																			// Will drag an element around taking into account where the mouse was and where it currently is.
+void GuiElement::DragElement()																			// Will drag an element around taking into account where the mouse was and where it currently is.
 {	
 																								// --- Updating the UI Element's position when it is being dragged.
 	iPoint origin(0, 0);																		//This prevents sending undragged elements to undesired places when passing 
@@ -245,7 +245,7 @@ void UI::DragElement()																			// Will drag an element around taking i
 	//iPoint draggingPos = position + GetMouseMotion();
 }
 
-void UI::AxisRestrictedDragElement(bool X_Axis, bool Y_Axis)
+void GuiElement::AxisRestrictedDragElement(bool X_Axis, bool Y_Axis)
 {
 	if (X_Axis == Y_Axis)
 	{
@@ -312,7 +312,7 @@ void UI::AxisRestrictedDragElement(bool X_Axis, bool Y_Axis)
 }
 
 // --- This method Checks if a UI Element has childs and updates them in case the UI Element (parent) has been moved/dragged.
-void UI::CheckElementChilds()
+void GuiElement::CheckElementChilds()
 {
 	if (App->gui_manager->ElementHasChilds(this))
 	{

@@ -7,7 +7,7 @@
 #include "Application.h"
 #include "Window.h"
 #include "GuiManager.h"
-#include "UI.h"
+#include "GuiElement.h"
 
 #include "Input.h"
 
@@ -586,7 +586,7 @@ void Input::TextInput()
 {
 	/*if (App->gui->focusedElement != nullptr)											
 	{
-		if (App->gui->focusedElement->element == UI_ELEMENT::INPUTBOX && App->gui->focusedElement->isVisible)
+		if (App->gui->focusedElement->element == GUI_ELEMENT_TYPE::INPUTBOX && App->gui->focusedElement->isVisible)
 		{
 			SDL_StartTextInput();														
 			text_input_is_enabled = true;													

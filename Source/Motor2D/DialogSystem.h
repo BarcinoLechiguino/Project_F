@@ -10,7 +10,7 @@
 #include "Point.h"
 
 struct _TTF_Font;
-class UI_Image;
+class GuiImage;
 
 enum class DialogState
 {

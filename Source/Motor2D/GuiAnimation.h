@@ -1,22 +1,22 @@
-#ifndef __UI_ANIMATION_H__
-#define __UI_ANIMATION_H__
+#ifndef __GUI_ANIMATION_H__
+#define __GUI_ANIMATION_H__
 
 #define MAX_RATE 1.0f
 #define MIN_RATE 0.0f
 
-class UI;
+class GuiElement;
 
-enum class UI_ANIMATION_TYPE									// Will be managed internally. There are no empty animations, so type will always be the same for each animation.
+enum class GUI_ANIMATION_TYPE									// Will be managed internally. There are no empty animations, so type will always be the same for each animation.
 {
 	FADE,
 	SLIDE
 };
 
-class UIAnimation
+class GuiAnimation
 {
 public:
-	UIAnimation(UI* element, UI_ANIMATION_TYPE type, float animation_duration, bool hide_on_completion);
-	virtual ~UIAnimation();
+	GuiAnimation(GuiElement* element, GUI_ANIMATION_TYPE type, float animation_duration, bool hide_on_completion);
+	virtual ~GuiAnimation();
 
 	virtual void Start();
 	virtual void StepAnimation();
@@ -31,9 +31,9 @@ public:
 	float GetAnimationStepRate(float animation_duration);
 
 public:
-	UI*		element;
+	GuiElement*		element;
 
-	UI_ANIMATION_TYPE type;
+	GUI_ANIMATION_TYPE type;
 
 	float	animation_duration;
 	float	current_animation_step_rate;
@@ -45,4 +45,4 @@ private:
 	float	animation_step_rate;
 };
 
-#endif // !__UI_ANIMATION_H__
+#endif // !__GUI_ANIMATION_H__

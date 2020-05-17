@@ -20,7 +20,7 @@ public:
 
 	void LoadGuiElements();
 
-	void OnEventCall(UI* element, UI_EVENT ui_event);
+	void OnEventCall(GuiElement* element, GUI_EVENT ui_event);
 
 	void ExecuteTransition();
 
@@ -30,7 +30,7 @@ public:
 	bool transition_to_main_menu_scene;
 
 
-	UI_Button*		lose_main_menu;
+	GuiButton*		lose_main_menu;
 
 private:
 	SDL_Rect		background_rect;
