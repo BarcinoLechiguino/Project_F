@@ -86,6 +86,7 @@
     <ClCompile Include="Boulder.cpp" />
     <ClCompile Include="Dependencies\mmgr\mmgr.cpp" />
     <ClCompile Include="Dependencies\PugiXml\src\pugixml.cpp" />
+    <ClCompile Include="DialogManager.cpp" />
     <ClCompile Include="Obelisk.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="CameraToMouse.cpp" />
@@ -93,7 +94,6 @@
     <ClCompile Include="Color.cpp" />
     <ClCompile Include="Console.cpp" />
     <ClCompile Include="Cut.cpp" />
-    <ClCompile Include="DialogSystem.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="EasingFunctions.cpp" />
     <ClCompile Include="Emitter.cpp" />
@@ -177,6 +177,7 @@
     <ClInclude Include="Boulder.h" />
     <ClInclude Include="Dependencies\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="Dependencies\PugiXml\src\pugixml.hpp" />
+    <ClInclude Include="DialogManager.h" />
     <ClInclude Include="Obelisk.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="CameraToMouse.h" />
@@ -184,7 +185,6 @@
     <ClInclude Include="Color.h" />
     <ClInclude Include="Console.h" />
     <ClInclude Include="Cut.h" />
-    <ClInclude Include="DialogSystem.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="EasingFunctions.h" />
     <ClInclude Include="Emitter.h" />

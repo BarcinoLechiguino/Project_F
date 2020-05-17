@@ -166,9 +166,6 @@
     <ClCompile Include="FowManager.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
-    <ClCompile Include="DialogSystem.cpp">
-      <Filter>Engine  ===========\Modules\Multimedia</Filter>
-    </ClCompile>
     <ClCompile Include="ParticleManager.cpp">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
@@ -261,6 +258,9 @@
     </ClCompile>
     <ClCompile Include="Boulder.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Obstacles\Obstacle Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="DialogManager.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -432,9 +432,6 @@
     <ClInclude Include="FowManager.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
-    <ClInclude Include="DialogSystem.h">
-      <Filter>Engine  ===========\Modules\Multimedia</Filter>
-    </ClInclude>
     <ClInclude Include="ParticleManager.h">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
@@ -536,6 +533,9 @@
     </ClInclude>
     <ClInclude Include="Boulder.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Obstacles\Obstacle Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="DialogManager.h">
+      <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

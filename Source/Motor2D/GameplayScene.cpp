@@ -1778,7 +1778,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 	if (element == HUD_dialogs_character_no_talking && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		if (App->dialog->dialog_state == DialogState::NOT_ACTIVE)
+		if (App->dialog->dialog_state == DIALOG_STATE::NOT_ACTIVE)
 		{
 			App->dialog->StartDialog(App->dialog->last_dialog);
 		}

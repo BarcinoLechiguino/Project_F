@@ -1,18 +1,17 @@
-#ifndef __DIALOGMANAGER_H__
-#define __DIALOGMANAGER_H__
+#ifndef __DIALOG_MANAGER_H__
+#define __DIALOG_MANAGER_H__
 
-#include <string>
-#include <vector>
-#include <queue>
-#include "Module.h"
 #include "Dependencies\SDL\include\SDL_pixels.h"
-#include "Timer.h"
+
+#include <queue>
+
+#include "Module.h"
 #include "Point.h"
 
 struct _TTF_Font;
 class GuiImage;
 
-enum class DialogState
+enum class DIALOG_STATE
 {
 	NOT_ACTIVE,
 	SLIDING_IN,
@@ -92,7 +91,7 @@ public:
 
 	float timer;
 
-	DialogState dialog_state;
+	DIALOG_STATE dialog_state;
 
 	bool is_clicked;
 	bool finished_typing;
@@ -102,4 +101,4 @@ public:
 public:
 	pugi::xml_document dialog_file;
 };
-#endif // __DIALOGSYSTEM_H__
+#endif // !__DIALOG_MANAGER_H__

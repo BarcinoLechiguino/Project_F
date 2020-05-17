@@ -37,7 +37,7 @@ void Dialog::NextBubble() //Next bubble in dialog
 	}
 	else
 	{
-		App->dialog->dialog_state = DialogState::TEXT_TYPING;
+		App->dialog->dialog_state = DIALOG_STATE::TEXT_TYPING;
 		App->dialog->EmptyText();
 	}
 }
@@ -49,7 +49,7 @@ DialogManager::DialogManager()
 	dialog_font = nullptr;
 	font_size = 20;
 
-	dialog_state = DialogState::NOT_ACTIVE;
+	dialog_state = DIALOG_STATE::NOT_ACTIVE;
 
 	is_clicked = false;
 	finished_typing = false;
@@ -84,23 +84,23 @@ bool DialogManager::Update(float dt)
 	{
 		switch (dialog_state)
 		{
-		case DialogState::NOT_ACTIVE:
+		case DIALOG_STATE::NOT_ACTIVE:
 			break;
 
-		case DialogState::SLIDING_IN:
+		case DIALOG_STATE::SLIDING_IN:
 
 			SlideIn();
 			break;
 
-		case DialogState::TEXT_TYPING:
+		case DIALOG_STATE::TEXT_TYPING:
 			TypeText();
 			break;
 
-		case DialogState::ACTIVE:
+		case DIALOG_STATE::ACTIVE:
 			NextBubbleCheck();
 			break;
 
-		case DialogState::SLIDING_OUT:
+		case DIALOG_STATE::SLIDING_OUT:
 			SlideOut();
 			break;
 		}
@@ -142,7 +142,7 @@ bool DialogManager::CleanUp()
 //This starts or queues a new dialog
 void DialogManager::StartDialog(int tree_id) 
 {
-	if (dialog_state != DialogState::NOT_ACTIVE) //Add dialog to queue
+	if (dialog_state != DIALOG_STATE::NOT_ACTIVE) //Add dialog to queue
 	{
 		for (std::vector<Dialog*>::iterator dialog = dialogs.begin(); dialog != dialogs.end(); ++dialog)
 		{
@@ -165,7 +165,7 @@ void DialogManager::StartDialog(int tree_id)
 				current_dialog = (*dialog);
 				current_dialog->current_bubble = 0; //set current bubble to first bubble
 
-				dialog_state = DialogState::SLIDING_IN;
+				dialog_state = DIALOG_STATE::SLIDING_IN;
 
 				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = true;
 				App->scene_manager->gameplay_scene->HUD_dialogs_background->is_interactible = true;
@@ -224,7 +224,7 @@ void DialogManager::NextDialog()
 
 	if (dialog_queue.empty())
 	{
-		dialog_state = DialogState::SLIDING_OUT;
+		dialog_state = DIALOG_STATE::SLIDING_OUT;
 		//current_dialog = nullptr;
 		App->scene_manager->gameplay_scene->HUD_dialogs_background->is_interactible = false;
 		App->gui_manager->CreateSlideAnimation(App->scene_manager->gameplay_scene->HUD_dialogs_background, 1.0f, false, current_dialog->position, iPoint(current_dialog->position.x - 500, current_dialog->position.y));
@@ -238,7 +238,7 @@ void DialogManager::NextDialog()
 	{
 		current_dialog = dialog_queue.front();
 		current_dialog->current_bubble = 0;
-		dialog_state = DialogState::TEXT_TYPING;
+		dialog_state = DIALOG_STATE::TEXT_TYPING;
 		EmptyText();
 	}
 }
@@ -295,7 +295,7 @@ void DialogManager::TypeText()
 
 	if (finished_typing)
 	{
-		dialog_state = DialogState::ACTIVE;
+		dialog_state = DIALOG_STATE::ACTIVE;
 		timer = 0;
 		text_buffer.clear();
 		finished_typing = false;
@@ -325,7 +325,7 @@ void DialogManager::SlideIn()
 			App->scene_manager->gameplay_scene->HUD_dialogs_screen_block->is_visible = true;
 		}
 
-		dialog_state = DialogState::TEXT_TYPING;
+		dialog_state = DIALOG_STATE::TEXT_TYPING;
 		EnableText();
 		App->scene_manager->gameplay_scene->HUD_dialogs_background->SetElementPosition(current_dialog->position);
 		SetTextPosition(current_dialog->position);
@@ -350,7 +350,7 @@ void DialogManager::SlideOut()
 		DisableText();
 		current_dialog = nullptr;
 		App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = false;
-		dialog_state = DialogState::NOT_ACTIVE;
+		dialog_state = DIALOG_STATE::NOT_ACTIVE;
 		
 	}
 }
@@ -409,7 +409,7 @@ bool DialogManager::LoadDialog()
 	SDL_Rect HUD_dialogs_char_talk_size = { 135, 770, 105, 175 };
 	App->scene_manager->gameplay_scene->HUD_dialogs_character_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 0, 0, HUD_dialogs_char_talk_size, false, false, false, nullptr, nullptr);
 
-	dialog_state = DialogState::NOT_ACTIVE;
+	dialog_state = DIALOG_STATE::NOT_ACTIVE;
 
 	return result;
 }
