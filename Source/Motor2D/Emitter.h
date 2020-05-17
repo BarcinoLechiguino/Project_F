@@ -53,7 +53,7 @@ private:
 	int rnd;
 	int particleLife;
 	SDL_Rect rect;
-	double emitterLife;
+
 	float cameraspeed;
 	uint layer; 
 
@@ -69,11 +69,12 @@ public:
 	Emitter(fPoint pos, float maxSpeed, float maxSize, fPoint angleRange, int emitVariance, float emitNumber, int maxParticleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect textureRect, const char* path, float cameraspeed, int spreadDirection, uint layer);
 	~Emitter();
 
-	bool Update(float dt);
-	bool PostUpdate();
+	bool  Update(float dt);
+	bool  PostUpdate();
 	float RandomizeParticles(float min, float max);
-	int GetSize() const { return size; }
-	void UpdatePos(fPoint newPos) { pos = newPos; }
+	int   GetSize() const { return size; }
+	void  UpdatePos(fPoint newPos) { pos = newPos; }
+	bool  IsEmitterToDelete() const;
 
 	Pool* container = nullptr;
 	int size = 5000;
@@ -83,6 +84,11 @@ public:
 	float randomAngle;
 	float randomSize;
 	float randomRotation;
+
+	double emitterLife;
+	float TimeLived; 
+
+	bool ToBeDeleted;
 
 	//POOL related
 	void CreateParticles(fPoint pos, float speed, float angle, float size, int life, float rotation, SDL_Rect tex, SDL_Color startColor, SDL_Color endColor);

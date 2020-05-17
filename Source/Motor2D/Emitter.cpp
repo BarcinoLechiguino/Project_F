@@ -35,7 +35,8 @@ Emitter::Emitter(fPoint pos, float speed, float size, fPoint angle, int rnd, flo
 	randomSize = -1.0f;
 	randomSpeed = -1.0f;
 
-
+	ToBeDeleted = false; 
+	TimeLived = 0.0f;
 	emissionRate = emission;
 }
 
@@ -50,6 +51,12 @@ bool Emitter::Update(float dt)
 {
 	bool ret = true;
 
+	if (emitterLife != -1) {
+		TimeLived += dt;
+		if (TimeLived > emitterLife) {
+			ToBeDeleted = true;
+		}
+	}
 
 	if (emissionRate > 1) {
 		for (int i = 1; i <= emissionRate; i++)
@@ -71,7 +78,6 @@ bool Emitter::Update(float dt)
 	else{
 		emissionRate += emission;
 	}
-
 
 	for (int i = 0; i < (int)particle_vec.size(); ++i)
 	{
@@ -104,12 +110,11 @@ bool Emitter::Update(float dt)
 			particle_vec.erase(particle_vec.begin() + i);
 		}
 	}
-
 	return ret;
 }
 
-bool Emitter::PostUpdate() {
-	
+bool Emitter::PostUpdate()
+{
 	for (int i = 0; i < (int)particle_vec.size(); ++i)
 	{
 		if (layer == 1) {
@@ -117,7 +122,6 @@ bool Emitter::PostUpdate() {
 
 			SDL_Rect drawRect = { (int)particle_vec[i]->startSize, (int)particle_vec[i]->startSize };
 			App->render->ColoredBlit(this->particle_tex, particle_vec[i]->pos.x + ((drawRect.w - particle_vec[i]->rectSize.w) / 2), particle_vec[i]->pos.y + ((drawRect.h - particle_vec[i]->rectSize.h) / 2), /*&particle_vec[i]->rect*/ NULL, &particle_vec[i]->rectSize, InterpolateColors(particle_vec[i]->startColor, particle_vec[i]->endColor, particle_vec[i]->fraction), cameraspeed);
-
 		}
 	}
 	return true;
@@ -176,4 +180,7 @@ float Emitter::RandomizeParticleColor(float min, float max)
 	return (max - min) * random + min;
 }
 
-
+bool  Emitter::IsEmitterToDelete() const 
+{
+	return ToBeDeleted;
+}

@@ -67,7 +67,6 @@ public:
 	
 	//Loads Emitter characteristics at Awake, to avoid reopening xml file
 	DataToLoad vecData[NUM_EMITTERS];
-
 };
 
 #endif // !__PARTICLE_MANAGER_H__
