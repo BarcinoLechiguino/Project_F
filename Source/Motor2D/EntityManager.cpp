@@ -398,7 +398,7 @@ void EntityManager::LoadEntityTextures()
 	boulder_tex			= App->tex->Load(entity_textures.child("boulder_texture").attribute("path").as_string());
 
 	// SPRITE RENDERING ORDER DEBUG TEXTURE
-	center_point_debug	= App->tex->Load(App->config_file.child("config").child("debug").child("center_position_debug").attribute("path").as_string());
+	center_point_debug	= App->tex->Load("Assets/maps/center_position_debug.png");//App->config_file.child("config").child("debug").child("center_position_debug").attribute("path").as_string()
 }
 
 void EntityManager::UnLoadEntityTextures()

@@ -23,7 +23,6 @@
 #include "Emitter.h"
 #include "QuestManager.h"
 
-
 #include "EntityManager.h"
 #include "Entity.h"
 
@@ -1449,16 +1448,6 @@ void GameplayScene::LoadGuiElements()
 
 	App->dialog->LoadDialog();
 
-	//Character
-	SDL_Rect HUD_dialogs_char_size = { 18, 777, 91, 165 };
-
-	HUD_dialogs_character_no_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 5, 30, HUD_dialogs_char_size, true, true, false, this, nullptr);
-
-	SDL_Rect HUD_dialogs_char_talk_size = { 138, 777, 91, 165 };
-
-	HUD_dialogs_character_talking = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 5, 30, HUD_dialogs_char_talk_size, false, true, false, this, nullptr);
-
-
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1877,6 +1866,11 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	}
 
 	if (element == HUD_dialogs_background && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->dialog->is_clicked = true;
+	}
+
+	if (element == HUD_dialogs_screen_block && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->dialog->is_clicked = true;
 	}
