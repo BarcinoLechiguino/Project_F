@@ -1,9 +1,8 @@
 #include "Emitter.h"
 #include "Render.h"
-//#include "j1Pool.h"
-//#include "j1Particle.h"
 #include "ParticleManager.h"
 #include "Textures.h"
+#include "Log.h"
 
 #include <time.h>
 #include <assert.h>
@@ -11,7 +10,7 @@
 
 #define PI 3.14159265359f 
 
-Emitter::Emitter(fPoint pos, float speed, float size, fPoint angle, int rnd, int emission, int particleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect rectangle, const char* path, float cameraspeed, int spreadDirection, uint layer)
+Emitter::Emitter(fPoint pos, float speed, float size, fPoint angle, int rnd, float emission, int particleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect rectangle, const char* path, float cameraspeed, int spreadDirection, uint layer)
 {
 	srand(time(NULL));
 
@@ -36,6 +35,9 @@ Emitter::Emitter(fPoint pos, float speed, float size, fPoint angle, int rnd, int
 	randomSize = -1.0f;
 	randomSpeed = -1.0f;
 
+	ToBeDeleted = false; 
+	TimeLived = 0.0f;
+	emissionRate = emission;
 }
 
 Emitter::~Emitter()
@@ -49,15 +51,32 @@ bool Emitter::Update(float dt)
 {
 	bool ret = true;
 
-	int emissionRate = (int)(emission + rnd);
+	if (emitterLife != -1) {
+		TimeLived += dt;
+		if (TimeLived > emitterLife) {
+			ToBeDeleted = true;
+		}
+	}
 
-	for (int i = 1; i <= emissionRate; i++)
-	{
-		randomSpeed = speed * RandomizeParticles(0.0f, 2.0f);
-		randomAngle = RandomizeParticles(angle.x, angle.y);
-		randomSize = emitterSize * RandomizeParticles(0.5f, 1.25f);
-		randomRotation = RandomizeParticles(0.0f, 360.0f);
-		CreateParticles(pos, randomSpeed, randomAngle, randomSize, particleLife, randomRotation, rect, startColor, endColor);
+	if (emissionRate > 1) {
+		for (int i = 1; i <= emissionRate; i++)
+		{
+			randomSpeed = speed * RandomizeParticles(0.0f, 2.0f);
+			randomAngle = RandomizeParticles(angle.x, angle.y);
+			randomSize = emitterSize * RandomizeParticles(0.5f, 1.25f);
+			randomRotation = RandomizeParticles(0.0f, 360.0f);
+			CreateParticles(pos, randomSpeed, randomAngle, randomSize, particleLife, randomRotation, rect, startColor, endColor);
+		}
+		if (emission < 1) {
+			emissionRate = 0;
+		}
+	}
+	else if (emissionRate < 0) {
+		LOG("Something broke at EmissionRate");
+		return false;
+	}
+	else{
+		emissionRate += emission;
 	}
 
 	for (int i = 0; i < (int)particle_vec.size(); ++i)
@@ -91,12 +110,11 @@ bool Emitter::Update(float dt)
 			particle_vec.erase(particle_vec.begin() + i);
 		}
 	}
-
 	return ret;
 }
 
-bool Emitter::PostUpdate() {
-	
+bool Emitter::PostUpdate()
+{
 	for (int i = 0; i < (int)particle_vec.size(); ++i)
 	{
 		if (layer == 1) {
@@ -104,7 +122,6 @@ bool Emitter::PostUpdate() {
 
 			SDL_Rect drawRect = { (int)particle_vec[i]->startSize, (int)particle_vec[i]->startSize };
 			App->render->ColoredBlit(this->particle_tex, particle_vec[i]->pos.x + ((drawRect.w - particle_vec[i]->rectSize.w) / 2), particle_vec[i]->pos.y + ((drawRect.h - particle_vec[i]->rectSize.h) / 2), /*&particle_vec[i]->rect*/ NULL, &particle_vec[i]->rectSize, InterpolateColors(particle_vec[i]->startColor, particle_vec[i]->endColor, particle_vec[i]->fraction), cameraspeed);
-
 		}
 	}
 	return true;
@@ -123,10 +140,10 @@ void Emitter::CreateParticles(fPoint pos, float speed, float angle, float size, 
 
 	float random = ((float)rand()) / (float)RAND_MAX;
 
-	particle_tocreate->pos.x = (this->rect.w - this->rect.x) * random + this->rect.x;
+	particle_tocreate->pos.x = (this->rect.w) * random + pos.x;
 
 	random = ((float)rand()) / (float)RAND_MAX;
-	particle_tocreate->pos.y = (this->rect.h - this->rect.y) * random + this->rect.y;
+	particle_tocreate->pos.y = (this->rect.h) * random + pos.y;
 
 	float test = sin(angle * PI / 180.0f) + sin(spreadDirection * PI / 180.0f);
 
@@ -163,4 +180,7 @@ float Emitter::RandomizeParticleColor(float min, float max)
 	return (max - min) * random + min;
 }
 
-
+bool  Emitter::IsEmitterToDelete() const 
+{
+	return ToBeDeleted;
+}

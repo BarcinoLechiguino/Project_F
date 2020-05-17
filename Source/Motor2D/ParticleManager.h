@@ -28,7 +28,7 @@ private:
 		SDL_Rect r;
 
 		float speed;
-		int emission;
+		float emission;
 		fPoint coneAngle;
 		float spreadDirection;
 		int particleLife;
@@ -59,6 +59,7 @@ public:
 	Emitter* SpawnEmitter(fPoint pos, EMITTER_TYPE type);
 	void LoadData();
 	bool RemoveEverything();
+	void DeleteEmitter(Emitter* todelete);
 
 
 	EMITTER_TYPE type;
@@ -66,7 +67,6 @@ public:
 	
 	//Loads Emitter characteristics at Awake, to avoid reopening xml file
 	DataToLoad vecData[NUM_EMITTERS];
-
 };
 
 #endif // !__PARTICLE_MANAGER_H__

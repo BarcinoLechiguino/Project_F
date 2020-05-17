@@ -86,8 +86,6 @@ bool GameplayScene::Start()
 
 	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_BACKGROUND);
 
-	App->particle_manager->SpawnEmitter({ 0,0 }, EMITTER_EXPLOSION);
-
 	return ret;
 }
 
@@ -263,6 +261,7 @@ void GameplayScene::InitScene()
 
 	App->entity_manager->resource_data = 0;
 	App->entity_manager->resource_electricity = 0;
+	App->entity_manager->resource_bits = 0;
 
 	App->render->camera.x = App->player->original_camera_position.x;
 	App->render->camera.y = App->player->original_camera_position.y;
@@ -591,18 +590,16 @@ void GameplayScene::BuildingUpgrade()
 	}
 }
 
-void GameplayScene::UnitUpgrade()
+void GameplayScene::UnitUpgrade(int unit)
 {
 	if (App->player->building_selected != nullptr)
 	{
-		Barracks* barrack = nullptr;
-		TownHall* townhall = nullptr;
+		Barracks* barrack = (Barracks*)App->player->building_selected;
+		TownHall* townhall = (TownHall*)App->player->building_selected;
 
-		switch (App->player->building_selected->type)
+		switch (unit)
 		{
-		case ENTITY_TYPE::TOWNHALL:
-
-			townhall = (TownHall*)App->player->building_selected;
+		case 0:
 
 			if (townhall->gatherer_level < townhall->max_gatherer_level)
 			{
@@ -613,9 +610,7 @@ void GameplayScene::UnitUpgrade()
 			}
 			break;
 
-		case ENTITY_TYPE::BARRACKS:
-
-			barrack = (Barracks*)App->player->building_selected;
+		case 1:
 
 			if (barrack->infantry_level < barrack->max_infantry_level)
 			{
@@ -624,6 +619,30 @@ void GameplayScene::UnitUpgrade()
 					barrack->infantry_level++;
 				}
 			}
+			break;
+
+		case 2:
+
+			if (townhall->scout_level < townhall->max_scout_level)
+			{
+				if (CheckResources(50, 100))
+				{
+					townhall->scout_level++;
+				}
+			}
+
+			break;
+
+		case 3:
+
+			if (barrack->heavy_level < barrack->max_heavy_level)
+			{
+				if (CheckResources(50, 100))
+				{
+					barrack->heavy_level++;
+				}
+			}
+
 			break;
 		}
 	}
@@ -1702,7 +1721,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
-		UnitUpgrade();
+		UnitUpgrade(0);
 		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price to upgrade Gatherer
@@ -1743,7 +1762,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_unit_upgrade_townhall_scout && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
-		UnitUpgrade();
+		UnitUpgrade(2);
 		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price to upgrade scout
@@ -1802,7 +1821,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
-		UnitUpgrade();
+		UnitUpgrade(1);
 		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price Upgrade Infantry
@@ -1842,7 +1861,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_unit_upgrade_barracks_heavy && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		// Upgrade Unit
-		UnitUpgrade();
+		UnitUpgrade(3);
 		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price Upgrade Heavy

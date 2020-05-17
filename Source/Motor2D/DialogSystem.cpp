@@ -38,7 +38,7 @@ void Dialog::NextBubble() //Next bubble in dialog
 	else
 	{
 		App->dialog->dialog_state = DialogState::TEXT_TYPING;
-		App->dialog->current_text.clear();
+		App->dialog->EmptyText();
 	}
 }
 
@@ -52,6 +52,12 @@ DialogSystem::DialogSystem()
 	dialog_state = DialogState::NOT_ACTIVE;
 
 	is_clicked = false;
+	finished_typing = false;
+
+	timer = nullptr;
+	dialog_color = { 0,0,0,0 };
+
+	steps_in_typing = 0;
 }
 
 bool DialogSystem::Awake(pugi::xml_node&)
@@ -161,7 +167,6 @@ void DialogSystem::StartDialog(int tree_id)
 			{
 				current_dialog = (*dialog);
 				current_dialog->current_bubble = 0; //set current bubble to first bubble
-				current_text.clear();
 
 				dialog_state = DialogState::SLIDING_IN;
 
@@ -231,25 +236,74 @@ void DialogSystem::NextDialog()
 	{
 		current_dialog = dialog_queue.front();
 		current_dialog->current_bubble = 0;
-		//LoadDialogTextures();
-		current_text.clear();
 		dialog_state = DialogState::TEXT_TYPING;
+		EmptyText();
 	}
 }
 
 void DialogSystem::TypeText()
 {
-	EmptyText();
-
 	int i = 0;
-	for (std::vector<std::string>::iterator text = current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.begin(); text != current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.end(); ++text)
+	
+	if (timer->Read() >= 50)
 	{
-		App->scene_manager->gameplay_scene->HUD_dialog_text[i]->RefreshTextInput((*text).c_str());
-		i++;
+		//type new letter
+		for (std::vector<std::string>::iterator text = current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.begin(); text != current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.end(); ++text)
+		{
+			if (steps_in_typing == i)
+			{
+				if (text_buffer != (*text))
+				{
+					for (int j = 0; j < (*text).size(); j++)
+					{
+						if (text_buffer[j] != (*text)[j])
+						{
+							text_buffer.push_back((*text)[j]);
+							App->scene_manager->gameplay_scene->HUD_dialog_text[i]->RefreshTextInput(text_buffer.c_str());
+							LOG("%s", text_buffer.c_str());
+							break;
+						}
+					}
+				}
+				else
+				{
+					steps_in_typing++;
+					text_buffer.clear();
+
+					if (steps_in_typing == current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.size())
+					{
+						finished_typing = true;
+					}
+				}
+				i++;
+				break;
+			}
+			i++;
+		}
+		timer->Start();
 	}
 
-	dialog_state = DialogState::ACTIVE;
-	timer->Start();
+	if (is_clicked)
+	{
+		int k = 0;
+		for (std::vector<std::string>::iterator text = current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.begin(); text != current_dialog->dialog_bubbles[current_dialog->current_bubble]->text.end(); ++text, ++k)
+		{
+			App->scene_manager->gameplay_scene->HUD_dialog_text[k]->RefreshTextInput((*text).c_str());
+		}
+
+		finished_typing = true;
+	}
+
+	if (finished_typing)
+	{
+		dialog_state = DialogState::ACTIVE;
+		timer->Start();
+		text_buffer.clear();
+		finished_typing = false;
+		is_clicked = false;
+		steps_in_typing = 0;
+	}
+	
 }
 
 void DialogSystem::SetTextPosition(iPoint position)

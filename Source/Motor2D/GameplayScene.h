@@ -52,7 +52,7 @@ public:
 
 	void BuildingUpgrade();
 
-	void UnitUpgrade();
+	void UnitUpgrade(int unit);
 
 	bool CheckResources(uint required_data, uint required_electricity);
 

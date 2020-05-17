@@ -200,6 +200,10 @@ void Minimap::DrawMinimap()
 	{
 		MapLayer* layer = *item;
 
+		if (layer->name == "walkability")
+		{
+			continue;
+		}
 		for (int y = 0; y < App->map->data.height; ++y)
 		{
 			for (int x = 0; x < App->map->data.width; ++x)

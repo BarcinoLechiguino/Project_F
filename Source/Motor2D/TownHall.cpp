@@ -217,6 +217,12 @@ void TownHall::InitEntity()
 	max_gatherer_level = 2;
 	max_scout_level = 2;
 
+	gatherer_data_cost = 100;
+	gatherer_electricity_cost = 50;
+
+	scout_data_cost = 100;
+	scout_electricity_cost = 50;
+
 	max_level = 2;
 
 	// HEALTHBAR & CREATION BAR

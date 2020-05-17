@@ -40,7 +40,6 @@ bool ParticleManager::Awake(pugi::xml_node& config)
 
 bool ParticleManager::Update(float dt)
 {
-
 	 for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	 {
 		 if ((*it) != nullptr) {
@@ -53,7 +52,7 @@ bool ParticleManager::Update(float dt)
 
 bool ParticleManager::PostUpdate()
 {
-
+/*
 	for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	{
 		if ((*it) != nullptr) {
@@ -65,17 +64,25 @@ bool ParticleManager::PostUpdate()
 	{
 		if ((*it)->remove)
 		{
-			delete (*it);
 			emittersList.erase(it);
 		}
 	}
-
+*/	
+	for (int i = 0; i < (int)emittersList.size(); ++i)
+	{
+		if (emittersList[i] != nullptr) {
+			emittersList[i]->PostUpdate();
+		}
+		if (emittersList[i]->IsEmitterToDelete())
+		{
+			RELEASE(emittersList[i]);
+		}
+	}
 	return true;
 }
 
 bool ParticleManager::CleanUp()
 {
-
 	for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	{
 		if ((*it) != nullptr)
@@ -93,7 +100,6 @@ Emitter* ParticleManager::SpawnEmitter(fPoint pos, EMITTER_TYPE type)
 
 	ret = new Emitter(pos, vecData[(int)type].speed, vecData[(int)type].size, vecData[(int)type].coneAngle, vecData[(int)type].rnd, vecData[(int)type].emission,
 			vecData[(int)type].particleLife, vecData[(int)type].emitterLife, vecData[(int)type].startColor, vecData[(int)type].endColor, vecData[(int)type].r, vecData[(int)type].path.c_str(), vecData[(int)type].cameraspeed, vecData[(int)type].spreadDirection, vecData[(int)type].layer);
-
 	
 	emittersList.push_back(ret);
 	
@@ -118,7 +124,7 @@ void ParticleManager::LoadData()
 		data.size = node.child("size").attribute("value").as_float();
 		data.coneAngle.x = node.child("cone_angle").attribute("min").as_float();
 		data.coneAngle.y = node.child("cone_angle").attribute("max").as_float();
-		data.emission = node.child("emission").attribute("value").as_int();
+		data.emission = node.child("emission").attribute("value").as_float();
 		data.rnd = node.child("rnd").attribute("value").as_int();
 		data.particleLife = node.child("particleLife").attribute("value").as_int();
 		data.emitterLife = node.child("emitterLife").attribute("value").as_float();
@@ -148,8 +154,6 @@ void ParticleManager::LoadData()
 	}
 }
 
-
-
 bool ParticleManager::RemoveEverything()
 {
 	bool ret = false;
@@ -161,6 +165,24 @@ bool ParticleManager::RemoveEverything()
 			ret = true;
 		}
 	}
-
 	return ret;
+}
+
+void ParticleManager::DeleteEmitter(Emitter* todelete) {
+
+	std::vector<Emitter*>::iterator item = emittersList.begin();
+
+	for (; item != emittersList.end(); ++item)
+	{
+		if ((*item) == todelete)
+		{
+			RELEASE(*item);
+
+			emittersList.erase(item);
+
+			emittersList.resize(emittersList.size());
+
+			break;
+		}
+	}
 }
