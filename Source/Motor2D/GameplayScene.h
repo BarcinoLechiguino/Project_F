@@ -4,6 +4,7 @@
 #include "Scene.h"
 
 struct SDL_Texture;
+struct _TTF_Font;
 
 class Timer;
 class PerfTimer;

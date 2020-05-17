@@ -777,6 +777,26 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 			objectgroup->object[index].type = OBELISK;
 			App->entity_manager->CreateEntity(ENTITY_TYPE::OBELISK, tile_coords.x, tile_coords.y);
 		}
+		else if (object_type == "enemy_heavy")
+		{
+			//objectgroup->object[index].type = HEAVY;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_HEAVY, tile_coords.x, tile_coords.y);
+		}
+		else if (object_type == "heavy")
+		{
+			//objectgroup->object[index].type = HEAVY;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::HEAVY, tile_coords.x, tile_coords.y);
+		}
+		else if (object_type == "enemy_scout")
+		{
+			//objectgroup->object[index].type = HEAVY;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, tile_coords.x, tile_coords.y);
+		}
+		else if (object_type == "scout")
+		{
+			//objectgroup->object[index].type = HEAVY;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::SCOUT, tile_coords.x, tile_coords.y);
+		}
 
 		index++;
 	}

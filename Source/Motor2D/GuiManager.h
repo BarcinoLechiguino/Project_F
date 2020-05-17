@@ -67,6 +67,8 @@ public:																		//  ------------------ GUI ELEMENT CREATION/DESTRUCTION
 	void DestroyGuiElements();
 	void DeleteGuiElement(GuiElement* element_to_delete);
 
+	void LoadGuiFonts();													//  Fonts do not need to be UnLoaded, they are all cleaned up at the Fonts module CleanUp().
+
 	void LoadGuiElementsAudio();
 	void UnLoadGuiElementsAudio();
 
@@ -125,11 +127,22 @@ public:																		// --- GUI AUDIO VARIABLES ---
 	uint						upgrade_button_clicked_fx;
 	uint						recruit_unit_button_clicked_fx;
 
+public:																		// --- GUI FONT VARIABLES ---
+	bool						fonts_already_loaded;
+	
+	_TTF_Font*					borgsquadcond_12;
+	_TTF_Font*					borgsquadcond_15;
+	_TTF_Font*					borgsquadcond_20;
+	_TTF_Font*					borgsquadcond_25;
+	_TTF_Font*					borgsquadcond_30;
+	_TTF_Font*					borgsquadcond_40;
+	_TTF_Font*					borgsquadcond_50;
+
 private:																	// --- GUI PRIVATE VARIABLES ---
 	SDL_Texture*				atlas;										//Texture of the atlas (UI Spritesheet)
 	std::string					atlas_file_name;							//Name of the atlas in the xml file.
 
-	std::vector<GuiElement*>			elements;									//List where all the UI elements in a scene will be stored at.
+	std::vector<GuiElement*>	elements;									//List where all the UI elements in a scene will be stored at.
 	std::vector<GuiAnimation*>	ui_animations;
 };
 

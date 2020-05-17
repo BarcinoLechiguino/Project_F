@@ -32,6 +32,8 @@
 GuiManager::GuiManager() : Module()
 {
 	name = ("gui");
+
+	fonts_already_loaded = false;
 	audio_already_loaded = false;
 }
 
@@ -58,6 +60,13 @@ bool GuiManager::Start()
 	ui_debug = false;
 	escape = true;
 
+	if (!fonts_already_loaded)
+	{
+		LoadGuiFonts();
+
+		fonts_already_loaded = true;
+	}
+	
 	if (!audio_already_loaded)
 	{
 		LoadGuiElementsAudio();
@@ -336,6 +345,19 @@ void GuiManager::DeleteGuiElement(GuiElement* element_to_delete)
 			return;
 		}
 	}
+}
+
+void GuiManager::LoadGuiFonts()
+{
+	std::string borgsquadcond = App->config_file.child("config").child("gui").child("fonts").child("borgsquadcond").attribute("path").as_string();
+
+	borgsquadcond_12 = App->font->Load(borgsquadcond.c_str(), 12);
+	borgsquadcond_15 = App->font->Load(borgsquadcond.c_str(), 15);
+	borgsquadcond_20 = App->font->Load(borgsquadcond.c_str(), 20);
+	borgsquadcond_25 = App->font->Load(borgsquadcond.c_str(), 25);
+	borgsquadcond_30 = App->font->Load(borgsquadcond.c_str(), 30);
+	borgsquadcond_40 = App->font->Load(borgsquadcond.c_str(), 40);
+	borgsquadcond_50 = App->font->Load(borgsquadcond.c_str(), 50);
 }
 
 void GuiManager::LoadGuiElementsAudio()
