@@ -86,11 +86,9 @@ bool ParticleManager::CleanUp()
 	for (std::vector<Emitter*>::iterator it = emittersList.begin(); it != emittersList.end(); ++it)
 	{
 		if ((*it) != nullptr)
-			delete (*it);
+			RELEASE(*it);
 	}
-
 	emittersList.clear();
-
 	return true;
 }
 

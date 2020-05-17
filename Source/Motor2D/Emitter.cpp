@@ -107,6 +107,7 @@ bool Emitter::Update(float dt)
 		else if (particle_vec[i]->life <= 0)
 		{
 			//DELETE PARTICLE;
+			RELEASE(particle_vec[i]);
 			particle_vec.erase(particle_vec.begin() + i);
 		}
 	}

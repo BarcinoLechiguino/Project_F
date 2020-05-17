@@ -9,6 +9,8 @@
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Player.h"
+#include "ParticleManager.h"
+#include "Emitter.h"
 #include "GuiManager.h"
 #include "GuiElement.h"
 #include "GuiHealthbar.h"
@@ -54,6 +56,8 @@ bool Gatherer::Update(float dt, bool do_logic)
 
 	UpdateUnitSpriteSection();
 
+	SmokeEmitter->UpdatePos({ pixel_position.x + 5, pixel_position.y - 20 });
+
 	selection_collider.x = (int)pixel_position.x + 10;
 	selection_collider.y = (int)pixel_position.y + 10;
 
@@ -89,6 +93,7 @@ bool Gatherer::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(occupied_tile, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
+	App->particle_manager->DeleteEmitter(SmokeEmitter);
 
 	entity_sprite = nullptr;
 
@@ -277,6 +282,9 @@ void Gatherer::InitEntity()
 	is_selectable = true;
 	is_selected = false;
 	path_full = false;
+
+	//PARTICLES
+	SmokeEmitter = App->particle_manager->SpawnEmitter({ pixel_position.x + 25, pixel_position.y - 20 }, EMITTER_GATHERER);
 
 	// STATS
 	speed = 400.0f;
