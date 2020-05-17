@@ -30,6 +30,7 @@ class TransitionManager;
 class SceneManager;
 class Minimap;
 class Movement;
+class EnemyAI;
 class FowManager;
 class DialogSystem;
 class ParticleManager;

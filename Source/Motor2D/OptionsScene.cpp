@@ -167,12 +167,6 @@ void OptionsScene::UpdateFXVolumeThumbPosition()
 	int world_thumb_pos = (int)floor(local_thumb_pos + (float)sfx_scrollbar->GetHitbox().x);
 
 	sfx_scrollbar->SetThumbHitbox({ world_thumb_pos, sfx_scrollbar->GetHitbox().y, sfx_scrollbar->GetHitbox().w, sfx_scrollbar->GetHitbox().h });
-
-	const uint tmp = 10;
-
-	std::string casual = { "My House %d", tmp };
-
-	LOG("%s", casual.c_str());
 }
 
 void OptionsScene::LoadGuiElements()
@@ -182,21 +176,17 @@ void OptionsScene::LoadGuiElements()
 	background_rect = { 0, 0, 1280, 720 };
 	background_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("options_scene").attribute("path").as_string());
 
-	std::string borgsquadcond = App->config_file.child("config").child("gui").child("fonts").child("borgsquadcond").attribute("path").as_string();
-
 	//Options Menu
 	SDL_Rect text_rect = { 0, 0, 100, 20 };
-	_TTF_Font* font = App->font->Load(borgsquadcond.c_str(), 40);
-	_TTF_Font* font2 = App->font->Load(borgsquadcond.c_str(), 30);
 	options_parent = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	//Options
 	std::string title_string = "Options";
-	options_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 370, 150, text_rect, font, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &title_string);
+	options_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 370, 150, text_rect, App->gui_manager->borgsquadcond_40, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &title_string);
 
 	//Music
 	std::string music_string = "Music";
-	music_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 457, 255, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &music_string);
+	music_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 457, 255, text_rect, App->gui_manager->borgsquadcond_30, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &music_string);
 
 	SDL_Rect scrollbar_rect = { 743,3,180,15 };
 	SDL_Rect thumb_rect = { 930,2,18,31 };
@@ -211,14 +201,14 @@ void OptionsScene::LoadGuiElements()
 
 	//SFX
 	std::string sfx_string = "SFX";
-	sfx_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 486, 289, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &sfx_string);
+	sfx_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 486, 289, text_rect, App->gui_manager->borgsquadcond_30, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &sfx_string);
 	sfx_scrollbar = (GuiScrollbar*)App->gui_manager->CreateScrollbar(GUI_ELEMENT_TYPE::SCROLLBAR, 570, 300, scrollbar_rect, thumb_rect, thumb_offset
 		, drag_area, drag_factor, true, false, false, true, false, false);
 	sfx_scrollbar->parent = options_parent;
 
 	//screen size
 	std::string resolution_string = "fullscreen";
-	resolution_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 380, 326, text_rect, font2, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
+	resolution_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 380, 326, text_rect, App->gui_manager->borgsquadcond_30, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, options_parent, &resolution_string);
 
 	// Fullscreen options
 
