@@ -1570,48 +1570,12 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 	if (element == HUD_pause_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		if (!App->transition_manager->is_transitioning)
-		{
-			// Pause
-			//App->pause = !App->pause;
-
-			if (!in_game_background->is_visible)
-			{
-				if (!in_game_background->is_transitioning)
-				{
-					App->pause = true;
-				}
-				
-				// Slide in from the left
-				iPoint current_pos = in_game_background->GetScreenPos();
-
-				iPoint origin = { -600, current_pos.y };
-				iPoint destination = { 380, current_pos.y };
-
-				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, false, origin, destination);
-				App->gui_manager->SetElementsVisibility(in_game_background, true);
-			}
-			else
-			{
-				if (!in_game_background->is_transitioning)
-				{
-					App->pause = false;
-				}
-				
-				// Slide out to the right.
-				iPoint origin = { 380, in_game_background->GetScreenPos().y };
-				iPoint destination = { 1281, in_game_background->GetScreenPos().y };
-
-				App->gui_manager->CreateSlideAnimation(in_game_background, 0.5f, true, origin, destination);
-			}
-
-			App->gui_manager->SetElementsVisibility(in_game_options_parent, !in_game_options_parent);
-
-			App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
-			//App->gui->SetElementsVisibility(HUD_pause_button, false);			
-			//App->gui->SetElementsVisibility(HUD_play_button, true);	
-			//element->ui_event = GUI_EVENT::IDLE;
-		}
+		// Pause
+		SwitchPauseMenuMode();
+		
+		//App->gui->SetElementsVisibility(HUD_pause_button, false);			
+		//App->gui->SetElementsVisibility(HUD_play_button, true);	
+		//element->ui_event = GUI_EVENT::IDLE;
 	}
 
 	//if (element == HUD_play_button && ui_event == GUI_EVENT::UNCLICKED)
@@ -1919,11 +1883,6 @@ void GameplayScene::SwitchPauseMenuMode()
 	App->audio->PlayFx(App->gui_manager->pause_menu_button_clicked_fx, 0);
 
 	//Mix_HaltMusic();
-
-	if (!App->transition_manager->is_transitioning)
-	{
-
-	}
 }
 
 // --- ENTITY HUD METHODS ---
