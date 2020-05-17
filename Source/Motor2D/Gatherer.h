@@ -3,6 +3,8 @@
 
 #include "DynamicObject.h"
 
+class Emitter;
+
 class Gatherer : public DynamicObject
 {
 public:
@@ -41,6 +43,7 @@ public:
 	Entity* GetTarget();
 	int GetAttackRange();
 
+
 	//void HandleFx();
 	//void SubstractResource();
 
@@ -52,6 +55,9 @@ public:
 	int		gathering_amount_data;
 	int		gathering_amount_electricity;
 	int		gathering_amount_bits;
+
+private:
+	Emitter* SmokeEmitter;
 };
 
 #endif // !__GATHERER_H__

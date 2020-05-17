@@ -350,9 +350,9 @@ void EntityManager::DeleteEntity(Entity* entity)
 	{
 		if ((*item) == entity)
 		{	
-			//if (1) {
-			//	App->particle_manager->SpawnEmitter(entity->pixel_position, EMITTER_EXPLOSION);
-			//}
+			if (IsUnit(entity)) {
+				App->particle_manager->SpawnEmitter({entity->pixel_position.x + 25, entity->pixel_position.y}, EMITTER_EXPLOSION);
+			}
 			
 			(*item)->CleanUp();
 			RELEASE((*item));

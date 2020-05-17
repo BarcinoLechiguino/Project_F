@@ -54,7 +54,6 @@ bool Obelisk::PostUpdate()
 {
 	if (current_health <= 0)
 	{
-		
 		App->entity_manager->DeleteEntity(this);
 		App->audio->PlayFx(App->entity_manager->gatherer_gathering_finished_fx);
 	}
