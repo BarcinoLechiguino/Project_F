@@ -189,12 +189,14 @@ bool GameplayScene::PostUpdate()
 				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, false, 0.0f, 255.0f);*/
 
 				App->gui_manager->SetElementsVisibility(in_game_background, true);
+
 			}
 			else
 			{
 				if (!in_game_background->is_transitioning)
 				{
 					App->pause = false;
+					
 				}
 				
 				// Slide out to the right.
@@ -221,6 +223,11 @@ bool GameplayScene::PostUpdate()
 	if (App->player->god_mode == false)
 	{
 		App->gui_manager->SetElementsVisibility(God_Mode_Activated, false);
+	}
+
+	if (App->pause)
+	{
+		App->audio->volume *= 0.5;
 	}
 
 	App->minimap->BlitMinimap();
