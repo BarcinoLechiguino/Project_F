@@ -16,7 +16,8 @@
     <enemy_wall_texture               path="Assets/entities/enemy_building_wall_placeholder.png"/>
     <rock_texture                     path="Assets/entities/neutral_resource_rocks.png"/>
     <tree_texture                     path="Assets/entities/neutral_resource_trees.png"/>
-    <bits_texture                     path="Assets/entities/neutral_resource_obelisk.png"/>
+    <obelisk_texture                  path="Assets/entities/neutral_resource_obelisk.png"/>
+    <boulder_texture                  path="Assets/entities/neutral_obstacle_boulder.png"/>
   </textures>
 
   <fx>

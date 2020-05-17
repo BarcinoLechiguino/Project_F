@@ -33,7 +33,8 @@ enum class ENTITY_TYPE
 	ENEMY_WALL,
 	ROCK,
 	TREE,
-	OBELISK
+	OBELISK,
+	BOULDER
 };
 
 struct EntityData
