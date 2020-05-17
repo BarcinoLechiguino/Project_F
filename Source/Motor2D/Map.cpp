@@ -853,7 +853,7 @@ bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)
 					{
 						//map[index] = (tile_id - tileset->firstgid);							//get the id of the tile we assigned: 0 = walkable, 1 = non walkable...
 
-						if ((tile_id - tileset->firstgid) > 0)
+						if ((tile_id - tileset->firstgid) == 0)
 						{
 							map[index] = 0;
 						}

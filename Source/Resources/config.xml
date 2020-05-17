@@ -123,14 +123,9 @@
 
       <cursor_click path=""/>
     </fx>
-  </gui>
-  
-  <scene_menu>
-    <audio path="Background music.ogg"/>
-  </scene_menu>
-    
+  </gui>    
   <scenes>
-    <map_name name="New_Tilesete_Map.tmx"/>
+    <map_name name="gameplay_map.tmx"/>
 
     <fx>
       <logo_scene_background_noise  path="Assets/audio/fx/scenes/logo_scene_background_noise.wav"/>
