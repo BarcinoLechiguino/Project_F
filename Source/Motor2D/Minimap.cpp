@@ -1,4 +1,3 @@
-#include "Minimap.h"
 #include "Brofiler/Brofiler.h"
 #include "Log.h"
 
@@ -9,12 +8,13 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
+#include "Map.h"
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Player.h"
 #include "FowManager.h"
 
-#include "Map.h"
+#include "Minimap.h"
 
 Minimap::Minimap() : Module(), minimap_loaded(false)
 {
