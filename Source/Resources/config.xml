@@ -132,6 +132,10 @@
   <scenes>
     <map_name name="New_Tilesete_Map.tmx"/>
 
+    <fx>
+      <logo_scene_background_noise  path="Assets/audio/fx/scenes/logo_scene_background_noise.wav"/>
+    </fx>
+      
     <music>
       <logo_scene       path=""/>
       <main_menu_scene  path="Assets/audio/music/main_menu_theme.ogg"/>

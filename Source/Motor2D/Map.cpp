@@ -64,6 +64,11 @@ void Map::Draw()
 
 	for (; layer != data.layers.end(); layer++)																	
 	{
+		if ((*layer)->name == "walkability")
+		{
+			continue;
+		}
+		
 		if (smaller_camera)
 		{
 			camera_pos_in_pixels.x = -App->render->camera.x + winWidth / 4;

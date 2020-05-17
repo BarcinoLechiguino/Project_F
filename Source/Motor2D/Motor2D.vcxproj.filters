@@ -256,6 +256,9 @@
     <ClCompile Include="Dependencies\mmgr\mmgr.cpp">
       <Filter>Engine  ===========\Sources</Filter>
     </ClCompile>
+    <ClCompile Include="Obstacle.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Obstacles</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -525,6 +528,9 @@
     <ClInclude Include="Dependencies\PugiXml\src\pugixml.hpp">
       <Filter>Engine  ===========\Tools\PuguiXML</Filter>
     </ClInclude>
+    <ClInclude Include="Obstacle.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Obstacles</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
@@ -633,6 +639,9 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Gui\Console">
       <UniqueIdentifier>{51ed0ee9-06de-4b6f-b7cb-42d8f01e37b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Static\Obstacles">
+      <UniqueIdentifier>{4fae6b27-4019-4f85-924e-c8dcad5158ec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

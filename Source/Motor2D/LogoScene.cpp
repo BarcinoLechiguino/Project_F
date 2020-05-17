@@ -13,7 +13,13 @@
 #include "Audio.h"
 #include "LogoScene.h"
 
-LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE), accumulated_time(0.f), background_rect({ 0, 0, 0, 0 }), background_texture(nullptr), logo_channel(0), logo_fx(0), logo_scene_duration(0.f)
+LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE)
+, accumulated_time(0.f)
+, background_rect({ 0, 0, 0, 0 })
+, background_texture(nullptr)
+, logo_channel(0)
+, logo_fx(0)
+, logo_scene_duration(0.f)
 {
 	name_tag = ("Logo");
 }
@@ -32,9 +38,7 @@ bool LogoScene::Start()
 {
 	InitScene();	
 
-	LOG("Logo scene start");
-
-	return true;	//crash
+	return true;
 }
 
 bool LogoScene::PreUpdate()
@@ -43,7 +47,7 @@ bool LogoScene::PreUpdate()
 }
 
 bool LogoScene::Update(float dt)
-{
+{	
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 	return true;
 }
@@ -97,8 +101,8 @@ void LogoScene::LoadGuiElements()
 
 void LogoScene::InitScene()
 {
-	//logo_fx = App->audio->LoadFx("audio/fx/LogoScreen_sfx.wav");
-	//logo_channel = App->audio->PlayFx(logo_fx, 0);
+	logo_fx = App->audio->LoadFx(App->config_file.child("config").child("scenes").child("fx").child("logo_scene_background_noise").attribute("path").as_string());
+	logo_channel = App->audio->PlayFx(logo_fx, 0);
 
 	logo_scene_duration = 5.0f;
 	accumulated_time	= 0.0f;
