@@ -42,13 +42,13 @@ bool MainMenuScene::Start()
 
 	LOG("Main menu scene start");
 
-	App->gui_manager->CreateSlideAnimation(new_game_button, 0.6f, false, iPoint(new_game_button->GetScreenPos().x, 1000), iPoint(new_game_button->GetScreenPos().x, 274));
+	App->gui_manager->CreateSlideAnimation(new_game_button, 0.6f, false, iPoint(new_game_button->GetScreenPos().x, 420), iPoint(new_game_button->GetScreenPos().x, 274));
 
-	App->gui_manager->CreateSlideAnimation(continue_button, 0.7f, false, iPoint(continue_button->GetScreenPos().x, 1200), iPoint(continue_button->GetScreenPos().x, 306));
+	App->gui_manager->CreateSlideAnimation(continue_button, 0.7f, false, iPoint(continue_button->GetScreenPos().x, 420), iPoint(continue_button->GetScreenPos().x, 306));
 	
-	App->gui_manager->CreateSlideAnimation(options_button, 0.8f, false, iPoint(options_button->GetScreenPos().x, 1400), iPoint(options_button->GetScreenPos().x, 336));
+	App->gui_manager->CreateSlideAnimation(options_button, 0.8f, false, iPoint(options_button->GetScreenPos().x, 420), iPoint(options_button->GetScreenPos().x, 336));
 	
-	App->gui_manager->CreateSlideAnimation(exit_button, 0.9f, false, iPoint(exit_button->GetScreenPos().x, 1600), iPoint(exit_button->GetScreenPos().x, 366));
+	App->gui_manager->CreateSlideAnimation(exit_button, 0.9f, false, iPoint(exit_button->GetScreenPos().x, 420), iPoint(exit_button->GetScreenPos().x, 366));
 	
 	return true;
 }
