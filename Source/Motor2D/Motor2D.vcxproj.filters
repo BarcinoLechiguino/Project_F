@@ -181,9 +181,6 @@
     <ClCompile Include="Emitter.cpp">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClCompile>
-    <ClCompile Include="Bits.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
-    </ClCompile>
     <ClCompile Include="Wall.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
     </ClCompile>
@@ -255,6 +252,9 @@
     </ClCompile>
     <ClCompile Include="GuiAnimationSlide.cpp">
       <Filter>Engine  ===========\Modules\Gui\Gui Animations\Gui Animation Types</Filter>
+    </ClCompile>
+    <ClCompile Include="Obelisk.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -441,9 +441,6 @@
     <ClInclude Include="Emitter.h">
       <Filter>Engine  ===========\Modules\Multimedia</Filter>
     </ClInclude>
-    <ClInclude Include="Bits.h">
-      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
-    </ClInclude>
     <ClInclude Include="Wall.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Buildings\Building Entities</Filter>
     </ClInclude>
@@ -524,6 +521,9 @@
     </ClInclude>
     <ClInclude Include="GuiAnimationSlide.h">
       <Filter>Engine  ===========\Modules\Gui\Gui Animations\Gui Animation Types</Filter>
+    </ClInclude>
+    <ClInclude Include="Obelisk.h">
+      <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -83,7 +83,7 @@
   <ItemGroup>
     <ClCompile Include="AlternatingBars.cpp" />
     <ClCompile Include="Barracks.cpp" />
-    <ClCompile Include="Bits.cpp" />
+    <ClCompile Include="Obelisk.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="CameraToMouse.cpp" />
     <ClCompile Include="Collisions.cpp" />
@@ -172,7 +172,7 @@
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bar.h" />
     <ClInclude Include="Barracks.h" />
-    <ClInclude Include="Bits.h" />
+    <ClInclude Include="Obelisk.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="CameraToMouse.h" />
     <ClInclude Include="Collisions.h" />

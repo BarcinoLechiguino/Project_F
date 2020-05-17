@@ -293,7 +293,7 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		break;
 
 	case ENTITY_TYPE::BITS:
-		entity = new Bits(x, y, type, level);
+		entity = new Obelisk(x, y, type, level);
 		break;
 	}
 

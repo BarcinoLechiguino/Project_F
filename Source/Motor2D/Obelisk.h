@@ -3,11 +3,11 @@
 
 #include "Resource.h"
 
-class Bits : public Resource
+class Obelisk : public Resource
 {
 public:
-	Bits(int x, int y, ENTITY_TYPE type, int level);
-	~Bits();
+	Obelisk(int x, int y, ENTITY_TYPE type, int level);
+	~Obelisk();
 
 	bool Awake(pugi::xml_node&);
 	bool Start();

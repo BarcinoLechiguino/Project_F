@@ -45,7 +45,7 @@
 #include "EnemyWall.h"
 #include "Rock.h"
 #include "Tree.h"
-#include "Bits.h"
+#include "Obelisk.h"
 
 #include "GuiManager.h"
 #include "GuiElement.h"
@@ -2121,7 +2121,7 @@ void GameplayScene::UnitDebugKeys()
 
 			if (App->input->GetKey(SDL_SCANCODE_Y) == KEY_STATE::KEY_DOWN)
 			{
-				(Bits*)App->entity_manager->CreateEntity(ENTITY_TYPE::BITS, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
+				(Obelisk*)App->entity_manager->CreateEntity(ENTITY_TYPE::BITS, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_K) == KEY_STATE::KEY_DOWN)

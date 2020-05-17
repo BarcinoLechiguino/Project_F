@@ -10,36 +10,36 @@
 #include "FowManager.h"
 #include "EntityManager.h"
 
-#include "Bits.h"
+#include "Obelisk.h"
 
-Bits::Bits(int x, int y, ENTITY_TYPE type, int level) : Resource(x, y, type, level)
+Obelisk::Obelisk(int x, int y, ENTITY_TYPE type, int level) : Resource(x, y, type, level)
 {
 	InitEntity();
 }
 
-Bits::~Bits()
+Obelisk::~Obelisk()
 {
 
 }
 
-bool Bits::Awake(pugi::xml_node& config)
+bool Obelisk::Awake(pugi::xml_node& config)
 {
 	return true;
 }
 
-bool Bits::Start()
+bool Obelisk::Start()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
 	
 	return true;
 }
 
-bool Bits::PreUpdate()
+bool Obelisk::PreUpdate()
 {
 	return true;
 }
 
-bool Bits::Update(float dt, bool do_logic)
+bool Obelisk::Update(float dt, bool do_logic)
 {
 	// FOG OF WAR
 	is_visible = fow_entity->is_visible;										// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
@@ -47,7 +47,7 @@ bool Bits::Update(float dt, bool do_logic)
 	return true;
 }
 
-bool Bits::PostUpdate()
+bool Obelisk::PostUpdate()
 {
 	if (current_health <= 0)
 	{
@@ -58,7 +58,7 @@ bool Bits::PostUpdate()
 	return true;
 }
 
-bool Bits::CleanUp()
+bool Obelisk::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
@@ -79,12 +79,12 @@ bool Bits::CleanUp()
 	return true;
 }
 
-void Bits::Draw()
+void Obelisk::Draw()
 {
 	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 20, blit_section);
 }
 
-void Bits::InitEntity()
+void Obelisk::InitEntity()
 {
 	// POSITION & SIZE
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
@@ -124,7 +124,7 @@ void Bits::InitEntity()
 	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
 }
 
-void Bits::AttachHealthbarToEntity()
+void Obelisk::AttachHealthbarToEntity()
 {
 	healthbar_position_offset.y = -25;
 	healthbar_position_offset.x = -30;
