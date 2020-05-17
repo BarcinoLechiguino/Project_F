@@ -80,7 +80,9 @@ public:
 	std::vector<Dialog*> dialogs; //Dialogs loaded available
 	std::queue<Dialog*> dialog_queue; //queue storing pending dialogs
 	Dialog* current_dialog;
-	std::string current_text;
+
+	std::string text_buffer;
+	int steps_in_typing;
 
 	SDL_Color dialog_color;
 	_TTF_Font* dialog_font;

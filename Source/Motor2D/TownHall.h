@@ -44,6 +44,12 @@ public:
 	float		gatherer_creation_time;
 	float		scout_creation_time;
 
+	int			gatherer_data_cost;
+	int			gatherer_electricity_cost;
+	
+	int			scout_data_cost;
+	int			scout_electricity_cost;
+
 	ENTITY_TYPE created_unit_type;
 	bool		creating_unit;
 };

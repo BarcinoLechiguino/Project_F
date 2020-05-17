@@ -281,6 +281,9 @@
 
         <gatherer_creation_time time="1.0f"/>
 
+        <gatherer_cost data="100" electricity="50"/>
+        <scout_cost data="100" electricity="50"/>
+
         <healthbar_background_section x="618" y="12" w="115" h="9"/>
         <healthbar_section x="618" y="23" w="115" h="9"/>
         <healthbar_position_offset x="-6" y="-6"/>
@@ -302,6 +305,9 @@
         <scout_creation_time time="1.0f"/>
         <infantry_creation_time time="2.0f"/>
         <heavy_creation_time time="5.0f"/>
+
+        <infantry_cost data="100" electricity="50"/>
+        <heavy_cost data="100" electricity="50"/>
 
         <healthbar_background_section x="618" y="12" w="115" h="9"/>
         <healthbar_section x="618" y="23" w="115" h="9"/>
