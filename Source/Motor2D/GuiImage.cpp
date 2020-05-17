@@ -61,6 +61,11 @@ bool GuiImage::Draw()
 	{
 		BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &GetScreenRect(), 0.0f, 1.0f);		//GetPosition() is used as the position variable in the UI parent class will be initialized with the values of the GuiImage instance at constructor call
 	}
+
+	/*if (this->element == GUI_ELEMENT_TYPE::EMPTY)
+	{
+		App->render->DrawQuad(GetHitbox(),0,0,0,100,true,false);
+	}*/
 	
 	return true;
 }

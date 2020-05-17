@@ -17,6 +17,17 @@ class GuiButton;
 class GuiInputBox;
 class GuiScrollbar;
 
+struct Tutorial
+{
+	enum class TutorialState
+	{
+
+	};
+
+	bool lock_camera;
+	TutorialState tutorial_state;
+};
+
 class GameplayScene : public Scene
 {
 public:
@@ -107,6 +118,8 @@ public:
 
 	iPoint					firstOriginalPos;
 	iPoint					secondOrigianlPos;
+
+	Tutorial				tutorial;
 	
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;

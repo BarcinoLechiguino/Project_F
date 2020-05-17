@@ -22,7 +22,7 @@
 #include "SceneManager.h"
 #include "Movement.h"
 #include "FowManager.h"
-#include "DialogSystem.h"
+#include "DialogManager.h"
 #include "ParticleManager.h"
 #include "QuestManager.h"
 
@@ -57,7 +57,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	scene_manager		= new SceneManager();
 	movement			= new Movement();
 	fow_manager			= new FowManager();
-	dialog				= new DialogSystem();
+	dialog				= new DialogManager();
 	particle_manager	= new ParticleManager();
 	quest_manager		= new QuestManager();
 

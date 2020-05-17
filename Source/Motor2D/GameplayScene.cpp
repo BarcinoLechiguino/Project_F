@@ -18,7 +18,7 @@
 #include "Console.h"
 #include "Player.h"
 #include "Scene.h"
-#include "DialogSystem.h"
+#include "DialogManager.h"
 #include "ParticleManager.h"
 #include "Emitter.h"
 #include "QuestManager.h"
@@ -1873,6 +1873,14 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_dialogs_screen_block && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->dialog->is_clicked = true;
+	}
+
+	if (element == HUD_dialogs_character_no_talking && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		if (App->dialog->dialog_state == DialogState::NOT_ACTIVE)
+		{
+			App->dialog->StartDialog(App->dialog->last_dialog);
+		}
 	}
 }
 

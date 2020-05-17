@@ -31,7 +31,7 @@ class SceneManager;
 class Minimap;
 class Movement;
 class FowManager;
-class DialogSystem;
+class DialogManager;
 class ParticleManager;
 class QuestManager;
 
@@ -99,7 +99,7 @@ public:
 	Minimap*			minimap;
 	Movement*			movement;
 	FowManager*			fow_manager;
-	DialogSystem*		dialog;
+	DialogManager*		dialog;
 	ParticleManager*	particle_manager;
 	QuestManager*		quest_manager;
 

@@ -1,5 +1,5 @@
-#ifndef __DIALOGSYSTEM_H__
-#define __DIALOGSYSTEM_H__
+#ifndef __DIALOGMANAGER_H__
+#define __DIALOGMANAGER_H__
 
 #include <string>
 #include <vector>
@@ -47,11 +47,11 @@ public:
 	bool pause_game;
 };
 
-class DialogSystem : public Module
+class DialogManager : public Module
 {
 public: 
-	DialogSystem();
-	~DialogSystem();
+	DialogManager();
+	~DialogManager();
 
 	bool Awake(pugi::xml_node&);
 	bool Start();

@@ -11,6 +11,8 @@
 #include "Console.h"
 #include "Entity.h"
 #include "Player.h"									// TMP CONTROLLER
+#include "SceneManager.h"
+#include "GameplayScene.h"
 
 #include "GuiManager.h"
 #include "GuiElement.h"
@@ -140,6 +142,11 @@ bool GuiManager::PostUpdate()
 		if (elements[i]->is_visible)
 		{
 			elements[i]->Draw();
+
+			if (elements[i] == App->scene_manager->gameplay_scene->HUD_dialogs_screen_block)//fix
+			{
+				App->render->DrawQuad({ 0,0,1280,720 }, 0, 0, 0, 100, true, false);
+			}
 		}
 	}
 
