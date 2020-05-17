@@ -9,6 +9,8 @@
 #include "GuiHealthbar.h"
 #include "FowManager.h"
 #include "EntityManager.h"
+#include "Emitter.h"
+#include "ParticleManager.h"
 
 #include "Obelisk.h"
 
@@ -30,7 +32,8 @@ bool Obelisk::Awake(pugi::xml_node& config)
 bool Obelisk::Start()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
-	
+	SparkEmitter = App->particle_manager->SpawnEmitter({pixel_position.x + 5, pixel_position.y - 20}, EMITTER_OBELISK);
+
 	return true;
 }
 
@@ -51,6 +54,7 @@ bool Obelisk::PostUpdate()
 {
 	if (current_health <= 0)
 	{
+		
 		App->entity_manager->DeleteEntity(this);
 		App->audio->PlayFx(App->entity_manager->gatherer_gathering_finished_fx);
 	}
@@ -62,6 +66,7 @@ bool Obelisk::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
+	App->particle_manager->DeleteEmitter(SparkEmitter);
 
 	entity_sprite = nullptr;
 
@@ -81,7 +86,7 @@ bool Obelisk::CleanUp()
 
 void Obelisk::Draw()
 {
-	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 20, blit_section);
+	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 45);
 }
 
 void Obelisk::InitEntity()
@@ -101,8 +106,6 @@ void Obelisk::InitEntity()
 
 	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetBitsTexture();
-	int bits_version = (rand() % 4) * 54;
-	blit_section = new SDL_Rect{ bits_version, 0, 54, 44 };
 
 	// FLAGS
 	is_selected = false;

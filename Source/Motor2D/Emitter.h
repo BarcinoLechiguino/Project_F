@@ -15,7 +15,9 @@ enum EMITTER_TYPE
 {
 	EMITTER_NONE,
 	EMITTER_BACKGROUND,
-	EMITTER_EXPLOSION
+	EMITTER_EXPLOSION,
+	EMITTER_GATHERER,
+	EMITTER_OBELISK
 };
 
 struct Particle
@@ -47,7 +49,7 @@ private:
 	int spreadDirection;
 	float speed;
 	float emitterSize;
-	int emission;
+	float emission;
 	int rnd;
 	int particleLife;
 	SDL_Rect rect;
@@ -60,9 +62,11 @@ private:
 
 	SDL_Texture* particle_tex = nullptr;
 
+	float emissionRate;
+
 public:
 
-	Emitter(fPoint pos, float maxSpeed, float maxSize, fPoint angleRange, int emitVariance, int emitNumber, int maxParticleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect textureRect, const char* path, float cameraspeed, int spreadDirection, uint layer);
+	Emitter(fPoint pos, float maxSpeed, float maxSize, fPoint angleRange, int emitVariance, float emitNumber, int maxParticleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect textureRect, const char* path, float cameraspeed, int spreadDirection, uint layer);
 	~Emitter();
 
 	bool Update(float dt);
