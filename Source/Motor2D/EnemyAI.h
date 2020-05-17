@@ -7,6 +7,13 @@ class Entity;
 class EnemyTownHall;
 class EnemyBarracks;
 
+enum class ENEMY_AI_STATE
+{
+	IDLE,
+	PATROLING,
+	ATTACKING
+};
+
 class EnemyAI : public Module
 {
 public:
