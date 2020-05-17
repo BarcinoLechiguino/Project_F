@@ -3,6 +3,8 @@
 
 #include "Resource.h"
 
+class Emitter;
+
 class Obelisk : public Resource
 {
 public:
@@ -24,7 +26,7 @@ public:
 	void AttachHealthbarToEntity();
 
 private:
-
+	Emitter* SparkEmitter;
 };
 
 #endif // !__OBELISK_H__

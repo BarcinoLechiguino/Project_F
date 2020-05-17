@@ -1,9 +1,8 @@
 #include "Emitter.h"
 #include "Render.h"
-//#include "j1Pool.h"
-//#include "j1Particle.h"
 #include "ParticleManager.h"
 #include "Textures.h"
+#include "Log.h"
 
 #include <time.h>
 #include <assert.h>
@@ -11,7 +10,7 @@
 
 #define PI 3.14159265359f 
 
-Emitter::Emitter(fPoint pos, float speed, float size, fPoint angle, int rnd, int emission, int particleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect rectangle, const char* path, float cameraspeed, int spreadDirection, uint layer)
+Emitter::Emitter(fPoint pos, float speed, float size, fPoint angle, int rnd, float emission, int particleLife, double emitterLife, SDL_Color startColor, SDL_Color endColor, SDL_Rect rectangle, const char* path, float cameraspeed, int spreadDirection, uint layer)
 {
 	srand(time(NULL));
 
@@ -36,6 +35,8 @@ Emitter::Emitter(fPoint pos, float speed, float size, fPoint angle, int rnd, int
 	randomSize = -1.0f;
 	randomSpeed = -1.0f;
 
+
+	emissionRate = emission;
 }
 
 Emitter::~Emitter()
@@ -49,16 +50,28 @@ bool Emitter::Update(float dt)
 {
 	bool ret = true;
 
-	int emissionRate = (int)(emission + rnd);
 
-	for (int i = 1; i <= emissionRate; i++)
-	{
-		randomSpeed = speed * RandomizeParticles(0.0f, 2.0f);
-		randomAngle = RandomizeParticles(angle.x, angle.y);
-		randomSize = emitterSize * RandomizeParticles(0.5f, 1.25f);
-		randomRotation = RandomizeParticles(0.0f, 360.0f);
-		CreateParticles(pos, randomSpeed, randomAngle, randomSize, particleLife, randomRotation, rect, startColor, endColor);
+	if (emissionRate > 1) {
+		for (int i = 1; i <= emissionRate; i++)
+		{
+			randomSpeed = speed * RandomizeParticles(0.0f, 2.0f);
+			randomAngle = RandomizeParticles(angle.x, angle.y);
+			randomSize = emitterSize * RandomizeParticles(0.5f, 1.25f);
+			randomRotation = RandomizeParticles(0.0f, 360.0f);
+			CreateParticles(pos, randomSpeed, randomAngle, randomSize, particleLife, randomRotation, rect, startColor, endColor);
+		}
+		if (emission < 1) {
+			emissionRate = 0;
+		}
 	}
+	else if (emissionRate < 0) {
+		LOG("Something broke at EmissionRate");
+		return false;
+	}
+	else{
+		emissionRate += emission;
+	}
+
 
 	for (int i = 0; i < (int)particle_vec.size(); ++i)
 	{
@@ -123,10 +136,10 @@ void Emitter::CreateParticles(fPoint pos, float speed, float angle, float size, 
 
 	float random = ((float)rand()) / (float)RAND_MAX;
 
-	particle_tocreate->pos.x = (this->rect.w - this->rect.x) * random + this->rect.x;
+	particle_tocreate->pos.x = (this->rect.w) * random + pos.x;
 
 	random = ((float)rand()) / (float)RAND_MAX;
-	particle_tocreate->pos.y = (this->rect.h - this->rect.y) * random + this->rect.y;
+	particle_tocreate->pos.y = (this->rect.h) * random + pos.y;
 
 	float test = sin(angle * PI / 180.0f) + sin(spreadDirection * PI / 180.0f);
 
