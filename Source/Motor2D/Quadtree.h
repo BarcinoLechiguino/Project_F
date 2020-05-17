@@ -1,7 +1,7 @@
 #ifndef __QUADTREE__H_
 #define __QUADTREE__H_
 
-#include "SDL/include/SDL_rect.h"
+#include "Dependencies/SDL/include/SDL_rect.h"
 #include "Definitions.h"
 #include "Point.h"
 

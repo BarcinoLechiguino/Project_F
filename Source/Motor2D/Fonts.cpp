@@ -4,9 +4,9 @@
 #include "Textures.h"
 #include "Fonts.h"
 
-#include "SDL\include\SDL.h"
-#include "SDL_ttf\include\SDL_ttf.h"
-#pragma comment( lib, "SDL_ttf/libx86/SDL2_ttf.lib" )
+#include "Dependencies\SDL\include\SDL.h"
+#include "Dependencies\SDL_ttf\include\SDL_ttf.h"
+#pragma comment( lib, "Dependencies/SDL_ttf/libx86/SDL2_ttf.lib" )
 
 Fonts::Fonts() : Module()
 {

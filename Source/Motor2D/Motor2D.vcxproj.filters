@@ -1,12 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="PugiXml\src\pugixml.cpp">
-      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
-    </ClCompile>
-    <ClCompile Include="mmgr\mmgr.cpp">
-      <Filter>Engine  ===========\Sources</Filter>
-    </ClCompile>
     <ClCompile Include="Main.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
@@ -256,14 +250,14 @@
     <ClCompile Include="Obelisk.cpp">
       <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
     </ClCompile>
+    <ClCompile Include="Dependencies\PugiXml\src\pugixml.cpp">
+      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
+    </ClCompile>
+    <ClCompile Include="Dependencies\mmgr\mmgr.cpp">
+      <Filter>Engine  ===========\Sources</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="PugiXml\src\pugiconfig.hpp">
-      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
-    </ClInclude>
-    <ClInclude Include="PugiXml\src\pugixml.hpp">
-      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
-    </ClInclude>
     <ClInclude Include="Module.h">
       <Filter>Engine  ===========\Core</Filter>
     </ClInclude>
@@ -524,6 +518,12 @@
     </ClInclude>
     <ClInclude Include="Obelisk.h">
       <Filter>Engine  ===========\Modules\Entities\Static\Resources\Resource Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\PugiXml\src\pugiconfig.hpp">
+      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
+    </ClInclude>
+    <ClInclude Include="Dependencies\PugiXml\src\pugixml.hpp">
+      <Filter>Engine  ===========\Tools\PuguiXML</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

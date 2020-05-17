@@ -5,7 +5,7 @@
 #include "Render.h"
 #include "Entity.h"
 
-#include "Brofiler\Brofiler.h"
+#include "Dependencies\Brofiler\Brofiler.h"
 
 EntityQuadTree::EntityQuadTree(SDL_Rect quadtree, uint level, uint max_levels) : QuadTree(quadtree, level, max_levels)
 {

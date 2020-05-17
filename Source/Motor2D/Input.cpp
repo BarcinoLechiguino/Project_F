@@ -1,6 +1,6 @@
-#include "SDL/include/SDL.h"
-#include "SDL/include/SDL_gamecontroller.h"
-#include "Brofiler\Brofiler.h"
+#include "Dependencies/SDL/include/SDL.h"
+#include "Dependencies/SDL/include/SDL_gamecontroller.h"
+#include "Dependencies\Brofiler\Brofiler.h"
 
 #include "Log.h"
 

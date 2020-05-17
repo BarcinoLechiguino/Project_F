@@ -1,4 +1,4 @@
-#include "Brofiler\Brofiler.h"
+#include "Dependencies\Brofiler\Brofiler.h"
 //#include "mmgr/mmgr.h"
 
 #include <algorithm>
@@ -40,7 +40,7 @@
 
 #include "Rock.h"
 #include "Tree.h"
-#include "Bits.h"
+#include "Obelisk.h"
 
 struct 
 {

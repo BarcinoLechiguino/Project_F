@@ -1,7 +1,7 @@
 #ifndef __GUI_ELEMENT_H__
 #define __GUI_ELEMENT_H__
 
-#include "SDL/include/SDL.h"
+#include "Dependencies/SDL/include/SDL.h"
 #include "Module.h"
 #include "Point.h"
 

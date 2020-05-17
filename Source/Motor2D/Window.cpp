@@ -1,4 +1,4 @@
-#include "SDL/include/SDL.h"
+#include "Dependencies/SDL/include/SDL.h"
 
 #include "Definitions.h"
 #include "Log.h"

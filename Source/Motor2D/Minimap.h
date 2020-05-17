@@ -1,4 +1,4 @@
-#include "SDL\include\SDL.h"
+#include "Dependencies\SDL\include\SDL.h"
 #include "Application.h"
 #include "Module.h"
 #include "Point.h"

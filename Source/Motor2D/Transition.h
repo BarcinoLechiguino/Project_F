@@ -1,7 +1,7 @@
 #ifndef __TRANSITION_H__
 #define __TRANSITION_H__
 
-#include "SDL/include/SDL.h"
+#include "Dependencies/SDL/include/SDL.h"
 
 enum class SCENES;
 

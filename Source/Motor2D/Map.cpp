@@ -1,5 +1,5 @@
-#include "Brofiler\Brofiler.h"
-//#include "mmgr/mmgr.h"
+#include "Dependencies\Brofiler\Brofiler.h"
+//#include "Dependencies/mmgr/mmgr.h"
 
 #include <math.h>
 #include "Definitions.h"

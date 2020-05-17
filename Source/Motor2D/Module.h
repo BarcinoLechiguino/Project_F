@@ -6,7 +6,7 @@
 #ifndef __MODULE_H__
 #define __MODULE_H__
 
-#include "PugiXml\src\pugixml.hpp"
+#include "Dependencies\PugiXml\src\pugixml.hpp"
 #include <string>
 #include <vector>
 #include <list>

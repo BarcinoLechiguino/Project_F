@@ -1,7 +1,7 @@
 #ifndef __AUDIO_H__
 #define __AUDIO_H__
 
-#include "SDL_mixer\include\SDL_mixer.h"
+#include "Dependencies\SDL_mixer\include\SDL_mixer.h"
 #include "Point.h"
 #include "Module.h"
 

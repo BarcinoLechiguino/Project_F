@@ -5,7 +5,7 @@
 #include <vector>
 #include <queue>
 #include "Module.h"
-#include "SDL\include\SDL_pixels.h"
+#include "Dependencies\SDL\include\SDL_pixels.h"
 #include "Timer.h"
 #include "Point.h"
 

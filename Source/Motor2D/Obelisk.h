@@ -1,5 +1,5 @@
-#ifndef __BITS_H__
-#define __BITS_H__
+#ifndef __OBELISK_H__
+#define __OBELISK_H__
 
 #include "Resource.h"
 
@@ -27,4 +27,4 @@ private:
 
 };
 
-#endif // !__BITS_H__
+#endif // !__OBELISK_H__

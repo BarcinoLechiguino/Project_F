@@ -6,9 +6,9 @@
 #include "Input.h"
 
 
-#include "SDL/include/SDL.h"
-#include "SDL_mixer\include\SDL_mixer.h"
-#pragma comment( lib, "SDL_mixer/libx86/SDL2_mixer.lib" )
+#include "Dependencies/SDL/include/SDL.h"
+#include "Dependencies\SDL_mixer\include\SDL_mixer.h"
+#pragma comment( lib, "Dependencies/SDL_mixer/libx86/SDL2_mixer.lib" )
 
 Audio::Audio() : Module()
 {

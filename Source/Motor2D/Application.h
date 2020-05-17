@@ -1,7 +1,7 @@
 #ifndef __APPLICATION_H__
 #define __APPLICATION_H__
 
-#include "PugiXml\src\pugixml.hpp"
+#include "Dependencies\PugiXml\src\pugixml.hpp"
 #include <vector>
 #include <string>
 #include "Module.h"

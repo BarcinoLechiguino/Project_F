@@ -1,11 +1,10 @@
-#ifndef __j1EMITTER_H__
-#define __j1EMITTER_H__
+#ifndef __EMITTER_H__
+#define __EMITTER_H__
 
 #include "Point.h"
 
-//#include "j1Pool.h"
 #include "PerfTimer.h"
-#include "SDL/include/SDL_rect.h"
+#include "Dependencies/SDL/include/SDL_rect.h"
 
 #include <vector>
 
@@ -95,4 +94,4 @@ public:
 	//void Emitter::LoadParticleProperties(fPoint pos, float speed, float angle, float size, int life, SDL_Rect tex, SDL_Color startColor, SDL_Color endColor);
 };
 
-#endif
+#endif // !__EMITTER_H__

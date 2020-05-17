@@ -26,7 +26,7 @@
 #include "ParticleManager.h"
 #include "QuestManager.h"
 
-#include "Brofiler\Brofiler.h"
+#include "Dependencies\Brofiler\Brofiler.h"
 
 //#include "mmgr/mmgr.h"
 

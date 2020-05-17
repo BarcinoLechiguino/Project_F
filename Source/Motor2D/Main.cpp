@@ -6,12 +6,12 @@
 
 // This is needed here because SDL redefines main function
 // do not add any other libraries here, instead put them in their modules
-#include "SDL/include/SDL.h"
-#include "Brofiler/Brofiler.h"
-#pragma comment( lib, "SDL/libx86/SDL2.lib" )
-#pragma comment( lib, "SDL/libx86/SDL2main.lib" )
+#include "Dependencies/SDL/include/SDL.h"
+#include "Dependencies/Brofiler/Brofiler.h"
+#pragma comment( lib, "Dependencies/SDL/libx86/SDL2.lib" )
+#pragma comment( lib, "Dependencies/SDL/libx86/SDL2main.lib" )
 
-#pragma comment( lib, "Brofiler/ProfilerCore32.lib")
+#pragma comment( lib, "Dependencies/Brofiler/ProfilerCore32.lib")
 
 enum class MainState
 {

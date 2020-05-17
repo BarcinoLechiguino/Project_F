@@ -1,7 +1,7 @@
 ﻿#ifndef __ENTITY_H__
 #define __ENTITY_H__
 
-#include "SDL/include/SDL_rect.h"
+#include "Dependencies/SDL/include/SDL_rect.h"
 #include "Point.h"						//Required. For some reason the iPoint namespace does not work without it, even with a forward declaration like class iPoint.
 
 class Animation;

@@ -1,4 +1,4 @@
-#include "Brofiler/Brofiler.h"
+#include "Dependencies/Brofiler/Brofiler.h"
 
 #include "Point.h"
 #include "Application.h"

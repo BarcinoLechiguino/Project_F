@@ -1,5 +1,5 @@
-#ifndef __PARTICLEMANAGER_H__
-#define __PARTICLEMANAGER_H__
+#ifndef __PARTICLE_MANAGER_H__
+#define __PARTICLE_MANAGER_H__
 
 #include "Application.h"
 #include "Point.h"
@@ -10,7 +10,7 @@
 #include <list>
 #include <string>
 
-#include "SDL/include/SDL_rect.h"
+#include "Dependencies/SDL/include/SDL_rect.h"
 
 class Emitter;
 enum EMITTER_TYPE;
@@ -69,4 +69,4 @@ public:
 
 };
 
-#endif // __PARTICLEMANAGER_H__
+#endif // !__PARTICLE_MANAGER_H__

@@ -1,7 +1,7 @@
 #ifndef __COLLISIONS_H__
 #define __COLLISIONS_H__
 
-#include "SDL/include/SDL_rect.h"
+#include "Dependencies/SDL/include/SDL_rect.h"
 #include "Module.h"
 
 enum Object_Type;	//If it was enum class we would need to refer to the types with Object_Type::SOLID for examole.

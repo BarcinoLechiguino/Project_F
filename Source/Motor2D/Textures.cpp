@@ -1,5 +1,5 @@
-#include "SDL_image/include/SDL_image.h"
-#pragma comment( lib, "SDL_image/libx86/SDL2_image.lib" )
+#include "Dependencies/SDL_image/include/SDL_image.h"
+#pragma comment( lib, "Dependencies/SDL_image/libx86/SDL2_image.lib" )
 
 #include "Definitions.h"
 #include "Log.h"

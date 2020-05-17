@@ -2,7 +2,7 @@
 #include "Point.h"
 #include <vector>
 #include <list>
-#include "SDL/include/SDL_rect.h"
+#include "Dependencies/SDL/include/SDL_rect.h"
 
 
 class Quest

@@ -1,7 +1,7 @@
 #ifndef __FONTS_H__
 #define __FONTS_H__
 
-#include "SDL\include\SDL_pixels.h"
+#include "Dependencies\SDL\include\SDL_pixels.h"
 #include "Module.h"
 
 #define DEFAULT_FONT "fonts/arial.ttf"

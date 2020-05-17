@@ -1,7 +1,7 @@
 #ifndef __RENDER_H__
 #define __RENDER_H__
 
-#include "SDL/include/SDL.h"
+#include "Dependencies/SDL/include/SDL.h"
 #include "Module.h"
 #include "Application.h"
 #include "Point.h"
