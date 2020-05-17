@@ -119,7 +119,7 @@ public:																		// --- GUI AUDIO VARIABLES ---
 	uint						new_game_button_clicked_fx;
 	uint						options_button_clicked_fx;
 	uint						back_button_clicked_fx;
-	uint						exit_button_clicked_fx;
+	uint						main_menu_button_clicked_fx;
 	uint						pause_menu_button_clicked_fx;
 	uint						standard_button_clicked_fx;
 	uint						upgrade_button_clicked_fx;

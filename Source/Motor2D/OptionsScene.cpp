@@ -180,12 +180,14 @@ void OptionsScene::LoadGuiElements()
 	LOG("STARTED GUI LOAD");
 	// BACKGROUND
 	background_rect = { 0, 0, 1280, 720 };
-	background_texture = App->tex->Load("maps/Options_Background.png");
+	background_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("options_scene").attribute("path").as_string());
+
+	std::string borgsquadcond = App->config_file.child("config").child("gui").child("fonts").child("borgsquadcond").attribute("path").as_string();
 
 	//Options Menu
 	SDL_Rect text_rect = { 0, 0, 100, 20 };
-	_TTF_Font* font = App->font->Load("fonts/borgsquadcond.ttf", 40);
-	_TTF_Font* font2 = App->font->Load("fonts/borgsquadcond.ttf", 30);
+	_TTF_Font* font = App->font->Load(borgsquadcond.c_str(), 40);
+	_TTF_Font* font2 = App->font->Load(borgsquadcond.c_str(), 30);
 	options_parent = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	//Options
@@ -255,7 +257,7 @@ void OptionsScene::InitScene()
 
 	transition_to_main_menu_scene = false;
 	
-	menu_song = App->audio->LoadMusic("audio/music/Music_Menu.ogg");
+	menu_song = App->audio->LoadMusic(App->config_file.child("config").child("scenes").child("music").child("main_menu_scene").attribute("path").as_string());
 	App->audio->PlayMusic(menu_song, 0.0f);
 	LoadGuiElements();
 

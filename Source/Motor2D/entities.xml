@@ -1,37 +1,37 @@
 <entities>
   <textures>
-    <gatherer_texture                 path="textures/Spritesheets/Entities/gatherer2_lowres.png"/>
-    <scout_texture                    path="textures/Spritesheets/Entities/scout_allied.png"/>
-    <infantry_texture                 path="textures/Spritesheets/Entities/infantry_lowres.png"/>
-    <heavy_texture                    path="textures/Spritesheets/Entities/heavy.png"/>
-    <enemy_gatherer_texture           path="textures/Spritesheets/Entities/gatherer_lowres.png"/>
-    <enemy_scout_texture              path="textures/Spritesheets/Entities/scout_enemy.png"/>
-    <enemy_infantry_texture           path="textures/Spritesheets/Entities/infantry2_lowres.png"/>
-    <enemy_heavy_texture              path="textures/Spritesheets/Entities/heavy_enemy.png"/>
-    <townhall_texture                 path="maps/hall.png"/>
-    <barracks_texture                 path="maps/Barracks.png"/>
-    <wall_texture                     path="maps/Wall_Placeholder.png"/>
-    <enemy_townhall_texture           path="maps/Hall_enemy.png"/>
-    <enemy_barracks_texture           path="maps/Barracks_enemy.png"/>
-    <enemy_wall_texture               path="maps/Enemy_Wall_Placeholder.png"/>
-    <rock_texture                     path="maps/rocks.png"/>
-    <tree_texture                     path="maps/trees.png"/>
-    <bits_texture                     path="maps/bits_placeholder.png"/>
+    <gatherer_texture                 path="Assets/entities/ally_unit_gatherer.png"/>
+    <scout_texture                    path="Assets/entities/ally_unit_scout.png"/>
+    <infantry_texture                 path="Assets/entities/ally_unit_infantry.png"/>
+    <heavy_texture                    path="Assets/entities/ally_unit_heavy.png"/>
+    <enemy_gatherer_texture           path="Assets/entities/enemy_unit_gatherer.png"/>
+    <enemy_scout_texture              path="Assets/entities/enemy_unit_scout.png"/>
+    <enemy_infantry_texture           path="Assets/entities/enemy_unit_infantry.png"/>
+    <enemy_heavy_texture              path="Assets/entities/enemy_unit_heavy.png"/>
+    <townhall_texture                 path="Assets/entities/ally_building_townhall.png"/>
+    <barracks_texture                 path="Assets/entities/ally_building_barracks.png"/>
+    <wall_texture                     path="Assets/entities/ally_building_wall_placeholder.png"/>
+    <enemy_townhall_texture           path="Assets/entities/enemy_building_townhall.png"/>
+    <enemy_barracks_texture           path="Assets/entities/enemy_building_barracks.png"/>
+    <enemy_wall_texture               path="Assets/entities/enemy_building_wall_placeholder.png"/>
+    <rock_texture                     path="Assets/entities/neutral_resource_rocks.png"/>
+    <tree_texture                     path="Assets/entities/neutral_resource_trees.png"/>
+    <bits_texture                     path="Assets/entities/neutral_resource_obelisk.png"/>
   </textures>
 
   <fx>
-    <gatherer_moving                  path="audio/fx/Gatherer_movement.wav"/>
-    <gatherer_gathering               path="audio/fx/Gathering.wav"/>
-    <gatherer_finished_gathering      path="audio/fx/Finnished_gathering.wav"/>
-    <infantry_moving                  path="audio/fx/Infantry_movement.wav"/>
-    <infantry_shooting                path="audio/fx/Infantry_shot.wav"/>
-    <heavy_shooting                   path=""/>
-    <townhall_clicked                 path="audio/fx/Click_Townhall.wav"/>
-    <barracks_clicked                 path="audio/fx/Click Barracks.wav"/>
-    <building_constructing            path="audio/fx/Building.wav"/>
-    <building_finished_constructing   path="audio/fx/Finished_building.wav"/>
-    <building_finished_recruiting     path="audio/fx/Finished_recruiting.wav"/>
-    <building_finished_upgrading      path="audio/fx/Finished_Upgrading.wav"/>
+    <gatherer_moving                  path="Assets/audio/fx/entities/gatherer_moving.wav"/>
+    <gatherer_gathering               path="Assets/audio/fx/entities/gatherer_gathering.wav"/>
+    <gatherer_gathering_finished      path="Assets/audio/fx/entities/gatherer_gathering_finished.wav"/>
+    <infantry_moving                  path="Assets/audio/fx/entities/infantry_moving.wav"/>
+    <infantry_shooting                path="Assets/audio/fx/entities/infantry_shooting.wav"/>
+    <heavy_shooting                   path="Assets/audio/fx/entities/heavy_shooting.wav"/>
+    <townhall_clicked                 path="Assets/audio/fx/entities/townhall_clicked.wav"/>
+    <barracks_clicked                 path="Assets/audio/fx/entities/barracks_clicked.wav"/>
+    <building_constructing            path="Assets/audio/fx/entities/building_constructing.wav"/>
+    <building_constructing_finished   path="Assets/audio/fx/entities/building_constructing_finished.wav"/>
+    <building_recruiting_finished     path="Assets/audio/fx/entities/building_recruiting_finished.wav"/>
+    <building_upgrading_finished      path="Assets/audio/fx/entities/building_upgrading_finished.wav"/>
   </fx>
   
   <units>

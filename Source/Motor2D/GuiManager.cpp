@@ -338,7 +338,7 @@ void GuiManager::LoadGuiElementsAudio()
 	new_game_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("new_game_button_clicked").attribute("path").as_string());
 	options_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("options_button_clicked").attribute("path").as_string());
 	back_button_clicked_fx			= App->audio->LoadFx(gui_fx.child("back_button_clicked").attribute("path").as_string());
-	exit_button_clicked_fx			= App->audio->LoadFx(gui_fx.child("exit_button_clicked").attribute("path").as_string());
+	main_menu_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("main_menu_button_clicked").attribute("path").as_string());
 	pause_menu_button_clicked_fx	= App->audio->LoadFx(gui_fx.child("pause_menu_button_clicked").attribute("path").as_string());
 	standard_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("standard_button_clicked").attribute("path").as_string());
 	upgrade_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("upgrade_button_clicked").attribute("path").as_string());

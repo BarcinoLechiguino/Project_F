@@ -164,8 +164,6 @@ public:
 	bool fow_debug;
 
 private:
-	pugi::xml_document config;
-	
 	int visibility_map_width;
 	int visibility_map_height;
 

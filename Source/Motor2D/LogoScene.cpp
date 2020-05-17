@@ -107,7 +107,7 @@ void LogoScene::InitScene()
 
 	// BACKGROUND
 	background_rect = { 0, 0, 1280, 720 };
-	background_texture = App->tex->Load("maps/MissingmdScreen.png");
+	background_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("logo_scene_team_logo").attribute("path").as_string());
 
 	//LoadGuiElements();
 }

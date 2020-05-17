@@ -73,7 +73,7 @@ void WinScene::LoadGuiElements()
 {
 	// BACKGROUND
 	background_rect = { 0,0,1280,720 };
-	background_texture = App->tex->Load("maps/WinScreen.png");
+	background_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("win_scene").attribute("path").as_string());
 
 	// Back to menu Button
 	SDL_Rect win_back_to_menu_size = { 0, 0, 189, 23 };
@@ -89,7 +89,7 @@ void WinScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 {
 	if (element == win_main_menu && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		App->audio->PlayFx(App->gui_manager->exit_button_clicked_fx, 0);
+		App->audio->PlayFx(App->gui_manager->main_menu_button_clicked_fx, 0);
 
 		transition_to_main_menu_scene = true;
 	}
@@ -112,6 +112,6 @@ void WinScene::InitScene()
 {
 	transition_to_main_menu_scene = false;
 	
-	win_song = App->audio->LoadMusic("audio/music/Victory_Song.ogg");
+	win_song = App->audio->LoadMusic(App->config_file.child("config").child("scenes").child("music").child("win_scene").attribute("path").as_string());
 	App->audio->PlayMusic(win_song, 0);
 }

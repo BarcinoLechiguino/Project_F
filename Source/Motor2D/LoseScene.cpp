@@ -70,7 +70,7 @@ void LoseScene::LoadGuiElements()
 {
 	// BACKGROUND
 	background_rect = { 0,0,1280,720 };
-	background_texture = App->tex->Load("maps/DefeatScreen.png");
+	background_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("lose_scene").attribute("path").as_string());
 
 	// Back to menu Button
 	SDL_Rect lose_back_to_menu_size = { 0, 0, 189, 23 };
@@ -86,7 +86,7 @@ void LoseScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 {
 	if (element == lose_main_menu && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		App->audio->PlayFx(App->gui_manager->exit_button_clicked_fx, 0);
+		App->audio->PlayFx(App->gui_manager->main_menu_button_clicked_fx, 0);
 
 		transition_to_main_menu_scene = true;
 	}
@@ -109,6 +109,6 @@ void LoseScene::InitScene()
 {
 	transition_to_main_menu_scene = false;
 	
-	lose_song = App->audio->LoadMusic("audio/music/Lose_Song.ogg");
+	lose_song = App->audio->LoadMusic(App->config_file.child("config").child("scenes").child("music").child("lose_scene").attribute("path").as_string());
 	App->audio->PlayMusic(lose_song, 0);
 }

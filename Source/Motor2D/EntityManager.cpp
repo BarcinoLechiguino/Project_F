@@ -384,7 +384,7 @@ void EntityManager::LoadEntityTextures()
 	bits_tex			= App->tex->Load(entity_textures.child("bits_texture").attribute("path").as_string());
 
 	// SPRITE RENDERING ORDER DEBUG TEXTURE
-	center_point_debug	= App->tex->Load("maps/center_position_debug.png");
+	center_point_debug	= App->tex->Load(App->config_file.child("config").child("debug").child("center_position_debug").attribute("path").as_string());
 }
 
 void EntityManager::UnLoadEntityTextures()
@@ -437,16 +437,16 @@ void EntityManager::LoadEntityAudios()
 
 	gatherer_moving_fx					= App->audio->LoadFx(entity_fx.child("gatherer_moving").attribute("path").as_string());
 	gatherer_gathering_fx				= App->audio->LoadFx(entity_fx.child("gatherer_gathering").attribute("path").as_string());
-	gatherer_finished_gathering_fx		= App->audio->LoadFx(entity_fx.child("gatherer_finished_gathering").attribute("path").as_string());
+	gatherer_gathering_finished_fx		= App->audio->LoadFx(entity_fx.child("gatherer_gathering_finished").attribute("path").as_string());
 	infantry_moving_fx					= App->audio->LoadFx(entity_fx.child("infantry_moving").attribute("path").as_string());
 	infantry_shooting_fx				= App->audio->LoadFx(entity_fx.child("infantry_shooting").attribute("path").as_string());
-	//heavy_shooting_fx					= App->audio->LoadFx(entity_fx.child("heavy_shooting").attribute("path").as_string());
+	heavy_shooting_fx					= App->audio->LoadFx(entity_fx.child("heavy_shooting").attribute("path").as_string());
 	townhall_clicked_fx					= App->audio->LoadFx(entity_fx.child("townhall_clicked").attribute("path").as_string());
 	barracks_clicked_fx					= App->audio->LoadFx(entity_fx.child("barracks_clicked").attribute("path").as_string());
 	building_constructing_fx			= App->audio->LoadFx(entity_fx.child("building_constructing").attribute("path").as_string());
-	building_finished_constructing_fx	= App->audio->LoadFx(entity_fx.child("building_finished_constructing").attribute("path").as_string());
-	building_finished_recruiting_fx		= App->audio->LoadFx(entity_fx.child("building_finished_recruiting").attribute("path").as_string());
-	building_finished_upgrading_fx		= App->audio->LoadFx(entity_fx.child("building_finished_upgrading").attribute("path").as_string());
+	building_constructing_finished_fx	= App->audio->LoadFx(entity_fx.child("building_constructing_finished").attribute("path").as_string());
+	building_recruiting_finished_fx		= App->audio->LoadFx(entity_fx.child("building_recruiting_finished").attribute("path").as_string());
+	building_upgrading_finished_fx		= App->audio->LoadFx(entity_fx.child("building_upgrading_finished").attribute("path").as_string());
 }
 
 void EntityManager::UnLoadEntityAudios()

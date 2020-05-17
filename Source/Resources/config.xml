@@ -22,7 +22,7 @@
   </window>
 
   <audio>
-      <folder>audio/music/</folder>
+      <folder>Assets/audio/music/</folder>
       <volume value = "70"/>
       <volume_fx value="21"/>
       <distance scale="425"/>
@@ -34,12 +34,16 @@
 
   <debug>
     <textures>
-      
+      <mouse_tile_debug       path="Assets/maps/mouse_tile_debug.png"/>
+      <entity_map_tile_debug  path="Assets/maps/entity_map_tile_debug.png"/>
+      <occupied_tile_debug    path="Assets/maps/occupied_tile_debug.png"/>
+      <path_tile_debug        path="Assets/maps/path_tile_debug.png"/>
+      <center_position_debug  path="Assets/maps/center_position_debug.png"/>
     </textures>
   </debug>
   
   <map>
-    <folder>maps/</folder>
+    <folder>Assets/maps/</folder>
     <layers>
       <bg_parallax_speed speed="0.05f"/>
       <first_parallax_speed speed ="0.70f"/>
@@ -48,13 +52,13 @@
   </map>
 
   <fog_of_war>
-    <fow_tex path="maps/FOW_meta_sheet.png"/>
+    <fow_tex path="Assets/maps/fog_of_war_spritesheet.png"/>
   </fog_of_war>
   
   <player>
     <god_mode value="0"/>
     <is_selecting value="0"/>
-    <mouse_tile_tex path="maps/mouse_tile_debug.png"/>
+    <mouse_tile_tex path="Assets/maps/mouse_tile_debug.png"/>
 
     <camera>
       <speed x="700.0f" y="700.0f"/>
@@ -82,38 +86,61 @@
   </player>
 
   <gui>
-    <atlas file="gui/UI_HUD.png"/>
+    <atlas file="Assets/gui/UI_HUD.png"/>
 
     <backgrounds>
-      
+      <logo_scene                   path="Assets/gui/backgrounds/logo_scene_background.png"/>
+      <logo_scene_team_logo         path="Assets/gui/backgrounds/logo_scene_missingmd_background.png"/>
+      <main_menu_scene              path="Assets/gui/backgrounds/main_menu_scene_background.png"/>
+      <options_scene                path="Assets/gui/backgrounds/options_scene_background.png"/>
+      <gameplay_scene               path="Assets/gui/backgrounds/gameplay_scene_background.png"/>
+      <minimap                      path="Assets/gui/backgrounds/gameplay_scene_minimap_background.png"/>
+      <win_scene                    path="Assets/gui/backgrounds/win_scene_background.png"/>
+      <lose_scene                   path="Assets/gui/backgrounds/lose_scene_background.png"/>
     </backgrounds>
+
+    <fonts>
+      <arial                        path="Assets/gui/fonts/arial.ttf"/>
+      <borgsquadcond                path="Assets/gui/fonts/borgsquadcond.ttf"/>
+      <copper_plate_bold_italic     path="Assets/gui/fonts/copper_plate_bold_italic.ttf"/>
+      <future_now                   path="Assets/gui/fonts/future_now.ttf"/>
+      <kenvector_future             path="Assets/gui/fonts/kenvector_future.ttf"/>
+      <major_mono_display           path="Assets/gui/fonts/major_mono_display.ttf"/>
+      <minecraftia_regular          path="Assets/gui/fonts/minecraftia_regular.ttf"/>
+      <old_school_adventures        path="Assets/gui/fonts/old_school_adventures.ttf"/>
+      <open_sans_bold_italic        path="Assets/gui/fonts/open_sans_bold_italic.ttf"/>
+    </fonts>
     
     <fx>
-      <new_game_button_clicked      path="audio/fx/UI/New Game_Continue.wav"/>
-      <options_button_clicked       path="audio/fx/UI/Options.wav"/>
-      <back_button_clicked          path="audio/fx/UI/Back.wav"/>
-      <exit_button_clicked          path="audio/fx/UI/Back to menu.wav"/>
-      <pause_menu_button_clicked    path="audio/fx/UI/Appear Pause Menu.wav"/>
-      <standard_button_clicked      path="audio/fx/UI/Standard.wav"/>
-      <upgrade_button_clicked       path="audio/fx/UI/Upgrade Button.wav"/>
-      <recruit_unit_button_clicked  path="audio/fx/UI/Recruit_Unit.wav"/>
+      <new_game_button_clicked      path="Assets/audio/fx/gui/new_game_button_clicked.wav"/>
+      <options_button_clicked       path="Assets/audio/fx/gui/options_button_clicked.wav"/>
+      <back_button_clicked          path="Assets/audio/fx/gui/back_button_clicked.wav"/>
+      <main_menu_button_clicked     path="Assets/audio/fx/gui/main_menu_button_clicked.wav"/>
+      <pause_menu_button_clicked    path="Assets/audio/fx/gui/pause_menu_button_clicked.wav"/>
+      <standard_button_clicked      path="Assets/audio/fx/gui/standard_button_clicked.wav"/>
+      <upgrade_button_clicked       path="Assets/audio/fx/gui/upgade_button_clicked.wav"/>
+      <recruit_unit_button_clicked  path="Assets/audio/fx/gui/recruit_unit_button_clicked.wav"/>
 
-      <cursor_click path="audio/fx/Mouse Click.wav"/>
+      <cursor_click path=""/>
     </fx>
   </gui>
-
+  
   <scene_menu>
     <audio path="Background music.ogg"/>
   </scene_menu>
     
-  <scene>
-    <map_name name="New_Tilesete_Map.tmx"></map_name>
-    <map_name name="Test_map_2.tmx"></map_name>
-    <audio path="Combat Heavy.ogg"/>
-    <audio2 path="Background music.ogg"/>
-    <audio3 path="menu_music.ogg"/>
-    <fade_time value="1"/>
-  </scene>
+  <scenes>
+    <map_name name="New_Tilesete_Map.tmx"/>
+
+    <music>
+      <logo_scene       path=""/>
+      <main_menu_scene  path="Assets/audio/music/main_menu_theme.ogg"/>
+      <options_scene    path="Assets/audio/music/main_menu_theme.ogg"/>
+      <gameplay_scene   path="Assets/audio/music/gameplay_scene_theme_3.ogg"/>
+      <win_scene        path="Assets/audio/music/win_scene_theme.ogg"/>
+      <lose_scene       path="Assets/audio/music/lose_scene_theme.ogg"/>
+    </music>
+  </scenes>
 
   <console>
     <!--Console Background Variables-->

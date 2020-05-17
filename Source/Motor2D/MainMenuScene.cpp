@@ -183,12 +183,12 @@ void MainMenuScene::InitScene()
 	transition_to_gameplay_scene = false;
 	transition_to_options_scene = false;
 
-	menu_song = App->audio->LoadMusic("audio/music/Music_Menu.ogg");
+	menu_song = App->audio->LoadMusic(App->config_file.child("config").child("scenes").child("music").child("main_menu_scene").attribute("path").as_string());
 	App->audio->PlayMusic(menu_song, 0.0f);
 	
 	// BACKGROUND
 	background_rect = { 0, 0, 1280, 720 };
-	background_texture = App->tex->Load("maps/MainMenu_background.png");
+	background_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("main_menu_scene").attribute("path").as_string());
 	
 	LoadGuiElements();
 

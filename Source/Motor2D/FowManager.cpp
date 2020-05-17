@@ -52,8 +52,8 @@ bool FowManager::Start()
 {
 	InitFowManager();
 	
-	frontier_debug_tex = App->tex->Load("maps/occupied_tile.png");
-	line_of_sight_debug_tex = App->tex->Load("maps/occupied_by_entity_tile.png");
+	frontier_debug_tex = App->tex->Load(App->config_file.child("config").child("debug").child("occupied_tile_debug").attribute("path").as_string());
+	line_of_sight_debug_tex = App->tex->Load(App->config_file.child("config").child("debug").child("entity_map_tile_debug").attribute("path").as_string());
 
 	return true;
 }
@@ -1059,11 +1059,7 @@ void FowManager::SmoothEntityOuterFrontierEdges(std::vector<iPoint> outer_fronti
 
 void FowManager::InitFowManager()
 {
-	config.load_file("config.xml");
-
-	pugi::xml_node fow = config.child("config").child("fog_of_war");
-
-	fow_tex = App->tex->Load(fow.child("fow_tex").attribute("path").as_string());
+	fow_tex = App->tex->Load(App->config_file.child("config").child("fog_of_war").child("fow_tex").attribute("path").as_string());
 }
 
 // --- FOW_Entity methods ---

@@ -527,29 +527,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\Game\animations.xml">
-      <Filter>Engine  ===========\XML Files</Filter>
-    </Xml>
-    <Xml Include="..\Game\config.xml">
-      <Filter>Engine  ===========\XML Files</Filter>
-    </Xml>
-    <Xml Include="..\Game\save_game.xml">
-      <Filter>Engine  ===========\XML Files</Filter>
-    </Xml>
-    <Xml Include="..\Game\dialog.xml">
-      <Filter>Engine  ===========\XML Files</Filter>
-    </Xml>
-    <Xml Include="..\Game\ps_config.xml">
-      <Filter>Engine  ===========\XML Files</Filter>
-    </Xml>
-    <Xml Include="..\Game\quest_data.xml">
-      <Filter>Engine  ===========\XML Files</Filter>
-    </Xml>
-    <Xml Include="entities.xml">
-      <Filter>Engine  ===========\XML Files</Filter>
-    </Xml>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
       <Filter>Engine  ===========\XML Files</Filter>
     </None>
@@ -657,5 +634,28 @@
     <Filter Include="Engine  ===========\Modules\Gui\Console">
       <UniqueIdentifier>{51ed0ee9-06de-4b6f-b7cb-42d8f01e37b0}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Xml Include="..\Resources\animations.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="..\Resources\config.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="..\Resources\dialog.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="..\Resources\entities.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="..\Resources\ps_config.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="..\Resources\quest_data.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
+    <Xml Include="..\Resources\save_game.xml">
+      <Filter>Engine  ===========\XML Files</Filter>
+    </Xml>
   </ItemGroup>
 </Project>

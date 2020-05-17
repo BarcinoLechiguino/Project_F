@@ -42,11 +42,11 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IntDir>..\Game\</IntDir>
+    <IntDir>..\Resources\</IntDir>
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <IntDir>..\Game</IntDir>
+    <IntDir>$(SolutionDir)$(Configuration)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -262,17 +262,13 @@
     <None Include="..\Game\maps\1st Screen2.tmx" />
   </ItemGroup>
   <ItemGroup>
-    <Xml Include="..\Game\animations.xml">
-      <SubType>Designer</SubType>
-    </Xml>
-    <Xml Include="..\Game\config.xml">
-      <SubType>Designer</SubType>
-    </Xml>
-    <Xml Include="..\Game\dialog.xml" />
-    <Xml Include="..\Game\ps_config.xml" />
-    <Xml Include="..\Game\quest_data.xml" />
-    <Xml Include="..\Game\save_game.xml" />
-    <Xml Include="entities.xml" />
+    <Xml Include="..\Resources\animations.xml" />
+    <Xml Include="..\Resources\config.xml" />
+    <Xml Include="..\Resources\dialog.xml" />
+    <Xml Include="..\Resources\entities.xml" />
+    <Xml Include="..\Resources\ps_config.xml" />
+    <Xml Include="..\Resources\quest_data.xml" />
+    <Xml Include="..\Resources\save_game.xml" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

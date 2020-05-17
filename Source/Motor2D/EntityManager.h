@@ -117,16 +117,16 @@ public:
 
 	uint							gatherer_moving_fx;
 	uint							gatherer_gathering_fx;
-	uint							gatherer_finished_gathering_fx;
+	uint							gatherer_gathering_finished_fx;
 	uint							infantry_moving_fx;
 	uint							infantry_shooting_fx;
 	uint							heavy_shooting_fx;
 	uint							townhall_clicked_fx;
 	uint							barracks_clicked_fx;
 	uint							building_constructing_fx;
-	uint							building_finished_constructing_fx;
-	uint							building_finished_recruiting_fx;
-	uint							building_finished_upgrading_fx;
+	uint							building_constructing_finished_fx;
+	uint							building_recruiting_finished_fx;
+	uint							building_upgrading_finished_fx;
 	
 	
 	std::vector<Entity*>			entities;	
