@@ -44,6 +44,7 @@ public:
 	int current_bubble;
 	int dialog_id;
 	int last_id;
+	bool pause_game;
 };
 
 class DialogSystem : public Module
@@ -88,12 +89,14 @@ public:
 	_TTF_Font* dialog_font;
 	int font_size;
 
-	Timer* timer;
+	float timer;
 
 	DialogState dialog_state;
 
 	bool is_clicked;
 	bool finished_typing;
+
+	int last_dialog;
 
 public:
 	pugi::xml_document dialog_file;
