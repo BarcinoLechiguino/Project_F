@@ -292,7 +292,7 @@ Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 		entity = new Tree(x, y, type, level);
 		break;
 
-	case ENTITY_TYPE::BITS:
+	case ENTITY_TYPE::OBELISK:
 		entity = new Obelisk(x, y, type, level);
 		break;
 	}
@@ -653,7 +653,7 @@ bool EntityManager::IsBuilding(Entity* entity)
 
 bool EntityManager::IsResource(Entity* entity)
 {
-	if (entity->type == ENTITY_TYPE::ROCK || entity->type == ENTITY_TYPE::TREE || entity->type == ENTITY_TYPE::BITS)
+	if (entity->type == ENTITY_TYPE::ROCK || entity->type == ENTITY_TYPE::TREE || entity->type == ENTITY_TYPE::OBELISK)
 	{
 		return true;
 	}

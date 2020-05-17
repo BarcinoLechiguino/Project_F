@@ -769,8 +769,8 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 		}
 		else if (object_type == "bit")
 		{
-			objectgroup->object[index].type = BITS;
-			App->entity_manager->CreateEntity(ENTITY_TYPE::BITS, tile_coords.x, tile_coords.y);
+			objectgroup->object[index].type = OBELISK;
+			App->entity_manager->CreateEntity(ENTITY_TYPE::OBELISK, tile_coords.x, tile_coords.y);
 		}
 
 		index++;

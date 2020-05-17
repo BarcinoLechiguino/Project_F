@@ -27,7 +27,7 @@
 #ifndef _SDL_TTF_H
 #define _SDL_TTF_H
 
-#include "Dependencies/SDL/include/SDL.h"                       // CUSTOM SDL_TFF INCLUDES/DEPENDENCIES
+#include "Dependencies/SDL/include/SDL.h"                       // CUSTOM SDL_TFF INCLUDES (DEPENDENCIES)
 #include "Dependencies/SDL/include/begin_code.h"
 
 /* Set up for C function definitions, even when using C++ */

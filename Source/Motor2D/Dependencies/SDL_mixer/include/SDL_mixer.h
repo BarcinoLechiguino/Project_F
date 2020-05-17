@@ -24,7 +24,7 @@
 #ifndef _SDL_MIXER_H
 #define _SDL_MIXER_H
 
-#include "Dependencies/SDL/include/SDL_stdinc.h"                // CUSTOM SDL_MIXER INCLUDE/DEPENDENCIES
+#include "Dependencies/SDL/include/SDL_stdinc.h"                // CUSTOM SDL_MIXER INCLUDES (DEPENDENCIES)
 #include "Dependencies/SDL/include/SDL_rwops.h"
 #include "Dependencies/SDL/include/SDL_audio.h"
 #include "Dependencies/SDL/include/SDL_endian.h"
