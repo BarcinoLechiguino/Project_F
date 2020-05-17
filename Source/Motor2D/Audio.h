@@ -69,9 +69,7 @@ private:
 public:
 	float					volume;
 	uint					volume_fx;
-	//std::string			music_folder;
-	//std::string			sfx_folder;
-	uint					general_volume;
+
 };
 
 #endif // __AUDIO_H__

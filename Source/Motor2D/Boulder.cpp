@@ -1,66 +1,64 @@
 #include "Application.h"
 #include "Render.h"
-#include "Textures.h"
-#include "Input.h"
 #include "Audio.h"
 #include "Map.h"
+#include "EntityManager.h"
 #include "Pathfinding.h"
 #include "GuiManager.h"
 #include "GuiElement.h"
 #include "GuiHealthbar.h"
 #include "FowManager.h"
-#include "EntityManager.h"
 
-#include "Rock.h"
+#include "Boulder.h"
 
-
-Rock::Rock(int x, int y, ENTITY_TYPE type, int level) : Resource(x, y, type, level)
+Boulder::Boulder(int x, int y, ENTITY_TYPE type, int level) : Obstacle(x, y, type, level)
 {
 	InitEntity();
 }
 
-Rock::~Rock()
+Boulder::~Boulder()
 {
 
 }
 
-bool Rock::Awake(pugi::xml_node&)
+bool Boulder::Awake(pugi::xml_node&)
 {
 	return true;
 }
 
-bool Rock::Start()
+bool Boulder::Start()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
+	//App->entity_manager->ChangeEntityMap(tile_position, this, true);
 
 	return true;
 }
 
-bool Rock::PreUpdate()
+bool Boulder::PreUpdate()
 {
 	return true;
 }
 
-bool Rock::Update(float dt, bool do_logic)
+bool Boulder::Update(float dt, bool do_logic)
 {
-	// FOG OF WAR
+	//FOG OF WAR
 	is_visible = fow_entity->is_visible;									// No fow_entity->SetPos(tile_position) as, obviously, a StaticObject entity will never move.
 	
 	return true;
 }
 
-bool Rock::PostUpdate()
+bool Boulder::PostUpdate()
 {
 	if (current_health <= 0)
 	{
 		App->entity_manager->DeleteEntity(this);
-		App->audio->PlayFx(App->entity_manager->gatherer_gathering_finished_fx);
+		//App->audio->PlayFx(App->entity_manager->gatherer_gathering_finished_fx);
 	}
-
+	
 	return true;
 }
 
-bool Rock::CleanUp()
+bool Boulder::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
@@ -71,22 +69,25 @@ bool Rock::CleanUp()
 	{
 		collider->to_delete = true;
 	}
-	
+
 	App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
-	
-	delete blit_section;
 
+	if (blit_section != nullptr)
+	{
+		delete blit_section;
+	}
+	
 	return true;
 }
 
-void Rock::Draw()
+void Boulder::Draw()
 {
-	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y, blit_section);
+	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 28, NULL);
 }
 
-void Rock::InitEntity()
+void Boulder::InitEntity()
 {
 	// POSITION & SIZE
 	iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
@@ -100,11 +101,9 @@ void Rock::InitEntity()
 	tiles_occupied.y = 1;
 
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };		// THIS ???
-	
+
 	// TEXTURE & SECTIONS
-	entity_sprite = App->entity_manager->GetRockTexture();
-	int rock_version = (rand() % 4) * 54;
-	blit_section = new SDL_Rect{ rock_version, 0, 54, 35 };
+	entity_sprite = App->entity_manager->GetBoulderTexture();
 
 	// FLAGS
 	is_selected = false;
@@ -126,7 +125,7 @@ void Rock::InitEntity()
 	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
 }
 
-void Rock::AttachHealthbarToEntity()
+void Boulder::AttachHealthbarToEntity()
 {
 	healthbar_position_offset.x = -30;
 	healthbar_position_offset.y = -6;

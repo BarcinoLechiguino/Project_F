@@ -105,7 +105,7 @@ void Obelisk::InitEntity()
 	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
 	// TEXTURE & SECTIONS
-	entity_sprite = App->entity_manager->GetBitsTexture();
+	entity_sprite = App->entity_manager->GetObeliskTexture();
 
 	// FLAGS
 	is_selected = false;

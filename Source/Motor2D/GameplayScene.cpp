@@ -45,6 +45,7 @@
 #include "Rock.h"
 #include "Tree.h"
 #include "Obelisk.h"
+#include "Boulder.h"
 
 #include "GuiManager.h"
 #include "GuiElement.h"
@@ -187,12 +188,14 @@ bool GameplayScene::PostUpdate()
 				/*App->gui_manager->CreateFadeAnimation(in_game_background, 0.5f, false, 0.0f, 255.0f);*/
 
 				App->gui_manager->SetElementsVisibility(in_game_background, true);
+
 			}
 			else
 			{
 				if (!in_game_background->is_transitioning)
 				{
 					App->pause = false;
+					
 				}
 				
 				// Slide out to the right.
@@ -219,6 +222,11 @@ bool GameplayScene::PostUpdate()
 	if (App->player->god_mode == false)
 	{
 		App->gui_manager->SetElementsVisibility(God_Mode_Activated, false);
+	}
+
+	if (App->pause)
+	{
+		App->audio->volume *= 0.5;
 	}
 
 	App->minimap->BlitMinimap();
@@ -2143,6 +2151,12 @@ void GameplayScene::UnitDebugKeys()
 				App->entity_manager->resource_data += 300;
 				App->entity_manager->resource_electricity += 300;
 				App->entity_manager->resource_bits += 300;
+			}
+
+			// OBSTACLES
+			if (App->input->GetKey(SDL_SCANCODE_Q) == KEY_STATE::KEY_DOWN)
+			{
+				(Boulder*)App->entity_manager->CreateEntity(ENTITY_TYPE::BOULDER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
 			}
 		}
 	}

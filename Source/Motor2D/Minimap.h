@@ -62,5 +62,7 @@ private:
 	iPoint minimap_position;
 
 	bool minimap_loaded;
+
+	std::vector<iPoint> minimap_tiles;
 };
 
