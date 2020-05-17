@@ -163,6 +163,8 @@ bool Minimap::CleanUp()
 	SDL_DestroyTexture(minimap_tex);
 	SDL_FreeSurface(map_surface);
 
+	minimap_tiles.clear();
+
 	return true;
 }
 
@@ -222,6 +224,10 @@ void Minimap::DrawMinimap()
 					// Blit the minimap. You need to pass all the parameters until renderer included.
 					// As it is an isometric map, keep in mind that x == 0 is in the middle of the map.
 					App->render->Blit(tex, (pos.x + minimap_width * 0.5f), pos.y, &r, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
+
+
+					// FOG OF WAR
+					minimap_tiles.push_back({ x, y });
 				}
 			}
 		}
@@ -240,22 +246,19 @@ void Minimap::DrawFogOfWar()
 		SDL_DestroyTexture(minimap_fow_tex);													// The texture needs to be destroyed as we use SDL_CreateTextureFromSurface().
 	}
 	
-	for (int y = 0; y < App->map->data.height; ++y)
+	for (int i = 0; i < minimap_tiles.size(); ++i)
 	{
-		for (int x = 0; x < App->map->data.width; ++x)
-		{
-			iPoint tile_position = { x, y };
-			iPoint world_position = App->map->MapToWorld(x, y);
+		iPoint tile_position = { minimap_tiles[i].x, minimap_tiles[i].y };
+		iPoint world_position = App->map->MapToWorld(tile_position.x, tile_position.y);
 
-			world_position.x *= minimap_scale;
-			world_position.y *= minimap_scale;
-			
-			// FOG OF WAR
-			uchar fow_state = App->fow_manager->GetVisibilityAt({ x, y });
+		world_position.x *= minimap_scale;
+		world_position.y *= minimap_scale;
 
-			SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-			App->render->Blit(fow_tex, (world_position.x + minimap_width * 0.5f), world_position.y - 2, &fow_tile_rect, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
-		}
+		// FOG OF WAR
+		uchar fow_state = App->fow_manager->GetVisibilityAt(tile_position);
+
+		SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+		App->render->Blit(fow_tex, (world_position.x + minimap_width * 0.5f), world_position.y - 2, &fow_tile_rect, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
 	}
 
 	minimap_fow_tex = SDL_CreateTextureFromSurface(App->render->renderer, map_surface);
