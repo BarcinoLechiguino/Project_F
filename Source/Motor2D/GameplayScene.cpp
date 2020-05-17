@@ -260,6 +260,7 @@ void GameplayScene::InitScene()
 
 	App->entity_manager->resource_data = 0;
 	App->entity_manager->resource_electricity = 0;
+	App->entity_manager->resource_bits = 0;
 
 	App->render->camera.x = App->player->original_camera_position.x;
 	App->render->camera.y = App->player->original_camera_position.y;
