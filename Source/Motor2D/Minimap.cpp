@@ -137,7 +137,7 @@ void Minimap::BlitMinimap()
 {
 	BROFILER_CATEGORY("Mini Map", Profiler::Color::LavenderBlush);
 
-	App->render->Blit(minimap_bg, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
+	App->render->Blit(minimap_bg, minimap_position.x + 2, minimap_position.y + 2, NULL, false, 0.0f);
 
 	App->render->Blit(minimap_tex, minimap_position.x, minimap_position.y, NULL, false, 0.0f);
 
