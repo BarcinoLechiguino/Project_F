@@ -78,8 +78,6 @@ bool Obelisk::CleanUp()
 	App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
-
-	delete blit_section;
 	
 	return true;
 }

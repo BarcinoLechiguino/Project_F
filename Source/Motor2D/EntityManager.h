@@ -18,7 +18,6 @@ enum class ENTITY_TYPE;
 class EntityManager : public Module
 {
 public:
-
 	EntityManager();
 	~EntityManager();
 
@@ -28,6 +27,7 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+
 	void DrawEntities();
 
 public:																					// -------------- ENTITY CREATION & DESTRUCTION METHODS --------------
@@ -73,16 +73,16 @@ public:																					// -------------- ENTITY CONDITIONAL CHECK METHODS -
 	bool IsAllyUnit(Entity* entity);													// Temporal methods, might be unnecessary down the line.
 	bool IsEnemyUnit(Entity* entity);													// Temporal methods, might be unnecessary down the line.
 
-	bool IsGatherer(Entity* enitity);
-	bool IsScout(Entity* enitity);
-	bool IsInfantry(Entity* entity);
-	bool IsHeavy(Entity* enitity);
+	bool IsGatherer(Entity* enitity);													// Method that will return true if the entity passed as argument is an Ally Gatherer Unit.
+	bool IsScout(Entity* enitity);														// Method that will return true if the entity passed as argument is an Ally Scout Unit.
+	bool IsInfantry(Entity* entity);													// Method that will return true if the entity passed as argument is an Ally Infantry Unit.
+	bool IsHeavy(Entity* enitity);														// Method that will return true if the entity passed as argument is an Ally Heavy Unit.
 	
-	bool IsBuilding(Entity* entity);													// Method that will return true if the entity passed as argument is a building.
-	bool IsResource(Entity* entity);													// Method that will return true if the entity passed as argument is a resource.
-	bool IsObstacle(Entity* entity);
+	bool IsBuilding(Entity* entity);													// Method that will return true if the entity passed as argument is a building entity.
+	bool IsResource(Entity* entity);													// Method that will return true if the entity passed as argument is a resource entity.
+	bool IsObstacle(Entity* entity);													// Method that will return true if the entity passed as argument is an obstacle entity.
 	
-	bool InViewport(Entity* entity);
+	bool InViewport(Entity* entity);													// Method that will return true if the entity passed as argument is currently inside the viewport.
 
 public:																								// -------------- ENTITY MAP METHODS -------------- 
 	void SetEntityMap(int width, int height);														// Method that will allocate the necessary memory for the entity_map.

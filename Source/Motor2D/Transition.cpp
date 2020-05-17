@@ -74,7 +74,7 @@ float Transition::N_Lerp(float start, float end, float rate, bool smash_in)				/
 
 float Transition::GetCutoffRate(float step_duration)
 {
-	cutoff_rate = App->GetDt() / step_duration;											// Change App->GetDt() to App->GetUnpausableDt() later.
+	cutoff_rate = App->GetUnpausableDt() / step_duration;											// Change App->GetDt() to App->GetUnpausableDt() later.
 
 	return cutoff_rate;
 }

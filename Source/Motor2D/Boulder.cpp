@@ -73,11 +73,6 @@ bool Boulder::CleanUp()
 	App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
-
-	if (blit_section != nullptr)
-	{
-		delete blit_section;
-	}
 	
 	return true;
 }

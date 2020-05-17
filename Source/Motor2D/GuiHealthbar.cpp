@@ -70,9 +70,11 @@ void GuiHealthbar::UpdateHealthbarPosition()
 	int position_x = (int)attached_entity->pixel_position.x + attached_entity->healthbar_position_offset.x;
 	int position_y = (int)attached_entity->pixel_position.y + attached_entity->healthbar_position_offset.y;
 
-	SetScreenPos({ position_x, position_y });
+	/*SetScreenPos({ position_x, position_y });
 
-	SetHitbox({ position_x, position_y, GetHitbox().w, GetHitbox().h });
+	SetHitbox({ position_x, position_y, GetHitbox().w, GetHitbox().h });*/
+
+	SetElementPosition({ position_x, position_y });
 }
 
 void GuiHealthbar::UpdateHealthbarValue()

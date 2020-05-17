@@ -17,16 +17,6 @@ public:
 	virtual bool CleanUp();
 
 	virtual void Draw();
-
-public:
-	
-
-public:
-	SDL_Rect* blit_section;
-
-private:
-
-
 };
 
 #endif // !__OBSTACLE_H__
