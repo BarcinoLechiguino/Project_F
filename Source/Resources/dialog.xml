@@ -4,7 +4,7 @@
   <dialog_font font="Assets/gui/fonts/borgsquadcond.ttf" font_size="16" r="255" g="255" b="100" a="255"/>
   <dialog_tree tree_id="0" position_x="100" position_y="20" pause="1">
     
-    <dialog_bubble bubble_id="0" active_time="6500">
+    <dialog_bubble bubble_id="0" active_time="6000">
         <text text="Hi there Vrainen! I see you are finally in."/>
         <text text="BRUH! I knew this was gonna work!"/>
         <text text="Now let's move on!"/>
@@ -41,17 +41,43 @@
   <dialog_tree tree_id="2" position_x="100" position_y="20" pause="1">
 
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Now let's recruit some new units"/>
-      <text text="First off select your Town Hall"/>
+      <text text="Nice! Now you'll need some infantry"/>
+      <text text="to be able to attack and defend"/>
+      <text text="yourself against your enemies!"/>
+      <text text="To do that you'll need resources!"/>
+    </dialog_bubble>
+
+    <dialog_bubble bubble_id="1" active_time="6000">
+      <text text="Gatherer's are these tracktor looking "/>
+      <text text="units, they will get resources fro you!"/>
+      <text text=""/>
+      <text text="Select that one on screen"/>
     </dialog_bubble>
 
   </dialog_tree>
   <dialog_tree tree_id="3" position_x="100" position_y="20" pause="1">
 
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Now let's recruit some new units"/>
-      <text text="First off select your Town Hall"/>
+      <text text="Right click on a tree to gather"/>
+      <text text="electricity for the infantry"/>
     </dialog_bubble>
 
   </dialog_tree>
+
+  <dialog_tree tree_id="4" position_x="100" position_y="20" pause="1">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Notice how on the bottom right"/>
+      <text text="of the screen there is your"/>
+      <text text="electricity reservoir"/>
+    </dialog_bubble>
+
+    <dialog_bubble bubble_id="1" active_time="6000">
+      <text text="Get more electricity until you have"/>
+      <text text="15 of them"/>
+      <text text="electricity reservoir"/>
+    </dialog_bubble>
+
+  </dialog_tree>
+  
 </dialog>

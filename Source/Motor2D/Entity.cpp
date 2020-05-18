@@ -10,6 +10,8 @@
 #include "EntityManager.h"
 #include "GuiHealthbar.h"
 #include "SceneManager.h"
+#include "ParticleManager.h"
+#include "Emitter.h"
 
 #include "Entity.h"
 
@@ -104,6 +106,7 @@ void Entity::ApplyDamage(Entity* target)
 		if (!App->player->god_mode)
 		{
 			target->current_health -= attack_damage;
+			Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ target->pixel_position.x, target->pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
 
 			target->healthbar->UpdateHealthbarValue();
 		}
@@ -112,7 +115,7 @@ void Entity::ApplyDamage(Entity* target)
 			if (!App->entity_manager->IsAllyEntity(target))
 			{
 				target->current_health -= attack_damage;
-
+				Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ target->pixel_position.x, target->pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
 				target->healthbar->UpdateHealthbarValue();
 			}
 		}

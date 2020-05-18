@@ -306,15 +306,22 @@ void Player::GiveOrder()//fix
 			{
 				App->movement->OrderUnitsToMove(cursor_tile, units_selected);
 
-				if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::MOVE_UNIT )
+				if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::MOVE_UNIT ) //Tutorial 2
 				{
-					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
+					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::SELECT_GATHERER;
 					App->dialog_manager->StartDialog(2);
 				}
 			}
 			else
 			{
 				App->movement->OrderUnitsToAttack(cursor_tile, units_selected);
+
+				if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::GATHER_RESOURCE && !units_selected.empty() 
+					&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsResource(App->entity_manager->GetEntityAt(cursor_tile)) ) //Tutorial 4
+				{
+					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_MORE_RESOURCES;
+					App->dialog_manager->StartDialog(4);
+				}
 			}
 		}
 		else
@@ -380,10 +387,17 @@ void Player::DragSelection()
 
 						SelectEntitiesInSelectionRect();
 
-						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty() && App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE)
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty() && App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE) //Tutorial 1
 						{
 							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
 							App->dialog_manager->StartDialog(1);
+						}
+
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty() 
+							&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
+						{
+							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
+							App->dialog_manager->StartDialog(3);
 						}
 					}
 				}
@@ -395,10 +409,19 @@ void Player::DragSelection()
 					{
 						SelectEntityAt(cursor_tile);
 
-						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty() && App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE)
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty() && App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE) //Tutorial 1
 						{
 							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
 							App->dialog_manager->StartDialog(1);
+						}
+
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty()
+							&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
+						{
+							App->entity_manager->IsGatherer(units_selected[0]);
+
+							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
+							App->dialog_manager->StartDialog(3);
 						}
 					}
 				}

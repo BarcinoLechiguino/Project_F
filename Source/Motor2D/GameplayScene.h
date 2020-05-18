@@ -23,8 +23,9 @@ enum class TutorialState
 	NOT_ACTIVE,
 	SELECT_UNIT,
 	MOVE_UNIT,
+	SELECT_GATHERER,
 	GATHER_RESOURCE,
-	SELECT_BARRACKS,
+	GATHER_MORE_RESOURCES,
 	RECRUIT_INFANTRY,
 	ATTACK_ENEMY
 };
@@ -344,6 +345,7 @@ public:
 	GuiImage*				HUD_dialogs_character_no_talking;
 	GuiImage*				HUD_dialogs_character_talking;
 	GuiImage*				HUD_dialogs_screen_block;
+	GuiButton*				HUD_dialogs_skip_tutorial;
 
 private:
 
