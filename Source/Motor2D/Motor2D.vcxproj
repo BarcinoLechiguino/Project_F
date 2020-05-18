@@ -99,7 +99,7 @@
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="EasingFunctions.cpp" />
     <ClCompile Include="Emitter.cpp" />
-    <ClCompile Include="EnemyAI.cpp" />
+    <ClCompile Include="EnemyAIManager.cpp" />
     <ClCompile Include="EnemyInfantry.cpp" />
     <ClCompile Include="EnemyGatherer.cpp" />
     <ClCompile Include="EnemyHeavy.cpp" />
@@ -192,7 +192,7 @@
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="EasingFunctions.h" />
     <ClInclude Include="Emitter.h" />
-    <ClInclude Include="EnemyAI.h" />
+    <ClInclude Include="EnemyAIManager.h" />
     <ClInclude Include="EnemyBarracks.h" />
     <ClInclude Include="EnemyGatherer.h" />
     <ClInclude Include="EnemyHeavy.h" />

@@ -81,19 +81,22 @@ void GuiHealthbar::UpdateHealthbarValue()
 {
 	int new_width = 0;
 
-	if (App->entity_manager->IsUnit(attached_entity)) // crash attached_entity access violation
+	if (attached_entity != nullptr)
 	{
-		new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_entity->current_health) / attached_entity->max_health;
-	}
+		if (App->entity_manager->IsUnit(attached_entity)) // crash attached_entity access violation
+		{
+			new_width = (MAX_UNIT_HEALTHBAR_WIDTH * attached_entity->current_health) / attached_entity->max_health;
+		}
 
-	if (App->entity_manager->IsBuilding(attached_entity))
-	{
-		new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * attached_entity->current_health) / attached_entity->max_health;
-	}
+		if (App->entity_manager->IsBuilding(attached_entity))
+		{
+			new_width = (MAX_BUILDING_HEALTHBAR_WIDTH * attached_entity->current_health) / attached_entity->max_health;
+		}
 
-	if (App->entity_manager->IsResource(attached_entity))
-	{
-		new_width = (MAX_RESOURCE_HEALTHBAR_WIDTH * attached_entity->current_health) / attached_entity->max_health;
+		if (App->entity_manager->IsResource(attached_entity))
+		{
+			new_width = (MAX_RESOURCE_HEALTHBAR_WIDTH * attached_entity->current_health) / attached_entity->max_health;
+		}
 	}
 
 	healthbar.w = new_width;

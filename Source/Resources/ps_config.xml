@@ -24,7 +24,7 @@
 			<emission value ="2"/>
 			<rnd value ="1"/>
 			<particleLife value ="80"/>
-			<emitterLife value ="-1"/>
+			<emitterLife value ="2"/>
 			<startColor r ="250" g="104" b="0" a="255"/>
 			<endColor r ="205" g="205" b="205" a="255"/>
 			<rect x="0" y="0" w="20" h="20"/>
@@ -56,6 +56,23 @@
       <size value ="60"/>
       <cone_angle min ="60" max ="120"/>
       <emission value ="0.1"/>
+      <rnd value ="1"/>
+      <particleLife value ="80"/>
+      <emitterLife value ="-1"/>
+      <startColor r ="51" g="250" b="250" a="255"/>
+      <endColor r ="0" g="128" b="255" a="128"/>
+      <rect x="0" y="0" w="55" h="40"/>
+      <texture_path path="Assets/particles/spark_03.png" />
+      <camera_speed speed="1.0f" />
+      <layer value="1" />
+      <spread_direction a = "90"/>
+    </emitter>
+
+    <emitter type ="5" name="rock shine">
+      <speed value ="20"/> <!-- upwards speed  -->
+      <size value ="60"/>
+      <cone_angle min ="60" max ="120"/>
+      <emission value ="0.1"/> <!-- frame by frame speed  -->
       <rnd value ="1"/>
       <particleLife value ="80"/>
       <emitterLife value ="-1"/>

@@ -52,8 +52,8 @@ bool FowManager::Start()
 {
 	InitFowManager();
 	
-	frontier_debug_tex = App->tex->Load(App->config_file.child("config").child("debug").child("occupied_tile_debug").attribute("path").as_string());
-	line_of_sight_debug_tex = App->tex->Load(App->config_file.child("config").child("debug").child("entity_map_tile_debug").attribute("path").as_string());
+	frontier_debug_tex = App->tex->Load(App->config_file.child("config").child("debug").child("textures").child("occupied_tile_debug").attribute("path").as_string());
+	line_of_sight_debug_tex = App->tex->Load(App->config_file.child("config").child("debug").child("textures").child("entity_map_tile_debug").attribute("path").as_string());
 
 	return true;
 }
@@ -69,7 +69,7 @@ bool FowManager::Update(float dt)
 	{
 		if (App->input->GetKey(SDL_SCANCODE_LCTRL) == KEY_STATE::KEY_REPEAT)	// FOW DEBUG TOOLS
 		{
-			App->map->DrawMapGrid();
+			//App->map->DrawMapGrid();
 
 			DebugFrontier();
 			DebugLineOfSight();

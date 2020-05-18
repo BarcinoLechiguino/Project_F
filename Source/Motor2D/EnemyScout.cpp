@@ -14,12 +14,13 @@
 #include "GuiHealthbar.h"
 #include "SceneManager.h"
 #include "FowManager.h"
+#include "EnemyAIManager.h"
 #include "EntityManager.h"
 
 #include "EnemyScout.h"
 
 
-EnemyScout::EnemyScout(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)  //Constructor. Called at the first frame.
+EnemyScout::EnemyScout(int x, int y, ENTITY_TYPE type, int level) : EnemyUnit(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	LOG("x %d and y %d", x, y);
 	InitEntity();
@@ -119,9 +120,16 @@ bool EnemyScout::CleanUp()
 		collider->to_delete = true;
 	}
 
+	if (is_selected)
+	{
+		App->player->DeleteEntityFromBuffers(this);
+	}
+
 	App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
+
+	App->enemy_AI_manager->DeleteEnemyAIEntity(enemy_AI_entity);
 
 	return true;
 };
@@ -175,6 +183,9 @@ void EnemyScout::InitEntity()
 	provides_visibility = false;
 
 	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
+
+	// ENEMY AI
+	enemy_AI_entity = App->enemy_AI_manager->CreateEnemyAIEntity(this);
 }
 
 void EnemyScout::AttachHealthbarToEntity()
@@ -193,17 +204,64 @@ void EnemyScout::AttachHealthbarToEntity()
 
 void EnemyScout::InitUnitSpriteSections()
 {
-	entity_sprite_section = { 58, 0, 58, 47 };						//Down Right
+	//entity_sprite_section = { 58, 0, 58, 47 };						//Down Right
 
-	pathing_up_section = { 0, 47, 70, 52 };
-	pathing_down_section = { 71, 47, 70, 52 };
-	pathing_rigth_section = { 202, 47, 59, 52 };
-	pathing_left_section = { 142, 47, 59, 52 };
-	pathing_up_right_section = { 116, 0, 60, 47 };
-	pathing_up_left_section = { 176, 0, 59, 47 };
-	pathing_down_right_section = { 58, 0, 58, 47 };
-	pathing_down_left_section = { 0, 0, 58, 47 };
+	//pathing_up_section = { 0, 47, 70, 52 };
+	//pathing_down_section = { 71, 47, 70, 52 };
+	//pathing_rigth_section = { 202, 47, 59, 52 };
+	//pathing_left_section = { 142, 47, 59, 52 };
+	//pathing_up_right_section = { 116, 0, 60, 47 };
+	//pathing_up_left_section = { 176, 0, 59, 47 };
+	//pathing_down_right_section = { 58, 0, 58, 47 };
+	//pathing_down_left_section = { 0, 0, 58, 47 };
+
+	//	 --- LOADING FROM XML ---
+	pugi::xml_node sections = App->entities_file.child("entities").child("units").child("enemies").child("enemy_scout").child("sprite_sections");
+
+	pathing_up_section.x = sections.child("pathing_up").attribute("x").as_int();
+	pathing_up_section.y = sections.child("pathing_up").attribute("y").as_int();
+	pathing_up_section.w = sections.child("pathing_up").attribute("w").as_int();
+	pathing_up_section.h = sections.child("pathing_up").attribute("h").as_int();
+
+	pathing_down_section.x = sections.child("pathing_down").attribute("x").as_int();
+	pathing_down_section.y = sections.child("pathing_down").attribute("y").as_int();
+	pathing_down_section.w = sections.child("pathing_down").attribute("w").as_int();
+	pathing_down_section.h = sections.child("pathing_down").attribute("h").as_int();
+
+	pathing_rigth_section.x = sections.child("pathing_right").attribute("x").as_int();
+	pathing_rigth_section.y = sections.child("pathing_right").attribute("y").as_int();
+	pathing_rigth_section.w = sections.child("pathing_right").attribute("w").as_int();
+	pathing_rigth_section.h = sections.child("pathing_right").attribute("h").as_int();
+
+	pathing_left_section.x = sections.child("pathing_left").attribute("x").as_int();
+	pathing_left_section.y = sections.child("pathing_left").attribute("y").as_int();
+	pathing_left_section.w = sections.child("pathing_left").attribute("w").as_int();
+	pathing_left_section.h = sections.child("pathing_left").attribute("h").as_int();
+
+	pathing_up_right_section.x = sections.child("pathing_up_right").attribute("x").as_int();
+	pathing_up_right_section.y = sections.child("pathing_up_right").attribute("y").as_int();
+	pathing_up_right_section.w = sections.child("pathing_up_right").attribute("w").as_int();
+	pathing_up_right_section.h = sections.child("pathing_up_right").attribute("h").as_int();
+
+	pathing_up_left_section.x = sections.child("pathing_up_left").attribute("x").as_int();
+	pathing_up_left_section.y = sections.child("pathing_up_left").attribute("y").as_int();
+	pathing_up_left_section.w = sections.child("pathing_up_left").attribute("w").as_int();
+	pathing_up_left_section.h = sections.child("pathing_up_left").attribute("h").as_int();
+
+	pathing_down_right_section.x = sections.child("pathing_down_right").attribute("x").as_int();
+	pathing_down_right_section.y = sections.child("pathing_down_right").attribute("y").as_int();
+	pathing_down_right_section.w = sections.child("pathing_down_right").attribute("w").as_int();
+	pathing_down_right_section.h = sections.child("pathing_down_right").attribute("h").as_int();
+
+	pathing_down_left_section.x = sections.child("pathing_down_left").attribute("x").as_int();
+	pathing_down_left_section.y = sections.child("pathing_down_left").attribute("y").as_int();
+	pathing_down_left_section.w = sections.child("pathing_down_left").attribute("w").as_int();
+	pathing_down_left_section.h = sections.child("pathing_down_left").attribute("h").as_int();
+
+	//Default section
+	entity_sprite_section = pathing_down_right_section;
 }
+
 
 void EnemyScout::UpdateUnitSpriteSection()
 {

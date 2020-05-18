@@ -1,45 +1,57 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <dialog>
-  <dialog_font font="Assets/gui/fonts/borgsquadcond.ttf" font_size="14" r="255" g="255" b="100" a="255"/>
+  <dialog_font font="Assets/gui/fonts/borgsquadcond.ttf" font_size="16" r="255" g="255" b="100" a="255"/>
   <dialog_tree tree_id="0" position_x="100" position_y="20" pause="1">
     
-    <dialog_bubble bubble_id="0" active_time="6000">
-        <text text="Oh hello cutie I'll be your instructor"/>
-        <text text="for today"/>
-        <text text="bruh"/>
-        <text text="bruuh"/>
-        <text text="BRUH"/>
+    <dialog_bubble bubble_id="0" active_time="6500">
+        <text text="Hi there Vrainen! I see you are finally in."/>
+        <text text="BRUH! I knew this was gonna work!"/>
+        <text text="Now let's move on!"/>
+        <text text="We have tones of work to do..."/>
     </dialog_bubble>
     
     <dialog_bubble bubble_id="1" active_time="6000"> 
-        <text text="Your first lesson will be on how to gather resources"/>
-        <text text="First select some gatherer units using left click"/>
+        <text text="Your first lesson will be on how to move"/>
+        <text text="the units under your command"/>
     </dialog_bubble>
-    
-    <dialog_bubble bubble_id="2" active_time="6000"> 
-        <text text="Now that they are selected rifht click on a resource"/>
-        <text text="And they should get there and start working for you!"/>
+
+    <dialog_bubble bubble_id="2" active_time="6000">
+      <text text="First select a unit using left click on"/>
+      <text text="one of them"/>
+    </dialog_bubble>
+
+    <dialog_bubble bubble_id="3" active_time="6000">
+      <text text="By the way if you need me to repeat"/>
+      <text text="something or give you some advice"/>
+      <text text="just left click me!"/>
     </dialog_bubble>
     
   </dialog_tree>
 
   <dialog_tree tree_id="1" position_x="100" position_y="20" pause="1">
 
-    <dialog_bubble bubble_id="0" active_time="4000">
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Now that you have selected"/>
+      <text text="one of your units try and"/>
+      <text text="right click an empty tile"/>
+    </dialog_bubble>
+    
+  </dialog_tree>
+  <dialog_tree tree_id="2" position_x="100" position_y="20" pause="1">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
       <text text="Now let's recruit some new units"/>
       <text text="First off select your Town Hall"/>
     </dialog_bubble>
 
-    <dialog_bubble bubble_id="1" active_time="4000">
-      <text text="Click on the button that has a gatherer in it"/>
-      <text text="Notice that you need some resources to recruit it"/>
+  </dialog_tree>
+  <dialog_tree tree_id="3" position_x="100" position_y="20" pause="1">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Now let's recruit some new units"/>
+      <text text="First off select your Town Hall"/>
     </dialog_bubble>
 
-    <dialog_bubble bubble_id="2" active_time="4000">
-      <text text="Above the recruit button there's a level up button"/>
-      <text text="This will increse the units stats!"/>
-    </dialog_bubble>
-    
   </dialog_tree>
 </dialog>

@@ -18,15 +18,24 @@ class GuiButton;
 class GuiInputBox;
 class GuiScrollbar;
 
+enum class TutorialState
+{
+	NOT_ACTIVE,
+	SELECT_UNIT,
+	MOVE_UNIT,
+	GATHER_RESOURCE,
+	SELECT_BARRACKS,
+	RECRUIT_INFANTRY,
+	ATTACK_ENEMY
+};
+
 struct Tutorial
 {
-	enum class TutorialState
-	{
-
-	};
-
 	bool lock_camera;
+	iPoint camera_position;
 	TutorialState tutorial_state;
+
+	void NextStep(TutorialState state);
 };
 
 class GameplayScene : public Scene
@@ -60,7 +69,7 @@ public:
 	void SpawnAllyUnit(ENTITY_TYPE type);
 	void SpawnEnemyUnit(ENTITY_TYPE type);
 
-	void SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount);		// TMP. Put in EnemyAI module.
+	void SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount);		// TMP. Put in EnemyAIManager module.
 
 	void BuildingUpgrade();
 	void UnitUpgrade(int unit);
@@ -72,13 +81,13 @@ public:
 	void LoadInGameOptionsMenu();
 
 	void OnEventCall(GuiElement* element, GUI_EVENT ui_event);
-
 	void SwitchPauseMenuMode();																// Will switch between enabling and disabling the pause menu.
-
 	void DebugHUDSpawn();																	// HUD SPAWN
-
 	void AdjustVolumeWithScrollbar();
 	
+	//Tutorial
+	void HandleTutorial();
+
 	// --- Debug Methods
 	void UnitDebugKeys();
 
