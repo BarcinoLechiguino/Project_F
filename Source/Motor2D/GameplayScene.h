@@ -152,6 +152,7 @@ public:
 	GuiScrollbar*			in_game_music_scrollbar;
 	GuiScrollbar*			in_game_sfx_scrollbar;
 
+
 	// Text:
 	GuiText*				in_game_resolution_text;
 	GuiText*				in_game_sfx_text;

@@ -1448,13 +1448,13 @@ void GameplayScene::LoadGuiElements()
 	App->dialog_manager->LoadDialog();
 
 	//Skip tutorial
-	SDL_Rect in_game_back_button_size = { 0, 0, 45, 33 };
-	SDL_Rect in_game_back_button_idle = { 0, 103, 45, 33 };
-	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
-	SDL_Rect in_game_back_button_clicked = { 114, 103, 45, 33 };
+	SDL_Rect HUD_dialogs_skip_tutorial_size = { 0, 0, 50, 37 };
+	SDL_Rect HUD_dialogs_skip_tutorial_idle = { 26, 955, 50, 38 };
+	SDL_Rect HUD_dialogs_skip_tutorial_hover = { 78, 956, 50, 38 };
+	SDL_Rect HUD_dialogs_skip_tutorial_clicked = { 129, 956, 50, 38 };
 
-	in_game_back_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 430, 445, true, true, false, this, in_game_options_parent
-		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
+	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 120, 145, true, true, false, this, in_game_options_parent
+		, &HUD_dialogs_skip_tutorial_idle, &HUD_dialogs_skip_tutorial_hover, &HUD_dialogs_skip_tutorial_clicked);
 
 }
 
