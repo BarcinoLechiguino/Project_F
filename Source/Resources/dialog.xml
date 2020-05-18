@@ -79,5 +79,39 @@
     </dialog_bubble>
 
   </dialog_tree>
+
+  <dialog_tree tree_id="5" position_x="100" position_y="20" pause="1">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Now select the barracks and recruit"/>
+      <text text="an infantry unit"/>
+    </dialog_bubble>
+
+  </dialog_tree>
   
+  <dialog_tree tree_id="6" position_x="100" position_y="20" pause="1">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Nice! Now you know all the basics"/>
+      <text text="To attack an enemy you just have to"/>
+      <text text="select a combat unit and right click"/>
+      <text text="on an enemy building or unit"/>
+    </dialog_bubble>
+    
+    <dialog_bubble bubble_id="1" active_time="6000">
+      <text text="You are now free to do whatever you"/>
+      <text text="want"/>
+      <text text="Keep gathering and recruiting more units"/>
+      <text text="so you are not defenceless against"/>
+      <text text="the enemy troops!"/>
+    </dialog_bubble>
+
+    <dialog_bubble bubble_id="2" active_time="6000">
+      <text text="Remember I'll be up here if you need"/>
+      <text text="any advice!"/>
+    </dialog_bubble>
+
+  </dialog_tree>
+
+
 </dialog>
