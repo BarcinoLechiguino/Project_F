@@ -63,6 +63,8 @@ bool EnemyAIManager::Update(float dt)
 	{
 		wave_timer += dt;
 
+		GivePatrolPath();
+		
 		//CheckWaveTimers();
 
 		//GiveTargetOnWaveSpawnCompletion();
@@ -213,6 +215,17 @@ void EnemyAIManager::GiveTargetToEnemyWave(const EnemyWave& enemy_wave)
 	}
 
 	wave_units.clear();
+}
+
+void EnemyAIManager::GivePatrolPath()
+{
+	for (int i = 0; i < patroling_entities.size(); ++i)
+	{
+		if (!patroling_entities[i]->has_proximity_target && patroling_entities[i]->entity_path.empty())
+		{
+			//Give Random Path
+		}
+	}
 }
 
 EnemyAIEntity* EnemyAIManager::CreateEnemyAIEntity(Entity* enemy_entity)
