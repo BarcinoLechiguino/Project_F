@@ -216,7 +216,7 @@ void EnemyScout::InitUnitSpriteSections()
 	//pathing_down_left_section = { 0, 0, 58, 47 };
 
 	//	 --- LOADING FROM XML ---
-	pugi::xml_node sections = App->entities_file.child("entities").child("units").child("enemies").child("scout").child("sprite_sections");
+	pugi::xml_node sections = App->entities_file.child("entities").child("units").child("enemies").child("enemy_scout").child("sprite_sections");
 
 	pathing_up_section.x = sections.child("pathing_up").attribute("x").as_int();
 	pathing_up_section.y = sections.child("pathing_up").attribute("y").as_int();
