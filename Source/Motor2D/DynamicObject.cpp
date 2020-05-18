@@ -35,6 +35,11 @@ DynamicObject::DynamicObject(int x, int y, ENTITY_TYPE type, int level) : Entity
 	ChangeOccupiedTile(tile_position);
 }
 
+DynamicObject::~DynamicObject()
+{
+
+}
+
 bool DynamicObject::Awake(pugi::xml_node&)
 {
 	return true;

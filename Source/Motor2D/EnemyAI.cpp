@@ -100,3 +100,64 @@ void EnemyAI::SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry
 		}
 	}
 }
+
+EnemyAIEntity* EnemyAI::CreateEnemyAIEntity(Entity* enemy_entity)
+{
+	EnemyAIEntity* enemy_AI = nullptr;
+
+	enemy_AI = new EnemyAIEntity(enemy_entity);
+
+	if (enemy_AI != nullptr)
+	{
+		enemy_AI_entities.push_back(enemy_AI);
+	}
+
+	return enemy_AI;
+}
+
+void EnemyAI::DeleteEnemyAIEntity(EnemyAIEntity* AI_entity_to_delete)
+{
+	std::vector<EnemyAIEntity*>::iterator item = enemy_AI_entities.begin();
+	
+	for (; item != enemy_AI_entities.end(); ++item)
+	{
+		if ((*item) == AI_entity_to_delete)
+		{
+			(*item)->CleanUp();
+			
+			RELEASE((*item));
+			enemy_AI_entities.erase(item);
+			
+			break;
+		}
+	}
+}
+
+void EnemyAI::DestroyEnemyAIEntities()
+{
+	std::vector<EnemyAIEntity*>::iterator item = enemy_AI_entities.begin();
+
+	for (; item != enemy_AI_entities.end(); ++item)
+	{
+		(*item)->CleanUp();
+		RELEASE((*item));
+	}
+
+	enemy_AI_entities.clear();
+}
+
+// --------- ENEMY AI ENTITY METHODS ---------
+EnemyAIEntity::EnemyAIEntity(Entity* enemy_entity) : enemy_entity(enemy_entity), AI_state(ENEMY_AI_STATE::IDLE)
+{
+
+}
+
+EnemyAIEntity::EnemyAIEntity() : enemy_entity(nullptr), AI_state(ENEMY_AI_STATE::NONE)
+{
+
+}
+
+void EnemyAIEntity::CleanUp()
+{
+
+}

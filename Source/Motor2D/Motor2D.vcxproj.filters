@@ -43,12 +43,6 @@
     <ClCompile Include="Application.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Gatherer.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
-    </ClCompile>
-    <ClCompile Include="Infantry.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
-    </ClCompile>
     <ClCompile Include="Transition.cpp">
       <Filter>Engine  ===========\Modules\Transitions</Filter>
     </ClCompile>
@@ -111,24 +105,6 @@
     </ClCompile>
     <ClCompile Include="MainMenuScene.cpp">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClCompile>
-    <ClCompile Include="Scout.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
-    </ClCompile>
-    <ClCompile Include="Heavy.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyGatherer.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyScout.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyHeavy.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyInfantry.cpp">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClCompile>
     <ClCompile Include="EnemyAI.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
@@ -262,6 +238,36 @@
     <ClCompile Include="DialogManager.cpp">
       <Filter>Engine  ===========\Modules\Multimedia\Dialog Manager</Filter>
     </ClCompile>
+    <ClCompile Include="AllyUnit.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units</Filter>
+    </ClCompile>
+    <ClCompile Include="Gatherer.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Heavy.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Infantry.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="Scout.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyUnit.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyGatherer.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyHeavy.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyInfantry.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyScout.cpp">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -305,12 +311,6 @@
     </ClInclude>
     <ClInclude Include="Application.h">
       <Filter>Engine  ===========\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Gatherer.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
-    </ClInclude>
-    <ClInclude Include="Infantry.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
     </ClInclude>
     <ClInclude Include="Transition.h">
       <Filter>Engine  ===========\Modules\Transitions</Filter>
@@ -377,24 +377,6 @@
     </ClInclude>
     <ClInclude Include="MainMenuScene.h">
       <Filter>Engine  ===========\Modules\Scenes\In-Game Scenes</Filter>
-    </ClInclude>
-    <ClInclude Include="Scout.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
-    </ClInclude>
-    <ClInclude Include="Heavy.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Allies</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyGatherer.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyScout.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyHeavy.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyInfantry.h">
-      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="EnemyAI.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
@@ -537,6 +519,36 @@
     <ClInclude Include="DialogManager.h">
       <Filter>Engine  ===========\Modules\Multimedia\Dialog Manager</Filter>
     </ClInclude>
+    <ClInclude Include="AllyUnit.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units</Filter>
+    </ClInclude>
+    <ClInclude Include="Gatherer.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Heavy.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Infantry.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="Scout.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyUnit.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyGatherer.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyHeavy.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyInfantry.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyScout.h">
+      <Filter>Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
@@ -558,9 +570,6 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Dynamic">
       <UniqueIdentifier>{e96a4ccf-5996-4da6-8d54-7d5fcc7477e3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Enemies">
-      <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine  ===========\Modules\Interactions">
       <UniqueIdentifier>{cf73c846-5205-46c2-b047-e3046a31911b}</UniqueIdentifier>
@@ -603,9 +612,6 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Multimedia">
       <UniqueIdentifier>{15264866-1f65-434b-a574-b872e2272144}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Allies">
-      <UniqueIdentifier>{a7300310-4fa0-4b46-8cbe-f69324b1c8b4}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Static\Buildings">
       <UniqueIdentifier>{d8af655e-522b-40ee-b083-1548d8a7be61}</UniqueIdentifier>
@@ -657,6 +663,18 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Multimedia\Dialog Manager">
       <UniqueIdentifier>{ca768f60-5d42-4856-83f5-4e4c96edd0ea}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Ally Units">
+      <UniqueIdentifier>{a7300310-4fa0-4b46-8cbe-f69324b1c8b4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Enemy Units">
+      <UniqueIdentifier>{78dcf8be-9063-49b0-a649-aeba797687f9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Ally Units\Ally Unit Entities">
+      <UniqueIdentifier>{93273520-8906-4dfd-92cb-291617c90669}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities">
+      <UniqueIdentifier>{4e19cffa-e3d2-4f8c-b36a-6d485849cb0e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

@@ -98,7 +98,7 @@ public:
 	SceneManager*		scene_manager;
 	Minimap*			minimap;
 	Movement*			movement;
-	EnemyAI*			enemy_ai;
+	EnemyAI*			enemy_AI;
 	FowManager*			fow_manager;
 	DialogManager*		dialog_manager;
 	ParticleManager*	particle_manager;

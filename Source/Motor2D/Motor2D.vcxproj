@@ -81,12 +81,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AllyUnit.cpp" />
     <ClCompile Include="AlternatingBars.cpp" />
     <ClCompile Include="Barracks.cpp" />
     <ClCompile Include="Boulder.cpp" />
     <ClCompile Include="Dependencies\mmgr\mmgr.cpp" />
     <ClCompile Include="Dependencies\PugiXml\src\pugixml.cpp" />
     <ClCompile Include="DialogManager.cpp" />
+    <ClCompile Include="EnemyUnit.cpp" />
     <ClCompile Include="Obelisk.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="CameraToMouse.cpp" />
@@ -170,6 +172,7 @@
     <ClCompile Include="ZoomToMouse.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AllyUnit.h" />
     <ClInclude Include="AlternatingBars.h" />
     <ClInclude Include="Animation.h" />
     <ClInclude Include="Bar.h" />
@@ -178,6 +181,7 @@
     <ClInclude Include="Dependencies\PugiXml\src\pugiconfig.hpp" />
     <ClInclude Include="Dependencies\PugiXml\src\pugixml.hpp" />
     <ClInclude Include="DialogManager.h" />
+    <ClInclude Include="EnemyUnit.h" />
     <ClInclude Include="Obelisk.h" />
     <ClInclude Include="Building.h" />
     <ClInclude Include="CameraToMouse.h" />

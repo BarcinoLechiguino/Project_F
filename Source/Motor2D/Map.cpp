@@ -739,13 +739,13 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 		{
 			objectgroup->object[index].type = ENEMY_BARRACKS;
 			//App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, tile_coords.x, tile_coords.y);
-			App->enemy_ai->enemy_barracks = (EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, tile_coords.x, tile_coords.y);
+			App->enemy_AI->enemy_barracks = (EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, tile_coords.x, tile_coords.y);
 		}
 		else if (object_type == "enemy_hall")
 		{
 			objectgroup->object[index].type = ENEMY_HALL;
 			//App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, tile_coords.x, tile_coords.y);
-			App->enemy_ai->enemy_townhall = (EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, tile_coords.x, tile_coords.y);
+			App->enemy_AI->enemy_townhall = (EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, tile_coords.x, tile_coords.y);
 
 		}
 		else if (object_type == "infantry")

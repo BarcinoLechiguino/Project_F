@@ -57,7 +57,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	transition_manager	= new TransitionManager();
 	scene_manager		= new SceneManager();
 	movement			= new Movement();
-	enemy_ai			= new EnemyAI();
+	enemy_AI			= new EnemyAI();
 	fow_manager			= new FowManager();
 	dialog_manager		= new DialogManager();
 	particle_manager	= new ParticleManager();
@@ -84,7 +84,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene_manager);
 	AddModule(transition_manager);
 	AddModule(entity_manager);
-	AddModule(enemy_ai);
+	AddModule(enemy_AI);
 	AddModule(fow_manager);
 	AddModule(dialog_manager);
 	AddModule(player);
