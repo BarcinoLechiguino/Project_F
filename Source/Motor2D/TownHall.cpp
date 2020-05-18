@@ -211,6 +211,7 @@ void TownHall::InitEntity()
 	is_selected = false;
 
 	// UNIT CREATION VARIABLES
+	creating_unit = false;
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
 	
 	gatherer_creation_time = 1.0f;														//Magic
