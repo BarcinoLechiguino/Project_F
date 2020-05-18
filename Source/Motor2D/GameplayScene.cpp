@@ -1864,14 +1864,13 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
-		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(1300, HUD_missions_background->GetScreenPos().y), iPoint(902, HUD_missions_background->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(1277, HUD_missions_background->GetScreenPos().y), iPoint(902, HUD_missions_background->GetScreenPos().y));
 		
 		App->gui_manager->CreateSlideAnimation(HUD_missions_tab_close, 0.5f, false, iPoint(1252, HUD_missions_tab_close->GetScreenPos().y), iPoint(883, HUD_missions_tab_close->GetScreenPos().y));
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, true);
 		
 		App->gui_manager->CreateSlideAnimation(HUD_missions_tab, 0.5f, false, iPoint(1252, HUD_missions_tab->GetScreenPos().y), iPoint(883, HUD_missions_tab->GetScreenPos().y));
-		App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);
-		
+		App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);	
 		
 	}
 
@@ -1879,8 +1878,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
-		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(902, HUD_missions_background->GetScreenPos().y), iPoint(1300, HUD_missions_background->GetScreenPos().y));
-		
+		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(902, HUD_missions_background->GetScreenPos().y), iPoint(1277, HUD_missions_background->GetScreenPos().y));
 
 		App->gui_manager->CreateSlideAnimation(HUD_missions_tab_close, 0.5f, false, iPoint(883, HUD_missions_tab_close->GetScreenPos().y), iPoint(1252, HUD_missions_tab_close->GetScreenPos().y));
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, false);
