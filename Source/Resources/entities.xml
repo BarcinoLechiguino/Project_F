@@ -1,6 +1,6 @@
 <entities>
   <textures>
-    <gatherer_texture                 path="Assets/entities/ally_unit_gatherer2.png"/>
+    <gatherer_texture                 path="Assets/entities/ally_unit_gatherer.png"/>
     <scout_texture                    path="Assets/entities/ally_unit_scout.png"/>
     <infantry_texture                 path="Assets/entities/ally_unit_infantry.png"/>
     <heavy_texture                    path="Assets/entities/ally_unit_heavy.png"/>
