@@ -4,6 +4,7 @@
 #include "Audio.h"
 #include "Map.h"
 #include "Pathfinding.h"
+#include "Player.h"
 #include "GuiManager.h"
 #include "GuiElement.h"
 #include "GuiHealthbar.h"
@@ -72,6 +73,11 @@ bool Obelisk::CleanUp()
 	if (collider != nullptr)
 	{
 		collider->to_delete = true;
+	}
+
+	if (is_selected)
+	{
+		App->player->DeleteEntityFromBuffers(this);
 	}
 
 	App->gui_manager->DeleteGuiElement(healthbar);

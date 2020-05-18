@@ -21,7 +21,7 @@
 #include "Gatherer.h"
 
 
-Gatherer::Gatherer(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)
+Gatherer::Gatherer(int x, int y, ENTITY_TYPE type, int level) : AllyUnit(x, y, type, level)
 {
 	InitEntity();
 }
@@ -100,6 +100,11 @@ bool Gatherer::CleanUp()
 	if (collider != nullptr)
 	{
 		collider->to_delete = true;
+	}
+	
+	if (is_selected)
+	{
+		App->player->DeleteEntityFromBuffers(this);
 	}
 	
 	App->gui_manager->DeleteGuiElement(healthbar);

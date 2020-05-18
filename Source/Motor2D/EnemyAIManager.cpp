@@ -3,51 +3,51 @@
 #include "EnemyTownHall.h"
 #include "EnemyBarracks.h"
 
-#include "EnemyAI.h"
+#include "EnemyAIManager.h"
 
-EnemyAI::EnemyAI() : Module(), enemy_townhall(nullptr), enemy_barracks(nullptr)
+EnemyAIManager::EnemyAIManager() : Module(), enemy_townhall(nullptr), enemy_barracks(nullptr)
 {
 
 }
 
-EnemyAI::~EnemyAI()
+EnemyAIManager::~EnemyAIManager()
 {
 
 }
 
-bool EnemyAI::Awake(pugi::xml_node& config)
-{
-	return true;
-}
-
-bool EnemyAI::Start()
+bool EnemyAIManager::Awake(pugi::xml_node& config)
 {
 	return true;
 }
 
-bool EnemyAI::PreUpdate()
+bool EnemyAIManager::Start()
 {
 	return true;
 }
 
-bool EnemyAI::Update(float dt)
+bool EnemyAIManager::PreUpdate()
+{
+	return true;
+}
+
+bool EnemyAIManager::Update(float dt)
 {
 	enemy_barracks;
 	enemy_townhall;
 	return true;
 }
 
-bool EnemyAI::PostUpdate()
+bool EnemyAIManager::PostUpdate()
 {
 	return true;
 }
 
-bool EnemyAI::CleanUp()
+bool EnemyAIManager::CleanUp()
 {
 	return true;
 }
 
-void EnemyAI::SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount)
+void EnemyAIManager::SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount)
 {
 	EnemyTownHall* enemy_townhall = nullptr;
 	EnemyBarracks* enemy_barracks = nullptr;
@@ -101,7 +101,7 @@ void EnemyAI::SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry
 	}
 }
 
-EnemyAIEntity* EnemyAI::CreateEnemyAIEntity(Entity* enemy_entity)
+EnemyAIEntity* EnemyAIManager::CreateEnemyAIEntity(Entity* enemy_entity)
 {
 	EnemyAIEntity* enemy_AI = nullptr;
 
@@ -115,7 +115,7 @@ EnemyAIEntity* EnemyAI::CreateEnemyAIEntity(Entity* enemy_entity)
 	return enemy_AI;
 }
 
-void EnemyAI::DeleteEnemyAIEntity(EnemyAIEntity* AI_entity_to_delete)
+void EnemyAIManager::DeleteEnemyAIEntity(EnemyAIEntity* AI_entity_to_delete)
 {
 	std::vector<EnemyAIEntity*>::iterator item = enemy_AI_entities.begin();
 	
@@ -133,7 +133,7 @@ void EnemyAI::DeleteEnemyAIEntity(EnemyAIEntity* AI_entity_to_delete)
 	}
 }
 
-void EnemyAI::DestroyEnemyAIEntities()
+void EnemyAIManager::DestroyEnemyAIEntities()
 {
 	std::vector<EnemyAIEntity*>::iterator item = enemy_AI_entities.begin();
 

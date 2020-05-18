@@ -26,11 +26,11 @@ struct EnemyAIEntity
 	ENEMY_AI_STATE AI_state;
 };
 
-class EnemyAI : public Module
+class EnemyAIManager : public Module
 {
 public:
-	EnemyAI();
-	~EnemyAI();
+	EnemyAIManager();
+	~EnemyAIManager();
 
 	bool Awake(pugi::xml_node&);
 	bool Start();
