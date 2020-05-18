@@ -11,6 +11,7 @@
 #include "GuiHealthbar.h"
 #include "GuiCreationBar.h"
 #include "FowManager.h"
+#include "EnemyAIManager.h"
 #include "EntityManager.h"
 #include "Gatherer.h"
 #include "Scout.h"
@@ -106,6 +107,8 @@ bool TownHall::CleanUp()
 	App->gui_manager->DeleteGuiElement(creation_bar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
+
+	App->enemy_AI_manager->TownhallReassignment();
 
 	return true;
 }
@@ -249,6 +252,9 @@ void TownHall::InitEntity()
 	fow_entity->frontier = App->fow_manager->CreateCircularFrontier(range_of_vision, tile_position + iPoint(1, 1));
 
 	fow_entity->line_of_sight = App->fow_manager->GetLineOfSight(fow_entity->frontier);
+
+	// ENEMY AI
+	App->enemy_AI_manager->ally_townhall = this;
 }
 
 void TownHall::AttachHealthbarToEntity()

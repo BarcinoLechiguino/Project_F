@@ -35,6 +35,7 @@ struct Tutorial
 	bool lock_camera;
 	iPoint camera_position;
 	TutorialState tutorial_state;
+	bool boulders_active;
 
 	void NextStep(TutorialState state);
 };

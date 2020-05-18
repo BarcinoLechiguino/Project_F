@@ -259,6 +259,8 @@ void GameplayScene::InitScene()
 
 	App->dialog_manager->StartDialog(0);
 	tutorial.tutorial_state = TutorialState::SELECT_UNIT;
+
+	tutorial.boulders_active = true;
 }
 
 // --- SCENE TRANSITIONS
@@ -303,10 +305,21 @@ void GameplayScene::HandleTutorial()
 		if(tutorial.lock_camera)
 		tutorial.lock_camera = false;
 
+		if (tutorial.boulders_active)
+		{
+			for (std::vector<Entity*>::iterator boulder = App->map->tutorial_boulders.begin(); boulder != App->map->tutorial_boulders.end(); ++boulder)
+			{
+				App->entity_manager->DeleteEntity((*boulder));
+			}
+			App->map->tutorial_boulders.clear();
+
+			tutorial.boulders_active = false;
+		}
+
 		break;
 	case TutorialState::SELECT_UNIT:
-		tutorial.lock_camera = true;
-		App->render->SetCameraPosition(iPoint(2750, -3100));
+		tutorial.lock_camera = false;
+		//App->render->SetCameraPosition(iPoint(2750, -3100));
 
 		break;
 	case TutorialState::MOVE_UNIT:
