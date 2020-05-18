@@ -317,30 +317,60 @@ void Minimap::DrawEntities()
 
 			switch ((*entity)->type) 
 			{
-			case ENTITY_TYPE::BARRACKS:
-				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 204, 0, 204, 255, true, false);
+			case ENTITY_TYPE::GATHERER:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+				break;
+			case ENTITY_TYPE::SCOUT:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+				break;
+			case ENTITY_TYPE::INFANTRY:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+				break;
+			case ENTITY_TYPE::HEAVY:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+				break;
+			case ENTITY_TYPE::ENEMY_GATHERER:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+				break;
+			case ENTITY_TYPE::ENEMY_SCOUT:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+				break;
+			case ENTITY_TYPE::ENEMY_INFANTRY:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 0, 204, 204, 255, true, false);
+				break;
+			case ENTITY_TYPE::ENEMY_HEAVY:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 0, 204, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::TOWNHALL:
 				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 204, 0, 204, 255, true, false);
 				App->render->DrawQuad({ (pos_x + (int)(minimap_width * 0.5f)) + 1 + minimap_position.x, pos_y - y_offset + minimap_position.y + 1, 2, 2 }, 204, 153, 204, 255, true, false);
 				break;
-			case ENTITY_TYPE::INFANTRY:
-				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
+			case ENTITY_TYPE::BARRACKS:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 204, 0, 204, 255, true, false);
 				break;
-			case ENTITY_TYPE::GATHERER:
-				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 204, 0, 204, 255, true, false);
-				break;
-			case ENTITY_TYPE::ENEMY_BARRACKS:
-				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
+			case ENTITY_TYPE::WALL:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 204, 0, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ENEMY_TOWNHALL:
 				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
 				App->render->DrawQuad({ (pos_x + (int)(minimap_width * 0.5f)) + 1 + minimap_position.x, pos_y - y_offset + minimap_position.y + 1, 2, 2 }, 153, 204, 204, 255, true, false);
 				break;
-			case ENTITY_TYPE::ENEMY_INFANTRY:
-				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 0, 204, 204, 255, true, false);
+			case ENTITY_TYPE::ENEMY_BARRACKS:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
+				break;
+			case ENTITY_TYPE::ENEMY_WALL:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 4, 4 }, 0, 204, 204, 255, true, false);
 				break;
 			case ENTITY_TYPE::ROCK:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 255, 255, 255, 255, true, false);
+				break;
+			case ENTITY_TYPE::TREE:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 255, 255, 255, 255, true, false);
+				break;
+			case ENTITY_TYPE::OBELISK:
+				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 255, 255, 255, 255, true, false);
+				break;
+			case ENTITY_TYPE::BOULDER:
 				App->render->DrawQuad({ pos_x + (int)(minimap_width * 0.5f) + minimap_position.x, pos_y - y_offset + minimap_position.y, 2, 2 }, 255, 255, 255, 255, true, false);
 				break;
 			}
