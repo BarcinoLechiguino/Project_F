@@ -7,6 +7,7 @@
 class Animation;
 class GuiImage;
 class GuiHealthbar;
+class Emitter;
 
 struct SDL_Texture;
 struct SDL_Rect;

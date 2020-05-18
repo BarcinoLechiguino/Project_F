@@ -84,5 +84,22 @@
       <layer value="1" />
       <spread_direction a = "90"/>
     </emitter>
+
+    <emitter type ="6" name="damage spark">
+      <speed value ="0"/>                <!-- upwards speed  -->
+      <size value ="30"/>
+      <cone_angle min ="60" max ="120"/>
+      <emission value ="0.7"/>            <!-- frame by frame speed  -->
+      <rnd value ="1"/>
+      <particleLife value ="80"/>
+      <emitterLife value ="0.4"/>
+      <startColor r ="220" g="95" b="157" a="255"/>
+      <endColor r ="255" g="245" b="254" a="128"/>
+      <rect x="20" y="20" w="35" h="20"/>
+      <texture_path path="Assets/particles/scorch_02.png" />
+      <camera_speed speed="1.0f" />
+      <layer value="1" />
+      <spread_direction a = "90"/>
+    </emitter>
 	</info>
 </particlesystem>

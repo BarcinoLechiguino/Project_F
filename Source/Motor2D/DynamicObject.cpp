@@ -4,7 +4,6 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "Audio.h"
-
 #include "Player.h"
 
 #include "DynamicObject.h"
@@ -33,6 +32,8 @@ DynamicObject::DynamicObject(int x, int y, ENTITY_TYPE type, int level) : Entity
 	path_state = PATHFINDING_STATE::IDLE;
 
 	ChangeOccupiedTile(tile_position);
+
+	
 }
 
 DynamicObject::~DynamicObject()
