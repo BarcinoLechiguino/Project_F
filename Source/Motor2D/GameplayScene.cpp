@@ -453,9 +453,23 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 		case ENTITY_TYPE::INFANTRY:
 			if (CheckResources(0, 5, 0))
 			{
+				LOG("ARRIVED HERE");
 				barrack = (Barracks*)App->player->building_selected;
+				
+				if (barrack == nullptr)
+				{
+					LOG("BARRACK IS NULL");
+				}
+				
 				App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 				barrack->creation_queue.push_back(ENTITY_TYPE::INFANTRY);
+
+				if (barrack->creation_queue.size() == 0)
+				{
+					LOG("THE UNIT WAS NOT QUEUED");
+				}
+
+				LOG("EXITED HERE");
 			}
 			break;
 
