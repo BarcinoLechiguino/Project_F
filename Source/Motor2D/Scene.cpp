@@ -171,11 +171,6 @@ void Scene::DebugKeys()
 
 	if (App->input->GetKey(SDL_SCANCODE_F10) == KEY_STATE::KEY_DOWN)						//Enable/Disable collider debug. (Display all colliders.)
 	{
-		App->collisions->collider_debug = !App->collisions->collider_debug;
-	}
-
-	if (App->input->GetKey(SDL_SCANCODE_F11) == KEY_STATE::KEY_DOWN)
-	{
 		App->entity_manager->debug_center_point = !App->entity_manager->debug_center_point;
 	}
 
