@@ -121,7 +121,7 @@ bool Emitter::PostUpdate()
 	for (int i = 0; i < (int)particle_vec.size(); ++i)
 	{
 		if (layer == 1 && App->fow_manager->GetVisibilityAt(App->map->WorldToMap(particle_vec[i]->pos.x, particle_vec[i]->pos.y)) == VISIBLE) {
-			particle_vec[i]->fraction += (RandomizeParticleColor(0.0f, 1.5f) / particle_vec[i]->startLife);
+			particle_vec[i]->fraction += (RandomizeParticleColor(0.0f, 3.0f) / particle_vec[i]->startLife);
 
 			SDL_Rect drawRect = { (int)particle_vec[i]->startSize, (int)particle_vec[i]->startSize };
 			App->render->ColoredBlit(this->particle_tex, particle_vec[i]->pos.x + ((drawRect.w - particle_vec[i]->rectSize.w) / 2), particle_vec[i]->pos.y + ((drawRect.h - particle_vec[i]->rectSize.h) / 2), /*&particle_vec[i]->rect*/ NULL, &particle_vec[i]->rectSize, InterpolateColors(particle_vec[i]->startColor, particle_vec[i]->endColor, particle_vec[i]->fraction), cameraspeed);

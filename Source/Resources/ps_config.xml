@@ -42,7 +42,7 @@
       <rnd value ="1"/>
       <particleLife value ="80"/>
       <emitterLife value ="-1"/>
-      <startColor r ="30" g="30" b="50" a="255"/>
+      <startColor r ="30" g="30" b="120" a="255"/>
       <endColor r ="70" g="70" b="120" a="255"/>
       <rect x="0" y="0" w="20" h="20"/>
       <texture_path path="Assets/particles/smoke_06.png" />
@@ -103,14 +103,14 @@
     </emitter>
     
     <emitter type ="7" name="tree energy">
-      <speed value ="20"/>
+      <speed value ="10"/>
       <size value ="40"/>
       <cone_angle min ="60" max ="120"/>
       <emission value ="0.3"/>
       <rnd value ="1"/>
       <particleLife value ="80"/>
       <emitterLife value ="-1"/>
-      <startColor r ="222" g="34" b="202" a="255"/>
+      <startColor r ="92" g="115" b="233" a="255"/>
       <endColor r ="255" g="255" b="255" a="128"/>
       <rect x="20" y="20" w="20" h="10"/>
       <texture_path path="Assets/particles/spark_04.png" />
