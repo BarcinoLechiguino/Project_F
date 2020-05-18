@@ -5,7 +5,7 @@
 
 #include "EnemyAI.h"
 
-EnemyAI::EnemyAI() : Module()
+EnemyAI::EnemyAI() : Module(), enemy_townhall(nullptr), enemy_barracks(nullptr)
 {
 
 }
@@ -32,6 +32,8 @@ bool EnemyAI::PreUpdate()
 
 bool EnemyAI::Update(float dt)
 {
+	enemy_barracks;
+	enemy_townhall;
 	return true;
 }
 

@@ -207,10 +207,19 @@ void EnemyTownHall::InitEntity()
 	}
 
 	// FOG OF WAR
-	is_visible = false;
+	/*is_visible = false;
 	provides_visibility = false;
 
-	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);*/
+
+	is_visible = true;
+	provides_visibility = true;
+	range_of_vision = 6;
+
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position + iPoint(1, 1), provides_visibility);
+
+	fow_entity->frontier = App->fow_manager->CreateCircularFrontier(range_of_vision, tile_position + iPoint(1, 1));
+	fow_entity->line_of_sight = App->fow_manager->GetLineOfSight(fow_entity->frontier);
 }
 
 void EnemyTownHall::AttachHealthbarToEntity()

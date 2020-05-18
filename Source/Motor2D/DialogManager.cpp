@@ -32,13 +32,13 @@ void Dialog::NextBubble() //Next bubble in dialog
 
 	if (current_bubble > last_id)
 	{
-		App->dialog->NextDialog();
+		App->dialog_manager->NextDialog();
 		current_bubble = 0;
 	}
 	else
 	{
-		App->dialog->dialog_state = DIALOG_STATE::TEXT_TYPING;
-		App->dialog->EmptyText();
+		App->dialog_manager->dialog_state = DIALOG_STATE::TEXT_TYPING;
+		App->dialog_manager->EmptyText();
 	}
 }
 

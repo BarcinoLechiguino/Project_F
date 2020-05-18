@@ -39,7 +39,6 @@ class QuestManager;
 class Application
 {
 public:
-	
 	Application(int argc, char* args[]);						// Constructor
 	virtual ~Application();										// Destructor
 
@@ -99,8 +98,9 @@ public:
 	SceneManager*		scene_manager;
 	Minimap*			minimap;
 	Movement*			movement;
+	EnemyAI*			enemy_ai;
 	FowManager*			fow_manager;
-	DialogManager*		dialog;
+	DialogManager*		dialog_manager;
 	ParticleManager*	particle_manager;
 	QuestManager*		quest_manager;
 

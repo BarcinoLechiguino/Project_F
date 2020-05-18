@@ -21,6 +21,7 @@
 #include "TransitionManager.h"
 #include "SceneManager.h"
 #include "Movement.h"
+#include "EnemyAI.h"
 #include "FowManager.h"
 #include "DialogManager.h"
 #include "ParticleManager.h"
@@ -56,8 +57,9 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	transition_manager	= new TransitionManager();
 	scene_manager		= new SceneManager();
 	movement			= new Movement();
+	enemy_ai			= new EnemyAI();
 	fow_manager			= new FowManager();
-	dialog				= new DialogManager();
+	dialog_manager		= new DialogManager();
 	particle_manager	= new ParticleManager();
 	quest_manager		= new QuestManager();
 
@@ -82,8 +84,9 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene_manager);
 	AddModule(transition_manager);
 	AddModule(entity_manager);
+	AddModule(enemy_ai);
 	AddModule(fow_manager);
-	AddModule(dialog);
+	AddModule(dialog_manager);
 	AddModule(player);
 	AddModule(quest_manager);
 

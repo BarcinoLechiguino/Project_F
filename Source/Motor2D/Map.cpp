@@ -14,11 +14,14 @@
 #include "Pathfinding.h"
 #include "EntityManager.h"
 #include "Entity.h"
+#include "EnemyTownHall.h"
+#include "EnemyBarracks.h"
 #include "GuiManager.h"
 #include "Console.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "FowManager.h"
+#include "EnemyAI.h"
 
 #include "Map.h"
 
@@ -735,12 +738,15 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 		else if (object_type == "enemy_barracks")
 		{
 			objectgroup->object[index].type = ENEMY_BARRACKS;
-			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, tile_coords.x, tile_coords.y);
+			//App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, tile_coords.x, tile_coords.y);
+			App->enemy_ai->enemy_barracks = (EnemyBarracks*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_BARRACKS, tile_coords.x, tile_coords.y);
 		}
 		else if (object_type == "enemy_hall")
 		{
 			objectgroup->object[index].type = ENEMY_HALL;
-			App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, tile_coords.x, tile_coords.y);
+			//App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, tile_coords.x, tile_coords.y);
+			App->enemy_ai->enemy_townhall = (EnemyTownHall*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_TOWNHALL, tile_coords.x, tile_coords.y);
+
 		}
 		else if (object_type == "infantry")
 		{

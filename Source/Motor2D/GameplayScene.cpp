@@ -210,7 +210,7 @@ bool GameplayScene::CleanUp()
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui_manager->DestroyGuiElements();					//Deletes all the Gui Elements of the Gameplay Scene.
-	App->dialog->CleanUp();									//Deletes everything related with dialog in the Gameplay Scene.
+	App->dialog_manager->CleanUp();									//Deletes everything related with dialog in the Gameplay Scene.
 	App->particle_manager->RemoveEverything();
 
 	App->player->god_mode = false;							//Will disable the God Mode upon exiting the Gameplay Scene.
@@ -253,8 +253,8 @@ void GameplayScene::InitScene()
 
 	//App->fow_manager->ResetVisibilityMap();
 
-	App->dialog->StartDialog(0);
-	App->dialog->StartDialog(1);
+	App->dialog_manager->StartDialog(0);
+	App->dialog_manager->StartDialog(1);
 }
 
 // --- SCENE TRANSITIONS
@@ -1385,7 +1385,7 @@ void GameplayScene::LoadGuiElements()
 
 	// *****_____HUD dialogs_____****
 
-	App->dialog->LoadDialog();
+	App->dialog_manager->LoadDialog();
 
 }
 
@@ -1768,19 +1768,19 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 	if (element == HUD_dialogs_background && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		App->dialog->is_clicked = true;
+		App->dialog_manager->is_clicked = true;
 	}
 
 	if (element == HUD_dialogs_screen_block && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		App->dialog->is_clicked = true;
+		App->dialog_manager->is_clicked = true;
 	}
 
 	if (element == HUD_dialogs_character_no_talking && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		if (App->dialog->dialog_state == DIALOG_STATE::NOT_ACTIVE)
+		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE)
 		{
-			App->dialog->StartDialog(App->dialog->last_dialog);
+			App->dialog_manager->StartDialog(App->dialog_manager->last_dialog);
 		}
 	}
 }
