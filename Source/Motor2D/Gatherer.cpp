@@ -336,13 +336,14 @@ void Gatherer::AttachHealthbarToEntity()
 
 void Gatherer::InitUnitSpriteSections()
 {	
-	pathing_up_section			= { 0, 49, 39, 42 };
+	/*
+	pathing_up_section			= { 0, 49, 52, 45 };
 
-	pathing_down_section		= { 39, 49, 38, 45 };
+	pathing_down_section		= { 52, 49, 52, 45 };
 
-	pathing_rigth_section		= { 123, 49, 43, 42 };
+	pathing_rigth_section		= { 156, 49, 52, 53 };
 
-	pathing_left_section		= { 78, 49, 43, 42 };
+	pathing_left_section		= { 104, 49, 52, 53 };
 
 	pathing_up_right_section	= { 104, 0, 52, 49 };
 
@@ -350,14 +351,14 @@ void Gatherer::InitUnitSpriteSections()
 
 	pathing_down_right_section	= { 52, 0, 52 ,49 };
 
-	pathing_down_left_section	= { 0, 0, 52, 49 };
+	pathing_down_left_section	= { 0, 0, 52, 49 };*/
 
-	entity_sprite_section		= pathing_down_right_section;
+	
 
-	// --- LOADING FROM XML ---
-	//pugi::xml_node sections = App->entities_file.child("entities").child("units").child("allies").child("gatherer").child("sprite_sections");
+//	 --- LOADING FROM XML ---
+	pugi::xml_node sections = App->entities_file.child("entities").child("units").child("allies").child("gatherer").child("sprite_sections");
 
-	/*pathing_up_section.x = sections.child("pathing_up").attribute("x").as_int();
+	pathing_up_section.x = sections.child("pathing_up").attribute("x").as_int();
 	pathing_up_section.y = sections.child("pathing_up").attribute("y").as_int();
 	pathing_up_section.w = sections.child("pathing_up").attribute("w").as_int(); 
 	pathing_up_section.h = sections.child("pathing_up").attribute("h").as_int();
@@ -395,7 +396,10 @@ void Gatherer::InitUnitSpriteSections()
 	pathing_down_left_section.x = sections.child("pathing_down_left").attribute("x").as_int();
 	pathing_down_left_section.y = sections.child("pathing_down_left").attribute("y").as_int();
 	pathing_down_left_section.w = sections.child("pathing_down_left").attribute("w").as_int();
-	pathing_down_left_section.h = sections.child("pathing_down_left").attribute("h").as_int();*/
+	pathing_down_left_section.h = sections.child("pathing_down_left").attribute("h").as_int();
+
+	//Default section
+	entity_sprite_section = pathing_down_right_section;
 }
 
 void Gatherer::OnCollision(Collider* C1, Collider* C2)
