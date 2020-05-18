@@ -126,6 +126,7 @@ public:																		// --- GUI AUDIO VARIABLES ---
 	uint						standard_button_clicked_fx;
 	uint						upgrade_button_clicked_fx;
 	uint						recruit_unit_button_clicked_fx;
+	uint						no_resources_fx;
 
 public:																		// --- GUI FONT VARIABLES ---
 	bool						fonts_already_loaded;

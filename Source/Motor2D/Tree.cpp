@@ -4,6 +4,7 @@
 #include "Audio.h"
 #include "Map.h"
 #include "Pathfinding.h"
+#include "Player.h"
 #include "GuiManager.h"
 #include "GuiElement.h"
 #include "GuiHealthbar.h"
@@ -64,6 +65,11 @@ bool Tree::CleanUp()
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
 
 	entity_sprite = nullptr;
+
+	if (is_selected)
+	{
+		App->player->DeleteEntityFromBuffers(this);
+	}
 
 	if (collider != nullptr)
 	{

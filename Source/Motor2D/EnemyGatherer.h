@@ -1,9 +1,9 @@
 #ifndef __ENEMY_GATHERER_H__
 #define __ENEMY_GATHERER_H__
 
-#include "DynamicObject.h"
+#include "EnemyUnit.h"
 
-class EnemyGatherer : public DynamicObject
+class EnemyGatherer : public EnemyUnit
 {
 public:
 	EnemyGatherer(int x, int y, ENTITY_TYPE type, int level);

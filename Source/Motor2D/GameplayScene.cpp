@@ -627,6 +627,7 @@ bool GameplayScene::CheckResources(uint required_data, uint required_electricity
 	}
 	else
 	{
+		App->audio->PlayFx(App->gui_manager->no_resources_fx, 0);
 		return false;
 	}
 }

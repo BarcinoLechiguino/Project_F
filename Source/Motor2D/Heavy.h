@@ -1,9 +1,9 @@
 #ifndef __HEAVY_H__
 #define __HEAVY_H__
 
-#include "DynamicObject.h"
+#include "AllyUnit.h"
 
-class Heavy : public DynamicObject
+class Heavy : public AllyUnit
 {
 public:
 	Heavy(int x, int y, ENTITY_TYPE type, int level);
@@ -40,9 +40,9 @@ public:
 	int GetAttackRange();
 
 public:
-	int							attack_range;							// A unit's attack range in tiles.
+	/*int							attack_range;							// A unit's attack range in tiles.
 	int							attack_radius;							// The unit's effective attack area. The heavy has an AoE attack. Radius in tiles.
-	float						attack_speed;							// A unit's attack speed in attacks/second.
+	float						attack_speed;							// A unit's attack speed in attacks/second.*/
 
 	//const std::vector<iPoint>*	entity_path;
 };

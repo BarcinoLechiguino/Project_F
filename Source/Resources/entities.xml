@@ -33,6 +33,7 @@
     <building_constructing_finished   path="Assets/audio/fx/entities/building_constructing_finished.wav"/>
     <building_recruiting_finished     path="Assets/audio/fx/entities/building_recruiting_finished.wav"/>
     <building_upgrading_finished      path="Assets/audio/fx/entities/building_upgrading_finished.wav"/>
+    <explosion_units_died             path="Assets/audio/fx/entities/explosion_units_died.wav"/>
   </fx>
   
   <units>
