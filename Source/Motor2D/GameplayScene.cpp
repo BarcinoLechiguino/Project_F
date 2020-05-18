@@ -456,6 +456,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 			if (CheckResources(0, 5, 0))
 			{
 				barrack = (Barracks*)App->player->building_selected;
+				
 				App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 				barrack->creation_queue.push_back(ENTITY_TYPE::INFANTRY);
 

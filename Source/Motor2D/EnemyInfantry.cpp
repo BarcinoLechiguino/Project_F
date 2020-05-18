@@ -133,7 +133,7 @@ bool EnemyInfantry::CleanUp()
 
 void EnemyInfantry::Draw()
 {
-	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y, &entity_sprite_section);
+	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section);
 
 	if (App->player->god_mode)
 	{

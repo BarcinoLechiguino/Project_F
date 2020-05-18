@@ -373,7 +373,9 @@ void Player::DragSelection()
 			{
 				if (selection_start != cursor_position)
 				{
-					if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT)
+					if (App->input->GetMouseButtonDown(SDL_BUTTON_LEFT) == KEY_STATE::KEY_REPEAT
+						|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_A) == BUTTON_STATE::BUTTON_REPEAT
+						|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_REPEAT)
 					{
 						UpdateSelectionRect();
 					}

@@ -3,6 +3,8 @@
 
 #include "Resource.h"
 
+class Emitter;
+
 class Rock : public Resource
 {
 public:
@@ -24,7 +26,8 @@ public:
 	void AttachHealthbarToEntity();
 
 private:
-
+	
+	Emitter* ShineEmitter;
 };
 
 #endif // !__ROCK_H__

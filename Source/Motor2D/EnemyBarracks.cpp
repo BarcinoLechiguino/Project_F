@@ -212,6 +212,7 @@ void EnemyBarracks::InitEntity()
 	is_selected = false;
 
 	// UNIT CREATION VARIABLES
+	creating_unit = false;
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
 
 	enemy_infantry_creation_time = 2.0f;
