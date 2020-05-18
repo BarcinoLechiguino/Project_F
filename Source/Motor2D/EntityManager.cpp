@@ -465,6 +465,7 @@ void EntityManager::LoadEntityAudios()
 	building_constructing_finished_fx	= App->audio->LoadFx(entity_fx.child("building_constructing_finished").attribute("path").as_string());
 	building_recruiting_finished_fx		= App->audio->LoadFx(entity_fx.child("building_recruiting_finished").attribute("path").as_string());
 	building_upgrading_finished_fx		= App->audio->LoadFx(entity_fx.child("building_upgrading_finished").attribute("path").as_string());
+	explosion_units_die_fx				= App->audio->LoadFx(entity_fx.child("explosion_units_died").attribute("path").as_string());
 }
 
 void EntityManager::UnLoadEntityAudios()

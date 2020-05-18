@@ -30,7 +30,7 @@ class TransitionManager;
 class SceneManager;
 class Minimap;
 class Movement;
-class EnemyAI;
+class EnemyAIManager;
 class FowManager;
 class DialogManager;
 class ParticleManager;
@@ -98,7 +98,7 @@ public:
 	SceneManager*		scene_manager;
 	Minimap*			minimap;
 	Movement*			movement;
-	EnemyAI*			enemy_AI;
+	EnemyAIManager*		enemy_AI_manager;
 	FowManager*			fow_manager;
 	DialogManager*		dialog_manager;
 	ParticleManager*	particle_manager;

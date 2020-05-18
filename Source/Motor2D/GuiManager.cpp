@@ -372,6 +372,7 @@ void GuiManager::LoadGuiElementsAudio()
 	standard_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("standard_button_clicked").attribute("path").as_string());
 	upgrade_button_clicked_fx		= App->audio->LoadFx(gui_fx.child("upgrade_button_clicked").attribute("path").as_string());
 	recruit_unit_button_clicked_fx	= App->audio->LoadFx(gui_fx.child("recruit_unit_button_clicked").attribute("path").as_string());
+	no_resources_fx					= App->audio->LoadFx(gui_fx.child("no_resources").attribute("path").as_string());
 }
 
 void GuiManager::UnLoadGuiElementsAudio()

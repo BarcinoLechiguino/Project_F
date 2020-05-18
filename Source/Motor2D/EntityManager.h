@@ -136,6 +136,7 @@ public:
 	uint							building_constructing_finished_fx;
 	uint							building_recruiting_finished_fx;
 	uint							building_upgrading_finished_fx;
+	uint							explosion_units_die_fx;
 	
 
 	std::vector<Entity*>			entities;	

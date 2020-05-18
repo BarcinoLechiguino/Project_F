@@ -1,28 +1,21 @@
 #ifndef __GATHERER_H__
 #define __GATHERER_H__
 
-#include "DynamicObject.h"
+#include "AllyUnit.h"
 
 class Emitter;
 
-class Gatherer : public DynamicObject
+class Gatherer : public AllyUnit
 {
 public:
-
 	Gatherer(int x, int y, ENTITY_TYPE type, int level);
-
 	~Gatherer();
 
 	bool Awake(pugi::xml_node&);
-
 	bool Start();
-
 	bool PreUpdate();
-
 	bool Update(float dt, bool do_logic);
-
 	bool PostUpdate();
-
 	bool CleanUp();
 
 	void Draw();

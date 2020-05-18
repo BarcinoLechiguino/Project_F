@@ -69,7 +69,7 @@ public:
 	void SpawnAllyUnit(ENTITY_TYPE type);
 	void SpawnEnemyUnit(ENTITY_TYPE type);
 
-	void SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount);		// TMP. Put in EnemyAI module.
+	void SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount);		// TMP. Put in EnemyAIManager module.
 
 	void BuildingUpgrade();
 	void UnitUpgrade(int unit);

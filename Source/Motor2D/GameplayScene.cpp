@@ -425,7 +425,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 			if (CheckResources(40, 0, 0))
 			{
 				townhall = (TownHall*)App->player->building_selected;
-
+				App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 				townhall->creation_queue.push_back(ENTITY_TYPE::GATHERER);
 			}
 			break;
@@ -434,7 +434,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 			if (CheckResources(20, 0, 0))
 			{
 				townhall = (TownHall*)App->player->building_selected;
-
+				App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 				townhall->creation_queue.push_back(ENTITY_TYPE::SCOUT);
 			}
 			break;
@@ -443,7 +443,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 			if (CheckResources(0, 5, 0))
 			{
 				barrack = (Barracks*)App->player->building_selected;
-
+				App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 				barrack->creation_queue.push_back(ENTITY_TYPE::INFANTRY);
 			}
 			break;
@@ -452,7 +452,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 			if (CheckResources(0, 15, 0))
 			{
 				barrack = (Barracks*)App->player->building_selected;
-
+				App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 				barrack->creation_queue.push_back(ENTITY_TYPE::HEAVY);
 
 			}
@@ -578,6 +578,7 @@ void GameplayScene::BuildingUpgrade()
 			{
 				if (CheckResources(240, 20, 3))
 				{
+					App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 					townhall->level++;
 					townhall->LevelChanges();
 				}
@@ -592,6 +593,7 @@ void GameplayScene::BuildingUpgrade()
 			{
 				if (CheckResources(180, 25, 2))
 				{
+					App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 					barrack->level++;
 					barrack->LevelChanges();
 				}
@@ -616,6 +618,7 @@ void GameplayScene::UnitUpgrade(int unit)
 			{
 				if (CheckResources(100, 5, 1))
 				{
+					App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 					townhall->gatherer_level++;
 				}
 			}
@@ -627,6 +630,7 @@ void GameplayScene::UnitUpgrade(int unit)
 			{
 				if (CheckResources(100, 5, 1))
 				{
+					App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 					barrack->infantry_level++;
 				}
 			}
@@ -638,6 +642,7 @@ void GameplayScene::UnitUpgrade(int unit)
 			{
 				if (CheckResources(180, 30, 1))
 				{
+					App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 					townhall->scout_level++;
 				}
 			}
@@ -650,6 +655,7 @@ void GameplayScene::UnitUpgrade(int unit)
 			{
 				if (CheckResources(180, 30, 1))
 				{
+					App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 					barrack->heavy_level++;
 				}
 			}
@@ -671,6 +677,7 @@ bool GameplayScene::CheckResources(uint required_data, uint required_electricity
 	}
 	else
 	{
+		App->audio->PlayFx(App->gui_manager->no_resources_fx, 0);
 		return false;
 	}
 }
@@ -1599,7 +1606,6 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Upgrade Townhall
 		BuildingUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
 	}
 	//Price Upgrade Townhall
 	if (element == HUD_upgrade_townhall && ui_event == GUI_EVENT::HOVER)
@@ -1619,7 +1625,6 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::GATHERER);
 
-		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 	}
 	//Price to recruit
 	if (element == HUD_unit_gatherer_townhall && ui_event == GUI_EVENT::HOVER)
@@ -1640,7 +1645,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Upgrade Unit
 		UnitUpgrade(0);
-		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
+		
 	}
 	//Price to upgrade Gatherer
 	if (element == HUD_unit_upgrade_townhall_gatherer && ui_event == GUI_EVENT::HOVER)
@@ -1660,7 +1665,6 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::SCOUT);
 
-		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 	}
 	//Price to recruit
 	if (element == HUD_unit_scout_townhall && ui_event == GUI_EVENT::HOVER)
@@ -1681,7 +1685,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Upgrade Unit
 		UnitUpgrade(2);
-		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
+		
 	}
 	//Price to upgrade scout
 	if (element == HUD_unit_upgrade_townhall_scout && ui_event == GUI_EVENT::HOVER)
@@ -1700,7 +1704,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		// Upgrade Barracks
 		// Code to upgrade barracks
 		BuildingUpgrade();
-		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
+		
 	}
 
 	if (element == HUD_upgrade_barracks && ui_event == GUI_EVENT::HOVER)
@@ -1719,7 +1723,6 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::INFANTRY);
-		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 	}
 	//Price Recruit Heavy
 	if (element == HUD_unit_infantry_barracks && ui_event == GUI_EVENT::HOVER)
@@ -1740,7 +1743,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Upgrade Unit
 		UnitUpgrade(1);
-		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
+		
 	}
 	//Price Upgrade Infantry
 	if (element == HUD_unit_upgrade_barracks_infantry && ui_event == GUI_EVENT::HOVER)
@@ -1759,7 +1762,6 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Recruit Unit
 		SpawnAllyUnit(ENTITY_TYPE::HEAVY);
-		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 	}
 	//Price Recruit Heavy
 	if (element == HUD_unit_heavy_barracks && ui_event == GUI_EVENT::HOVER)
@@ -1780,7 +1782,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Upgrade Unit
 		UnitUpgrade(3);
-		App->audio->PlayFx(App->gui_manager->upgrade_button_clicked_fx, 0);
+		
 	}
 	//Price Upgrade Heavy
 	if (element == HUD_unit_upgrade_barracks_heavy && ui_event == GUI_EVENT::HOVER)
