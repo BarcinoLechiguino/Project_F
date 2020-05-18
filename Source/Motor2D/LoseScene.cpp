@@ -33,6 +33,8 @@ bool LoseScene::Start()
 	
 	InitScene();
 
+	App->gui_manager->CreateSlideAnimation(lose_main_menu, 1.0f, false, iPoint(0, 0), iPoint(555, 621));
+
 	return true;
 }
 

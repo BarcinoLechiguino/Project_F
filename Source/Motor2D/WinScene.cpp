@@ -35,6 +35,8 @@ bool WinScene::Start()
 {
 	LoadGuiElements();
 	InitScene();
+
+	App->gui_manager->CreateSlideAnimation(win_main_menu, 1.0f, false, iPoint(0,0), iPoint(555, 621));
 	
 	return true;
 }
