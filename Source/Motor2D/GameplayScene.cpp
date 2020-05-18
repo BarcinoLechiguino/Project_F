@@ -2084,7 +2084,7 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_STATE::KEY_DOWN)
 			{
 				(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
-				SpawnEnemyWave(5, 5, 5, 5);
+				//SpawnEnemyWave(5, 5, 5, 5);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_STATE::KEY_DOWN)
