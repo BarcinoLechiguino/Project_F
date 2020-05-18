@@ -89,8 +89,8 @@
     <atlas file="Assets/gui/UI_HUD.png"/>
 
     <backgrounds>
-      <logo_scene                   path="Assets/gui/backgrounds/logo_scene_background.png"/>
-      <logo_scene_team_logo         path="Assets/gui/backgrounds/logo_scene_missingmd_background.png"/>
+      <logo_scene                   path="Assets/gui/backgrounds/logo_scene_missingmd_background.png"/>
+      <logo_scene_team_logo         path="Assets/gui/backgrounds/missing_logo.png"/>
       <main_menu_scene              path="Assets/gui/backgrounds/main_menu_scene_background.png"/>
       <options_scene                path="Assets/gui/backgrounds/options_scene_background.png"/>
       <gameplay_scene               path="Assets/gui/backgrounds/gameplay_scene_background.png"/>
