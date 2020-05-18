@@ -120,6 +120,7 @@
       <standard_button_clicked      path="Assets/audio/fx/gui/standard_button_clicked.wav"/>
       <upgrade_button_clicked       path="Assets/audio/fx/gui/upgade_button_clicked.wav"/>
       <recruit_unit_button_clicked  path="Assets/audio/fx/gui/recruit_unit_button_clicked.wav"/>
+      <no_resources                 path="Assets/audio/fx/gui/no_resources.wav"/>
 
       <cursor_click path=""/>
     </fx>

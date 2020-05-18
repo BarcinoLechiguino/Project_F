@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.2" tiledversion="1.2.5" orientation="isometric" renderorder="right-down" width="100" height="150" tilewidth="54" tileheight="40" infinite="0" nextlayerid="10" nextobjectid="137">
+<map version="1.2" tiledversion="1.2.5" orientation="isometric" renderorder="right-down" width="100" height="150" tilewidth="54" tileheight="40" infinite="0" nextlayerid="10" nextobjectid="299">
  <tileset firstgid="1" name="Prototileset" tilewidth="54" tileheight="44" tilecount="12" columns="4">
   <image source="Prototileset.png" width="216" height="153"/>
  </tileset>
@@ -15039,12 +15039,12 @@
   <object id="44" name="tree" type="tree" x="2240" y="5200" width="40" height="40"/>
   <object id="45" name="tree" type="tree" x="2200" y="4640" width="40" height="40"/>
   <object id="46" name="enemy" type="enemy" x="1719" y="1196.88" width="40" height="40"/>
-  <object id="47" name="enemy" type="enemy" x="1837.02" y="2520.26" width="40" height="40"/>
-  <object id="48" name="enemy" type="enemy" x="1715.46" y="2636.72" width="40" height="40"/>
+  <object id="47" name="enemy" type="enemy" x="1877.68" y="2078.14" width="40" height="40"/>
+  <object id="48" name="enemy" type="enemy" x="1756.12" y="2194.6" width="40" height="40"/>
   <object id="49" name="enemy" type="enemy" x="2078.68" y="1194.29" width="40" height="40"/>
   <object id="50" name="rock" type="rock" x="1840" y="4760" width="40" height="40"/>
   <object id="51" name="enemy" type="enemy" x="1958.73" y="1196.17" width="40" height="40"/>
-  <object id="52" name="enemy" type="enemy" x="1996.34" y="2634.87" width="40" height="40"/>
+  <object id="52" name="enemy" type="enemy" x="2037" y="2192.75" width="40" height="40"/>
   <object id="53" name="enemy" type="enemy" x="1838.13" y="1196.79" width="40" height="40"/>
   <object id="54" name="bit" type="bit" x="157.794" y="3238.88" width="40" height="40"/>
   <object id="55" name="bit" type="bit" x="3718.26" y="2239.74" width="40" height="40"/>
@@ -15124,6 +15124,167 @@
   <object id="134" name="obstacle" type="boulder" x="835.02" y="3315.74" width="40" height="40" rotation="-180"/>
   <object id="135" name="obstacle" type="boulder" x="795.26" y="3274.5" width="40" height="40" rotation="-180"/>
   <object id="136" name="obstacle" type="boulder" x="675.39" y="3155.37" width="40" height="40" rotation="-180"/>
+  <object id="137" name="obstacle" type="boulder" x="34.4577" y="2831.97" width="40" height="40" rotation="-180"/>
+  <object id="138" name="obstacle" type="boulder" x="113.773" y="2834.99" width="40" height="40" rotation="-180"/>
+  <object id="139" name="obstacle" type="boulder" x="156.594" y="2875.84" width="40" height="40" rotation="-180"/>
+  <object id="140" name="obstacle" type="boulder" x="354.6" y="2834.83" width="40" height="40" rotation="-180"/>
+  <object id="141" name="obstacle" type="boulder" x="395.556" y="2875.54" width="40" height="40" rotation="-180"/>
+  <object id="142" name="obstacle" type="boulder" x="315.452" y="2831.97" width="40" height="40" rotation="-180"/>
+  <object id="143" name="obstacle" type="boulder" x="274.044" y="2872.06" width="40" height="40" rotation="-180"/>
+  <object id="144" name="obstacle" type="boulder" x="436.594" y="2875.84" width="40" height="40" rotation="-180"/>
+  <object id="145" name="obstacle" type="boulder" x="395.607" y="2836.83" width="40" height="40" rotation="-180"/>
+  <object id="146" name="obstacle" type="boulder" x="354.223" y="2794.21" width="40" height="40" rotation="-180"/>
+  <object id="147" name="obstacle" type="boulder" x="836.02" y="3276.74" width="40" height="40" rotation="-180"/>
+  <object id="148" name="obstacle" type="boulder" x="796.26" y="3235.5" width="40" height="40" rotation="-180"/>
+  <object id="149" name="obstacle" type="boulder" x="756.26" y="3195.5" width="40" height="40" rotation="-180"/>
+  <object id="150" name="obstacle" type="boulder" x="716.39" y="3156.37" width="40" height="40" rotation="-180"/>
+  <object id="151" name="obstacle" type="boulder" x="676.39" y="3116.37" width="40" height="40" rotation="-180"/>
+  <object id="152" name="obstacle" type="boulder" x="636.02" y="3076.74" width="40" height="40" rotation="-180"/>
+  <object id="153" name="obstacle" type="boulder" x="596.26" y="3035.5" width="40" height="40" rotation="-180"/>
+  <object id="154" name="obstacle" type="boulder" x="556.26" y="2995.5" width="40" height="40" rotation="-180"/>
+  <object id="155" name="obstacle" type="boulder" x="516.39" y="2956.37" width="40" height="40" rotation="-180"/>
+  <object id="156" name="obstacle" type="boulder" x="476.39" y="2916.37" width="40" height="40" rotation="-180"/>
+  <object id="157" name="obstacle" type="boulder" x="194.217" y="2793.22" width="40" height="40" rotation="-180"/>
+  <object id="158" name="obstacle" type="boulder" x="3157.53" y="2273.81" width="40" height="40" rotation="-360"/>
+  <object id="159" name="obstacle" type="boulder" x="3156.53" y="2312.81" width="40" height="40" rotation="-360"/>
+  <object id="160" name="obstacle" type="boulder" x="3197.29" y="2315.05" width="40" height="40" rotation="-360"/>
+  <object id="161" name="obstacle" type="boulder" x="3196.29" y="2354.05" width="40" height="40" rotation="-360"/>
+  <object id="162" name="obstacle" type="boulder" x="3237.29" y="2355.05" width="40" height="40" rotation="-360"/>
+  <object id="163" name="obstacle" type="boulder" x="3236.29" y="2394.05" width="40" height="40" rotation="-360"/>
+  <object id="164" name="obstacle" type="boulder" x="3277.16" y="2394.18" width="40" height="40" rotation="-360"/>
+  <object id="165" name="obstacle" type="boulder" x="3276.16" y="2433.18" width="40" height="40" rotation="-360"/>
+  <object id="166" name="obstacle" type="boulder" x="3317.16" y="2434.18" width="40" height="40" rotation="-360"/>
+  <object id="167" name="obstacle" type="boulder" x="3316.16" y="2473.18" width="40" height="40" rotation="-360"/>
+  <object id="168" name="obstacle" type="boulder" x="3357.53" y="2473.81" width="40" height="40" rotation="-360"/>
+  <object id="169" name="obstacle" type="boulder" x="3356.53" y="2512.81" width="40" height="40" rotation="-360"/>
+  <object id="170" name="obstacle" type="boulder" x="3397.29" y="2515.05" width="40" height="40" rotation="-360"/>
+  <object id="171" name="obstacle" type="boulder" x="3396.29" y="2554.05" width="40" height="40" rotation="-360"/>
+  <object id="172" name="obstacle" type="boulder" x="3437.29" y="2555.05" width="40" height="40" rotation="-360"/>
+  <object id="173" name="obstacle" type="boulder" x="3436.29" y="2594.05" width="40" height="40" rotation="-360"/>
+  <object id="174" name="obstacle" type="boulder" x="3477.16" y="2594.18" width="40" height="40" rotation="-360"/>
+  <object id="175" name="obstacle" type="boulder" x="3476.16" y="2633.18" width="40" height="40" rotation="-360"/>
+  <object id="176" name="obstacle" type="boulder" x="3517.16" y="2634.18" width="40" height="40" rotation="-360"/>
+  <object id="177" name="obstacle" type="boulder" x="3516.16" y="2673.18" width="40" height="40" rotation="-360"/>
+  <object id="178" name="obstacle" type="boulder" x="3557.53" y="2673.81" width="40" height="40" rotation="-360"/>
+  <object id="179" name="obstacle" type="boulder" x="3555.96" y="2713.71" width="40" height="40" rotation="-360"/>
+  <object id="180" name="obstacle" type="boulder" x="3598.4" y="2673.94" width="40" height="40" rotation="-360"/>
+  <object id="181" name="obstacle" type="boulder" x="3597" y="2714.01" width="40" height="40" rotation="-360"/>
+  <object id="182" name="obstacle" type="boulder" x="3637.16" y="2674.18" width="40" height="40" rotation="-360"/>
+  <object id="183" name="obstacle" type="boulder" x="3596.94" y="2752.72" width="40" height="40" rotation="-360"/>
+  <object id="184" name="obstacle" type="boulder" x="3677.66" y="2673.68" width="40" height="40" rotation="-360"/>
+  <object id="185" name="obstacle" type="boulder" x="3717.53" y="2672.81" width="40" height="40" rotation="-360"/>
+  <object id="186" name="obstacle" type="boulder" x="3637.95" y="2754.72" width="40" height="40" rotation="-360"/>
+  <object id="187" name="obstacle" type="boulder" x="3756.78" y="2673.55" width="40" height="40" rotation="-360"/>
+  <object id="188" name="obstacle" type="boulder" x="3638.33" y="2795.34" width="40" height="40" rotation="-360"/>
+  <object id="189" name="obstacle" type="boulder" x="3677.1" y="2757.58" width="40" height="40" rotation="-360"/>
+  <object id="190" name="obstacle" type="boulder" x="3718.51" y="2717.49" width="40" height="40" rotation="-360"/>
+  <object id="191" name="obstacle" type="boulder" x="3796.41" y="2673.92" width="40" height="40" rotation="-360"/>
+  <object id="192" name="obstacle" type="boulder" x="3838.16" y="2674.18" width="40" height="40" rotation="-360"/>
+  <object id="193" name="obstacle" type="boulder" x="3835.96" y="2713.71" width="40" height="40" rotation="-360"/>
+  <object id="194" name="obstacle" type="boulder" x="3877.28" y="2674.05" width="40" height="40" rotation="-360"/>
+  <object id="195" name="obstacle" type="boulder" x="3917.53" y="2672.81" width="40" height="40" rotation="-360"/>
+  <object id="196" name="obstacle" type="boulder" x="3798.33" y="2796.33" width="40" height="40" rotation="-360"/>
+  <object id="197" name="obstacle" type="boulder" x="3957.62" y="2674.38" width="40" height="40" rotation="-360"/>
+  <object id="198" name="obstacle" type="boulder" x="3878.78" y="2754.56" width="40" height="40" rotation="-360"/>
+  <object id="199" name="obstacle" type="boulder" x="3958.09" y="2757.58" width="40" height="40" rotation="-360"/>
+  <object id="200" name="obstacle" type="boulder" x="3115.92" y="2274.42" width="40" height="40" rotation="-360"/>
+  <object id="201" name="obstacle" type="boulder" x="3116.92" y="2235.42" width="40" height="40" rotation="-360"/>
+  <object id="202" name="obstacle" type="boulder" x="3075.55" y="2234.79" width="40" height="40" rotation="-360"/>
+  <object id="203" name="obstacle" type="boulder" x="3076.55" y="2195.79" width="40" height="40" rotation="-360"/>
+  <object id="204" name="obstacle" type="boulder" x="3035.55" y="2194.79" width="40" height="40" rotation="-360"/>
+  <object id="205" name="obstacle" type="boulder" x="3036.55" y="2155.79" width="40" height="40" rotation="-360"/>
+  <object id="206" name="obstacle" type="boulder" x="2995.68" y="2155.66" width="40" height="40" rotation="-360"/>
+  <object id="207" name="obstacle" type="boulder" x="2996.68" y="2116.66" width="40" height="40" rotation="-360"/>
+  <object id="208" name="obstacle" type="boulder" x="2955.68" y="2115.66" width="40" height="40" rotation="-360"/>
+  <object id="209" name="obstacle" type="boulder" x="2956.68" y="2076.66" width="40" height="40" rotation="-360"/>
+  <object id="210" name="obstacle" type="boulder" x="2915.92" y="2074.42" width="40" height="40" rotation="-360"/>
+  <object id="211" name="obstacle" type="boulder" x="2916.92" y="2035.42" width="40" height="40" rotation="-360"/>
+  <object id="212" name="obstacle" type="boulder" x="2273.72" y="2194.26" width="40" height="40" rotation="-180"/>
+  <object id="213" name="obstacle" type="boulder" x="2274.72" y="2155.26" width="40" height="40" rotation="-180"/>
+  <object id="214" name="obstacle" type="boulder" x="2233.96" y="2153.02" width="40" height="40" rotation="-180"/>
+  <object id="215" name="obstacle" type="boulder" x="2234.96" y="2114.02" width="40" height="40" rotation="-180"/>
+  <object id="216" name="obstacle" type="boulder" x="2193.96" y="2113.02" width="40" height="40" rotation="-180"/>
+  <object id="217" name="obstacle" type="boulder" x="2194.96" y="2074.02" width="40" height="40" rotation="-180"/>
+  <object id="218" name="obstacle" type="boulder" x="2154.09" y="2073.89" width="40" height="40" rotation="-180"/>
+  <object id="219" name="obstacle" type="boulder" x="2155.09" y="2034.89" width="40" height="40" rotation="-180"/>
+  <object id="220" name="obstacle" type="boulder" x="2114.09" y="2033.89" width="40" height="40" rotation="-180"/>
+  <object id="221" name="obstacle" type="boulder" x="2115.09" y="1994.89" width="40" height="40" rotation="-180"/>
+  <object id="222" name="obstacle" type="boulder" x="2073.72" y="1994.26" width="40" height="40" rotation="-180"/>
+  <object id="223" name="obstacle" type="boulder" x="2074.72" y="1955.26" width="40" height="40" rotation="-180"/>
+  <object id="224" name="obstacle" type="boulder" x="2033.96" y="1953.02" width="40" height="40" rotation="-180"/>
+  <object id="225" name="obstacle" type="boulder" x="2034.96" y="1914.02" width="40" height="40" rotation="-180"/>
+  <object id="226" name="obstacle" type="boulder" x="1993.96" y="1913.02" width="40" height="40" rotation="-180"/>
+  <object id="227" name="obstacle" type="boulder" x="1994.96" y="1874.02" width="40" height="40" rotation="-180"/>
+  <object id="228" name="obstacle" type="boulder" x="1954.09" y="1873.89" width="40" height="40" rotation="-180"/>
+  <object id="229" name="obstacle" type="boulder" x="1955.09" y="1834.89" width="40" height="40" rotation="-180"/>
+  <object id="231" name="obstacle" type="boulder" x="2274.56" y="2276.08" width="40" height="40" rotation="-180"/>
+  <object id="232" name="obstacle" type="boulder" x="2274.89" y="2316.42" width="40" height="40" rotation="-180"/>
+  <object id="233" name="obstacle" type="boulder" x="1594.55" y="2275.09" width="40" height="40" rotation="-180"/>
+  <object id="234" name="obstacle" type="boulder" x="2234.04" y="2073.6" width="40" height="40" rotation="-180"/>
+  <object id="235" name="obstacle" type="boulder" x="2233.63" y="2314.67" width="40" height="40" rotation="-180"/>
+  <object id="236" name="obstacle" type="boulder" x="2275.8" y="2235.84" width="40" height="40" rotation="-180"/>
+  <object id="237" name="obstacle" type="boulder" x="2115.25" y="1954.06" width="40" height="40" rotation="-180"/>
+  <object id="238" name="obstacle" type="boulder" x="2074.91" y="1873.73" width="40" height="40" rotation="-180"/>
+  <object id="239" name="obstacle" type="boulder" x="1754.93" y="2075.71" width="40" height="40" rotation="-180"/>
+  <object id="240" name="obstacle" type="boulder" x="2195.26" y="1996.05" width="40" height="40" rotation="-180"/>
+  <object id="241" name="obstacle" type="boulder" x="1874.63" y="1754.68" width="40" height="40" rotation="-180"/>
+  <object id="242" name="obstacle" type="boulder" x="1874.79" y="1793.85" width="40" height="40" rotation="-180"/>
+  <object id="243" name="obstacle" type="boulder" x="1635.12" y="1953.19" width="40" height="40" rotation="-180"/>
+  <object id="244" name="obstacle" type="boulder" x="1516.29" y="2115.35" width="40" height="40" rotation="-180"/>
+  <object id="245" name="obstacle" type="boulder" x="1516.4" y="2276.34" width="40" height="40" rotation="360"/>
+  <object id="246" name="obstacle" type="boulder" x="1516.73" y="2236.01" width="40" height="40" rotation="360"/>
+  <object id="247" name="obstacle" type="boulder" x="1515.49" y="2195.77" width="40" height="40" rotation="360"/>
+  <object id="248" name="obstacle" type="boulder" x="1517.57" y="2154.18" width="40" height="40" rotation="360"/>
+  <object id="249" name="obstacle" type="boulder" x="1516.57" y="2115.18" width="40" height="40" rotation="360"/>
+  <object id="250" name="obstacle" type="boulder" x="1557.33" y="2112.94" width="40" height="40" rotation="360"/>
+  <object id="251" name="obstacle" type="boulder" x="1556.33" y="2073.94" width="40" height="40" rotation="360"/>
+  <object id="252" name="obstacle" type="boulder" x="1557.25" y="2033.52" width="40" height="40" rotation="360"/>
+  <object id="253" name="obstacle" type="boulder" x="1597.33" y="2072.94" width="40" height="40" rotation="360"/>
+  <object id="254" name="obstacle" type="boulder" x="1596.33" y="2033.94" width="40" height="40" rotation="360"/>
+  <object id="255" name="obstacle" type="boulder" x="1637.2" y="2033.81" width="40" height="40" rotation="360"/>
+  <object id="256" name="obstacle" type="boulder" x="1596.03" y="1955.97" width="40" height="40" rotation="360"/>
+  <object id="257" name="obstacle" type="boulder" x="1636.2" y="1994.81" width="40" height="40" rotation="360"/>
+  <object id="258" name="obstacle" type="boulder" x="1677.2" y="1993.81" width="40" height="40" rotation="360"/>
+  <object id="259" name="obstacle" type="boulder" x="1676.2" y="1954.81" width="40" height="40" rotation="360"/>
+  <object id="260" name="obstacle" type="boulder" x="1676.04" y="1913.99" width="40" height="40" rotation="360"/>
+  <object id="261" name="obstacle" type="boulder" x="1717.57" y="1954.18" width="40" height="40" rotation="360"/>
+  <object id="262" name="obstacle" type="boulder" x="1716.57" y="1915.18" width="40" height="40" rotation="360"/>
+  <object id="263" name="obstacle" type="boulder" x="1757.33" y="1912.94" width="40" height="40" rotation="360"/>
+  <object id="264" name="obstacle" type="boulder" x="1756.33" y="1873.94" width="40" height="40" rotation="360"/>
+  <object id="265" name="obstacle" type="boulder" x="1716.38" y="1833.65" width="40" height="40" rotation="360"/>
+  <object id="266" name="obstacle" type="boulder" x="1797.33" y="1872.94" width="40" height="40" rotation="360"/>
+  <object id="267" name="obstacle" type="boulder" x="1796.33" y="1833.94" width="40" height="40" rotation="360"/>
+  <object id="268" name="obstacle" type="boulder" x="1837.2" y="1833.81" width="40" height="40" rotation="360"/>
+  <object id="269" name="obstacle" type="boulder" x="1836.2" y="1794.81" width="40" height="40" rotation="360"/>
+  <object id="270" name="obstacle" type="boulder" x="2235.47" y="2035.54" width="40" height="40" rotation="360"/>
+  <object id="271" name="tree" type="tree" x="3191.2" y="2594.68" width="40" height="40" rotation="-180"/>
+  <object id="272" name="obstacle" type="boulder" x="3235.56" y="2435.78" width="40" height="40" rotation="-360"/>
+  <object id="273" name="obstacle" type="boulder" x="3358.33" y="2596.33" width="40" height="40" rotation="-360"/>
+  <object id="274" name="obstacle" type="boulder" x="3036.74" y="2238.93" width="40" height="40" rotation="-360"/>
+  <object id="275" name="obstacle" type="boulder" x="3397.59" y="2597.07" width="40" height="40" rotation="-360"/>
+  <object id="276" name="rock" type="rock" x="3154.12" y="2437.31" width="40" height="40" rotation="-180"/>
+  <object id="277" name="obstacle" type="boulder" x="3116" y="2359.67" width="40" height="40" rotation="-360"/>
+  <object id="278" name="obstacle" type="boulder" x="3318.04" y="2395.3" width="40" height="40" rotation="-360"/>
+  <object id="279" name="rock" type="rock" x="3236.08" y="2313.35" width="40" height="40" rotation="-180"/>
+  <object id="280" name="obstacle" type="boulder" x="3197.96" y="2235.71" width="40" height="40" rotation="-360"/>
+  <object id="281" name="rock" type="rock" x="3073.6" y="2113.83" width="40" height="40" rotation="-180"/>
+  <object id="282" name="obstacle" type="boulder" x="3073.74" y="2075.93" width="40" height="40" rotation="-360"/>
+  <object id="283" name="rock" type="rock" x="2633.2" y="3236.89" width="40" height="40" rotation="-180"/>
+  <object id="284" name="obstacle" type="boulder" x="2675.38" y="3153.63" width="40" height="40" rotation="-360"/>
+  <object id="285" name="rock" type="rock" x="2715.17" y="3112.93" width="40" height="40" rotation="-180"/>
+  <object id="286" name="obstacle" type="boulder" x="2676.38" y="3114.63" width="40" height="40" rotation="-360"/>
+  <object id="287" name="obstacle" type="boulder" x="2595.08" y="3159.25" width="40" height="40" rotation="-360"/>
+  <object id="288" name="obstacle" type="boulder" x="2634.55" y="2994.79" width="40" height="40" rotation="-360"/>
+  <object id="289" name="obstacle" type="boulder" x="2677.05" y="3035.29" width="40" height="40" rotation="-360"/>
+  <object id="290" name="obstacle" type="boulder" x="2636.62" y="3073.39" width="40" height="40" rotation="-360"/>
+  <object id="291" name="obstacle" type="boulder" x="2555.77" y="3157.23" width="40" height="40" rotation="-360"/>
+  <object id="292" name="obstacle" type="boulder" x="2516.11" y="3157.57" width="40" height="40" rotation="-360"/>
+  <object id="293" name="rock" type="rock" x="2515.69" y="3076.41" width="40" height="40" rotation="-180"/>
+  <object id="294" name="obstacle" type="boulder" x="2554.64" y="3034.37" width="40" height="40" rotation="-360"/>
+  <object id="295" name="obstacle" type="boulder" x="2478.32" y="3080.02" width="40" height="40" rotation="-360"/>
+  <object id="296" name="obstacle" type="boulder" x="2555.64" y="2995.37" width="40" height="40" rotation="-360"/>
+  <object id="297" name="obstacle" type="boulder" x="2514.64" y="2994.37" width="40" height="40" rotation="-360"/>
+  <object id="298" name="obstacle" type="boulder" x="1913.72" y="1834.26" width="40" height="40" rotation="-180"/>
  </objectgroup>
  <layer id="9" name="walkability" width="100" height="150" visible="0">
   <data>
