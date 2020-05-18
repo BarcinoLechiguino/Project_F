@@ -331,6 +331,9 @@ void GameplayScene::HandleTutorial()
 	case TutorialState::GATHER_RESOURCE:
 
 		break;
+	case TutorialState::GATHER_MORE_RESOURCES:
+
+		break;
 	case TutorialState::RECRUIT_INFANTRY:
 
 		break;
@@ -1868,6 +1871,8 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
 		tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
+
+		App->dialog_manager->EndDialog();
 	}
 }
 
