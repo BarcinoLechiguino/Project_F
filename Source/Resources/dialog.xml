@@ -116,7 +116,7 @@
       <text text="and buildings?"/>
       <text text="You need bits which are stored in"/>
       <text text="obelisks"/>
-      <text text="Search and gather as much as posible"/>
+      <text text="Search and gather as much as posible!"/>
     </dialog_bubble>
 
   </dialog_tree>
@@ -124,10 +124,10 @@
   <dialog_tree tree_id="7" position_x="100" position_y="20" pause="0">
 
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="CUTIE FUCK YOU"/>
-      <text text="To attack an enemy you just have to"/>
-      <text text="select a combat unit and right click"/>
-      <text text="on an enemy building or unit"/>
+      <text text="Hint: Don't die"/>
+      <text text=""/>
+      <text text="If they destroy your townhall"/>
+      <text text="you will be done for"/>
     </dialog_bubble>
 
   </dialog_tree>
@@ -135,13 +135,47 @@
   <dialog_tree tree_id="8" position_x="100" position_y="20" pause="0">
 
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="BRUUUUUUUUUUUUUUH"/>
-      <text text="To attack an enemy you just have to"/>
-      <text text="select a combat unit and right click"/>
-      <text text="on an enemy building or unit"/>
+      <text text="Heavy units can be recruited from"/>
+      <text text="the barracks"/>
+      <text text="They move and attack very slowly"/>
+      <text text="but they sure pack a punch!"/>
     </dialog_bubble>
 
   </dialog_tree>
 
+  <dialog_tree tree_id="9" position_x="100" position_y="20" pause="0">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Scout units can be recruited from"/>
+      <text text="the Town Hall"/>
+      <text text="They are super fast and will clear"/>
+      <text text="the fog of war very fast"/>
+      <text text="They are very weak though..."/>
+    </dialog_bubble>
+
+  </dialog_tree>
+
+  <dialog_tree tree_id="10" position_x="100" position_y="20" pause="0">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Scout units can be recruited from"/>
+      <text text="the Town Hall"/>
+      <text text="They are super fast and will clear"/>
+      <text text="the fog of war very fast"/>
+      <text text="They are very weak though..."/>
+    </dialog_bubble>
+
+  </dialog_tree>
+
+  <dialog_tree tree_id="11" position_x="100" position_y="20" pause="0">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Find and destroy the enemie's Town Hall"/>
+      <text text="to win!"/>
+      <text text="Be careful not to get your own"/>
+      <text text="destroyed though"/>
+    </dialog_bubble>
+
+  </dialog_tree>
 
 </dialog>
