@@ -1876,11 +1876,11 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
 		{
-			int i = rand() % 3 + 6;
+			int i = rand() % 8 + 6;
 
 			while(i == last_random_hint)
 			{
-				i = rand() % 3 + 6;
+				i = rand() % 8 + 6;
 			}
 
 			last_random_hint = i;
