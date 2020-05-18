@@ -156,7 +156,7 @@ void Infantry::InitEntity()
 	accumulated_cooldown = 0.0f;
 
 	// STATS
-	speed = 350.0f;
+	speed = 175.0f;
 
 	max_health = 300;
 	current_health = max_health;
