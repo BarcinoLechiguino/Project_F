@@ -306,8 +306,8 @@ void GameplayScene::HandleTutorial()
 		break;
 	case TutorialState::SELECT_UNIT:
 		tutorial.lock_camera = true;
+		App->render->SetCameraPosition(iPoint(2750, -3100));
 
-		tutorial.camera_position = iPoint(2750, -3100);
 		break;
 	case TutorialState::MOVE_UNIT:
 
@@ -324,11 +324,6 @@ void GameplayScene::HandleTutorial()
 	case TutorialState::ATTACK_ENEMY:
 
 		break;
-	}
-
-	if (tutorial.lock_camera)
-	{
-		App->render->SetCameraPosition(tutorial.camera_position);
 	}
 }
 
@@ -889,9 +884,9 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_gatherer_descp_string = "Primary resource unit.";
 	std::string HUD_gatherer_descp_string2 = "It doesn't attack. It is useful";
 	std::string HUD_gatherer_descp_string3 = "for gathering resources.";
-	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 360, 635, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string);
-	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 337, 649, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string2);
-	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 355, 662, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string3);
+	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 360, 635, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string);
+	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 337, 649, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string2);
+	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 355, 662, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string3);
 
 	//Gatherer Recruit Button
 	SDL_Rect HUD_unit_gatherer_townhall_size = { 0, 0, 53, 50 };
