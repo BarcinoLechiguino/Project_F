@@ -144,7 +144,7 @@ void Player::CameraController(float dt)
 	int window_width, window_height;
 	App->win->GetWindowSize(window_width, window_height);
 
-	if (CurrentlyInGameplayScene())																							// If the current scene is FIRST_SCENE (gameplay scene)
+	if (CurrentlyInGameplayScene() && !App->scene_manager->gameplay_scene->tutorial.lock_camera)																							// If the current scene is FIRST_SCENE (gameplay scene)
 	{
 		if (!cursor.game_controller_mode)
 		{
@@ -189,35 +189,38 @@ void Player::CameraController(float dt)
 
 void Player::MoveCameraWithGameController()
 {
-	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Left
+	if (!App->scene_manager->gameplay_scene->tutorial.lock_camera)
 	{
-		if (App->render->camera.x < scene_camera_x_limit.y)
+		if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Left
 		{
-			App->render->camera.x += (int)(camera_speed.x * App->GetDt());
+			if (App->render->camera.x < scene_camera_x_limit.y)
+			{
+				App->render->camera.x += (int)(camera_speed.x * App->GetDt());
+			}
 		}
-	}
 
-	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Right
-	{
-		if (App->render->camera.x > scene_camera_x_limit.x)
+		if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Right
 		{
-			App->render->camera.x -= (int)(camera_speed.x * App->GetDt());
+			if (App->render->camera.x > scene_camera_x_limit.x)
+			{
+				App->render->camera.x -= (int)(camera_speed.x * App->GetDt());
+			}
 		}
-	}
 
-	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Bottom
-	{
-		if (App->render->camera.y > scene_camera_y_limit.x)
+		if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Bottom
 		{
-			App->render->camera.y -= (int)(camera_speed.y * App->GetDt());
+			if (App->render->camera.y > scene_camera_y_limit.x)
+			{
+				App->render->camera.y -= (int)(camera_speed.y * App->GetDt());
+			}
 		}
-	}
 
-	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Up
-	{
-		if (App->render->camera.y < scene_camera_y_limit.y)
+		if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Up
 		{
-			App->render->camera.y += (int)(camera_speed.y * App->GetDt());
+			if (App->render->camera.y < scene_camera_y_limit.y)
+			{
+				App->render->camera.y += (int)(camera_speed.y * App->GetDt());
+			}
 		}
 	}
 }
@@ -377,7 +380,7 @@ void Player::DragSelection()
 
 						SelectEntitiesInSelectionRect();
 
-						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty())
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty() && App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE)
 						{
 							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
 							App->dialog_manager->StartDialog(1);
@@ -392,7 +395,7 @@ void Player::DragSelection()
 					{
 						SelectEntityAt(cursor_tile);
 
-						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty())
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty() && App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE)
 						{
 							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
 							App->dialog_manager->StartDialog(1);
