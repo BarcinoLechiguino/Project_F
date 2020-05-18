@@ -16,6 +16,7 @@
 #include "Scene.h"
 #include "GameplayScene.h"
 #include "Movement.h"
+#include "DialogManager.h"
 
 #include "GuiManager.h"
 #include "GuiElement.h"
@@ -143,7 +144,7 @@ void Player::CameraController(float dt)
 	int window_width, window_height;
 	App->win->GetWindowSize(window_width, window_height);
 
-	if (CurrentlyInGameplayScene())																							// If the current scene is FIRST_SCENE (gameplay scene)
+	if (CurrentlyInGameplayScene() && !App->scene_manager->gameplay_scene->tutorial.lock_camera)																							// If the current scene is FIRST_SCENE (gameplay scene)
 	{
 		if (!cursor.game_controller_mode)
 		{
@@ -188,35 +189,38 @@ void Player::CameraController(float dt)
 
 void Player::MoveCameraWithGameController()
 {
-	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Left
+	if (!App->scene_manager->gameplay_scene->tutorial.lock_camera)
 	{
-		if (App->render->camera.x < scene_camera_x_limit.y)
+		if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Left
 		{
-			App->render->camera.x += (int)(camera_speed.x * App->GetDt());
+			if (App->render->camera.x < scene_camera_x_limit.y)
+			{
+				App->render->camera.x += (int)(camera_speed.x * App->GetDt());
+			}
 		}
-	}
 
-	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Right
-	{
-		if (App->render->camera.x > scene_camera_x_limit.x)
+		if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTX) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Right
 		{
-			App->render->camera.x -= (int)(camera_speed.x * App->GetDt());
+			if (App->render->camera.x > scene_camera_x_limit.x)
+			{
+				App->render->camera.x -= (int)(camera_speed.x * App->GetDt());
+			}
 		}
-	}
 
-	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Bottom
-	{
-		if (App->render->camera.y > scene_camera_y_limit.x)
+		if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::POSITIVE_AXIS_REPEAT)					//Bottom
 		{
-			App->render->camera.y -= (int)(camera_speed.y * App->GetDt());
+			if (App->render->camera.y > scene_camera_y_limit.x)
+			{
+				App->render->camera.y -= (int)(camera_speed.y * App->GetDt());
+			}
 		}
-	}
 
-	if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Up
-	{
-		if (App->render->camera.y < scene_camera_y_limit.y)
+		if (App->input->GetGameControllerAxis(SDL_CONTROLLER_AXIS_RIGHTY) == AXIS_STATE::NEGATIVE_AXIS_REPEAT)					//Up
 		{
-			App->render->camera.y += (int)(camera_speed.y * App->GetDt());
+			if (App->render->camera.y < scene_camera_y_limit.y)
+			{
+				App->render->camera.y += (int)(camera_speed.y * App->GetDt());
+			}
 		}
 	}
 }
@@ -301,10 +305,23 @@ void Player::GiveOrder()//fix
 			if (App->entity_manager->GetEntityAt(cursor_tile) == nullptr)
 			{
 				App->movement->OrderUnitsToMove(cursor_tile, units_selected);
+
+				if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::MOVE_UNIT ) //Tutorial 2
+				{
+					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::SELECT_GATHERER;
+					App->dialog_manager->StartDialog(2);
+				}
 			}
 			else
 			{
 				App->movement->OrderUnitsToAttack(cursor_tile, units_selected);
+
+				if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::GATHER_RESOURCE && !units_selected.empty() 
+					&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsResource(App->entity_manager->GetEntityAt(cursor_tile)) ) //Tutorial 4
+				{
+					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_MORE_RESOURCES;
+					App->dialog_manager->StartDialog(4);
+				}
 			}
 		}
 		else
@@ -369,6 +386,19 @@ void Player::DragSelection()
 						is_selecting = false;
 
 						SelectEntitiesInSelectionRect();
+
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty() && App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE) //Tutorial 1
+						{
+							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
+							App->dialog_manager->StartDialog(1);
+						}
+
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty() 
+							&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
+						{
+							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
+							App->dialog_manager->StartDialog(3);
+						}
 					}
 				}
 				else
@@ -378,6 +408,21 @@ void Player::DragSelection()
 						|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
 					{
 						SelectEntityAt(cursor_tile);
+
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty() && App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE) //Tutorial 1
+						{
+							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
+							App->dialog_manager->StartDialog(1);
+						}
+
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty()
+							&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
+						{
+							App->entity_manager->IsGatherer(units_selected[0]);
+
+							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
+							App->dialog_manager->StartDialog(3);
+						}
 					}
 				}
 			}
@@ -441,7 +486,7 @@ void Player::SelectOnClick()
 	{
 		if (!god_mode)
 		{
-			
+			//what?
 		}
 	}
 }

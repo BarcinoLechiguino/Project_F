@@ -18,15 +18,26 @@ class GuiButton;
 class GuiInputBox;
 class GuiScrollbar;
 
+enum class TutorialState
+{
+	NOT_ACTIVE,
+	SELECT_UNIT,
+	MOVE_UNIT,
+	SELECT_GATHERER,
+	GATHER_RESOURCE,
+	GATHER_MORE_RESOURCES,
+	RECRUIT_INFANTRY,
+	ATTACK_ENEMY
+};
+
 struct Tutorial
 {
-	enum class TutorialState
-	{
-
-	};
-
 	bool lock_camera;
+	iPoint camera_position;
 	TutorialState tutorial_state;
+	bool boulders_active;
+
+	void NextStep(TutorialState state);
 };
 
 class GameplayScene : public Scene
@@ -72,13 +83,13 @@ public:
 	void LoadInGameOptionsMenu();
 
 	void OnEventCall(GuiElement* element, GUI_EVENT ui_event);
-
 	void SwitchPauseMenuMode();																// Will switch between enabling and disabling the pause menu.
-
 	void DebugHUDSpawn();																	// HUD SPAWN
-
 	void AdjustVolumeWithScrollbar();
 	
+	//Tutorial
+	void HandleTutorial();
+
 	// --- Debug Methods
 	void UnitDebugKeys();
 
@@ -142,6 +153,7 @@ public:
 	GuiButton*				in_game_back_button;
 	GuiScrollbar*			in_game_music_scrollbar;
 	GuiScrollbar*			in_game_sfx_scrollbar;
+
 
 	// Text:
 	GuiText*				in_game_resolution_text;
@@ -335,6 +347,7 @@ public:
 	GuiImage*				HUD_dialogs_character_no_talking;
 	GuiImage*				HUD_dialogs_character_talking;
 	GuiImage*				HUD_dialogs_screen_block;
+	GuiButton*				HUD_dialogs_skip_tutorial;
 
 private:
 

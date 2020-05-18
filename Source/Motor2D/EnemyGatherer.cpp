@@ -193,7 +193,7 @@ void EnemyGatherer::AttachHealthbarToEntity()
 
 void EnemyGatherer::InitUnitSpriteSections()
 {
-	entity_sprite_section = { 52, 0, 52, 49 };
+	/*entity_sprite_section = { 52, 0, 52, 49 };
 
 	pathing_up_section = { 0, 49, 39, 42 };
 	pathing_down_section = { 39, 49, 38, 45 };
@@ -202,7 +202,53 @@ void EnemyGatherer::InitUnitSpriteSections()
 	pathing_up_right_section = { 104, 0, 52, 49 };
 	pathing_up_left_section = { 156, 0, 52, 49 };
 	pathing_down_right_section = { 52, 0, 52 ,49 };
-	pathing_down_left_section = { 0, 0, 52, 49 };
+	pathing_down_left_section = { 0, 0, 52, 49 };*/
+
+	//	 --- LOADING FROM XML ---
+	pugi::xml_node sections = App->entities_file.child("entities").child("units").child("enemies").child("enemy_gatherer").child("sprite_sections");
+
+	pathing_up_section.x = sections.child("pathing_up").attribute("x").as_int();
+	pathing_up_section.y = sections.child("pathing_up").attribute("y").as_int();
+	pathing_up_section.w = sections.child("pathing_up").attribute("w").as_int();
+	pathing_up_section.h = sections.child("pathing_up").attribute("h").as_int();
+
+	pathing_down_section.x = sections.child("pathing_down").attribute("x").as_int();
+	pathing_down_section.y = sections.child("pathing_down").attribute("y").as_int();
+	pathing_down_section.w = sections.child("pathing_down").attribute("w").as_int();
+	pathing_down_section.h = sections.child("pathing_down").attribute("h").as_int();
+
+	pathing_rigth_section.x = sections.child("pathing_right").attribute("x").as_int();
+	pathing_rigth_section.y = sections.child("pathing_right").attribute("y").as_int();
+	pathing_rigth_section.w = sections.child("pathing_right").attribute("w").as_int();
+	pathing_rigth_section.h = sections.child("pathing_right").attribute("h").as_int();
+
+	pathing_left_section.x = sections.child("pathing_left").attribute("x").as_int();
+	pathing_left_section.y = sections.child("pathing_left").attribute("y").as_int();
+	pathing_left_section.w = sections.child("pathing_left").attribute("w").as_int();
+	pathing_left_section.h = sections.child("pathing_left").attribute("h").as_int();
+
+	pathing_up_right_section.x = sections.child("pathing_up_right").attribute("x").as_int();
+	pathing_up_right_section.y = sections.child("pathing_up_right").attribute("y").as_int();
+	pathing_up_right_section.w = sections.child("pathing_up_right").attribute("w").as_int();
+	pathing_up_right_section.h = sections.child("pathing_up_right").attribute("h").as_int();
+
+	pathing_up_left_section.x = sections.child("pathing_up_left").attribute("x").as_int();
+	pathing_up_left_section.y = sections.child("pathing_up_left").attribute("y").as_int();
+	pathing_up_left_section.w = sections.child("pathing_up_left").attribute("w").as_int();
+	pathing_up_left_section.h = sections.child("pathing_up_left").attribute("h").as_int();
+
+	pathing_down_right_section.x = sections.child("pathing_down_right").attribute("x").as_int();
+	pathing_down_right_section.y = sections.child("pathing_down_right").attribute("y").as_int();
+	pathing_down_right_section.w = sections.child("pathing_down_right").attribute("w").as_int();
+	pathing_down_right_section.h = sections.child("pathing_down_right").attribute("h").as_int();
+
+	pathing_down_left_section.x = sections.child("pathing_down_left").attribute("x").as_int();
+	pathing_down_left_section.y = sections.child("pathing_down_left").attribute("y").as_int();
+	pathing_down_left_section.w = sections.child("pathing_down_left").attribute("w").as_int();
+	pathing_down_left_section.h = sections.child("pathing_down_left").attribute("h").as_int();
+
+	//Default section
+	entity_sprite_section = pathing_down_right_section;
 }
 
 void EnemyGatherer::UpdateUnitSpriteSection()

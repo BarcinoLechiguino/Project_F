@@ -229,6 +229,8 @@ public:
 	bool				map_loaded;
 	bool				smaller_camera;
 
+	std::vector<Entity*> tutorial_boulders;
+
 private:
 	pugi::xml_document	map_file;
 	std::string			folder;
