@@ -1519,7 +1519,28 @@ void GameplayScene::LoadInGameOptionsMenu()
 
 	//Remapping
 
-	//Back button
+	//Fullscreen
+	SDL_Rect in_game_text_fullscreen_rect = { 0, 0, 100, 20 };
+	std::string in_game_fullscreen_string = "fullscreen";
+	in_game_fullscreen_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 410, 336, in_game_text_fullscreen_rect, App->gui_manager->borgsquadcond_30, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_fullscreen_string);
+
+	SDL_Rect in_game_opt_fullscreen_off_size = { 0, 0, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_off_idle = { 744, 18, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_off_hover = { 744, 18, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_off_clicked = { 744, 18, 29, 24 };
+
+	in_game_fullscreen_off = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 605, 339, true, true, false, this, in_game_options_parent
+		, &in_game_opt_fullscreen_off_idle, &in_game_opt_fullscreen_off_hover, &in_game_opt_fullscreen_off_clicked);
+
+	SDL_Rect in_game_opt_fullscreen_on_size = { 0, 0, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_on_idle = { 788, 18, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_on_hover = { 788, 18, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_on_clicked = { 788, 18, 29, 24 };
+
+	in_game_fullscreen_on = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 605, 339, false, true, false, this, nullptr
+		, &in_game_opt_fullscreen_on_idle, &in_game_opt_fullscreen_on_clicked);
+	
+		//Back button
 	SDL_Rect in_game_back_button_size = { 0, 0, 45, 33 };
 	SDL_Rect in_game_back_button_idle = { 0, 103, 45, 33 };
 	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
@@ -1588,6 +1609,19 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Exit
 		escape = false;
+	}
+
+	if (element == in_game_fullscreen_off && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->gui_manager->SetElementsVisibility(in_game_fullscreen_on, true);
+		App->gui_manager->SetElementsVisibility(in_game_fullscreen_off, false);
+	}
+
+	if (element == in_game_fullscreen_on && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->win->ToggleFullscreen();
+		App->gui_manager->SetElementsVisibility(in_game_fullscreen_on, false);
+		App->gui_manager->SetElementsVisibility(in_game_fullscreen_off, true);
 	}
 
 
