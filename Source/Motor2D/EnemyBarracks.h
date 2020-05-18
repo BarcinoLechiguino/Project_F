@@ -3,6 +3,8 @@
 
 #include "Building.h"
 
+struct EnemyAIEntity;
+
 class EnemyBarracks : public Building
 {
 public:
@@ -45,6 +47,8 @@ public:
 
 	ENTITY_TYPE created_unit_type;
 	bool		creating_unit;
+
+	EnemyAIEntity* enemy_AI_entity;
 };
 
 #endif // !__ENEMY_BARRACKS_H__

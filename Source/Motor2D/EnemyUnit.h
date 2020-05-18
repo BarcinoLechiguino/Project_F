@@ -3,6 +3,8 @@
 
 #include "DynamicObject.h"
 
+struct EnemyAIEntity;
+
 class EnemyUnit : public DynamicObject
 {
 public:
@@ -18,8 +20,10 @@ public:
 
 	virtual void Draw();
 
-private:
+public:
+	EnemyAIEntity* enemy_AI_entity;
 
+private:
 
 };
 
