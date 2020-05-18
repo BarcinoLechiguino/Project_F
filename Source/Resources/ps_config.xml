@@ -24,7 +24,7 @@
 			<emission value ="2"/>
 			<rnd value ="1"/>
 			<particleLife value ="80"/>
-			<emitterLife value ="-1"/>
+			<emitterLife value ="2"/>
 			<startColor r ="250" g="104" b="0" a="255"/>
 			<endColor r ="205" g="205" b="205" a="255"/>
 			<rect x="0" y="0" w="20" h="20"/>

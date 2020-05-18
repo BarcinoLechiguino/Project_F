@@ -71,10 +71,11 @@ bool ParticleManager::PostUpdate()
 	{
 		if (emittersList[i] != nullptr) {
 			emittersList[i]->PostUpdate();
-		}
-		if (emittersList[i]->IsEmitterToDelete())
-		{
-			RELEASE(emittersList[i]);
+
+			if (emittersList[i]->IsEmitterToDelete())
+			{
+				RELEASE(emittersList[i]);
+			}
 		}
 	}
 	return true;
