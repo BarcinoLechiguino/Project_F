@@ -8,21 +8,14 @@ class Infantry;
 class EnemyInfantry : public DynamicObject
 {
 public:
-
 	EnemyInfantry(int x, int y, ENTITY_TYPE type, int level);
-
 	~EnemyInfantry();
-
+	
 	bool Awake(pugi::xml_node&);
-
 	bool Start();
-
 	bool PreUpdate();
-
 	bool Update(float dt,  bool do_logic);
-
 	bool PostUpdate();
-
 	bool CleanUp();
 
 	void Draw();

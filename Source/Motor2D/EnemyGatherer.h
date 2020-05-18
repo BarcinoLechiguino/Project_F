@@ -6,21 +6,14 @@
 class EnemyGatherer : public DynamicObject
 {
 public:
-
 	EnemyGatherer(int x, int y, ENTITY_TYPE type, int level);
-
 	~EnemyGatherer();
 
 	bool Awake(pugi::xml_node&);
-
 	bool Start();
-
 	bool PreUpdate();
-
 	bool Update(float dt, bool do_logic);
-
 	bool PostUpdate();
-
 	bool CleanUp();
 
 	void Draw();

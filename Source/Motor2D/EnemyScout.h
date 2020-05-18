@@ -6,21 +6,14 @@
 class EnemyScout : public DynamicObject
 {
 public:
-
 	EnemyScout(int x, int y, ENTITY_TYPE type, int level);
-
 	~EnemyScout();
 
 	bool Awake(pugi::xml_node&);
-
 	bool Start();
-
 	bool PreUpdate();
-
 	bool Update(float dt, bool do_logic);
-
 	bool PostUpdate();
-
 	bool CleanUp();
 
 	void Draw();
