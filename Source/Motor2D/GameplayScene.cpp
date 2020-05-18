@@ -1429,7 +1429,7 @@ void GameplayScene::LoadGuiElements()
 
 	//Side Quests
 	SDL_Rect HUD_missions_side_quest_rect = { 0, 0, 100, 20 };
-	std::string HUD_missions_side_quest_string = "Recollect X Data & X Electricty";
+	std::string HUD_missions_side_quest_string = "Recollect 200 Data & 15 Electricty";
 	HUD_missions_title_side = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1365, 455, HUD_missions_side_quest_rect, App->gui_manager->borgsquadcond_15, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_missions_background, &HUD_missions_side_quest_string);
 
 	SDL_Rect HUD_missions_side_quest2_rect = { 0, 0, 100, 20 };
@@ -1873,6 +1873,8 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
 
 		App->dialog_manager->EndDialog();
+
+		App->gui_manager->SetElementsVisibility(HUD_dialogs_skip_tutorial, false);
 	}
 }
 
