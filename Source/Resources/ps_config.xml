@@ -11,7 +11,7 @@
 			<startColor r ="0" g="102" b="102" a="0"/>
 			<endColor r ="51" g="51" b="102" a ="0"/>
 			<rect x="0" y="0" w="1280" h="720"/>
-      <texture_path path="Assets/particles/spark_06.png" />
+      <texture_path path="Assets/particles/spark_07.png" />
       <camera_speed speed="0.0f" />
       <layer value="0" />
       <spread_direction a = "45"/>
@@ -45,7 +45,7 @@
       <startColor r ="30" g="30" b="50" a="255"/>
       <endColor r ="70" g="70" b="120" a="255"/>
       <rect x="0" y="0" w="20" h="20"/>
-      <texture_path path="Assets/particles/smoke_04.png" />
+      <texture_path path="Assets/particles/smoke_06.png" />
       <camera_speed speed="1.0f" />
       <layer value="1" />
       <spread_direction a = "90"/>
@@ -69,17 +69,17 @@
     </emitter>
 
     <emitter type ="5" name="rock shine">
-      <speed value ="20"/> <!-- upwards speed  -->
-      <size value ="60"/>
+      <speed value ="0"/> <!-- upwards speed  -->
+      <size value ="10"/>
       <cone_angle min ="60" max ="120"/>
       <emission value ="0.1"/> <!-- frame by frame speed  -->
       <rnd value ="1"/>
-      <particleLife value ="80"/>
+      <particleLife value ="120"/>
       <emitterLife value ="-1"/>
-      <startColor r ="51" g="250" b="250" a="255"/>
-      <endColor r ="0" g="128" b="255" a="128"/>
-      <rect x="0" y="0" w="55" h="40"/>
-      <texture_path path="Assets/particles/spark_03.png" />
+      <startColor r ="86" g="232" b="79" a="255"/>
+      <endColor r ="200" g="255" b="200" a="128"/>
+      <rect x="0" y="0" w="45" h="30"/>
+      <texture_path path="Assets/particles/star_08.png" />
       <camera_speed speed="1.0f" />
       <layer value="1" />
       <spread_direction a = "90"/>
@@ -97,6 +97,23 @@
       <endColor r ="255" g="245" b="254" a="128"/>
       <rect x="20" y="20" w="35" h="20"/>
       <texture_path path="Assets/particles/scorch_02.png" />
+      <camera_speed speed="1.0f" />
+      <layer value="1" />
+      <spread_direction a = "90"/>
+    </emitter>
+    
+    <emitter type ="7" name="tree energy">
+      <speed value ="20"/>
+      <size value ="40"/>
+      <cone_angle min ="60" max ="120"/>
+      <emission value ="0.3"/>
+      <rnd value ="1"/>
+      <particleLife value ="80"/>
+      <emitterLife value ="-1"/>
+      <startColor r ="222" g="34" b="202" a="255"/>
+      <endColor r ="255" g="255" b="255" a="128"/>
+      <rect x="20" y="20" w="20" h="10"/>
+      <texture_path path="Assets/particles/spark_04.png" />
       <camera_speed speed="1.0f" />
       <layer value="1" />
       <spread_direction a = "90"/>

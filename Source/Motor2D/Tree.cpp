@@ -10,6 +10,8 @@
 #include "GuiHealthbar.h"
 #include "FowManager.h"
 #include "EntityManager.h"
+#include "Emitter.h"
+#include "ParticleManager.h"
 
 #include "Tree.h"
 
@@ -63,6 +65,7 @@ bool Tree::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
+	App->particle_manager->DeleteEmitter(SparkEmitter);
 
 	entity_sprite = nullptr;
 
@@ -109,6 +112,9 @@ void Tree::InitEntity()
 	entity_sprite = App->entity_manager->GetTreeTexture();
 	int tree_version = (rand() % 4) * 54;
 	blit_section = new SDL_Rect{ tree_version, 0, 54, 44 };
+
+	// EMITTER
+	SparkEmitter = App->particle_manager->SpawnEmitter({ pixel_position.x + 25, pixel_position.y }, EMITTER_TREE);
 
 	// FLAGS
 	is_selected = false;
