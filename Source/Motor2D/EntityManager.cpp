@@ -352,7 +352,7 @@ void EntityManager::DeleteEntity(Entity* entity)
 		{	
 			if (IsUnit(entity)) { //EXLOSION VFX & AUDIO
 				App->particle_manager->SpawnEmitter({entity->pixel_position.x + 25, entity->pixel_position.y}, EMITTER_EXPLOSION);
-				//App->audio->PlayFx();
+				App->audio->PlayFx(explosion_units_die_fx);
 			}
 			
 			(*item)->CleanUp();
