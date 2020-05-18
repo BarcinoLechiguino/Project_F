@@ -292,7 +292,7 @@ void Gatherer::InitEntity()
 	SmokeEmitter = App->particle_manager->SpawnEmitter({ pixel_position.x + 25, pixel_position.y - 20 }, EMITTER_GATHERER);
 
 	// STATS
-	speed = 400.0f;
+	speed = 225.0f;
 
 	max_health = 150;
 	current_health = max_health;
