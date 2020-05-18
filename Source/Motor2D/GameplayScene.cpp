@@ -312,10 +312,10 @@ void GameplayScene::HandleTutorial()
 	case TutorialState::MOVE_UNIT:
 
 		break;
-	case TutorialState::GATHER_RESOURCE:
+	case TutorialState::SELECT_GATHERER:
 
 		break;
-	case TutorialState::SELECT_BARRACKS:
+	case TutorialState::GATHER_RESOURCE:
 
 		break;
 	case TutorialState::RECRUIT_INFANTRY:

@@ -5,6 +5,7 @@
 
 #define MAX_UNIT_LEVEL 2								//TMP. Right now all units have the same level cap.
 
+class Emitter;
 enum class PATHFINDING_STATE
 {
 	IDLE,
@@ -107,6 +108,8 @@ public:
 
 	std::vector<iPoint>				entity_path;
 	std::vector<iPoint>::iterator	current_path_tile;
+
+	//Emitter*						damage_emitter;
 
 private:
 
