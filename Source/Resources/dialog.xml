@@ -12,7 +12,7 @@
     </dialog_bubble>
     
     <dialog_bubble bubble_id="1" active_time="6000"> 
-        <text text="Your first lesson will be on how to move"/>
+        <text text="Your first lesson will be how to move"/>
         <text text="the units under your command"/>
     </dialog_bubble>
 
@@ -50,10 +50,10 @@
     </dialog_bubble>
 
     <dialog_bubble bubble_id="1" active_time="6000">
-      <text text="Gatherer's are these tracktor looking "/>
+      <text text="Gatherers are these tractor looking "/>
       <text text="units, they will get resources for you!"/>
       <text text=""/>
-      <text text="Select that one on screen and right"/>
+      <text text="Select the one on the screen and right"/>
       <text text="click that tree to gather its"/>
       <text text="electricity"/>
     </dialog_bubble>
@@ -70,7 +70,7 @@
 
     <dialog_bubble bubble_id="1" active_time="6000">
       <text text="Get more electricity until you have"/>
-      <text text="15 of them"/>
+      <text text="15 of them in the"/>
       <text text="electricity reservoir"/>
     </dialog_bubble>
 
@@ -91,14 +91,14 @@
       <text text="Nice! Now you know all the basics"/>
       <text text="To attack an enemy you just have to"/>
       <text text="select a combat unit and right click"/>
-      <text text="on an enemy building or unit"/>
+      <text text="an enemy building or unit"/>
     </dialog_bubble>
     
     <dialog_bubble bubble_id="1" active_time="6000">
       <text text="You are now free to do whatever you"/>
-      <text text="want"/>
+      <text text="want!"/>
       <text text="Keep gathering and recruiting more units"/>
-      <text text="so you are not defenceless against"/>
+      <text text="so you are not defenseless against"/>
       <text text="the enemy troops!"/>
     </dialog_bubble>
 
