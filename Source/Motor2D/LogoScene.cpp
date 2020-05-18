@@ -17,6 +17,7 @@ LogoScene::LogoScene() : Scene(SCENES::LOGO_SCENE)
 , accumulated_time(0.f)
 , background_rect({ 0, 0, 0, 0 })
 , background_texture(nullptr)
+, logo_texture(nullptr)
 , logo_channel(0)
 , logo_fx(0)
 , logo_scene_duration(0.f)
@@ -48,7 +49,10 @@ bool LogoScene::PreUpdate()
 
 bool LogoScene::Update(float dt)
 {	
+	SDL_SetTextureAlphaMod(logo_texture, accumulated_time * 300.0f);
+
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
+	App->render->Blit(logo_texture, 513, 166, &logo_rect, false, 0.0f);
 	return true;
 }
 
@@ -111,7 +115,11 @@ void LogoScene::InitScene()
 
 	// BACKGROUND
 	background_rect = { 0, 0, 1280, 720 };
-	background_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("logo_scene_team_logo").attribute("path").as_string());
+	background_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("logo_scene").attribute("path").as_string());
+	
+	// LOGO
+	logo_rect = { 0, 0, 256, 337 };
+	logo_texture = App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("logo_scene_team_logo").attribute("path").as_string());
 
 	//LoadGuiElements();
 }

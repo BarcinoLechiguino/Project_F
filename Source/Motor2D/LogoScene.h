@@ -36,6 +36,8 @@ public:
 	//BACKGROUND
 	SDL_Rect			background_rect;
 	SDL_Texture*		background_texture;
+	SDL_Rect			logo_rect;
+	SDL_Texture*		logo_texture;
 
 private:
 	float				logo_scene_duration;
