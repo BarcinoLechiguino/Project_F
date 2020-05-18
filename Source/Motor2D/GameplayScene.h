@@ -65,7 +65,7 @@ public:
 	void BuildingUpgrade();
 	void UnitUpgrade(int unit);
 
-	bool CheckResources(uint required_data, uint required_electricity);
+	bool CheckResources(uint required_data, uint required_electricity, uint required_bits);
 
 	// --- UI & HUD
 	void LoadGuiElements();
@@ -320,10 +320,14 @@ public:
 	GuiText*				HUD_missions_side_quest2;
 	GuiText*				HUD_missions_side_quest3;
 
-	GuiImage*				HUD_missions_checkbox_in_progress_main_quest;
-	GuiImage*				HUD_missions_checkbox_in_progress_side_quest;
-	GuiImage*				HUD_missions_checkbox_in_progress_side_quest2;
-	GuiImage*				HUD_missions_checkbox_in_progress_side_quest3;
+	GuiImage* HUD_missions_checkbox_in_progress_main_quest_off;
+	GuiImage* HUD_missions_checkbox_in_progress_main_quest_on;
+	GuiImage* HUD_missions_checkbox_in_progress_side_quest_off;
+	GuiImage* HUD_missions_checkbox_in_progress_side_quest_on;
+	GuiImage* HUD_missions_checkbox_in_progress_side_quest2_off;
+	GuiImage* HUD_missions_checkbox_in_progress_side_quest2_on;
+	GuiImage* HUD_missions_checkbox_in_progress_side_quest3_off;
+	GuiImage* HUD_missions_checkbox_in_progress_side_quest3_on;
 
 	//Dialogs
 	GuiImage*				HUD_dialogs_background;

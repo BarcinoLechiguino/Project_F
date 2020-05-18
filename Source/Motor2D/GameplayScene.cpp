@@ -135,6 +135,8 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 	std::string HUD_bits_resource_string = std::to_string(App->entity_manager->resource_bits);
 	HUD_bytes_resource_text->RefreshTextInput(HUD_bits_resource_string.c_str());
 
+	CheckCompletedQuests();
+
 	return true;
 }
 
@@ -376,7 +378,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 		{
 		case ENTITY_TYPE::GATHERER:
 
-			if (CheckResources(20, 0))
+			if (CheckResources(40, 0, 0))
 			{
 				townhall = (TownHall*)App->player->building_selected;
 
@@ -385,7 +387,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 			break;
 
 		case ENTITY_TYPE::SCOUT:
-			if (CheckResources(0, 10))
+			if (CheckResources(20, 0, 0))
 			{
 				townhall = (TownHall*)App->player->building_selected;
 
@@ -394,7 +396,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 			break;
 
 		case ENTITY_TYPE::INFANTRY:
-			if (CheckResources(0, 10))
+			if (CheckResources(0, 5, 0))
 			{
 				barrack = (Barracks*)App->player->building_selected;
 
@@ -403,7 +405,7 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 			break;
 
 		case ENTITY_TYPE::HEAVY:
-			if (CheckResources(0, 50))
+			if (CheckResources(0, 15, 0))
 			{
 				barrack = (Barracks*)App->player->building_selected;
 
@@ -426,40 +428,36 @@ void GameplayScene::SpawnEnemyUnit(ENTITY_TYPE type)
 		{
 		case ENTITY_TYPE::ENEMY_GATHERER:
 
-			if (CheckResources(20, 0))
-			{
-				enemy_townhall = (EnemyTownHall*)App->player->building_selected;
 
-				enemy_townhall->creation_queue.push_back(ENTITY_TYPE::ENEMY_GATHERER);
-			}
+			enemy_townhall = (EnemyTownHall*)App->player->building_selected;
+
+			enemy_townhall->creation_queue.push_back(ENTITY_TYPE::ENEMY_GATHERER);
+
 			break;
 
 		case ENTITY_TYPE::ENEMY_SCOUT:
-			if (CheckResources(0, 10))
-			{
-				enemy_barrack = (EnemyBarracks*)App->player->building_selected;
 
-				enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_SCOUT);
-			}
+			enemy_barrack = (EnemyBarracks*)App->player->building_selected;
+
+			enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_SCOUT);
+
 			break;
 
 		case ENTITY_TYPE::ENEMY_INFANTRY:
-			if (CheckResources(0, 10))
-			{
-				enemy_barrack = (EnemyBarracks*)App->player->building_selected;
 
-				enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_INFANTRY);
-			}
+			enemy_barrack = (EnemyBarracks*)App->player->building_selected;
+
+			enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_INFANTRY);
+
 			break;
 
 		case ENTITY_TYPE::ENEMY_HEAVY:
-			if (CheckResources(0, 50))
-			{
-				enemy_barrack = (EnemyBarracks*)App->player->building_selected;
 
-				enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_HEAVY);
+			enemy_barrack = (EnemyBarracks*)App->player->building_selected;
 
-			}
+			enemy_barrack->creation_queue.push_back(ENTITY_TYPE::ENEMY_HEAVY);
+
+
 			break;
 		}
 	}
@@ -534,7 +532,7 @@ void GameplayScene::BuildingUpgrade()
 
 			if (townhall->level < townhall->max_level)
 			{
-				if (CheckResources(200, 175))
+				if (CheckResources(240, 20, 3))
 				{
 					townhall->level++;
 					townhall->LevelChanges();
@@ -548,7 +546,7 @@ void GameplayScene::BuildingUpgrade()
 
 			if (barrack->level < barrack->max_level)
 			{
-				if (CheckResources(170, 120))
+				if (CheckResources(180, 25, 2))
 				{
 					barrack->level++;
 					barrack->LevelChanges();
@@ -572,7 +570,7 @@ void GameplayScene::UnitUpgrade(int unit)
 
 			if (townhall->gatherer_level < townhall->max_gatherer_level)
 			{
-				if (CheckResources(100, 50))
+				if (CheckResources(100, 5, 1))
 				{
 					townhall->gatherer_level++;
 				}
@@ -583,7 +581,7 @@ void GameplayScene::UnitUpgrade(int unit)
 
 			if (barrack->infantry_level < barrack->max_infantry_level)
 			{
-				if (CheckResources(50, 100))
+				if (CheckResources(100, 5, 1))
 				{
 					barrack->infantry_level++;
 				}
@@ -594,7 +592,7 @@ void GameplayScene::UnitUpgrade(int unit)
 
 			if (townhall->scout_level < townhall->max_scout_level)
 			{
-				if (CheckResources(50, 100))
+				if (CheckResources(180, 30, 1))
 				{
 					townhall->scout_level++;
 				}
@@ -606,7 +604,7 @@ void GameplayScene::UnitUpgrade(int unit)
 
 			if (barrack->heavy_level < barrack->max_heavy_level)
 			{
-				if (CheckResources(50, 100))
+				if (CheckResources(180, 30, 1))
 				{
 					barrack->heavy_level++;
 				}
@@ -618,12 +616,13 @@ void GameplayScene::UnitUpgrade(int unit)
 }
 
 //--------------- RESOURCE MANAGEMENT ---------------
-bool GameplayScene::CheckResources(uint required_data, uint required_electricity)
+bool GameplayScene::CheckResources(uint required_data, uint required_electricity, uint required_bits)
 {
-	if ((required_data <= App->entity_manager->resource_data) && (required_electricity <= App->entity_manager->resource_electricity))
+	if ((required_data <= App->entity_manager->resource_data) && (required_electricity <= App->entity_manager->resource_electricity) && (required_bits <= App->entity_manager->resource_bits))
 	{
 		App->entity_manager->resource_data -= required_data;
 		App->entity_manager->resource_electricity -= required_electricity;
+		App->entity_manager->resource_bits -= required_bits;
 		return true;
 	}
 	else
@@ -1379,9 +1378,24 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_missions_side_quest3_string = "Destroy 10 enemies";
 	HUD_missions_title_side = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1365, 505, HUD_missions_side_quest3_rect, App->gui_manager->borgsquadcond_15, SDL_Color{ 182,255,106,0 }, true, false, false, this, HUD_missions_background, &HUD_missions_side_quest3_string);
 
-	//Checkbox in-progress
+	//Quests boxes
 
-	CheckCompletedQuests();
+	SDL_Rect HUD_missions_checkbox_in_progress_bar_size = { 642, 112, 16, 16 };
+	SDL_Rect HUD_missions_checkbox_in_progress_bar_size_on = { 624, 112, 16, 16 };
+
+
+	HUD_missions_checkbox_in_progress_main_quest_on = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 405, HUD_missions_checkbox_in_progress_bar_size_on, false, true, false, this, HUD_missions_background);
+	HUD_missions_checkbox_in_progress_main_quest_off = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 405, HUD_missions_checkbox_in_progress_bar_size, true, true, false, this, HUD_missions_background);
+
+	HUD_missions_checkbox_in_progress_side_quest_on = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 455, HUD_missions_checkbox_in_progress_bar_size_on, false, true, false, this, HUD_missions_background);
+	HUD_missions_checkbox_in_progress_side_quest_off = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 455, HUD_missions_checkbox_in_progress_bar_size, true, true, false, this, HUD_missions_background);
+
+	HUD_missions_checkbox_in_progress_side_quest2_on = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 480, HUD_missions_checkbox_in_progress_bar_size_on, false, true, false, this, HUD_missions_background);
+	HUD_missions_checkbox_in_progress_side_quest2_off = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 480, HUD_missions_checkbox_in_progress_bar_size, true, true, false, this, HUD_missions_background);
+
+	HUD_missions_checkbox_in_progress_side_quest3_on = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 505, HUD_missions_checkbox_in_progress_bar_size_on, false, true, false, this, HUD_missions_background);
+	HUD_missions_checkbox_in_progress_side_quest3_off = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 505, HUD_missions_checkbox_in_progress_bar_size, true, true, false, this, HUD_missions_background);
+
 
 	// *****_____HUD dialogs_____****
 
@@ -2150,12 +2164,10 @@ float GameplayScene::N_Lerp(float start, float end, float rate, bool smash_in)		
 	return start + increment;
 }
 
-
 void GameplayScene::CheckCompletedQuests()
 {
-	SDL_Rect HUD_missions_checkbox_in_progress_bar_size = { 642, 112, 16, 16 };
-	SDL_Rect HUD_missions_checkbox_in_progress_bar_size_on = { 624, 112, 16, 16 };
-	
+
+
 	for (std::vector <Quest*>::iterator it = App->quest_manager->quests.begin(); it != App->quest_manager->quests.end(); it++)
 	{
 		int quest_id = (*it)->id;
@@ -2165,44 +2177,48 @@ void GameplayScene::CheckCompletedQuests()
 		case 0:
 			if ((*it)->completed)
 			{
-				HUD_missions_checkbox_in_progress_main_quest = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 405, HUD_missions_checkbox_in_progress_bar_size_on, true, true, false, this, HUD_missions_background);
+				HUD_missions_checkbox_in_progress_main_quest_on->is_visible = true;
 			}
 			else
 			{
-				HUD_missions_checkbox_in_progress_main_quest = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 405, HUD_missions_checkbox_in_progress_bar_size, true, true, false, this, HUD_missions_background);
+				HUD_missions_checkbox_in_progress_main_quest_off->is_visible = true;
+				HUD_missions_checkbox_in_progress_main_quest_on->is_visible = false;
 			}
 			break;
 
 		case 1:
 			if ((*it)->completed)
 			{
-				HUD_missions_checkbox_in_progress_side_quest = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 455, HUD_missions_checkbox_in_progress_bar_size_on, true, true, false, this, HUD_missions_background);
+				HUD_missions_checkbox_in_progress_side_quest_on->is_visible = true;
 			}
 			else
 			{
-				HUD_missions_checkbox_in_progress_side_quest = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 455, HUD_missions_checkbox_in_progress_bar_size, true, true, false, this, HUD_missions_background);
+				HUD_missions_checkbox_in_progress_side_quest_off->is_visible = true;
+				HUD_missions_checkbox_in_progress_side_quest_on->is_visible = false;
 			}
 			break;
 
 		case 2:
 			if ((*it)->completed)
 			{
-				HUD_missions_checkbox_in_progress_side_quest2 = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 480, HUD_missions_checkbox_in_progress_bar_size_on, true, true, false, this, HUD_missions_background);
+				HUD_missions_checkbox_in_progress_side_quest2_on->is_visible = true;
 			}
 			else
 			{
-				HUD_missions_checkbox_in_progress_side_quest2 = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 480, HUD_missions_checkbox_in_progress_bar_size, true, true, false, this, HUD_missions_background);
+				HUD_missions_checkbox_in_progress_side_quest2_off->is_visible = true;
+				HUD_missions_checkbox_in_progress_side_quest2_on->is_visible = false;
 			}
 			break;
 
 		case 3:
 			if ((*it)->completed)
 			{
-				HUD_missions_checkbox_in_progress_side_quest3 = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 505, HUD_missions_checkbox_in_progress_bar_size_on, true, true, false, this, HUD_missions_background);
+				HUD_missions_checkbox_in_progress_side_quest3_on->is_visible = true;
 			}
 			else
 			{
-				HUD_missions_checkbox_in_progress_side_quest3 = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1345, 505, HUD_missions_checkbox_in_progress_bar_size, true, true, false, this, HUD_missions_background);
+				HUD_missions_checkbox_in_progress_side_quest3_off->is_visible = true;
+				HUD_missions_checkbox_in_progress_side_quest3_on->is_visible = false;
 			}
 			break;
 
@@ -2211,8 +2227,6 @@ void GameplayScene::CheckCompletedQuests()
 		}
 	}
 }
-
-
 
 // --------------- REQUIRED FOR THE GOLD VERSION ---------------
 //bool Scene1::Load(pugi::xml_node& data)
