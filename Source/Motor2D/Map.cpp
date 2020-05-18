@@ -809,6 +809,12 @@ bool Map::LoadObjectLayers(pugi::xml_node& node, ObjectGroup * objectgroup)
 			//objectgroup->object[index].type = HEAVY;
 			App->entity_manager->CreateEntity(ENTITY_TYPE::BOULDER, tile_coords.x, tile_coords.y);
 		}
+		else if (object_type == "tutorial_boulder")
+		{
+			//objectgroup->object[index].type = HEAVY;
+			tutorial_boulders.push_back(App->entity_manager->CreateEntity(ENTITY_TYPE::BOULDER, tile_coords.x, tile_coords.y));
+		}
+
 		index++;
 	}
 
