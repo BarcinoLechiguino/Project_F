@@ -308,7 +308,7 @@ void Player::GiveOrder()//fix
 
 				if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::MOVE_UNIT ) //Tutorial 2
 				{
-					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::SELECT_GATHERER;
+					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
 					App->dialog_manager->StartDialog(2);
 				}
 			}
@@ -395,12 +395,12 @@ void Player::DragSelection()
 							App->dialog_manager->StartDialog(1);
 						}
 
-						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty() 
-							&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
-						{
-							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
-							App->dialog_manager->StartDialog(3);
-						}
+						//if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty() 
+						//	&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
+						//{
+						//	App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
+						//	App->dialog_manager->StartDialog(3);
+						//}
 					}
 				}
 				else
@@ -417,14 +417,14 @@ void Player::DragSelection()
 							App->dialog_manager->StartDialog(1);
 						}
 
-						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty()
-							&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
-						{
-							App->entity_manager->IsGatherer(units_selected[0]);
+						//if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty()
+						//	&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
+						//{
+						//	App->entity_manager->IsGatherer(units_selected[0]);
 
-							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
-							App->dialog_manager->StartDialog(3);
-						}
+						//	App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
+						//	App->dialog_manager->StartDialog(3);
+						//}
 					}
 				}
 			}

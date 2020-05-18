@@ -332,10 +332,10 @@ void GameplayScene::HandleTutorial()
 
 		break;
 	case TutorialState::GATHER_MORE_RESOURCES:
-		if (App->entity_manager->resource_electricity >= 5) //Tutorial 5
+		if (App->entity_manager->resource_electricity >= 5) //Tutorial 4
 		{
 			tutorial.tutorial_state = TutorialState::RECRUIT_INFANTRY;
-			App->dialog_manager->StartDialog(5);
+			App->dialog_manager->StartDialog(4);
 		}
 
 		break;
@@ -460,10 +460,10 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 				App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 				barrack->creation_queue.push_back(ENTITY_TYPE::INFANTRY);
 
-				if (tutorial.tutorial_state == TutorialState::RECRUIT_INFANTRY)							//Tutorial 6
+				if (tutorial.tutorial_state == TutorialState::RECRUIT_INFANTRY)//Tutorial 5
 				{
 					tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
-					App->dialog_manager->StartDialog(6);
+					App->dialog_manager->StartDialog(5);
 				}
 			}
 			break;
@@ -1473,12 +1473,12 @@ void GameplayScene::LoadGuiElements()
 	App->dialog_manager->LoadDialog();
 
 	//Skip tutorial
-	SDL_Rect HUD_dialogs_skip_tutorial_size = { 0, 0, 50, 37 };
-	SDL_Rect HUD_dialogs_skip_tutorial_idle = { 26, 955, 50, 38 };
-	SDL_Rect HUD_dialogs_skip_tutorial_hover = { 78, 956, 50, 38 };
-	SDL_Rect HUD_dialogs_skip_tutorial_clicked = { 129, 956, 50, 38 };
+	SDL_Rect HUD_dialogs_skip_tutorial_size = { 0, 0, 131, 15 };
+	SDL_Rect HUD_dialogs_skip_tutorial_idle = { 0, 164, 131, 15 };
+	SDL_Rect HUD_dialogs_skip_tutorial_hover = { 135, 164, 131, 15 };
+	SDL_Rect HUD_dialogs_skip_tutorial_clicked = { 269, 164, 131, 15 };
 
-	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 120, 145, true, true, false, this, nullptr
+	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 110, 145, true, true, false, this, nullptr
 		, &HUD_dialogs_skip_tutorial_idle, &HUD_dialogs_skip_tutorial_hover, &HUD_dialogs_skip_tutorial_clicked);
 
 }
@@ -1869,9 +1869,23 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 	if (element == HUD_dialogs_character_no_talking && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE)
+		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && tutorial.tutorial_state != TutorialState::NOT_ACTIVE)
 		{
 			App->dialog_manager->StartDialog(App->dialog_manager->last_dialog);
+		}
+
+		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
+		{
+			int i = rand() % 3 + 6;
+
+			while(i == last_random_hint)
+			{
+				i = rand() % 3 + 6;
+			}
+
+			last_random_hint = i;
+
+			App->dialog_manager->StartDialog(i);
 		}
 	}
 

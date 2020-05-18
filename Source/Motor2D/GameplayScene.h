@@ -131,6 +131,8 @@ public:
 	iPoint					secondOrigianlPos;
 
 	Tutorial				tutorial;
+
+	int						last_random_hint;
 	
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
