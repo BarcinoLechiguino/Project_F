@@ -78,3 +78,4 @@ ipch/
 *.db
 *.opendb
 packages/
+Release/Motor2D.vcxproj.FileListAbsolute.txt
