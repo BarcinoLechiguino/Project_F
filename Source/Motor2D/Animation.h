@@ -1,8 +1,8 @@
 #ifndef __ANIMATION_H__
 #define __ANIMATION_H__
 
-#include "PugiXml\src\pugixml.hpp"
-#include "SDL/include/SDL_rect.h"
+#include "Dependencies\PugiXml\src\pugixml.hpp"
+#include "Dependencies/SDL/include/SDL_rect.h"
 #include "Log.h"
 
 #define MAX_FRAMES 60
@@ -35,7 +35,7 @@ public:
 
 		if (animations_config != NULL)																								//If the animation_data.xml could be loaded.
 		{
-			animations = animations_file.child("animations").child(entity.c_str()).child(animationName.c_str());								//Get the set of animations' name (passed as argument).
+			animations = animations_file.child("animations").child(entity.c_str()).child(animationName.c_str());					//Get the set of animations' name (passed as argument).
 			
 			speed = animations.attribute("speed").as_float();																		//Loads the animations set's speed from the xml file.
 			loop = animations.attribute("loop").as_bool();																			//Loads the loop bool state from the xml file.

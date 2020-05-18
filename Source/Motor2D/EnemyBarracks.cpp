@@ -13,7 +13,6 @@
 #include "FowManager.h"
 #include "EnemyAIManager.h"
 #include "EntityManager.h"
-#include "EnemyScout.h"
 #include "EnemyInfantry.h"
 #include "EnemyHeavy.h"
 
@@ -129,10 +128,6 @@ void EnemyBarracks::StartUnitCreation()
 
 	switch (created_unit_type)
 	{
-	case ENTITY_TYPE::ENEMY_SCOUT:
-		creation_bar->SetNewCreationTime(enemy_scout_creation_time);
-		break;
-
 	case ENTITY_TYPE::ENEMY_INFANTRY:
 		creation_bar->SetNewCreationTime(enemy_infantry_creation_time);
 		break;
@@ -149,10 +144,6 @@ void EnemyBarracks::GenerateUnit(ENTITY_TYPE type, int level)
 	
 	switch (type)
 	{
-	case ENTITY_TYPE::ENEMY_SCOUT:
-		(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, pos.x, pos.y, level);
-		break;
-
 	case ENTITY_TYPE::ENEMY_INFANTRY:
 		(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, pos.x, pos.y, level);
 		break;
@@ -169,10 +160,6 @@ void EnemyBarracks::GenerateUnitByType(ENTITY_TYPE type)
 
 	switch (type)
 	{
-	case ENTITY_TYPE::ENEMY_SCOUT:
-		(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, pos.x, pos.y, enemy_scout_level);
-		break;
-
 	case ENTITY_TYPE::ENEMY_INFANTRY:
 		(EnemyInfantry*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_INFANTRY, pos.x, pos.y, enemy_infantry_level);
 		break;
@@ -227,7 +214,6 @@ void EnemyBarracks::InitEntity()
 	// UNIT CREATION VARIABLES
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
 
-	enemy_scout_creation_time = 1.0f;
 	enemy_infantry_creation_time = 2.0f;
 	enemy_heavy_creation_time = 5.0f;
 
@@ -235,7 +221,6 @@ void EnemyBarracks::InitEntity()
 	max_health = 600;
 	current_health = max_health;
 
-	enemy_scout_level = 1;
 	enemy_infantry_level = 1;
 	enemy_heavy_level = 1;
 

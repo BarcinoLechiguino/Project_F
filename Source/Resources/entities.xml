@@ -447,4 +447,13 @@
       <healthbar_position_offset x="-6" y="-6"/>
     </boulder>
   </obstacles>
+
+  <enemy_AI>
+    <enemy_waves>
+      <wave spawn_timer="5.0f" target="ally_barracks" gatherers_to_spawn="0" scouts_to_spawn="2" infantries_to_spawn="2" heavys_to_spawn="0"/>
+      <wave spawn_timer="45.0f" target="ally_barracks" gatherers_to_spawn="0" scouts_to_spawn="4" infantries_to_spawn="3" heavys_to_spawn="0"/>
+      <wave spawn_timer="130.0f" target="ally_townhall" gatherers_to_spawn="0" scouts_to_spawn="5" infantries_to_spawn="4" heavys_to_spawn="1"/>
+      <wave spawn_timer="260.0f" target="ally_townhall" gatherers_to_spawn="0" scouts_to_spawn="8" infantries_to_spawn="6" heavys_to_spawn="2"/>
+    </enemy_waves>
+  </enemy_AI>
 </entities>

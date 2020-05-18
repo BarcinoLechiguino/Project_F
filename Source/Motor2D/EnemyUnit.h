@@ -21,7 +21,9 @@ public:
 	virtual void Draw();
 
 public:
-	EnemyAIEntity* enemy_AI_entity;
+	EnemyAIEntity*	enemy_AI_entity;
+
+	bool			has_proximity_target;
 
 private:
 
