@@ -137,6 +137,8 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 
 	CheckCompletedQuests();
 
+	HandleTutorial();
+
 	return true;
 }
 
@@ -256,7 +258,7 @@ void GameplayScene::InitScene()
 	//App->fow_manager->ResetVisibilityMap();
 
 	App->dialog_manager->StartDialog(0);
-	App->dialog_manager->StartDialog(1);
+	tutorial.tutorial_state = TutorialState::SELECT_UNIT;
 }
 
 // --- SCENE TRANSITIONS
@@ -291,6 +293,48 @@ void GameplayScene::ExecuteTransition()
 
 		App->transition_manager->CreateSlide(SCENES::LOSE_SCENE, 0.5f, true, true, false, false, Black);
 	}
+}
+
+void GameplayScene::HandleTutorial()
+{
+	switch (tutorial.tutorial_state)
+	{
+	case TutorialState::NOT_ACTIVE:
+		if(tutorial.lock_camera)
+		tutorial.lock_camera = false;
+
+		break;
+	case TutorialState::SELECT_UNIT:
+		tutorial.lock_camera = true;
+
+		tutorial.camera_position = iPoint(2750, -3100);
+		break;
+	case TutorialState::MOVE_UNIT:
+
+		break;
+	case TutorialState::GATHER_RESOURCE:
+
+		break;
+	case TutorialState::SELECT_BARRACKS:
+
+		break;
+	case TutorialState::RECRUIT_INFANTRY:
+
+		break;
+	case TutorialState::ATTACK_ENEMY:
+
+		break;
+	}
+
+	if (tutorial.lock_camera)
+	{
+		App->render->SetCameraPosition(tutorial.camera_position);
+	}
+}
+
+void Tutorial::NextStep( TutorialState state)
+{
+	App->scene_manager->gameplay_scene->tutorial.tutorial_state = state;
 }
 
 // --------------- WIN/LOSE CONDITION METHODS ---------------

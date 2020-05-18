@@ -48,6 +48,8 @@ public:
 	// Set background color
 	void SetBackgroundColor(SDL_Color color);
 
+	void SetCameraPosition(iPoint position);
+
 public:
 
 	SDL_Renderer*	renderer;

@@ -16,6 +16,7 @@
 #include "Scene.h"
 #include "GameplayScene.h"
 #include "Movement.h"
+#include "DialogManager.h"
 
 #include "GuiManager.h"
 #include "GuiElement.h"
@@ -301,6 +302,12 @@ void Player::GiveOrder()//fix
 			if (App->entity_manager->GetEntityAt(cursor_tile) == nullptr)
 			{
 				App->movement->OrderUnitsToMove(cursor_tile, units_selected);
+
+				if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::MOVE_UNIT )
+				{
+					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
+					App->dialog_manager->StartDialog(2);
+				}
 			}
 			else
 			{
@@ -369,6 +376,12 @@ void Player::DragSelection()
 						is_selecting = false;
 
 						SelectEntitiesInSelectionRect();
+
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty())
+						{
+							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
+							App->dialog_manager->StartDialog(1);
+						}
 					}
 				}
 				else
@@ -378,6 +391,12 @@ void Player::DragSelection()
 						|| App->input->GetGameControllerButton(SDL_CONTROLLER_BUTTON_LEFTSHOULDER) == BUTTON_STATE::BUTTON_UP)
 					{
 						SelectEntityAt(cursor_tile);
+
+						if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_UNIT && !units_selected.empty())
+						{
+							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
+							App->dialog_manager->StartDialog(1);
+						}
 					}
 				}
 			}
@@ -441,7 +460,7 @@ void Player::SelectOnClick()
 	{
 		if (!god_mode)
 		{
-			
+			//what?
 		}
 	}
 }
