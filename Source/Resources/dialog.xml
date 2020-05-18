@@ -4,7 +4,7 @@
   <dialog_font font="Assets/gui/fonts/borgsquadcond.ttf" font_size="16" r="255" g="255" b="100" a="255"/>
   <dialog_tree tree_id="0" position_x="100" position_y="20" pause="1">
     
-    <dialog_bubble bubble_id="0" active_time="6500">
+    <dialog_bubble bubble_id="0" active_time="6000">
         <text text="Hi there Vrainen! I see you are finally in."/>
         <text text="BRUH! I knew this was gonna work!"/>
         <text text="Now let's move on!"/>
