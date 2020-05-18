@@ -75,6 +75,8 @@ public:
 	bool LoadDialog();
 	bool LoadTextBubbles(Dialog* dialog_tree, pugi::xml_node tree);
 
+	void EndDialog();
+
 public:
 
 	std::vector<Dialog*> dialogs; //Dialogs loaded available
