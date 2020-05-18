@@ -1473,12 +1473,12 @@ void GameplayScene::LoadGuiElements()
 	App->dialog_manager->LoadDialog();
 
 	//Skip tutorial
-	SDL_Rect HUD_dialogs_skip_tutorial_size = { 0, 0, 50, 37 };
-	SDL_Rect HUD_dialogs_skip_tutorial_idle = { 26, 955, 50, 38 };
-	SDL_Rect HUD_dialogs_skip_tutorial_hover = { 78, 956, 50, 38 };
-	SDL_Rect HUD_dialogs_skip_tutorial_clicked = { 129, 956, 50, 38 };
+	SDL_Rect HUD_dialogs_skip_tutorial_size = { 0, 0, 131, 15 };
+	SDL_Rect HUD_dialogs_skip_tutorial_idle = { 0, 164, 131, 15 };
+	SDL_Rect HUD_dialogs_skip_tutorial_hover = { 135, 164, 131, 15 };
+	SDL_Rect HUD_dialogs_skip_tutorial_clicked = { 269, 164, 131, 15 };
 
-	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 120, 145, true, true, false, this, nullptr
+	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 110, 145, true, true, false, this, nullptr
 		, &HUD_dialogs_skip_tutorial_idle, &HUD_dialogs_skip_tutorial_hover, &HUD_dialogs_skip_tutorial_clicked);
 
 }
