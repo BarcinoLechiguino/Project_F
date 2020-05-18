@@ -4,6 +4,9 @@
 #include "Module.h"
 
 class Entity;
+class EnemyUnit;
+class TownHall;
+class Barracks;
 class EnemyTownHall;
 class EnemyBarracks;
 
@@ -22,8 +25,20 @@ struct EnemyAIEntity
 
 	void CleanUp();
 	
-	Entity* enemy_entity;
-	ENEMY_AI_STATE AI_state;
+	Entity*			enemy_entity;
+	ENEMY_AI_STATE	AI_state;
+	bool			reached_target;
+};
+
+struct EnemyWave
+{
+	float			spawn_timer;
+	std::string		target;
+
+	uchar			gatherers_to_spawn;
+	uchar			scouts_to_spawn;
+	uchar			infantries_to_spawn;
+	uchar			heavys_to_spawn;
 };
 
 class EnemyAIManager : public Module
@@ -40,19 +55,43 @@ public:
 	bool CleanUp();
 
 public:
-	void SpawnEnemyWave(int gatherer_amount, int scout_amount, int infantry_amount, int heavy_amount);
+	void InitEnemyAI();
+	
+	void SpawnEnemyWave(const uchar& gatherers_to_spawn, const uchar& scouts_to_spawn, const uchar& infantries_to_spawn, const uchar& heavys_to_spawn);
+	void SpawnEnemyWave(const EnemyWave& enemy_wave);
+	void GiveTargetOnWaveSpawnCompletion();
+	void GiveTargetToEnemyWave(const EnemyWave& enemy_wave);
+
+	void GivePatrolPath();
 
 	EnemyAIEntity* CreateEnemyAIEntity(Entity* enemy_entity);
-	void DeleteEnemyAIEntity(EnemyAIEntity* AI_entity_to_delete);											// Will delete the given FowEntity from the fow_entities vector.
+	void DeleteEnemyAIEntity(EnemyAIEntity* AI_entity_to_delete);														// Will delete the given EnemyAIEntity from the fow_entities vector.
 	void DestroyEnemyAIEntities();
 
-public:
-	EnemyTownHall* enemy_townhall;
-	EnemyBarracks* enemy_barracks;
+	void TownhallReassignment();
+	void BarracksReassignment();
+	void EnemyTownhallReassignment();
+	void EnemyBarracksReassignment();
 
-	std::vector<EnemyAIEntity*> enemy_AI_entities;
+	void CheckWaveTimers();
+
+public:
+	TownHall*					ally_townhall;
+	Barracks*					ally_barracks;
+	
+	EnemyTownHall*				enemy_townhall;
+	EnemyBarracks*				enemy_barracks;
 
 private:
+	float						wave_timer;
+	
+	std::string					ally_townhall_string;
+	std::string					ally_barracks_string;
+
+	std::vector<EnemyAIEntity*> enemy_AI_entities;
+	std::vector<EnemyUnit*>		patroling_entities;
+	std::vector<EnemyWave>		enemy_waves;
+	std::vector<EnemyWave>		enemy_wave_buffer;
 
 };
 

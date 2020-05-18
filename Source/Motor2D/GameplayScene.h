@@ -35,6 +35,7 @@ struct Tutorial
 	bool lock_camera;
 	iPoint camera_position;
 	TutorialState tutorial_state;
+	bool boulders_active;
 
 	void NextStep(TutorialState state);
 };
@@ -152,6 +153,7 @@ public:
 	GuiButton*				in_game_back_button;
 	GuiScrollbar*			in_game_music_scrollbar;
 	GuiScrollbar*			in_game_sfx_scrollbar;
+
 
 	// Text:
 	GuiText*				in_game_resolution_text;

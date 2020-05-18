@@ -38,8 +38,10 @@ public:
 	SDL_Rect	hall_rect_2;
 
 	int			enemy_gatherer_level;
+	int			enemy_scout_level;
 
 	float		enemy_gatherer_creation_time;
+	float		enemy_scout_creation_time;
 
 	ENTITY_TYPE created_unit_type;
 	bool		creating_unit;

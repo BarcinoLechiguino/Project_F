@@ -259,6 +259,8 @@ void GameplayScene::InitScene()
 
 	App->dialog_manager->StartDialog(0);
 	tutorial.tutorial_state = TutorialState::SELECT_UNIT;
+
+	tutorial.boulders_active = true;
 }
 
 // --- SCENE TRANSITIONS
@@ -303,10 +305,21 @@ void GameplayScene::HandleTutorial()
 		if(tutorial.lock_camera)
 		tutorial.lock_camera = false;
 
+		if (tutorial.boulders_active)
+		{
+			for (std::vector<Entity*>::iterator boulder = App->map->tutorial_boulders.begin(); boulder != App->map->tutorial_boulders.end(); ++boulder)
+			{
+				App->entity_manager->DeleteEntity((*boulder));
+			}
+			App->map->tutorial_boulders.clear();
+
+			tutorial.boulders_active = false;
+		}
+
 		break;
 	case TutorialState::SELECT_UNIT:
-		tutorial.lock_camera = true;
-		App->render->SetCameraPosition(iPoint(2750, -3100));
+		tutorial.lock_camera = false;
+		//App->render->SetCameraPosition(iPoint(2750, -3100));
 
 		break;
 	case TutorialState::MOVE_UNIT:
@@ -316,6 +329,9 @@ void GameplayScene::HandleTutorial()
 
 		break;
 	case TutorialState::GATHER_RESOURCE:
+
+		break;
+	case TutorialState::GATHER_MORE_RESOURCES:
 
 		break;
 	case TutorialState::RECRUIT_INFANTRY:
@@ -1448,13 +1464,13 @@ void GameplayScene::LoadGuiElements()
 	App->dialog_manager->LoadDialog();
 
 	//Skip tutorial
-	SDL_Rect in_game_back_button_size = { 0, 0, 45, 33 };
-	SDL_Rect in_game_back_button_idle = { 0, 103, 45, 33 };
-	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
-	SDL_Rect in_game_back_button_clicked = { 114, 103, 45, 33 };
+	SDL_Rect HUD_dialogs_skip_tutorial_size = { 0, 0, 50, 37 };
+	SDL_Rect HUD_dialogs_skip_tutorial_idle = { 26, 955, 50, 38 };
+	SDL_Rect HUD_dialogs_skip_tutorial_hover = { 78, 956, 50, 38 };
+	SDL_Rect HUD_dialogs_skip_tutorial_clicked = { 129, 956, 50, 38 };
 
-	in_game_back_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 430, 445, true, true, false, this, in_game_options_parent
-		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
+	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 120, 145, true, true, false, this, in_game_options_parent
+		, &HUD_dialogs_skip_tutorial_idle, &HUD_dialogs_skip_tutorial_hover, &HUD_dialogs_skip_tutorial_clicked);
 
 }
 
@@ -1855,6 +1871,8 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
 		tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
+
+		App->dialog_manager->EndDialog();
 	}
 }
 
@@ -2071,7 +2089,7 @@ void GameplayScene::UnitDebugKeys()
 			if (App->input->GetKey(SDL_SCANCODE_7) == KEY_STATE::KEY_DOWN)
 			{
 				(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, App->player->cursor_tile.x, App->player->cursor_tile.y, 1);
-				SpawnEnemyWave(5, 5, 5, 5);
+				//SpawnEnemyWave(5, 5, 5, 5);
 			}
 
 			if (App->input->GetKey(SDL_SCANCODE_8) == KEY_STATE::KEY_DOWN)
