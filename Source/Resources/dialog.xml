@@ -55,16 +55,8 @@
     </dialog_bubble>
 
   </dialog_tree>
+
   <dialog_tree tree_id="3" position_x="100" position_y="20" pause="1">
-
-    <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Right click on a tree to gather"/>
-      <text text="electricity for the infantry"/>
-    </dialog_bubble>
-
-  </dialog_tree>
-
-  <dialog_tree tree_id="4" position_x="100" position_y="20" pause="1">
 
     <dialog_bubble bubble_id="0" active_time="6000">
       <text text="Notice how on the bottom right"/>
@@ -80,7 +72,7 @@
 
   </dialog_tree>
 
-  <dialog_tree tree_id="5" position_x="100" position_y="20" pause="1">
+  <dialog_tree tree_id="4" position_x="100" position_y="20" pause="1">
 
     <dialog_bubble bubble_id="0" active_time="6000">
       <text text="Now select the barracks and recruit"/>
@@ -89,7 +81,7 @@
 
   </dialog_tree>
   
-  <dialog_tree tree_id="6" position_x="100" position_y="20" pause="1">
+  <dialog_tree tree_id="5" position_x="100" position_y="20" pause="1">
 
     <dialog_bubble bubble_id="0" active_time="6000">
       <text text="Nice! Now you know all the basics"/>
@@ -109,6 +101,40 @@
     <dialog_bubble bubble_id="2" active_time="6000">
       <text text="Remember I'll be up here if you need"/>
       <text text="any advice!"/>
+    </dialog_bubble>
+
+  </dialog_tree>
+
+  <dialog_tree tree_id="6" position_x="100" position_y="20" pause="1">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Did you know that you can upgrade units"/>
+      <text text="and buildings?"/>
+      <text text="You need bits which are stored in"/>
+      <text text="obelisks"/>
+      <text text="Search and gather as much as posible"/>
+    </dialog_bubble>
+
+  </dialog_tree>
+  
+  <dialog_tree tree_id="7" position_x="100" position_y="20" pause="1">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Nice! Now you know all the basics"/>
+      <text text="To attack an enemy you just have to"/>
+      <text text="select a combat unit and right click"/>
+      <text text="on an enemy building or unit"/>
+    </dialog_bubble>
+
+  </dialog_tree>
+
+  <dialog_tree tree_id="8" position_x="100" position_y="20" pause="1">
+
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Nice! Now you know all the basics"/>
+      <text text="To attack an enemy you just have to"/>
+      <text text="select a combat unit and right click"/>
+      <text text="on an enemy building or unit"/>
     </dialog_bubble>
 
   </dialog_tree>

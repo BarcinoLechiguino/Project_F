@@ -332,10 +332,10 @@ void GameplayScene::HandleTutorial()
 
 		break;
 	case TutorialState::GATHER_MORE_RESOURCES:
-		if (App->entity_manager->resource_electricity >= 5) //Tutorial 5
+		if (App->entity_manager->resource_electricity >= 5) //Tutorial 4
 		{
 			tutorial.tutorial_state = TutorialState::RECRUIT_INFANTRY;
-			App->dialog_manager->StartDialog(5);
+			App->dialog_manager->StartDialog(4);
 		}
 
 		break;
@@ -459,10 +459,10 @@ void GameplayScene::SpawnAllyUnit(ENTITY_TYPE type)
 				App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 				barrack->creation_queue.push_back(ENTITY_TYPE::INFANTRY);
 
-				if (tutorial.tutorial_state == TutorialState::RECRUIT_INFANTRY)//Tutorial 6
+				if (tutorial.tutorial_state == TutorialState::RECRUIT_INFANTRY)//Tutorial 5
 				{
 					tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
-					App->dialog_manager->StartDialog(6);
+					App->dialog_manager->StartDialog(5);
 				}
 			}
 			break;
