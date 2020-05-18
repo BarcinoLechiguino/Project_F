@@ -156,7 +156,7 @@ void Heavy::InitEntity()
 	accumulated_cooldown = 0.0f;
 
 	// STATS
-	speed = 250.0f;
+	speed = 125.0f;
 
 	max_health = 600;
 	current_health = max_health;
