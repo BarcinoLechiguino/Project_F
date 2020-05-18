@@ -355,6 +355,14 @@ void DialogManager::SlideOut()
 	}
 }
 
+void  DialogManager::EndDialog()
+{
+	dialog_state = DIALOG_STATE::SLIDING_OUT;
+	App->gui_manager->CreateSlideAnimation(App->scene_manager->gameplay_scene->HUD_dialogs_background, 1.0f, false, current_dialog->position, iPoint(current_dialog->position.x - 500, current_dialog->position.y));
+	EmptyText();
+	DisableText();
+}
+
 bool DialogManager::LoadDialog()
 {
 	timer = 0;
