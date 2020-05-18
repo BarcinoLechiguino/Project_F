@@ -70,7 +70,7 @@ bool Boulder::CleanUp()
 		collider->to_delete = true;
 	}
 
-	App->gui_manager->DeleteGuiElement(healthbar);
+	//App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
 	
@@ -110,7 +110,7 @@ void Boulder::InitEntity()
 	// HEALTHBAR
 	if (App->entity_manager->CheckTileAvailability(iPoint(tile_position), this))
 	{
-		AttachHealthbarToEntity();
+		//AttachHealthbarToEntity();
 	}
 
 	// FOG OF WAR
