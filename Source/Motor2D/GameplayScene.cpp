@@ -261,6 +261,7 @@ void GameplayScene::InitScene()
 	tutorial.tutorial_state = TutorialState::SELECT_UNIT;
 
 	tutorial.boulders_active = true;
+	tutorial.lock_camera = false;
 }
 
 // --- SCENE TRANSITIONS
