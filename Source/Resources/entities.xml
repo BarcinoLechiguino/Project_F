@@ -1,6 +1,6 @@
 <entities>
   <textures>
-    <gatherer_texture                 path="Assets/entities/ally_unit_gatherer.png"/>
+    <gatherer_texture                 path="Assets/entities/ally_unit_gatherer2.png"/>
     <scout_texture                    path="Assets/entities/ally_unit_scout.png"/>
     <infantry_texture                 path="Assets/entities/ally_unit_infantry.png"/>
     <heavy_texture                    path="Assets/entities/ally_unit_heavy.png"/>
@@ -42,10 +42,10 @@
     <allies>
       <gatherer>
         <sprite_sections>
-          <pathing_up         x="0"   y="49" w="39" h="42"/>
-          <pathing_down       x="39"  y="49" w="38" h="45"/>
-          <pathing_right      x="123" y="49" w="43" h="42"/>
-          <pathing_left       x="78"  y="49" w="43" h="42"/>
+          <pathing_up         x="0"   y="49" w="52" h="45"/>
+          <pathing_down       x="52"  y="49" w="52" h="45"/>
+          <pathing_right      x="156" y="49" w="52" h="53"/>
+          <pathing_left       x="104" y="49" w="52" h="53"/>
           <pathing_up_right   x="104" y="0"  w="52" h="49"/>
           <pathing_up_left    x="156" y="0"  w="52" h="49"/>
           <pathing_down_right x="52"  y="0"  w="52" h="49"/>
@@ -74,14 +74,14 @@
 
       <scout>
         <sprite_sections>
-          <pathing_up         x="0" y="0" w="0" h="0"/>
-          <pathing_down       x="0" y="0" w="0" h="0"/>
-          <pathing_right      x="0" y="0" w="0" h="0"/>
-          <pathing_left       x="0" y="0" w="0" h="0"/>
-          <pathing_up_right   x="0" y="0" w="0" h="0"/>
-          <pathing_up_left    x="0" y="0" w="0" h="0"/>
-          <pathing_down_right x="0" y="0" w="0" h="0"/>
-          <pathing_down_left  x="0" y="0" w="0" h="0"/>
+          <pathing_up         x="0" y="47" w="70" h="52"/>
+          <pathing_down       x="71" y="47" w="70" h="52"/>
+          <pathing_right      x="202" y="47" w="59" h="52"/>
+          <pathing_left       x="142" y="47" w="59" h="52"/>
+          <pathing_up_right   x="116" y="0" w="60" h="47"/>
+          <pathing_up_left    x="176" y="0" w="59" h="47"/>
+          <pathing_down_right x="58" y="0" w="58" h="47"/>
+          <pathing_down_left  x="0" y="0" w="58" h="47"/>
         </sprite_sections>
 
         <sprite_size w="58" h="45"/>
