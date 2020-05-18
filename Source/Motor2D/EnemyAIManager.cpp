@@ -32,8 +32,7 @@ bool EnemyAIManager::PreUpdate()
 
 bool EnemyAIManager::Update(float dt)
 {
-	enemy_barracks;
-	enemy_townhall;
+
 	return true;
 }
 
@@ -117,8 +116,20 @@ EnemyAIEntity* EnemyAIManager::CreateEnemyAIEntity(Entity* enemy_entity)
 
 void EnemyAIManager::DeleteEnemyAIEntity(EnemyAIEntity* AI_entity_to_delete)
 {
-	std::vector<EnemyAIEntity*>::iterator item = enemy_AI_entities.begin();
+	if (enemy_townhall->enemy_AI_entity == AI_entity_to_delete)
+	{
+		for (int i = 0; i < enemy_AI_entities.size(); ++i)
+		{
+			if (enemy_AI_entities[i]->enemy_entity->type == ENTITY_TYPE::ENEMY_TOWNHALL)
+			{
+				enemy_townhall = (EnemyTownHall*)enemy_AI_entities[i]->enemy_entity;
+				break;
+			}
+		}
+	}
 	
+	std::vector<EnemyAIEntity*>::iterator item = enemy_AI_entities.begin();
+
 	for (; item != enemy_AI_entities.end(); ++item)
 	{
 		if ((*item) == AI_entity_to_delete)
