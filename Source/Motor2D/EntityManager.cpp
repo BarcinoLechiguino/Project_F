@@ -350,8 +350,9 @@ void EntityManager::DeleteEntity(Entity* entity)
 	{
 		if ((*item) == entity)
 		{	
-			if (IsUnit(entity)) {
+			if (IsUnit(entity)) { //EXLOSION VFX & AUDIO
 				App->particle_manager->SpawnEmitter({entity->pixel_position.x + 25, entity->pixel_position.y}, EMITTER_EXPLOSION);
+				//App->audio->PlayFx();
 			}
 			
 			(*item)->CleanUp();
@@ -465,6 +466,7 @@ void EntityManager::LoadEntityAudios()
 	building_constructing_finished_fx	= App->audio->LoadFx(entity_fx.child("building_constructing_finished").attribute("path").as_string());
 	building_recruiting_finished_fx		= App->audio->LoadFx(entity_fx.child("building_recruiting_finished").attribute("path").as_string());
 	building_upgrading_finished_fx		= App->audio->LoadFx(entity_fx.child("building_upgrading_finished").attribute("path").as_string());
+	ondeath_explosion_fx				= App->audio->LoadFx(entity_fx.child("ondeath_explosion_fx").attribute("path").as_string());
 }
 
 void EntityManager::UnLoadEntityAudios()
