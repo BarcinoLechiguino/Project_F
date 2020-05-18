@@ -323,3 +323,9 @@ bool Render::DrawCircle(int x, int y, int radius, Uint8 r, Uint8 g, Uint8 b, Uin
 
 	return ret;
 }
+
+void Render::SetCameraPosition(iPoint position)
+{
+	camera.x = position.x;
+	camera.y = position.y;
+}

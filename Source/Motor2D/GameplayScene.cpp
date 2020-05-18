@@ -137,6 +137,8 @@ bool GameplayScene::Update(float dt)														//Receives dt as an argument.
 
 	CheckCompletedQuests();
 
+	HandleTutorial();
+
 	return true;
 }
 
@@ -256,7 +258,7 @@ void GameplayScene::InitScene()
 	//App->fow_manager->ResetVisibilityMap();
 
 	App->dialog_manager->StartDialog(0);
-	App->dialog_manager->StartDialog(1);
+	tutorial.tutorial_state = TutorialState::SELECT_UNIT;
 }
 
 // --- SCENE TRANSITIONS
@@ -291,6 +293,43 @@ void GameplayScene::ExecuteTransition()
 
 		App->transition_manager->CreateSlide(SCENES::LOSE_SCENE, 0.5f, true, true, false, false, Black);
 	}
+}
+
+void GameplayScene::HandleTutorial()
+{
+	switch (tutorial.tutorial_state)
+	{
+	case TutorialState::NOT_ACTIVE:
+		if(tutorial.lock_camera)
+		tutorial.lock_camera = false;
+
+		break;
+	case TutorialState::SELECT_UNIT:
+		tutorial.lock_camera = true;
+		App->render->SetCameraPosition(iPoint(2750, -3100));
+
+		break;
+	case TutorialState::MOVE_UNIT:
+
+		break;
+	case TutorialState::GATHER_RESOURCE:
+
+		break;
+	case TutorialState::SELECT_BARRACKS:
+
+		break;
+	case TutorialState::RECRUIT_INFANTRY:
+
+		break;
+	case TutorialState::ATTACK_ENEMY:
+
+		break;
+	}
+}
+
+void Tutorial::NextStep( TutorialState state)
+{
+	App->scene_manager->gameplay_scene->tutorial.tutorial_state = state;
 }
 
 // --------------- WIN/LOSE CONDITION METHODS ---------------
@@ -845,9 +884,9 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_gatherer_descp_string = "Primary resource unit.";
 	std::string HUD_gatherer_descp_string2 = "It doesn't attack. It is useful";
 	std::string HUD_gatherer_descp_string3 = "for gathering resources.";
-	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 360, 635, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string);
-	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 337, 649, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string2);
-	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 355, 662, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string3);
+	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 360, 635, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string);
+	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 337, 649, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string2);
+	HUD_description_gatherer = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 355, 662, HUD_text_getherer_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_gatherer, &HUD_gatherer_descp_string3);
 
 	//Gatherer Recruit Button
 	SDL_Rect HUD_unit_gatherer_townhall_size = { 0, 0, 53, 50 };
@@ -1408,6 +1447,15 @@ void GameplayScene::LoadGuiElements()
 
 	App->dialog_manager->LoadDialog();
 
+	//Skip tutorial
+	SDL_Rect in_game_back_button_size = { 0, 0, 45, 33 };
+	SDL_Rect in_game_back_button_idle = { 0, 103, 45, 33 };
+	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
+	SDL_Rect in_game_back_button_clicked = { 114, 103, 45, 33 };
+
+	in_game_back_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 430, 445, true, true, false, this, in_game_options_parent
+		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
+
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1782,6 +1830,8 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab, true);
 	}
 
+	//*****______Dialogs_____*****
+
 	if (element == HUD_dialogs_background && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->dialog_manager->is_clicked = true;
@@ -1798,6 +1848,13 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		{
 			App->dialog_manager->StartDialog(App->dialog_manager->last_dialog);
 		}
+	}
+
+	if (element == HUD_dialogs_skip_tutorial && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
+
+		tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
 	}
 }
 
