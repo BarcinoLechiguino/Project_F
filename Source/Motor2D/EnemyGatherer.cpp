@@ -14,12 +14,13 @@
 #include "GuiHealthbar.h"
 #include "SceneManager.h"
 #include "FowManager.h"
+#include "EnemyAIManager.h"
 #include "EntityManager.h"
 
 #include "EnemyGatherer.h"
 
 
-EnemyGatherer::EnemyGatherer(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)
+EnemyGatherer::EnemyGatherer(int x, int y, ENTITY_TYPE type, int level) : EnemyUnit(x, y, type, level)
 {
 	InitEntity();
 }
@@ -106,9 +107,16 @@ bool EnemyGatherer::CleanUp()
 		collider->to_delete = true;
 	}
 
+	if (is_selected)
+	{
+		App->player->DeleteEntityFromBuffers(this);
+	}
+
 	App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
+
+	App->enemy_AI_manager->DeleteEnemyAIEntity(enemy_AI_entity);
 
 	return true;
 }
@@ -164,6 +172,9 @@ void EnemyGatherer::InitEntity()
 	provides_visibility = false;
 
 	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
+
+	// ENEMY AI
+	enemy_AI_entity = App->enemy_AI_manager->CreateEnemyAIEntity(this);
 }
 
 void EnemyGatherer::AttachHealthbarToEntity()

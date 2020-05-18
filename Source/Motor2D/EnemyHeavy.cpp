@@ -14,12 +14,13 @@
 #include "GuiHealthbar.h"
 #include "SceneManager.h"
 #include "FowManager.h"
+#include "EnemyAIManager.h"
 #include "EntityManager.h"
 
 #include "EnemyHeavy.h"
 
 
-EnemyHeavy::EnemyHeavy(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)  //Constructor. Called at the first frame.
+EnemyHeavy::EnemyHeavy(int x, int y, ENTITY_TYPE type, int level) : EnemyUnit(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	LOG("x %d and y %d", x, y);
 	InitEntity();
@@ -119,9 +120,16 @@ bool EnemyHeavy::CleanUp()
 		collider->to_delete = true;
 	}
 
+	if (is_selected)
+	{
+		App->player->DeleteEntityFromBuffers(this);
+	}
+
 	App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
+
+	App->enemy_AI_manager->DeleteEnemyAIEntity(enemy_AI_entity);
 
 	return true;
 };
@@ -175,6 +183,9 @@ void EnemyHeavy::InitEntity()
 	provides_visibility = false;
 
 	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
+
+	// ENEMY AI
+	enemy_AI_entity = App->enemy_AI_manager->CreateEnemyAIEntity(this);
 }
 
 void EnemyHeavy::AttachHealthbarToEntity()

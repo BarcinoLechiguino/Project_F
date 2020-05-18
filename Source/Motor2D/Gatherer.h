@@ -1,11 +1,11 @@
 #ifndef __GATHERER_H__
 #define __GATHERER_H__
 
-#include "DynamicObject.h"
+#include "AllyUnit.h"
 
 class Emitter;
 
-class Gatherer : public DynamicObject
+class Gatherer : public AllyUnit
 {
 public:
 	Gatherer(int x, int y, ENTITY_TYPE type, int level);

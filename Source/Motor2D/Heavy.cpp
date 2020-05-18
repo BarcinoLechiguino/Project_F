@@ -19,7 +19,7 @@
 #include "Heavy.h"
 
 
-Heavy::Heavy(int x, int y, ENTITY_TYPE type, int level) : DynamicObject(x, y, type, level)  //Constructor. Called at the first frame.
+Heavy::Heavy(int x, int y, ENTITY_TYPE type, int level) : AllyUnit(x, y, type, level)  //Constructor. Called at the first frame.
 {
 	LOG("x %d and y %d", x, y);
 	InitEntity();
@@ -116,6 +116,11 @@ bool Heavy::CleanUp()
 	if (collider != nullptr)
 	{
 		collider->to_delete = true;
+	}
+
+	if (is_selected)
+	{
+		App->player->DeleteEntityFromBuffers(this);
 	}
 
 	App->gui_manager->DeleteGuiElement(healthbar);
