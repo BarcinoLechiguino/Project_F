@@ -254,6 +254,7 @@ void EnemyBarracks::InitEntity()
 
 	// ENEMY AI
 	enemy_AI_entity = App->enemy_AI_manager->CreateEnemyAIEntity(this);
+	App->enemy_AI_manager->enemy_barracks = this;
 }
 
 void EnemyBarracks::AttachHealthbarToEntity()
