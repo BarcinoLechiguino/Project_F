@@ -302,8 +302,8 @@ void GameplayScene::HandleTutorial()
 	switch (tutorial.tutorial_state)
 	{
 	case TutorialState::NOT_ACTIVE:
-		if(tutorial.lock_camera)
-		tutorial.lock_camera = false;
+
+		HUD_dialogs_skip_tutorial->is_visible = false;
 
 		if (tutorial.boulders_active)
 		{
@@ -318,8 +318,6 @@ void GameplayScene::HandleTutorial()
 
 		break;
 	case TutorialState::SELECT_UNIT:
-		tutorial.lock_camera = false;
-		//App->render->SetCameraPosition(iPoint(2750, -3100));
 
 		break;
 	case TutorialState::MOVE_UNIT:
@@ -332,7 +330,7 @@ void GameplayScene::HandleTutorial()
 
 		break;
 	case TutorialState::GATHER_MORE_RESOURCES:
-		if (App->entity_manager->resource_electricity >= 5) //Tutorial 4
+		if (App->entity_manager->resource_electricity >= 5 && App->entity_manager->resource_data >= 40) //Tutorial 4
 		{
 			tutorial.tutorial_state = TutorialState::RECRUIT_INFANTRY;
 			App->dialog_manager->StartDialog(4);

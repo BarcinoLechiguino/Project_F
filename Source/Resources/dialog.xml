@@ -17,8 +17,8 @@
     </dialog_bubble>
 
     <dialog_bubble bubble_id="2" active_time="6000">
-      <text text="First select a unit using left click on"/>
-      <text text="one of them"/>
+      <text text="First select a unit pressing left click "/>
+      <text text="on one of them"/>
     </dialog_bubble>
 
     <dialog_bubble bubble_id="3" active_time="6000">
@@ -59,26 +59,34 @@
     <dialog_bubble bubble_id="0" active_time="6000">
       <text text="Notice how on the bottom right"/>
       <text text="of the screen there is your"/>
-      <text text="electricity reservoir"/>
+      <text text="electricity, data and bits"/>
+      <text text="reservoirs"/>
     </dialog_bubble>
 
     <dialog_bubble bubble_id="1" active_time="6000">
       <text text="Get more electricity until you have"/>
-      <text text="15 of them in the"/>
-      <text text="electricity reservoir"/>
+      <text text="5 of them in the electricity "/>
+      <text text="reservoir and 40 of data"/>
+    </dialog_bubble>
+    <dialog_bubble bubble_id="2" active_time="6000">
+      <text text="Psst here Electricity is usually "/>
+      <text text="stored in trees and data in rocks"/>
+      <text text="Don't tell anyone I told you this..."/>
     </dialog_bubble>
   </dialog_tree>
 
   <dialog_tree tree_id="4" position_x="100" position_y="20" pause="1">
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Now select the barracks and recruit"/>
-      <text text="an infantry unit"/>
+      <text text="Nice! Good job"/>
+      <text text="Now select the building called barracks"/>
+      <text text="and look for the infantry button"/>
+      <text text="Click it to recruit an infantry unit!"/>
     </dialog_bubble>
   </dialog_tree>
   
   <dialog_tree tree_id="5" position_x="100" position_y="20" pause="1">
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Nice! Now you know all the basics"/>
+      <text text="Hey! now you know all the basics"/>
       <text text="To attack an enemy you just have to"/>
       <text text="select a combat unit and right click"/>
       <text text="an enemy building or unit"/>
@@ -94,7 +102,7 @@
 
     <dialog_bubble bubble_id="2" active_time="6000">
       <text text="Remember I'll be up here if you need"/>
-      <text text="any advice!"/>
+      <text text="any advice, just left click me!"/>
     </dialog_bubble>
   </dialog_tree>
 
