@@ -114,7 +114,7 @@ void Tree::InitEntity()
 	blit_section = new SDL_Rect{ tree_version, 0, 54, 44 };
 
 	// EMITTER
-	SparkEmitter = App->particle_manager->SpawnEmitter({ pixel_position.x + 25, pixel_position.y }, EMITTER_TREE);
+	SparkEmitter = App->particle_manager->SpawnEmitter({ pixel_position.x + 15, pixel_position.y }, EMITTER_TREE);
 
 	// FLAGS
 	is_selected = false;

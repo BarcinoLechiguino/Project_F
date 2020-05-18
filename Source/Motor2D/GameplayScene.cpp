@@ -302,8 +302,8 @@ void GameplayScene::HandleTutorial()
 	switch (tutorial.tutorial_state)
 	{
 	case TutorialState::NOT_ACTIVE:
-		if(tutorial.lock_camera)
-		tutorial.lock_camera = false;
+
+		HUD_dialogs_skip_tutorial->is_visible = false;
 
 		if (tutorial.boulders_active)
 		{
@@ -318,8 +318,6 @@ void GameplayScene::HandleTutorial()
 
 		break;
 	case TutorialState::SELECT_UNIT:
-		tutorial.lock_camera = false;
-		//App->render->SetCameraPosition(iPoint(2750, -3100));
 
 		break;
 	case TutorialState::MOVE_UNIT:
@@ -332,7 +330,7 @@ void GameplayScene::HandleTutorial()
 
 		break;
 	case TutorialState::GATHER_MORE_RESOURCES:
-		if (App->entity_manager->resource_electricity >= 5) //Tutorial 4
+		if (App->entity_manager->resource_electricity >= 5 && App->entity_manager->resource_data >= 40) //Tutorial 4
 		{
 			tutorial.tutorial_state = TutorialState::RECRUIT_INFANTRY;
 			App->dialog_manager->StartDialog(4);
@@ -1519,7 +1517,28 @@ void GameplayScene::LoadInGameOptionsMenu()
 
 	//Remapping
 
-	//Back button
+	//Fullscreen
+	SDL_Rect in_game_text_fullscreen_rect = { 0, 0, 100, 20 };
+	std::string in_game_fullscreen_string = "fullscreen";
+	in_game_fullscreen_text = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 410, 336, in_game_text_fullscreen_rect, App->gui_manager->borgsquadcond_30, SDL_Color{ 255,255,0,0 }, true, false, false, nullptr, in_game_options_parent, &in_game_fullscreen_string);
+
+	SDL_Rect in_game_opt_fullscreen_off_size = { 0, 0, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_off_idle = { 744, 18, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_off_hover = { 744, 18, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_off_clicked = { 744, 18, 29, 24 };
+
+	in_game_fullscreen_off = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 605, 339, true, true, false, this, in_game_options_parent
+		, &in_game_opt_fullscreen_off_idle, &in_game_opt_fullscreen_off_hover, &in_game_opt_fullscreen_off_clicked);
+
+	SDL_Rect in_game_opt_fullscreen_on_size = { 0, 0, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_on_idle = { 788, 18, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_on_hover = { 788, 18, 29, 24 };
+	SDL_Rect in_game_opt_fullscreen_on_clicked = { 788, 18, 29, 24 };
+
+	in_game_fullscreen_on = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 605, 339, false, true, false, this, nullptr
+		, &in_game_opt_fullscreen_on_idle, &in_game_opt_fullscreen_on_clicked);
+	
+		//Back button
 	SDL_Rect in_game_back_button_size = { 0, 0, 45, 33 };
 	SDL_Rect in_game_back_button_idle = { 0, 103, 45, 33 };
 	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
@@ -1588,6 +1607,19 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		// Exit
 		escape = false;
+	}
+
+	if (element == in_game_fullscreen_off && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->gui_manager->SetElementsVisibility(in_game_fullscreen_on, true);
+		App->gui_manager->SetElementsVisibility(in_game_fullscreen_off, false);
+	}
+
+	if (element == in_game_fullscreen_on && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->win->ToggleFullscreen();
+		App->gui_manager->SetElementsVisibility(in_game_fullscreen_on, false);
+		App->gui_manager->SetElementsVisibility(in_game_fullscreen_off, true);
 	}
 
 
@@ -1830,14 +1862,13 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
-		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(1300, HUD_missions_background->GetScreenPos().y), iPoint(902, HUD_missions_background->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(1277, HUD_missions_background->GetScreenPos().y), iPoint(902, HUD_missions_background->GetScreenPos().y));
 		
 		App->gui_manager->CreateSlideAnimation(HUD_missions_tab_close, 0.5f, false, iPoint(1252, HUD_missions_tab_close->GetScreenPos().y), iPoint(883, HUD_missions_tab_close->GetScreenPos().y));
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, true);
 		
 		App->gui_manager->CreateSlideAnimation(HUD_missions_tab, 0.5f, false, iPoint(1252, HUD_missions_tab->GetScreenPos().y), iPoint(883, HUD_missions_tab->GetScreenPos().y));
-		App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);
-		
+		App->gui_manager->SetElementsVisibility(HUD_missions_tab, false);	
 		
 	}
 
@@ -1845,8 +1876,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
-		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(902, HUD_missions_background->GetScreenPos().y), iPoint(1300, HUD_missions_background->GetScreenPos().y));
-		
+		App->gui_manager->CreateSlideAnimation(HUD_missions_background, 0.5f, false, iPoint(902, HUD_missions_background->GetScreenPos().y), iPoint(1277, HUD_missions_background->GetScreenPos().y));
 
 		App->gui_manager->CreateSlideAnimation(HUD_missions_tab_close, 0.5f, false, iPoint(883, HUD_missions_tab_close->GetScreenPos().y), iPoint(1252, HUD_missions_tab_close->GetScreenPos().y));
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab_close, false);
@@ -1869,9 +1899,23 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 	if (element == HUD_dialogs_character_no_talking && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE)
+		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && tutorial.tutorial_state != TutorialState::NOT_ACTIVE)
 		{
 			App->dialog_manager->StartDialog(App->dialog_manager->last_dialog);
+		}
+
+		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
+		{
+			int i = rand() % 8 + 6;
+
+			while(i == last_random_hint)
+			{
+				i = rand() % 8 + 6;
+			}
+
+			last_random_hint = i;
+
+			App->dialog_manager->StartDialog(i);
 		}
 	}
 

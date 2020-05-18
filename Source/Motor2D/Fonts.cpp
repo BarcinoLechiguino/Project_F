@@ -94,8 +94,8 @@ SDL_Texture* Fonts::Print(const char* text, SDL_Color color, _TTF_Font* font)
 	SDL_Surface* surface = TTF_RenderText_Blended((font) ? font : default, text, color);
 
 	if (surface == NULL)
-	{
-		LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError());
+	{//fix
+		//LOG("Unable to render text surface! SDL_ttf Error: %s\n", TTF_GetError()); 
 	}
 	else
 	{

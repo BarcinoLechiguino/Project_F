@@ -131,6 +131,8 @@ public:
 	iPoint					secondOrigianlPos;
 
 	Tutorial				tutorial;
+
+	int						last_random_hint;
 	
 	bool					firstScrollPosCalc;
 	bool					secondScrollPosCalc;
@@ -145,6 +147,9 @@ public:
 	GuiButton*				in_game_exit_button;
 	GuiButton*				in_game_back_to_menu;
 	GuiText*				in_game_title_text;
+	GuiText*				in_game_fullscreen_text;
+	GuiButton*				in_game_fullscreen_off;
+	GuiButton*				in_game_fullscreen_on;
 
 	// In-game options
 	GuiImage*				in_game_options_parent;
@@ -331,14 +336,14 @@ public:
 	GuiText*				HUD_missions_side_quest2;
 	GuiText*				HUD_missions_side_quest3;
 
-	GuiImage* HUD_missions_checkbox_in_progress_main_quest_off;
-	GuiImage* HUD_missions_checkbox_in_progress_main_quest_on;
-	GuiImage* HUD_missions_checkbox_in_progress_side_quest_off;
-	GuiImage* HUD_missions_checkbox_in_progress_side_quest_on;
-	GuiImage* HUD_missions_checkbox_in_progress_side_quest2_off;
-	GuiImage* HUD_missions_checkbox_in_progress_side_quest2_on;
-	GuiImage* HUD_missions_checkbox_in_progress_side_quest3_off;
-	GuiImage* HUD_missions_checkbox_in_progress_side_quest3_on;
+	GuiImage*				HUD_missions_checkbox_in_progress_main_quest_off;
+	GuiImage*				HUD_missions_checkbox_in_progress_main_quest_on;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest_off;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest_on;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest2_off;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest2_on;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest3_off;
+	GuiImage*				HUD_missions_checkbox_in_progress_side_quest3_on;
 
 	//Dialogs
 	GuiImage*				HUD_dialogs_background;

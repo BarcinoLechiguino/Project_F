@@ -317,10 +317,10 @@ void Player::GiveOrder()//fix
 				App->movement->OrderUnitsToAttack(cursor_tile, units_selected);
 
 				if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::GATHER_RESOURCE && !units_selected.empty() 
-					&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsResource(App->entity_manager->GetEntityAt(cursor_tile)) ) //Tutorial 4
+					&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsResource(App->entity_manager->GetEntityAt(cursor_tile)) ) //Tutorial 3
 				{
 					App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_MORE_RESOURCES;
-					App->dialog_manager->StartDialog(4);
+					App->dialog_manager->StartDialog(3);
 				}
 			}
 		}

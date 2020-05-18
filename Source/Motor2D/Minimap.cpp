@@ -225,7 +225,6 @@ void Minimap::DrawMinimap()
 					// As it is an isometric map, keep in mind that x == 0 is in the middle of the map.
 					App->render->Blit(tex, (pos.x + minimap_width * 0.5f), pos.y, &r, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
 
-
 					// FOG OF WAR
 					minimap_tiles.push_back({ x, y });
 				}
@@ -269,7 +268,7 @@ void Minimap::DrawCamera()
 	SDL_Rect map_camera = { ((-App->render->camera.x)) * minimap_scale + minimap_width * 0.5f + minimap_position.x, -App->render->camera.y * minimap_scale + minimap_position.y,
 							App->render->camera.w * minimap_scale, App->render->camera.h * minimap_scale };
 
-	App->render->DrawQuad(map_camera, 255, 255, 0, 255, false, false);
+	App->render->DrawQuad(map_camera, 182, 234, 57, 255, false, false);
 }
 
 void Minimap::MinimapBorders()
@@ -278,25 +277,31 @@ void Minimap::MinimapBorders()
 						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
 						, (minimap_width * 0.5f) + x_offset + minimap_position.x						// End X
 						, y_offset + minimap_position.y													// End Y
-						, 255, 255, 255, 255, false);													// Colour, opacity and camera use.
+						, 0, 255, 255, 255, false);													// Colour, opacity and camera use.
 	
 	App->render->DrawLine(minimap_width + x_offset + minimap_position.x									// Origin X
 						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
 						, (minimap_width * 0.5f) + x_offset + minimap_position.x						// End X
 						, y_offset + minimap_position.y													// End Y
-						, 255, 255, 255, 255, false);													// Colour, opacity and camera use.
+						, 0, 255, 255, 255, false);													// Colour, opacity and camera use.
 	
 	App->render->DrawLine(minimap_width + x_offset + minimap_position.x									// Origin X
 						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
 						, (minimap_width * 0.5f) + x_offset + minimap_position.x						// End X
 						, minimap_height + y_offset + minimap_position.y								// End Y
-						, 255, 255, 255, 255, false);													// Colour, opacity and camera use.
+						, 0, 255, 255, 255, false);													// Colour, opacity and camera use.
 	
 	App->render->DrawLine(x_offset + minimap_position.x													// Origin X
-						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
+						, (minimap_height) + y_offset + minimap_position.y								// Origin Y
 						, (minimap_width * 0.5f) + x_offset + minimap_position.x						// End X
 						, minimap_height + y_offset + minimap_position.y								// End Y
-						, 255, 255, 255, 255, false);													// Colour, opacity and camera use.
+						, 0, 255, 255, 255, false);													// Colour, opacity and camera use.
+
+	App->render->DrawLine(x_offset + minimap_position.x													// Origin X
+						, (minimap_height * 0.5f) + y_offset + minimap_position.y						// Origin Y
+						, x_offset + minimap_position.x													// End X
+						, minimap_height + y_offset + minimap_position.y								// End Y
+						, 0, 255, 255, 255, false);													// Colour, opacity and camera use.
 }
 
 void Minimap::DrawEntities()

@@ -12,13 +12,13 @@
     </dialog_bubble>
     
     <dialog_bubble bubble_id="1" active_time="6000"> 
-        <text text="Your first lesson will be on how to move"/>
+        <text text="Your first lesson will be how to move"/>
         <text text="the units under your command"/>
     </dialog_bubble>
 
     <dialog_bubble bubble_id="2" active_time="6000">
-      <text text="First select a unit using left click on"/>
-      <text text="one of them"/>
+      <text text="First select a unit pressing left click "/>
+      <text text="on one of them"/>
     </dialog_bubble>
 
     <dialog_bubble bubble_id="3" active_time="6000">
@@ -26,117 +26,156 @@
       <text text="something or give you some advice"/>
       <text text="just left click me!"/>
     </dialog_bubble>
-    
   </dialog_tree>
 
   <dialog_tree tree_id="1" position_x="100" position_y="20" pause="1">
-
     <dialog_bubble bubble_id="0" active_time="6000">
       <text text="Now that you have selected"/>
       <text text="one of your units try and"/>
       <text text="right click an empty tile"/>
+      <text text="and the unit will move there"/>
     </dialog_bubble>
-    
   </dialog_tree>
+  
   <dialog_tree tree_id="2" position_x="100" position_y="20" pause="1">
-
     <dialog_bubble bubble_id="0" active_time="6000">
       <text text="Nice! Now you'll need some infantry"/>
       <text text="to be able to attack and defend"/>
       <text text="yourself against your enemies!"/>
-      <text text="To do that you'll need resources!"/>
+      <text text="To do that you'll need some resources!"/>
     </dialog_bubble>
 
     <dialog_bubble bubble_id="1" active_time="6000">
-      <text text="Gatherer's are these tracktor looking "/>
-      <text text="units, they will get resources fro you!"/>
+      <text text="Gatherers are these tractor looking "/>
+      <text text="units, they will get resources for you!"/>
       <text text=""/>
-      <text text="Select that one on screen"/>
+      <text text="Select the one on the screen and right"/>
+      <text text="click that tree to gather its"/>
+      <text text="electricity"/>
     </dialog_bubble>
-
   </dialog_tree>
 
   <dialog_tree tree_id="3" position_x="100" position_y="20" pause="1">
-
     <dialog_bubble bubble_id="0" active_time="6000">
       <text text="Notice how on the bottom right"/>
       <text text="of the screen there is your"/>
-      <text text="electricity reservoir"/>
+      <text text="electricity, data and bits"/>
+      <text text="reservoirs"/>
     </dialog_bubble>
 
     <dialog_bubble bubble_id="1" active_time="6000">
       <text text="Get more electricity until you have"/>
-      <text text="15 of them"/>
-      <text text="electricity reservoir"/>
+      <text text="5 of them in the electricity "/>
+      <text text="reservoir and 40 of data"/>
     </dialog_bubble>
-
+    <dialog_bubble bubble_id="2" active_time="6000">
+      <text text="Psst here Electricity is usually "/>
+      <text text="stored in trees and data in rocks"/>
+      <text text="Don't tell anyone I told you this..."/>
+    </dialog_bubble>
   </dialog_tree>
 
   <dialog_tree tree_id="4" position_x="100" position_y="20" pause="1">
-
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Now select the barracks and recruit"/>
-      <text text="an infantry unit"/>
+      <text text="Nice! Good job"/>
+      <text text="Now select the building called barracks"/>
+      <text text="and look for the infantry button"/>
+      <text text="Click it to recruit an infantry unit!"/>
     </dialog_bubble>
-
   </dialog_tree>
   
   <dialog_tree tree_id="5" position_x="100" position_y="20" pause="1">
-
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Nice! Now you know all the basics"/>
+      <text text="Hey! now you know all the basics"/>
       <text text="To attack an enemy you just have to"/>
       <text text="select a combat unit and right click"/>
-      <text text="on an enemy building or unit"/>
+      <text text="an enemy building or unit"/>
     </dialog_bubble>
     
     <dialog_bubble bubble_id="1" active_time="6000">
       <text text="You are now free to do whatever you"/>
-      <text text="want"/>
+      <text text="want!"/>
       <text text="Keep gathering and recruiting more units"/>
-      <text text="so you are not defenceless against"/>
+      <text text="so you are not defenseless against"/>
       <text text="the enemy troops!"/>
     </dialog_bubble>
 
     <dialog_bubble bubble_id="2" active_time="6000">
       <text text="Remember I'll be up here if you need"/>
-      <text text="any advice!"/>
+      <text text="any advice, just left click me!"/>
     </dialog_bubble>
-
   </dialog_tree>
 
-  <dialog_tree tree_id="6" position_x="100" position_y="20" pause="1">
-
-    <dialog_bubble bubble_id="0" active_time="6000">
+  <dialog_tree tree_id="6" position_x="100" position_y="20" pause="0">
+    <dialog_bubble bubble_id="0" active_time="8000">
       <text text="Did you know that you can upgrade units"/>
       <text text="and buildings?"/>
       <text text="You need bits which are stored in"/>
       <text text="obelisks"/>
-      <text text="Search and gather as much as posible"/>
+      <text text="Search and gather as much as posible!"/>
     </dialog_bubble>
-
   </dialog_tree>
   
-  <dialog_tree tree_id="7" position_x="100" position_y="20" pause="1">
-
+  <dialog_tree tree_id="7" position_x="100" position_y="20" pause="0">
     <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Nice! Now you know all the basics"/>
-      <text text="To attack an enemy you just have to"/>
-      <text text="select a combat unit and right click"/>
-      <text text="on an enemy building or unit"/>
+      <text text="Hint: Don't die"/>
+      <text text=""/>
+      <text text="If they destroy your townhall"/>
+      <text text="you will be done for"/>
     </dialog_bubble>
-
   </dialog_tree>
 
-  <dialog_tree tree_id="8" position_x="100" position_y="20" pause="1">
-
-    <dialog_bubble bubble_id="0" active_time="6000">
-      <text text="Nice! Now you know all the basics"/>
-      <text text="To attack an enemy you just have to"/>
-      <text text="select a combat unit and right click"/>
-      <text text="on an enemy building or unit"/>
+  <dialog_tree tree_id="8" position_x="100" position_y="20" pause="0">
+    <dialog_bubble bubble_id="0" active_time="8000">
+      <text text="Heavy units can be recruited from"/>
+      <text text="the Barracks"/>
+      <text text="They move and attack very slowly"/>
+      <text text="but they sure pack a punch!"/>
     </dialog_bubble>
+  </dialog_tree>
 
+  <dialog_tree tree_id="9" position_x="100" position_y="20" pause="0">
+    <dialog_bubble bubble_id="0" active_time="8000">
+      <text text="Scout units can be recruited from"/>
+      <text text="the Town Hall"/>
+      <text text="They are super fast and will clear"/>
+      <text text="the fog of war very fast"/>
+      <text text="They are very weak though..."/>
+    </dialog_bubble>
+  </dialog_tree>
+
+  <dialog_tree tree_id="10" position_x="100" position_y="20" pause="0">
+    <dialog_bubble bubble_id="0" active_time="8000">
+      <text text="Scout units can be recruited from"/>
+      <text text="the Town Hall"/>
+      <text text="They are super fast and will clear"/>
+      <text text="the fog of war very quickly"/>
+      <text text="They are very weak though..."/>
+    </dialog_bubble>
+  </dialog_tree>
+
+  <dialog_tree tree_id="11" position_x="100" position_y="20" pause="0">
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Find and destroy the enemie's Town Hall"/>
+      <text text="to win!"/>
+      <text text="Be careful not to get your own"/>
+      <text text="destroyed though"/>
+    </dialog_bubble>
+  </dialog_tree>
+
+  <dialog_tree tree_id="12" position_x="100" position_y="20" pause="0">
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Damn it does get boring in here sometimes"/>
+      <text text="it's nice to have a little company eh?"/>
+    </dialog_bubble>
+  </dialog_tree>
+  
+  <dialog_tree tree_id="13" position_x="100" position_y="20" pause="0">
+    <dialog_bubble bubble_id="0" active_time="6000">
+      <text text="Having more gatherers can be very useful"/>
+      <text text="You can gather stuff from many different"/>
+      <text text="places!"/>
+    </dialog_bubble>
   </dialog_tree>
 
 

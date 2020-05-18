@@ -349,6 +349,7 @@ void DialogManager::SlideOut()
 		EmptyText();
 		DisableText();
 		current_dialog = nullptr;
+		text_buffer.clear();
 		App->scene_manager->gameplay_scene->HUD_dialogs_background->is_visible = false;
 		dialog_state = DIALOG_STATE::NOT_ACTIVE;
 		
@@ -363,6 +364,13 @@ void  DialogManager::EndDialog()
 		App->gui_manager->CreateSlideAnimation(App->scene_manager->gameplay_scene->HUD_dialogs_background, 1.0f, false, current_dialog->position, iPoint(current_dialog->position.x - 500, current_dialog->position.y));
 		EmptyText();
 		DisableText();
+		App->scene_manager->gameplay_scene->HUD_dialogs_character_talking->is_visible = false;
+		App->scene_manager->gameplay_scene->HUD_dialogs_character_no_talking->is_visible = true;
+
+		while (!dialog_queue.empty())
+		{
+			dialog_queue.pop();
+		}
 	}
 }
 
