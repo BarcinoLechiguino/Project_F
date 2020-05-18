@@ -1447,6 +1447,15 @@ void GameplayScene::LoadGuiElements()
 
 	App->dialog_manager->LoadDialog();
 
+	//Skip tutorial
+	SDL_Rect in_game_back_button_size = { 0, 0, 45, 33 };
+	SDL_Rect in_game_back_button_idle = { 0, 103, 45, 33 };
+	SDL_Rect in_game_back_button_hover = { 57, 103, 45, 33 };
+	SDL_Rect in_game_back_button_clicked = { 114, 103, 45, 33 };
+
+	in_game_back_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 430, 445, true, true, false, this, in_game_options_parent
+		, &in_game_back_button_idle, &in_game_back_button_hover, &in_game_back_button_clicked);
+
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1821,6 +1830,8 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->gui_manager->SetElementsVisibility(HUD_missions_tab, true);
 	}
 
+	//*****______Dialogs_____*****
+
 	if (element == HUD_dialogs_background && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->dialog_manager->is_clicked = true;
@@ -1837,6 +1848,13 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		{
 			App->dialog_manager->StartDialog(App->dialog_manager->last_dialog);
 		}
+	}
+
+	if (element == HUD_dialogs_skip_tutorial && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
+
+		tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
 	}
 }
 

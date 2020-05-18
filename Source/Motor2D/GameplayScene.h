@@ -345,6 +345,7 @@ public:
 	GuiImage*				HUD_dialogs_character_no_talking;
 	GuiImage*				HUD_dialogs_character_talking;
 	GuiImage*				HUD_dialogs_screen_block;
+	GuiButton*				HUD_dialogs_skip_tutorial;
 
 private:
 
