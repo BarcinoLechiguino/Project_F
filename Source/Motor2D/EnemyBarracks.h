@@ -37,11 +37,9 @@ public:
 	SDL_Rect	barracks_rect_2;
 	SDL_Rect	barracks_rect;
 
-	int			enemy_scout_level;
 	int			enemy_infantry_level;
 	int			enemy_heavy_level;
 	
-	float		enemy_scout_creation_time;
 	float		enemy_infantry_creation_time;
 	float		enemy_heavy_creation_time;
 

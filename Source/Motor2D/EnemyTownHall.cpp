@@ -14,6 +14,7 @@
 #include "EnemyAIManager.h"
 #include "EntityManager.h"
 #include "EnemyGatherer.h"
+#include "EnemyScout.h"
 
 #include "EnemyTownHall.h"
 
@@ -130,6 +131,10 @@ void EnemyTownHall::StartUnitCreation()
 	case ENTITY_TYPE::ENEMY_GATHERER:
 		creation_bar->SetNewCreationTime(enemy_gatherer_creation_time);
 		break;
+
+	case ENTITY_TYPE::ENEMY_SCOUT:
+		creation_bar->SetNewCreationTime(enemy_scout_creation_time);
+		break;
 	}
 }
 
@@ -142,6 +147,10 @@ void EnemyTownHall::GenerateUnit(ENTITY_TYPE type, int level)
 	case ENTITY_TYPE::ENEMY_GATHERER:
 		(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, pos.x, pos.y, level);
 		break;
+
+	case ENTITY_TYPE::ENEMY_SCOUT:
+		(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, pos.x, pos.y, level);
+		break;
 	}
 }
 
@@ -153,6 +162,10 @@ void EnemyTownHall::GenerateUnitByType(ENTITY_TYPE type)
 	{
 	case ENTITY_TYPE::ENEMY_GATHERER:
 		(EnemyGatherer*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_GATHERER, pos.x, pos.y, enemy_gatherer_level);
+		break;
+
+	case ENTITY_TYPE::ENEMY_SCOUT:
+		(EnemyScout*)App->entity_manager->CreateEntity(ENTITY_TYPE::ENEMY_SCOUT, pos.x, pos.y, enemy_scout_level);
 		break;
 	}
 }
@@ -200,13 +213,16 @@ void EnemyTownHall::InitEntity()
 
 	// UNIT CREATION VARIABLES
 	created_unit_type = ENTITY_TYPE::UNKNOWN;
+	
 	enemy_gatherer_creation_time = 1.0f;														//Magic
+	enemy_scout_creation_time = 2.0f;
 
 	// STATS
 	max_health = 900;
 	current_health = max_health;
 
 	enemy_gatherer_level = 1;
+	enemy_scout_level = 1;
 
 	// HEALTHBAR & CREATION BAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
