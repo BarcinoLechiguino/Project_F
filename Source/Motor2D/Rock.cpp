@@ -11,6 +11,8 @@
 #include "GuiHealthbar.h"
 #include "FowManager.h"
 #include "EntityManager.h"
+#include "ParticleManager.h"
+#include "Emitter.h"
 
 #include "Rock.h"
 
@@ -33,7 +35,7 @@ bool Rock::Awake(pugi::xml_node&)
 bool Rock::Start()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, NON_WALKABLE);
-
+	ShineEmitter = App->particle_manager->SpawnEmitter({ pixel_position.x, pixel_position.y - 0 }, EMITTER_ROCK);
 	return true;
 }
 
@@ -65,6 +67,7 @@ bool Rock::CleanUp()
 {
 	App->pathfinding->ChangeWalkability(tile_position, this, WALKABLE);		//The entity is cleared from the walkability map.
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
+	App->particle_manager->DeleteEmitter(ShineEmitter);
 
 	entity_sprite = nullptr;
 

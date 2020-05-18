@@ -4,6 +4,8 @@
 
 #include "Resource.h"
 
+class Emitter;
+
 class Tree : public Resource
 {
 public:
@@ -25,7 +27,8 @@ public:
 	void AttachHealthbarToEntity();
 
 private:
-
+	
+	Emitter* SparkEmitter; 
 };
 
 #endif // !__TREE_H__

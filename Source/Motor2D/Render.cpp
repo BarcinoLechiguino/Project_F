@@ -231,7 +231,7 @@ bool Render::ColoredBlit(SDL_Texture* texture, int x, int y, const SDL_Rect* sec
 	}
 
 	SDL_SetTextureColorMod(texture, color.r, color.g, color.b) == 0;
-	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_BLEND) == 0;
+	SDL_SetTextureBlendMode(texture, SDL_BLENDMODE_ADD) == 0;
 
 	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, SDL_FLIP_NONE) != 0)
 	{
