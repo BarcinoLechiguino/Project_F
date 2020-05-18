@@ -1869,9 +1869,23 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 	if (element == HUD_dialogs_character_no_talking && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE)
+		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && tutorial.tutorial_state != TutorialState::NOT_ACTIVE)
 		{
 			App->dialog_manager->StartDialog(App->dialog_manager->last_dialog);
+		}
+
+		if (App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
+		{
+			int i = rand() % 3 + 6;
+
+			while(i == last_random_hint)
+			{
+				i = rand() % 3 + 6;
+			}
+
+			last_random_hint = i;
+
+			App->dialog_manager->StartDialog(i);
 		}
 	}
 
