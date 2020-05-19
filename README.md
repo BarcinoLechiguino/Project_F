@@ -368,13 +368,13 @@ No previous installation is required to play the game, just download the latest 
 
 ## Developer Team: missing.md
 
- - Ángel González - {Project Lead, Management, Programmer} - GitHub: [@BarcinoLechiguino](https://github.com/BarcinoLechiguino)
- - Pau Pedra - {Lead Programmer} - GitHub: [@paupedra](https://github.com/paupedra)
- - Pau Fiol - {Lead Artist} - GitHub: [@paufiol](https://github.com/paufiol)
- - Aitor Luque - {Lead Designer} - GitHub: [@Aitorlb7](https://github.com/Aitorlb7)
- - Francisco Guerrero - {UI Artist} - GitHub: [@FranGV98](https://github.com/FranGV98)
- - Gerard Romeu - {QA, Designer} - GitHub: [@Gromeu2000](https://github.com/Gromeu2000)
- - Guillem Turmo - {Management} - GitHub: [@Turmo11](https://github.com/Turmo11)
+ - Ángel González - Project Lead, Management, Programmer - GitHub: [@BarcinoLechiguino](https://github.com/BarcinoLechiguino)
+ - Pau Pedra - Lead Programmer - GitHub: [@paupedra](https://github.com/paupedra)
+ - Pau Fiol - Lead Artist - GitHub: [@paufiol](https://github.com/paufiol)
+ - Aitor Luque - Lead Designer - GitHub: [@Aitorlb7](https://github.com/Aitorlb7)
+ - Francisco Guerrero - UI Artist - GitHub: [@FranGV98](https://github.com/FranGV98)
+ - Gerard Romeu - QA, Designer - GitHub: [@Gromeu2000](https://github.com/Gromeu2000)
+ - Guillem Turmo - Management - GitHub: [@Turmo11](https://github.com/Turmo11)
 
 
 
