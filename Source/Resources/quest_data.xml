@@ -1,0 +1,31 @@
+<!-- Quest Data -->
+<quests>
+  <quest 
+   id="0"
+   title="Objective F"
+   trigger="0"
+   requisites="0"
+   description="Destroy the enemy base">
+  </quest>
+  <quest
+   id="1"
+   title="Gathering 101"
+   trigger="1"
+   requisites="0"
+   description="Gather some data and electricity">
+  </quest>
+  <quest
+   id="2"
+   title="Watch for bugs, they byte!"
+   trigger="1"
+   requisites="0"
+   description="Gather 3 bytes">
+  </quest>
+  <quest
+   id="3"
+   title="You are terminated!"
+   trigger="1"
+   requisites="0"
+   description="Destroy 10 enemy units">
+  </quest>
+</quests>

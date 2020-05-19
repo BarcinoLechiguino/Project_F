@@ -1,0 +1,132 @@
+<!-- Animations file for the game -->
+
+<animations>
+  <player>
+    <idle speed ="4.0f" loop ="true">
+      <pushback x="27" y="14" w="40" h="58"/>
+      <pushback x="126" y="12" w="40" h="58"/>
+      <pushback x="228" y="12" w="40" h="58"/>
+      <pushback x="326" y="14" w="40" h="58"/>
+    </idle>
+
+    <running speed ="8.0f" loop ="true">
+      <pushback x="134" y="90" w="39" h="55"/>
+      <pushback x="232" y="92" w="39" h="53"/>
+      <pushback x="332" y="96" w="39" h="49"/>
+      <pushback x="434" y="90" w="45" h="55"/>
+      <pushback x="532" y="92" w="39" h="53"/>
+      <pushback x="632" y="96" w="39" h="49"/>
+    </running>
+
+    <crouching speed ="4.0f" loop ="true">
+      <pushback x="432" y="10" w="37" h="61"/>  <!-- 20 pixels of margin vertically up -->
+      <pushback x="530" y="8" w="39" h="63"/>
+      <pushback x="630" y="8" w="37" h="63"/>
+      <pushback x="34" y="84" w="33" h="61"/>
+    </crouching>
+
+    <jumping speed ="10.0f" loop ="true">
+      <pushback x="30" y="172" w="39" h="47"/>
+      <pushback x="130" y="176" w="39" h="43"/>
+      <pushback x="234" y="162" w="37" h="53"/>
+      <pushback x="328" y="158" w="41" h="45"/>
+      <!-- <pushback x="436" y="162" w="29" h="41"/> Cape coiling up a bit before falling -->
+    </jumping>
+
+    <frontflip speed ="20.0f" loop ="true">
+      <pushback x="528" y="168" w="47" h="33"/>
+      <pushback x="528" y="168" w="47" h="33"/>
+      <pushback x="640" y="168" w="35" h="41"/>
+      <pushback x="640" y="168" w="35" h="41"/>
+      <pushback x="22" y="248" w="51" h="33"/>
+      <pushback x="22" y="248" w="51" h="33"/>
+    </frontflip>
+
+    <boosted_jump speed ="8.0f" loop ="true">
+      <pushback x="30" y="172" w="39" h="47"/>
+      <pushback x="130" y="176" w="39" h="43"/>
+      <pushback x="234" y="162" w="37" h="53"/>
+      <pushback x="328" y="158" w="41" h="45"/>
+      <pushback x="436" y="162" w="29" h="41"/>
+      <pushback x="528" y="168" w="47" h="33"/>
+      <pushback x="640" y="168" w="35" h="41"/>
+      <pushback x="22" y="248" w="51" h="33"/>
+    </boosted_jump>
+
+    <falling speed ="8.0f" loop ="true">
+      <pushback x="136" y="224" w="33" h="61"/>
+      <pushback x="236" y="226" w="33" h="59"/>
+    </falling>
+
+    <attacking speed ="20.0f" loop="false">
+      <pushback x="26" y="532" w="40" h="58"/>
+      <pushback x="26" y="532" w="40" h="58"/>
+      <pushback x="120" y="532" w="74" h="58"/>
+      <pushback x="204" y="533" w="64" h="58"/>
+      <pushback x="304" y="532" w="62" h="58"/>
+    </attacking>
+
+    <wallslide speed ="20.0f" loop="true">
+      <pushback x="232" y="820" w="34" h="62"/>
+      <pushback x="332" y="818" w="34" h="65"/>
+    </wallslide>
+
+    <death speed ="6.0f" loop ="true">
+      <!--<pushback x="10" y="1094" w="58" h="66"/>-->
+      <pushback x="69" y="1074" w="58" h="86"/>
+      <pushback x="134" y="1074" w="58" h="86"/>
+      <pushback x="195" y="1074" w="58" h="86"/>
+    </death>
+  </player>
+  
+  <mecha>
+    <idle speed =" 1.0f" loop="true">
+      <!--<pushback x="20" y="16" w="47" h="64"/>-->
+      <pushback x="25" y="21" w="58" h="82"/>
+    </idle>
+    <running speed ="7.0f" loop ="true">
+      <pushback x="29" y="21" w="59" h="79"/>
+      <pushback x="141" y="18" w="67" h="82"/>
+      <pushback x="259" y="19" w="74" h="81"/>
+      <pushback x="379" y="23" w="75" h="77"/>
+      <pushback x="499" y="24" w="72" h="76"/>
+      <pushback x="624" y="21" w="61" h="79"/>
+      <pushback x="745" y="18" w="58" h="82"/>
+      <pushback x="867" y="19" w="61" h="81"/>
+      <pushback x="985" y="23" w="54" h="77"/>
+      <pushback x="1108" y="24" w="54" h="76"/>
+    </running>
+  </mecha>
+
+  <alien>
+    <idle speed ="8.0f" loop="true">
+      <pushback x="20" y="18" w="52" h="54"/>
+      <pushback x="84" y="21" w="54" h="51"/>
+      <pushback x="163" y="19" w="52" h="53"/>
+      <pushback x="235" y="22" w="54" h="50"/>
+      <pushback x="309" y="20" w="51" h="52"/>
+      <pushback x="381" y="21" w="54" h="51"/>
+      <pushback x="455" y="19" w="52" h="53"/>
+      <pushback x="524" y="22" w="54" h="50"/>
+    </idle>
+    <running speed ="10.0f" loop ="true">
+      <pushback x="20" y="18" w="52" h="54"/>
+      <pushback x="84" y="21" w="54" h="51"/>
+      <pushback x="163" y="19" w="52" h="53"/>
+      <pushback x="235" y="22" w="54" h="50"/>
+      <pushback x="309" y="20" w="51" h="52"/>
+      <pushback x="381" y="21" w="54" h="51"/>
+      <pushback x="455" y="19" w="52" h="53"/>
+      <pushback x="524" y="22" w="54" h="50"/>
+    </running>
+  </alien>
+
+  <coin>
+    <idle speed ="8.0f" loop="true">
+      <pushback x="2" y="2" w="32" h="32"/>
+      <pushback x="66" y="2" w="32" h="32"/>
+      <pushback x="128" y="2" w="32" h="32"/>
+      <pushback x="194" y="2" w="32" h="32"/>
+    </idle>
+  </coin>
+</animations>

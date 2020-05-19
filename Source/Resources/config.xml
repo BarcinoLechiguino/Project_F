@@ -1,19 +1,18 @@
 <!-- Config file for the game -->
 
 <config>
-  <app framerate_cap="10">
-    <title>Game Development Testbed</title>
+  <app framerate_cap="60" frame_cap_on="true">
+    <title>RTS Project</title>
     <organization>UPC</organization>
   </app>
 	
   <renderer>
     <vsync value="true"/>
+    <camera x ="1550" y ="-600" smoothing_speed ="0.01f"/>
+    <spawn_cam x ="0" y ="-570"/>
+    <camera_debug value="false" speed="400.0f"/>
   </renderer>
-
-  <fonts>
-    <default_font file="fonts/open_sans/OpenSans-Regular.ttf" size="32"/>
-  </fonts>
-
+  
   <window>
     <resolution width="1280" height="720" scale="1"/>
     <fullscreen value="false"/>
@@ -22,12 +21,172 @@
     <fullscreen_window value="false"/>
   </window>
 
+  <audio>
+      <folder>Assets/audio/music/</folder>
+      <volume value = "70"/>
+      <volume_fx value="21"/>
+      <distance scale="425"/>
+  </audio>
+
   <file_system>
     <path>data.zip</path>
   </file_system>
 
+  <debug>
+    <textures>
+      <mouse_tile_debug       path="Assets/maps/mouse_tile_debug.png"/>
+      <entity_map_tile_debug  path="Assets/maps/entity_map_tile_debug.png"/>
+      <occupied_tile_debug    path="Assets/maps/occupied_tile_debug.png"/>
+      <path_tile_debug        path="Assets/maps/path_tile_debug.png"/>
+      <center_position_debug  path="Assets/maps/center_position_debug.png"/>
+    </textures>
+  </debug>
+  
   <map>
-    <folder>maps/</folder>
+    <folder>Assets/maps/</folder>
+    <layers>
+      <bg_parallax_speed speed="0.05f"/>
+      <first_parallax_speed speed ="0.70f"/>
+      <decor_parallax_speed speed ="0.9f"/>
+    </layers>
   </map>
 
+  <fog_of_war>
+    <fow_tex path="Assets/maps/fog_of_war_spritesheet.png"/>
+  </fog_of_war>
+  
+  <player>
+    <god_mode value="0"/>
+    <is_selecting value="0"/>
+    <mouse_tile_tex path="Assets/maps/mouse_tile_debug.png"/>
+
+    <camera>
+      <speed x="700.0f" y="700.0f"/>
+      <original_position x="2800" y="-3150"/>
+      <x_axis_limit left="-50" right="3200"/>
+      <y_axis_limit top="-3650" bottom="-1000"/>
+    </camera>
+
+    <game_controller>
+      <cursor_speed x="500.0f" y="500.0f"/>
+    </game_controller>
+
+    <cursor_sections>
+      <idle             x="501" y="54" w="20" h="24"/>
+      <hover_ally       x="581" y="54" w="20" h="24"/>
+      <hover_enemy      x="541" y="54" w="20" h="24"/>
+      <hover_resource   x="561" y="54" w="20" h="24"/>
+      <hover_UI         x="541" y="54" w="20" h="24"/>
+      <clicked_idle     x="501" y="78" w="20" h="24"/>
+      <clicked_ally     x="581" y="78" w="20" h="24"/>
+      <clicked_enemy    x="541" y="78" w="20" h="24"/>
+      <clicked_resource x="561" y="78" w="20" h="24"/>
+      <clicked_UI       x="541" y="78" w="78" h="24"/>
+    </cursor_sections>
+  </player>
+
+  <gui>
+    <atlas file="Assets/gui/UI_HUD.png"/>
+
+    <backgrounds>
+      <logo_scene                   path="Assets/gui/backgrounds/logo_scene_missingmd_background.png"/>
+      <logo_scene_team_logo         path="Assets/gui/backgrounds/missing_logo.png"/>
+      <main_menu_scene              path="Assets/gui/backgrounds/main_menu_scene_background.png"/>
+      <options_scene                path="Assets/gui/backgrounds/options_scene_background.png"/>
+      <gameplay_scene               path="Assets/gui/backgrounds/gameplay_scene_background.png"/>
+      <minimap                      path="Assets/gui/backgrounds/gameplay_scene_minimap_background.png"/>
+      <win_scene                    path="Assets/gui/backgrounds/win_scene_background.png"/>
+      <lose_scene                   path="Assets/gui/backgrounds/lose_scene_background.png"/>
+    </backgrounds>
+
+    <fonts>
+      <arial                        path="Assets/gui/fonts/arial.ttf"/>
+      <borgsquadcond                path="Assets/gui/fonts/borgsquadcond.ttf"/>
+      <copper_plate_bold_italic     path="Assets/gui/fonts/copper_plate_bold_italic.ttf"/>
+      <future_now                   path="Assets/gui/fonts/future_now.ttf"/>
+      <kenvector_future             path="Assets/gui/fonts/kenvector_future.ttf"/>
+      <major_mono_display           path="Assets/gui/fonts/major_mono_display.ttf"/>
+      <minecraftia_regular          path="Assets/gui/fonts/minecraftia_regular.ttf"/>
+      <old_school_adventures        path="Assets/gui/fonts/old_school_adventures.ttf"/>
+      <open_sans_bold_italic        path="Assets/gui/fonts/open_sans_bold_italic.ttf"/>
+    </fonts>
+    
+    <fx>
+      <new_game_button_clicked      path="Assets/audio/fx/gui/new_game_button_clicked.wav"/>
+      <options_button_clicked       path="Assets/audio/fx/gui/options_button_clicked.wav"/>
+      <back_button_clicked          path="Assets/audio/fx/gui/back_button_clicked.wav"/>
+      <main_menu_button_clicked     path="Assets/audio/fx/gui/main_menu_button_clicked.wav"/>
+      <pause_menu_button_clicked    path="Assets/audio/fx/gui/pause_menu_button_clicked.wav"/>
+      <standard_button_clicked      path="Assets/audio/fx/gui/standard_button_clicked.wav"/>
+      <upgrade_button_clicked       path="Assets/audio/fx/gui/upgade_button_clicked.wav"/>
+      <recruit_unit_button_clicked  path="Assets/audio/fx/gui/recruit_unit_button_clicked.wav"/>
+      <no_resources                 path="Assets/audio/fx/gui/no_resources.wav"/>
+
+      <cursor_click path=""/>
+    </fx>
+  </gui>    
+  <scenes>
+    <map_name name="gameplay_map.tmx"/>
+
+    <fx>
+      <logo_scene_background_noise  path="Assets/audio/fx/scenes/logo_scene_background_noise.wav"/>
+    </fx>
+      
+    <music>
+      <logo_scene       path=""/>
+      <main_menu_scene  path="Assets/audio/music/main_menu_theme.ogg"/>
+      <options_scene    path="Assets/audio/music/options_scene_theme.ogg"/>
+      <gameplay_scene   path="Assets/audio/music/gameplay_scene_theme_3.ogg"/>
+      <win_scene        path="Assets/audio/music/win_scene_theme.ogg"/>
+      <lose_scene       path="Assets/audio/music/lose_scene_theme.ogg"/>
+    </music>
+  </scenes>
+
+  <console>
+    <!--Console Background Variables-->
+    <bg_position x="0" y="0"/>
+    <bg_rect x="0" y="0" w="1024" h="256"/>     <!--256-->
+    <bg_isVisible value="false"/>
+    <bg_isInteractible value="false"/>
+    <bg_isDraggable value="false"/>
+    <bg_colour r="0" g="0" b="0" a="180"/>
+    
+    <!--Console Output Variables-->
+    <output_position x="20" y="20"/>
+    <output_rect x="0" y="0" w="1024" h="216"/>
+    <output_font_path path="fonts/Minecraftia-Regular.ttf"/>
+    <output_font_size size="18"/>
+    <output_font_colour r="255" g="255" b="255" a="255"/>
+    <output_isVisible value="false"/>
+    <output_isInteractible value="false"/>
+    <output_isDraggable value="false"/>
+
+    <!--Console Input Variables-->
+    <input_position x="20" y="152"/>
+    <input_rect x="0" y="0" w="1024" h="40"/>
+    <input_font_path path="fonts/Minecraftia-Regular.ttf"/>
+    <input_font_size size="20"/>
+    <input_font_colour r="255" g="255" b="255" a="255"/>
+    <cursor_rect x="0" y="0" w="3" h="30"/>
+    <cursor_colour r="255" g="255" b="255" a="255"/>
+    <input_text_offset x="0" y="8"/>
+    <cursor_blinkFrequency frequency="0.5f"/>
+    <input_isVisible value="false"/>
+    <input_isInteractible value="true"/>
+    <input_isDraggable value="false"/>
+
+    <!--Console Scrollbar Variables-->
+    <scroll_position x="0" y="0"/>
+    <scrollbar_rect x="0" y="0" w="20" h="256"/>
+    <thumb_rect x="1291" y="56" w="20" h="20"/>
+    <thumb_offset x="0" y="0"/>
+    <drag_area x="0" y="0" w="1024" h="256"/>
+    <drag_factor factor="0.2f"/>
+    <drag_x_axis value="false"/>
+    <drag_y_axis value="true"/>
+    <inverted_scrolling value="true"/>
+    <scroll_isVisible value="false"/>
+    <scroll_isInteractible value="false"/>
+    <scroll_isDraggable value="false"/>
+  </console>
 </config>
