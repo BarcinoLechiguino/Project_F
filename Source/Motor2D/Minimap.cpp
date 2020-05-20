@@ -256,8 +256,12 @@ void Minimap::DrawFogOfWar()
 		// FOG OF WAR
 		uchar fow_state = App->fow_manager->GetVisibilityAt(tile_position);
 
-		SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-		App->render->Blit(fow_tex, (world_position.x + minimap_width * 0.5f), world_position.y - 2, &fow_tile_rect, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
+		if (fow_state != VISIBLE)
+		//if (fow_state == UNEXPLORED)
+		{
+			SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+			App->render->Blit(fow_tex, (world_position.x + minimap_width * 0.5f), world_position.y - 2, &fow_tile_rect, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
+		}
 	}
 
 	minimap_fow_tex = SDL_CreateTextureFromSurface(App->render->renderer, map_surface);
