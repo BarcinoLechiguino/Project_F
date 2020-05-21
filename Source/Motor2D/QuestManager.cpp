@@ -118,7 +118,7 @@ void QuestManager::CheckQuests()
 			break;
 
 		case 1:
-			if (App->entity_manager->resource_data > 0 && App->entity_manager->resource_electricity > 0 && ((*it)->requisites == 0))
+			if (App->entity_manager->resource_data > 200 && App->entity_manager->resource_electricity > 15 && ((*it)->requisites == 0))
 			{
 				(*it)->completed = true;				
 			}
