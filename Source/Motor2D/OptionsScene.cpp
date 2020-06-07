@@ -40,6 +40,18 @@ bool OptionsScene::Start()
 {
 	InitScene();
 
+	App->gui_manager->CreateSlideAnimation(options_text, 0.5, false, iPoint(options_text->GetScreenPos().x, 420), iPoint(options_text->GetScreenPos().x, 150));
+
+	App->gui_manager->CreateSlideAnimation(music_text, 0.6, false, iPoint(music_text->GetScreenPos().x, 470), iPoint(music_text->GetScreenPos().x, 255));
+	
+	App->gui_manager->CreateSlideAnimation(sfx_text, 0.6, false, iPoint(sfx_text->GetScreenPos().x, 470), iPoint(sfx_text->GetScreenPos().x, 289));
+
+	App->gui_manager->CreateSlideAnimation(resolution_text, 0.7, false, iPoint(resolution_text->GetScreenPos().x, 520), iPoint(resolution_text->GetScreenPos().x, 326));
+
+	App->gui_manager->CreateSlideAnimation(fullscreen_off, 0.8, false, iPoint(fullscreen_off->GetScreenPos().x, 570), iPoint(fullscreen_off->GetScreenPos().x, 334));
+
+	App->gui_manager->CreateSlideAnimation(back_button, 0.9, false, iPoint(back_button->GetScreenPos().x, 620), iPoint(back_button->GetScreenPos().x, 470));
+
 	return true;
 }
 
