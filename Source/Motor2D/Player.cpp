@@ -394,13 +394,6 @@ void Player::DragSelection()
 							App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::MOVE_UNIT;
 							App->dialog_manager->StartDialog(1);
 						}
-
-						//if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::SELECT_GATHERER && !units_selected.empty() 
-						//	&& App->dialog_manager->dialog_state == DIALOG_STATE::NOT_ACTIVE && App->entity_manager->IsGatherer(units_selected[0])) //Tutorial 3
-						//{
-						//	App->scene_manager->gameplay_scene->tutorial.tutorial_state = TutorialState::GATHER_RESOURCE;
-						//	App->dialog_manager->StartDialog(3);
-						//}
 					}
 				}
 				else
@@ -470,7 +463,10 @@ void Player::SelectEntitiesInSelectionRect()
 
 			if (unit->is_selectable)
 			{
-				if (CheckSelectionRectBorders(unit))				//Collision ally units rectangles
+				if ((unit->center_point.x > selection_rect.x - App->render->camera.x) &&									// Unit is inside the left border.
+					(unit->center_point.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&					// Unit is inside the right border.
+					(unit->center_point.y > selection_rect.y - App->render->camera.y) &&									// Unit is inside the top border.
+					(unit->center_point.y < selection_rect.y - App->render->camera.y + selection_rect.h))					// Unit is inside the bottom border.
 				{
 					unit->is_selected = true;
 					units_selected.push_back(unit);
@@ -1022,14 +1018,6 @@ bool Player::CurrentlyInGameplayScene()
 	}
 
 	return ret;
-}
-
-bool Player::CheckSelectionRectBorders(DynamicObject* unit)
-{
-	return (unit->selection_collider.x + unit->selection_collider.w > selection_rect.x - App->render->camera.x) &&			// Unit is inside the left border.
-			(unit->selection_collider.x < selection_rect.x - App->render->camera.x + selection_rect.w) &&					// Unit is inside the right border.
-			(unit->selection_collider.y + unit->selection_collider.h > selection_rect.y - App->render->camera.y) &&			// Unit is inside the top border.
-			(unit->selection_collider.y < selection_rect.y - App->render->camera.y + selection_rect.h);						// Unit is inside the bottom border.
 }
 
 void Player::InitializePlayer()

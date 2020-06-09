@@ -81,8 +81,6 @@ public:
 
 	// --- Conditional Checks
 	bool CurrentlyInGameplayScene();
-	bool CheckSelectionRectBorders(DynamicObject* unit);
-
 
 public:
 	bool				god_mode;									// Will keep track of whether the god_mode has been activated or not.

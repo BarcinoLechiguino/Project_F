@@ -37,8 +37,6 @@ public:
 	Entity* GetTarget();
 	int GetAttackRange();
 
-	void OnCollision(Collider* C1, Collider* C2);
-
 public:
 	/*int							attack_range;							// A unit's attack range in tiles.
 	int							attack_radius;							// The unit's effective attack area. The heavy has an AoE attack. Radius in tiles.

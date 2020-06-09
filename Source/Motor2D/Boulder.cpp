@@ -65,11 +65,6 @@ bool Boulder::CleanUp()
 
 	entity_sprite = nullptr;
 
-	if (collider != nullptr)
-	{
-		collider->to_delete = true;
-	}
-
 	//App->gui_manager->DeleteGuiElement(healthbar);
 
 	App->fow_manager->DeleteFowEntity(fow_entity);
@@ -94,8 +89,6 @@ void Boulder::InitEntity()
 
 	tiles_occupied.x = 1;
 	tiles_occupied.y = 1;
-
-	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };		// THIS ???
 
 	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetBoulderTexture();

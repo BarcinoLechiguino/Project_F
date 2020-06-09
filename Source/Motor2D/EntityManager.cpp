@@ -11,7 +11,6 @@
 #include "Render.h"
 #include "Textures.h"
 #include "Input.h"
-#include "Collisions.h"
 #include "Map.h"
 #include "Audio.h"
 #include "ParticleManager.h"
@@ -138,6 +137,8 @@ bool EntityManager::Update(float dt)
 
 	OrderEntities();
 
+	DrawEntities();
+
 	return true;
 }
 
@@ -178,8 +179,6 @@ void EntityManager::OrderEntities()
 	BROFILER_CATEGORY("OrderEntities", Profiler::Color::FireBrick);
 
 	std::sort(entities_in_screen.begin(), entities_in_screen.end(), customLess);
-
-	DrawEntities();
 }
 
 void EntityManager::DrawEntities()
@@ -192,32 +191,12 @@ void EntityManager::DrawEntities()
 
 		if (debug_center_point)
 		{
-			App->render->Blit(center_point_debug, (int)entities_in_screen[i]->center_point.x + App->map->data.tile_width/2 - 6, (int)entities_in_screen[i]->center_point.y - 5, nullptr);
-		}
-	}
-}
-
-void EntityManager::OnCollision(Collider* C1, Collider* C2)		//This OnCollision will manage the collisions of all entities and derive them to their respective OnCollision methods()
-{
-	std::vector<Entity*>::iterator item = entities.begin();
-
-	for (; item != entities.end(); ++item)
-	{
-		if (C1 == (*item)->collider)							//Will be run if there is a collision and any of the colliders are of the type PLAYER.
-		{
-			(*item)->OnCollision(C1, C2);
-			break;
-		}
-		else if (C2 == (*item)->collider)
-		{
-			(*item)->OnCollision(C2, C1);
-			break;
+			App->render->Blit(center_point_debug, (int)entities_in_screen[i]->center_point.x - 6, (int)entities_in_screen[i]->center_point.y - 5, nullptr);
 		}
 	}
 }
 
 // -------------------------------------- ENTITY MANAGING METHODS --------------------------------------
-
 Entity* EntityManager::CreateEntity(ENTITY_TYPE type, int x, int y, int level)
 {
 	//static_assert?

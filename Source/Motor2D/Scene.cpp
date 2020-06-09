@@ -2,7 +2,6 @@
 #include "Window.h"
 #include "Render.h"
 #include "Input.h"
-#include "Collisions.h"
 #include "Map.h"
 #include "EntityManager.h"
 #include "GuiManager.h"

@@ -11,7 +11,6 @@ class Emitter;
 
 struct SDL_Texture;
 struct SDL_Rect;
-struct Collider;
 struct FowEntity;
 
 
@@ -83,8 +82,6 @@ public:
 	
 	virtual void Draw();
 
-	virtual void OnCollision(Collider* c1, Collider* c2);						//If {} are used then the OnCollision on the entity.cpp needs to be erased.
-
 	void ApplyDamage(Entity* target);											//Applies the current unit damage to the referenced target, also handles the target health bar.
 
 public:																			// --- ENTITY VARIABLES ---
@@ -112,12 +109,7 @@ public:																			// --- ENTITY VARIABLES ---
 
 	SDL_Texture*	entity_sprite;
 
-	Collider*		collider;
-
 	Animation*		animation;
-
-	SDL_Rect		selection_collider;
-
 																				// --- ENTITY FOW RELATED VARIABLES ---
 	bool			is_visible;													// Will determine whether or not an entity is currently visible. (See FowManager module)
 	bool			provides_visibility;										// Will determine whether or not an entity will grant the player visibility over the Fog of War.

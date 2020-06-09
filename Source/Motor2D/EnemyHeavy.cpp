@@ -5,7 +5,6 @@
 #include "Textures.h"
 #include "Input.h"
 #include "Audio.h"
-#include "Collisions.h"
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Player.h"
@@ -61,9 +60,6 @@ bool EnemyHeavy::Update(float dt, bool do_logic)
 		UpdateUnitOrientation();
 	}
 
-	selection_collider.x = (int)pixel_position.x;
-	selection_collider.y = (int)pixel_position.y;
-
 	if (do_logic)
 	{
 		if (target == nullptr && entity_path.empty())
@@ -115,10 +111,7 @@ bool EnemyHeavy::CleanUp()
 
 	entity_sprite = nullptr;
 
-	if (collider != nullptr)
-	{
-		collider->to_delete = true;
-	}
+
 
 	if (is_selected)
 	{
@@ -137,11 +130,6 @@ bool EnemyHeavy::CleanUp()
 void EnemyHeavy::Draw()
 {
 	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section);
-
-	if (App->player->god_mode)
-	{
-		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
-	}
 }
 
 void EnemyHeavy::InitEntity()
@@ -449,12 +437,6 @@ void EnemyHeavy::DealDamage()
 
 		return;
 	}
-}
-
-// Collision Handling ---------------------------------------
-void EnemyHeavy::OnCollision(Collider* C1, Collider* C2)
-{
-	return;
 }
 
 Entity* EnemyHeavy::GetTarget()

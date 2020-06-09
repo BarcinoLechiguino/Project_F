@@ -5,7 +5,6 @@
 #include "Textures.h"
 #include "Input.h"
 #include "Audio.h"
-#include "Collisions.h"
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Player.h"
@@ -55,9 +54,6 @@ bool EnemyGatherer::Update(float dt, bool do_logic)
 
 	UpdateUnitSpriteSection();
 
-	selection_collider.x = (int)pixel_position.x + 10;
-	selection_collider.y = (int)pixel_position.y + 10;//magic
-
 	if (do_logic)
 	{
 		if (target == nullptr && entity_path.empty())
@@ -102,11 +98,6 @@ bool EnemyGatherer::CleanUp()
 
 	entity_sprite = nullptr;
 
-	if (collider != nullptr)
-	{
-		collider->to_delete = true;
-	}
-
 	if (is_selected)
 	{
 		App->player->DeleteEntityFromBuffers(this);
@@ -125,10 +116,6 @@ void EnemyGatherer::Draw()
 {
 	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 14, &entity_sprite_section);
 
-	if (App->player->god_mode)
-	{
-		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
-	}
 }
 
 void EnemyGatherer::InitEntity()
@@ -390,11 +377,6 @@ void EnemyGatherer::GatherResource()
 
 		return;
 	}
-}
-
-void EnemyGatherer::OnCollision(Collider* C1, Collider* C2)
-{
-
 }
 
 Entity* EnemyGatherer::GetTarget()

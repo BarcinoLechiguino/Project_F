@@ -96,8 +96,6 @@ public:																								// -------------- ENTITY MAP METHODS ------------
 
 	bool CheckTileAvailability(const iPoint& tile_position, Entity* entity);						// Method that will return true whenever the space required by an entity is available.
 
-	void OnCollision(Collider* C1, Collider* C2);
-
 public:
 	SDL_Texture*					gatherer_tex;
 	SDL_Texture*					scout_tex;

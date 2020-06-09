@@ -24,7 +24,7 @@
 		<alien />
 	</entities>
 	<collisions />
-	<:anonymous />
+	<anonymous />
 	<renderer>
 		<camera x="-1970" y="-46" />
 	</renderer>

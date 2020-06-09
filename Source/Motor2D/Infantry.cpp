@@ -5,7 +5,6 @@
 #include "Textures.h"
 #include "Input.h"
 #include "Audio.h"
-#include "Collisions.h"
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Player.h"
@@ -60,9 +59,6 @@ bool Infantry::Update(float dt, bool do_logic)
 		UpdateUnitOrientation();
 	}
 
-	selection_collider.x = (int)pixel_position.x;
-	selection_collider.y = (int)pixel_position.y;
-
 	if (do_logic)
 	{
 		if (target == nullptr && entity_path.empty())
@@ -86,7 +82,7 @@ bool Infantry::Update(float dt, bool do_logic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	center_point = fPoint(pixel_position.x + App->map->data.tile_width * 0.5f, pixel_position.y + App->map->data.tile_height * 0.5f);
 
 	// FOG OF WAR
 	is_visible = fow_entity->is_visible;
@@ -112,11 +108,6 @@ bool Infantry::CleanUp()
 	App->entity_manager->ChangeEntityMap(tile_position, this, true);		//The entity is cleared from the entity_map.
 
 	entity_sprite = nullptr;
-
-	if (collider != nullptr)
-	{
-		collider->to_delete = true;
-	}
 	
 	if (is_selected)
 	{
@@ -133,11 +124,6 @@ bool Infantry::CleanUp()
 void Infantry::Draw()
 {
 	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section);
-
-	if (App->player->god_mode)
-	{
-		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
-	}
 }
 
 void Infantry::InitEntity()
@@ -445,12 +431,6 @@ void Infantry::DealDamage()
 
 		return;
 	}
-}
-
-// Collision Handling ---------------------------------------
-void Infantry::OnCollision(Collider* C1, Collider* C2)
-{
-	return;
 }
 
 Entity* Infantry::GetTarget()

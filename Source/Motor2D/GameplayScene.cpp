@@ -11,7 +11,6 @@
 #include "Fonts.h"
 #include "Input.h"
 #include "Audio.h"
-#include "Collisions.h"
 #include "Map.h"
 #include "Minimap.h"
 #include "Pathfinding.h"
@@ -209,7 +208,6 @@ bool GameplayScene::CleanUp()
 	App->tex->UnLoad(occupied_by_entity_debug);
 	App->tex->UnLoad(path_debug_tex);
 
-	App->collisions->CleanUp();								//Deletes all colliders that were loaded for this scene / map.
 	App->player->ClearEntityBuffers();						//Clears the entity list
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)

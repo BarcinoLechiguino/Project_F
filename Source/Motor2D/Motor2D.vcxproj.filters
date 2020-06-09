@@ -10,9 +10,6 @@
     <ClCompile Include="EntityManager.cpp">
       <Filter>Engine  ===========\Modules\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="Collisions.cpp">
-      <Filter>Engine  ===========\Modules\Interactions</Filter>
-    </ClCompile>
     <ClCompile Include="Input.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
@@ -154,15 +151,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>Engine  ===========\Tools\Timers</Filter>
     </ClCompile>
-    <ClCompile Include="EntityQuadTree.cpp">
-      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
-    </ClCompile>
-    <ClCompile Include="Quadtree.cpp">
-      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
-    </ClCompile>
-    <ClCompile Include="TileQuadTree.cpp">
-      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
-    </ClCompile>
     <ClCompile Include="Log.cpp">
       <Filter>Engine  ===========\Tools\Utilities</Filter>
     </ClCompile>
@@ -268,6 +256,9 @@
     <ClCompile Include="EnemyAIManager.cpp">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClCompile>
+    <ClCompile Include="ProjectileManager.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia\Projectile Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -278,9 +269,6 @@
     </ClInclude>
     <ClInclude Include="EntityManager.h">
       <Filter>Engine  ===========\Modules\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="Collisions.h">
-      <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
     <ClInclude Include="Input.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
@@ -426,15 +414,6 @@
     <ClInclude Include="Timer.h">
       <Filter>Engine  ===========\Tools\Timers</Filter>
     </ClInclude>
-    <ClInclude Include="EntityQuadTree.h">
-      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
-    </ClInclude>
-    <ClInclude Include="Quadtree.h">
-      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
-    </ClInclude>
-    <ClInclude Include="TileQuadTree.h">
-      <Filter>Engine  ===========\Tools\Quadtrees</Filter>
-    </ClInclude>
     <ClInclude Include="Animation.h">
       <Filter>Engine  ===========\Tools\Utilities</Filter>
     </ClInclude>
@@ -549,6 +528,9 @@
     <ClInclude Include="EnemyAIManager.h">
       <Filter>Engine  ===========\Modules\Interactions</Filter>
     </ClInclude>
+    <ClInclude Include="ProjectileManager.h">
+      <Filter>Engine  ===========\Modules\Multimedia\Projectile Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
@@ -631,9 +613,6 @@
     <Filter Include="Engine  ===========\Tools\Timers">
       <UniqueIdentifier>{58a976e7-7720-4064-a0d2-2857590b6742}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine  ===========\Tools\Quadtrees">
-      <UniqueIdentifier>{4fc32383-6edd-443e-acdb-044b3a5faa9e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine  ===========\Tools\Utilities">
       <UniqueIdentifier>{1d648d44-87d1-403a-93c9-16082a74dd74}</UniqueIdentifier>
     </Filter>
@@ -675,6 +654,9 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Dynamic\Enemy Units\Enemy Unit Entities">
       <UniqueIdentifier>{4e19cffa-e3d2-4f8c-b36a-6d485849cb0e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Multimedia\Projectile Manager">
+      <UniqueIdentifier>{d179ecb6-ccf8-4f42-aa58-c5be5efec7b3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

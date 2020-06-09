@@ -40,8 +40,6 @@ public:
 	//void HandleFx();
 	//void SubstractResource();
 
-	void OnCollision(Collider* C1, Collider* C2);
-
 public:
 	bool	gather_in_cooldown;
 	float	gathering_speed;

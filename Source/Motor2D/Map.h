@@ -5,14 +5,9 @@
 
 #include "Module.h"
 #include "Point.h"
-#include "Collisions.h"
 #include "TileQuadTree.h"
 
-class Collisions;
-struct Collider;
-
 class Entity;
-
 
 // Collider Types -------------------------
 enum Object_Type					//Care with enum class. If enum class-> Object_Type::HAZARD and not just HAZARD (i.e)
@@ -215,7 +210,7 @@ public:
 
 	MapData				data;
 	Point<float>		spawn_position_cam;
-	Collider			camera_collider;				// Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
+	//Collider			camera_collider;				// Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
 	int					winWidth;						// Declared to store the window's width.
 	int					winHeight;						// Declared to store the window's height.
 														   

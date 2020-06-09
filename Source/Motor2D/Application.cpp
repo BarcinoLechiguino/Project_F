@@ -13,7 +13,6 @@
 #include "Fonts.h"
 #include "EntityManager.h"
 #include "Pathfinding.h"
-#include "Collisions.h"
 #include "GuiManager.h"
 #include "Console.h"
 #include "Player.h"
@@ -26,6 +25,7 @@
 #include "DialogManager.h"
 #include "ParticleManager.h"
 #include "QuestManager.h"
+#include "ProjectileManager.h"
 
 #include "Dependencies\Brofiler\Brofiler.h"
 
@@ -47,7 +47,6 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	audio				= new Audio();
 	map					= new Map();
 	pathfinding			= new PathFinding();
-	collisions			= new Collisions();
 	entity_manager		= new EntityManager();
 	minimap				= new Minimap();
 	font				= new Fonts();
@@ -62,6 +61,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	dialog_manager		= new DialogManager();
 	particle_manager	= new ParticleManager();
 	quest_manager		= new QuestManager();
+	projectile_manager  = new ProjectileManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -73,7 +73,6 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(font);
 	AddModule(console);
-	AddModule(collisions);
 	AddModule(movement);
 	
 	// scene_manager last before render.
@@ -84,6 +83,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(scene_manager);
 	AddModule(transition_manager);
 	AddModule(entity_manager);
+	AddModule(projectile_manager);
 	AddModule(enemy_AI_manager);
 	AddModule(fow_manager);
 	AddModule(dialog_manager);

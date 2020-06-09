@@ -5,7 +5,6 @@
 #include "Textures.h"
 #include "Input.h"
 #include "Audio.h"
-#include "Collisions.h"
 #include "Map.h"
 #include "Pathfinding.h"
 #include "Player.h"
@@ -58,9 +57,6 @@ bool Gatherer::Update(float dt, bool do_logic)
 
 	SmokeEmitter->UpdatePos({ pixel_position.x + 5, pixel_position.y - 20 });
 
-	selection_collider.x = (int)pixel_position.x + 10;
-	selection_collider.y = (int)pixel_position.y + 10;
-
 	if (target != nullptr)
 	{
 		if (TargetIsInRange())
@@ -69,7 +65,7 @@ bool Gatherer::Update(float dt, bool do_logic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	center_point = fPoint(pixel_position.x + App->map->data.tile_width * 0.5f, pixel_position.y + App->map->data.tile_height * 0.5f);
 
 	// FOG OF WAR
 	is_visible = fow_entity->is_visible;
@@ -96,11 +92,6 @@ bool Gatherer::CleanUp()
 	App->particle_manager->DeleteEmitter(SmokeEmitter);
 
 	entity_sprite = nullptr;
-
-	if (collider != nullptr)
-	{
-		collider->to_delete = true;
-	}
 	
 	if (is_selected)
 	{
@@ -117,11 +108,6 @@ bool Gatherer::CleanUp()
 void Gatherer::Draw()
 {
 	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 14, &entity_sprite_section);
-
-	if (App->player->god_mode)
-	{
-		App->render->DrawQuad(selection_collider, 255, 255, 0, 100);
-	}
 }
 
 void Gatherer::UpdateUnitSpriteSection()
@@ -405,9 +391,4 @@ void Gatherer::InitUnitSpriteSections()
 
 	//Default section
 	entity_sprite_section = pathing_down_right_section;
-}
-
-void Gatherer::OnCollision(Collider* C1, Collider* C2)
-{
-
 }

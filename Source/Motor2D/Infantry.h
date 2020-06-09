@@ -36,8 +36,6 @@ public:
 	Entity* GetTarget();
 	int GetAttackRange();
 
-	void OnCollision(Collider* C1, Collider* C2);
-
 public:
 	/*int							attack_range;							// A unit's attack range in tiles.
 	float						attack_speed;							// A unit's attack speed in attacks/second.*/

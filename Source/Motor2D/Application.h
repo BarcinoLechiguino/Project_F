@@ -20,7 +20,6 @@ class Textures;
 class Audio;
 class Map;
 class PathFinding;
-class Collisions;
 class EntityManager;
 class Fonts;
 class GuiManager;
@@ -35,6 +34,7 @@ class FowManager;
 class DialogManager;
 class ParticleManager;
 class QuestManager;
+class ProjectileManager;
 
 class Application
 {
@@ -90,7 +90,6 @@ public:
 	Map*				map;
 	PathFinding*		pathfinding;
 	EntityManager*		entity_manager;
-	Collisions*			collisions;
 	GuiManager*			gui_manager;
 	Console*			console;
 	Player*				player;
@@ -103,6 +102,7 @@ public:
 	DialogManager*		dialog_manager;
 	ParticleManager*	particle_manager;
 	QuestManager*		quest_manager;
+	ProjectileManager*  projectile_manager;
 
 	uint				frame_cap;								// Stores the frames per second cap to be applied.
 	uint				original_frame_cap;						// Stores the original frame cap at application start.

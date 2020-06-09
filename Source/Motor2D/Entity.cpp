@@ -16,12 +16,12 @@
 #include "Entity.h"
 
 
-Entity::Entity() : tile_position(0, 0), type(ENTITY_TYPE::UNKNOWN), level(1), entity_sprite(nullptr), collider(nullptr), animation(nullptr)
+Entity::Entity() : tile_position(0, 0), type(ENTITY_TYPE::UNKNOWN), level(1), entity_sprite(nullptr), animation(nullptr)
 {
 
 }
 
-Entity::Entity(int x, int y, ENTITY_TYPE type, int level) : tile_position(x, y), type(type), level(level), entity_sprite(nullptr), collider(nullptr), animation(nullptr)	//Initializes the variables to the specified values when the constructor is called.
+Entity::Entity(int x, int y, ENTITY_TYPE type, int level) : tile_position(x, y), type(type), level(level), entity_sprite(nullptr), animation(nullptr)	//Initializes the variables to the specified values when the constructor is called.
 {
 	return;
 }
@@ -30,10 +30,6 @@ Entity::Entity(int x, int y, ENTITY_TYPE type, int level) : tile_position(x, y),
 //{
 //	App->tex->UnLoad(entity_sprite);
 //	entity_sprite = nullptr;
-//	if (collider != nullptr)
-//	{
-//		collider->delete_collider = true;
-//	}
 //
 //}
 
@@ -125,9 +121,4 @@ void Entity::ApplyDamage(Entity* target)
 			}
 		}
 	}
-}
-
-void Entity::OnCollision(Collider* C1, Collider* C2)
-{
-	return;
 }

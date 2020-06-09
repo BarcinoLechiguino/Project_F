@@ -70,11 +70,6 @@ bool Obelisk::CleanUp()
 
 	entity_sprite = nullptr;
 
-	if (collider != nullptr)
-	{
-		collider->to_delete = true;
-	}
-
 	if (is_selected)
 	{
 		App->player->DeleteEntityFromBuffers(this);
@@ -104,8 +99,6 @@ void Obelisk::InitEntity()
 
 	tiles_occupied.x = 1;
 	tiles_occupied.y = 1;
-
-	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
 
 	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetObeliskTexture();

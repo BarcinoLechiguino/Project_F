@@ -14,8 +14,6 @@ DynamicObject::DynamicObject(int x, int y, ENTITY_TYPE type, int level) : Entity
 	pixel_position.x = (float)App->map->MapToWorld(x, y).x;
 	pixel_position.y = (float)App->map->MapToWorld(x, y).y;
 
-	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };
-
 	speed_x_factor = 0.803f;							// Get from config.xml Magic
 	speed_y_factor = 0.59f;								// Get from config.xml
 

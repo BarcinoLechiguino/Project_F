@@ -15,8 +15,6 @@ struct		SDL_Texture;
 struct		SDL_Rect;
 class		Application;
 
-struct		Collider;
-
 class		GuiElement;
 enum class	GUI_EVENT;
 
@@ -95,8 +93,6 @@ public:
 			CleanUp();
 		}
 	}
-
-	virtual void OnCollision(Collider* C1, Collider* C2) {}							//Collision handling
 
 	virtual void OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{

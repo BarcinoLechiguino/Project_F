@@ -70,11 +70,6 @@ bool Rock::CleanUp()
 	App->particle_manager->DeleteEmitter(ShineEmitter);
 
 	entity_sprite = nullptr;
-
-	if (collider != nullptr)
-	{
-		collider->to_delete = true;
-	}
 	
 	if (is_selected)
 	{
@@ -107,8 +102,6 @@ void Rock::InitEntity()
 
 	tiles_occupied.x = 1;
 	tiles_occupied.y = 1;
-
-	selection_collider = { (int)pixel_position.x + 20, (int)pixel_position.y + 20 , 35, 25 };		// THIS ???
 	
 	// TEXTURE & SECTIONS
 	entity_sprite = App->entity_manager->GetRockTexture();
