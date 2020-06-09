@@ -1,13 +1,13 @@
 <!-- Config file for the game -->
 
 <config>
-  <app framerate_cap="60" frame_cap_on="true">
+  <app framerate_cap="60" frame_cap_on="1">
     <title>RTS Project</title>
     <organization>UPC</organization>
   </app>
 	
   <renderer>
-    <vsync value="true"/>
+    <vsync value="1"/>
     <camera x ="1550" y ="-600" smoothing_speed ="0.01f"/>
     <spawn_cam x ="0" y ="-570"/>
     <camera_debug value="false" speed="400.0f"/>

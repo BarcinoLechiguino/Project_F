@@ -16,27 +16,23 @@ struct TileData
 class TileQuadTree : public QuadTree
 {
 public:
-
 	TileQuadTree(SDL_Rect quadtree, uint level, uint max_levels);
 
-	void Subdivide();
-
-	void InsertTile(iPoint position, uint id);
-
-	void DrawQuadtree();
-
+	void Subdivide();							//Divide node's space in 4 subnodes
+	void InsertTile(iPoint position, uint id);	//Insert a tile in corresponding node
+	void DrawQuadtree();						//Draw lines of the quadtree for debug
+	
 public:
 
-	std::vector<TileData> tiles;
+	std::vector<TileData> tiles; //Tiles inside this node
 
-	uint max_tiles; //Max tiles in tree
+	uint max_tiles; //Max tiles in node
 
+	//Quadtree childs
 	TileQuadTree* northWest;
 	TileQuadTree* northEast;
 	TileQuadTree* southWest;
 	TileQuadTree* southEast;
-
-	int i = 0;
 };
 
 #endif // !__TILEQUADTREE__H_
