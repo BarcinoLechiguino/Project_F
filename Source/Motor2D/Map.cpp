@@ -122,7 +122,12 @@ void Map::Draw()
 							iPoint tile_position	= { x, y };
 							iPoint world_position	= MapToWorld(x, y);													//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map world_position: x = 1 --> World world_position: x = 32...
 
-							App->render->Blit(tileset->texture, world_position.x + tileset->offset_x, world_position.y + tileset->offset_y, &tile_rect); //, false, (*layer)->speed)
+							/*if (App->fow_manager->GetVisibilityAt({ x, y }) != UNEXPLORED)
+							{
+								App->render->Blit(tileset->texture, world_position.x + tileset->offset_x, world_position.y + tileset->offset_y, &tile_rect); //, false, (*layer)->speed)
+							}*/
+
+							App->render->Blit(tileset->texture, world_position.x + tileset->offset_x, world_position.y + tileset->offset_y, &tile_rect);
 
 							tiles_drawn++;
 
@@ -145,8 +150,11 @@ void Map::DrawFowTile(const iPoint& tile_position, const iPoint& world_position)
 	SDL_Rect fow_tile_rect	= { 0, 0, 0, 0 };																								// Fow Tile Sprite Section.
 
 	// NO FOW TILE SMOOTHING
-	fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-	App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+	if (fow_state != VISIBLE)
+	{
+		fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+	}
 
 	// --- First tile out of line_of_sight is FOGGED
 	/*if (fow_state == UNEXPLORED && !App->fow_manager->CheckNeighbourTilesVisibility(tile_position))
