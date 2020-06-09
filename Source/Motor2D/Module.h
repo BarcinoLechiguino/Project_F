@@ -23,90 +23,27 @@ enum class	GUI_EVENT;
 class Module
 {
 public:
+	Module();
 
-	Module() : is_active(true)
-	{}
+	void Init();
 
-	void Init()
-	{
-		
-	}
+	virtual bool Awake(pugi::xml_node&);			// Called before render is available
+	virtual bool Start();							// Called before the first frame
+	virtual bool PreUpdate();						// Called each loop iteration
+	virtual bool Update(float dt);					// Called each loop iteration
+	virtual bool PostUpdate();						// Called each loop iteration
+	virtual bool CleanUp();							// Called before quitting
 
-	// Called before render is available
-	virtual bool Awake(pugi::xml_node&)
-	{
-		return true;
-	}
+	void Enable();									//Start()
+	void Disable();									//CleanUp()
 
-	// Called before the first frame
-	virtual bool Start()
-	{
-		return true;
-	}
+public:
+	virtual bool Load(pugi::xml_node&);
+	virtual bool Save(pugi::xml_node&) const;
 
-	// Called each loop iteration
-	virtual bool PreUpdate()
-	{
-		return true;
-	}
-
-	// Called each loop iteration
-	virtual bool Update(float dt)
-	{
-		return true;
-	}
-
-	// Called each loop iteration
-	virtual bool PostUpdate()
-	{
-		return true;
-	}
-
-	// Called before quitting
-	virtual bool CleanUp()
-	{
-		return true;
-	}
-
-	virtual bool Load(pugi::xml_node&)
-	{
-		return true;
-	}
-
-	virtual bool Save(pugi::xml_node&) const
-	{
-		return true;
-	}
-
-	void Enable()																	//Start()
-	{
-		if (!is_active)
-		{
-			is_active = true;
-			Start();
-		}
-	}
-
-	void Disable()																	//CleanUp()
-	{
-		if (is_active)
-		{
-			is_active = false;
-			CleanUp();
-		}
-	}
-
-	virtual void OnCollision(Collider* C1, Collider* C2) {}							//Collision handling
-
-	virtual void OnEventCall(GuiElement* element, GUI_EVENT ui_event)
-	{
-		return;
-	}
-
-	virtual void OnCommand(const char* command, const char* subCommand = nullptr)
-	{
-		return;
-	}
+	virtual void OnCollision(Collider* C1, Collider* C2);							// Collision handling
+	virtual void OnEventCall(GuiElement* element, GUI_EVENT ui_event);				// Gui Event Handling
+	virtual void OnCommand(const char* command, const char* subCommand = nullptr);	// Console Command Handling
 
 public:
 	std::string name;
