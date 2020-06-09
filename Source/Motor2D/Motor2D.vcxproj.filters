@@ -259,6 +259,9 @@
     <ClCompile Include="ProjectileManager.cpp">
       <Filter>Engine  ===========\Modules\Multimedia\Projectile Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Module.cpp">
+      <Filter>Engine  ===========\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">

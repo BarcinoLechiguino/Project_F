@@ -1030,6 +1030,7 @@ void Player::InitializePlayer()
 	pugi::xml_node player = App->config_file.child("config").child("player");
 
 	god_mode					= player.child("god_mode").attribute("value").as_bool();
+	has_saved					= player.child("has_saved").attribute("value").as_bool();
 	is_selecting				= player.child("is_selecting").attribute("value").as_bool();
 	
 	mouse_tile_debug			= App->tex->Load(player.child("mouse_tile_tex").attribute("path").as_string());

@@ -89,6 +89,7 @@
     <ClCompile Include="Dependencies\PugiXml\src\pugixml.cpp" />
     <ClCompile Include="DialogManager.cpp" />
     <ClCompile Include="EnemyUnit.cpp" />
+    <ClCompile Include="Module.cpp" />
     <ClCompile Include="Obelisk.cpp" />
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="CameraToMouse.cpp" />
