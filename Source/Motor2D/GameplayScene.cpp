@@ -851,9 +851,9 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_townhall_descp_string = "The main building of your base.";
 	std::string HUD_townhall_descp_string2 = "If It gets destroyed,";
 	std::string HUD_townhall_descp_string3 = "the game ends.";
-	HUD_description_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 335, 635, HUD_text_townhall_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_townhall, &HUD_townhall_descp_string);
-	HUD_description_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 362, 649, HUD_text_townhall_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_townhall, &HUD_townhall_descp_string2);
-	HUD_description_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 379, 662, HUD_text_townhall_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_townhall, &HUD_townhall_descp_string3);
+	HUD_description_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 335, 635, HUD_text_townhall_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string);
+	HUD_description_townhall2 = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 362, 649, HUD_text_townhall_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string2);
+	HUD_description_townhall3 = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 379, 662, HUD_text_townhall_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_townhall_bar, &HUD_townhall_descp_string3);
 
 	// Resources Upgrade Townhall
 	HUD_parent_resources_upgrade_townhall = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
@@ -1106,9 +1106,9 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_barracks_descp_string = "Trains different military units";
 	std::string HUD_barracks_descp_string2 = "depending on the number of";
 	std::string HUD_barracks_descp_string3 = "resources you acquire.";
-	HUD_description_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 329, 635, HUD_text_barracks_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_barracks, &HUD_barracks_descp_string);
-	HUD_description_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 341, 649, HUD_text_barracks_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_barracks, &HUD_barracks_descp_string2);
-	HUD_description_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 359, 662, HUD_text_barracks_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_title_barracks, &HUD_barracks_descp_string3);
+	HUD_description_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 329, 635, HUD_text_barracks_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string);
+	HUD_description_barracks2 = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 341, 649, HUD_text_barracks_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string2);
+	HUD_description_barracks3 = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 359, 662, HUD_text_barracks_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_barracks_bar, &HUD_barracks_descp_string3);
 
 	// Resources Upgrade Barracks
 	HUD_parent_resources_upgrade_barracks = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
@@ -1692,12 +1692,18 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		// Price to recruit
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_townhall, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall2, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall3, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_gatherer, true);
 	}
 	if (element == HUD_unit_gatherer_townhall && ui_event == GUI_EVENT::UNHOVER)
 	{
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_gatherer, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_townhall, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall2, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall3, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_gatherer, false);
 	}
 	//Upgrade Gatherer
@@ -1732,12 +1738,18 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		// Price to recruit
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_scout, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_townhall, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall2, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall3, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_scout, true);
 	}
 	if (element == HUD_unit_scout_townhall && ui_event == GUI_EVENT::UNHOVER)
 	{
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_townhall_scout, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_townhall, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall2,true);
+		App->gui_manager->SetElementsVisibility(HUD_description_townhall3,true);
 		App->gui_manager->SetElementsVisibility(HUD_title_scout, false);
 	}
 	//Upgrade scout
@@ -1790,12 +1802,18 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		// Price to recruit
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_barracks, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks2, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks3, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_infantry, true);
 	}
 	if (element == HUD_unit_infantry_barracks && ui_event == GUI_EVENT::UNHOVER)
 	{
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_infantry, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_barracks, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks2, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks3, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_infantry, false);
 	}
 	//Upgrade Infantry
@@ -1829,12 +1847,18 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		// Price to recruit
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_heavy, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_barracks, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks2, false);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks3, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_heavy, true);
 	}
 	if (element == HUD_unit_heavy_barracks && ui_event == GUI_EVENT::UNHOVER)
 	{
 		App->gui_manager->SetElementsVisibility(HUD_parent_resources_unit_barracks_heavy, false);
 		App->gui_manager->SetElementsVisibility(HUD_title_barracks, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks2, true);
+		App->gui_manager->SetElementsVisibility(HUD_description_barracks3, true);
 		App->gui_manager->SetElementsVisibility(HUD_title_heavy, false);
 	}
 	//Upgrade Heavy
@@ -1983,12 +2007,16 @@ void GameplayScene::DebugHUDSpawn()
 		switch (App->player->building_selected->type)
 		{
 		case ENTITY_TYPE::TOWNHALL:
+			/*App->gui_manager->CreateSlideAnimation(HUD_barracks_bar, 0.6, false, iPoint(HUD_barracks_bar->GetScreenPos().x, 560), iPoint(HUD_barracks_bar->GetScreenPos().x, 1000));*/
 			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+			/*App->gui_manager->CreateSlideAnimation(HUD_enemy_barracks_bar, 0.6, false, iPoint(HUD_enemy_barracks_bar->GetScreenPos().x, 560), iPoint(HUD_enemy_barracks_bar->GetScreenPos().x, 1000));*/
 			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+			/*App->gui_manager->CreateSlideAnimation(HUD_enemy_townhall_bar, 0.6, false, iPoint(HUD_enemy_townhall_bar->GetScreenPos().x, 560), iPoint(HUD_enemy_townhall_bar->GetScreenPos().x, 1000));*/
 			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
 			if (!HUD_townhall_bar->is_visible)
 			{
 				App->audio->PlayFx(App->entity_manager->townhall_clicked_fx, 0);
+				App->gui_manager->CreateSlideAnimation(HUD_townhall_bar, 0.6, false, iPoint(HUD_townhall_bar->GetScreenPos().x, 1000), iPoint(HUD_townhall_bar->GetScreenPos().x, 560));
 				App->gui_manager->SetElementsVisibility(HUD_townhall_bar, true);
 			}
 
@@ -2001,6 +2029,7 @@ void GameplayScene::DebugHUDSpawn()
 			if (!HUD_enemy_townhall_bar->is_visible)
 			{
 				App->audio->PlayFx(App->entity_manager->townhall_clicked_fx, 0);
+				App->gui_manager->CreateSlideAnimation(HUD_enemy_townhall_bar, 0.6, false, iPoint(HUD_enemy_townhall_bar->GetScreenPos().x, 1000), iPoint(HUD_enemy_townhall_bar->GetScreenPos().x, 560));
 				App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, true);
 			}
 
@@ -2014,6 +2043,7 @@ void GameplayScene::DebugHUDSpawn()
 			if (!HUD_barracks_bar->is_visible)
 			{
 				App->audio->PlayFx(App->entity_manager->barracks_clicked_fx, 0);
+				App->gui_manager->CreateSlideAnimation(HUD_barracks_bar, 0.6, false, iPoint(HUD_barracks_bar->GetScreenPos().x, 1000), iPoint(HUD_barracks_bar->GetScreenPos().x, 560));
 				App->gui_manager->SetElementsVisibility(HUD_barracks_bar, true);
 
 				if (HUD_townhall_bar->is_visible)
@@ -2043,6 +2073,7 @@ void GameplayScene::DebugHUDSpawn()
 			if (!HUD_enemy_barracks_bar->is_visible)
 			{
 				App->audio->PlayFx(App->entity_manager->barracks_clicked_fx, 0);
+				App->gui_manager->CreateSlideAnimation(HUD_enemy_barracks_bar, 0.6, false, iPoint(HUD_enemy_barracks_bar->GetScreenPos().x, 1000), iPoint(HUD_enemy_barracks_bar->GetScreenPos().x, 560));
 				App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, true);
 
 				if (HUD_enemy_townhall_bar->is_visible)
@@ -2070,19 +2101,23 @@ void GameplayScene::DebugHUDSpawn()
 	{
 		if (HUD_townhall_bar->is_visible)
 		{
-			App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);
+			App->gui_manager->CreateSlideAnimation(HUD_townhall_bar, 0.7, true, iPoint(HUD_townhall_bar->GetScreenPos().x, 560), iPoint(HUD_townhall_bar->GetScreenPos().x, 800));
+			/*App->gui_manager->SetElementsVisibility(HUD_townhall_bar, false);*/
 		}
 		if (HUD_barracks_bar->is_visible)
 		{
-			App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);
+			App->gui_manager->CreateSlideAnimation(HUD_barracks_bar, 0.7, true, iPoint(HUD_townhall_bar->GetScreenPos().x, 560), iPoint(HUD_barracks_bar->GetScreenPos().x, 800));
+			/*App->gui_manager->SetElementsVisibility(HUD_barracks_bar, false);*/
 		}
 		if (HUD_enemy_townhall_bar->is_visible)
 		{
-			App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);
+			App->gui_manager->CreateSlideAnimation(HUD_enemy_townhall_bar, 0.7, true, iPoint(HUD_enemy_townhall_bar->GetScreenPos().x, 560), iPoint(HUD_enemy_townhall_bar->GetScreenPos().x, 800));
+			/*App->gui_manager->SetElementsVisibility(HUD_enemy_townhall_bar, false);*/
 		}
 		if (HUD_enemy_barracks_bar->is_visible)
 		{
-			App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);
+			App->gui_manager->CreateSlideAnimation(HUD_enemy_barracks_bar, 0.7, true, iPoint(HUD_enemy_barracks_bar->GetScreenPos().x, 560), iPoint(HUD_enemy_barracks_bar->GetScreenPos().x, 800));
+			/*App->gui_manager->SetElementsVisibility(HUD_enemy_barracks_bar, false);*/
 		}
 	}
 }

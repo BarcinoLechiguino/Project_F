@@ -178,6 +178,8 @@ public:
 	GuiImage*				 HUD_townhall_bar;
 	GuiText*				 HUD_title_townhall;
 	GuiText*				 HUD_description_townhall;
+	GuiText*				 HUD_description_townhall2;
+	GuiText*				 HUD_description_townhall3;
 	GuiButton*				 HUD_unit_gatherer_townhall;
 	GuiButton*				 HUD_unit_scout_townhall;
 
@@ -237,6 +239,8 @@ public:
 	GuiImage*				 HUD_barracks_bar;
 	GuiText*				 HUD_title_barracks;
 	GuiText*				 HUD_description_barracks;
+	GuiText*				 HUD_description_barracks2;
+	GuiText*				 HUD_description_barracks3;
 	GuiButton*				 HUD_unit_infantry_barracks;
 	GuiButton*				 HUD_unit_heavy_barracks;
 
