@@ -568,11 +568,21 @@ bool Application::LoadGameNow()
 
 		data.reset();
 		
-		//Commented
-		/*if (ret == true)
+		if (ret == true)
+		{
 			LOG("...finished loading");
+		}
 		else
-			LOG("...loading process interrupted with error on module %s", ((*item) != NULL) ? (*item)->name.GetString() : "unknown");*/
+		{
+			if ((*item) != nullptr)
+			{
+				LOG("...loading process interrupted with error on module %s", (*item)->name.c_str());
+			}
+			else
+			{
+				LOG("...loading process interrupted with error on module %s", "unknown");
+			}
+		}
 	}
 	else
 	{
@@ -605,14 +615,22 @@ bool Application::SavegameNow() //Chenged to non const due to list unknown probl
 		ret = (*item)->Save(root.append_child((*item)->name.c_str()));
 	}
 
-	/*if (ret == true)
+	if (ret == true)
 	{
-		data.save_file(save_game.GetString());
+		data.save_file(save_game.c_str());
 		LOG("... finished saving", );
 	}
 	else
-		LOG("Save process halted from an error in module %s", ((*item) != NULL) ? (*item)->name.GetString() : "unknown");*/
-
+	{
+		if ((*item) != nullptr)
+		{
+			LOG("Save process halted from an error in module %s", (*item)->name.c_str());
+		}
+		else
+		{
+			LOG("Save process halted from an error in module %s", "unknown");
+		}
+	}
 
 	data.reset();
 	want_to_save = false;

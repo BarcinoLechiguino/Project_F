@@ -125,7 +125,8 @@
 
       <cursor_click path=""/>
     </fx>
-  </gui>    
+  </gui> 
+  
   <scenes>
     <map_name name="gameplay_map.tmx"/>
 

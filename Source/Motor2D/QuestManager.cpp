@@ -9,8 +9,10 @@
 #include "GameplayScene.h"
 #include "Application.h"
 
-QuestManager::QuestManager() {}
-
+QuestManager::QuestManager() 
+{
+	name = ("quest_manager");
+}
 
 QuestManager::~QuestManager()
 {

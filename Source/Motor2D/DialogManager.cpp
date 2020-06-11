@@ -45,6 +45,8 @@ void Dialog::NextBubble() //Next bubble in dialog
 //Dialog System
 DialogManager::DialogManager()
 {
+	name = ("dialog_manager");
+	
 	current_dialog = nullptr;
 	dialog_font = nullptr;
 	font_size = 20;
@@ -88,7 +90,6 @@ bool DialogManager::Update(float dt)
 			break;
 
 		case DIALOG_STATE::SLIDING_IN:
-
 			SlideIn();
 			break;
 

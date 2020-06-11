@@ -16,7 +16,7 @@
 
 SceneManager::SceneManager() : current_scene(nullptr)
 {
-	name = "scene_manager";
+	name = ("scene_manager");
 }
 
 SceneManager::~SceneManager()

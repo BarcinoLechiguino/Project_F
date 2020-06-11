@@ -11,7 +11,7 @@
 
 FowManager::FowManager() : visibility_map(nullptr), debug_visibility_map(nullptr), visibility_map_debug_buffer(nullptr), fow_tex(nullptr), scouting_trail(true), fow_debug(false)
 {
-
+	name = ("fow_manager");
 }
 
 FowManager::~FowManager()

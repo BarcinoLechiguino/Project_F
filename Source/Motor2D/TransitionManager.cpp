@@ -10,7 +10,7 @@
 
 TransitionManager::TransitionManager() : active_transition(nullptr), is_transitioning(false)
 {
-
+	name = ("transition_manager");
 }
 
 TransitionManager::~TransitionManager()

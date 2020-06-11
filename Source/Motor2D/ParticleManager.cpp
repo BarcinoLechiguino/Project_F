@@ -7,7 +7,7 @@
 
 ParticleManager::ParticleManager() : Module()
 {
-	name = "particle_manager";
+	name = ("particle_manager");
 }
 
 ParticleManager::~ParticleManager()

@@ -25,12 +25,9 @@
 
 #include "Map.h"
 
-
-
 Map::Map() : Module(), map_loaded(false), pathfinding_meta_debug(false), walkability_debug(false), entity_map_debug(false),smaller_camera(false)
 {
 	name = ("map");
-	
 }
 
 // Destructor
