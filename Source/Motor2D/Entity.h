@@ -83,6 +83,7 @@ public:
 	virtual void Draw();
 
 	void ApplyDamage(Entity* target);											//Applies the current unit damage to the referenced target, also handles the target health bar.
+	void RecieveDamage(int damage);
 
 public:																			// --- ENTITY VARIABLES ---
 	std::string		name_tag;													//Name of the entity in the xml file.

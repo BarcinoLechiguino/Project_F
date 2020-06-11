@@ -99,26 +99,33 @@ void Entity::ApplyDamage(Entity* target)
 {
 	if (target != nullptr)
 	{
-		if (!App->player->god_mode)
+		
+		if(App->player->god_mode)
 		{
-			target->current_health -= attack_damage;
-			target->healthbar->UpdateHealthbarValue();
-			if (App->entity_manager->IsUnit(target))
+			if (App->entity_manager->IsAllyEntity(target))
 			{
-				Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ target->pixel_position.x, target->pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
+				return;
 			}
 		}
-		else
+
+		target->current_health -= attack_damage;
+		target->healthbar->UpdateHealthbarValue();
+		if (App->entity_manager->IsUnit(target))
 		{
-			if (!App->entity_manager->IsAllyEntity(target))
-			{
-				target->current_health -= attack_damage;
-				target->healthbar->UpdateHealthbarValue();
-				if (App->entity_manager->IsUnit(target))
-				{
-					Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ target->pixel_position.x, target->pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
-				}
-			}
+			Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ target->pixel_position.x, target->pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
 		}
+
+		App->render->DrawLine(this->center_point.x, this->center_point.y, target->center_point.x, target->center_point.y, 255, 0, 0, 255); //debug
+	}
+}
+
+void Entity::RecieveDamage(int damage)
+{
+	current_health -= damage;
+	healthbar->UpdateHealthbarValue();
+
+	if (App->entity_manager->IsUnit(this))
+	{
+		Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ pixel_position.x, pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
 	}
 }

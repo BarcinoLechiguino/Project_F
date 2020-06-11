@@ -14,6 +14,7 @@
 #include "SceneManager.h"
 #include "FowManager.h"
 #include "EntityManager.h"
+#include "ProjectileManager.h"
 
 #include "Infantry.h"
 
@@ -407,7 +408,8 @@ void Infantry::DealDamage()
 	{
 		if (!attack_in_cooldown)
 		{
-			ApplyDamage(target);
+			//ApplyDamage(target);
+			App->projectile_manager->CreateProjectile(pixel_position, 100,attack_damage, target);
 			App->audio->PlayFx(App->entity_manager->infantry_shooting_fx);
 			attack_in_cooldown = true;
 		}

@@ -15,6 +15,7 @@
 #include "Audio.h"
 #include "ParticleManager.h"
 #include "Emitter.h"
+#include "ProjectileManager.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -115,8 +116,6 @@ bool EntityManager::Update(float dt)
 		do_logic = true;
 	}
 
-	int j = 0;
-
 	for (int i = 0; i < (int)entities.size(); ++i)
 	{
 		entities[i]->Update(dt, do_logic);
@@ -124,8 +123,6 @@ bool EntityManager::Update(float dt)
 		if(InViewport(entities[i]) && entities[i]->is_visible) //Entities to be drawn
 		{
 			entities_in_screen.push_back(entities[i]);
-			j++;
-			//LOG("trues %d", j);
 		}
 	}
 
@@ -340,6 +337,8 @@ void EntityManager::DeleteEntity(Entity* entity)
 			entities.erase(item);
 
 			entities.resize(entities.size());		// THIS?
+
+			App->projectile_manager->ClearTargetProjectiles(entity);
 
 			break;
 		}
