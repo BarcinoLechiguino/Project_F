@@ -57,7 +57,7 @@ void Map::Draw()
 
 	int tiles_drawn = 0;
 
-	App->win->GetWindowSize(winWidth, winHeight);																	//Gets the window size so it can be added to the camera collider as parameters.
+	App->win->GetWindowSize(window_width, window_height);																	//Gets the window size so it can be added to the camera collider as parameters.
 
 	std::vector<MapLayer*>::iterator layer = data.layers.begin();
 
@@ -70,19 +70,19 @@ void Map::Draw()
 		
 		if (smaller_camera)
 		{
-			camera_pos_in_pixels.x = -App->render->camera.x + winWidth / 4;
-			camera_pos_in_pixels.y = -App->render->camera.y + winHeight / 4;
+			camera_pos_in_pixels.x = -App->render->camera.x + window_width * 0.25f;			//THIS
+			camera_pos_in_pixels.y = -App->render->camera.y + window_height * 0.25f;
 
-			bottom_right_x = -App->render->camera.x + winWidth / 4 * 3;
-			bottom_right_y = -App->render->camera.y + winHeight / 4 * 3;
+			bottom_right_x = -App->render->camera.x + window_width * 0.25f * 3;
+			bottom_right_y = -App->render->camera.y + window_height * 0.25f * 3;
 		}
 		else
 		{
 			camera_pos_in_pixels.x = -App->render->camera.x;
 			camera_pos_in_pixels.y = -App->render->camera.y;
 
-			bottom_right_x = -App->render->camera.x + winWidth;
-			bottom_right_y = -App->render->camera.y + winHeight;
+			bottom_right_x = -App->render->camera.x + window_width;
+			bottom_right_y = -App->render->camera.y + window_height;
 		}
 
 		min_x_row = WorldToMap(camera_pos_in_pixels.x, camera_pos_in_pixels.y).x;						//Top Left Corner row
@@ -126,9 +126,6 @@ void Map::Draw()
 							App->render->Blit(tileset->texture, world_position.x + tileset->offset_x, world_position.y + tileset->offset_y, &tile_rect);
 
 							tiles_drawn++;
-
-							// DRAWING THE FOG OF WAR							
-							DrawFowTile(tile_position, world_position);
 						}
 					}
 				}
@@ -137,76 +134,6 @@ void Map::Draw()
 	}
 	//(*data.layers.begin())->tiles_tree->DrawQuadtree();
 	//LOG("Tiles drawn: %d", tiles_drawn);
-}
-
-void Map::DrawFowTile(const iPoint& tile_position, const iPoint& world_position)
-{
-	uchar fow_state			= App->fow_manager->GetVisibilityAt(tile_position);																// Can be either UNEXPLORED, FOGGED or VISIBLE.
-	uchar smoothing_state	= 0;																											// Smoothing state of the tile (if it is the case).
-	SDL_Rect fow_tile_rect	= { 0, 0, 0, 0 };																								// Fow Tile Sprite Section.
-
-	// NO FOW TILE SMOOTHING
-	if (fow_state != VISIBLE)
-	{
-		fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-	}
-
-	// --- First tile out of line_of_sight is FOGGED
-	/*if (fow_state == UNEXPLORED && !App->fow_manager->CheckNeighbourTilesVisibility(tile_position))
-	{
-		fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);
-		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-	}
-	else
-	{
-		fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-	}*/
-
-	// FOW TILE SMOOTHING
-	/*if (fow_state == FOGGED)
-	{
-		smoothing_state = (uchar)App->fow_manager->GetSmoothingStateAt(tile_position);
-
-		if (smoothing_state >= (uchar)FOW_SMOOTHING_STATE::UNXTOFOG_TOP)																	// UNEXPLORED TO FOGGED CASE
-		{
-			fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);																		// First a FOGGED tile is printed.
-			App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-
-			smoothing_state = smoothing_state - ((uchar)FOW_SMOOTHING_STATE::UNXTOFOG_TOP - (uchar)FOW_SMOOTHING_STATE::UNEXPLORED_TOP);	// Gets the corresponding UNEXPLORED smoothing state.
-
-			fow_tile_rect = App->fow_manager->GetFowTileRect(smoothing_state);																// Gets the correct UNEXPLORED sprite section.
-			App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-
-			return;
-		}
-		else
-		{
-			if (smoothing_state == (uchar)FOW_SMOOTHING_STATE::NONE)																		// If this is not a smoothing case.
-			{
-				fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);
-				App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-				return;
-			}
-			else
-			{
-				fow_tile_rect = App->fow_manager->GetFowTileRect(smoothing_state);															// Gets the correct FOGGED smoothing sprite section.
-				App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-				return;
-			}
-		}	
-	}
-	else if (fow_state == UNEXPLORED)																										// If this is an UNEXPLORED case.
-	{
-		fow_tile_rect = App->fow_manager->GetFowTileRect(UNEXPLORED);
-		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
-		return;
-	}
-	else
-	{
-		return;
-	}*/
 }
 
 void Map::DataMapDebug()
@@ -853,6 +780,35 @@ bool Map::CheckMapBoundaries(const iPoint& tile_position)
 {
 	return (tile_position.x >= 0 && tile_position.x < (int)data.width &&
 			tile_position.y >= 0 && tile_position.y < (int)data.height);
+}
+
+bool Map::HasMapTile(const iPoint& tile_position)
+{
+	BROFILER_CATEGORY("HasMapTile", Profiler::Color::Red)
+	
+	bool ret = false;
+
+	if (CheckMapBoundaries(tile_position))
+	{
+		std::vector<MapLayer*>::iterator layer = data.layers.begin();
+
+		for (; layer != data.layers.end(); layer++)
+		{
+			if ((*layer)->name == "walkability")
+			{
+				continue;
+			}
+
+			int tile_id = (*layer)->Get(tile_position.x, tile_position.y);
+
+			if (tile_id > 0)
+			{
+				ret = true;
+			}
+		}
+	}
+
+	return ret;
 }
 
 bool Map::CreateWalkabilityMap(int& width, int& height, uchar** buffer)

@@ -181,6 +181,7 @@ public:
 	iPoint TiledIsoCoordsToMap(int x, int y) const;
 	
 	bool CheckMapBoundaries(const iPoint& tile_position);							//This method will check whether or not a given tile position is within the map's bounds.
+	bool HasMapTile(const iPoint& tile_position);									//Will check the gid of every layer to check whether or not the given tile position has a drawn tile.
 
 	bool CreateWalkabilityMap(int& width, int& height, uchar** buffer);				//Changed to non const because of list unknown problem
 	bool CreateEntityMap(int& width, int& height);									//This method will allocate the necessary memory and initialize the entities map. Not need for it to be here.
@@ -191,7 +192,6 @@ public:
 	void GetMapSize(int& w, int& h) const;
 
 	void DrawMapGrid();
-	void DrawFowTile(const iPoint& tile_position, const iPoint& world_position);	// Will draw the corresponding FOW tile given a tile_position.
 
 	TileSet* GetTilesetFromTileId(int id);											//Changed to non const because of list unknown problem
 
@@ -210,9 +210,9 @@ public:
 
 	MapData				data;
 	Point<float>		spawn_position_cam;
-	//Collider			camera_collider;				// Collider that will have the same position and dimensions as the camera. Will be used for camera culling.
-	int					winWidth;						// Declared to store the window's width.
-	int					winHeight;						// Declared to store the window's height.
+
+	int					window_width;					// Declared to store the window's width.
+	int					window_height;					// Declared to store the window's height.
 														   
 	iPoint				cam_tilePos;					// Position of the camera in the X and Y axis in tiles.
 	int					tile_index;						// Will store the tile's index number so the correct tile is loaded.
@@ -222,16 +222,14 @@ public:
 	bool				entity_map_debug;				// Will track whether or not the entity map debug is active or not.
 
 	bool				map_loaded;
-	bool				smaller_camera;
 
 	std::vector<Entity*> tutorial_boulders;
 
-private:
-	pugi::xml_document	map_file;
-	std::string			folder;
+public:													// Camera Culling Variables
+	bool				smaller_camera;
 	
 	iPoint				camera_pos_in_pixels;
-	
+
 	int					bottom_right_x;
 	int					bottom_right_y;
 
@@ -240,6 +238,10 @@ private:
 
 	int					min_y_row;						// Top right corner
 	int					max_y_row;						// Bottom left corner
+
+private:
+	pugi::xml_document	map_file;
+	std::string			folder;
 };
 
 #endif // __MAP_H__

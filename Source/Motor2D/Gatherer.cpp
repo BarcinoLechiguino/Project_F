@@ -300,10 +300,11 @@ void Gatherer::InitEntity()
 
 	// FOG OF WAR
 	is_visible = true;
+	is_neutral = false;
 	provides_visibility = true;
 	range_of_vision = 4;
 
-	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, is_neutral, provides_visibility);
 
 	//fow_entity->frontier = App->fow_manager->CreateRectangularFrontier(range_of_vision, range_of_vision, tile_position);
 	fow_entity->frontier = App->fow_manager->CreateCircularFrontier(range_of_vision, tile_position);

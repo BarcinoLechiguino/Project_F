@@ -113,6 +113,7 @@ public:																			// --- ENTITY VARIABLES ---
 	Animation*		animation;
 																				// --- ENTITY FOW RELATED VARIABLES ---
 	bool			is_visible;													// Will determine whether or not an entity is currently visible. (See FowManager module)
+	bool			is_neutral;													// Will determine whether or not an entity will be seen through FOGGED tiles.
 	bool			provides_visibility;										// Will determine whether or not an entity will grant the player visibility over the Fog of War.
 	uint			range_of_vision;											// Radius in which a given entity will grant vision. In tiles.
 
