@@ -73,8 +73,3 @@ void Module::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 {
 	return;
 }
-
-void Module::OnCommand(const char* command, const char* subCommand)
-{
-	return;
-}

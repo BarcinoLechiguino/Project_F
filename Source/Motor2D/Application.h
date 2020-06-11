@@ -23,7 +23,6 @@ class PathFinding;
 class EntityManager;
 class Fonts;
 class GuiManager;
-class Console;
 class Player;
 class TransitionManager;
 class SceneManager;
@@ -91,7 +90,6 @@ public:
 	PathFinding*		pathfinding;
 	EntityManager*		entity_manager;
 	GuiManager*			gui_manager;
-	Console*			console;
 	Player*				player;
 	TransitionManager*	transition_manager;
 	SceneManager*		scene_manager;

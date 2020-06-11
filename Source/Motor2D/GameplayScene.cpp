@@ -14,7 +14,6 @@
 #include "Map.h"
 #include "Minimap.h"
 #include "Pathfinding.h"
-#include "Console.h"
 #include "Player.h"
 #include "Scene.h"
 #include "DialogManager.h"

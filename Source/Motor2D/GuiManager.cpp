@@ -8,7 +8,6 @@
 #include "Input.h"
 #include "Audio.h"
 #include "Fonts.h"
-#include "Console.h"
 #include "Entity.h"
 #include "Player.h"									// TMP CONTROLLER
 #include "SceneManager.h"
@@ -74,8 +73,6 @@ bool GuiManager::Start()
 		audio_already_loaded = true;
 	}
 
-	//CreateGuiCommands();
-
 	return true;
 }
 
@@ -106,23 +103,6 @@ bool GuiManager::PreUpdate()
 			}
 		}
 	}
-	
-
-	// CONSOLE MANAGING
-	/*if (App->input->GetKey(SDL_SCANCODE_GRAVE) == KEY_DOWN)			//  Bring this to console.cpp?
-	{
-		SetElementsVisibility(App->console->console_background, !App->console->console_background->is_visible);
-		//SetElementsVisibility(App->scene->upper_bar, !App->scene->upper_bar->is_visible);							//As it does not currently exist it CTDs on a nullptr
-
-		
-		App->input->ClearTextInput();
-
-		if (App->console->console_background->is_visible)
-		{
-			focused_element = App->console->console_input;
-		}
-	}*/
-	
 
 	return true;
 }
@@ -131,8 +111,6 @@ bool GuiManager::PreUpdate()
 bool GuiManager::PostUpdate()
 {	
 	BROFILER_CATEGORY("GUI_PostUpdate", Profiler::Color::NavajoWhite);
-	
-	//App->console->DrawBackgroundElement();		//THIS HERE CONSOLE
 
 	for (int i = 0; i < (int)ui_animations.size(); ++i)
 	{
@@ -755,34 +733,4 @@ void GuiManager::Debug_UI()
 	}
 }
 
-void GuiManager::CreateGuiCommands()
-{
-	quit_command		= "quit";
-	enable_ui_debug		= "enable_ui_debug";
-	disable_ui_debug	= "disable_ui_debug";
-
-	App->console->CreateCommand(quit_command, this, 1, 1);
-	App->console->CreateCommand(enable_ui_debug, this, 1, 1);
-	App->console->CreateCommand(disable_ui_debug, this, 1, 1);
-}
-
-void GuiManager::OnCommand(const char* command, const char* subCommand)
-{	
-	if (App->input->CmpStr(command, quit_command))
-	{
-		escape = false;
-	}
-
-	if (App->input->CmpStr(command, enable_ui_debug))
-	{
-		ui_debug = true;
-	}
-
-	if (App->input->CmpStr(command, disable_ui_debug))
-	{
-		ui_debug = false;
-	}
-}
-
 // class Gui ---------------------------------------------------
-
