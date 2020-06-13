@@ -39,7 +39,6 @@ public:
 	virtual bool Save(pugi::xml_node&) const;
 
 	virtual void OnEventCall(GuiElement* element, GUI_EVENT ui_event);				// Gui Event Handling
-	virtual void OnCommand(const char* command, const char* subCommand = nullptr);	// Console Command Handling
 
 public:
 	std::string name;

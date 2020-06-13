@@ -14,7 +14,6 @@
 #include "EntityManager.h"
 #include "Pathfinding.h"
 #include "GuiManager.h"
-#include "Console.h"
 #include "Player.h"
 #include "Minimap.h"
 #include "TransitionManager.h"
@@ -51,7 +50,6 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	minimap				= new Minimap();
 	font				= new Fonts();
 	gui_manager			= new GuiManager();
-	console				= new Console();
 	player				= new Player();
 	transition_manager	= new TransitionManager();
 	scene_manager		= new SceneManager();
@@ -72,7 +70,6 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(map);
 	AddModule(pathfinding);
 	AddModule(font);
-	AddModule(console);
 	AddModule(movement);
 	
 	// scene_manager last before render.
@@ -568,11 +565,21 @@ bool Application::LoadGameNow()
 
 		data.reset();
 		
-		//Commented
-		/*if (ret == true)
+		if (ret == true)
+		{
 			LOG("...finished loading");
+		}
 		else
-			LOG("...loading process interrupted with error on module %s", ((*item) != NULL) ? (*item)->name.GetString() : "unknown");*/
+		{
+			if ((*item) != nullptr)
+			{
+				LOG("...loading process interrupted with error on module %s", (*item)->name.c_str());
+			}
+			else
+			{
+				LOG("...loading process interrupted with error on module %s", "unknown");
+			}
+		}
 	}
 	else
 	{
@@ -605,14 +612,22 @@ bool Application::SavegameNow() //Chenged to non const due to list unknown probl
 		ret = (*item)->Save(root.append_child((*item)->name.c_str()));
 	}
 
-	/*if (ret == true)
+	if (ret == true)
 	{
-		data.save_file(save_game.GetString());
+		data.save_file(save_game.c_str());
 		LOG("... finished saving", );
 	}
 	else
-		LOG("Save process halted from an error in module %s", ((*item) != NULL) ? (*item)->name.GetString() : "unknown");*/
-
+	{
+		if ((*item) != nullptr)
+		{
+			LOG("Save process halted from an error in module %s", (*item)->name.c_str());
+		}
+		else
+		{
+			LOG("Save process halted from an error in module %s", "unknown");
+		}
+	}
 
 	data.reset();
 	want_to_save = false;

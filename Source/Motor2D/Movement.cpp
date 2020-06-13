@@ -12,7 +12,7 @@
 
 Movement::Movement()
 {
-
+	name = ("movement");
 }
 
 Movement::~Movement()

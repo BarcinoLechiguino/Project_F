@@ -108,9 +108,10 @@ void Boulder::InitEntity()
 
 	// FOG OF WAR
 	is_visible = false;
+	is_neutral = true;
 	provides_visibility = false;
 
-	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, is_neutral, provides_visibility);
 }
 
 void Boulder::AttachHealthbarToEntity()

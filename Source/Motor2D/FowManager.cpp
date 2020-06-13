@@ -2,6 +2,7 @@
 
 #include "Point.h"
 #include "Application.h"
+#include "Window.h"
 #include "Textures.h"
 #include "Input.h"
 #include "Map.h"
@@ -11,7 +12,7 @@
 
 FowManager::FowManager() : visibility_map(nullptr), debug_visibility_map(nullptr), visibility_map_debug_buffer(nullptr), fow_tex(nullptr), scouting_trail(true), fow_debug(false)
 {
-
+	name = ("fow_manager");
 }
 
 FowManager::~FowManager()
@@ -76,8 +77,9 @@ bool FowManager::Update(float dt)
 		}
 
 		UpdateEntitiesFowManipulation();
-
 		UpdateEntitiesVisibility();
+
+		DrawFowTiles();
 	}
 	else
 	{
@@ -98,6 +100,101 @@ bool FowManager::PostUpdate()
 bool FowManager::CleanUp()
 {
 	return true;
+}
+
+void FowManager::DrawFowTiles()
+{
+	BROFILER_CATEGORY("DrawFowTiles", Profiler::Color::Orange)
+	
+	// Getting the variables from the Map module works as the map module is executed before the fow_manager module is.
+	iPoint camera_tile_position = { App->map->min_x_row, App->map->min_y_row };			// First tile inside the camera's bounds (top-leftmost tile).	
+	iPoint camera_tile_limit = { App->map->max_x_row, App->map->max_y_row };			// Last tile inside the camera's bounds (bottom-rightmost tile).
+
+	for (int x = camera_tile_position.x; x < camera_tile_limit.x; ++x)
+	{
+		for (int y = camera_tile_position.y; y < camera_tile_limit.y; ++y)
+		{
+			if (App->map->HasMapTile({ x, y }))											// May consume more ms as layer number increases.
+			{
+				iPoint tile_position = { x, y };
+				iPoint world_position = App->map->MapToWorld(x, y);						//Gets the position on the world (in pixels) of a specific point (in tiles). In the case of orthogonal maps the x and y are multiplied by the tile's width  or height. If 32x32, Map world_position: x = 1 --> World world_position: x = 32...
+
+				// DRAWING THE FOG OF WAR							
+				uchar fow_state = GetVisibilityAt(tile_position);						// Can be either UNEXPLORED, FOGGED or VISIBLE.
+				SDL_Rect fow_tile_rect = { 0, 0, 0, 0 };								// Fow Tile Sprite Section.
+
+				// NO FOW TILE SMOOTHING
+				if (fow_state != VISIBLE)
+				{
+					fow_tile_rect = GetFowTileRect(fow_state);
+					App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+				}
+
+				//SmoothFowTiles(tile_position, world_position, fow_state, fow_tile_rect);
+			}
+		}
+	}
+}
+
+void FowManager::SmoothFowTiles(iPoint tile_position, iPoint world_position, uchar fow_state, SDL_Rect fow_tile_rect)
+{
+	uchar smoothing_state = 0;																												// Smoothing state of the tile (if it is the case).
+	
+	// --- First tile out of line_of_sight is FOGGED
+	if (fow_state == UNEXPLORED && !App->fow_manager->CheckNeighbourTilesVisibility(tile_position))
+	{
+		fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);
+		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+	}
+	else
+	{
+		fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
+		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+	}
+
+	 //FOW TILE SMOOTHING
+	if (fow_state == FOGGED)
+	{
+		smoothing_state = (uchar)App->fow_manager->GetSmoothingStateAt(tile_position);
+
+		if (smoothing_state >= (uchar)FOW_SMOOTHING_STATE::UNXTOFOG_TOP)																	// UNEXPLORED TO FOGGED CASE
+		{
+			fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);																		// First a FOGGED tile is printed.
+			App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+
+			smoothing_state = smoothing_state - ((uchar)FOW_SMOOTHING_STATE::UNXTOFOG_TOP - (uchar)FOW_SMOOTHING_STATE::UNEXPLORED_TOP);	// Gets the corresponding UNEXPLORED smoothing state.
+
+			fow_tile_rect = App->fow_manager->GetFowTileRect(smoothing_state);																// Gets the correct UNEXPLORED sprite section.
+			App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+
+			return;
+		}
+		else
+		{
+			if (smoothing_state == (uchar)FOW_SMOOTHING_STATE::NONE)																		// If this is not a smoothing case.
+			{
+				fow_tile_rect = App->fow_manager->GetFowTileRect(FOGGED);
+				App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+				return;
+			}
+			else
+			{
+				fow_tile_rect = App->fow_manager->GetFowTileRect(smoothing_state);															// Gets the correct FOGGED smoothing sprite section.
+				App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+				return;
+			}
+		}
+	}
+	else if (fow_state == UNEXPLORED)																										// If this is an UNEXPLORED case.
+	{
+		fow_tile_rect = App->fow_manager->GetFowTileRect(UNEXPLORED);
+		App->render->Blit(App->fow_manager->fow_tex, world_position.x - 5, world_position.y - 19, &fow_tile_rect);
+		return;
+	}
+	else
+	{
+		return;
+	}
 }
 
 void FowManager::SetVisibilityMap(const int& width, const int& height)
@@ -527,11 +624,11 @@ SDL_Rect FowManager::GetFowTileRect(const uchar& visibility_state)
 }
 
 // ---------------- FOW ENTITY METHODS ----------------
-FowEntity* FowManager::CreateFowEntity(const iPoint& tile_position, bool provides_visibility)
+FowEntity* FowManager::CreateFowEntity(const iPoint& tile_position, bool is_neutral, bool provides_visibility)
 {
 	FowEntity* fow_entity = nullptr;
 
-	fow_entity = new FowEntity(tile_position, provides_visibility);
+	fow_entity = new FowEntity(tile_position, is_neutral, provides_visibility);
 
 	if (fow_entity != nullptr)
 	{
@@ -694,9 +791,21 @@ void FowManager::UpdateEntitiesVisibility()
 {
 	for (uint i = 0; i < fow_entities.size(); ++i)
 	{
-		if (GetVisibilityAt(fow_entities[i]->position) != VISIBLE)
+		uchar fow_state = GetVisibilityAt(fow_entities[i]->position);
+		
+		if (fow_state != VISIBLE)
 		{
-			fow_entities[i]->is_visible = false;
+			if (fow_entities[i]->is_neutral)
+			{
+				if (fow_state == UNEXPLORED)						// If the entity is neutral and the tile is not VISIBLE nor FOGGED.
+				{
+					fow_entities[i]->is_visible = false;
+				}
+			}
+			else
+			{
+				fow_entities[i]->is_visible = false;
+			}
 		}
 		else
 		{
@@ -1063,15 +1172,16 @@ void FowManager::InitFowManager()
 }
 
 // --- FOW_Entity methods ---
-FowEntity::FowEntity() : position({ 0, 0 }), motion({ 0, 0 }), is_visible(false), provides_visibility(false), has_moved(false)
+FowEntity::FowEntity() : position({ 0, 0 }), motion({ 0, 0 }), is_visible(false), is_neutral(false), provides_visibility(false), has_moved(false)
 {
 
 }
 
-FowEntity::FowEntity(const iPoint& position, const bool provides_visibility) 
+FowEntity::FowEntity(const iPoint& position, const bool is_neutral, const bool provides_visibility)
 	: position(position)
 	, motion({ 0, 0 })
 	, is_visible(false)																	// TMP. Check if it is worth it to make it a constructor parameter.
+	, is_neutral(is_neutral)
 	, provides_visibility(provides_visibility)
 	, has_moved(false)
 {

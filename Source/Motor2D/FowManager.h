@@ -80,7 +80,7 @@ enum class FOW_SMOOTHING_STATE
 struct FowEntity
 {
 	FowEntity();
-	FowEntity(const iPoint& position, const bool provides_visibility);
+	FowEntity(const iPoint& position, const bool is_neutral, const bool provides_visibility);
 
 	void CleanUp();
 
@@ -90,6 +90,7 @@ struct FowEntity
 	iPoint motion;
 
 	bool is_visible;
+	bool is_neutral;													// Resources and obstacles are neutral entities. Neutral entities can be seen through FOGGED tiles.
 	bool provides_visibility;
 	bool has_moved;
 
@@ -109,6 +110,9 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+	
+	void DrawFowTiles();
+	void SmoothFowTiles(iPoint tile_position, iPoint world_position, uchar fow_state, SDL_Rect fow_tile_rect);
 
 public:
 	void SetVisibilityMap(const int& width, const int& height);													// Will create the the visibility_map along the debug_visibility_map.
@@ -127,7 +131,7 @@ public:
 
 	SDL_Rect GetFowTileRect(const uchar& visibility_state);														// Will get the corresponding FOW tile section rect for a given visibility state.
 
-	FowEntity* CreateFowEntity(const iPoint& tile_position, bool provides_visibility);
+	FowEntity* CreateFowEntity(const iPoint& tile_position, bool is_neutral, bool provides_visibility);
 	void DeleteFowEntity(FowEntity* fow_entity_to_delete);														// Will delete the given FowEntity from the fow_entities vector.
 	void ClearFowEntityLineOfSight(FowEntity* fow_entity_to_clear);												// Will add the tiles inside the line_of_sight of an entity to tiles_to_reset.
 	void DestroyFowEntities();																					// Will delete all fow_entities and will clear the fow_entities vector.
@@ -155,6 +159,8 @@ private:
 	void DebugUpdateEntitiesFowManipulation();													// Will update all entities  line_of_sight and frontier position in fow_debug mode.
 	void DebugLineOfSight();
 	void DebugFrontier();
+
+	
 
 public:
 	SDL_Texture* fow_tex;

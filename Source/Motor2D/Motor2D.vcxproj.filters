@@ -187,9 +187,6 @@
     <ClCompile Include="GuiText.cpp">
       <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
     </ClCompile>
-    <ClCompile Include="Console.cpp">
-      <Filter>Engine  ===========\Modules\Gui\Console</Filter>
-    </ClCompile>
     <ClCompile Include="GuiAnimation.cpp">
       <Filter>Engine  ===========\Modules\Gui\Gui Animations</Filter>
     </ClCompile>
@@ -462,9 +459,6 @@
     <ClInclude Include="GuiText.h">
       <Filter>Engine  ===========\Modules\Gui\Gui Elements</Filter>
     </ClInclude>
-    <ClInclude Include="Console.h">
-      <Filter>Engine  ===========\Modules\Gui\Console</Filter>
-    </ClInclude>
     <ClInclude Include="GuiAnimation.h">
       <Filter>Engine  ===========\Modules\Gui\Gui Animations</Filter>
     </ClInclude>
@@ -630,9 +624,6 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Gui\Gui Elements">
       <UniqueIdentifier>{c2435af3-f09d-455b-ab4b-859dd5daf90c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine  ===========\Modules\Gui\Console">
-      <UniqueIdentifier>{51ed0ee9-06de-4b6f-b7cb-42d8f01e37b0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine  ===========\Modules\Entities\Static\Obstacles">
       <UniqueIdentifier>{4fae6b27-4019-4f85-924e-c8dcad5158ec}</UniqueIdentifier>

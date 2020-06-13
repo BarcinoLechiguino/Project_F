@@ -36,7 +36,7 @@
 
 Player::Player() : building_selected(nullptr), resource_selected(nullptr), mouse_tile_debug(nullptr)
 {
-
+	name = ("player");
 }
 
 Player::~Player()

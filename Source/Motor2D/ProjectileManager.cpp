@@ -67,7 +67,7 @@ void Projectile::Draw()
 
 ProjectileManager::ProjectileManager()
 {
-
+	name = ("projectile_manager");
 }
 
 ProjectileManager::~ProjectileManager()

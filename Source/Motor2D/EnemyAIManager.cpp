@@ -20,7 +20,7 @@ EnemyAIManager::EnemyAIManager() : Module()
 , ally_townhall_string("ally_townhall")
 , ally_barracks_string("ally_barracks")
 {
-	
+	name = ("enemy_AI_manager");
 }
 
 EnemyAIManager::~EnemyAIManager()

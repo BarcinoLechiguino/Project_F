@@ -94,7 +94,6 @@
     <ClCompile Include="Building.cpp" />
     <ClCompile Include="CameraToMouse.cpp" />
     <ClCompile Include="Color.cpp" />
-    <ClCompile Include="Console.cpp" />
     <ClCompile Include="Cut.cpp" />
     <ClCompile Include="DynamicObject.cpp" />
     <ClCompile Include="EasingFunctions.cpp" />
@@ -184,7 +183,6 @@
     <ClInclude Include="Building.h" />
     <ClInclude Include="CameraToMouse.h" />
     <ClInclude Include="Color.h" />
-    <ClInclude Include="Console.h" />
     <ClInclude Include="Cut.h" />
     <ClInclude Include="DynamicObject.h" />
     <ClInclude Include="EasingFunctions.h" />

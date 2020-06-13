@@ -45,8 +45,6 @@ public:																		//  ------------------ GUI ELEMENT CREATION/DESTRUCTION
 	GuiElement* CreateButton(GUI_ELEMENT_TYPE type, int x, int y, bool is_visible = true, bool is_interactible = true, bool is_draggable = false, Module* listener = nullptr, GuiElement* parent = nullptr
 				, SDL_Rect* idle = nullptr, SDL_Rect* hover = nullptr, SDL_Rect* clicked = nullptr);
 
-	GuiElement* CreateUI_Window(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, bool is_visible = true, bool is_interactible = false, bool is_draggable = false, GuiElement* parent = nullptr);
-
 	GuiElement* CreateInputBox(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, _TTF_Font* font, SDL_Color font_colour, SDL_Rect cursor, SDL_Color cursor_colour, iPoint text_offset
 					, float blink_frequency = 0.0f, bool is_visible = true, bool is_interactible = false, bool is_draggable = false, Module* listener = nullptr, GuiElement* parent = nullptr
 					, std::string* default_string = nullptr, bool empty_elements = false);
@@ -100,20 +98,12 @@ public:																		// ------------------ GUI ELEMENT MANAGEMENT METHODS --
 
 	void Debug_UI();														//Shows on screen the different rects that compose the UI Display.
 
-	void CreateGuiCommands();												//Creates all Gui relevant commands.
-	void OnCommand(const char* command, const char* subCommand = nullptr);	//Gui OnCommand() method overload.
-
 public:																		// --- GUI PUBLIC VARIABLES ---
 	GuiElement*							focused_element;							//Change to list item
 	std::vector<GuiElement*>::iterator	iterated_element;
 
 	bool						escape;										//When this bool is true the game is exited.
 	bool						ui_debug;									//When this bool is true, debug mode is activated.
-	
-	//Command Strings
-	const char*					quit_command;
-	const char*					enable_ui_debug;
-	const char*					disable_ui_debug;
 
 public:																		// --- GUI AUDIO VARIABLES ---
 	bool						audio_already_loaded;

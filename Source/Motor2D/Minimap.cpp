@@ -18,7 +18,7 @@
 
 Minimap::Minimap() : Module(), minimap_loaded(false)
 {
-	name = "minimap";
+	name = ("minimap");
 }
 
 Minimap::~Minimap() {}

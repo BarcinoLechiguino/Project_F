@@ -234,9 +234,10 @@ void EnemyBarracks::InitEntity()
 
 	// FOG OF WAR
 	is_visible = false;
+	is_neutral = false;
 	provides_visibility = false;
 
-	fow_entity = App->fow_manager->CreateFowEntity(tile_position, provides_visibility);
+	fow_entity = App->fow_manager->CreateFowEntity(tile_position, is_neutral, provides_visibility);
 
 	// ENEMY AI
 	enemy_AI_entity = App->enemy_AI_manager->CreateEnemyAIEntity(this);
