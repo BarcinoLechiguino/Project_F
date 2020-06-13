@@ -331,14 +331,14 @@ void EntityManager::DeleteEntity(Entity* entity)
 				App->audio->PlayFx(explosion_units_die_fx);
 			}
 			
+			App->projectile_manager->ClearTargetProjectiles(entity);
+
 			(*item)->CleanUp();
 			RELEASE((*item));
 
 			entities.erase(item);
 
 			entities.resize(entities.size());		// THIS?
-
-			App->projectile_manager->ClearTargetProjectiles(entity);
 
 			break;
 		}

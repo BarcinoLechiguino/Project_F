@@ -79,7 +79,7 @@ bool GuiCursor::Draw()
 		}
 	}
 
-	BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &current_section, 0.0f, 1.0f);
+	//BlitElement(tex, GetScreenPos().x, GetScreenPos().y, &current_section, 0.0f, 1.0f);
 
 	return true;
 }

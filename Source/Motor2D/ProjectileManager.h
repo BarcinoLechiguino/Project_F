@@ -1,5 +1,6 @@
 #include "Module.h"
 #include "Point.h"
+#include "Timer.h"
 
 class Entity;
 
@@ -10,11 +11,15 @@ struct Projectile
 
 	bool Update(float dt);
 	void Draw();
+	void CleanUp();
 
 	fPoint position;
+	fPoint target_position;
 	float speed;
 	int damage;
+	bool is_target_alive;
 	Entity* target;
+	Timer life;
 };
 
 
@@ -38,4 +43,6 @@ public:
 public:
 
 	std::vector<Projectile*> projectiles;
+
+	int iterator;
 };

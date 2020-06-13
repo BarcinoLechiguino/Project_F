@@ -121,6 +121,13 @@ void Entity::ApplyDamage(Entity* target)
 
 void Entity::RecieveDamage(int damage)
 {
+	if (App->player->god_mode)
+	{
+		if (App->entity_manager->IsAllyEntity(this))
+		{
+			return;
+		}
+	}
 	current_health -= damage;
 	healthbar->UpdateHealthbarValue();
 
