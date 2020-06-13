@@ -17,9 +17,7 @@ class GuiCursor;
 class Player : public Module
 {
 public:
-
 	Player();
-
 	~Player();
 
 	bool Awake(pugi::xml_node& conf);
@@ -28,6 +26,9 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&);
 
 public:
 	void InitializePlayer();

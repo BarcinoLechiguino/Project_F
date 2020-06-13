@@ -30,6 +30,9 @@ public:
 
 	void DrawEntities();
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&);
+
 public:																					// -------------- ENTITY CREATION & DESTRUCTION METHODS --------------
 	Entity* CreateEntity(ENTITY_TYPE type, int x = 0, int y = 0, int level = 1);		// Crates a new entity depending on the ENTITY_TYPE passed as argument. 
 	void DestroyEntities();																// Calls the CleanUp() method of each entity and then it clears the entities list.

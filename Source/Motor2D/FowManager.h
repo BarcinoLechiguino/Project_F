@@ -111,6 +111,9 @@ public:
 	bool PostUpdate();
 	bool CleanUp();
 	
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&);
+
 	void DrawFowTiles();
 	void SmoothFowTiles(iPoint tile_position, iPoint world_position, uchar fow_state, SDL_Rect fow_tile_rect);
 
@@ -176,6 +179,8 @@ private:
 	uchar* visibility_map;										// 2D container that will store the FOW state of each tile in the map.
 	uchar* debug_visibility_map;								// Visibility map used for debug pursposes.	All the tiles will be VISIBLE.
 	uchar* visibility_map_debug_buffer;							// Buffer that will allow to swap between the visibility_map and debug_visibility_without issue.
+
+	uchar* saved_visibility_map;
 
 	FOW_SMOOTHING_STATE smoothing_state;
 	

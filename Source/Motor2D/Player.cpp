@@ -120,6 +120,22 @@ bool Player::CleanUp()
 	return true;
 }
 
+bool Player::Load(pugi::xml_node& data)
+{
+	ClearEntityBuffers();
+
+	god_mode = data.child("god_mode").attribute("value").as_bool();
+
+	return true;
+}
+
+bool Player::Save(pugi::xml_node& data)
+{
+	data.append_child("god_mode").append_attribute("value") = god_mode;
+
+	return true;
+}
+
 // ------------------- CAMERA AND MOUSE METHODS -------------------
 void Player::CursorCalculations()
 {

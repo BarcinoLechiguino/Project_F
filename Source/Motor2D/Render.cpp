@@ -121,7 +121,7 @@ bool Render::Load(pugi::xml_node& data)
 }
 
 // Save Game State
-bool Render::Save(pugi::xml_node& data) const
+bool Render::Save(pugi::xml_node& data)
 {
 	pugi::xml_node cam = data.append_child("camera");
 

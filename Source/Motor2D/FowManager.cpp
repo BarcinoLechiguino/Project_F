@@ -42,6 +42,12 @@ FowManager::~FowManager()
 		delete[] visibility_map;
 		visibility_map = nullptr;
 	}
+
+	if (saved_visibility_map != nullptr)
+	{
+		delete[] saved_visibility_map;
+		saved_visibility_map = nullptr;
+	}
 }
 
 bool FowManager::Awake(pugi::xml_node& config)
@@ -99,6 +105,40 @@ bool FowManager::PostUpdate()
 
 bool FowManager::CleanUp()
 {
+	return true;
+}
+
+bool FowManager::Load(pugi::xml_node& data)
+{
+	bool tmp = data.child("fow_debug").attribute("value").as_bool();
+
+	if (fow_debug != tmp)
+	{
+		fow_debug = tmp;
+		SwapVisibilityMaps();
+	}
+
+	int map_size = visibility_map_width * visibility_map_height;
+
+	for (int i = 0; i < map_size; ++i)
+	{
+		visibility_map[i] = saved_visibility_map[i];
+	}
+
+	return true;
+}
+
+bool FowManager::Save(pugi::xml_node& data)
+{
+	data.append_child("fow_debug").append_attribute("value") = fow_debug;
+
+	int map_size = visibility_map_width * visibility_map_height;
+
+	for (int i = 0; i < map_size; ++i)
+	{
+		saved_visibility_map[i] = visibility_map[i];
+	}
+
 	return true;
 }
 
@@ -214,6 +254,9 @@ void FowManager::SetVisibilityMap(const int& width, const int& height)
 
 	debug_visibility_map = new uchar[map_size];
 	memset(debug_visibility_map, VISIBLE, map_size);								// Will set the state of all the tiles in the container to VISIBLE. (For debug purposes).
+
+	saved_visibility_map = new uchar[map_size];
+	memset(saved_visibility_map, VISIBLE, map_size);
 }
 
 void FowManager::ChangeVisibilityMap(const iPoint& tile_position, const uchar& visibility)
@@ -295,6 +338,12 @@ void FowManager::ClearVisibilityMapContainers()
 
 		delete[] visibility_map;
 		visibility_map = nullptr;
+	}
+
+	if (saved_visibility_map != nullptr)
+	{
+		delete[] saved_visibility_map;
+		saved_visibility_map = nullptr;
 	}
 }
 
