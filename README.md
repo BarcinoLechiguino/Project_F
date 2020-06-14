@@ -252,25 +252,48 @@ No previous installation is required to play the game, just download the latest 
 
 #### God Mode Keys 
 
-* **Spawn Unit Debug Keys:**
-  * **G Key:** Spawn **Gatherer Unit** at mouse position.
-  * **S Key:** Spawn **Scout Unit** at mouse position.
-  * **I Key:** Spawn **Infantry Unit** at mouse position.
-  * **O Key:** Spawn **Heavy Unit** at mouse position.
-  * **7 Key:** Spawn **Enemy Gatherer Unit** at mouse position.
-  * **8 Key:** Spawn **Enemy Scout Unit** at mouse position.
-  * **9 Key:** Spawn **Enemy Infantry Unit** at mouse position.
-  * **0 Key:** Spawn **Enemy Heavy Unit** at mouse position.
-  * **H Key:** Spawn **Town-hall Building** at mouse position.
-  * **B Key:** Spawn **Barracks Building** at mouse position.
-  * **W Key:** Spawn **Wall Building** at mouse position. (Work in progress)
-  * **J Key:** Spawn **Enemy Town-hall Building** at mouse position.
-  * **N Key:**  Spawn **Enemy Barracks Building** at mouse position.
-  * **E Key:**  Spawn **Enemy Wall Building** at mouse position. (Work in progress)
-  * **R Key:** Spawn **Rock Resource** at mouse position.
-  * **T Key:** Spawn **Tree Resource** at mouse position.
-  * **Y Key:** Spawn **Obelisk Resource** at mouse position.
-  * **Q Key:** Spawn **Boulder Obstacle** at mouse position.
+* **Spawn Entity Debug Keys:**
+  
+  * **Units:**
+  
+    * **G Key:** Spawn **Gatherer Unit** at mouse position.
+  
+    * **S Key:** Spawn **Scout Unit** at mouse position.
+  
+    * **I Key:** Spawn **Infantry Unit** at mouse position.
+  
+    * **O Key:** Spawn **Heavy Unit** at mouse position.
+  
+    * **7 Key:** Spawn **Enemy Gatherer Unit** at mouse position.
+  
+    * **8 Key:** Spawn **Enemy Scout Unit** at mouse position.
+  
+    * **9 Key:** Spawn **Enemy Infantry Unit** at mouse position.
+  
+    * **0 Key:** Spawn **Enemy Heavy Unit** at mouse position.
+  
+      
+  * **Buildings:**
+  
+    * **H Key:** Spawn **Town-hall Building** at mouse position.
+  
+    * **B Key:** Spawn **Barracks Building** at mouse position.
+  
+    * **W Key:** Spawn **Wall Building** at mouse position. (Work in progress)
+  
+    * **J Key:** Spawn **Enemy Town-hall Building** at mouse position.
+  
+    * **N Key:**  Spawn **Enemy Barracks Building** at mouse position.
+  
+    * **E Key:**  Spawn **Enemy Wall Building** at mouse position. (Work in progress)
+  
+      
+  * **Resources & Obstacles:**
+  
+    * **R Key:** Spawn **Rock Resource** at mouse position.
+    * **T Key:** Spawn **Tree Resource** at mouse position.
+    * **Y Key:** Spawn **Obelisk Resource** at mouse position.
+    * **Q Key:** Spawn **Boulder Obstacle** at mouse position.
 
 
 
