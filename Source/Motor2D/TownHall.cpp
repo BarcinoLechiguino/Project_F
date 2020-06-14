@@ -48,6 +48,8 @@ bool TownHall::PreUpdate()
 
 bool TownHall::Update(float dt, bool do_logic)
 {
+	UpdateRedState();
+	
 	if (creation_queue.size() != 0)
 	{
 		if (!creating_unit)
@@ -115,7 +117,12 @@ bool TownHall::CleanUp()
 
 void TownHall::Draw()
 {
-	App->render->Blit(entity_sprite, (int)pixel_position.x - 51, (int)pixel_position.y - 20, &hall_rect);
+	if (this->red_state == false) {
+		App->render->Blit(entity_sprite, (int)pixel_position.x - 51, (int)pixel_position.y - 20, &hall_rect); //Magic
+	}
+	if (this->red_state == true) {
+		App->render->Blit(entity_sprite, (int)pixel_position.x - 51, (int)pixel_position.y - 20, &hall_rect, false, 1.0F, 1.0F, 0.0, 0, 0, App->render->renderer, { 255, 192, 192, 255 });
+	}
 }
 
 void TownHall::StartUnitCreation()

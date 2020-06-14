@@ -12,6 +12,8 @@ class Entity;
 class DynamicObject;
 class StaticObject;
 
+enum class ENTITY_TYPE;
+
 class GuiCursor;
 
 class Player : public Module
@@ -83,52 +85,67 @@ public:
 	// --- Conditional Checks
 	bool CurrentlyInGameplayScene();
 
+public:															// --- Building System Methods
+	void BuildingMenu();
+	void CheckBuildingShortcuts();								// Will check whether or not a building input shortcut has been inputted and set the building type to the corresponding one.
+	void ShowBuildingPreview();									// Will display the required space to build a building and will also display whether or not a tile can be build upon.
+
 public:
-	bool				god_mode;									// Will keep track of whether the god_mode has been activated or not.
-	bool				has_saved;									// Will keep track of whether the player has saved since application start or not.
-	bool				load_game_from_main_menu;					// Will keep track of whether the player has selected to continue a previous game or not.
-	bool				is_selecting;								// Will keep track of whether the player is currently selecting units or not.
+	bool				god_mode;								// Will keep track of whether the god_mode has been activated or not.
+	bool				has_saved;								// Will keep track of whether the player has saved since application start or not.
+	bool				load_game_from_main_menu;				// Will keep track of whether the player has selected to continue a previous game or not.
+	bool				is_selecting;							// Will keep track of whether the player is currently selecting units or not.
 
 	iPoint				original_camera_position;
-	iPoint				scene_camera_x_limit;						// x = left limit, y = right limit.
-	iPoint				scene_camera_y_limit;						// x = top limit, y = bottom limit.
+	iPoint				scene_camera_x_limit;					// x = left limit, y = right limit.
+	iPoint				scene_camera_y_limit;					// x = top limit, y = bottom limit.
 
 	iPoint				cursor_position;
-	iPoint				cursor_map_position;						// The tile where the cursor is currently on.
+	iPoint				cursor_map_position;					// The tile where the cursor is currently on.
 	iPoint				cursor_tile;
 
 	//iPoint				mouse_position;
 	//iPoint				mouse_map_position;
-	//iPoint				mouse_tile;									// The tile where the mouse is currently on.
+	//iPoint				mouse_tile;								// The tile where the mouse is currently on.
 	
-	fPoint				camera_speed;								// Speed at which the camera will move when moving it with the mouse.
-	fPoint				controller_cursor_speed;					// Speed at which the cursor will move under the influence of the game controller.
+	fPoint				camera_speed;							// Speed at which the camera will move when moving it with the mouse.
+	fPoint				controller_cursor_speed;				// Speed at which the cursor will move under the influence of the game controller.
 	
-	iPoint				selection_start;							// Position where unit selection will start (Selection rect's anchor point).
+	iPoint				selection_start;						// Position where unit selection will start (Selection rect's anchor point).
 	SDL_Rect			selection_rect;
 
 	StaticObject*		building_selected;
 	StaticObject*		resource_selected;
 
 	std::vector<DynamicObject*>	units_selected;
-	
-public:																// ---------- CURSOR VARIABLES ----------
-	SDL_Texture*		mouse_tile_debug;							// Texture that will be drawn on top of the tile where the cursor is currently at.
-	
-	GuiCursor			cursor;										// For whatever reason only a pointer works with the forward declaration.
-	
-	SDL_Rect			idle;										// IDLE Sprite of the cursor.
 
-	SDL_Rect			cursor_hover_ally;							// HOVER Sprite for when the cursor hovers an ally entity.
-	SDL_Rect			cursor_hover_enemy;							// HOVER Sprite for when the cursor hovers an enemy entity.
-	SDL_Rect			cursor_hover_resource;						// HOVER Sprite for when the cursor hovers a resource entity.
-	SDL_Rect			cursor_hover_UI;							// HOVER Sprite for when the cursor hovers an interactible UI_Element.
+public:															// ---------- BUILDING SYSTEM VARIABLES ----------
+	SDL_Texture*		buildable_tile_tex;
+	SDL_Texture*		non_buildable_tile_tex;
+	
+	ENTITY_TYPE			building_type;
 
-	SDL_Rect			cursor_clicked_idle;						// CLICKED Sprite for when the cursor clicks and there is nothing under it.
-	SDL_Rect			cursor_clicked_ally;						// CLICKED Sprite for when the cursor hovers an ally entity.
-	SDL_Rect			cursor_clicked_enemy;						// CLICKED Sprite for when the cursor hovers an enemy entity.
-	SDL_Rect			cursor_clicked_resource;					// CLICKED Sprite for when the cursor hovers a resource entity.
-	SDL_Rect			cursor_clicked_UI;							// CLICKED Sprite for when the cursor hovers an interactible UI_Element.
+	bool				is_building;							// Will keep track of whether the player is currently using the building system or not.
+	bool				building_preview;
+	bool				construct_building;
+	
+public:															// ---------- CURSOR VARIABLES ----------
+	SDL_Texture*		mouse_tile_debug;						// Texture that will be drawn on top of the tile where the cursor is currently at.
+	
+	GuiCursor			cursor;									// For whatever reason only a pointer works with the forward declaration.
+	
+	SDL_Rect			idle;									// IDLE Sprite of the cursor.
+
+	SDL_Rect			cursor_hover_ally;						// HOVER Sprite for when the cursor hovers an ally entity.
+	SDL_Rect			cursor_hover_enemy;						// HOVER Sprite for when the cursor hovers an enemy entity.
+	SDL_Rect			cursor_hover_resource;					// HOVER Sprite for when the cursor hovers a resource entity.
+	SDL_Rect			cursor_hover_UI;						// HOVER Sprite for when the cursor hovers an interactible UI_Element.
+
+	SDL_Rect			cursor_clicked_idle;					// CLICKED Sprite for when the cursor clicks and there is nothing under it.
+	SDL_Rect			cursor_clicked_ally;					// CLICKED Sprite for when the cursor hovers an ally entity.
+	SDL_Rect			cursor_clicked_enemy;					// CLICKED Sprite for when the cursor hovers an enemy entity.
+	SDL_Rect			cursor_clicked_resource;				// CLICKED Sprite for when the cursor hovers a resource entity.
+	SDL_Rect			cursor_clicked_UI;						// CLICKED Sprite for when the cursor hovers an interactible UI_Element.
 };
 
 #endif // !__PLAYER_H__

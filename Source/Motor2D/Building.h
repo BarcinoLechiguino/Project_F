@@ -7,6 +7,16 @@
 
 class GuiCreationBar;
 
+enum class BUILDING_STATE
+{
+	UNKNOWN,
+	IDLE,
+	CONSTRUCTING,
+	GENERATING_UNIT,
+	DAMAGED,
+	DESTROYED
+};
+
 class Building : public StaticObject
 {
 public:
@@ -25,6 +35,8 @@ public:
 public:
 	std::vector<ENTITY_TYPE>	creation_queue;
 
+	BUILDING_STATE				state;
+	
 	GuiCreationBar*				creation_bar;
 
 	SDL_Rect					creation_bar_background_rect;						// The background sprite of an entity's healthbar.

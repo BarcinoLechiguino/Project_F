@@ -134,8 +134,8 @@ void Entity::RecieveDamage(int damage)
 	if (App->entity_manager->IsUnit(this))
 	{
 		Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ pixel_position.x, pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
-		red_state = true;
 	}
+	red_state = true;
 }
 
 void Entity::UpdateRedState() {

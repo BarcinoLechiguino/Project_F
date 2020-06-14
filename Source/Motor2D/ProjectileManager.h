@@ -7,7 +7,8 @@
 
 //class Color;
 class Entity;
-
+struct SDL_Rect;
+class Emitter;
 
 struct Projectile
 {
@@ -30,6 +31,9 @@ struct Projectile
 	Entity* target;
 	Timer life;
 
+	SDL_Rect* bullet_section;
+
+	Emitter* trail;
 	//Color color;
 	//int width;
 	//int height;

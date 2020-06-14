@@ -1,7 +1,11 @@
 #include "ProjectileManager.h"
 #include "Render.h"
 #include "Entity.h"
+#include "ParticleManager.h"
+#include "Emitter.h"
 #include "Log.h"
+#include "Textures.h"
+#include "EntityManager.h"
 #include <math.h>
 
 #define PI 3.1415
@@ -19,11 +23,45 @@ Projectile::Projectile(fPoint position, float speed,int damage, Entity* target)
 	this->target = target;
 	is_target_alive = true;
 	this->life.Start();
+
+	bullet_section = new SDL_Rect{};
+	if (App->entity_manager->IsAllyEntity(target))
+	{
+		bullet_section->y = 14;
+	}
+	else
+	{
+		bullet_section->y = 0;
+	}
+
+	if (this->damage > 50)
+	{
+		bullet_section->w = 13;
+		bullet_section->x = 16;
+		bullet_section->h = 12;
+	}
+	else if (this->damage > 20)
+	{
+		bullet_section->w = 7;
+		bullet_section->x = 7;
+		bullet_section->h = 10;
+	}
+	else
+	{
+		bullet_section->w = 5;
+		bullet_section->x = 0;
+		bullet_section->h = 7;
+	}
+
+	trail = App->particle_manager->SpawnEmitter(this->position, EMITTER_BULLET);
 	//LOG("My target is %s", target->name_tag.c_str());
 }
 
 void Projectile::CleanUp()
 {
+	delete bullet_section;
+	App->particle_manager->DeleteEmitter(trail);
+
 	target = nullptr;
 }
 
@@ -42,6 +80,8 @@ bool Projectile::Update(float dt)
 
 	position.x += velocity.x * dt;
 	position.y += velocity.y * dt;
+
+	trail->UpdatePos(position);
 
 	//Find angle
 	double radiant = atan2(position_difference.x, position_difference.y);
@@ -81,7 +121,8 @@ bool Projectile::Update(float dt)
 
 void Projectile::Draw()
 {
-	App->render->DrawQuad(SDL_Rect{(int)position.x , (int)position.y,5,5}, 255, 0, 0, 255);
+	//App->render->DrawQuad(SDL_Rect{(int)position.x , (int)position.y,5,5}, 255, 0, 0, 255);
+	App->render->Blit(App->projectile_manager->bullet, (int)position.x, (int)position.y, bullet_section,false, 1.0F,1.0F, angle, NULL, NULL);
 }
 
 ProjectileManager::ProjectileManager()
@@ -97,6 +138,8 @@ ProjectileManager::~ProjectileManager()
 bool ProjectileManager::Start()
 {
 	iterator = 0;
+	
+	bullet = App->tex->Load("Assets/entities/laser_sprites.png");
 
 	return true;
 }

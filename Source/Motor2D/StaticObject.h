@@ -3,16 +3,6 @@
 
 #include "Entity.h"
 
-enum class BUILDING_STATE
-{
-	UNKNOWN,
-	IDLE,
-	CONSTRUCTING,
-	GENERATING_UNIT,
-	DAMAGED,
-	DESTROYED
-};
-
 class StaticObject : public Entity
 {
 public:
@@ -31,8 +21,6 @@ public:
 	//virtual void LevelChanges();
 
 public:
-	BUILDING_STATE			state;
-
 	int						tile_width;
 	int						tile_height;
 };

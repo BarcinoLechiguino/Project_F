@@ -48,6 +48,8 @@ bool Barracks::PreUpdate()
 
 bool Barracks::Update(float dt, bool do_logic)
 {
+	UpdateRedState();
+
 	if (creation_queue.size() != 0)
 	{	
 		if (!creating_unit)
@@ -115,7 +117,12 @@ bool Barracks::CleanUp()
 
 void Barracks::Draw()
 {
-	App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect); //Magic
+	if (this->red_state == false) {
+		App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect); //Magic
+	}
+	if (this->red_state == true) {
+		App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect, false, 1.0F, 1.0F, 0.0, 0, 0, App->render->renderer, { 255, 192, 192, 255 });
+	}
 }
 
 void Barracks::StartUnitCreation()
