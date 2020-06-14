@@ -8,6 +8,7 @@
 //class Color;
 class Entity;
 
+
 struct Projectile
 {
 	Projectile();
@@ -60,6 +61,8 @@ public:
 	std::vector<Projectile*> projectiles;
 
 	int iterator;
+
+	SDL_Texture* bullet;
 };
 
 #endif // !__PROJECTILE_MANAGER_H__

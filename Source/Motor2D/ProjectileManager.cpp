@@ -2,6 +2,9 @@
 #include "Render.h"
 #include "Entity.h"
 #include "Log.h"
+#include <math.h>
+
+#define PI 3.1415
 
 Projectile::Projectile()
 {
@@ -40,6 +43,21 @@ bool Projectile::Update(float dt)
 	position.x += velocity.x * dt;
 	position.y += velocity.y * dt;
 
+	//Find angle
+	double radiant = atan2(position_difference.x, position_difference.y);
+
+	if (radiant < 0)
+	{
+		radiant = abs(radiant);
+	}
+	else
+	{
+		radiant = 2 * PI - radiant;
+	}
+
+	angle = radiant * (180/PI);
+
+
 	if(position.DistanceTo(target_position) < 10)
 	{
 		if (is_target_alive)
@@ -50,7 +68,7 @@ bool Projectile::Update(float dt)
 		App->projectile_manager->DestroyProjectile(this);
 		App->projectile_manager->iterator--;
 	}
-
+	
 	if (life.Read() > 5000)
 	{
 		App->projectile_manager->DestroyProjectile(this);
