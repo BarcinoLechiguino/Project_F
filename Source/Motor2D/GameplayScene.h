@@ -102,6 +102,10 @@ public:
 	bool transition_to_win_scene;										// Will keep track whether or not the transition to the win scene has been triggered.
 	bool transition_to_lose_scene;										// Will keep track whether or not the transition to the lose scene has been triggered.
 	
+	float					time_on_scene;
+	bool					saved_text_active;
+
+
 	GuiImage*				background;
 	SDL_Rect				background_rect;
 
@@ -159,7 +163,6 @@ public:
 	GuiScrollbar*			in_game_music_scrollbar;
 	GuiScrollbar*			in_game_sfx_scrollbar;
 
-
 	// Text:
 	GuiText*				in_game_resolution_text;
 	GuiText*				in_game_sfx_text;
@@ -171,6 +174,7 @@ public:
 	GuiButton*				 HUD_group_button;
 	GuiButton*				 HUD_home_button;
 	GuiButton*				 HUD_pause_button;
+	GuiButton*				 HUD_build_button;
 	GuiButton*				 HUD_play_button;
 	GuiImage*				 HUD_resource_bar;
 
@@ -300,7 +304,6 @@ public:
 
 	GuiButton*				 HUD_unit_upgrade_barracks_heavy;
 
-	GuiText*				 God_Mode_Activated;
 
 	//Resources HUD
 
@@ -357,6 +360,17 @@ public:
 	GuiImage*				HUD_dialogs_character_talking;
 	GuiImage*				HUD_dialogs_screen_block;
 	GuiButton*				HUD_dialogs_skip_tutorial;
+
+	//Building HUD
+	GuiImage*				HUD_building_background;
+	GuiText*				HUD_building_title;
+
+	//Extras
+
+	GuiText*				God_Mode_Activated;
+	GuiText*				Saving;
+	GuiText*				No_Saved_Game;
+	GuiImage*				Icon_Saving;
 
 private:
 
