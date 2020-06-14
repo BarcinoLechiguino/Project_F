@@ -66,6 +66,9 @@
       <is_building value="0"/>
       <building_preview value="0"/>
       <construct_building value="0"/>
+      <townhall_size size ="3"/>
+      <barracks_size size ="2"/>
+      <wall_size size ="1"/>
       <building_type type="0"/>
       <buildable_tile_tex path="Assets/maps/buildable_tile.png"/>
       <non_buildable_tile_tex path="Assets/maps/non_buildable_tile.png"/>

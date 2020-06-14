@@ -128,6 +128,10 @@ public:															// ---------- BUILDING SYSTEM VARIABLES ----------
 	bool				is_building;							// Will keep track of whether the player is currently using the building system or not.
 	bool				building_preview;
 	bool				construct_building;
+
+	int					townhall_size;
+	int					barracks_size;
+	int					wall_size;
 	
 public:															// ---------- CURSOR VARIABLES ----------
 	SDL_Texture*		mouse_tile_debug;						// Texture that will be drawn on top of the tile where the cursor is currently at.

@@ -296,7 +296,8 @@ void GameplayScene::ExecuteTransition()
 			App->pause = false;
 		}
 
-		App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, false, true);
+		//App->transition_manager->CreateAlternatingBars(SCENES::MAIN_MENU_SCENE, 0.5f, true, 10, false, true);
+		App->transition_manager->CreateOldMonitor(SCENES::MAIN_MENU_SCENE, 1.0f, true, Black);
 	}
 
 	if (transition_to_win_scene)

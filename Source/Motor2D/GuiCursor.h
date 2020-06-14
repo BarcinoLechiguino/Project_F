@@ -3,6 +3,8 @@
 
 #include "GuiElement.h"
 
+struct SDL_Cursor;
+
 class GuiCursor : public GuiElement
 {
 public:
@@ -31,6 +33,8 @@ private:
 	bool ControllerInteractionButtonsPressed();
 	bool ControllerInteractionButtonsReleased();
 
+	bool ChangeMouse(const char* path);
+
 public:
 	bool game_controller_mode;			// Will track whether the cursor is following the mouse or it's being moved by a game controller.
 
@@ -51,6 +55,12 @@ private:
 	SDL_Rect clicked_enemy;				// CLICKED Sprite for when the cursor hovers an enemy entity.
 	SDL_Rect clicked_resource;			// CLICKED Sprite for when the cursor hovers a resource entity.
 	SDL_Rect clicked_UI;				// CLICKED Sprite for when the cursor hovers an interactible UI_Element.
+
+	SDL_Surface* mouse_surface;
+
+	SDL_Cursor* cursor;
+
+	std::string previous_cursor;
 
 	bool ui_cursor_event_enabled;		// Will track whether or not the cursor has a ui event for when it hovers or clicks a GUI_ELEMENT_TYPE
 };
