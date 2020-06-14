@@ -19,7 +19,7 @@ Projectile::Projectile(fPoint position, float speed,int damage, Entity* target)
 	this->target = target;
 	is_target_alive = true;
 	this->life.Start();
-	LOG("My target is %s", target->name_tag.c_str());
+	//LOG("My target is %s", target->name_tag.c_str());
 }
 
 void Projectile::CleanUp()
@@ -94,6 +94,13 @@ ProjectileManager::~ProjectileManager()
 
 }
 
+bool ProjectileManager::Start()
+{
+	iterator = 0;
+
+	return true;
+}
+
 bool ProjectileManager::Update(float dt)
 {
 	std::vector<Projectile*>::iterator projectile = projectiles.begin();
@@ -111,6 +118,22 @@ bool ProjectileManager::Update(float dt)
 bool ProjectileManager::PostUpdate()
 {
 	Draw();
+
+	return true;
+}
+
+bool ProjectileManager::CleanUp()
+{
+	std::vector<Projectile*>::iterator projectile = projectiles.begin();
+
+	for (; projectile != projectiles.end(); projectile++)
+	{
+		(*projectile)->CleanUp();
+
+		delete (*projectile);
+	}
+
+	projectiles.clear();
 
 	return true;
 }

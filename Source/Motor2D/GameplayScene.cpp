@@ -213,7 +213,7 @@ bool GameplayScene::CleanUp()
 	App->gui_manager->DestroyGuiElements();					//Deletes all the Gui Elements of the Gameplay Scene.
 	App->dialog_manager->CleanUp();							//Deletes everything related with dialog in the Gameplay Scene.
 	App->particle_manager->RemoveEverything();
-	App->projectile_manager->ClearAllProjectiles();
+	App->projectile_manager->CleanUp();
 
 	App->player->god_mode = false;							//Will disable the God Mode upon exiting the Gameplay Scene.
 	App->fow_manager->fow_debug = false;					//Will disable the FOW Debug Mode upon exiting the Gameplay Scene.
@@ -282,6 +282,8 @@ void GameplayScene::InitScene()
 		tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
 		App->LoadGame("save_game.xml");
 	}
+
+	App->projectile_manager->Start();
 }
 
 // --- SCENE TRANSITIONS

@@ -42,8 +42,10 @@ public:
 	ProjectileManager();
 	~ProjectileManager();
 
+	bool Start();
 	bool Update(float dt);
 	bool PostUpdate();
+	bool CleanUp();
 
 	void Draw();
 
