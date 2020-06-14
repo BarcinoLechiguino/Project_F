@@ -88,6 +88,16 @@ void OldMonitor::TranslateMonitor()
 	}
 	else
 	{
+		/*top_rect.y		= (int)N_Lerp((float)-top_rect.h, 0.f, current_cutoff);
+		bottom_rect.y	= (int)N_Lerp((float)window_height, (window_height * 0.5f), current_cutoff);
+		left_rect.x		= (int)Lerp((float)-left_rect.w, 0.f, current_cutoff);
+		right_rect.x	= (int)Lerp((float)window_width, (window_width * 0.5f), current_cutoff);*/
+
+		/*top_rect.y		= (int)N_Lerp((float)-top_rect.h, 0.f, current_cutoff);
+		bottom_rect.y	= (int)N_Lerp((float)window_height, (window_height * 0.5f), current_cutoff);
+		left_rect.x		= (int)N_Lerp((float)-left_rect.w, 0.f, current_cutoff);
+		right_rect.x	= (int)N_Lerp((float)window_width, (window_width * 0.5f), current_cutoff);*/
+		
 		top_rect.y		= (int)N_Lerp((float)-top_rect.h, 0.f, current_cutoff);
 		bottom_rect.y	= (int)N_Lerp((float)window_height, (window_height * 0.5f), current_cutoff);
 		left_rect.x		= (int)N_Lerp((float)-left_rect.w, 0.f, current_cutoff, true);

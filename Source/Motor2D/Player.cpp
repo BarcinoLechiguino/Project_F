@@ -76,15 +76,23 @@ bool Player::Update(float dt)
 	
 	CameraController(dt);
 	
-	if (!App->pause && !App->gui_manager->VisibleElementIsUnderCursor())			//TMP. Dirty Fix(?)
+	if (!App->pause)
 	{
-		DragSelection();
+		if (!App->gui_manager->VisibleElementIsUnderCursor())						//TMP. Dirty Fix(?)
+		{
+			DragSelection();
 
-		SelectOnClick();
+			SelectOnClick();
 
-		DeleteOnInput();
+			DeleteOnInput();
 
-		GiveOrder();
+			GiveOrder();
+		}
+
+		if (is_building && !god_mode)
+		{
+			BuildingMenu();
+		}
 	}
 
 	SelectionShortcuts();
@@ -114,6 +122,8 @@ bool Player::PostUpdate()
 bool Player::CleanUp()
 {
 	App->tex->UnLoad(mouse_tile_debug);
+	App->tex->UnLoad(buildable_tile_tex);
+	App->tex->UnLoad(non_buildable_tile_tex);
 	
 	ClearEntityBuffers();
 	
@@ -1040,6 +1050,53 @@ bool Player::CurrentlyInGameplayScene()
 	return ret;
 }
 
+// ------------------- BUILDING SYSTEM METHODS -------------------
+void Player::BuildingMenu()
+{
+	CheckBuildingShortcuts();
+
+	if (!building_preview)
+	{
+		if (building_type != ENTITY_TYPE::UNKNOWN)
+		{
+			building_preview = true;
+		}
+	}
+	else
+	{
+		ShowBuildingPreview();
+
+		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_STATE::KEY_DOWN)
+		{
+			
+		}
+	}
+}
+
+void Player::CheckBuildingShortcuts()
+{
+	if (App->input->GetKey(SDL_SCANCODE_H) == KEY_STATE::KEY_DOWN)
+	{
+		building_type = ENTITY_TYPE::TOWNHALL;
+	}
+
+	if (App->input->GetKey(SDL_SCANCODE_B) == KEY_STATE::KEY_DOWN)
+	{
+		building_type = ENTITY_TYPE::BARRACKS;
+	}
+
+	/*if (App->input->GetKey(SDL_SCANCODE_W) == KEY_STATE::KEY_DOWN)
+	{
+		building_type = ENTITY_TYPE::WALL;
+	}*/
+}
+
+void Player::ShowBuildingPreview()
+{
+
+}
+
+// ------------------- PLAYER INICIALIZATION METHOD -------------------
 void Player::InitializePlayer()
 {
 	SDL_ShowCursor(SDL_DISABLE);
@@ -1069,6 +1126,16 @@ void Player::InitializePlayer()
 
 	controller_cursor_speed.x	= player.child("game_controller").child("cursor_speed").attribute("x").as_float();
 	controller_cursor_speed.y	= player.child("game_controller").child("cursor_speed").attribute("y").as_float();
+
+	// --- Building System
+	is_building				= player.child("building_system").child("is_building").attribute("value").as_bool();
+	building_preview		= player.child("building_system").child("building_preview").attribute("value").as_bool();
+	construct_building		= player.child("building_system").child("construct_building").attribute("value").as_bool();
+
+	building_type			= (ENTITY_TYPE)player.child("building_system").child("building_type").attribute("type").as_uint();
+
+	buildable_tile_tex		= App->tex->Load(player.child("building_system").child("buildable_tile_tex").attribute("path").as_string());
+	non_buildable_tile_tex	= App->tex->Load(player.child("building_system").child("non_buildable_tile_tex").attribute("path").as_string());
 
 	// --- Cursor Section Sprites
 	// -- Cursor IDLE

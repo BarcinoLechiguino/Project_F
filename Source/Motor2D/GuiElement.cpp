@@ -225,9 +225,8 @@ bool GuiElement::ElementRemainedInPlace() const																		// Returns true
 	return (GetScreenPos() == initial_position);
 }
 
-void GuiElement::DragElement()																			// Will drag an element around taking into account where the mouse was and where it currently is.
-{	
-																								// --- Updating the UI Element's position when it is being dragged.
+void GuiElement::DragElement()																	// Will drag an element around taking into account where the mouse was and where it currently is.
+{																								// --- Updating the UI Element's position when it is being dragged.
 	iPoint origin(0, 0);																		//This prevents sending undragged elements to undesired places when passing 
 																								//from dragging one element to another as prevMousePos in undragged elements is (0,0).
 
