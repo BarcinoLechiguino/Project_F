@@ -94,6 +94,20 @@ bool GameplayScene::PreUpdate()
 	{
 		PathfindingDebug();
 	}
+	
+	// Text Save
+	if (saved_text_active)
+	{
+		time_on_scene += App->GetUnpausableDt();
+		
+		if (time_on_scene > 3.0f)
+		{
+			App->gui_manager->SetElementsVisibility(Saving, false);
+			time_on_scene = 0.0f;
+			saved_text_active = false;
+		}
+	}
+	
 
 	return true;
 }
@@ -284,6 +298,8 @@ void GameplayScene::InitScene()
 	}
 
 	App->projectile_manager->Start();
+
+	time_on_scene = 0.0f;
 }
 
 // --- SCENE TRANSITIONS
@@ -1672,6 +1688,9 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		}
 
 		App->gui_manager->SetElementsVisibility(Saving, true);
+
+		saved_text_active = true;
+
 	}
 
 	if (element == in_game_exit_button && ui_event == GUI_EVENT::UNCLICKED)

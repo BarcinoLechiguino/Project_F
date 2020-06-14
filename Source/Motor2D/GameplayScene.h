@@ -102,6 +102,9 @@ public:
 	bool transition_to_win_scene;										// Will keep track whether or not the transition to the win scene has been triggered.
 	bool transition_to_lose_scene;										// Will keep track whether or not the transition to the lose scene has been triggered.
 	
+	float					time_on_scene;
+	bool					saved_text_active;
+
 	GuiImage*				background;
 	SDL_Rect				background_rect;
 
