@@ -118,5 +118,22 @@
       <layer value="1" />
       <spread_direction a = "90"/>
     </emitter>
+
+    <emitter type ="8" name="bullet trail">
+      <speed value ="0"/>
+      <size value ="10"/>
+      <cone_angle min ="60" max ="120"/>
+      <emission value ="0.5"/>
+      <rnd value ="1"/>
+      <particleLife value ="50"/>
+      <emitterLife value ="-1"/>
+      <startColor r ="131" g="218" b="218" a="255"/>
+      <endColor r ="255" g="255" b="255" a="128"/>
+      <rect x="0" y="0" w="5" h="5"/>
+      <texture_path path="Assets/particles/flame_02.png" />
+      <camera_speed speed="1.0f" />
+      <layer value="1" />
+      <spread_direction a = "90"/>
+    </emitter>
 	</info>
 </particlesystem>
