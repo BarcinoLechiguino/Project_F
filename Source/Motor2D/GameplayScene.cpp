@@ -94,6 +94,21 @@ bool GameplayScene::PreUpdate()
 	{
 		PathfindingDebug();
 	}
+	
+	// Text Save
+	if (saved_text_active)
+	{
+		time_on_scene += App->GetUnpausableDt();
+		
+		if (time_on_scene > 7.0f)
+		{
+			App->gui_manager->SetElementsVisibility(Saving, false);
+			App->gui_manager->SetElementsVisibility(Icon_Saving, false);
+			time_on_scene = 0.0f;
+			saved_text_active = false;
+		}
+	}
+	
 
 	return true;
 }
@@ -284,6 +299,8 @@ void GameplayScene::InitScene()
 	}
 
 	App->projectile_manager->Start();
+
+	time_on_scene = 0.0f;
 }
 
 // --- SCENE TRANSITIONS
@@ -761,10 +778,10 @@ void GameplayScene::LoadGuiElements()
 
 	// Save button
 
-	SDL_Rect in_game_save_size = { 0, 0, 189, 23 };
-	SDL_Rect in_game_save_idle = { 0, 137, 189, 23 };
-	SDL_Rect in_game_save_hover = { 204, 137, 189, 23 };
-	SDL_Rect in_game_save_clicked = { 408, 137, 189, 23 };
+	SDL_Rect in_game_save_size = { 0, 0, 73, 22 };
+	SDL_Rect in_game_save_idle = { 2, 184, 73, 22 };
+	SDL_Rect in_game_save_hover = { 88, 184, 73, 22 };
+	SDL_Rect in_game_save_clicked = { 173, 184, 73, 22 };
 
 	in_game_save_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, 361, false, true, false, this, in_game_background
 		, &in_game_save_idle, &in_game_save_hover, &in_game_save_clicked);
@@ -1414,12 +1431,6 @@ void GameplayScene::LoadGuiElements()
 	HUD_enemy_description_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 339, 662, HUD_enemy_text_barracks_descp_rect, App->gui_manager->borgsquadcond_12, SDL_Color{ 255,0,0,0 }, false, false, false, this, HUD_enemy_title_barracks, &HUD_enemy_barracks_descp_string3);
 
 
-	// God_Mode
-	SDL_Rect HUD_text_God = { 0, 0, 100, 20 };
-	std::string HUD_God_string = "God Mode Activated";
-	God_Mode_Activated = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 950, 2, HUD_text_God, App->gui_manager->borgsquadcond_30, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_God_string);
-
-
 
 	// *****______HUD Quests_____*****
 
@@ -1513,6 +1524,21 @@ void GameplayScene::LoadGuiElements()
 	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 110, 145, true, true, false, this, nullptr
 		, &HUD_dialogs_skip_tutorial_idle, &HUD_dialogs_skip_tutorial_hover, &HUD_dialogs_skip_tutorial_clicked);
 
+
+	//************________EXTRAS____________*********
+	// God_Mode
+	SDL_Rect HUD_text_God = { 0, 0, 100, 20 };
+	std::string HUD_God_string = "God Mode Activated";
+	God_Mode_Activated = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 950, 2, HUD_text_God, App->gui_manager->borgsquadcond_30, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_God_string);
+
+	//Saving
+	SDL_Rect HUD_text_Save = { 0, 0, 100, 20 };
+	std::string HUD_Save_string = "Your Game Has Been Succesfully Saved";
+	Saving = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, -500, 55, HUD_text_Save, App->gui_manager->borgsquadcond_20, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_Save_string);
+
+	//Saving Icon
+	SDL_Rect saving_icon_size = { 610, 145, 52, 52 };
+	Icon_Saving = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1225, 2, saving_icon_size, false, true, false, this, nullptr);
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1656,10 +1682,22 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 	if (element == in_game_save_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
-		// Back to menu
+		// Save Game
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
 
-		App->SaveGame("save_game.xml");
+		if (App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
+		{
+			App->SaveGame("save_game.xml");
+			App->player->has_saved = true;
+		}
+
+		App->gui_manager->SetElementsVisibility(Saving, true);
+
+		App->gui_manager->SetElementsVisibility(Icon_Saving, true);
+
+		App->gui_manager->CreateSlideAnimation(Saving, 8.0f, false, iPoint(-300, Saving->GetScreenPos().y), iPoint(1345, Saving->GetScreenPos().y));
+
+		saved_text_active = true;
 	}
 
 	if (element == in_game_exit_button && ui_event == GUI_EVENT::UNCLICKED)
