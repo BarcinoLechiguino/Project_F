@@ -36,7 +36,7 @@ public:
 	void Disable();									//CleanUp()
 
 	virtual bool Load(pugi::xml_node&);
-	virtual bool Save(pugi::xml_node&);
+	virtual bool Save(pugi::xml_node&) const;
 
 	virtual void OnEventCall(GuiElement* element, GUI_EVENT ui_event);				// Gui Event Handling
 

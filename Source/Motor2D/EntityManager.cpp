@@ -198,6 +198,12 @@ bool EntityManager::Load(pugi::xml_node& data)
 {
 	BROFILER_CATEGORY("EntityManager Load", Profiler::Color::Khaki);
 	
+	pugi::xml_node resources = data.child("resources");
+	
+	resource_data			= resources.attribute("data").as_uint();
+	resource_electricity	= resources.attribute("electricity").as_uint();
+	resource_bits			= resources.attribute("bits").as_uint();
+	
 	DestroyEntities();
 
 	pugi::xml_node entity = data.child("entities").child("entity");
@@ -217,8 +223,14 @@ bool EntityManager::Load(pugi::xml_node& data)
 	return true;
 }
 
-bool EntityManager::Save(pugi::xml_node& data)
+bool EntityManager::Save(pugi::xml_node& data) const
 {
+	pugi::xml_node resources = data.append_child("resources");
+
+	resources.append_attribute("data")			= resource_data;
+	resources.append_attribute("electricity")	= resource_electricity;
+	resources.append_attribute("bits")			= resource_bits;
+	
 	pugi::xml_node entity = data.append_child("entities");
 	
 	for (int i = 0; i < entities.size(); ++i)

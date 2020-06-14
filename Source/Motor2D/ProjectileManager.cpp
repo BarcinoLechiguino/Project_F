@@ -96,9 +96,44 @@ bool ProjectileManager::PostUpdate()
 	return true;
 }
 
-void ProjectileManager::CreateProjectile(fPoint position, float speed,int damage,Entity* target)
+void ProjectileManager::Draw()
 {
-	projectiles.push_back(new Projectile(position, speed,damage,target));
+	for (std::vector<Projectile*>::iterator projectile = projectiles.begin(); projectile != projectiles.end(); projectile++)
+	{
+		(*projectile)->Draw();
+	}
+}
+
+bool ProjectileManager::Load(pugi::xml_node& data)
+{
+	for (int i = 0; i < projectiles.size(); ++i)
+	{
+		projectiles[i]->CleanUp();
+		RELEASE(projectiles[i]);
+	}
+
+	projectiles.clear();
+
+	return true;
+}
+
+bool ProjectileManager::Save(pugi::xml_node& data) const
+{
+	
+
+	return true;
+}
+
+void ProjectileManager::CreateProjectile(fPoint position, float speed, int damage, Entity* target)
+{
+	Projectile* projectile = new Projectile(position, speed, damage, target);
+	
+	if (projectile != nullptr)
+	{
+		projectiles.push_back(projectile);
+	}
+
+	//return projectile;
 }
 
 void ProjectileManager::DestroyProjectile(Projectile* projectile)
@@ -127,13 +162,15 @@ void ProjectileManager::ClearTargetProjectiles(Entity* target)
 	{
 		(*projectile)->is_target_alive = false;
 	}
-
 }
 
-void ProjectileManager::Draw()
+void ProjectileManager::ClearAllProjectiles()
 {
-	for (std::vector<Projectile*>::iterator projectile = projectiles.begin(); projectile != projectiles.end(); projectile++)
+	for (int i = 0; i < projectiles.size(); ++i)
 	{
-		(*projectile)->Draw();
+		projectiles[i]->CleanUp();
+		RELEASE(projectiles[i]);
 	}
+
+	projectiles.clear();
 }

@@ -150,7 +150,7 @@ void EnemyScout::InitEntity()
 	accumulated_cooldown = 0.0f;
 
 	// STATS
-	speed = 450.0f;
+	speed = 350.0f;
 
 	max_health = 200;
 	current_health = max_health;

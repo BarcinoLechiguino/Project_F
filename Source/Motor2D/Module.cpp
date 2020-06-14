@@ -64,7 +64,7 @@ bool Module::Load(pugi::xml_node& data)
 	return true;
 }
 
-bool Module::Save(pugi::xml_node& data)
+bool Module::Save(pugi::xml_node& data) const
 {
 	return true;
 }

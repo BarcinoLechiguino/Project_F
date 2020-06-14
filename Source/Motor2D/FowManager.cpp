@@ -142,17 +142,10 @@ bool FowManager::Load(pugi::xml_node& data)
 
 	load_saved_visibility_map = true;
 
-	/*int map_size = visibility_map_width * visibility_map_height;
-
-	for (int i = 0; i < map_size; ++i)
-	{
-		visibility_map[i] = saved_visibility_map[i];
-	}*/
-
 	return true;
 }
 
-bool FowManager::Save(pugi::xml_node& data)
+bool FowManager::Save(pugi::xml_node& data) const
 {
 	data.append_child("fow_debug").append_attribute("value") = fow_debug;
 
@@ -279,8 +272,11 @@ void FowManager::SetVisibilityMap(const int& width, const int& height)
 	debug_visibility_map = new uchar[map_size];
 	memset(debug_visibility_map, VISIBLE, map_size);								// Will set the state of all the tiles in the container to VISIBLE. (For debug purposes).
 
-	saved_visibility_map = new uchar[map_size];
-	memset(saved_visibility_map, VISIBLE, map_size);
+	if (saved_visibility_map == nullptr)											// saved_visibility_map will not reset between scenes.
+	{
+		saved_visibility_map = new uchar[map_size];
+		memset(saved_visibility_map, UNEXPLORED, map_size);
+	}
 }
 
 void FowManager::ChangeVisibilityMap(const iPoint& tile_position, const uchar& visibility)
@@ -364,11 +360,11 @@ void FowManager::ClearVisibilityMapContainers()
 		visibility_map = nullptr;
 	}
 
-	if (saved_visibility_map != nullptr)
+	/*if (saved_visibility_map != nullptr)
 	{
 		delete[] saved_visibility_map;
 		saved_visibility_map = nullptr;
-	}
+	}*/
 }
 
 bool FowManager::CheckMapBoundaries(const iPoint& tile_position)
@@ -870,19 +866,23 @@ void FowManager::UpdateEntitiesVisibility()
 		{
 			if (fow_entities[i]->is_neutral)
 			{
-				if (fow_state == UNEXPLORED)						// If the entity is neutral and the tile is not VISIBLE nor FOGGED.
+				if (fow_state == FOGGED)
 				{
-					fow_entities[i]->is_visible = false;
+					fow_entities[i]->is_visible = true;			// If the entity is neutral and the tile is FOGGED.
+				}
+				else
+				{
+					fow_entities[i]->is_visible = false;		// If the entity is neutral and the tile is UNEXPLORED.
 				}
 			}
 			else
 			{
-				fow_entities[i]->is_visible = false;
+				fow_entities[i]->is_visible = false;			// If the entity is not neutral and the tile is not VISIBLE.
 			}
 		}
 		else
 		{
-			fow_entities[i]->is_visible = true;
+			fow_entities[i]->is_visible = true;					// If the entity is at a VISIBLE tile.
 		}
 	}
 }

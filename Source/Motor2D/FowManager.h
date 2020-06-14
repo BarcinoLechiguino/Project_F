@@ -112,7 +112,7 @@ public:
 	bool CleanUp();
 	
 	bool Load(pugi::xml_node&);
-	bool Save(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 	void DrawFowTiles();
 	void SmoothFowTiles(iPoint tile_position, iPoint world_position, uchar fow_state, SDL_Rect fow_tile_rect);

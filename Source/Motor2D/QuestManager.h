@@ -1,20 +1,22 @@
+#ifndef __QUEST_MANAGER_H__
+#define __QUEST_MANAGER_H__
+
+#include "Dependencies/SDL/include/SDL_rect.h"
+
 #include "Module.h"
 #include "Point.h"
 #include <vector>
-#include <list>
-#include "Dependencies/SDL/include/SDL_rect.h"
-
 
 class Quest
 {
 public:
-
-	Quest() {};
+	Quest();
 	~Quest();
 
-	int id = 0;
-	int trigger = 0;	//whether or not a quest is active
-	int requisites = 0;
+public:
+	int id;
+	int trigger;					//whether or not a quest is active
+	int requisites;
 
 	std::string title;
 	std::string description;
@@ -22,11 +24,9 @@ public:
 	bool completed = false;
 };
 
-
 class QuestManager : public Module
 {
 public:
-
 	QuestManager();
 	~QuestManager();
 
@@ -34,14 +34,18 @@ public:
 	bool Start();
 	bool Update(float dt);
 
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
+
+public:
+	pugi::xml_node LoadQuests(pugi::xml_document& quest_file) const;
 	void CheckQuests();
 
-	pugi::xml_node LoadQuests(pugi::xml_document& quest_file) const;
-
+public:
 	pugi::xml_document quest_data;
 
 	std::vector<Quest*> loaded_quests;
 	std::vector<Quest*> quests;
 };
 
-
+#endif // !__QUEST_MANAGER_H__

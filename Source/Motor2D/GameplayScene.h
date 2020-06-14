@@ -53,8 +53,8 @@ public:
 	bool PostUpdate();									// Called before all Updates
 	bool CleanUp();										// Called before quitting
 
-	//bool Load(pugi::xml_node& data);
-	//bool Save(pugi::xml_node& data) const;
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 	
 
 public:

@@ -322,7 +322,7 @@ bool Audio::Load(pugi::xml_node & data)
 	return true;
 }
 
-bool Audio::Save(pugi::xml_node& data)
+bool Audio::Save(pugi::xml_node& data) const
 {
 	pugi::xml_node vol = data.append_child("volume");
 

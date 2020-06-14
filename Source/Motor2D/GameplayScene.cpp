@@ -16,10 +16,12 @@
 #include "Pathfinding.h"
 #include "Player.h"
 #include "Scene.h"
+#include "FowManager.h"
 #include "DialogManager.h"
 #include "ParticleManager.h"
 #include "Emitter.h"
 #include "QuestManager.h"
+#include "ProjectileManager.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -51,8 +53,6 @@
 #include "GuiButton.h"
 #include "GuiScrollbar.h"
 #include "GuiImage.h"
-
-#include "FowManager.h"
 
 #include "SceneManager.h"
 #include "TransitionManager.h"
@@ -211,11 +211,26 @@ bool GameplayScene::CleanUp()
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui_manager->DestroyGuiElements();					//Deletes all the Gui Elements of the Gameplay Scene.
-	App->dialog_manager->CleanUp();									//Deletes everything related with dialog in the Gameplay Scene.
+	App->dialog_manager->CleanUp();							//Deletes everything related with dialog in the Gameplay Scene.
 	App->particle_manager->RemoveEverything();
+	App->projectile_manager->ClearAllProjectiles();
 
 	App->player->god_mode = false;							//Will disable the God Mode upon exiting the Gameplay Scene.
 	App->fow_manager->fow_debug = false;					//Will disable the FOW Debug Mode upon exiting the Gameplay Scene.
+
+	return true;
+}
+
+bool GameplayScene::Load(pugi::xml_node& data)
+{
+
+
+	return true;
+}
+
+bool GameplayScene::Save(pugi::xml_node& data) const
+{
+
 
 	return true;
 }
@@ -254,11 +269,19 @@ void GameplayScene::InitScene()
 
 	//App->fow_manager->ResetVisibilityMap();
 
-	App->dialog_manager->StartDialog(0);
-	tutorial.tutorial_state = TutorialState::SELECT_UNIT;
+	if (!App->player->load_game_from_main_menu)
+	{
+		App->dialog_manager->StartDialog(0);
+		tutorial.tutorial_state = TutorialState::SELECT_UNIT;
 
-	tutorial.boulders_active = true;
-	tutorial.lock_camera = false;
+		tutorial.boulders_active = true;
+		tutorial.lock_camera = false;
+	}
+	else
+	{
+		tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
+		App->LoadGame("save_game.xml");
+	}
 }
 
 // --- SCENE TRANSITIONS
@@ -2392,26 +2415,3 @@ void GameplayScene::CheckCompletedQuests()
 		}
 	}
 }
-
-// --------------- REQUIRED FOR THE GOLD VERSION ---------------
-//bool Scene1::Load(pugi::xml_node& data)
-//{
-//	if (currentMap != data.child("currentMap").attribute("num").as_int())
-//	{
-//		LOG("Calling switch maps");
-//		currentMap = data.child("currentMap").attribute("num").as_int();
-//
-//		//std::list<std::string>::iterator map_iterator = map_names.begin();
-//
-//		//std::advance(map_iterator, data.child("currentMap").attribute("num").as_int() );
-//
-//		//App->map->SwitchMaps( (*map_iterator) );
-//	}
-//	return true;
-//}
-
-//bool Scene1::Save(pugi::xml_node& data) const
-//{
-//	data.append_child("currentMap").append_attribute("num") = currentMap;
-//	return true;
-//}

@@ -16,8 +16,9 @@
 	<scene_manager />
 	<transition_manager />
 	<entity_manager>
+		<resources data="0" electricity="0" bits="0" />
 		<entities>
-			<entity type="1" x="63" y="143" level="1" />
+			<entity type="1" x="50" y="131" level="1" />
 			<entity type="9" x="48" y="127" level="1" />
 			<entity type="12" x="52" y="17" level="1" />
 			<entity type="10" x="43" y="127" level="1" />
@@ -56,9 +57,6 @@
 			<entity type="7" x="85" y="52" level="1" />
 			<entity type="7" x="85" y="57" level="1" />
 			<entity type="7" x="90" y="50" level="1" />
-			<entity type="7" x="10" y="76" level="1" />
-			<entity type="7" x="6" y="85" level="1" />
-			<entity type="7" x="10" y="81" level="1" />
 			<entity type="15" x="22" y="77" level="1" />
 			<entity type="16" x="23" y="84" level="1" />
 			<entity type="15" x="29" y="64" level="1" />
@@ -269,6 +267,58 @@
 			<entity type="18" x="13" y="71" level="1" />
 			<entity type="15" x="11" y="69" level="1" />
 			<entity type="18" x="11" y="68" level="1" />
+			<entity type="3" x="51" y="72" level="1" />
+			<entity type="3" x="51" y="74" level="1" />
+			<entity type="3" x="50" y="71" level="1" />
+			<entity type="2" x="51" y="71" level="1" />
+			<entity type="3" x="49" y="71" level="1" />
+			<entity type="3" x="50" y="75" level="1" />
+			<entity type="2" x="51" y="75" level="1" />
+			<entity type="3" x="49" y="75" level="1" />
+			<entity type="2" x="52" y="73" level="1" />
+			<entity type="3" x="52" y="72" level="1" />
+			<entity type="3" x="52" y="74" level="1" />
+			<entity type="3" x="49" y="71" level="1" />
+			<entity type="4" x="52" y="75" level="1" />
+			<entity type="3" x="49" y="75" level="1" />
+			<entity type="3" x="48" y="75" level="1" />
+			<entity type="2" x="50" y="70" level="1" />
+			<entity type="3" x="51" y="70" level="1" />
+			<entity type="2" x="49" y="70" level="1" />
+			<entity type="3" x="52" y="70" level="1" />
+			<entity type="2" x="50" y="70" level="1" />
+			<entity type="3" x="48" y="70" level="1" />
+			<entity type="3" x="49" y="75" level="1" />
+			<entity type="3" x="51" y="76" level="1" />
+			<entity type="2" x="52" y="76" level="1" />
+			<entity type="3" x="48" y="76" level="1" />
+			<entity type="4" x="51" y="73" level="1" />
+			<entity type="4" x="49" y="72" level="1" />
+			<entity type="8" x="49" y="76" level="1" />
+			<entity type="6" x="48" y="74" level="1" />
+			<entity type="7" x="50" y="71" level="1" />
+			<entity type="8" x="50" y="72" level="1" />
+			<entity type="6" x="48" y="72" level="1" />
+			<entity type="7" x="47" y="71" level="1" />
+			<entity type="8" x="50" y="69" level="1" />
+			<entity type="6" x="46" y="72" level="1" />
+			<entity type="6" x="49" y="74" level="1" />
+			<entity type="7" x="46" y="76" level="1" />
+			<entity type="8" x="48" y="69" level="1" />
+			<entity type="6" x="47" y="75" level="1" />
+			<entity type="7" x="48" y="77" level="1" />
+			<entity type="6" x="47" y="74" level="1" />
+			<entity type="7" x="50" y="75" level="1" />
+			<entity type="6" x="53" y="74" level="1" />
+			<entity type="8" x="53" y="75" level="1" />
+			<entity type="6" x="48" y="73" level="1" />
+			<entity type="8" x="49" y="75" level="1" />
+			<entity type="6" x="45" y="76" level="1" />
+			<entity type="8" x="50" y="77" level="1" />
+			<entity type="6" x="48" y="71" level="1" />
+			<entity type="7" x="49" y="72" level="1" />
+			<entity type="8" x="50" y="71" level="1" />
+			<entity type="6" x="49" y="73" level="1" />
 		</entities>
 	</entity_manager>
 	<projectile_manager />
@@ -282,6 +332,6 @@
 	</player>
 	<quest_manager />
 	<renderer>
-		<camera x="2800" y="-3458" />
+		<camera x="1535" y="-1961" />
 	</renderer>
 </game_state>

@@ -259,6 +259,9 @@
     <ClCompile Include="Module.cpp">
       <Filter>Engine  ===========\Core</Filter>
     </ClCompile>
+    <ClCompile Include="OldMonitor.cpp">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -527,6 +530,9 @@
     </ClInclude>
     <ClInclude Include="ProjectileManager.h">
       <Filter>Engine  ===========\Modules\Multimedia\Projectile Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="OldMonitor.h">
+      <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

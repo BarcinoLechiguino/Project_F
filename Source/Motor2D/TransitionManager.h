@@ -37,7 +37,10 @@ public:
 	Transition* CreateExpandingBars(SCENES next_scene, float step_duration = 0.5f, bool non_lerp = false, int bar_number = 10, bool vertical = false,
 										bool random_colours = false, Color even_colour = Black, Color odd_colour = Black);
 
+	Transition* CreateOldMonitor(SCENES next_scene, float step_duration = 0.5f, bool non_lerp = false, Color rect_colour = Black);
+
 	Transition* CreateZoomToMouse(SCENES next_scene, iPoint mouse_position, float step_duration = 0.5, bool non_lerp = false, float zoom_scale = 1.0f);
+	
 	Transition* CreateCameraToMouse(iPoint mouse_pos, float step_duration = 0.5f, bool non_lerp = false);
 
 public:

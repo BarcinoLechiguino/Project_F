@@ -58,6 +58,7 @@
   <player>
     <god_mode value="0"/>                                       <!--bools that are represented as either 0 (false) or 1 (true)-->
     <has_saved value ="0"/>
+    <load_game_from_main_menu value ="0"/>
     <is_selecting value="0"/>
     <mouse_tile_tex path="Assets/maps/mouse_tile_debug.png"/>
 

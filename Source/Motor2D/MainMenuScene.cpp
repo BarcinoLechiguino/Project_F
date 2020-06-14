@@ -5,10 +5,11 @@
 #include "Application.h"
 #include "Window.h"
 #include "Render.h"
+#include "Input.h"
 #include "Textures.h"
 #include "Audio.h"
 #include "Fonts.h"
-#include "Input.h"
+#include "Player.h"
 #include "GuiManager.h"
 #include "GuiElement.h"
 #include "GuiImage.h"
@@ -61,7 +62,7 @@ bool MainMenuScene::PreUpdate()
 bool MainMenuScene::Update(float dt)
 {
 	//LOG("BEFORE DRAW UPDATE");
-
+	
 	App->render->Blit(background_texture, 0, 0, &background_rect, false, 0.0f);
 	
 	//LOG("AFTER DRAW UPDATE");
@@ -99,7 +100,8 @@ void MainMenuScene::ExecuteTransition()
 			App->pause = false;
 		}
 		
-		App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 30, true, false, Magenta, Black);
+		//App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 30, true, false, Magenta, Black);
+		App->transition_manager->CreateOldMonitor(SCENES::GAMEPLAY_SCENE, 1.25f, true, Black);
 	}
 
 	if (transition_to_options_scene)
@@ -124,6 +126,18 @@ void MainMenuScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->audio->PlayFx(App->gui_manager->new_game_button_clicked_fx,0);
 
 		transition_to_gameplay_scene = true;
+	}
+
+	if (element == continue_button && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		if (App->player->has_saved)
+		{
+			App->audio->PlayFx(App->gui_manager->new_game_button_clicked_fx, 0);
+
+			transition_to_gameplay_scene = true;
+
+			App->player->load_game_from_main_menu = true;
+		}
 	}
 
 	if (element == exit_button && ui_event == GUI_EVENT::UNCLICKED)
