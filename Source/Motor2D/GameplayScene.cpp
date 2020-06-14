@@ -100,7 +100,7 @@ bool GameplayScene::PreUpdate()
 	{
 		time_on_scene += App->GetUnpausableDt();
 		
-		if (time_on_scene > 3.0f)
+		if (time_on_scene > 7.0f)
 		{
 			App->gui_manager->SetElementsVisibility(Saving, false);
 			time_on_scene = 0.0f;
@@ -1533,7 +1533,7 @@ void GameplayScene::LoadGuiElements()
 	//Saving
 	SDL_Rect HUD_text_Save = { 0, 0, 100, 20 };
 	std::string HUD_Save_string = "Your Game Has Been Succesfully Saved";
-	Saving = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 845, 32, HUD_text_Save, App->gui_manager->borgsquadcond_20, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_Save_string);
+	Saving = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, -500, 32, HUD_text_Save, App->gui_manager->borgsquadcond_20, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_Save_string);
 
 }
 
@@ -1689,8 +1689,9 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 		App->gui_manager->SetElementsVisibility(Saving, true);
 
-		saved_text_active = true;
+		App->gui_manager->CreateSlideAnimation(Saving, 8.0f, false, iPoint(-100, Saving->GetScreenPos().y), iPoint(845, Saving->GetScreenPos().y));
 
+		saved_text_active = true;
 	}
 
 	if (element == in_game_exit_button && ui_event == GUI_EVENT::UNCLICKED)
