@@ -13,6 +13,7 @@
 #include "Input.h"
 #include "Map.h"
 #include "Audio.h"
+#include "FowManager.h"
 #include "ParticleManager.h"
 #include "Emitter.h"
 #include "ProjectileManager.h"

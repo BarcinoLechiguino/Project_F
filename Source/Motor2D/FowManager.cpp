@@ -10,7 +10,14 @@
 
 #include "FowManager.h"
 
-FowManager::FowManager() : visibility_map(nullptr), debug_visibility_map(nullptr), visibility_map_debug_buffer(nullptr), fow_tex(nullptr), scouting_trail(true), fow_debug(false)
+FowManager::FowManager() 
+	: visibility_map(nullptr)
+	, debug_visibility_map(nullptr)
+	, visibility_map_debug_buffer(nullptr)
+	, fow_tex(nullptr)
+	, scouting_trail(true)
+	, fow_debug(false)
+	, load_saved_visibility_map(false)
 {
 	name = ("fow_manager");
 }
@@ -100,6 +107,21 @@ bool FowManager::Update(float dt)
 
 bool FowManager::PostUpdate()
 {
+	if (App->player->CurrentlyInGameplayScene())
+	{
+		if (load_saved_visibility_map)
+		{
+			int map_size = visibility_map_width * visibility_map_height;
+
+			for (int i = 0; i < map_size; ++i)
+			{
+				visibility_map[i] = saved_visibility_map[i];
+			}
+
+			load_saved_visibility_map = false;
+		}
+	}
+	
 	return true;
 }
 
@@ -118,12 +140,14 @@ bool FowManager::Load(pugi::xml_node& data)
 		SwapVisibilityMaps();
 	}
 
-	int map_size = visibility_map_width * visibility_map_height;
+	load_saved_visibility_map = true;
+
+	/*int map_size = visibility_map_width * visibility_map_height;
 
 	for (int i = 0; i < map_size; ++i)
 	{
 		visibility_map[i] = saved_visibility_map[i];
-	}
+	}*/
 
 	return true;
 }

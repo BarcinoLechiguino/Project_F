@@ -17,7 +17,7 @@
 	<transition_manager />
 	<entity_manager>
 		<entities>
-			<entity type="1" x="50" y="131" level="1" />
+			<entity type="1" x="63" y="143" level="1" />
 			<entity type="9" x="48" y="127" level="1" />
 			<entity type="12" x="52" y="17" level="1" />
 			<entity type="10" x="43" y="127" level="1" />
@@ -282,6 +282,6 @@
 	</player>
 	<quest_manager />
 	<renderer>
-		<camera x="2800" y="-3150" />
+		<camera x="2800" y="-3458" />
 	</renderer>
 </game_state>
