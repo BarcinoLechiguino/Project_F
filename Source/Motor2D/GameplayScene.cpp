@@ -1615,7 +1615,13 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 		App->gui_manager->SetElementsVisibility(in_game_options_parent, true);
 
-		App->gui_manager->CreateSlideAnimation(in_game_options_parent, 0.5f, false, iPoint(2000, in_game_options_parent->GetScreenPos().y), iPoint(0, in_game_options_parent->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_options_text, 0.5f, false, iPoint(2000, in_game_options_text->GetScreenPos().y), iPoint(445, in_game_options_text->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_music_text, 0.5f, false, iPoint(2000, in_game_music_text->GetScreenPos().y), iPoint(487, in_game_music_text->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_sfx_text, 0.5f, false, iPoint(2000, in_game_sfx_text->GetScreenPos().y), iPoint(491, in_game_sfx_text->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_resolution_text, 0.5f, false, iPoint(2000, in_game_resolution_text->GetScreenPos().y), iPoint(448, in_game_resolution_text->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_fullscreen_text, 0.5f, false, iPoint(2000, in_game_fullscreen_text->GetScreenPos().y), iPoint(410, in_game_fullscreen_text->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_fullscreen_off, 0.5f, false, iPoint(2000, in_game_fullscreen_off->GetScreenPos().y), iPoint(605, in_game_fullscreen_off->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_back_button, 0.5f, false, iPoint(2000, in_game_back_button->GetScreenPos().y), iPoint(430, in_game_back_button->GetScreenPos().y));
 	}
 
 	if (element == in_game_back_button && ui_event == GUI_EVENT::UNCLICKED)
@@ -1645,6 +1651,14 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->audio->PlayFx(App->gui_manager->main_menu_button_clicked_fx, 0);
 
 		transition_to_main_menu_scene = true;
+	}
+
+	if (element == in_game_save_button && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		// Back to menu
+		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
+
+		App->SaveGame("save_game.xml");
 	}
 
 	if (element == in_game_exit_button && ui_event == GUI_EVENT::UNCLICKED)
