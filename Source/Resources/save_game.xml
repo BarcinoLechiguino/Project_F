@@ -392,6 +392,6 @@
 	</player>
 	<quest_manager />
 	<renderer>
-		<camera x="2708" y="-3082" />
+		<camera x="2800" y="-3150" />
 	</renderer>
 </game_state>

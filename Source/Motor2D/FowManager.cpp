@@ -14,6 +14,7 @@ FowManager::FowManager()
 	: visibility_map(nullptr)
 	, debug_visibility_map(nullptr)
 	, visibility_map_debug_buffer(nullptr)
+	, saved_visibility_map(nullptr)
 	, fow_tex(nullptr)
 	, scouting_trail(true)
 	, fow_debug(false)
@@ -274,7 +275,6 @@ void FowManager::SetVisibilityMap(const int& width, const int& height)
 
 	if (saved_visibility_map == nullptr)											// saved_visibility_map will not reset between scenes.
 	{
-		int ewewew = 0;
 		saved_visibility_map = new uchar[map_size];
 		memset(saved_visibility_map, UNEXPLORED, map_size);
 	}
