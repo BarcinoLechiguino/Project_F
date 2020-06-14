@@ -185,8 +185,12 @@ void EntityManager::DrawEntities()
 
 	for (int i = 0; i < (int)entities_in_screen.size(); ++i)
 	{
+		if (entities_in_screen[i]->is_selected) {
+			App->render->Blit(select_circle_tex, (int)entities_in_screen[i]->pixel_position.x, (int)entities_in_screen[i]->pixel_position.y, nullptr);
+		}
+		
 		entities_in_screen[i]->Draw();
-
+	
 		if (debug_center_point)
 		{
 			App->render->Blit(center_point_debug, (int)entities_in_screen[i]->center_point.x - 6, (int)entities_in_screen[i]->center_point.y - 5, nullptr);
@@ -414,6 +418,9 @@ void EntityManager::LoadEntityTextures()
 	enemy_scout_tex		= App->tex->Load(entity_textures.child("enemy_scout_texture").attribute("path").as_string());
 	enemy_infantry_tex	= App->tex->Load(entity_textures.child("enemy_infantry_texture").attribute("path").as_string());
 	enemy_heavy_tex		= App->tex->Load(entity_textures.child("enemy_heavy_texture").attribute("path").as_string());
+
+	//MISCELLANEOUS
+	select_circle_tex	= App->tex->Load(entity_textures.child("select_circle_tex").attribute("path").as_string());
 
 	// BUILDINGS
 	townhall_tex		= App->tex->Load(entity_textures.child("townhall_texture").attribute("path").as_string());

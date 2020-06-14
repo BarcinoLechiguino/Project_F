@@ -55,7 +55,7 @@ bool DynamicObject::PreUpdate()
 }
 
 bool DynamicObject::Update(float dt, bool do_logic)
-{
+{	
 	return true;
 }
 

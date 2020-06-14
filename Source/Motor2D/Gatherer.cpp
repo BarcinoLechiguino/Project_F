@@ -57,6 +57,8 @@ bool Gatherer::Update(float dt, bool do_logic)
 
 	SmokeEmitter->UpdatePos({ pixel_position.x + 5, pixel_position.y - 20 });
 
+	UpdateRedState();
+
 	if (target != nullptr)
 	{
 		if (TargetIsInRange())
@@ -107,7 +109,12 @@ bool Gatherer::CleanUp()
 
 void Gatherer::Draw()
 {
-	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 14, &entity_sprite_section);
+	if (this->red_state == false) {
+		App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section);
+	}
+	if (this->red_state == true) {
+		App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section, false, 1.0F, 1.0F, 0.0, 0, 0, App->render->renderer, { 255, 128, 128, 255 });
+	}
 }
 
 void Gatherer::UpdateUnitSpriteSection()

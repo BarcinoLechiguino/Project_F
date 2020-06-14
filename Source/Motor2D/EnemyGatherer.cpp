@@ -54,6 +54,8 @@ bool EnemyGatherer::Update(float dt, bool do_logic)
 
 	UpdateUnitSpriteSection();
 
+	UpdateRedState();
+
 	if (do_logic)
 	{
 		if (target == nullptr && entity_path.empty())
@@ -114,8 +116,13 @@ bool EnemyGatherer::CleanUp()
 
 void EnemyGatherer::Draw()
 {
-	App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 14, &entity_sprite_section);
 
+	if (this->red_state == false) {
+		App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 14, &entity_sprite_section);
+	}
+	if (this->red_state == true) {
+		App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 14, &entity_sprite_section, false, 1.0F, 1.0F, 0.0, 0, 0, App->render->renderer, { 255, 128, 128, 255 });
+	}
 }
 
 void EnemyGatherer::InitEntity()

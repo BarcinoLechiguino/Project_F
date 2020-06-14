@@ -51,7 +51,7 @@ bool Infantry::Update(float dt, bool do_logic)
 
 	DataMapSafetyCheck();
 
-
+	UpdateRedState();
 
 	if (!entity_path.empty())
 	{
@@ -126,11 +126,13 @@ bool Infantry::CleanUp()
 
 void Infantry::Draw()
 {
+
+
 	if (this->red_state == false) {
 		App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section);
 	}
 	if (this->red_state == true) {
-		App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section, false, 1.0F, 1.0F, 0.0, 0, 0, App->render->renderer, {255, 0, 0, 255});
+		App->render->Blit(this->entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 15, &entity_sprite_section, false, 1.0F, 1.0F, 0.0, 0, 0, App->render->renderer, {255, 128, 128, 255});
 	}
 }
 

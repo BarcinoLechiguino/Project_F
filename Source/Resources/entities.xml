@@ -18,6 +18,7 @@
     <tree_texture                     path="Assets/entities/neutral_resource_trees.png"/>
     <obelisk_texture                  path="Assets/entities/neutral_resource_obelisk.png"/>
     <boulder_texture                  path="Assets/entities/neutral_obstacle_boulder.png"/>
+    <select_circle_tex                path="Assets/maps/selected_entity.png"/>
   </textures>
 
   <fx>
