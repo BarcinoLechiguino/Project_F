@@ -7,7 +7,6 @@
 
 #include "GuiScrollbar.h"
 
-
 GuiScrollbar::GuiScrollbar(GUI_ELEMENT_TYPE type, int x, int y, SDL_Rect hitbox, SDL_Rect thumbSize, iPoint thumbOffset, SDL_Rect drag_area, float drag_factor, bool drag_x_axis, bool drag_y_axis,
 				bool inverted_scrolling, bool is_visible, bool is_interactible, bool is_draggable, Module* listener, GuiElement* parent , SDL_Rect* scroll_mask, iPoint maskOffset,
 				bool emptyElements) : GuiElement(type, x, y, hitbox, listener, parent)
