@@ -158,7 +158,7 @@ iPoint Render::ScreenToWorld(int x, int y) const
 }
 
 // Blit to screen
-bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool flip, float speed, float render_scale, double angle, int pivot_x, int pivot_y, SDL_Renderer* renderer) const
+bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool flip, float speed, float render_scale, double angle, int pivot_x, int pivot_y, SDL_Renderer* renderer, SDL_Color color) const
 {	
 	bool ret = true;
 	float scale = App->win->GetScale();
@@ -190,12 +190,25 @@ bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, b
 		pivot.y = pivot_y;
 		p = &pivot;
 	}
+	
+	SDL_Color original;
+	if (color.a != 0) {
+		
+		SDL_GetTextureColorMod(texture, &original.r, &original.g, &original.b);
+
+		SDL_SetTextureColorMod(texture, color.r, color.g, color.b) == 0;
+	}
 
 	if (SDL_RenderCopyEx(renderer, texture, section, &rect, angle, p, flip ? SDL_FLIP_HORIZONTAL : SDL_FLIP_NONE) != 0)
 	{
 		LOG("Cannot blit to screen. SDL_RenderCopy error: %s", SDL_GetError());
 		ret = false;
 	}
+
+	if (color.a != 0) {
+		SDL_SetTextureColorMod(texture, original.r, original.g, original.b) == 0;
+	}
+
 
  	return ret;
 }

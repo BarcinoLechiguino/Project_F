@@ -16,12 +16,12 @@
 #include "Entity.h"
 
 
-Entity::Entity() : tile_position(0, 0), type(ENTITY_TYPE::UNKNOWN), level(1), entity_sprite(nullptr), animation(nullptr)
+Entity::Entity() : tile_position(0, 0), type(ENTITY_TYPE::UNKNOWN), level(1), entity_sprite(nullptr), animation(nullptr), red_state(false), red_state_timer(0)
 {
 
 }
 
-Entity::Entity(int x, int y, ENTITY_TYPE type, int level) : tile_position(x, y), type(type), level(level), entity_sprite(nullptr), animation(nullptr)	//Initializes the variables to the specified values when the constructor is called.
+Entity::Entity(int x, int y, ENTITY_TYPE type, int level) : tile_position(x, y), type(type), level(level), entity_sprite(nullptr), animation(nullptr), red_state(false), red_state_timer(0)	//Initializes the variables to the specified values when the constructor is called.
 {
 	return;
 }
@@ -127,5 +127,20 @@ void Entity::RecieveDamage(int damage)
 	if (App->entity_manager->IsUnit(this))
 	{
 		Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ pixel_position.x, pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
+		red_state = true;
 	}
+}
+
+void Entity::UpdateRedState() {
+	if (red_state) 
+	{
+		red_state_timer++;
+		if (red_state_timer > 5) 
+		{
+			red_state = false;
+			red_state_timer = 0;
+		}
+	}
+	
+	return;
 }

@@ -85,6 +85,8 @@ public:
 	void ApplyDamage(Entity* target);											//Applies the current unit damage to the referenced target, also handles the target health bar.
 	void RecieveDamage(int damage);
 
+	void UpdateRedState();
+
 public:																			// --- ENTITY VARIABLES ---
 	std::string		name_tag;													//Name of the entity in the xml file.
 	ENTITY_TYPE		type;
@@ -111,6 +113,9 @@ public:																			// --- ENTITY VARIABLES ---
 	SDL_Texture*	entity_sprite;
 
 	Animation*		animation;
+						
+	bool			red_state;
+	uint			red_state_timer;
 																				// --- ENTITY FOW RELATED VARIABLES ---
 	bool			is_visible;													// Will determine whether or not an entity is currently visible. (See FowManager module)
 	bool			is_neutral;													// Will determine whether or not an entity will be seen through FOGGED tiles.
