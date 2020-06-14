@@ -57,6 +57,7 @@ bool Projectile::Update(float dt)
 
 	angle = radiant * (180/PI);
 
+	//LOG("angle is %f", angle);
 
 	if(position.DistanceTo(target_position) < 10)
 	{

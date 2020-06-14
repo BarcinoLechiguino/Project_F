@@ -92,7 +92,7 @@ public:																								// -------------- ENTITY MAP METHODS ------------
 	void ChangeEntityMap(const iPoint& tile_position, Entity* entity, bool set_to_null = false);	// Method that will modify the entity map when a unit or building is spawned.
 	void OrderEntities();
 
-	//void SetDeadTarget(Entity* entity);
+	void SetDeadTarget(Entity* entity);
 
 	bool CheckEntityMapBoundaries(const iPoint& tile_position) const;								// Method that will return true if the tile passed as argument is inside the entity_map.
 

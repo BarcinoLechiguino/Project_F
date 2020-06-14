@@ -23,6 +23,7 @@ struct Projectile
 	
 	float speed;
 	int damage;
+	double angle;
 	
 	bool is_target_alive;
 	
