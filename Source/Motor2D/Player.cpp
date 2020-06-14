@@ -18,6 +18,9 @@
 #include "Movement.h"
 #include "DialogManager.h"
 
+#include "Dependencies/SDL_image/include/SDL_image.h"
+#include "Dependencies/SDL/include/SDL.h"
+
 #include "GuiManager.h"
 #include "GuiElement.h"
 //#include "GuiCursor.h"
@@ -61,10 +64,12 @@ bool Player::PreUpdate()
 	if (CurrentlyInGameplayScene() && !App->pause)
 	{
 		SDL_SetRelativeMouseMode(SDL_TRUE);
+		//SDL_ShowCursor(SDL_ENABLE);
 	}
 	else
 	{
 		SDL_SetRelativeMouseMode(SDL_FALSE);
+		//SDL_ShowCursor(SDL_ENABLE);
 	}
 
 	return true;
@@ -1043,6 +1048,8 @@ bool Player::CurrentlyInGameplayScene()
 void Player::InitializePlayer()
 {
 	SDL_ShowCursor(SDL_DISABLE);
+
+	//SDL_SetCursor(SDL_CreateColorCursor(IMG_Load("Assets/gui/idle_cursor.png"), 0, 0));
 
 	selection_rect = { 0, 0, 0, 0 };
 
