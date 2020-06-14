@@ -163,7 +163,6 @@ public:
 	GuiScrollbar*			in_game_music_scrollbar;
 	GuiScrollbar*			in_game_sfx_scrollbar;
 
-
 	// Text:
 	GuiText*				in_game_resolution_text;
 	GuiText*				in_game_sfx_text;
@@ -175,6 +174,7 @@ public:
 	GuiButton*				 HUD_group_button;
 	GuiButton*				 HUD_home_button;
 	GuiButton*				 HUD_pause_button;
+	GuiButton*				 HUD_build_button;
 	GuiButton*				 HUD_play_button;
 	GuiImage*				 HUD_resource_bar;
 
@@ -360,6 +360,10 @@ public:
 	GuiImage*				HUD_dialogs_character_talking;
 	GuiImage*				HUD_dialogs_screen_block;
 	GuiButton*				HUD_dialogs_skip_tutorial;
+
+	//Building HUD
+	GuiImage*				HUD_building_background;
+	GuiText*				HUD_building_title;
 
 	//Extras
 

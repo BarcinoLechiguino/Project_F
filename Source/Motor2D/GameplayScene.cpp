@@ -815,7 +815,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_group_button_hover = { 970, 48, 63, 38 };
 	SDL_Rect HUD_group_button_clicked = { 1171, 48, 63, 38 };
 
-	HUD_group_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 544, -4, true, true, false, this, nullptr
+	HUD_group_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 481, -4, true, true, false, this, nullptr
 		, &HUD_group_button_idle, &HUD_group_button_hover, &HUD_group_button_clicked);
 
 	// Pause
@@ -824,7 +824,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_pause_button_hover = { 1036, 48, 63, 38 };
 	SDL_Rect HUD_pause_button_clicked = { 1237, 48, 63, 38 };
 
-	HUD_pause_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 601, -4, true, true, false, this, nullptr
+	HUD_pause_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 538, -4, true, true, false, this, nullptr
 		, &HUD_pause_button_idle, &HUD_pause_button_hover, &HUD_pause_button_clicked);
 
 	// Play
@@ -833,7 +833,7 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_play_button_hover = { 1104, 3, 63, 38 };
 	SDL_Rect HUD_play_button_clicked = { 1171, 3, 63, 38 };
 
-	HUD_play_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 601, -4, false, true, false, this, nullptr
+	HUD_play_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 664, -4, false, true, false, this, nullptr
 		, &HUD_play_button_idle, &HUD_play_button_hover, &HUD_play_button_clicked);
 
 	// Home 
@@ -842,8 +842,18 @@ void GameplayScene::LoadGuiElements()
 	SDL_Rect HUD_home_button_hover = { 1101, 48, 63, 37 };
 	SDL_Rect HUD_home_button_clicked = { 1302, 48, 63, 37 };
 
-	HUD_home_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 657, -4, true, true, false, this, nullptr
+	HUD_home_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 651, -4, true, true, false, this, nullptr
 		, &HUD_home_button_idle, &HUD_home_button_hover, &HUD_home_button_clicked);
+
+
+	// Build 
+	SDL_Rect HUD_build_button_size = { 0, 0, 63, 37 };
+	SDL_Rect HUD_build_button_idle = { 1038, 5, 63, 37 };
+	SDL_Rect HUD_build_button_hover = { 1106, 5, 63, 37 };
+	SDL_Rect HUD_build_button_clicked = { 1173, 5, 63, 37 };
+
+	HUD_build_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, -2, true, true, false, this, nullptr
+		, &HUD_build_button_idle, &HUD_build_button_hover, &HUD_build_button_clicked);
 
 
 
@@ -1390,6 +1400,7 @@ void GameplayScene::LoadGuiElements()
 	HUD_unit_upgrade_barracks_heavy = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 616, 594, false, true, false, this, HUD_barracks_bar
 		, &HUD_unit2_upgrade_barracks_idle, &HUD_unit2_upgrade_barracks_hover, &HUD_unit2_upgrade_barracks_clicked);
 
+
 	//*****_____ENEMY_____*****
 	//Enemy Down Bar
 	SDL_Rect HUD_enemy_townhall_bar_size = { 20, 209, 798, 160 };
@@ -1523,6 +1534,17 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 110, 145, true, true, false, this, nullptr
 		, &HUD_dialogs_skip_tutorial_idle, &HUD_dialogs_skip_tutorial_hover, &HUD_dialogs_skip_tutorial_clicked);
+
+	// ******____HUD building_____******
+
+	//Back
+	SDL_Rect HUD_building_back_size = { 25, 400, 390, 226 };
+	HUD_building_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 895, 100, HUD_building_back_size, true, true, false, this, nullptr);
+
+	//Title
+	SDL_Rect HUD_text_title_build = { 0, 0, 100, 20 };
+	std::string HUD_title_build_string = "Building System";
+	HUD_building_title = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 930, 105, HUD_text_title_build, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_build_string);
 
 
 	//************________EXTRAS____________*********
@@ -1695,7 +1717,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 		App->gui_manager->SetElementsVisibility(Icon_Saving, true);
 
-		App->gui_manager->CreateSlideAnimation(Saving, 8.0f, false, iPoint(-300, Saving->GetScreenPos().y), iPoint(1345, Saving->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(Saving, 8.0f, false, iPoint(-500, Saving->GetScreenPos().y), iPoint(1345, Saving->GetScreenPos().y));
 
 		saved_text_active = true;
 	}
