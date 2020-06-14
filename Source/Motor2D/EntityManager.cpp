@@ -13,6 +13,7 @@
 #include "Input.h"
 #include "Map.h"
 #include "Audio.h"
+#include "Pathfinding.h"
 #include "FowManager.h"
 #include "ParticleManager.h"
 #include "Emitter.h"
@@ -883,13 +884,13 @@ Entity* EntityManager::GetEntityAt(const iPoint& pos) const
 	return nullptr;
 }
 
-bool EntityManager::CheckTileAvailability(const iPoint& pos, Entity* entity)
+bool EntityManager::CheckTileAvailability(const iPoint& tile_position, Entity* entity)
 {
 	if (entity_map != nullptr)
 	{
 		if (IsUnit(entity))
 		{
-			if (entity_map[(pos.y * entity_map_width) + pos.x] != nullptr)
+			if (!CheckSingleTileAvailability(tile_position) /*|| !App->pathfinding->IsWalkable(tile_position)*/)
 			{
 				return false;
 			}
@@ -901,15 +902,28 @@ bool EntityManager::CheckTileAvailability(const iPoint& pos, Entity* entity)
 			{
 				for (int x = 0; x != entity->tiles_occupied.x; ++x)
 				{
-					int pos_y = pos.y + y;
-					int pos_x = pos.x + x;
+					int pos_y = tile_position.y + y;
+					int pos_x = tile_position.x + x;
 
-					if (entity_map[(pos_y * entity_map_width) + pos_x] != nullptr)
+					if (!CheckSingleTileAvailability({ pos_x, pos_y }) /*|| !App->pathfinding->IsWalkable({ pos_x, pos_y })*/)
 					{
 						return false;
 					}
 				}
 			}
+		}
+	}
+
+	return true;
+}
+
+bool EntityManager::CheckSingleTileAvailability(const iPoint& tile_position)
+{
+	if (entity_map != nullptr)
+	{
+		if (entity_map[(tile_position.y * entity_map_width) + tile_position.x] != nullptr)
+		{
+			return false;
 		}
 	}
 

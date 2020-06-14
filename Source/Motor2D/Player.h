@@ -85,10 +85,14 @@ public:
 	// --- Conditional Checks
 	bool CurrentlyInGameplayScene();
 
-public:															// --- Building System Methods
+public:																// --- Building System Methods.
 	void BuildingMenu();
-	void CheckBuildingShortcuts();								// Will check whether or not a building input shortcut has been inputted and set the building type to the corresponding one.
-	void ShowBuildingPreview();									// Will display the required space to build a building and will also display whether or not a tile can be build upon.
+	void CheckBuildingShortcuts();									// Will check whether or not a building input shortcut has been inputted and set the building type to the corresponding one.
+	
+	void ShowBuildingPreview();										// Will display the required space to build a building and will also display whether or not a tile can be build upon.
+	void DrawBuildingPreview(ENTITY_TYPE type, int building_size);	// Will draw the building preview.
+
+	bool TileIsBuildable(const iPoint& tile_position);				// Will check whether or not a given tile can be built upon.
 
 public:
 	bool				god_mode;								// Will keep track of whether the god_mode has been activated or not.
@@ -120,6 +124,10 @@ public:
 	std::vector<DynamicObject*>	units_selected;
 
 public:															// ---------- BUILDING SYSTEM VARIABLES ----------
+	SDL_Texture*		townhall_build_tex;
+	SDL_Texture*		barracks_build_tex;
+	SDL_Texture*		wall_build_tex;
+
 	SDL_Texture*		buildable_tile_tex;
 	SDL_Texture*		non_buildable_tile_tex;
 	
@@ -132,6 +140,10 @@ public:															// ---------- BUILDING SYSTEM VARIABLES ----------
 	int					townhall_size;
 	int					barracks_size;
 	int					wall_size;
+
+	SDL_Rect			townhall_section;
+	SDL_Rect			barracks_section;
+	SDL_Rect			wall_section;
 	
 public:															// ---------- CURSOR VARIABLES ----------
 	SDL_Texture*		mouse_tile_debug;						// Texture that will be drawn on top of the tile where the cursor is currently at.

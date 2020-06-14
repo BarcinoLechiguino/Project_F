@@ -1113,7 +1113,62 @@ void Player::CheckBuildingShortcuts()
 
 void Player::ShowBuildingPreview()
 {
+	if (building_type == ENTITY_TYPE::TOWNHALL)
+	{
+		DrawBuildingPreview(building_type, townhall_size);
+	}
 
+	if (building_type == ENTITY_TYPE::BARRACKS)
+	{
+		DrawBuildingPreview(building_type, barracks_size);
+	}
+
+	if (building_type == ENTITY_TYPE::WALL)
+	{
+		DrawBuildingPreview(building_type, wall_size);
+	}
+}
+
+void Player::DrawBuildingPreview(ENTITY_TYPE type, int building_size)
+{
+	for (int y = 0; y != building_size; ++y)
+	{
+		for (int x = 0; x != building_size; ++x)
+		{
+			int pos_y = (cursor_tile.y - 1) + y;
+			int pos_x = (cursor_tile.x - 1) + x;
+
+			iPoint draw_position = App->map->MapToWorld(pos_x, pos_y);
+			
+			if (TileIsBuildable({ pos_x, pos_y }))
+			{
+				App->render->Blit(buildable_tile_tex, draw_position.x, draw_position.y, nullptr);
+			}
+			else
+			{
+				App->render->Blit(non_buildable_tile_tex, draw_position.x, draw_position.y, nullptr);
+			}
+		}
+	}
+
+	iPoint draw_position = App->map->MapToWorld((cursor_tile.x - 1), (cursor_tile.y- 1));
+
+	switch (type)
+	{
+	case ENTITY_TYPE::TOWNHALL:
+		App->render->Blit(townhall_build_tex, draw_position.x, draw_position.y, &townhall_section);
+		break;
+	}
+}
+
+bool Player::TileIsBuildable(const iPoint& tile_position)
+{
+	if (!App->entity_manager->CheckSingleTileAvailability(tile_position) ||  !App->pathfinding->IsWalkable(tile_position))
+	{
+		return false;
+	}
+
+	return true;
 }
 
 // ------------------- PLAYER INICIALIZATION METHOD -------------------
@@ -1158,10 +1213,29 @@ void Player::InitializePlayer()
 	barracks_size			= player.child("building_system").child("barracks_size").attribute("size").as_int();
 	wall_size				= player.child("building_system").child("wall_size").attribute("size").as_int();
 
+	townhall_section.x		= player.child("building_system").child("townhall_section").attribute("x").as_int();
+	townhall_section.y		= player.child("building_system").child("townhall_section").attribute("y").as_int();
+	townhall_section.w		= player.child("building_system").child("townhall_section").attribute("w").as_int();
+	townhall_section.h		= player.child("building_system").child("townhall_section").attribute("h").as_int();
+
+	barracks_section.x		= player.child("building_system").child("barracks_section").attribute("x").as_int();
+	barracks_section.y		= player.child("building_system").child("barracks_section").attribute("y").as_int();
+	barracks_section.w		= player.child("building_system").child("barracks_section").attribute("w").as_int();
+	barracks_section.h		= player.child("building_system").child("barracks_section").attribute("h").as_int();
+
+	wall_section.x			= player.child("building_system").child("wall_section").attribute("x").as_int();
+	wall_section.y			= player.child("building_system").child("wall_section").attribute("y").as_int();
+	wall_section.w			= player.child("building_system").child("wall_section").attribute("w").as_int();
+	wall_section.h			= player.child("building_system").child("wall_section").attribute("h").as_int();
+
 	building_type			= (ENTITY_TYPE)player.child("building_system").child("building_type").attribute("type").as_uint();
 
-	buildable_tile_tex		= App->tex->Load(player.child("building_system").child("buildable_tile_tex").attribute("path").as_string());
-	non_buildable_tile_tex	= App->tex->Load(player.child("building_system").child("non_buildable_tile_tex").attribute("path").as_string());
+	townhall_build_tex		= App->tex->Load(player.child("building_system").child("townhall_build_texture").attribute("path").as_string());
+	barracks_build_tex		= App->tex->Load(player.child("building_system").child("barracks_build_texture").attribute("path").as_string());
+	wall_build_tex			= App->tex->Load(player.child("building_system").child("wall_build_texture").attribute("path").as_string());
+
+	buildable_tile_tex		= App->tex->Load(player.child("building_system").child("buildable_tile_texture").attribute("path").as_string());
+	non_buildable_tile_tex	= App->tex->Load(player.child("building_system").child("non_buildable_tile_texture").attribute("path").as_string());
 
 	// --- Cursor Section Sprites
 	// -- Cursor IDLE

@@ -23,9 +23,7 @@ class DynamicObject;
 class PathFinding : public Module
 {
 public:
-
 	PathFinding();
-
 	~PathFinding();																				// Destructor
 
 	bool CleanUp();																				// Called before quitting

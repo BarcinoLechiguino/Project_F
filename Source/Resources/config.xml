@@ -69,9 +69,15 @@
       <townhall_size size ="3"/>
       <barracks_size size ="2"/>
       <wall_size size ="1"/>
+      <townhall_section x="0" y="0" w="155" h="138"/>
+      <barracks_section x="0" y="0" w="106" h="95"/>
+      <wall_section x="0" y="0" w="0" h="0"/>
       <building_type type="0"/>
-      <buildable_tile_tex path="Assets/maps/buildable_tile.png"/>
-      <non_buildable_tile_tex path="Assets/maps/non_buildable_tile.png"/>
+      <townhall_build_texture path="Assets/entities/ally_building_townhall.png"/>
+      <barracks_build_texture path="Assets/entities/ally_building_barracks.png"/>
+      <wall_build_texture path="Assets/entities/ally_building_wall_placeholder.png"/>
+      <buildable_tile_texture path="Assets/maps/buildable_tile.png"/>
+      <non_buildable_tile_texture path="Assets/maps/non_buildable_tile.png"/>
     </building_system>
     
     <camera>

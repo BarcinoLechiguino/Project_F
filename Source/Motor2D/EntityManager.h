@@ -100,6 +100,7 @@ public:																								// -------------- ENTITY MAP METHODS ------------
 	iPoint GetEntityPos(Entity* entity);
 
 	bool CheckTileAvailability(const iPoint& tile_position, Entity* entity);						// Method that will return true whenever the space required by an entity is available.
+	bool CheckSingleTileAvailability(const iPoint& tile_position);									// Method that will return true if the given tile is not occupied by any entity.
 
 public:
 	SDL_Texture*					gatherer_tex;
