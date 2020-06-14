@@ -756,13 +756,23 @@ void GameplayScene::LoadGuiElements()
 	in_game_back_to_menu = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 541, 321, false, true, false, this, in_game_background
 		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
 
+	// Save button
+
+	SDL_Rect in_game_save_size = { 0, 0, 189, 23 };
+	SDL_Rect in_game_save_idle = { 0, 137, 189, 23 };
+	SDL_Rect in_game_save_hover = { 204, 137, 189, 23 };
+	SDL_Rect in_game_save_clicked = { 408, 137, 189, 23 };
+
+	in_game_save_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, 361, false, true, false, this, in_game_background
+		, &in_game_save_idle, &in_game_save_hover, &in_game_save_clicked);
+
 	// Exit Button
 	SDL_Rect in_game_exit_button_size = { 0, 0, 74, 23 };
 	SDL_Rect in_game_exit_button_idle = { 1, 77, 74, 23 };
 	SDL_Rect in_game_exit_button_hover = { 178, 77, 74, 23 };
 	SDL_Rect in_game_exit_button_clicked = { 356, 77, 74, 23 };
 
-	in_game_exit_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, 361, false, true, false, this, in_game_background
+	in_game_exit_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, 401, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
 
 	// Title
@@ -1599,21 +1609,32 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->gui_manager->SetElementsVisibility(in_game_exit_button, false);
 		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, false);
 		App->gui_manager->SetElementsVisibility(in_game_title_text, false);
+		App->gui_manager->SetElementsVisibility(in_game_save_button, false);
 
 		App->gui_manager->SetElementsVisibility(in_game_options_parent, true);
+
+		App->gui_manager->CreateSlideAnimation(in_game_options_parent, 0.5f, false, iPoint(2000, in_game_options_parent->GetScreenPos().y), iPoint(0, in_game_options_parent->GetScreenPos().y));
 	}
 
 	if (element == in_game_back_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->back_button_clicked_fx, 0);
 
+		App->gui_manager->SetElementsVisibility(in_game_options_parent, false);
+
 		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu	// THIS (?)
 		App->gui_manager->SetElementsVisibility(in_game_options_button, true);
 		App->gui_manager->SetElementsVisibility(in_game_exit_button, true);
 		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, true);
 		App->gui_manager->SetElementsVisibility(in_game_title_text, true);
+		App->gui_manager->SetElementsVisibility(in_game_save_button, true);
 
-		App->gui_manager->SetElementsVisibility(in_game_options_parent, false);
+		App->gui_manager->CreateSlideAnimation(in_game_continue_button, 0.5f, false, iPoint(-100, in_game_continue_button->GetScreenPos().y), iPoint(555, in_game_continue_button->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_options_button, 0.5f, false, iPoint(-100, in_game_options_button->GetScreenPos().y), iPoint(567, in_game_options_button->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_exit_button, 0.5f, false, iPoint(-100, in_game_exit_button->GetScreenPos().y), iPoint(596, in_game_exit_button->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_title_text, 0.5f, false, iPoint(-100, in_game_title_text->GetScreenPos().y), iPoint(469, in_game_title_text->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_back_to_menu, 0.5f, false, iPoint(-100, in_game_back_to_menu->GetScreenPos().y), iPoint(541, in_game_back_to_menu->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_save_button, 0.5f, false, iPoint(-100, in_game_save_button->GetScreenPos().y), iPoint(596, in_game_save_button->GetScreenPos().y));
 	}
 
 	if (element == in_game_back_to_menu && ui_event == GUI_EVENT::UNCLICKED)

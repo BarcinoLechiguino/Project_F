@@ -143,6 +143,7 @@ public:
 
 	GuiImage*				in_game_background;
 	GuiButton*				in_game_continue_button;
+	GuiButton*				in_game_save_button;
 	GuiButton*				in_game_options_button;
 	GuiButton*				in_game_exit_button;
 	GuiButton*				in_game_back_to_menu;
