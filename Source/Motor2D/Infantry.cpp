@@ -416,8 +416,7 @@ void Infantry::DealDamage()
 	{
 		if (!attack_in_cooldown)
 		{
-			//ApplyDamage(target);
-			App->projectile_manager->CreateProjectile(pixel_position, 100,attack_damage, target);
+			App->projectile_manager->CreateProjectile(center_point, 200,attack_damage, target);
 			App->audio->PlayFx(App->entity_manager->infantry_shooting_fx);
 			attack_in_cooldown = true;
 		}

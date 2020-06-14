@@ -13,6 +13,7 @@
 #include "FowManager.h"
 #include "EnemyAIManager.h"
 #include "EntityManager.h"
+#include "ProjectileManager.h"
 
 #include "EnemyInfantry.h"
 
@@ -82,7 +83,7 @@ bool EnemyInfantry::Update(float dt, bool do_logic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	center_point = fPoint(pixel_position.x + App->map->data.tile_width * 0.5f, pixel_position.y + App->map->data.tile_height * 0.5f);
 
 	// FOG OF WAR
 	is_visible = fow_entity->is_visible;
@@ -136,6 +137,8 @@ void EnemyInfantry::Draw()
 
 void EnemyInfantry::InitEntity()
 {
+	name_tag = "enemy_infantry";
+
 	// POSITION VARIABLES
 	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
 	
@@ -153,7 +156,7 @@ void EnemyInfantry::InitEntity()
 	accumulated_cooldown = 0.0f;
 
 	// STATS
-	speed = 350.0f;
+	speed = 175.0f;
 
 	max_health = 300;
 	current_health = max_health;
@@ -413,7 +416,7 @@ void EnemyInfantry::DealDamage()
 	{
 		if (!attack_in_cooldown)
 		{
-			ApplyDamage(target);
+			App->projectile_manager->CreateProjectile(center_point, 200, attack_damage, target);
 			attack_in_cooldown = true;
 		}
 		else

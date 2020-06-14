@@ -1,6 +1,7 @@
 #include "ProjectileManager.h"
 #include "Render.h"
 #include "Entity.h"
+#include "Log.h"
 
 Projectile::Projectile()
 {
@@ -13,15 +14,23 @@ Projectile::Projectile(fPoint position, float speed,int damage, Entity* target)
 	this->speed = speed;
 	this->damage = damage;
 	this->target = target;
+	is_target_alive = true;
+	this->life.Start();
+	LOG("My target is %s", target->name_tag.c_str());
+}
+
+void Projectile::CleanUp()
+{
+	target = nullptr;
 }
 
 bool Projectile::Update(float dt)
 {
-	//Movement
-	//position = target->center_point;
+	if(is_target_alive)
+		target_position = target->center_point;
 
 	fPoint velocity;
-	fPoint position_difference(target->center_point.x - position.x, target->center_point.y - position.y);
+	fPoint position_difference(target_position.x - position.x, target_position.y - position.y);
 
 	float h = sqrt( (position_difference.x * position_difference.x) + (position_difference.y * position_difference.y) );
 
@@ -31,11 +40,21 @@ bool Projectile::Update(float dt)
 	position.x += velocity.x * dt;
 	position.y += velocity.y * dt;
 
-	if(position.DistanceTo(target->center_point) < 20)
+	if(position.DistanceTo(target_position) < 10)
 	{
-		target->RecieveDamage(this->damage);
+		if (is_target_alive)
+		{
+			target->RecieveDamage(damage);
+		}
 
 		App->projectile_manager->DestroyProjectile(this);
+		App->projectile_manager->iterator--;
+	}
+
+	if (life.Read() > 5000)
+	{
+		App->projectile_manager->DestroyProjectile(this);
+		App->projectile_manager->iterator--;
 	}
 
 	return true;
@@ -43,7 +62,7 @@ bool Projectile::Update(float dt)
 
 void Projectile::Draw()
 {
-	App->render->DrawQuad(SDL_Rect{(int)position.x , (int)position.y,10,10}, 255, 0, 0, 255);
+	App->render->DrawQuad(SDL_Rect{(int)position.x , (int)position.y,5,5}, 255, 0, 0, 255);
 }
 
 ProjectileManager::ProjectileManager()
@@ -60,9 +79,11 @@ bool ProjectileManager::Update(float dt)
 {
 	std::vector<Projectile*>::iterator projectile = projectiles.begin();
 
-	for (int i=0; i < projectiles.size() ; i++)
+	projectile = projectiles.begin();
+
+	for (iterator = 0 ; iterator < projectiles.size() ; iterator++)
 	{
-		projectile[i]->Update(dt);
+		projectile[iterator]->Update(dt);
 	}
 
 	return true;
@@ -71,12 +92,48 @@ bool ProjectileManager::Update(float dt)
 bool ProjectileManager::PostUpdate()
 {
 	Draw();
+
 	return true;
 }
 
-void ProjectileManager::CreateProjectile(fPoint position, float speed,int damage,Entity* target)
+void ProjectileManager::Draw()
 {
-	projectiles.push_back(new Projectile(position, speed,damage,target));
+	for (std::vector<Projectile*>::iterator projectile = projectiles.begin(); projectile != projectiles.end(); projectile++)
+	{
+		(*projectile)->Draw();
+	}
+}
+
+bool ProjectileManager::Load(pugi::xml_node& data)
+{
+	for (int i = 0; i < projectiles.size(); ++i)
+	{
+		projectiles[i]->CleanUp();
+		RELEASE(projectiles[i]);
+	}
+
+	projectiles.clear();
+
+	return true;
+}
+
+bool ProjectileManager::Save(pugi::xml_node& data) const
+{
+	
+
+	return true;
+}
+
+void ProjectileManager::CreateProjectile(fPoint position, float speed, int damage, Entity* target)
+{
+	Projectile* projectile = new Projectile(position, speed, damage, target);
+	
+	if (projectile != nullptr)
+	{
+		projectiles.push_back(projectile);
+	}
+
+	//return projectile;
 }
 
 void ProjectileManager::DestroyProjectile(Projectile* projectile)
@@ -87,8 +144,8 @@ void ProjectileManager::DestroyProjectile(Projectile* projectile)
 	{
 		if ((*item) == projectile)
 		{
-			//(*item)->CleanUp();
-			//RELEASE((*item));
+			(*item)->CleanUp();
+			RELEASE((*item));
 
 			projectiles.erase(item);
 
@@ -101,21 +158,19 @@ void ProjectileManager::ClearTargetProjectiles(Entity* target)
 {
 	std::vector<Projectile*>::iterator projectile = projectiles.begin();
 
-	for (int i = 0; i < projectiles.size(); i++)
+	for (; projectile != projectiles.end(); projectile++)
 	{
-		if (projectile[i]->target == target)
-		{
-			projectiles.erase(projectile);
-
-			i--;
-		}
+		(*projectile)->is_target_alive = false;
 	}
 }
 
-void ProjectileManager::Draw()
+void ProjectileManager::ClearAllProjectiles()
 {
-	for (std::vector<Projectile*>::iterator projectile = projectiles.begin(); projectile != projectiles.end(); projectile++)
+	for (int i = 0; i < projectiles.size(); ++i)
 	{
-		(*projectile)->Draw();
+		projectiles[i]->CleanUp();
+		RELEASE(projectiles[i]);
 	}
+
+	projectiles.clear();
 }

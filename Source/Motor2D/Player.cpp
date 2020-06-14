@@ -120,6 +120,26 @@ bool Player::CleanUp()
 	return true;
 }
 
+bool Player::Load(pugi::xml_node& data)
+{
+	ClearEntityBuffers();
+
+	god_mode = data.child("god_mode").attribute("value").as_bool();
+
+	//App->pause = data.child("pause").attribute("value").as_bool();
+
+	return true;
+}
+
+bool Player::Save(pugi::xml_node& data) const
+{
+	data.append_child("god_mode").append_attribute("value") = god_mode;
+
+	//data.append_child("pause").append_attribute("value") = App->pause;
+
+	return true;
+}
+
 // ------------------- CAMERA AND MOUSE METHODS -------------------
 void Player::CursorCalculations()
 {
@@ -1031,6 +1051,7 @@ void Player::InitializePlayer()
 
 	god_mode					= player.child("god_mode").attribute("value").as_bool();
 	has_saved					= player.child("has_saved").attribute("value").as_bool();
+	load_game_from_main_menu	= player.child("load_game_from_main_menu").attribute("value").as_bool();
 	is_selecting				= player.child("is_selecting").attribute("value").as_bool();
 	
 	mouse_tile_debug			= App->tex->Load(player.child("mouse_tile_tex").attribute("path").as_string());

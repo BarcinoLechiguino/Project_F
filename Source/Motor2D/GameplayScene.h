@@ -53,8 +53,8 @@ public:
 	bool PostUpdate();									// Called before all Updates
 	bool CleanUp();										// Called before quitting
 
-	//bool Load(pugi::xml_node& data);
-	//bool Save(pugi::xml_node& data) const;
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 	
 
 public:
@@ -143,6 +143,7 @@ public:
 
 	GuiImage*				in_game_background;
 	GuiButton*				in_game_continue_button;
+	GuiButton*				in_game_save_button;
 	GuiButton*				in_game_options_button;
 	GuiButton*				in_game_exit_button;
 	GuiButton*				in_game_back_to_menu;

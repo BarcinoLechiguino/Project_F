@@ -10,7 +10,14 @@
 
 #include "FowManager.h"
 
-FowManager::FowManager() : visibility_map(nullptr), debug_visibility_map(nullptr), visibility_map_debug_buffer(nullptr), fow_tex(nullptr), scouting_trail(true), fow_debug(false)
+FowManager::FowManager() 
+	: visibility_map(nullptr)
+	, debug_visibility_map(nullptr)
+	, visibility_map_debug_buffer(nullptr)
+	, fow_tex(nullptr)
+	, scouting_trail(true)
+	, fow_debug(false)
+	, load_saved_visibility_map(false)
 {
 	name = ("fow_manager");
 }
@@ -41,6 +48,12 @@ FowManager::~FowManager()
 	{
 		delete[] visibility_map;
 		visibility_map = nullptr;
+	}
+
+	if (saved_visibility_map != nullptr)
+	{
+		delete[] saved_visibility_map;
+		saved_visibility_map = nullptr;
 	}
 }
 
@@ -94,11 +107,55 @@ bool FowManager::Update(float dt)
 
 bool FowManager::PostUpdate()
 {
+	if (App->player->CurrentlyInGameplayScene())
+	{
+		if (load_saved_visibility_map)
+		{
+			int map_size = visibility_map_width * visibility_map_height;
+
+			for (int i = 0; i < map_size; ++i)
+			{
+				visibility_map[i] = saved_visibility_map[i];
+			}
+
+			load_saved_visibility_map = false;
+		}
+	}
+	
 	return true;
 }
 
 bool FowManager::CleanUp()
 {
+	return true;
+}
+
+bool FowManager::Load(pugi::xml_node& data)
+{
+	bool tmp = data.child("fow_debug").attribute("value").as_bool();
+
+	if (fow_debug != tmp)
+	{
+		fow_debug = tmp;
+		SwapVisibilityMaps();
+	}
+
+	load_saved_visibility_map = true;
+
+	return true;
+}
+
+bool FowManager::Save(pugi::xml_node& data) const
+{
+	data.append_child("fow_debug").append_attribute("value") = fow_debug;
+
+	int map_size = visibility_map_width * visibility_map_height;
+
+	for (int i = 0; i < map_size; ++i)
+	{
+		saved_visibility_map[i] = visibility_map[i];
+	}
+
 	return true;
 }
 
@@ -214,6 +271,12 @@ void FowManager::SetVisibilityMap(const int& width, const int& height)
 
 	debug_visibility_map = new uchar[map_size];
 	memset(debug_visibility_map, VISIBLE, map_size);								// Will set the state of all the tiles in the container to VISIBLE. (For debug purposes).
+
+	if (saved_visibility_map == nullptr)											// saved_visibility_map will not reset between scenes.
+	{
+		saved_visibility_map = new uchar[map_size];
+		memset(saved_visibility_map, UNEXPLORED, map_size);
+	}
 }
 
 void FowManager::ChangeVisibilityMap(const iPoint& tile_position, const uchar& visibility)
@@ -296,6 +359,12 @@ void FowManager::ClearVisibilityMapContainers()
 		delete[] visibility_map;
 		visibility_map = nullptr;
 	}
+
+	/*if (saved_visibility_map != nullptr)
+	{
+		delete[] saved_visibility_map;
+		saved_visibility_map = nullptr;
+	}*/
 }
 
 bool FowManager::CheckMapBoundaries(const iPoint& tile_position)
@@ -797,19 +866,23 @@ void FowManager::UpdateEntitiesVisibility()
 		{
 			if (fow_entities[i]->is_neutral)
 			{
-				if (fow_state == UNEXPLORED)						// If the entity is neutral and the tile is not VISIBLE nor FOGGED.
+				if (fow_state == FOGGED)
 				{
-					fow_entities[i]->is_visible = false;
+					fow_entities[i]->is_visible = true;			// If the entity is neutral and the tile is FOGGED.
+				}
+				else
+				{
+					fow_entities[i]->is_visible = false;		// If the entity is neutral and the tile is UNEXPLORED.
 				}
 			}
 			else
 			{
-				fow_entities[i]->is_visible = false;
+				fow_entities[i]->is_visible = false;			// If the entity is not neutral and the tile is not VISIBLE.
 			}
 		}
 		else
 		{
-			fow_entities[i]->is_visible = true;
+			fow_entities[i]->is_visible = true;					// If the entity is at a VISIBLE tile.
 		}
 	}
 }

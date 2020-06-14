@@ -16,10 +16,12 @@
 #include "Pathfinding.h"
 #include "Player.h"
 #include "Scene.h"
+#include "FowManager.h"
 #include "DialogManager.h"
 #include "ParticleManager.h"
 #include "Emitter.h"
 #include "QuestManager.h"
+#include "ProjectileManager.h"
 
 #include "EntityManager.h"
 #include "Entity.h"
@@ -51,8 +53,6 @@
 #include "GuiButton.h"
 #include "GuiScrollbar.h"
 #include "GuiImage.h"
-
-#include "FowManager.h"
 
 #include "SceneManager.h"
 #include "TransitionManager.h"
@@ -211,11 +211,26 @@ bool GameplayScene::CleanUp()
 	App->entity_manager->DestroyEntities();					//Destroys all non-player entities.
 	App->map->CleanUp();									//Deletes everything related with the map from memory. (Tilesets, Layers and ObjectGroups)
 	App->gui_manager->DestroyGuiElements();					//Deletes all the Gui Elements of the Gameplay Scene.
-	App->dialog_manager->CleanUp();									//Deletes everything related with dialog in the Gameplay Scene.
+	App->dialog_manager->CleanUp();							//Deletes everything related with dialog in the Gameplay Scene.
 	App->particle_manager->RemoveEverything();
+	App->projectile_manager->ClearAllProjectiles();
 
 	App->player->god_mode = false;							//Will disable the God Mode upon exiting the Gameplay Scene.
 	App->fow_manager->fow_debug = false;					//Will disable the FOW Debug Mode upon exiting the Gameplay Scene.
+
+	return true;
+}
+
+bool GameplayScene::Load(pugi::xml_node& data)
+{
+
+
+	return true;
+}
+
+bool GameplayScene::Save(pugi::xml_node& data) const
+{
+
 
 	return true;
 }
@@ -254,11 +269,19 @@ void GameplayScene::InitScene()
 
 	//App->fow_manager->ResetVisibilityMap();
 
-	App->dialog_manager->StartDialog(0);
-	tutorial.tutorial_state = TutorialState::SELECT_UNIT;
+	if (!App->player->load_game_from_main_menu)
+	{
+		App->dialog_manager->StartDialog(0);
+		tutorial.tutorial_state = TutorialState::SELECT_UNIT;
 
-	tutorial.boulders_active = true;
-	tutorial.lock_camera = false;
+		tutorial.boulders_active = true;
+		tutorial.lock_camera = false;
+	}
+	else
+	{
+		tutorial.tutorial_state = TutorialState::NOT_ACTIVE;
+		App->LoadGame("save_game.xml");
+	}
 }
 
 // --- SCENE TRANSITIONS
@@ -733,13 +756,23 @@ void GameplayScene::LoadGuiElements()
 	in_game_back_to_menu = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 541, 321, false, true, false, this, in_game_background
 		, &in_game_back_to_menu_idle, &in_game_back_to_menu_hover, &in_game_back_to_menu_clicked);
 
+	// Save button
+
+	SDL_Rect in_game_save_size = { 0, 0, 189, 23 };
+	SDL_Rect in_game_save_idle = { 0, 137, 189, 23 };
+	SDL_Rect in_game_save_hover = { 204, 137, 189, 23 };
+	SDL_Rect in_game_save_clicked = { 408, 137, 189, 23 };
+
+	in_game_save_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, 361, false, true, false, this, in_game_background
+		, &in_game_save_idle, &in_game_save_hover, &in_game_save_clicked);
+
 	// Exit Button
 	SDL_Rect in_game_exit_button_size = { 0, 0, 74, 23 };
 	SDL_Rect in_game_exit_button_idle = { 1, 77, 74, 23 };
 	SDL_Rect in_game_exit_button_hover = { 178, 77, 74, 23 };
 	SDL_Rect in_game_exit_button_clicked = { 356, 77, 74, 23 };
 
-	in_game_exit_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, 361, false, true, false, this, in_game_background
+	in_game_exit_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, 401, false, true, false, this, in_game_background
 		, &in_game_exit_button_idle, &in_game_exit_button_hover, &in_game_exit_button_clicked);
 
 	// Title
@@ -1576,21 +1609,32 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->gui_manager->SetElementsVisibility(in_game_exit_button, false);
 		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, false);
 		App->gui_manager->SetElementsVisibility(in_game_title_text, false);
+		App->gui_manager->SetElementsVisibility(in_game_save_button, false);
 
 		App->gui_manager->SetElementsVisibility(in_game_options_parent, true);
+
+		App->gui_manager->CreateSlideAnimation(in_game_options_parent, 0.5f, false, iPoint(2000, in_game_options_parent->GetScreenPos().y), iPoint(0, in_game_options_parent->GetScreenPos().y));
 	}
 
 	if (element == in_game_back_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->back_button_clicked_fx, 0);
 
+		App->gui_manager->SetElementsVisibility(in_game_options_parent, false);
+
 		App->gui_manager->SetElementsVisibility(in_game_continue_button, true);							// Activate Pause menu	// THIS (?)
 		App->gui_manager->SetElementsVisibility(in_game_options_button, true);
 		App->gui_manager->SetElementsVisibility(in_game_exit_button, true);
 		App->gui_manager->SetElementsVisibility(in_game_back_to_menu, true);
 		App->gui_manager->SetElementsVisibility(in_game_title_text, true);
+		App->gui_manager->SetElementsVisibility(in_game_save_button, true);
 
-		App->gui_manager->SetElementsVisibility(in_game_options_parent, false);
+		App->gui_manager->CreateSlideAnimation(in_game_continue_button, 0.5f, false, iPoint(-100, in_game_continue_button->GetScreenPos().y), iPoint(555, in_game_continue_button->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_options_button, 0.5f, false, iPoint(-100, in_game_options_button->GetScreenPos().y), iPoint(567, in_game_options_button->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_exit_button, 0.5f, false, iPoint(-100, in_game_exit_button->GetScreenPos().y), iPoint(596, in_game_exit_button->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_title_text, 0.5f, false, iPoint(-100, in_game_title_text->GetScreenPos().y), iPoint(469, in_game_title_text->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_back_to_menu, 0.5f, false, iPoint(-100, in_game_back_to_menu->GetScreenPos().y), iPoint(541, in_game_back_to_menu->GetScreenPos().y));
+		App->gui_manager->CreateSlideAnimation(in_game_save_button, 0.5f, false, iPoint(-100, in_game_save_button->GetScreenPos().y), iPoint(596, in_game_save_button->GetScreenPos().y));
 	}
 
 	if (element == in_game_back_to_menu && ui_event == GUI_EVENT::UNCLICKED)
@@ -2392,26 +2436,3 @@ void GameplayScene::CheckCompletedQuests()
 		}
 	}
 }
-
-// --------------- REQUIRED FOR THE GOLD VERSION ---------------
-//bool Scene1::Load(pugi::xml_node& data)
-//{
-//	if (currentMap != data.child("currentMap").attribute("num").as_int())
-//	{
-//		LOG("Calling switch maps");
-//		currentMap = data.child("currentMap").attribute("num").as_int();
-//
-//		//std::list<std::string>::iterator map_iterator = map_names.begin();
-//
-//		//std::advance(map_iterator, data.child("currentMap").attribute("num").as_int() );
-//
-//		//App->map->SwitchMaps( (*map_iterator) );
-//	}
-//	return true;
-//}
-
-//bool Scene1::Save(pugi::xml_node& data) const
-//{
-//	data.append_child("currentMap").append_attribute("num") = currentMap;
-//	return true;
-//}

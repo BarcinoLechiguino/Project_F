@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "FowManager.h"
 #include "SceneManager.h"
+#include "GameplayScene.h"
 #include "TransitionManager.h"
 
 #include "Scene.h"
@@ -136,12 +137,19 @@ void Scene::DebugKeys()
 
 	if (App->input->GetKey(SDL_SCANCODE_F5) == KEY_STATE::KEY_DOWN)						//Save Game Key
 	{
-		//App->SaveGame("save_game.xml");
+		if (App->player->CurrentlyInGameplayScene() && App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
+		{
+			App->SaveGame("save_game.xml");
+			App->player->has_saved = true;
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_STATE::KEY_DOWN)						//Load Game Key
 	{
-		//App->LoadGame("save_game.xml");
+		if (App->player->CurrentlyInGameplayScene() && App->player->has_saved && App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
+		{
+			App->LoadGame("save_game.xml");
+		}
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F7) == KEY_STATE::KEY_DOWN)						//Enable/Disable pathfinding meta debug. (Display pathfinding meta tiles)

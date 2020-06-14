@@ -84,7 +84,7 @@ bool EnemyHeavy::Update(float dt, bool do_logic)
 		}
 	}
 
-	center_point = fPoint(pixel_position.x, pixel_position.y + App->map->data.tile_height * 0.5f);
+	center_point = fPoint(pixel_position.x + App->map->data.tile_width * 0.5f, pixel_position.y + App->map->data.tile_height * 0.5f);
 
 	// FOG OF WAR
 	is_visible = fow_entity->is_visible;
@@ -152,7 +152,7 @@ void EnemyHeavy::InitEntity()
 	accumulated_cooldown = 0.0f;
 
 	// STATS
-	speed = 250.0f;
+	speed = 125.0f;
 
 	max_health = 600;
 	current_health = max_health;
@@ -416,7 +416,7 @@ void EnemyHeavy::DealDamage()
 		if (!attack_in_cooldown)
 		{
 			//ApplyDamage(target);
-			App->projectile_manager->CreateProjectile(pixel_position, 100,attack_damage, target);
+			App->projectile_manager->CreateProjectile(center_point, 100,attack_damage, target);
 			App->audio->PlayFx(App->entity_manager->infantry_shooting_fx);
 			attack_in_cooldown = true;
 		}

@@ -137,7 +137,7 @@ void EnemyGatherer::InitEntity()
 	accumulated_cooldown = 0.0f;
 
 	// STATS
-	speed = 400.0f;
+	speed = 255.0f;
 
 	max_health = 150;
 	current_health = max_health;

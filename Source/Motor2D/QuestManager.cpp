@@ -1,13 +1,12 @@
-#include "QuestManager.h"
-#include "Module.h"
-#include "Point.h"
 #include "Log.h"
-#include <vector>
+
+#include "Application.h"
 #include "EntityManager.h"
 #include "SceneManager.h"
 #include "Scene.h"
 #include "GameplayScene.h"
-#include "Application.h"
+
+#include "QuestManager.h"
 
 QuestManager::QuestManager() 
 {
@@ -24,6 +23,11 @@ QuestManager::~QuestManager()
 	{
 		quests.erase(it);
 	}
+}
+
+Quest::Quest() : id(0), trigger(0), requisites(0)
+{
+
 }
 
 Quest::~Quest()
@@ -81,6 +85,26 @@ bool QuestManager::Update(float dt)
 	{
 		CheckQuests();
 	}
+
+	return true;
+}
+
+bool QuestManager::Load(pugi::xml_node& data)
+{
+	// Use child & attribute to load the saved state of the quests.
+	// See the other Save&Load functions in the other modules for reference.
+
+
+
+	return true;
+}
+
+bool QuestManager::Save(pugi::xml_node& data) const
+{
+	// Use append_child & append_attribute to save the current state of the quests.
+	// See the other Save&Load functions in the other modules for reference.
+
+
 
 	return true;
 }
@@ -144,4 +168,3 @@ void QuestManager::CheckQuests()
 		}
 	}
 }
-

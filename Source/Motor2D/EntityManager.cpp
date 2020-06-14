@@ -13,6 +13,7 @@
 #include "Input.h"
 #include "Map.h"
 #include "Audio.h"
+#include "FowManager.h"
 #include "ParticleManager.h"
 #include "Emitter.h"
 #include "ProjectileManager.h"
@@ -54,7 +55,7 @@ struct
 
 EntityManager::EntityManager() : entity_map(nullptr)
 {
-	name = ("entities");
+	name = ("entity_manager");
 }
 
 EntityManager::~EntityManager()
@@ -191,6 +192,60 @@ void EntityManager::DrawEntities()
 			App->render->Blit(center_point_debug, (int)entities_in_screen[i]->center_point.x - 6, (int)entities_in_screen[i]->center_point.y - 5, nullptr);
 		}
 	}
+}
+
+bool EntityManager::Load(pugi::xml_node& data)
+{
+	BROFILER_CATEGORY("EntityManager Load", Profiler::Color::Khaki);
+	
+	pugi::xml_node resources = data.child("resources");
+	
+	resource_data			= resources.attribute("data").as_uint();
+	resource_electricity	= resources.attribute("electricity").as_uint();
+	resource_bits			= resources.attribute("bits").as_uint();
+	
+	DestroyEntities();
+
+	pugi::xml_node entity = data.child("entities").child("entity");
+
+	for (; entity != nullptr; entity = entity.next_sibling("entity"))
+	{
+		ENTITY_TYPE type = (ENTITY_TYPE)entity.attribute("type").as_int();
+		
+		int x = entity.attribute("x").as_int();
+		int y = entity.attribute("y").as_int();
+
+		int level = entity.attribute("level").as_int();
+
+		CreateEntity(type, x, y, level);
+	}
+	
+	return true;
+}
+
+bool EntityManager::Save(pugi::xml_node& data) const
+{
+	pugi::xml_node resources = data.append_child("resources");
+
+	resources.append_attribute("data")			= resource_data;
+	resources.append_attribute("electricity")	= resource_electricity;
+	resources.append_attribute("bits")			= resource_bits;
+	
+	pugi::xml_node entity = data.append_child("entities");
+	
+	for (int i = 0; i < entities.size(); ++i)
+	{
+		pugi::xml_node item = entity.append_child("entity");
+
+		item.append_attribute("type") = (uchar)entities[i]->type;
+
+		item.append_attribute("x") = entities[i]->tile_position.x;
+		item.append_attribute("y") = entities[i]->tile_position.y;
+
+		item.append_attribute("level") = entities[i]->level;
+	}
+
+	return true;
 }
 
 // -------------------------------------- ENTITY MANAGING METHODS --------------------------------------
@@ -331,14 +386,14 @@ void EntityManager::DeleteEntity(Entity* entity)
 				App->audio->PlayFx(explosion_units_die_fx);
 			}
 			
+			App->projectile_manager->ClearTargetProjectiles(entity);
+
 			(*item)->CleanUp();
 			RELEASE((*item));
 
 			entities.erase(item);
 
 			entities.resize(entities.size());		// THIS?
-
-			App->projectile_manager->ClearTargetProjectiles(entity);
 
 			break;
 		}

@@ -17,9 +17,7 @@ class GuiCursor;
 class Player : public Module
 {
 public:
-
 	Player();
-
 	~Player();
 
 	bool Awake(pugi::xml_node& conf);
@@ -28,6 +26,9 @@ public:
 	bool Update(float dt);
 	bool PostUpdate();
 	bool CleanUp();
+
+	bool Load(pugi::xml_node&);
+	bool Save(pugi::xml_node&) const;
 
 public:
 	void InitializePlayer();
@@ -85,6 +86,7 @@ public:
 public:
 	bool				god_mode;									// Will keep track of whether the god_mode has been activated or not.
 	bool				has_saved;									// Will keep track of whether the player has saved since application start or not.
+	bool				load_game_from_main_menu;					// Will keep track of whether the player has selected to continue a previous game or not.
 	bool				is_selecting;								// Will keep track of whether the player is currently selecting units or not.
 
 	iPoint				original_camera_position;

@@ -14,6 +14,7 @@
 #include "SceneManager.h"
 #include "FowManager.h"
 #include "EntityManager.h"
+#include "ProjectileManager.h"
 
 #include "Heavy.h"
 
@@ -412,7 +413,7 @@ void Heavy::DealDamage()
 		{
 			// For AoE damage just look for the entities in the immediately adjacent tiles to the target and apply damage to them too.
 
-			ApplyDamage(target);
+			App->projectile_manager->CreateProjectile(center_point, 100, attack_damage, target);
 			App->audio->PlayFx(App->entity_manager->infantry_shooting_fx);
 			attack_in_cooldown = true;
 		}

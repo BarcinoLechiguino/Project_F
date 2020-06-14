@@ -59,12 +59,12 @@ void Module::Disable()
 }
 
 // --- Other General Methods
-bool Module::Load(pugi::xml_node&)
+bool Module::Load(pugi::xml_node& data)
 {
 	return true;
 }
 
-bool Module::Save(pugi::xml_node&) const
+bool Module::Save(pugi::xml_node& data) const
 {
 	return true;
 }

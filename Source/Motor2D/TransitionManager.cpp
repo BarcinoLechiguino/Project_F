@@ -7,6 +7,7 @@
 #include "ExpandingBars.h"
 #include "CameraToMouse.h"
 #include "ZoomToMouse.h"
+#include "OldMonitor.h"
 
 TransitionManager::TransitionManager() : active_transition(nullptr), is_transitioning(false)
 {
@@ -117,6 +118,18 @@ Transition* TransitionManager::CreateExpandingBars(SCENES next_scene, float step
 	if (!is_transitioning)
 	{
 		active_transition = new ExpandingBars(next_scene, step_duration, non_lerp, bar_number, vertical, random_colours, even_colour, odd_colour);
+
+		is_transitioning = true;
+	}
+
+	return active_transition;
+}
+
+Transition* TransitionManager::CreateOldMonitor(SCENES next_scene, float step_duration, bool non_lerp, Color rect_colour)
+{
+	if (!is_transitioning)
+	{
+		active_transition = new OldMonitor(next_scene, step_duration, non_lerp, rect_colour);
 
 		is_transitioning = true;
 	}
