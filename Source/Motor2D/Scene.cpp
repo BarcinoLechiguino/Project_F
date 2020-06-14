@@ -142,6 +142,7 @@ void Scene::DebugKeys()
 			App->SaveGame("save_game.xml");
 			App->player->has_saved = true;
 		}
+
 	}
 
 	if (App->input->GetKey(SDL_SCANCODE_F6) == KEY_STATE::KEY_DOWN)						//Load Game Key

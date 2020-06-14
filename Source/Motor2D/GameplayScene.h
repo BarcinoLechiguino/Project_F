@@ -300,7 +300,6 @@ public:
 
 	GuiButton*				 HUD_unit_upgrade_barracks_heavy;
 
-	GuiText*				 God_Mode_Activated;
 
 	//Resources HUD
 
@@ -357,6 +356,12 @@ public:
 	GuiImage*				HUD_dialogs_character_talking;
 	GuiImage*				HUD_dialogs_screen_block;
 	GuiButton*				HUD_dialogs_skip_tutorial;
+
+	//Extras
+
+	GuiText*				God_Mode_Activated;
+	GuiText*				Saving;
+	GuiText*				No_Saved_Game;
 
 private:
 
