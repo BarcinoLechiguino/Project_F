@@ -274,6 +274,7 @@ void FowManager::SetVisibilityMap(const int& width, const int& height)
 
 	if (saved_visibility_map == nullptr)											// saved_visibility_map will not reset between scenes.
 	{
+		int ewewew = 0;
 		saved_visibility_map = new uchar[map_size];
 		memset(saved_visibility_map, UNEXPLORED, map_size);
 	}

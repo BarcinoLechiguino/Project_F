@@ -97,6 +97,21 @@ bool Player::Update(float dt)
 
 	SelectionShortcuts();
 
+	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_STATE::KEY_DOWN)
+	{
+		if (is_building)
+		{
+			is_building = false;
+		}
+		else
+		{
+			if (!god_mode)
+			{
+				is_building = true;
+			}
+		}
+	}
+	
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_STATE::KEY_DOWN)
 	{
 		DebugUnitSpawn();
@@ -1131,6 +1146,10 @@ void Player::InitializePlayer()
 	is_building				= player.child("building_system").child("is_building").attribute("value").as_bool();
 	building_preview		= player.child("building_system").child("building_preview").attribute("value").as_bool();
 	construct_building		= player.child("building_system").child("construct_building").attribute("value").as_bool();
+
+	townhall_size			= player.child("building_system").child("townhall_size").attribute("size").as_int();
+	barracks_size			= player.child("building_system").child("barracks_size").attribute("size").as_int();
+	wall_size				= player.child("building_system").child("wall_size").attribute("size").as_int();
 
 	building_type			= (ENTITY_TYPE)player.child("building_system").child("building_type").attribute("type").as_uint();
 

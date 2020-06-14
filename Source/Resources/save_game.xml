@@ -18,7 +18,7 @@
 	<entity_manager>
 		<resources data="0" electricity="0" bits="0" />
 		<entities>
-			<entity type="1" x="45" y="129" level="1" />
+			<entity type="1" x="50" y="134" level="1" />
 			<entity type="9" x="48" y="130" level="1" />
 			<entity type="12" x="52" y="16" level="1" />
 			<entity type="10" x="43" y="130" level="1" />
@@ -392,6 +392,6 @@
 	</player>
 	<quest_manager />
 	<renderer>
-		<camera x="2800" y="-3150" />
+		<camera x="2708" y="-3082" />
 	</renderer>
 </game_state>
