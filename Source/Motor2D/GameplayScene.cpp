@@ -103,6 +103,7 @@ bool GameplayScene::PreUpdate()
 		if (time_on_scene > 7.0f)
 		{
 			App->gui_manager->SetElementsVisibility(Saving, false);
+			App->gui_manager->SetElementsVisibility(Icon_Saving, false);
 			time_on_scene = 0.0f;
 			saved_text_active = false;
 		}
@@ -777,10 +778,10 @@ void GameplayScene::LoadGuiElements()
 
 	// Save button
 
-	SDL_Rect in_game_save_size = { 0, 0, 189, 23 };
-	SDL_Rect in_game_save_idle = { 0, 137, 189, 23 };
-	SDL_Rect in_game_save_hover = { 204, 137, 189, 23 };
-	SDL_Rect in_game_save_clicked = { 408, 137, 189, 23 };
+	SDL_Rect in_game_save_size = { 0, 0, 73, 22 };
+	SDL_Rect in_game_save_idle = { 2, 184, 73, 22 };
+	SDL_Rect in_game_save_hover = { 88, 184, 73, 22 };
+	SDL_Rect in_game_save_clicked = { 173, 184, 73, 22 };
 
 	in_game_save_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, 361, false, true, false, this, in_game_background
 		, &in_game_save_idle, &in_game_save_hover, &in_game_save_clicked);
@@ -1533,8 +1534,11 @@ void GameplayScene::LoadGuiElements()
 	//Saving
 	SDL_Rect HUD_text_Save = { 0, 0, 100, 20 };
 	std::string HUD_Save_string = "Your Game Has Been Succesfully Saved";
-	Saving = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, -500, 32, HUD_text_Save, App->gui_manager->borgsquadcond_20, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_Save_string);
+	Saving = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, -500, 55, HUD_text_Save, App->gui_manager->borgsquadcond_20, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_Save_string);
 
+	//Saving Icon
+	SDL_Rect saving_icon_size = { 610, 145, 52, 52 };
+	Icon_Saving = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1225, 2, saving_icon_size, false, true, false, this, nullptr);
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1689,7 +1693,9 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 
 		App->gui_manager->SetElementsVisibility(Saving, true);
 
-		App->gui_manager->CreateSlideAnimation(Saving, 8.0f, false, iPoint(-100, Saving->GetScreenPos().y), iPoint(845, Saving->GetScreenPos().y));
+		App->gui_manager->SetElementsVisibility(Icon_Saving, true);
+
+		App->gui_manager->CreateSlideAnimation(Saving, 8.0f, false, iPoint(-300, Saving->GetScreenPos().y), iPoint(1345, Saving->GetScreenPos().y));
 
 		saved_text_active = true;
 	}

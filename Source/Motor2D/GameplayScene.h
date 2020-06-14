@@ -105,6 +105,7 @@ public:
 	float					time_on_scene;
 	bool					saved_text_active;
 
+
 	GuiImage*				background;
 	SDL_Rect				background_rect;
 
@@ -365,6 +366,7 @@ public:
 	GuiText*				God_Mode_Activated;
 	GuiText*				Saving;
 	GuiText*				No_Saved_Game;
+	GuiImage*				Icon_Saving;
 
 private:
 
