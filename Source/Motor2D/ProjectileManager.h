@@ -8,6 +8,7 @@
 //class Color;
 class Entity;
 
+
 struct Projectile
 {
 	Projectile();
@@ -22,6 +23,7 @@ struct Projectile
 	
 	float speed;
 	int damage;
+	double angle;
 	
 	bool is_target_alive;
 	
@@ -40,8 +42,10 @@ public:
 	ProjectileManager();
 	~ProjectileManager();
 
+	bool Start();
 	bool Update(float dt);
 	bool PostUpdate();
+	bool CleanUp();
 
 	void Draw();
 
@@ -60,6 +64,8 @@ public:
 	std::vector<Projectile*> projectiles;
 
 	int iterator;
+
+	SDL_Texture* bullet;
 };
 
 #endif // !__PROJECTILE_MANAGER_H__

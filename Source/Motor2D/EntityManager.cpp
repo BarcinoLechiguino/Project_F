@@ -179,6 +179,24 @@ void EntityManager::OrderEntities()
 	std::sort(entities_in_screen.begin(), entities_in_screen.end(), customLess);
 }
 
+void EntityManager::SetDeadTarget(Entity* entity)
+{
+	std::vector<Entity*>::iterator dynamic = entities.begin();
+
+	for (; dynamic != entities.end(); dynamic++)
+	{
+		if (IsUnit( (*dynamic) ) )
+		{
+			DynamicObject* tmp = (DynamicObject*)(*dynamic);
+
+			if (tmp->target == entity)
+			{
+				tmp->target = nullptr;
+			}
+		}
+	}
+}
+
 void EntityManager::DrawEntities()
 {
 	//LOG("Entities in screen %d", entities_in_screen.size());
@@ -391,6 +409,7 @@ void EntityManager::DeleteEntity(Entity* entity)
 			}
 			
 			App->projectile_manager->ClearTargetProjectiles(entity);
+			SetDeadTarget(entity);
 
 			(*item)->CleanUp();
 			RELEASE((*item));

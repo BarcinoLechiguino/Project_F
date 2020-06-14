@@ -2,6 +2,9 @@
 #include "Render.h"
 #include "Entity.h"
 #include "Log.h"
+#include <math.h>
+
+#define PI 3.1415
 
 Projectile::Projectile()
 {
@@ -16,7 +19,7 @@ Projectile::Projectile(fPoint position, float speed,int damage, Entity* target)
 	this->target = target;
 	is_target_alive = true;
 	this->life.Start();
-	LOG("My target is %s", target->name_tag.c_str());
+	//LOG("My target is %s", target->name_tag.c_str());
 }
 
 void Projectile::CleanUp()
@@ -40,6 +43,22 @@ bool Projectile::Update(float dt)
 	position.x += velocity.x * dt;
 	position.y += velocity.y * dt;
 
+	//Find angle
+	double radiant = atan2(position_difference.x, position_difference.y);
+
+	if (radiant < 0)
+	{
+		radiant = abs(radiant);
+	}
+	else
+	{
+		radiant = 2 * PI - radiant;
+	}
+
+	angle = radiant * (180/PI);
+
+	//LOG("angle is %f", angle);
+
 	if(position.DistanceTo(target_position) < 10)
 	{
 		if (is_target_alive)
@@ -50,7 +69,7 @@ bool Projectile::Update(float dt)
 		App->projectile_manager->DestroyProjectile(this);
 		App->projectile_manager->iterator--;
 	}
-
+	
 	if (life.Read() > 5000)
 	{
 		App->projectile_manager->DestroyProjectile(this);
@@ -75,6 +94,13 @@ ProjectileManager::~ProjectileManager()
 
 }
 
+bool ProjectileManager::Start()
+{
+	iterator = 0;
+
+	return true;
+}
+
 bool ProjectileManager::Update(float dt)
 {
 	std::vector<Projectile*>::iterator projectile = projectiles.begin();
@@ -92,6 +118,22 @@ bool ProjectileManager::Update(float dt)
 bool ProjectileManager::PostUpdate()
 {
 	Draw();
+
+	return true;
+}
+
+bool ProjectileManager::CleanUp()
+{
+	std::vector<Projectile*>::iterator projectile = projectiles.begin();
+
+	for (; projectile != projectiles.end(); projectile++)
+	{
+		(*projectile)->CleanUp();
+
+		delete (*projectile);
+	}
+
+	projectiles.clear();
 
 	return true;
 }
