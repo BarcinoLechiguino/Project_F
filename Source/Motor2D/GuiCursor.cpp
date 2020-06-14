@@ -6,6 +6,8 @@
 #include "EntityManager.h"
 #include "Entity.h"
 #include "GuiManager.h"
+#include "Dependencies/SDL/include/SDL_mouse.h"
+#include "Dependencies/SDL_image/include/SDL_image.h"
 
 #include "GuiCursor.h"
 
@@ -181,6 +183,8 @@ void GuiCursor::CheckIdleEvent(iPoint mouse_tile_position)
 	if (!App->gui_manager->VisibleElementIsUnderCursor() && App->entity_manager->GetEntityAt(mouse_tile_position) == nullptr)//crash
 	{
 		current_section = idle;
+
+
 		ui_event = GUI_EVENT::IDLE;
 
 		if (game_controller_mode)
@@ -534,4 +538,17 @@ void GuiCursor::InitializeCursorSections(SDL_Rect* idle, SDL_Rect* clicked_idle,
 	{
 		ui_cursor_event_enabled = true;
 	}
+}
+
+bool GuiCursor::ChangeMouse(const char* path)
+{
+	if (previous_cursor.c_str() != path)
+	{
+		mouse_surface = IMG_Load(path);
+		cursor = SDL_CreateColorCursor(mouse_surface, 0, 0);
+
+		previous_cursor = path;
+	}
+
+	return true;
 }
