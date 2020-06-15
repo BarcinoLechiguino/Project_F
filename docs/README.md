@@ -1,13 +1,39 @@
 # Project F
 ## Description
-{Short Description}
-This project was developed from scratch in C++ by 7 [Bachelor's degree in Video Game Design and Development](<https://www.citm.upc.edu/ing/estudis/graus-videojocs/>) students at [UPC CITM](<https://www.citm.upc.edu/>) [Tech Talent Center](<https://www.talent.upc.edu/cat/school/ttc/>) in Barcelona.
 
 **Project F** is a Real Time Strategy game for PC in which you will have to defend your Base from enemy attacks as well as to search and destroy the enemy's Base.
 
 The game is set in a fictional virtual world simulation from which you will need to get out of to survive. However, to be able to get out of it you will need to destroy each enemy base.
 
-{Screenshot of the game}
+<img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/Source/Resources/Assets/gui/backgrounds/logo_scene_background.png?raw=true" width="350" height="200" />
+
+## Key Features
+
+  * **4 types of Playable Units:**
+
+    * **Gatherer:** Gathers resources. Can be selected and moved around.
+    * **Scout:** Attacks enemy entities. Can be selected and moved around. Really Fast.<img src="    https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Scout_render.png?raw=true" width="350" height="200" />
+    
+    * **Infantry:** Attacks enemy entities. Can be selected and moved around.
+    * **Heavy:** Attacks enemy entities. Can be selected and moved around. Slow but Powerful. <img src="    https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Heavy_render.png?raw=true" width="350" height="200" />
+    
+  
+* **3 types of Buildings:**
+  
+    * **Town-hall:** Can generate Gatherer & Scout Units. Can be upgraded.
+    * **Barracks:** Can generate Infantry & Heavy units. Can be upgraded.
+    * **Wall:** Serves as protection as well as an obstacle to enemy units. (Work in Progress)
+
+
+* **3 types of Resources:**
+
+    * **Rock**: Can be mined from certain spots all over the map. Used to create Gatherer and Heavy Units as well as upgrade buildings.
+    * **Tree:** Can be harvested from certain spots all over the map. Used to create Infantry and Heavy Units as well as upgrade buildings.
+    * **Obelisk:** Can be collected from certain spots all over the map. Used to upgrade every ally unit and building.
+
+* **1 type of Obstacle:**
+    * **Boulder:** Will obstruct the path of both ally and enemy units.
+
 
 ## Students Involved
  - {Angel Gonzalez} - {Project Lead, Management, Programmer} - GitHub: [BarcinoLechiguino](https://github.com/BarcinoLechiguino)
@@ -28,7 +54,7 @@ The game is set in a fictional virtual world simulation from which you will need
  - QA Workflow [Docs/QAWorkflow.md](../Docs/QAWorkflow.md)
  - Production Plan [Docs/ProductionPlan.md](../Docs/ProductionPlan.md)
  
- ### Where to find us
+ ## Where to find us
 
 Mail: [Gmail](p2.missing.md@gmail.com) 
 
