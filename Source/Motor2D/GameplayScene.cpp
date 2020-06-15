@@ -856,7 +856,6 @@ void GameplayScene::LoadGuiElements()
 		, &HUD_build_button_idle, &HUD_build_button_hover, &HUD_build_button_clicked);
 
 
-
 	//*****______Down Bar_____*****
 
 	//Resource Bar
@@ -1539,27 +1538,27 @@ void GameplayScene::LoadGuiElements()
 	// ******____HUD building_____******
 	//Back
 	SDL_Rect HUD_building_back_size = { 25, 400, 390, 226 };
-	HUD_building_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 895, 100, HUD_building_back_size, true, true, false, this, nullptr);
+	HUD_building_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1265, 100, HUD_building_back_size, true, true, false, this, nullptr);
 
 	//Title
 	SDL_Rect HUD_text_title_build = { 0, 0, 100, 20 };
 	std::string HUD_title_build_string = "Building Menu";
-	HUD_building_title = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 930, 115, HUD_text_title_build, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_build_string);
+	HUD_building_title = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1300, 115, HUD_text_title_build, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_build_string);
 
 	// *****_____TOWNHALL____****
 	// Townhall Build
 	SDL_Rect HUD_building_townhall_size = { 0, 0, 49, 50 };
-	SDL_Rect HUD_building_townhall_idle = { 1095, 190, 49, 50 };
-	SDL_Rect HUD_building_townhall_hover = { 1152, 190, 49, 50 };
-	SDL_Rect HUD_building_townhall_clicked = { 1207, 190, 49, 50 };
+	SDL_Rect HUD_building_townhall_idle = { 1095, 345, 49, 50 };
+	SDL_Rect HUD_building_townhall_hover = { 1152, 345, 49, 50 };
+	SDL_Rect HUD_building_townhall_clicked = { 1207, 345, 49, 50 };
 
-	HUD_building_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 933, 145, true, true, false, this, HUD_building_background
+	HUD_building_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 1303, 145, true, true, false, this, HUD_building_background
 		, &HUD_building_townhall_idle, &HUD_building_townhall_hover, &HUD_building_townhall_clicked);
 
 	//Title Townhall
 	SDL_Rect HUD_text_title_townhall_build = { 0, 0, 100, 20 };
 	std::string HUD_title_townhall_build_string = "Townhall(H)";
-	HUD_building_title_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 920, 195, HUD_text_title_townhall_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_townhall_build_string);
+	HUD_building_title_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1290, 195, HUD_text_title_townhall_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_townhall_build_string);
 
 	//Parent Null Townhall
 	HUD_building_parent_townhall = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
@@ -1597,17 +1596,17 @@ void GameplayScene::LoadGuiElements()
 
 	// Barracks Build
 	SDL_Rect HUD_building_barracks_size = { 0, 0, 49, 50 };
-	SDL_Rect HUD_building_barracks_idle = { 1095, 190, 49, 50 };
-	SDL_Rect HUD_building_barracks_hover = { 1152, 190, 49, 50 };
-	SDL_Rect HUD_building_barracks_clicked = { 1207, 190, 49, 50 };
+	SDL_Rect HUD_building_barracks_idle = { 1095, 295, 49, 50 };
+	SDL_Rect HUD_building_barracks_hover = { 1152, 295, 49, 50 };
+	SDL_Rect HUD_building_barracks_clicked = { 1207, 295, 49, 50 };
 
-	HUD_building_barracks = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 1027, 145, true, true, false, this, HUD_building_background
+	HUD_building_barracks = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 1437, 145, true, true, false, this, HUD_building_background
 		, &HUD_building_barracks_idle, &HUD_building_barracks_hover, &HUD_building_barracks_clicked);
 
 	//Title Barracks
 	SDL_Rect HUD_text_title_barracks_build = { 0, 0, 100, 20 };
 	std::string HUD_title_barracks_build_string = "Barrack(B)";
-	HUD_building_title_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1020, 195, HUD_text_title_barracks_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_barracks_build_string);
+	HUD_building_title_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1430, 195, HUD_text_title_barracks_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_barracks_build_string);
 
 	//Parent Null Barracks
 	HUD_building_parent_barracks = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
@@ -1872,6 +1871,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		if (App->player->is_building)
 		{
 			App->player->is_building = false;
+			App->gui_manager->CreateSlideAnimation(HUD_building_background, 0.5f, false, iPoint(895, HUD_building_background->GetScreenPos().y), iPoint(1265, HUD_building_background->GetScreenPos().y));
 		}
 		else
 		{
@@ -1880,9 +1880,14 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 				App->player->ClearEntityBuffers();
 
 				App->player->is_building = true;
+
+				App->gui_manager->CreateSlideAnimation(HUD_building_background, 0.5f, false, iPoint(1265, HUD_building_background->GetScreenPos().y), iPoint(895, HUD_building_background->GetScreenPos().y));
 			}
 		}
+
+		
 	}
+
 
 	if (element == HUD_home_button && ui_event == GUI_EVENT::UNCLICKED)
 	{

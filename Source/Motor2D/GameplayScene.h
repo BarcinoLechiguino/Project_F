@@ -385,6 +385,8 @@ public:
 	GuiText*				HUD_building_price_barracks_bytes;
 	GuiImage*				HUD_building_price_barracks_bytes_image;
 
+	bool					HUD_buildings_displayed;
+
 	//Extras
 
 	GuiText*				God_Mode_Activated;
