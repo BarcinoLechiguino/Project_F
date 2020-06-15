@@ -34,6 +34,8 @@ The game is set in a fictional virtual world simulation from which you will need
 * **1 type of Obstacle:**
     * **Boulder:** Will obstruct the path of both ally and enemy units.
 
+* **Win/Lose:**
+  * Victory can be achieved by destroying the enemy's Town-hall. Conversely, if your Town-hall is destroyed it is Game Over.
 
 ## Students Involved
  - {Angel Gonzalez} - {Project Lead, Management, Programmer} - GitHub: [BarcinoLechiguino](https://github.com/BarcinoLechiguino)
@@ -54,7 +56,7 @@ The game is set in a fictional virtual world simulation from which you will need
  - QA Workflow [Docs/QAWorkflow.md](../Docs/QAWorkflow.md)
  - Production Plan [Docs/ProductionPlan.md](../Docs/ProductionPlan.md)
  
- ## Where to find us
+## Contact Us
 
 Mail: [Gmail](p2.missing.md@gmail.com) 
 
