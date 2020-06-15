@@ -126,6 +126,7 @@ public:
 	SDL_Texture*					boulder_tex;
 	
 	SDL_Texture*					center_point_debug;
+
 	SDL_Texture*					select_circle_tex;
 	SDL_Texture*					select_townhall_tex;
 	SDL_Texture*					select_barracks_tex;

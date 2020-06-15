@@ -29,11 +29,11 @@ Feel free to visit our [Repository](<https://github.com/BarcinoLechiguino/Projec
 
     * **Gatherer:** Gathers resources. Can be selected and moved around.
     * **Scout:** Attacks enemy entities. Can be selected and moved around. Really Fast.
-  * **Infantry:** Attacks enemy entities. Can be selected and moved around.
+    * **Infantry:** Attacks enemy entities. Can be selected and moved around.
     * **Heavy:** Attacks enemy entities. Can be selected and moved around. Slow but Powerful.
-
+  
     
-
+  
   * **4 types of Non-Playable Unit:**
 
     * **Enemy Gatherer:** Gathers resources. Cannot be selected and will attack any ally entities on-sight.
@@ -55,11 +55,11 @@ Feel free to visit our [Repository](<https://github.com/BarcinoLechiguino/Projec
   * **Ally Buildings:**
     
     * **Town-hall:** Can generate Gatherer & Scout Units. Can be upgraded.
-  * **Barracks:** Can generate Infantry & Heavy units. Can be upgraded.
+    * **Barracks:** Can generate Infantry & Heavy units. Can be upgraded.
     * **Wall:** Serves as protection as well as an obstacle to enemy units. (Work in Progress)
-  
     
-  
+    
+    
   * **Enemy Buildings:**
       * **Enemy Town-hall:** Can generate Enemy Gatherer and Enemy Scout Units.
       * **Enemy Barracks:** Can generate Enemy Infantry and Enemy Heavy Units.
@@ -98,6 +98,8 @@ Feel free to visit our [Repository](<https://github.com/BarcinoLechiguino/Projec
 
   * **Quest Menu:** Menu that will display the Quests that are currently active and their state of completion.
 
+  * **Building Menu:** Menu that will display the buildings that are available to build and their cost. The buildings currently available are the Ally Townhall and the Ally Barracks.
+
   * **Entity Healthbars:** Each entity will have their own healthbars. Said healthbars will only show when an entity has been selected or has been hurt.
 
     * Ally entity healthbars will be GREEN.
@@ -111,7 +113,7 @@ Feel free to visit our [Repository](<https://github.com/BarcinoLechiguino/Projec
   * **Creation Bars:** When a unit entity is created, a bar displaying the progress will appear below the building that is creating the unit.
 
   
-
+  
   * **GUI Animations:** A GUI Slide animation has been implemented and has been applied to different elements of the UI and the HUD (Pause Menu, Quest Log...).
 
 
@@ -122,8 +124,9 @@ Feel free to visit our [Repository](<https://github.com/BarcinoLechiguino/Projec
   * **Fog of War:** There will be Fog of War covering the map. It will have 3 states: UNEXPLORED, FOGGED & VISIBLE.
   * **Particle System:** 7 different kinds of particles have been implemented.
   * **Dialog System:** 12 different dialogs have been implemented. 5 in the tutorial and the rest spread throughout the game.
-
-  * **Quest System:** 4 different quests have been implemented. (1 Main Quest and 3 Side Quests)
+* **Quest System:** 4 different quests have been implemented. (1 Main Quest and 3 Side Quests)
+  * **Building System:** 2 different buildable buildings have been implemented. (Ally Townhall and Ally Barracks).
+  * **Projectile System:** 6 different projectiles along with their particles have been implemented.
   * **Tutorial:** A tutorial with 5 different steps explaining the main gameplay mechanics have been implemented.
 
 
@@ -179,11 +182,23 @@ No previous installation is required to play the game, just download the latest 
 
 * **Camera Movement:**
   * **Cursor:** If the cursor is brought to any of the edges of the screen, the camera will move in the direction the cursor is at.
+  
   * **UP Arrow Key:** Move camera upwards.
+  
   * **DOWN Arrow Key:** Move camera downwards.
+  
   * **RIGHT Arrow Key:**  Move the camera to the right.
+  
   * **LEFT Arrow Key:** Move the camera to the left.
+  
   * **LSHIFT Key:** The camera will be centered around your Town-hall.
+  
+    
+
+* **Building Menu Shortcuts:**
+  * **P Key:** Will open the Building Menu.
+  * **H Key:** Select Townhall as the building to build. 
+  * **O Key:** Select Barracks as the building to build.
 
 
 
@@ -272,6 +287,8 @@ No previous installation is required to play the game, just download the latest 
   
     * **0 Key:** Spawn **Enemy Heavy Unit** at mouse position.
   
+      
+  
   * **Buildings:**
   
     * **H Key:** Spawn **Town-hall Building** at mouse position.
@@ -285,6 +302,8 @@ No previous installation is required to play the game, just download the latest 
     * **N Key:**  Spawn **Enemy Barracks Building** at mouse position.
   
     * **E Key:**  Spawn **Enemy Wall Building** at mouse position. (Work in progress)
+  
+      
   
   * **Resources & Obstacles:**
   
@@ -384,6 +403,24 @@ No previous installation is required to play the game, just download the latest 
 * Almost all UI and Entity SFX were implemented.
 * Logo Scene animation was implemented.
 * Music and SFX are now lowered when the pause menu is open.
+
+
+
+### v1.0
+
+* The UI has been fully implemented.
+* The Options Menu has been animated.
+* Now neutral entities show under FOGGED tiles.
+* Final Version of the map was implemented.
+* Save and Load System was implemented
+* Projectile System was implemented.
+* Building System was implemented.
+* Now selected units and resources have a halo drawn below them.
+* Now selected buildings have a square drawn around them.
+* Now units flash red when they receive damage.
+* Installer was implemented.
+* Assets are now loaded from a .zip file.
+* Boulder Obstacle sprite was modified.
 
 
 
