@@ -1361,7 +1361,7 @@ void GameplayScene::LoadGuiElements()
 	std::string HUD_barracks_price3_unit2_string = "0";
 	HUD_prices_bytes_unit_townhall_heavy = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1000, 687, HUD_text_barracks_price3_unit2_rect, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_parent_resources_unit_barracks_heavy, &HUD_barracks_price3_unit2_string);
 
-	// Resources Upgrade Infantry
+	// Resources Upgrade Heavy
 	HUD_parent_resources_upgrade_unit_barracks_heavy = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	SDL_Rect HUD_barracks_res_upg_unit2_size = { 707, 54, 13, 25 };
@@ -1535,6 +1535,7 @@ void GameplayScene::LoadGuiElements()
 	HUD_dialogs_skip_tutorial = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 110, 145, true, true, false, this, nullptr
 		, &HUD_dialogs_skip_tutorial_idle, &HUD_dialogs_skip_tutorial_hover, &HUD_dialogs_skip_tutorial_clicked);
 
+
 	// ******____HUD building_____******
 
 	//Back
@@ -1544,7 +1545,101 @@ void GameplayScene::LoadGuiElements()
 	//Title
 	SDL_Rect HUD_text_title_build = { 0, 0, 100, 20 };
 	std::string HUD_title_build_string = "Building System";
-	HUD_building_title = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 930, 105, HUD_text_title_build, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_build_string);
+	HUD_building_title = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 930, 115, HUD_text_title_build, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_build_string);
+
+	// *****_____ TOWNHALL____****
+	// Townhall Build
+	SDL_Rect HUD_building_townhall_size = { 0, 0, 49, 50 };
+	SDL_Rect HUD_building_townhall_idle = { 1095, 190, 49, 50 };
+	SDL_Rect HUD_building_townhall_hover = { 1152, 190, 49, 50 };
+	SDL_Rect HUD_building_townhall_clicked = { 1207, 190, 49, 50 };
+
+	HUD_building_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 933, 145, true, true, false, this, HUD_building_background
+		, &HUD_building_townhall_idle, &HUD_building_townhall_hover, &HUD_building_townhall_clicked);
+
+	//Title Townhall
+	SDL_Rect HUD_text_title_townhall_build = { 0, 0, 100, 20 };
+	std::string HUD_title_townhall_build_string = "Townhall";
+	HUD_building_title_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 920, 195, HUD_text_title_townhall_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_townhall_build_string);
+
+	//Parent Null Townhall
+	HUD_building_parent_townhall = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	//Price Townhall Data
+	SDL_Rect HUD_text_data_townhall_build = { 0, 0, 100, 20 };
+	std::string HUD_data_townhall_build_string = "50";
+	HUD_building_price_townhall_data = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 970, 290, HUD_text_data_townhall_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_townhall, &HUD_data_townhall_build_string);
+
+	SDL_Rect HUD_data_build_townhall_size = { 707, 54, 13, 25 };
+
+	HUD_building_price_townhall_data_image = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 950, 290, HUD_data_build_townhall_size, false, true, false, this, HUD_building_parent_townhall);
+
+
+	//Price Townhall ELectricity
+	SDL_Rect HUD_text_electricity_townhall_build = { 0, 0, 100, 20 };
+	std::string HUD_electricity_townhall_build_string = "50";
+	HUD_building_price_townhall_electricity = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1070, 290, HUD_text_electricity_townhall_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_townhall, &HUD_electricity_townhall_build_string);
+
+	SDL_Rect HUD_electricity_build_townhall_size = { 687, 54, 16, 25 };
+
+	HUD_building_price_townhall_electricity_image = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1050, 290, HUD_electricity_build_townhall_size, false, true, false, this, HUD_building_parent_townhall);
+
+	//Price Townhall Bytes
+	SDL_Rect HUD_text_bytes_townhall_build = { 0, 0, 100, 20 };
+	std::string HUD_bytes_townhall_build_string = "50";
+	HUD_building_price_townhall_bytes = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1170, 290, HUD_text_bytes_townhall_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_townhall, &HUD_bytes_townhall_build_string);
+
+	SDL_Rect HUD_bytes_build_townhall_size = { 667, 55, 15, 24 };
+
+	HUD_building_price_townhall_bytes_image = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1150, 290, HUD_bytes_build_townhall_size, false, true, false, this, HUD_building_parent_townhall);
+
+
+	//************_______BARRACKS________********
+
+	// Barracks Build
+	SDL_Rect HUD_building_barracks_size = { 0, 0, 49, 50 };
+	SDL_Rect HUD_building_barracks_idle = { 1095, 190, 49, 50 };
+	SDL_Rect HUD_building_barracks_hover = { 1152, 190, 49, 50 };
+	SDL_Rect HUD_building_barracks_clicked = { 1207, 190, 49, 50 };
+
+	HUD_building_barracks = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 1027, 145, true, true, false, this, HUD_building_background
+		, &HUD_building_barracks_idle, &HUD_building_barracks_hover, &HUD_building_barracks_clicked);
+
+	//Title Barracks
+	SDL_Rect HUD_text_title_barracks_build = { 0, 0, 100, 20 };
+	std::string HUD_title_barracks_build_string = "Barrack";
+	HUD_building_title_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1020, 195, HUD_text_title_barracks_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_barracks_build_string);
+
+	//Parent Null Barracks
+	HUD_building_parent_barracks = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
+
+	//Price Barracks Data
+	SDL_Rect HUD_text_data_barracks_build = { 0, 0, 100, 20 };
+	std::string HUD_data_barracks_build_string = "30";
+	HUD_building_price_barracks_data = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 970, 290, HUD_text_data_barracks_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_barracks, &HUD_data_barracks_build_string);
+
+	SDL_Rect HUD_data_build_barracks_size = { 707, 54, 13, 25 };
+
+	HUD_building_price_barracks_data_image = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 950, 290, HUD_data_build_barracks_size, false, true, false, this, HUD_building_parent_barracks);
+
+
+	//Price Barracks ELectricity
+	SDL_Rect HUD_text_electricity_barracks_build = { 0, 0, 100, 20 };
+	std::string HUD_electricity_barracks_build_string = "30";
+	HUD_building_price_barracks_electricity = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1070, 290, HUD_text_electricity_barracks_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_barracks, &HUD_electricity_barracks_build_string);
+
+	SDL_Rect HUD_electricity_build_barracks_size = { 687, 54, 16, 25 };
+
+	HUD_building_price_barracks_electricity_image = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1050, 290, HUD_electricity_build_barracks_size, false, true, false, this, HUD_building_parent_barracks);
+
+	//Price Barracks Bytes
+	SDL_Rect HUD_text_bytes_barracks_build = { 0, 0, 100, 20 };
+	std::string HUD_bytes_barracks_build_string = "30";
+	HUD_building_price_barracks_bytes = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1170, 290, HUD_text_bytes_barracks_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_barracks, &HUD_bytes_barracks_build_string);
+
+	SDL_Rect HUD_bytes_build_barracks_size = { 667, 55, 15, 24 };
+
+	HUD_building_price_barracks_bytes_image = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1150, 290, HUD_bytes_build_barracks_size, false, true, false, this, HUD_building_parent_barracks);
 
 
 	//************________EXTRAS____________*********
@@ -1769,6 +1864,13 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	//	App->gui->SetElementsVisibility(HUD_pause_button, true);
 	//	
 	//}
+
+	if (element == HUD_build_button && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		// Open Building Menu
+		
+		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
+	}
 
 	if (element == HUD_home_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
@@ -2071,6 +2173,39 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->dialog_manager->EndDialog();
 
 		App->gui_manager->SetElementsVisibility(HUD_dialogs_skip_tutorial, false);
+	}
+
+	// *****______Building SYstem_________*********
+	//Price Build Townhall
+	if (element == HUD_building_townhall && ui_event == GUI_EVENT::HOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_building_parent_townhall, true);
+	}
+	if (element == HUD_building_townhall && ui_event == GUI_EVENT::UNHOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_building_parent_townhall, false);
+	}
+	if (element == HUD_building_townhall && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
+
+		//Build TOWNHALL
+	}
+
+	//Price Build Barracks
+	if (element == HUD_building_barracks && ui_event == GUI_EVENT::HOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_building_parent_barracks, true);
+	}
+	if (element == HUD_building_barracks && ui_event == GUI_EVENT::UNHOVER)
+	{
+		App->gui_manager->SetElementsVisibility(HUD_building_parent_barracks, false);
+	}
+	if (element == HUD_building_barracks && ui_event == GUI_EVENT::UNCLICKED)
+	{
+		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
+
+		//Build Barracks
 	}
 }
 

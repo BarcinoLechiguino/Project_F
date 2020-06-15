@@ -365,6 +365,26 @@ public:
 	GuiImage*				HUD_building_background;
 	GuiText*				HUD_building_title;
 
+	GuiButton*				HUD_building_townhall;
+	GuiText*				HUD_building_title_townhall;
+	GuiImage*				HUD_building_parent_townhall;
+	GuiText*				HUD_building_price_townhall_data;
+	GuiImage*				HUD_building_price_townhall_data_image;
+	GuiText*				HUD_building_price_townhall_electricity;
+	GuiImage*				HUD_building_price_townhall_electricity_image;
+	GuiText*				HUD_building_price_townhall_bytes;
+	GuiImage*				HUD_building_price_townhall_bytes_image;
+
+	GuiButton*				HUD_building_barracks;
+	GuiText*				HUD_building_title_barracks;
+	GuiImage*				HUD_building_parent_barracks;
+	GuiText*				HUD_building_price_barracks_data;
+	GuiImage*				HUD_building_price_barracks_data_image;
+	GuiText*				HUD_building_price_barracks_electricity;
+	GuiImage*				HUD_building_price_barracks_electricity_image;
+	GuiText*				HUD_building_price_barracks_bytes;
+	GuiImage*				HUD_building_price_barracks_bytes_image;
+
 	//Extras
 
 	GuiText*				God_Mode_Activated;
