@@ -15,6 +15,7 @@
 #include "Pathfinding.h"
 #include "GuiManager.h"
 #include "Player.h"
+#include "Player.h"
 #include "Minimap.h"
 #include "TransitionManager.h"
 #include "SceneManager.h"
