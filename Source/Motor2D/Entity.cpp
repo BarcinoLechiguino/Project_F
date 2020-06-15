@@ -26,12 +26,12 @@ Entity::Entity(int x, int y, ENTITY_TYPE type, int level) : tile_position(x, y),
 	return;
 }
 
-//j1Entity::~j1Entity()
-//{
-//	App->tex->UnLoad(entity_sprite);
-//	entity_sprite = nullptr;
-//
-//}
+/*Entity::~Entity()
+{
+	App->tex->UnLoad(entity_sprite);
+	entity_sprite = nullptr;
+
+}*/
 
 bool Entity::Awake(pugi::xml_node& config)
 {

@@ -117,6 +117,11 @@ bool EnemyBarracks::CleanUp()
 
 void EnemyBarracks::Draw()
 {
+	if (is_selected)
+	{
+		App->render->Blit(App->entity_manager->select_barracks_tex, (int)pixel_position.x - 35, (int)pixel_position.y - 18);
+	}
+
 	if (this->red_state == false) {
 		App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect); //Magic
 	}
@@ -256,7 +261,7 @@ void EnemyBarracks::InitEntity()
 
 void EnemyBarracks::AttachHealthbarToEntity()
 {
-	healthbar_position_offset.x = -6;
+	healthbar_position_offset.x = -30;
 	healthbar_position_offset.y = -6;
 
 	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
@@ -270,8 +275,8 @@ void EnemyBarracks::AttachHealthbarToEntity()
 
 void EnemyBarracks::AttachCreationBarToEntity()
 {
-	creation_bar_position_offset.x = -6;															// Magic
-	creation_bar_position_offset.y = 16;
+	creation_bar_position_offset.x = -30;															// Magic
+	creation_bar_position_offset.y = 6;
 
 	creation_bar_background_rect = { 618, 1, MAX_CREATION_BAR_WIDTH, 9 };
 	creation_bar_rect = { 618, 23, MAX_CREATION_BAR_WIDTH, 9 };

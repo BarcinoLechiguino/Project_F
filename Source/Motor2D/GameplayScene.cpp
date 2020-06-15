@@ -108,6 +108,19 @@ bool GameplayScene::PreUpdate()
 			saved_text_active = false;
 		}
 	}
+
+	// Text Resources
+	if (res_text_active)
+	{
+		time_on_scene_res += App->GetUnpausableDt();
+
+		if (time_on_scene_res > 3.0f)
+		{
+			App->gui_manager->SetElementsVisibility(No_Resources, false);
+			time_on_scene_res = 0.0f;
+			res_text_active = false;
+		}
+	}
 	
 
 	return true;
@@ -299,6 +312,8 @@ void GameplayScene::InitScene()
 	}
 
 	App->projectile_manager->Start();
+
+	time_on_scene = 0.0f;
 
 	time_on_scene = 0.0f;
 }
@@ -737,6 +752,8 @@ bool GameplayScene::CheckResources(uint required_data, uint required_electricity
 	else
 	{
 		App->audio->PlayFx(App->gui_manager->no_resources_fx, 0);
+		res_text_active = true;
+		App->gui_manager->SetElementsVisibility(No_Resources, true);
 		return false;
 	}
 }
@@ -854,7 +871,6 @@ void GameplayScene::LoadGuiElements()
 
 	HUD_build_button = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 596, -2, true, true, false, this, nullptr
 		, &HUD_build_button_idle, &HUD_build_button_hover, &HUD_build_button_clicked);
-
 
 
 	//*****______Down Bar_____*****
@@ -1537,37 +1553,36 @@ void GameplayScene::LoadGuiElements()
 
 
 	// ******____HUD building_____******
-
 	//Back
 	SDL_Rect HUD_building_back_size = { 25, 400, 390, 226 };
-	HUD_building_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 895, 100, HUD_building_back_size, true, true, false, this, nullptr);
+	HUD_building_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1265, 100, HUD_building_back_size, true, true, false, this, nullptr);
 
 	//Title
 	SDL_Rect HUD_text_title_build = { 0, 0, 100, 20 };
-	std::string HUD_title_build_string = "Building System";
-	HUD_building_title = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 930, 115, HUD_text_title_build, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_build_string);
+	std::string HUD_title_build_string = "Building Menu";
+	HUD_building_title = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1300, 115, HUD_text_title_build, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_build_string);
 
-	// *****_____ TOWNHALL____****
+	// *****_____TOWNHALL____****
 	// Townhall Build
 	SDL_Rect HUD_building_townhall_size = { 0, 0, 49, 50 };
-	SDL_Rect HUD_building_townhall_idle = { 1095, 190, 49, 50 };
-	SDL_Rect HUD_building_townhall_hover = { 1152, 190, 49, 50 };
-	SDL_Rect HUD_building_townhall_clicked = { 1207, 190, 49, 50 };
+	SDL_Rect HUD_building_townhall_idle = { 1095, 345, 49, 50 };
+	SDL_Rect HUD_building_townhall_hover = { 1152, 345, 49, 50 };
+	SDL_Rect HUD_building_townhall_clicked = { 1207, 345, 49, 50 };
 
-	HUD_building_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 933, 145, true, true, false, this, HUD_building_background
+	HUD_building_townhall = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 1303, 145, true, true, false, this, HUD_building_background
 		, &HUD_building_townhall_idle, &HUD_building_townhall_hover, &HUD_building_townhall_clicked);
 
 	//Title Townhall
 	SDL_Rect HUD_text_title_townhall_build = { 0, 0, 100, 20 };
-	std::string HUD_title_townhall_build_string = "Townhall";
-	HUD_building_title_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 920, 195, HUD_text_title_townhall_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_townhall_build_string);
+	std::string HUD_title_townhall_build_string = "Townhall (H)";
+	HUD_building_title_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1285, 195, HUD_text_title_townhall_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_townhall_build_string);
 
 	//Parent Null Townhall
 	HUD_building_parent_townhall = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	//Price Townhall Data
 	SDL_Rect HUD_text_data_townhall_build = { 0, 0, 100, 20 };
-	std::string HUD_data_townhall_build_string = "50";
+	std::string HUD_data_townhall_build_string = "300";
 	HUD_building_price_townhall_data = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 970, 290, HUD_text_data_townhall_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_townhall, &HUD_data_townhall_build_string);
 
 	SDL_Rect HUD_data_build_townhall_size = { 707, 54, 13, 25 };
@@ -1577,7 +1592,7 @@ void GameplayScene::LoadGuiElements()
 
 	//Price Townhall ELectricity
 	SDL_Rect HUD_text_electricity_townhall_build = { 0, 0, 100, 20 };
-	std::string HUD_electricity_townhall_build_string = "50";
+	std::string HUD_electricity_townhall_build_string = "40";
 	HUD_building_price_townhall_electricity = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1070, 290, HUD_text_electricity_townhall_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_townhall, &HUD_electricity_townhall_build_string);
 
 	SDL_Rect HUD_electricity_build_townhall_size = { 687, 54, 16, 25 };
@@ -1586,7 +1601,7 @@ void GameplayScene::LoadGuiElements()
 
 	//Price Townhall Bytes
 	SDL_Rect HUD_text_bytes_townhall_build = { 0, 0, 100, 20 };
-	std::string HUD_bytes_townhall_build_string = "50";
+	std::string HUD_bytes_townhall_build_string = "10";
 	HUD_building_price_townhall_bytes = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1170, 290, HUD_text_bytes_townhall_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_townhall, &HUD_bytes_townhall_build_string);
 
 	SDL_Rect HUD_bytes_build_townhall_size = { 667, 55, 15, 24 };
@@ -1598,24 +1613,24 @@ void GameplayScene::LoadGuiElements()
 
 	// Barracks Build
 	SDL_Rect HUD_building_barracks_size = { 0, 0, 49, 50 };
-	SDL_Rect HUD_building_barracks_idle = { 1095, 190, 49, 50 };
-	SDL_Rect HUD_building_barracks_hover = { 1152, 190, 49, 50 };
-	SDL_Rect HUD_building_barracks_clicked = { 1207, 190, 49, 50 };
+	SDL_Rect HUD_building_barracks_idle = { 1095, 295, 49, 50 };
+	SDL_Rect HUD_building_barracks_hover = { 1152, 295, 49, 50 };
+	SDL_Rect HUD_building_barracks_clicked = { 1207, 295, 49, 50 };
 
-	HUD_building_barracks = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 1027, 145, true, true, false, this, HUD_building_background
+	HUD_building_barracks = (GuiButton*)App->gui_manager->CreateButton(GUI_ELEMENT_TYPE::BUTTON, 1437, 145, true, true, false, this, HUD_building_background
 		, &HUD_building_barracks_idle, &HUD_building_barracks_hover, &HUD_building_barracks_clicked);
 
 	//Title Barracks
 	SDL_Rect HUD_text_title_barracks_build = { 0, 0, 100, 20 };
-	std::string HUD_title_barracks_build_string = "Barrack";
-	HUD_building_title_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1020, 195, HUD_text_title_barracks_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_barracks_build_string);
+	std::string HUD_title_barracks_build_string = "Barrack (B)";
+	HUD_building_title_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1425, 195, HUD_text_title_barracks_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_barracks_build_string);
 
 	//Parent Null Barracks
 	HUD_building_parent_barracks = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::EMPTY, 0, 0, SDL_Rect{ 0,0,1,1 });
 
 	//Price Barracks Data
 	SDL_Rect HUD_text_data_barracks_build = { 0, 0, 100, 20 };
-	std::string HUD_data_barracks_build_string = "30";
+	std::string HUD_data_barracks_build_string = "200";
 	HUD_building_price_barracks_data = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 970, 290, HUD_text_data_barracks_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_barracks, &HUD_data_barracks_build_string);
 
 	SDL_Rect HUD_data_build_barracks_size = { 707, 54, 13, 25 };
@@ -1625,7 +1640,7 @@ void GameplayScene::LoadGuiElements()
 
 	//Price Barracks ELectricity
 	SDL_Rect HUD_text_electricity_barracks_build = { 0, 0, 100, 20 };
-	std::string HUD_electricity_barracks_build_string = "30";
+	std::string HUD_electricity_barracks_build_string = "50";
 	HUD_building_price_barracks_electricity = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1070, 290, HUD_text_electricity_barracks_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_barracks, &HUD_electricity_barracks_build_string);
 
 	SDL_Rect HUD_electricity_build_barracks_size = { 687, 54, 16, 25 };
@@ -1634,7 +1649,7 @@ void GameplayScene::LoadGuiElements()
 
 	//Price Barracks Bytes
 	SDL_Rect HUD_text_bytes_barracks_build = { 0, 0, 100, 20 };
-	std::string HUD_bytes_barracks_build_string = "30";
+	std::string HUD_bytes_barracks_build_string = "1";
 	HUD_building_price_barracks_bytes = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1170, 290, HUD_text_bytes_barracks_build, App->gui_manager->borgsquadcond_20, SDL_Color{ 182,255,106,0 }, false, false, false, this, HUD_building_parent_barracks, &HUD_bytes_barracks_build_string);
 
 	SDL_Rect HUD_bytes_build_barracks_size = { 667, 55, 15, 24 };
@@ -1656,6 +1671,11 @@ void GameplayScene::LoadGuiElements()
 	//Saving Icon
 	SDL_Rect saving_icon_size = { 610, 145, 52, 52 };
 	Icon_Saving = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1225, 2, saving_icon_size, false, true, false, this, nullptr);
+
+	//No resources
+	SDL_Rect HUD_text_res = { 0, 0, 100, 20 };
+	std::string HUD_res_string = "Not ENough Resources!";
+	No_Resources = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 945, 55, HUD_text_res, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_res_string);
 }
 
 void GameplayScene::LoadInGameOptionsMenu()
@@ -1868,9 +1888,28 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_build_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		// Open Building Menu
-		
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
+
+		if (App->player->is_building)
+		{
+			App->player->is_building = false;
+			App->gui_manager->CreateSlideAnimation(HUD_building_background, 0.5f, false, iPoint(895, HUD_building_background->GetScreenPos().y), iPoint(1265, HUD_building_background->GetScreenPos().y));
+		}
+		else
+		{
+			if (!App->player->god_mode && tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
+			{
+				App->player->ClearEntityBuffers();
+
+				App->player->is_building = true;
+
+				App->gui_manager->CreateSlideAnimation(HUD_building_background, 0.5f, false, iPoint(1265, HUD_building_background->GetScreenPos().y), iPoint(895, HUD_building_background->GetScreenPos().y));
+			}
+		}
+
+		
 	}
+
 
 	if (element == HUD_home_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
@@ -2175,7 +2214,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->gui_manager->SetElementsVisibility(HUD_dialogs_skip_tutorial, false);
 	}
 
-	// *****______Building SYstem_________*********
+	// *****______Building System_________*********
 	//Price Build Townhall
 	if (element == HUD_building_townhall && ui_event == GUI_EVENT::HOVER)
 	{
@@ -2190,6 +2229,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 
 		//Build TOWNHALL
+		App->player->building_type = ENTITY_TYPE::TOWNHALL;
 	}
 
 	//Price Build Barracks
@@ -2206,6 +2246,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 
 		//Build Barracks
+		App->player->building_type = ENTITY_TYPE::BARRACKS;
 	}
 }
 

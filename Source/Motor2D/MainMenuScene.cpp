@@ -101,7 +101,7 @@ void MainMenuScene::ExecuteTransition()
 		}
 		
 		//App->transition_manager->CreateAlternatingBars(SCENES::GAMEPLAY_SCENE, 0.5f, true, 30, true, false, Magenta, Black);
-		App->transition_manager->CreateOldMonitor(SCENES::GAMEPLAY_SCENE, 1.25f, true, Black);
+		App->transition_manager->CreateOldMonitor(SCENES::GAMEPLAY_SCENE, 1.0f, true, Black);
 	}
 
 	if (transition_to_options_scene)

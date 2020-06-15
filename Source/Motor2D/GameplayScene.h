@@ -105,6 +105,8 @@ public:
 	float					time_on_scene;
 	bool					saved_text_active;
 
+	float					time_on_scene_res;
+	bool					res_text_active;
 
 	GuiImage*				background;
 	SDL_Rect				background_rect;
@@ -385,12 +387,15 @@ public:
 	GuiText*				HUD_building_price_barracks_bytes;
 	GuiImage*				HUD_building_price_barracks_bytes_image;
 
+	bool					HUD_buildings_displayed;
+
 	//Extras
 
 	GuiText*				God_Mode_Activated;
 	GuiText*				Saving;
 	GuiText*				No_Saved_Game;
 	GuiImage*				Icon_Saving;
+	GuiText*				No_Resources;
 
 private:
 

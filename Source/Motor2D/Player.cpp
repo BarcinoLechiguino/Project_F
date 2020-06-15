@@ -25,6 +25,7 @@
 
 #include "GuiManager.h"
 #include "GuiElement.h"
+#include "GuiImage.h"
 //#include "GuiCursor.h"
 
 #include "EntityManager.h"
@@ -109,14 +110,17 @@ bool Player::Update(float dt)
 		if (is_building)
 		{
 			is_building = false;
+			App->gui_manager->CreateSlideAnimation(App->scene_manager->gameplay_scene->HUD_building_background, 0.5f, false, iPoint(895, App->scene_manager->gameplay_scene->HUD_building_background->GetScreenPos().y), iPoint(1265, App->scene_manager->gameplay_scene->HUD_building_background->GetScreenPos().y));
 		}
 		else
 		{
-			if (!god_mode)
+			if (!god_mode && App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
 			{
 				ClearEntityBuffers();
 
 				is_building = true;
+
+				App->gui_manager->CreateSlideAnimation(App->scene_manager->gameplay_scene->HUD_building_background, 0.5f, false, iPoint(1265, App->scene_manager->gameplay_scene->HUD_building_background->GetScreenPos().y), iPoint(895, App->scene_manager->gameplay_scene->HUD_building_background->GetScreenPos().y));
 			}
 		}
 	}
@@ -1112,11 +1116,17 @@ void Player::BuildingMenu()
 		switch (building_type)
 		{
 		case ENTITY_TYPE::TOWNHALL:
-			building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x - 1, cursor_tile.y - 1, MIN_BUILDING_LEVEL);
+			if (App->scene_manager->gameplay_scene->CheckResources(300, 40, 10))
+			{
+				building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x - 1, cursor_tile.y - 1, MIN_BUILDING_LEVEL);
+			}
 			break;
 
 		case ENTITY_TYPE::BARRACKS:
-			building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x, cursor_tile.y, MIN_BUILDING_LEVEL);
+			if (App->scene_manager->gameplay_scene->CheckResources(200, 50, 1))
+			{
+				building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x, cursor_tile.y, MIN_BUILDING_LEVEL);
+			}
 			break;
 
 		case ENTITY_TYPE::WALL:
@@ -1129,6 +1139,12 @@ void Player::BuildingMenu()
 			building->building_state = BUILDING_STATE::CONSTRUCTING;
 			building->construction_finished = false;
 
+			construct_building = false;
+		}
+		else
+		{
+			LOG("Building could not be created. Either not enough resources or other kind of error.");
+			
 			construct_building = false;
 		}
 	}

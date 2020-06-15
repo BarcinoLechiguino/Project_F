@@ -117,6 +117,11 @@ bool EnemyTownHall::CleanUp()
 
 void EnemyTownHall::Draw()
 {
+	if (is_selected)
+	{
+		App->render->Blit(App->entity_manager->select_townhall_tex, (int)pixel_position.x - 69, (int)pixel_position.y - 20);
+	}
+
 	if (this->red_state == false) {
 		App->render->Blit(entity_sprite, (int)pixel_position.x - 51, (int)pixel_position.y - 20, &hall_rect); //Magic
 	}
@@ -266,7 +271,7 @@ void EnemyTownHall::InitEntity()
 
 void EnemyTownHall::AttachHealthbarToEntity()
 {
-	healthbar_position_offset.x = -20;
+	healthbar_position_offset.x = -30;
 	healthbar_position_offset.y = -6;
 
 	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
@@ -280,8 +285,8 @@ void EnemyTownHall::AttachHealthbarToEntity()
 
 void EnemyTownHall::AttachCreationBarToEntity()
 {
-	creation_bar_position_offset.x = -6;															// Magic
-	creation_bar_position_offset.y = 16;
+	creation_bar_position_offset.x = -30;															// Magic
+	creation_bar_position_offset.y = 6;
 
 	creation_bar_background_rect = { 618, 1, MAX_CREATION_BAR_WIDTH, 9 };
 	creation_bar_rect = { 618, 23, MAX_CREATION_BAR_WIDTH, 9 };

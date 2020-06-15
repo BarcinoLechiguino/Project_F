@@ -146,7 +146,7 @@ void EnemyWall::InitEntity()
 
 void EnemyWall::AttachHealthbarToEntity()
 {
-	healthbar_position_offset.x = -6;
+	healthbar_position_offset.x = -30;
 	healthbar_position_offset.y = -6;
 
 	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
