@@ -8,6 +8,7 @@
 #include "GuiManager.h"
 #include "GuiElement.h"
 #include "GuiHealthbar.h"
+#include "GuiCreationBar.h"
 #include "FowManager.h"
 #include "EntityManager.h"
 
@@ -42,6 +43,11 @@ bool Wall::PreUpdate()
 
 bool Wall::Update(float dt, bool do_logic)
 {
+	if (building_state == BUILDING_STATE::CONSTRUCTING)
+	{
+		ConstructBuilding();
+	}
+	
 	// FOG OF WAR
 	is_visible = fow_entity->is_visible;
 	
@@ -81,7 +87,10 @@ void Wall::Draw()
 {
 	//App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 20, &wall_rect); //Magic 
 	
-	App->render->Blit(entity_sprite, (int)pixel_position.x + 2, (int)pixel_position.y + 2, NULL); //Magic 
+	if (construction_finished)
+	{
+		App->render->Blit(entity_sprite, (int)pixel_position.x + 2, (int)pixel_position.y + 2, NULL); //Magic 
+	}
 }
 
 void Wall::LevelChanges()
@@ -100,6 +109,53 @@ void Wall::LevelChanges()
 	default:
 		wall_rect = wall_rect_2;
 		break;
+	}
+}
+
+void Wall::ConstructBuilding()
+{
+	if (!constructing_building)
+	{
+		creation_bar->is_visible = true;
+		creation_bar->SetNewCreationTime(construction_time);
+
+		fow_entity->provides_visibility = false;
+
+		constructing_building = true;
+	}
+	else
+	{
+		creation_bar->UpdateCreationBarValue();
+
+		for (int y = 0; y != tiles_occupied.y; ++y)
+		{
+			for (int x = 0; x != tiles_occupied.x; ++x)
+			{
+				int pos_y = tile_position.y + y;
+				int pos_x = tile_position.x + x;
+
+				iPoint draw_position = App->map->MapToWorld(pos_x, pos_y);
+
+				if (App->player->buildable_tile_tex != nullptr)
+				{
+					App->render->Blit(App->player->buildable_tile_tex, draw_position.x + 2, draw_position.y + 2, nullptr);
+				}
+			}
+		}
+
+		/*if (App->player->townhall_build_tex != nullptr)
+		{
+			SDL_SetTextureAlphaMod(App->player->wall_build_tex, (Uint8)(current_rate * 255.0f));
+		}*/
+
+		if (creation_bar->creation_finished)
+		{
+			fow_entity->provides_visibility = true;
+
+			building_state = BUILDING_STATE::IDLE;
+			construction_finished = true;
+			constructing_building = false;
+		}
 	}
 }
 
@@ -125,6 +181,9 @@ void Wall::InitEntity()
 	// FLAGS
 	is_selected = false;
 
+	// BUILDING CONSTRUCTION VARIABLES
+	construction_time = 5.0f;
+
 	// STATS
 	max_health = 500;
 	current_health = max_health;
@@ -133,6 +192,7 @@ void Wall::InitEntity()
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
 	{
 		AttachHealthbarToEntity();
+		AttachCreationBarToEntity();
 	}
 
 	// FOG OF WAR
@@ -161,4 +221,19 @@ void Wall::AttachHealthbarToEntity()
 	int healthbar_position_y = (int)pixel_position.y + healthbar_position_offset.y;					// The healthbar's position is already calculated in GuiHealthbar.
 
 	healthbar = (GuiHealthbar*)App->gui_manager->CreateHealthbar(GUI_ELEMENT_TYPE::HEALTHBAR, healthbar_position_x, healthbar_position_y, true, &healthbar_rect, &healthbar_background_rect, this);
+}
+
+void Wall::AttachCreationBarToEntity()
+{
+	creation_bar_position_offset.x = -6;															// Magic
+	creation_bar_position_offset.y = 16;
+
+	creation_bar_background_rect = { 618, 1, MAX_CREATION_BAR_WIDTH, 9 };
+	creation_bar_rect = { 618, 23, MAX_CREATION_BAR_WIDTH, 9 };
+
+	int creation_bar_position_x = (int)pixel_position.x + creation_bar_position_offset.x;
+	int creation_bar_position_y = (int)pixel_position.y + creation_bar_position_offset.y;
+
+	creation_bar = (GuiCreationBar*)App->gui_manager->CreateCreationBar(GUI_ELEMENT_TYPE::CREATIONBAR, creation_bar_position_x, creation_bar_position_y, false
+		, &creation_bar_rect, &creation_bar_background_rect, this);
 }

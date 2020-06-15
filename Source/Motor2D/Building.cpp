@@ -5,7 +5,9 @@
 
 Building::Building(int x, int y, ENTITY_TYPE type, int level) : StaticObject(x, y, type, level)
 {
-
+	building_state = BUILDING_STATE::IDLE;
+	constructing_building = false;
+	construction_finished = true;
 }
 
 Building::~Building()
@@ -44,6 +46,11 @@ bool Building::CleanUp()
 }
 
 void Building::Draw()
+{
+	return;
+}
+
+void Building::ConstructBuilding()
 {
 	return;
 }

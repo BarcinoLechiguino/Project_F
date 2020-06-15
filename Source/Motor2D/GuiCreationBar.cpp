@@ -97,3 +97,8 @@ void GuiCreationBar::ResetCreationBar()
 	creation_bar.w = 0;
 	creation_finished = false;
 }
+
+float GuiCreationBar::GetAccumulatedTime()
+{
+	return accumulated_time;
+}

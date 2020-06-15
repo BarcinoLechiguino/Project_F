@@ -316,11 +316,15 @@ void Application::PrepareUpdate()
 // ---------------------------------------------
 void Application::FinishUpdate()
 {
-	if(want_to_save)
+	if (want_to_save)
+	{
 		SavegameNow();
+	}
 
-	if(want_to_load)
+	if (want_to_load)
+	{
 		LoadGameNow();
+	}
 
 	//------------ Framerate Calculations ------------
 	if (last_second_timer.ReadMs() > 1000)

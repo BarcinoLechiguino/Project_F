@@ -123,6 +123,9 @@ void EnemyWall::InitEntity()
 	// FLAGS
 	is_selected = false;
 
+	// BUILDING CONSTRUCTION VARIABLES
+	construction_time = 5.0f;
+	
 	// STATS
 	max_health = 500;
 	current_health = max_health;

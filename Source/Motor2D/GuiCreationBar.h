@@ -23,6 +23,8 @@ public:
 	void SetNewCreationTime(float new_creation_time);		// Will set a new creation time and will reset the creation_finished to false.
 	void ResetCreationBar();								// Will reset the creation bar back to 0. Will also reset creation_finished to false.
 
+	float GetAccumulatedTime();							// Will return the current accumulated time.
+
 public:
 	bool creation_finished;									// Will track whether or not the creation process has finished or not.
 

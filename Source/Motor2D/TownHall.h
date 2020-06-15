@@ -30,6 +30,8 @@ public:
 
 	void LevelChanges();
 
+	void ConstructBuilding();
+
 public:
 	SDL_Rect	hall_rect;
 	SDL_Rect	hall_rect_1;

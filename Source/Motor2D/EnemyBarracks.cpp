@@ -218,6 +218,9 @@ void EnemyBarracks::InitEntity()
 	// FLAGS
 	is_selected = false;
 
+	// BUILDING CONSTRUCTION VARIABLES
+	construction_time = 5.0f;
+
 	// UNIT CREATION VARIABLES
 	creating_unit = false;
 	created_unit_type = ENTITY_TYPE::UNKNOWN;

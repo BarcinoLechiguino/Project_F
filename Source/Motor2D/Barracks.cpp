@@ -48,33 +48,41 @@ bool Barracks::PreUpdate()
 
 bool Barracks::Update(float dt, bool do_logic)
 {
+	if (building_state == BUILDING_STATE::CONSTRUCTING)
+	{
+		ConstructBuilding();
+	}
+	
 	UpdateRedState();
 
-	if (creation_queue.size() != 0)
-	{	
-		if (!creating_unit)
+	if (construction_finished)
+	{
+		if (creation_queue.size() != 0)
 		{
-			StartUnitCreation();
+			if (!creating_unit)
+			{
+				StartUnitCreation();
+			}
+			else
+			{
+				creation_bar->UpdateCreationBarValue();
+
+				if (creation_bar->creation_finished)
+				{
+					GenerateUnitByType(created_unit_type);
+
+					created_unit_type = ENTITY_TYPE::UNKNOWN;
+
+					creation_queue.erase(creation_queue.begin());
+
+					creating_unit = false;
+				}
+			}
 		}
 		else
 		{
-			creation_bar->UpdateCreationBarValue();
-
-			if (creation_bar->creation_finished)
-			{
-				GenerateUnitByType(created_unit_type);
-				
-				created_unit_type = ENTITY_TYPE::UNKNOWN;
-
-				creation_queue.erase(creation_queue.begin());
-
-				creating_unit = false;
-			}
+			creation_bar->is_visible = false;
 		}
-	}
-	else
-	{
-		creation_bar->is_visible = false;
 	}
 	
 	// FOG OF WAR
@@ -117,11 +125,17 @@ bool Barracks::CleanUp()
 
 void Barracks::Draw()
 {
-	if (this->red_state == false) {
-		App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect); //Magic
-	}
-	if (this->red_state == true) {
-		App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect, false, 1.0F, 1.0F, 0.0, 0, 0, App->render->renderer, { 255, 192, 192, 255 });
+	if (construction_finished)
+	{
+		if (this->red_state == false)
+		{
+			App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect); //Magic
+		}
+
+		if (this->red_state == true)
+		{
+			App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect, false, 1.0F, 1.0F, 0.0, 0, 0, App->render->renderer, { 255, 192, 192, 255 });
+		}
 	}
 }
 
@@ -196,6 +210,53 @@ void Barracks::LevelChanges()				//Updates the building stats when leveling up
 	}
 }
 
+void Barracks::ConstructBuilding()
+{
+	if (!constructing_building)
+	{
+		creation_bar->is_visible = true;
+		creation_bar->SetNewCreationTime(construction_time);
+
+		fow_entity->provides_visibility = false;
+
+		constructing_building = true;
+	}
+	else
+	{
+		creation_bar->UpdateCreationBarValue();
+
+		for (int y = 0; y != tiles_occupied.y; ++y)
+		{
+			for (int x = 0; x != tiles_occupied.x; ++x)
+			{
+				int pos_y = tile_position.y + y;
+				int pos_x = tile_position.x + x;
+
+				iPoint draw_position = App->map->MapToWorld(pos_x, pos_y);
+
+				if (App->player->buildable_tile_tex != nullptr)
+				{
+					App->render->Blit(App->player->buildable_tile_tex, draw_position.x + 2, draw_position.y + 2, nullptr);
+				}
+			}
+		}
+
+		/*if (App->player->townhall_build_tex != nullptr)
+		{
+			SDL_SetTextureAlphaMod(App->player->barracks_build_tex, (Uint8)(current_rate * 255.0f));
+		}*/
+
+		if (creation_bar->creation_finished)
+		{
+			fow_entity->provides_visibility = true;
+
+			building_state = BUILDING_STATE::IDLE;
+			construction_finished = true;
+			constructing_building = false;
+		}
+	}
+}
+
 void Barracks::InitEntity()
 {
 	// POSITION & SIZE
@@ -217,6 +278,9 @@ void Barracks::InitEntity()
 
 	// FLAGS
 	is_selected = false;
+
+	// BUILDING CONSTRUCTION VARIABLES
+	construction_time = 1.0f;
 
 	// UNIT CREATION VARIABLES
 	creating_unit = false;

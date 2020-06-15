@@ -74,7 +74,18 @@ float Transition::N_Lerp(float start, float end, float rate, bool smash_in)				/
 
 float Transition::GetCutoffRate(float step_duration)
 {
-	cutoff_rate = App->GetUnpausableDt() / step_duration;											// Change App->GetDt() to App->GetUnpausableDt() later.
+	float max_dt = (1.0f / App->frame_cap);												// Capping the maximum dt allows to avoid "jumps" in the transition when the dt gets too high.
+	
+	if (App->GetUnpausableDt() > max_dt)
+	{
+		cutoff_rate = max_dt / step_duration;				
+	}
+	else
+	{
+		cutoff_rate = App->GetUnpausableDt() / step_duration;
+	}
+
+	//cutoff_rate = App->GetUnpausableDt() / step_duration;	
 
 	return cutoff_rate;
 }

@@ -30,6 +30,8 @@ public:
 
 	void LevelChanges();
 
+	void ConstructBuilding();
+
 public:
 	SDL_Rect	barracks_rect;
 	SDL_Rect	barracks_rect_1;

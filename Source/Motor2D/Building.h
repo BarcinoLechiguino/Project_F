@@ -3,6 +3,7 @@
 
 #include "StaticObject.h"
 
+#define MIN_BUILDING_LEVEL 1
 #define MAX_BUILDING_LEVEL 2									//TMP. Right now all buildings have the same level cap.
 
 class GuiCreationBar;
@@ -33,15 +34,22 @@ public:
 	virtual void Draw();
 
 public:
+	virtual void ConstructBuilding();
+
+public:
 	std::vector<ENTITY_TYPE>	creation_queue;
 
-	BUILDING_STATE				state;
-	
+	BUILDING_STATE				building_state;
+
 	GuiCreationBar*				creation_bar;
 
 	SDL_Rect					creation_bar_background_rect;						// The background sprite of an entity's healthbar.
 	SDL_Rect					creation_bar_rect;									// The foremost sprite of an entity's healthbar.
 	iPoint						creation_bar_position_offset;						// Value that will affect where around the entity the healthbar will appear.
+
+	float						construction_time;									// Amount of time that will be required to build a given building.
+	bool						constructing_building;
+	bool						construction_finished;								// Will keep track of whether or not the building construction has finished. 
 };
 
 #endif // !__BUILDING_H__

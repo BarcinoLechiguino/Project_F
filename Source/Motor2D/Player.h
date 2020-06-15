@@ -135,6 +135,7 @@ public:															// ---------- BUILDING SYSTEM VARIABLES ----------
 
 	bool				is_building;							// Will keep track of whether the player is currently using the building system or not.
 	bool				building_preview;
+	bool				can_build;
 	bool				construct_building;
 
 	int					townhall_size;

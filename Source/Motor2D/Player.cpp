@@ -1,3 +1,6 @@
+#include "Dependencies/SDL_image/include/SDL_image.h"
+#include "Dependencies/SDL/include/SDL.h"
+
 #include "Log.h"
 #include "EasingFunctions.h"
 
@@ -12,14 +15,13 @@
 #include "Pathfinding.h"
 #include "Map.h"
 #include "Minimap.h"
+#include "Movement.h"
+#include "FowManager.h"
+#include "DialogManager.h"
+
 #include "SceneManager.h"
 #include "Scene.h"
 #include "GameplayScene.h"
-#include "Movement.h"
-#include "DialogManager.h"
-
-#include "Dependencies/SDL_image/include/SDL_image.h"
-#include "Dependencies/SDL/include/SDL.h"
 
 #include "GuiManager.h"
 #include "GuiElement.h"
@@ -103,7 +105,7 @@ bool Player::Update(float dt)
 	SelectionShortcuts();
 
 	if (App->input->GetKey(SDL_SCANCODE_P) == KEY_STATE::KEY_DOWN)
-	{
+	{	
 		if (is_building)
 		{
 			is_building = false;
@@ -112,11 +114,18 @@ bool Player::Update(float dt)
 		{
 			if (!god_mode)
 			{
+				ClearEntityBuffers();
+
 				is_building = true;
 			}
 		}
 	}
 	
+	if (is_building && !CurrentlyInGameplayScene())
+	{
+		is_building = false;
+	}
+
 	if (App->input->GetKey(SDL_SCANCODE_A) == KEY_STATE::KEY_DOWN)
 	{
 		DebugUnitSpawn();
@@ -1088,7 +1097,39 @@ void Player::BuildingMenu()
 
 		if (App->input->GetMouseButtonDown(SDL_BUTTON_RIGHT) == KEY_STATE::KEY_DOWN)
 		{
-			
+			if (can_build)
+			{
+				construct_building = true;
+				building_preview = false;
+			}
+		}
+	}
+
+	if (construct_building)
+	{
+		Building* building = nullptr;
+		
+		switch (building_type)
+		{
+		case ENTITY_TYPE::TOWNHALL:
+			building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x - 1, cursor_tile.y - 1, MIN_BUILDING_LEVEL);
+			break;
+
+		case ENTITY_TYPE::BARRACKS:
+			building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x, cursor_tile.y, MIN_BUILDING_LEVEL);
+			break;
+
+		case ENTITY_TYPE::WALL:
+			building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x, cursor_tile.y, MIN_BUILDING_LEVEL);
+			break;
+		}
+
+		if (building != nullptr)
+		{
+			building->building_state = BUILDING_STATE::CONSTRUCTING;
+			building->construction_finished = false;
+
+			construct_building = false;
 		}
 	}
 }
@@ -1130,40 +1171,64 @@ void Player::ShowBuildingPreview()
 }
 
 void Player::DrawBuildingPreview(ENTITY_TYPE type, int building_size)
-{
+{	
+	iPoint center_tile = { 0, 0 };
+	
+	if (building_size > 2)													// 3 is the current maximum size of a given entity.
+	{
+		center_tile = cursor_tile - iPoint(1, 1);
+	}
+	else
+	{
+		center_tile = cursor_tile;
+	}
+	
+	// --- DRAW BUILDING TILES ---
+	can_build = true;
+	
 	for (int y = 0; y != building_size; ++y)
 	{
 		for (int x = 0; x != building_size; ++x)
 		{
-			int pos_y = (cursor_tile.y - 1) + y;
-			int pos_x = (cursor_tile.x - 1) + x;
+			int pos_y = center_tile.y + y;
+			int pos_x = center_tile.x + x;
 
 			iPoint draw_position = App->map->MapToWorld(pos_x, pos_y);
 			
 			if (TileIsBuildable({ pos_x, pos_y }))
 			{
-				App->render->Blit(buildable_tile_tex, draw_position.x, draw_position.y, nullptr);
+				App->render->Blit(buildable_tile_tex, draw_position.x + 2, draw_position.y + 2, nullptr);
 			}
 			else
 			{
-				App->render->Blit(non_buildable_tile_tex, draw_position.x, draw_position.y, nullptr);
+				App->render->Blit(non_buildable_tile_tex, draw_position.x + 2, draw_position.y + 2, nullptr);
+				can_build = false;
 			}
 		}
 	}
 
-	iPoint draw_position = App->map->MapToWorld((cursor_tile.x - 1), (cursor_tile.y- 1));
+	// --- DRAW BUILDING SPRITE ---
+	iPoint draw_position = App->map->MapToWorld(center_tile.x, center_tile.y);
 
 	switch (type)
 	{
 	case ENTITY_TYPE::TOWNHALL:
-		App->render->Blit(townhall_build_tex, draw_position.x, draw_position.y, &townhall_section);
+		App->render->Blit(townhall_build_tex, draw_position.x - 51,  draw_position.y - 20, &townhall_section);
+		break;
+
+	case ENTITY_TYPE::BARRACKS:
+		App->render->Blit(barracks_build_tex, draw_position.x - 27, draw_position.y - 18, &barracks_section);
+		break;
+
+	case ENTITY_TYPE::WALL:
+		App->render->Blit(wall_build_tex, draw_position.x + 2, draw_position.y + 2, &wall_section);
 		break;
 	}
 }
 
 bool Player::TileIsBuildable(const iPoint& tile_position)
 {
-	if (!App->entity_manager->CheckSingleTileAvailability(tile_position) ||  !App->pathfinding->IsWalkable(tile_position))
+	if (!App->entity_manager->CheckSingleTileAvailability(tile_position) ||  !App->pathfinding->IsWalkable(tile_position) || App->fow_manager->GetVisibilityAt(tile_position) != VISIBLE)
 	{
 		return false;
 	}
@@ -1207,6 +1272,7 @@ void Player::InitializePlayer()
 	// --- Building System
 	is_building				= player.child("building_system").child("is_building").attribute("value").as_bool();
 	building_preview		= player.child("building_system").child("building_preview").attribute("value").as_bool();
+	can_build				= player.child("building_system").child("can_build").attribute("value").as_bool();
 	construct_building		= player.child("building_system").child("construct_building").attribute("value").as_bool();
 
 	townhall_size			= player.child("building_system").child("townhall_size").attribute("size").as_int();
@@ -1233,6 +1299,10 @@ void Player::InitializePlayer()
 	townhall_build_tex		= App->tex->Load(player.child("building_system").child("townhall_build_texture").attribute("path").as_string());
 	barracks_build_tex		= App->tex->Load(player.child("building_system").child("barracks_build_texture").attribute("path").as_string());
 	wall_build_tex			= App->tex->Load(player.child("building_system").child("wall_build_texture").attribute("path").as_string());
+
+	SDL_SetTextureAlphaMod(townhall_build_tex, (Uint8)(0.65f * 255));
+	SDL_SetTextureAlphaMod(barracks_build_tex, (Uint8)(0.65f * 255));
+	SDL_SetTextureAlphaMod(wall_build_tex, (Uint8)(0.65f * 255));
 
 	buildable_tile_tex		= App->tex->Load(player.child("building_system").child("buildable_tile_texture").attribute("path").as_string());
 	non_buildable_tile_tex	= App->tex->Load(player.child("building_system").child("non_buildable_tile_texture").attribute("path").as_string());

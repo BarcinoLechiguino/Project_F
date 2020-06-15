@@ -65,6 +65,7 @@
     <building_system>
       <is_building value="0"/>
       <building_preview value="0"/>
+      <can_build value="1"/>
       <construct_building value="0"/>
       <townhall_size size ="3"/>
       <barracks_size size ="2"/>

@@ -20,10 +20,12 @@ public:
 
 public:
 	void InitEntity();
-
 	void AttachHealthbarToEntity();
+	void AttachCreationBarToEntity();
 
 	void LevelChanges();
+
+	void ConstructBuilding();
 
 public:
 	SDL_Rect wall_rect;
