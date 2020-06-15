@@ -157,6 +157,16 @@ bool Player::CleanUp()
 	App->tex->UnLoad(mouse_tile_debug);
 	App->tex->UnLoad(buildable_tile_tex);
 	App->tex->UnLoad(non_buildable_tile_tex);
+	App->tex->UnLoad(townhall_build_tex);
+	App->tex->UnLoad(barracks_build_tex);
+	App->tex->UnLoad(wall_build_tex);
+
+	mouse_tile_debug		= nullptr;
+	buildable_tile_tex		= nullptr;
+	non_buildable_tile_tex	= nullptr;
+	townhall_build_tex		= nullptr;
+	barracks_build_tex		= nullptr;
+	wall_build_tex			= nullptr;
 	
 	ClearEntityBuffers();
 	
