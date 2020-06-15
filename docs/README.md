@@ -13,10 +13,12 @@ To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall 
 
   * **4 types of Playable Units:**
 
-    * **Gatherer:** Gathers resources. Can be selected and moved around.
-    * **Scout:** Attacks enemy entities. Can be selected and moved around. Really Fast.<img src="    https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Scout_render.png?raw=true" width="350" height="200" />
+    * **Gatherer:** Gathers resources. Can be selected and moved around. <img src="    https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Gatherer_render.png?raw=true" width="350" height="200" />
     
-    * **Infantry:** Attacks enemy entities. Can be selected and moved around.
+    * **Scout:** Attacks enemy entities. Can be selected and moved around. Really Fast. <img src="    https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Scout_render.png?raw=true" width="350" height="200" />
+    
+    * **Infantry:** Attacks enemy entities. Can be selected and moved around. <img src="    https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Infantry_render.png?raw=true" width="350" height="200" />
+    
     * **Heavy:** Attacks enemy entities. Can be selected and moved around. Slow but Powerful. <img src="    https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Heavy_render.png?raw=true" width="350" height="200" />
     
   
@@ -35,8 +37,7 @@ To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall 
     * **Tree:** Can be harvested from certain spots all over the map to obtain electricity, used to create Infantry and Heavy Units as well as upgrade buildings.
     * **Obelisk:** Can be collected from certain spots all over the map to obtain bits, used to upgrade every ally unit and building.
 
-  
-  <img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Ingame_screenshot.png?raw=true" width="425" height="250" />  <img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Ingame_screenshot_2.png?raw=true" width="425" height="250" />
+ <img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Ingame_screenshot_2.png?raw=true" width="780" height="450" />
     
   
 ## Game Trailer
