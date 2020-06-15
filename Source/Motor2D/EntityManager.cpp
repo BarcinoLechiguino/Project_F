@@ -46,6 +46,7 @@
 
 #include "Boulder.h"
 
+
 struct 
 {
 	bool operator()(Entity* a, Entity* b) const
@@ -441,6 +442,8 @@ void EntityManager::LoadEntityTextures()
 
 	//MISCELLANEOUS
 	select_circle_tex	= App->tex->Load(entity_textures.child("select_circle_tex").attribute("path").as_string());
+	select_barracks_tex = App->tex->Load(entity_textures.child("select_barracks_tex").attribute("path").as_string());
+	select_townhall_tex = App->tex->Load(entity_textures.child("select_townhall_tex").attribute("path").as_string());
 
 	// BUILDINGS
 	townhall_tex		= App->tex->Load(entity_textures.child("townhall_texture").attribute("path").as_string());

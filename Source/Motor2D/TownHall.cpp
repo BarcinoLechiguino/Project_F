@@ -125,6 +125,11 @@ bool TownHall::CleanUp()
 
 void TownHall::Draw()
 {
+	if (is_selected) 
+	{
+		App->render->Blit(App->entity_manager->select_townhall_tex, (int)pixel_position.x - 69, (int)pixel_position.y - 20);
+	}
+
 	if (construction_finished)
 	{
 		if (this->red_state == false)
