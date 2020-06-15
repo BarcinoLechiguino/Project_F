@@ -74,7 +74,7 @@ bool Boulder::CleanUp()
 
 void Boulder::Draw()
 {
-	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 28, NULL);
+	App->render->Blit(entity_sprite, (int)pixel_position.x, (int)pixel_position.y - 36, NULL);
 }
 
 void Boulder::InitEntity()
