@@ -1537,17 +1537,16 @@ void GameplayScene::LoadGuiElements()
 
 
 	// ******____HUD building_____******
-
 	//Back
 	SDL_Rect HUD_building_back_size = { 25, 400, 390, 226 };
 	HUD_building_background = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 895, 100, HUD_building_back_size, true, true, false, this, nullptr);
 
 	//Title
 	SDL_Rect HUD_text_title_build = { 0, 0, 100, 20 };
-	std::string HUD_title_build_string = "Building System";
+	std::string HUD_title_build_string = "Building Menu";
 	HUD_building_title = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 930, 115, HUD_text_title_build, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_build_string);
 
-	// *****_____ TOWNHALL____****
+	// *****_____TOWNHALL____****
 	// Townhall Build
 	SDL_Rect HUD_building_townhall_size = { 0, 0, 49, 50 };
 	SDL_Rect HUD_building_townhall_idle = { 1095, 190, 49, 50 };
@@ -1868,8 +1867,21 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_build_button && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		// Open Building Menu
-		
 		App->audio->PlayFx(App->gui_manager->standard_button_clicked_fx, 0);
+
+		if (App->player->is_building)
+		{
+			App->player->is_building = false;
+		}
+		else
+		{
+			if (!App->player->god_mode)
+			{
+				App->player->ClearEntityBuffers();
+
+				App->player->is_building = true;
+			}
+		}
 	}
 
 	if (element == HUD_home_button && ui_event == GUI_EVENT::UNCLICKED)
@@ -2188,6 +2200,8 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	if (element == HUD_building_townhall && ui_event == GUI_EVENT::UNCLICKED)
 	{
 		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
+
+		App->player->building_type = ENTITY_TYPE::TOWNHALL;
 
 		//Build TOWNHALL
 	}
