@@ -37,7 +37,7 @@ To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall 
     * **Tree:** Can be harvested from certain spots all over the map to obtain electricity, used to create Infantry and Heavy Units as well as upgrade buildings.
     * **Obelisk:** Can be collected from certain spots all over the map to obtain bits, used to upgrade every ally unit and building.
 
- <img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Ingame_screenshot_2.png?raw=true" width="780" height="450" />
+ <img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Ingame_screenshot_2.png?raw=true" width="780" height="400" />
     
   
 ## Game Trailer

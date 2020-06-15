@@ -489,6 +489,10 @@ void EntityManager::UnLoadEntityTextures()
 
 	App->tex->UnLoad(boulder_tex);
 
+	App->tex->UnLoad(select_circle_tex);
+	App->tex->UnLoad(select_townhall_tex);
+	App->tex->UnLoad(select_barracks_tex);
+
 	gatherer_tex		= nullptr;
 	scout_tex			= nullptr;
 	infantry_tex		= nullptr;
@@ -510,6 +514,10 @@ void EntityManager::UnLoadEntityTextures()
 	obelisk_tex			= nullptr;
 
 	boulder_tex			= nullptr;
+
+	select_circle_tex	= nullptr;
+	select_townhall_tex = nullptr;
+	select_barracks_tex = nullptr; 
 }
 
 // --- ENTITY AUDIO LOAD & UNLOAD ---
