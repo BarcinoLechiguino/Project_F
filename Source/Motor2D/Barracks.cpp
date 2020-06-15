@@ -332,7 +332,7 @@ void Barracks::InitEntity()
 
 void Barracks::AttachHealthbarToEntity()
 {
-	healthbar_position_offset.x = -6;																//Magic
+	healthbar_position_offset.x = -30;																//Magic
 	healthbar_position_offset.y = -6;
 
 	healthbar_background_rect = { 618, 1, MAX_BUILDING_HEALTHBAR_WIDTH, 9 };
@@ -346,8 +346,8 @@ void Barracks::AttachHealthbarToEntity()
 
 void Barracks::AttachCreationBarToEntity()
 {
-	creation_bar_position_offset.x = -6;															// Magic
-	creation_bar_position_offset.y = 16;
+	creation_bar_position_offset.x = -30;															// Magic
+	creation_bar_position_offset.y = 6;
 
 	creation_bar_background_rect = { 618, 1, MAX_CREATION_BAR_WIDTH, 9 };
 	creation_bar_rect = { 618, 23, MAX_CREATION_BAR_WIDTH, 9 };
