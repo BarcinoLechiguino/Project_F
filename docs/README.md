@@ -5,9 +5,7 @@
 
 The game is set in a fictional virtual world simulation from which you will need to get out of to survive. However, to be able to get out of it you will need to destroy each enemy base.
 
-To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall is destroyed it is Game Over.
-
-<img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/Source/Resources/Assets/gui/backgrounds/logo_scene_background.png?raw=true" width="350" height="200" />
+To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall is destroyed it is Game Over.<img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Logo.png?raw=true" width="350" height="200" />
 
 ## Key Features
 
@@ -52,18 +50,18 @@ To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall 
  - {Guillem Turmo} - {Management} - GitHub: [Turmo11](https://github.com/Turmo11)
 
 ## Sections
- - Game Reference: General Analysis of a Similar Game [Docs/GameReference.md](../Docs/GameReference.md)
- - GDD: Game Design Document [Docs/GDD.md](../Docs/GDD.md)
- - TDD: Tech Design Document [Docs/TDD.md](../Docs/TDD.md)
- - GUI Document [Docs/GUIDocument.md](../Docs/GuiDocument.md)
- - Art Bible [Docs/ArtBible.md](../Docs/ArtBible.md)
- - Audio Bible [Docs/AudioBible.md](../Docs/AudioBible.md)
- - QA Workflow [Docs/QAWorkflow.md](../Docs/QAWorkflow.md)
- - Production Plan [Docs/ProductionPlan.md](../Docs/ProductionPlan.md)
+ - Game Reference: General Analysis of a Similar Game [Docs/GameReference.md](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/GameReference.md)
+ - GDD: Game Design Document [Docs/GDD.md](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/GDD.md)
+ - TDD: Tech Design Document [Docs/TDD.md](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/TDD.md)
+ - GUI Document [Docs/GUIDocument.md](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/GuiDocument.md)
+ - Art Bible [Docs/ArtBible.md](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/ArtBible.md)
+ - Audio Bible [Docs/AudioBible.md](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/AudioBible.md)
+ - QA Workflow [Docs/QAWorkflow.md](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/QAWorkflow.md)
+ - Production Plan [Docs/ProductionPlan.md](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/ProductionPlan.md)
  
 ## Contact Us
 
-Mail: [Gmail](p2.missing.md@gmail.com) 
+Mail: p2.missing.md@gmail.com
 
 Twitter: [@missingmd2](<https://twitter.com/missingmd2>)
 
