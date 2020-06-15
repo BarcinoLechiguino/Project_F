@@ -34,9 +34,6 @@ struct Projectile
 	SDL_Rect* bullet_section;
 
 	Emitter* trail;
-	//Color color;
-	//int width;
-	//int height;
 };
 
 
