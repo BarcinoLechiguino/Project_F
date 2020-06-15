@@ -114,7 +114,7 @@ bool Player::Update(float dt)
 		}
 		else
 		{
-			if (!god_mode)
+			if (!god_mode && App->scene_manager->gameplay_scene->tutorial.tutorial_state == TutorialState::NOT_ACTIVE)
 			{
 				ClearEntityBuffers();
 
@@ -1116,11 +1116,17 @@ void Player::BuildingMenu()
 		switch (building_type)
 		{
 		case ENTITY_TYPE::TOWNHALL:
-			building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x - 1, cursor_tile.y - 1, MIN_BUILDING_LEVEL);
+			if (App->scene_manager->gameplay_scene->CheckResources(300, 40, 10))
+			{
+				building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x - 1, cursor_tile.y - 1, MIN_BUILDING_LEVEL);
+			}
 			break;
 
 		case ENTITY_TYPE::BARRACKS:
-			building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x, cursor_tile.y, MIN_BUILDING_LEVEL);
+			if (App->scene_manager->gameplay_scene->CheckResources(200, 50, 1))
+			{
+				building = (Building*)App->entity_manager->CreateEntity(building_type, cursor_tile.x, cursor_tile.y, MIN_BUILDING_LEVEL);
+			}
 			break;
 
 		case ENTITY_TYPE::WALL:
@@ -1133,6 +1139,12 @@ void Player::BuildingMenu()
 			building->building_state = BUILDING_STATE::CONSTRUCTING;
 			building->construction_finished = false;
 
+			construct_building = false;
+		}
+		else
+		{
+			LOG("Building could not be created. Either not enough resources or other kind of error.");
+			
 			construct_building = false;
 		}
 	}
