@@ -1144,6 +1144,8 @@ void Player::BuildingMenu()
 		else
 		{
 			LOG("Building could not be created. Either not enough resources or other kind of error.");
+			
+			construct_building = false;
 		}
 	}
 }
