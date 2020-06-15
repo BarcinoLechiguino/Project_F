@@ -1558,7 +1558,7 @@ void GameplayScene::LoadGuiElements()
 
 	//Title Townhall
 	SDL_Rect HUD_text_title_townhall_build = { 0, 0, 100, 20 };
-	std::string HUD_title_townhall_build_string = "Townhall";
+	std::string HUD_title_townhall_build_string = "Townhall(H)";
 	HUD_building_title_townhall = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 920, 195, HUD_text_title_townhall_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_townhall_build_string);
 
 	//Parent Null Townhall
@@ -1606,7 +1606,7 @@ void GameplayScene::LoadGuiElements()
 
 	//Title Barracks
 	SDL_Rect HUD_text_title_barracks_build = { 0, 0, 100, 20 };
-	std::string HUD_title_barracks_build_string = "Barrack";
+	std::string HUD_title_barracks_build_string = "Barrack(B)";
 	HUD_building_title_barracks = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 1020, 195, HUD_text_title_barracks_build, App->gui_manager->borgsquadcond_15, SDL_Color{ 255,255,0,0 }, true, false, false, this, HUD_building_background, &HUD_title_barracks_build_string);
 
 	//Parent Null Barracks
@@ -2187,7 +2187,7 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 		App->gui_manager->SetElementsVisibility(HUD_dialogs_skip_tutorial, false);
 	}
 
-	// *****______Building SYstem_________*********
+	// *****______Building System_________*********
 	//Price Build Townhall
 	if (element == HUD_building_townhall && ui_event == GUI_EVENT::HOVER)
 	{
@@ -2201,7 +2201,10 @@ void GameplayScene::OnEventCall(GuiElement* element, GUI_EVENT ui_event)
 	{
 		App->audio->PlayFx(App->gui_manager->recruit_unit_button_clicked_fx, 0);
 
-		App->player->building_type = ENTITY_TYPE::TOWNHALL;
+		if (CheckResources(50, 50, 5))
+		{
+			App->player->building_type = ENTITY_TYPE::TOWNHALL;
+		}
 
 		//Build TOWNHALL
 	}
