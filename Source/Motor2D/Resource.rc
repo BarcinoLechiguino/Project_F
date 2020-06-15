@@ -1,6 +1,7 @@
 // Microsoft Visual C++ generated resource script.
 //
 #include "resource1.h"
+#include "libloaderapi.h"
 
 #define APSTUDIO_READONLY_SYMBOLS
 /////////////////////////////////////////////////////////////////////////////
@@ -52,12 +53,10 @@ END
 
 // Icon with lowest ID value placed first to ensure application icon
 // remains consistent on all systems.
-IDI_ICON1               ICON                    "D:\\GUILLEM\\UPC\\Proj2\\Github\\Project_F\\Source\\Resources\\Assets\\installer\\F_icon.ico"
+IDI_ICON1               ICON                    "F_icon.ico"
 
 #endif    // Spanish (Spain, International Sort) resources
 /////////////////////////////////////////////////////////////////////////////
-
-
 
 #ifndef APSTUDIO_INVOKED
 /////////////////////////////////////////////////////////////////////////////
