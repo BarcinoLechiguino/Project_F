@@ -19,6 +19,8 @@
     <obelisk_texture                  path="Assets/entities/neutral_resource_obelisk.png"/>
     <boulder_texture                  path="Assets/entities/neutral_obstacle_boulder.png"/>
     <select_circle_tex                path="Assets/maps/selected_entity.png"/>
+    <select_barracks_tex              path="Assets/maps/selected_barracks.png"/>
+    <select_townhall_tex              path="Assets/maps/selected_hall.png"/>
   </textures>
 
   <fx>

@@ -125,6 +125,11 @@ bool Barracks::CleanUp()
 
 void Barracks::Draw()
 {
+	if (is_selected)
+	{
+		App->render->Blit(App->entity_manager->select_barracks_tex, (int)pixel_position.x - 38, (int)pixel_position.y - 25);
+	}
+
 	if (construction_finished)
 	{
 		if (this->red_state == false)

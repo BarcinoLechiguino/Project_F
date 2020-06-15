@@ -108,6 +108,19 @@ bool GameplayScene::PreUpdate()
 			saved_text_active = false;
 		}
 	}
+
+	// Text Resources
+	if (res_text_active)
+	{
+		time_on_scene_res += App->GetUnpausableDt();
+
+		if (time_on_scene_res > 3.0f)
+		{
+			App->gui_manager->SetElementsVisibility(No_Resources, false);
+			time_on_scene_res = 0.0f;
+			res_text_active = false;
+		}
+	}
 	
 
 	return true;
@@ -299,6 +312,8 @@ void GameplayScene::InitScene()
 	}
 
 	App->projectile_manager->Start();
+
+	time_on_scene = 0.0f;
 
 	time_on_scene = 0.0f;
 }
@@ -737,6 +752,8 @@ bool GameplayScene::CheckResources(uint required_data, uint required_electricity
 	else
 	{
 		App->audio->PlayFx(App->gui_manager->no_resources_fx, 0);
+		res_text_active = true;
+		App->gui_manager->SetElementsVisibility(No_Resources, true);
 		return false;
 	}
 }
@@ -1654,6 +1671,11 @@ void GameplayScene::LoadGuiElements()
 	//Saving Icon
 	SDL_Rect saving_icon_size = { 610, 145, 52, 52 };
 	Icon_Saving = (GuiImage*)App->gui_manager->CreateImage(GUI_ELEMENT_TYPE::IMAGE, 1225, 2, saving_icon_size, false, true, false, this, nullptr);
+
+	//No resources
+	SDL_Rect HUD_text_res = { 0, 0, 100, 20 };
+	std::string HUD_res_string = "Not ENough Resources!";
+	No_Resources = (GuiText*)App->gui_manager->CreateText(GUI_ELEMENT_TYPE::TEXT, 945, 55, HUD_text_res, App->gui_manager->borgsquadcond_25, SDL_Color{ 255,255,0,0 }, false, false, false, this, nullptr, &HUD_res_string);
 }
 
 void GameplayScene::LoadInGameOptionsMenu()

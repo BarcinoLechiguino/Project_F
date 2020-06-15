@@ -117,6 +117,11 @@ bool EnemyBarracks::CleanUp()
 
 void EnemyBarracks::Draw()
 {
+	if (is_selected)
+	{
+		App->render->Blit(App->entity_manager->select_barracks_tex, (int)pixel_position.x - 35, (int)pixel_position.y - 18);
+	}
+
 	if (this->red_state == false) {
 		App->render->Blit(entity_sprite, (int)pixel_position.x - 27, (int)pixel_position.y - 18, &barracks_rect); //Magic
 	}
