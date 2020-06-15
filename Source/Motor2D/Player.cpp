@@ -25,6 +25,7 @@
 
 #include "GuiManager.h"
 #include "GuiElement.h"
+#include "GuiImage.h"
 //#include "GuiCursor.h"
 
 #include "EntityManager.h"
@@ -109,6 +110,7 @@ bool Player::Update(float dt)
 		if (is_building)
 		{
 			is_building = false;
+			App->gui_manager->CreateSlideAnimation(App->scene_manager->gameplay_scene->HUD_building_background, 0.5f, false, iPoint(895, App->scene_manager->gameplay_scene->HUD_building_background->GetScreenPos().y), iPoint(1265, App->scene_manager->gameplay_scene->HUD_building_background->GetScreenPos().y));
 		}
 		else
 		{
@@ -117,6 +119,8 @@ bool Player::Update(float dt)
 				ClearEntityBuffers();
 
 				is_building = true;
+
+				App->gui_manager->CreateSlideAnimation(App->scene_manager->gameplay_scene->HUD_building_background, 0.5f, false, iPoint(1265, App->scene_manager->gameplay_scene->HUD_building_background->GetScreenPos().y), iPoint(895, App->scene_manager->gameplay_scene->HUD_building_background->GetScreenPos().y));
 			}
 		}
 	}
