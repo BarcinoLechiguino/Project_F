@@ -34,6 +34,7 @@ class DialogManager;
 class ParticleManager;
 class QuestManager;
 class ProjectileManager;
+class AssetManager;
 
 class Application
 {
@@ -101,6 +102,7 @@ public:
 	ParticleManager*	particle_manager;
 	QuestManager*		quest_manager;
 	ProjectileManager*  projectile_manager;
+	AssetManager*		asset_manager;
 
 	uint				frame_cap;								// Stores the frames per second cap to be applied.
 	uint				original_frame_cap;						// Stores the original frame cap at application start.

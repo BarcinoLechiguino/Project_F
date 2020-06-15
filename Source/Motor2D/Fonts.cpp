@@ -3,6 +3,7 @@
 #include "Application.h"
 #include "Textures.h"
 #include "Fonts.h"
+#include "AssetManager.h"
 
 #include "Dependencies\SDL\include\SDL.h"
 #include "Dependencies\SDL_ttf\include\SDL_ttf.h"
@@ -72,7 +73,7 @@ bool Fonts::CleanUp()
 // Load new texture from file path
 TTF_Font* const Fonts::Load(const char* path, int size)
 {
-	TTF_Font* font = TTF_OpenFont(path, size);
+	TTF_Font* font = TTF_OpenFontRW(App->asset_manager->Load(path), 1 ,size);
 
 	if (font == NULL)
 	{

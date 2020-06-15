@@ -63,7 +63,7 @@ void Minimap::CreateTexture()
 
 	map_renderer = SDL_CreateSoftwareRenderer(map_surface);
 
-	tex			= App->tex->Load("Assets/maps/Prototileset.png", map_renderer);
+	tex			= App->tex->Load("Assets/maps/proto_tileset.png", map_renderer);
 	fow_tex		= App->tex->Load(App->config_file.child("config").child("fog_of_war").child("fow_tex").attribute("path").as_string(), map_renderer);
 	minimap_bg	= App->tex->Load(App->config_file.child("config").child("gui").child("backgrounds").child("minimap").attribute("path").as_string());
 
@@ -244,7 +244,7 @@ void Minimap::DrawFogOfWar()
 		App->tex->UnLoad(minimap_fow_tex);
 		SDL_DestroyTexture(minimap_fow_tex);													// The texture needs to be destroyed as we use SDL_CreateTextureFromSurface().
 	}
-	
+
 	for (int i = 0; i < minimap_tiles.size(); ++i)
 	{
 		iPoint tile_position = { minimap_tiles[i].x, minimap_tiles[i].y };
@@ -257,10 +257,10 @@ void Minimap::DrawFogOfWar()
 		uchar fow_state = App->fow_manager->GetVisibilityAt(tile_position);
 
 		if (fow_state != VISIBLE)
-		//if (fow_state == UNEXPLORED)
+			//if (fow_state == UNEXPLORED)
 		{
 			SDL_Rect fow_tile_rect = App->fow_manager->GetFowTileRect(fow_state);
-			App->render->Blit(fow_tex, (world_position.x + minimap_width * 0.5f), world_position.y - 2, &fow_tile_rect, false, 0.0f, minimap_scale, 0.0f, 0, 0, map_renderer);
+			App->render->Blit(fow_tex, (world_position.x + minimap_width * 0.5f), world_position.y - 2, &fow_tile_rect, false, 0.0f, minimap_scale, 0.0f, 0, 0,map_renderer);
 		}
 	}
 

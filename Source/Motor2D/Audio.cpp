@@ -4,7 +4,7 @@
 #include "Application.h"
 #include "Audio.h"
 #include "Input.h"
-
+#include "AssetManager.h"
 
 #include "Dependencies/SDL/include/SDL.h"
 #include "Dependencies\SDL_mixer\include\SDL_mixer.h"
@@ -132,7 +132,7 @@ unsigned int Audio::LoadMusic(std::string path) // Loads the audio on the Mix_Mu
 	if (!is_active)
 		return 0;
 
-	Mix_Music* music_chunk = Mix_LoadMUS(path.c_str());
+	Mix_Music* music_chunk = Mix_LoadMUS_RW(App->asset_manager->Load(path.c_str()), 1);
 
 	if (music_chunk == NULL)
 	{
@@ -211,12 +211,13 @@ unsigned int Audio::LoadFx(std::string path)
 {
 	unsigned int ret = 0;
 
-	if(!is_active)
+	if (!is_active)
 		return 0;
 
-	Mix_Chunk* chunk = Mix_LoadWAV(path.c_str());
+	//The IMG_LoadWAV_RW() method reads from the memory buffer instead of the disk
+	Mix_Chunk* chunk = Mix_LoadWAV_RW(App->asset_manager->Load(path.c_str()), 1); 
 
-	if(chunk == NULL)
+	if (chunk == NULL)
 	{
 		LOG("Cannot load wav %s. Mix_GetError(): %s", path, Mix_GetError());
 	}

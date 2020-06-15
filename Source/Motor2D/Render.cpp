@@ -159,7 +159,7 @@ iPoint Render::ScreenToWorld(int x, int y) const
 
 // Blit to screen
 bool Render::Blit(SDL_Texture* texture, int x, int y, const SDL_Rect* section, bool flip, float speed, float render_scale, double angle, int pivot_x, int pivot_y, SDL_Renderer* renderer, SDL_Color color) const
-{	
+{
 	bool ret = true;
 	float scale = App->win->GetScale();
 

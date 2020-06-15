@@ -99,7 +99,6 @@ void Entity::ApplyDamage(Entity* target)
 {
 	if (target != nullptr)
 	{
-		
 		if(App->player->god_mode)
 		{
 			if (App->entity_manager->IsAllyEntity(target))
@@ -115,7 +114,7 @@ void Entity::ApplyDamage(Entity* target)
 			Emitter* damage_emitter = App->particle_manager->SpawnEmitter({ target->pixel_position.x, target->pixel_position.y }, EMITTER_TYPE::EMITTER_DAMAGE);
 		}
 
-		App->render->DrawLine(this->center_point.x, this->center_point.y, target->center_point.x, target->center_point.y, 255, 0, 0, 255); //debug
+		//App->render->DrawLine(this->center_point.x, this->center_point.y, target->center_point.x, target->center_point.y, 255, 0, 0, 255); //debug
 	}
 }
 
@@ -138,7 +137,8 @@ void Entity::RecieveDamage(int damage)
 	red_state = true;
 }
 
-void Entity::UpdateRedState() {
+void Entity::UpdateRedState() 
+{
 	if (red_state) 
 	{
 		red_state_timer++;

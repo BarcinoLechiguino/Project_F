@@ -262,6 +262,9 @@
     <ClCompile Include="OldMonitor.cpp">
       <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClCompile>
+    <ClCompile Include="AssetManager.cpp">
+      <Filter>Engine  ===========\Modules\Multimedia\Asset Manager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Module.h">
@@ -534,6 +537,9 @@
     <ClInclude Include="OldMonitor.h">
       <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
+    <ClInclude Include="AssetManager.h">
+      <Filter>Engine  ===========\Modules\Multimedia\Asset Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
@@ -657,6 +663,9 @@
     </Filter>
     <Filter Include="Engine  ===========\Modules\Multimedia\Projectile Manager">
       <UniqueIdentifier>{d179ecb6-ccf8-4f42-aa58-c5be5efec7b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine  ===========\Modules\Multimedia\Asset Manager">
+      <UniqueIdentifier>{01b6c405-3290-491d-8dcc-88e23772c601}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

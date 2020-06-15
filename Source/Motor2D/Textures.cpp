@@ -1,9 +1,12 @@
 #include "Dependencies/SDL_image/include/SDL_image.h"
 #pragma comment( lib, "Dependencies/SDL_image/libx86/SDL2_image.lib" )
 
+#include "Dependencies/Brofiler/Brofiler.h"
+
 #include "Definitions.h"
 #include "Log.h"
 #include "Application.h"
+#include "AssetManager.h"
 
 #include "Textures.h"
 
@@ -63,7 +66,8 @@ bool Textures::CleanUp()
 SDL_Texture* const Textures::Load(const char* path, SDL_Renderer* renderer)
 {
 	SDL_Texture* texture = NULL;
-	SDL_Surface* surface = IMG_Load(path);
+	
+	SDL_Surface* surface = IMG_Load_RW(App->asset_manager->Load(path), 1);		//We do not read from hard disk anymore so we need IMG_Load_RW() method to read from the memory buffer
 
 	if (surface == NULL)
 	{
@@ -81,6 +85,7 @@ SDL_Texture* const Textures::Load(const char* path, SDL_Renderer* renderer)
 // Unload texture
 bool Textures::UnLoad(SDL_Texture* texture)
 {
+	BROFILER_CATEGORY("UNLOAD TEXTURE", Profiler::Color::Black);
 	std::vector<SDL_Texture*>::iterator item = textures.begin();
 
 	for (; item != textures.end(); ++item)

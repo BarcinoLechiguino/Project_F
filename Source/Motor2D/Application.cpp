@@ -25,6 +25,7 @@
 #include "ParticleManager.h"
 #include "QuestManager.h"
 #include "ProjectileManager.h"
+#include "AssetManager.h"
 
 #include "Dependencies\Brofiler\Brofiler.h"
 
@@ -60,6 +61,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	particle_manager	= new ParticleManager();
 	quest_manager		= new QuestManager();
 	projectile_manager  = new ProjectileManager();
+	asset_manager		= new AssetManager();
 
 	// Ordered for awake / Start / Update
 	// Reverse order of CleanUp
@@ -71,6 +73,7 @@ Application::Application(int argc, char* args[]) : argc(argc), args(args)
 	AddModule(pathfinding);
 	AddModule(font);
 	AddModule(movement);
+	AddModule(asset_manager);
 	
 	// scene_manager last before render.
 

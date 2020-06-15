@@ -21,6 +21,7 @@
 #include "Scene.h"
 #include "FowManager.h"
 #include "EnemyAIManager.h"
+#include "AssetManager.h"
 
 #include "Map.h"
 
@@ -311,7 +312,7 @@ bool Map::Load(std::string file_name)
 	bool ret = true;
 	std::string tmp = folder + file_name;
 
-	pugi::xml_parse_result result = map_file.load_file(tmp.c_str());
+	pugi::xml_parse_result result = App->asset_manager->LoadXML(map_file, tmp.c_str()); //map_file.load_file(tmp.c_str()); 
 
 	if(result == NULL)
 	{
