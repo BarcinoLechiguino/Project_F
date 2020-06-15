@@ -1,6 +1,12 @@
 # Project F
 ## Description
 {Short Description}
+This project was developed from scratch in C++ by 7 [Bachelor's degree in Video Game Design and Development](<https://www.citm.upc.edu/ing/estudis/graus-videojocs/>) students at [UPC CITM](<https://www.citm.upc.edu/>) [Tech Talent Center](<https://www.talent.upc.edu/cat/school/ttc/>) in Barcelona.
+
+**Project F** is a Real Time Strategy game for PC in which you will have to defend your Base from enemy attacks as well as to search and destroy the enemy's Base.
+
+The game is set in a fictional virtual world simulation from which you will need to get out of to survive. However, to be able to get out of it you will need to destroy each enemy base.
+
 {Screenshot of the game}
 
 ## Students Involved
@@ -21,3 +27,11 @@
  - Audio Bible [Docs/AudioBible.md](../Docs/AudioBible.md)
  - QA Workflow [Docs/QAWorkflow.md](../Docs/QAWorkflow.md)
  - Production Plan [Docs/ProductionPlan.md](../Docs/ProductionPlan.md)
+ 
+ ### Where to find us
+
+Mail: [Gmail](p2.missing.md@gmail.com) 
+
+Twitter: [@missingmd2](<https://twitter.com/missingmd2>)
+
+
