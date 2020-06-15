@@ -255,6 +255,8 @@ No previous installation is required to play the game, just download the latest 
 - **F2 Key:** Set the frame cap at 30 or 60 FPS depending on which cap is currently active.
 - **F3 Key:** Enable/Disable the Pause Mode.
 - **F4 Key:** Enable/Disable the GUI Debug Mode. (Shows all hitboxes, invisible elements...)
+- **F5 Key:** Save Game.
+- **F6 Key:** Load Game.
 - **F7 Key:** Enable/Disable the Pathfinding Meta Debug Mode. (Shows the current path)
 - **F8 Key:** Enable/Disable the Walkability Map Debug Mode. (Shows non-walkable tiles, etc)
 - **F9 Key:** Enable/Disable the Entity Map Debug Mode. (Shows tiles occupied by entities.)
