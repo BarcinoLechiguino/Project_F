@@ -272,7 +272,6 @@ No previous installation is required to play the game, just download the latest 
   
     * **0 Key:** Spawn **Enemy Heavy Unit** at mouse position.
   
-      
   * **Buildings:**
   
     * **H Key:** Spawn **Town-hall Building** at mouse position.
@@ -287,7 +286,6 @@ No previous installation is required to play the game, just download the latest 
   
     * **E Key:**  Spawn **Enemy Wall Building** at mouse position. (Work in progress)
   
-      
   * **Resources & Obstacles:**
   
     * **R Key:** Spawn **Rock Resource** at mouse position.
