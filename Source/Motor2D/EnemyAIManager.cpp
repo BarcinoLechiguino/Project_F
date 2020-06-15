@@ -219,20 +219,20 @@ void EnemyAIManager::GiveTargetToEnemyWave(const EnemyWave& enemy_wave)
 
 void EnemyAIManager::GivePatrolPath()
 {
-	std::vector<DynamicObject*> patrol;
+	/*std::vector<DynamicObject*> patrol;
 	
-	//for (int i = 0; i < patroling_entities.size(); ++i)
-	//{
-	//	if (/*!patroling_entities[i]->has_proximity_target &&*/ patroling_entities[i]->entity_path.empty())
-	//	{
-	//		//Give Random Path
-	//		patrol.push_back(patroling_entities[i]);
+	for (int i = 0; i < patroling_entities.size(); ++i)
+	{
+		if (!patroling_entities[i]->has_proximity_target && patroling_entities[i]->entity_path.empty())
+		{
+			//Give Random Path
+			patrol.push_back(patroling_entities[i]);
 
-	//		App->pathfinding->MoveOrder(patroling_entities[i]->tile_position + iPoint(rand() % 5, rand() % 5), patrol);
+			App->pathfinding->MoveOrder(patroling_entities[i]->tile_position + iPoint(rand() % 5, rand() % 5), patrol);
 
-	//		patrol.pop_back();
-	//	}
-	//}
+			patrol.pop_back();
+		}
+	}*/
 }
 
 EnemyAIEntity* EnemyAIManager::CreateEnemyAIEntity(Entity* enemy_entity)
