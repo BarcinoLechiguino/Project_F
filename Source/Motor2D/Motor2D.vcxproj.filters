@@ -534,6 +534,7 @@
     <ClInclude Include="OldMonitor.h">
       <Filter>Engine  ===========\Modules\Transitions\Transition Types</Filter>
     </ClInclude>
+    <ClInclude Include="resource1.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\Game\maps\1st Screen2.tmx">
@@ -681,5 +682,12 @@
     <Xml Include="..\Resources\save_game.xml">
       <Filter>Engine  ===========\XML Files</Filter>
     </Xml>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Motor 2D.rc" />
+    <ResourceCompile Include="Resource.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\Resources\Assets\installer\F_icon.ico" />
   </ItemGroup>
 </Project>

@@ -5,6 +5,8 @@
 
 The game is set in a fictional virtual world simulation from which you will need to get out of to survive. However, to be able to get out of it you will need to destroy each enemy base.
 
+To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall is destroyed it is Game Over.
+
 <img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/Source/Resources/Assets/gui/backgrounds/logo_scene_background.png?raw=true" width="350" height="200" />
 
 ## Key Features
@@ -18,22 +20,26 @@ The game is set in a fictional virtual world simulation from which you will need
     * **Heavy:** Attacks enemy entities. Can be selected and moved around. Slow but Powerful. <img src="    https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Heavy_render.png?raw=true" width="350" height="200" />
     
   
-* **3 types of Buildings:**
+* **2 types of Buildings:**
   
     * **Town-hall:** Can generate Gatherer & Scout Units. Can be upgraded.
     * **Barracks:** Can generate Infantry & Heavy units. Can be upgraded.
-    * **Wall:** Serves as protection as well as an obstacle to enemy units. (Work in Progress)
+    
+* **1 type of Obstacle:**
 
+    * **Boulder:** Will obstruct the path of both ally and enemy units.
 
 * **3 types of Resources:**
 
-    * **Rock**: Can be mined from certain spots all over the map. Used to create Gatherer and Heavy Units as well as upgrade buildings.
-    * **Tree:** Can be harvested from certain spots all over the map. Used to create Infantry and Heavy Units as well as upgrade buildings.
-    * **Obelisk:** Can be collected from certain spots all over the map. Used to upgrade every ally unit and building.
+    * **Rock**: Can be mined from certain spots all over the map to generate data, used to create Gatherer and Heavy Units as well as upgrade buildings.
+    * **Tree:** Can be harvested from certain spots all over the map to obtain electricity, used to create Infantry and Heavy Units as well as upgrade buildings.
+    * **Obelisk:** Can be collected from certain spots all over the map to obtain bits, used to upgrade every ally unit and building.
 
-* **1 type of Obstacle:**
-    * **Boulder:** Will obstruct the path of both ally and enemy units.
-
+  
+  <img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Ingame_screenshot.png?raw=true" width="425" height="250" />  <img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Ingame_screenshot_2.png?raw=true" width="425" height="250" />
+    
+  
+## Game Trailer
 
 ## Students Involved
  - {Angel Gonzalez} - {Project Lead, Management, Programmer} - GitHub: [BarcinoLechiguino](https://github.com/BarcinoLechiguino)
@@ -54,7 +60,7 @@ The game is set in a fictional virtual world simulation from which you will need
  - QA Workflow [Docs/QAWorkflow.md](../Docs/QAWorkflow.md)
  - Production Plan [Docs/ProductionPlan.md](../Docs/ProductionPlan.md)
  
- ## Where to find us
+## Contact Us
 
 Mail: [Gmail](p2.missing.md@gmail.com) 
 
