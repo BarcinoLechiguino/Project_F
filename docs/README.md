@@ -5,9 +5,7 @@
 
 The game is set in a fictional virtual world simulation from which you will need to get out of to survive. However, to be able to get out of it you will need to destroy each enemy base.
 
-To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall is destroyed it is Game Over.
-
-<img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/Source/Resources/Assets/gui/backgrounds/logo_scene_background.png?raw=true" width="350" height="200" />
+To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall is destroyed it is Game Over.<img src="https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Logo.png?raw=true" width="350" height="200" />
 
 ## Key Features
 
