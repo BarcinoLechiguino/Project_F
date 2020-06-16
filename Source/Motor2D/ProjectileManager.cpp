@@ -60,9 +60,9 @@ Projectile::Projectile(fPoint position, float speed,int damage, Entity* target)
 void Projectile::CleanUp()
 {
 	delete bullet_section;
-	App->particle_manager->DeleteEmitter(trail);
-
 	target = nullptr;
+
+	App->particle_manager->DeleteEmitter(trail);
 }
 
 bool Projectile::Update(float dt)
@@ -75,8 +75,8 @@ bool Projectile::Update(float dt)
 
 	float h = sqrt( (position_difference.x * position_difference.x) + (position_difference.y * position_difference.y) );
 
-	velocity.x = (position_difference.x / h) * speed;
-	velocity.y = (position_difference.y / h) * speed;
+	velocity.x = (position_difference.x / h) * 200;
+	velocity.y = (position_difference.y / h) * 200;
 
 	position.x += velocity.x * dt;
 	position.y += velocity.y * dt;
@@ -194,7 +194,7 @@ bool ProjectileManager::Load(pugi::xml_node& data)
 	for (int i = 0; i < projectiles.size(); ++i)
 	{
 		projectiles[i]->CleanUp();
-		RELEASE(projectiles[i]);
+		delete (projectiles[i]);
 	}
 
 	projectiles.clear();
@@ -230,9 +230,11 @@ void ProjectileManager::DestroyProjectile(Projectile* projectile)
 		if ((*item) == projectile)
 		{
 			(*item)->CleanUp();
-			RELEASE((*item));
+			delete (*item);
 
 			projectiles.erase(item);
+
+			projectiles.resize(projectiles.size());
 
 			break;
 		}
@@ -254,7 +256,7 @@ void ProjectileManager::ClearAllProjectiles()
 	for (int i = 0; i < projectiles.size(); ++i)
 	{
 		projectiles[i]->CleanUp();
-		RELEASE(projectiles[i]);
+		delete projectiles[i];
 	}
 
 	projectiles.clear();
