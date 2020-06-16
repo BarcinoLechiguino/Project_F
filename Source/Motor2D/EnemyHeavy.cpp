@@ -166,7 +166,7 @@ void EnemyHeavy::InitEntity()
 	attack_damage = 60;
 
 	attack_speed = 1.5f;
-	attack_range = 3;
+	attack_range = 7;
 
 	// HEALTHBAR
 	if (App->entity_manager->CheckTileAvailability(tile_position, this))
