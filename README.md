@@ -124,7 +124,8 @@ Feel free to visit our [Repository](<https://github.com/BarcinoLechiguino/Projec
   * **Fog of War:** There will be Fog of War covering the map. It will have 3 states: UNEXPLORED, FOGGED & VISIBLE.
   * **Particle System:** 7 different kinds of particles have been implemented.
   * **Dialog System:** 12 different dialogs have been implemented. 5 in the tutorial and the rest spread throughout the game.
-* **Quest System:** 4 different quests have been implemented. (1 Main Quest and 3 Side Quests)
+  * **Quest System:** 4 different quests have been implemented. (1 Main Quest and 3 Side Quests)
+  * **Save & Load System:** The game state can be saved and loaded.
   * **Building System:** 2 different buildable buildings have been implemented. (Ally Townhall and Ally Barracks).
   * **Projectile System:** 6 different projectiles along with their particles have been implemented.
   * **Tutorial:** A tutorial with 5 different steps explaining the main gameplay mechanics have been implemented.
@@ -413,6 +414,7 @@ No previous installation is required to play the game, just download the latest 
 * The UI has been fully implemented.
 * The Options Menu has been animated.
 * Now neutral entities show under FOGGED tiles.
+* Boulder Obstacle sprite was modified.
 * Final Version of the map was implemented.
 * Save and Load System was implemented
 * Projectile System was implemented.
@@ -420,9 +422,8 @@ No previous installation is required to play the game, just download the latest 
 * Now selected units and resources have a halo drawn below them.
 * Now selected buildings have a square drawn around them.
 * Now units flash red when they receive damage.
-* Installer was implemented.
 * Assets are now loaded from a .zip file.
-* Boulder Obstacle sprite was modified.
+* Installer was implemented.
 
 
 
