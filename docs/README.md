@@ -40,6 +40,8 @@ To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall 
   
 ## Game Trailer
 
+[![Trailer](https://github.com/BarcinoLechiguino/Project_F/blob/master/docs/Images/Renders/Video_cover.png?raw=true)](https://drive.google.com/file/d/1vDVO0CZzy5F_2dyo3LZEe14s1r4Uaznr/view?usp=sharing)
+
 ## Students Involved
  - {Angel Gonzalez} - {Project Lead, Management, Programmer} - GitHub: [BarcinoLechiguino](https://github.com/BarcinoLechiguino)
  - {Aitor Luque} - {Lead Designer, QA} - GitHub: [Aitorlb7](https://github.com/Aitorlb7)
@@ -64,5 +66,9 @@ To achieve victory destroy the enemy's Town-hall. Conversely, if your Town-hall 
 Mail: p2.missing.md@gmail.com
 
 Twitter: [@missingmd2](<https://twitter.com/missingmd2>)
+
+## Download the game
+
+[Gold version 1.0](<https://github.com/BarcinoLechiguino/Project_F/releases/tag/v1.0>)
 
 
