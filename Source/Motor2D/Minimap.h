@@ -63,6 +63,9 @@ private:
 
 	bool minimap_loaded;
 
+	bool draw_minimap_fow;								// Will keep track of whether or not to draw/refresh the minimap's Fog of War.
+	float draw_minimap_fow_timer;						// Will accumulate dt. When the timer reaches a given amount (i.e 0.1f), it will be reset back to 0.0f.
+
 	std::vector<iPoint> minimap_tiles;
 };
 
