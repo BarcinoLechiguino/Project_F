@@ -34,7 +34,7 @@ bool Minimap::Awake(pugi::xml_node& config)
 	player_is_moving_camera = false;
 
 	// FOG OF WAR
-	draw_minimap_fow = true;
+	draw_minimap_fow = true;								// Initialized to true so the minimap fow is drawn in the first frame.
 	draw_minimap_fow_timer = 0.0f;
 
 	return true;
