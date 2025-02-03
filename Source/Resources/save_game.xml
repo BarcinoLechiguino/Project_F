@@ -19,7 +19,7 @@
 	<entity_manager>
 		<resources data="0" electricity="0" bits="0" />
 		<entities>
-			<entity type="1" x="52" y="104" level="1" />
+			<entity type="1" x="51" y="138" level="1" />
 			<entity type="9" x="49" y="131" level="1" />
 			<entity type="12" x="52" y="16" level="1" />
 			<entity type="10" x="44" y="132" level="1" />
@@ -35,7 +35,6 @@
 			<entity type="15" x="45" y="60" level="1" />
 			<entity type="15" x="62" y="124" level="1" />
 			<entity type="15" x="61" y="137" level="1" />
-			<entity type="15" x="29" y="53" level="1" />
 			<entity type="15" x="59" y="57" level="1" />
 			<entity type="15" x="8" y="70" level="1" />
 			<entity type="16" x="25" y="107" level="1" />
@@ -67,10 +66,10 @@
 			<entity type="16" x="13" y="76" level="1" />
 			<entity type="15" x="75" y="64" level="1" />
 			<entity type="16" x="29" y="71" level="1" />
-			<entity type="15" x="35" y="54" level="1" />
+			<entity type="15" x="40" y="49" level="1" />
 			<entity type="15" x="69" y="71" level="1" />
 			<entity type="16" x="77" y="103" level="1" />
-			<entity type="15" x="76" y="49" level="1" />
+			<entity type="15" x="77" y="50" level="1" />
 			<entity type="16" x="79" y="76" level="1" />
 			<entity type="16" x="96" y="65" level="1" />
 			<entity type="16" x="87" y="83" level="1" />
@@ -81,7 +80,7 @@
 			<entity type="15" x="71" y="81" level="1" />
 			<entity type="15" x="70" y="94" level="1" />
 			<entity type="16" x="76" y="89" level="1" />
-			<entity type="16" x="63" y="117" level="1" />
+			<entity type="16" x="63" y="118" level="1" />
 			<entity type="18" x="15" y="53" level="1" />
 			<entity type="18" x="17" y="55" level="1" />
 			<entity type="18" x="19" y="57" level="1" />
@@ -124,62 +123,60 @@
 			<entity type="18" x="16" y="53" level="1" />
 			<entity type="18" x="15" y="52" level="1" />
 			<entity type="18" x="8" y="49" level="1" />
-			<entity type="18" x="79" y="49" level="1" />
-			<entity type="18" x="79" y="50" level="1" />
+			<entity type="18" x="80" y="49" level="1" />
 			<entity type="18" x="80" y="50" level="1" />
-			<entity type="18" x="80" y="51" level="1" />
+			<entity type="18" x="81" y="50" level="1" />
 			<entity type="18" x="81" y="51" level="1" />
-			<entity type="18" x="81" y="52" level="1" />
 			<entity type="18" x="82" y="52" level="1" />
-			<entity type="18" x="82" y="53" level="1" />
+			<entity type="18" x="82" y="52" level="1" />
+			<entity type="18" x="83" y="52" level="1" />
 			<entity type="18" x="83" y="53" level="1" />
-			<entity type="18" x="83" y="54" level="1" />
+			<entity type="18" x="84" y="53" level="1" />
 			<entity type="18" x="84" y="54" level="1" />
-			<entity type="18" x="84" y="55" level="1" />
+			<entity type="18" x="85" y="54" level="1" />
 			<entity type="18" x="85" y="55" level="1" />
-			<entity type="18" x="85" y="56" level="1" />
+			<entity type="18" x="86" y="55" level="1" />
 			<entity type="18" x="86" y="56" level="1" />
-			<entity type="18" x="86" y="57" level="1" />
+			<entity type="18" x="87" y="56" level="1" />
 			<entity type="18" x="87" y="57" level="1" />
-			<entity type="18" x="87" y="58" level="1" />
+			<entity type="18" x="88" y="57" level="1" />
 			<entity type="18" x="88" y="58" level="1" />
-			<entity type="18" x="88" y="59" level="1" />
+			<entity type="18" x="89" y="58" level="1" />
 			<entity type="18" x="89" y="59" level="1" />
-			<entity type="18" x="89" y="60" level="1" />
 			<entity type="18" x="90" y="59" level="1" />
 			<entity type="18" x="90" y="60" level="1" />
 			<entity type="18" x="91" y="59" level="1" />
-			<entity type="18" x="90" y="61" level="1" />
-			<entity type="18" x="92" y="59" level="1" />
-			<entity type="18" x="93" y="59" level="1" />
+			<entity type="18" x="91" y="60" level="1" />
+			<entity type="18" x="92" y="60" level="1" />
 			<entity type="18" x="91" y="61" level="1" />
-			<entity type="18" x="94" y="59" level="1" />
-			<entity type="18" x="91" y="62" level="1" />
-			<entity type="18" x="92" y="61" level="1" />
 			<entity type="18" x="93" y="60" level="1" />
-			<entity type="18" x="95" y="59" level="1" />
-			<entity type="18" x="96" y="59" level="1" />
+			<entity type="18" x="94" y="60" level="1" />
+			<entity type="18" x="92" y="61" level="1" />
+			<entity type="18" x="95" y="60" level="1" />
+			<entity type="18" x="92" y="62" level="1" />
+			<entity type="18" x="93" y="62" level="1" />
+			<entity type="18" x="94" y="61" level="1" />
 			<entity type="18" x="96" y="60" level="1" />
-			<entity type="18" x="97" y="59" level="1" />
-			<entity type="18" x="98" y="59" level="1" />
-			<entity type="18" x="95" y="62" level="1" />
-			<entity type="18" x="99" y="59" level="1" />
+			<entity type="18" x="97" y="60" level="1" />
 			<entity type="18" x="97" y="61" level="1" />
-			<entity type="18" x="99" y="61" level="1" />
-			<entity type="18" x="78" y="49" level="1" />
-			<entity type="18" x="78" y="48" level="1" />
+			<entity type="18" x="98" y="60" level="1" />
+			<entity type="18" x="99" y="60" level="1" />
+			<entity type="18" x="95" y="62" level="1" />
+			<entity type="18" x="97" y="61" level="1" />
+			<entity type="18" x="79" y="50" level="1" />
+			<entity type="18" x="79" y="49" level="1" />
 			<entity type="18" x="77" y="48" level="1" />
-			<entity type="18" x="77" y="47" level="1" />
+			<entity type="18" x="78" y="48" level="1" />
 			<entity type="18" x="76" y="47" level="1" />
+			<entity type="18" x="77" y="47" level="1" />
+			<entity type="18" x="75" y="47" level="1" />
 			<entity type="18" x="76" y="46" level="1" />
-			<entity type="18" x="75" y="46" level="1" />
+			<entity type="18" x="74" y="46" level="1" />
 			<entity type="18" x="75" y="45" level="1" />
 			<entity type="18" x="74" y="45" level="1" />
 			<entity type="18" x="74" y="44" level="1" />
-			<entity type="18" x="73" y="44" level="1" />
-			<entity type="18" x="73" y="43" level="1" />
-			<entity type="18" x="57" y="86" level="1" />
-			<entity type="18" x="57" y="85" level="1" />
+			<entity type="18" x="58" y="87" level="1" />
+			<entity type="18" x="58" y="86" level="1" />
 			<entity type="18" x="56" y="85" level="1" />
 			<entity type="18" x="56" y="84" level="1" />
 			<entity type="18" x="55" y="84" level="1" />
@@ -192,61 +189,60 @@
 			<entity type="18" x="52" y="80" level="1" />
 			<entity type="18" x="51" y="80" level="1" />
 			<entity type="18" x="51" y="79" level="1" />
-			<entity type="18" x="57" y="91" level="1" />
-			<entity type="18" x="57" y="92" level="1" />
-			<entity type="18" x="56" y="92" level="1" />
-			<entity type="18" x="57" y="88" level="1" />
-			<entity type="18" x="57" y="89" level="1" />
-			<entity type="18" x="29" y="83" level="1" />
+			<entity type="18" x="58" y="92" level="1" />
+			<entity type="18" x="58" y="93" level="1" />
+			<entity type="18" x="57" y="93" level="1" />
+			<entity type="18" x="58" y="89" level="1" />
+			<entity type="18" x="58" y="90" level="1" />
+			<entity type="18" x="30" y="84" level="1" />
 			<entity type="18" x="56" y="83" level="1" />
-			<entity type="18" x="56" y="89" level="1" />
-			<entity type="18" x="57" y="87" level="1" />
+			<entity type="18" x="56" y="90" level="1" />
+			<entity type="18" x="58" y="88" level="1" />
 			<entity type="18" x="53" y="80" level="1" />
-			<entity type="18" x="52" y="78" level="1" />
-			<entity type="18" x="33" y="88" level="1" />
-			<entity type="18" x="55" y="81" level="1" />
-			<entity type="18" x="54" y="95" level="1" />
-			<entity type="18" x="54" y="94" level="1" />
-			<entity type="18" x="30" y="91" level="1" />
-			<entity type="18" x="27" y="87" level="1" />
-			<entity type="18" x="27" y="81" level="1" />
-			<entity type="18" x="27" y="82" level="1" />
-			<entity type="18" x="27" y="83" level="1" />
-			<entity type="18" x="27" y="84" level="1" />
-			<entity type="18" x="27" y="85" level="1" />
+			<entity type="18" x="53" y="79" level="1" />
+			<entity type="18" x="34" y="89" level="1" />
+			<entity type="18" x="56" y="82" level="1" />
+			<entity type="18" x="55" y="96" level="1" />
+			<entity type="18" x="55" y="95" level="1" />
+			<entity type="18" x="31" y="92" level="1" />
+			<entity type="18" x="28" y="88" level="1" />
+			<entity type="18" x="28" y="82" level="1" />
+			<entity type="18" x="28" y="83" level="1" />
+			<entity type="18" x="28" y="84" level="1" />
 			<entity type="18" x="28" y="85" level="1" />
 			<entity type="18" x="28" y="86" level="1" />
-			<entity type="18" x="28" y="87" level="1" />
-			<entity type="18" x="29" y="86" level="1" />
 			<entity type="18" x="29" y="87" level="1" />
+			<entity type="18" x="29" y="88" level="1" />
 			<entity type="18" x="30" y="87" level="1" />
-			<entity type="18" x="29" y="89" level="1" />
 			<entity type="18" x="30" y="88" level="1" />
 			<entity type="18" x="31" y="88" level="1" />
+			<entity type="18" x="30" y="90" level="1" />
 			<entity type="18" x="31" y="89" level="1" />
-			<entity type="18" x="31" y="90" level="1" />
 			<entity type="18" x="32" y="89" level="1" />
-			<entity type="18" x="32" y="90" level="1" />
-			<entity type="18" x="33" y="90" level="1" />
+			<entity type="18" x="31" y="89" level="1" />
+			<entity type="18" x="32" y="91" level="1" />
+			<entity type="18" x="32" y="89" level="1" />
 			<entity type="18" x="33" y="91" level="1" />
-			<entity type="18" x="32" y="92" level="1" />
 			<entity type="18" x="34" y="91" level="1" />
 			<entity type="18" x="34" y="92" level="1" />
+			<entity type="18" x="33" y="93" level="1" />
 			<entity type="18" x="35" y="92" level="1" />
-			<entity type="18" x="53" y="92" level="1" />
-			<entity type="18" x="56" y="82" level="1" />
+			<entity type="18" x="35" y="93" level="1" />
+			<entity type="18" x="36" y="93" level="1" />
+			<entity type="18" x="54" y="93" level="1" />
+			<entity type="18" x="57" y="83" level="1" />
 			<entity type="16" x="80" y="57" level="1" />
-			<entity type="18" x="81" y="53" level="1" />
-			<entity type="18" x="84" y="57" level="1" />
-			<entity type="18" x="76" y="48" level="1" />
-			<entity type="18" x="85" y="57" level="1" />
-			<entity type="15" x="79" y="53" level="1" />
-			<entity type="18" x="78" y="51" level="1" />
-			<entity type="18" x="83" y="52" level="1" />
-			<entity type="15" x="81" y="50" level="1" />
-			<entity type="18" x="80" y="48" level="1" />
-			<entity type="15" x="77" y="45" level="1" />
-			<entity type="18" x="77" y="44" level="1" />
+			<entity type="18" x="81" y="54" level="1" />
+			<entity type="18" x="85" y="58" level="1" />
+			<entity type="18" x="77" y="49" level="1" />
+			<entity type="18" x="86" y="58" level="1" />
+			<entity type="15" x="80" y="54" level="1" />
+			<entity type="18" x="79" y="52" level="1" />
+			<entity type="18" x="84" y="52" level="1" />
+			<entity type="15" x="82" y="51" level="1" />
+			<entity type="18" x="81" y="49" level="1" />
+			<entity type="15" x="78" y="46" level="1" />
+			<entity type="18" x="78" y="45" level="1" />
 			<entity type="15" x="69" y="86" level="1" />
 			<entity type="18" x="70" y="84" level="1" />
 			<entity type="15" x="71" y="83" level="1" />
@@ -262,65 +258,65 @@
 			<entity type="18" x="65" y="82" level="1" />
 			<entity type="18" x="67" y="80" level="1" />
 			<entity type="18" x="66" y="80" level="1" />
-			<entity type="18" x="55" y="93" level="1" />
-			<entity type="18" x="56" y="93" level="1" />
+			<entity type="18" x="56" y="94" level="1" />
+			<entity type="18" x="57" y="94" level="1" />
 			<entity type="18" x="24" y="60" level="1" />
 			<entity type="18" x="23" y="59" level="1" />
 			<entity type="18" x="20" y="55" level="1" />
 			<entity type="18" x="17" y="54" level="1" />
 			<entity type="18" x="15" y="51" level="1" />
-			<entity type="18" x="48" y="98" level="1" />
+			<entity type="18" x="41" y="98" level="1" />
 			<entity type="18" x="44" y="99" level="1" />
-			<entity type="18" x="46" y="100" level="1" />
-			<entity type="18" x="50" y="98" level="1" />
-			<entity type="18" x="49" y="99" level="1" />
-			<entity type="18" x="46" y="101" level="1" />
-			<entity type="18" x="46" y="102" level="1" />
-			<entity type="18" x="53" y="95" level="1" />
-			<entity type="18" x="48" y="100" level="1" />
-			<entity type="18" x="51" y="97" level="1" />
+			<entity type="18" x="47" y="101" level="1" />
 			<entity type="18" x="50" y="99" level="1" />
-			<entity type="18" x="49" y="100" level="1" />
-			<entity type="18" x="53" y="96" level="1" />
-			<entity type="18" x="51" y="98" level="1" />
+			<entity type="18" x="50" y="100" level="1" />
 			<entity type="18" x="47" y="102" level="1" />
-			<entity type="18" x="52" y="97" level="1" />
+			<entity type="18" x="47" y="103" level="1" />
+			<entity type="18" x="54" y="96" level="1" />
 			<entity type="18" x="48" y="101" level="1" />
-			<entity type="18" x="50" y="99" level="1" />
+			<entity type="18" x="51" y="98" level="1" />
+			<entity type="18" x="51" y="100" level="1" />
+			<entity type="18" x="50" y="101" level="1" />
+			<entity type="18" x="54" y="97" level="1" />
+			<entity type="18" x="52" y="99" level="1" />
+			<entity type="18" x="48" y="103" level="1" />
+			<entity type="18" x="53" y="98" level="1" />
+			<entity type="18" x="49" y="102" level="1" />
+			<entity type="18" x="51" y="100" level="1" />
 			<entity type="18" x="33" y="111" level="1" />
 			<entity type="18" x="34" y="110" level="1" />
 			<entity type="18" x="33" y="111" level="1" />
-			<entity type="18" x="43" y="99" level="1" />
+			<entity type="18" x="44" y="100" level="1" />
+			<entity type="18" x="43" y="100" level="1" />
+			<entity type="18" x="42" y="98" level="1" />
+			<entity type="18" x="41" y="100" level="1" />
 			<entity type="18" x="42" y="99" level="1" />
 			<entity type="18" x="42" y="98" level="1" />
-			<entity type="18" x="40" y="99" level="1" />
 			<entity type="18" x="41" y="98" level="1" />
 			<entity type="18" x="41" y="97" level="1" />
-			<entity type="18" x="40" y="97" level="1" />
+			<entity type="18" x="40" y="98" level="1" />
+			<entity type="18" x="40" y="98" level="1" />
+			<entity type="18" x="42" y="96" level="1" />
+			<entity type="18" x="40" y="98" level="1" />
 			<entity type="18" x="40" y="96" level="1" />
-			<entity type="18" x="39" y="97" level="1" />
-			<entity type="18" x="38" y="98" level="1" />
-			<entity type="18" x="41" y="95" level="1" />
 			<entity type="18" x="39" y="96" level="1" />
+			<entity type="18" x="38" y="97" level="1" />
 			<entity type="18" x="39" y="95" level="1" />
 			<entity type="18" x="38" y="95" level="1" />
-			<entity type="18" x="37" y="96" level="1" />
 			<entity type="18" x="38" y="94" level="1" />
+			<entity type="18" x="37" y="95" level="1" />
 			<entity type="18" x="37" y="94" level="1" />
 			<entity type="18" x="37" y="93" level="1" />
-			<entity type="18" x="36" y="94" level="1" />
-			<entity type="18" x="36" y="93" level="1" />
-			<entity type="18" x="36" y="92" level="1" />
-			<entity type="18" x="46" y="103" level="1" />
-			<entity type="18" x="44" y="101" level="1" />
-			<entity type="18" x="45" y="103" level="1" />
-			<entity type="18" x="49" y="101" level="1" />
-			<entity type="18" x="35" y="87" level="1" />
+			<entity type="18" x="47" y="104" level="1" />
+			<entity type="18" x="45" y="102" level="1" />
+			<entity type="18" x="46" y="104" level="1" />
+			<entity type="18" x="50" y="102" level="1" />
 			<entity type="18" x="36" y="88" level="1" />
-			<entity type="18" x="35" y="86" level="1" />
+			<entity type="18" x="36" y="88" level="1" />
+			<entity type="18" x="36" y="87" level="1" />
 			<entity type="18" x="35" y="85" level="1" />
 			<entity type="18" x="34" y="86" level="1" />
-			<entity type="18" x="35" y="88" level="1" />
+			<entity type="18" x="36" y="89" level="1" />
 			<entity type="18" x="38" y="89" level="1" />
 			<entity type="18" x="37" y="89" level="1" />
 			<entity type="18" x="37" y="85" level="1" />
@@ -330,17 +326,17 @@
 			<entity type="18" x="38" y="85" level="1" />
 			<entity type="18" x="39" y="86" level="1" />
 			<entity type="18" x="39" y="88" level="1" />
-			<entity type="18" x="38" y="89" level="1" />
+			<entity type="18" x="39" y="90" level="1" />
 			<entity type="7" x="59" y="92" level="1" />
 			<entity type="7" x="14" y="81" level="1" />
 			<entity type="7" x="20" y="89" level="1" />
 			<entity type="8" x="46" y="92" level="1" />
 			<entity type="8" x="93" y="53" level="1" />
-			<entity type="18" x="57" y="90" level="1" />
-			<entity type="18" x="52" y="96" level="1" />
-			<entity type="18" x="44" y="102" level="1" />
-			<entity type="18" x="47" y="100" level="1" />
-			<entity type="18" x="45" y="100" level="1" />
+			<entity type="18" x="58" y="91" level="1" />
+			<entity type="18" x="53" y="97" level="1" />
+			<entity type="18" x="45" y="103" level="1" />
+			<entity type="18" x="48" y="101" level="1" />
+			<entity type="18" x="46" y="101" level="1" />
 			<entity type="15" x="58" y="111" level="1" />
 			<entity type="16" x="52" y="105" level="1" />
 			<entity type="15" x="43" y="114" level="1" />
@@ -380,19 +376,95 @@
 			<entity type="18" x="29" y="68" level="1" />
 			<entity type="18" x="26" y="68" level="1" />
 			<entity type="18" x="30" y="70" level="1" />
+			<entity type="18" x="32" y="26" level="1" />
+			<entity type="18" x="30" y="28" level="1" />
+			<entity type="18" x="28" y="32" level="1" />
+			<entity type="18" x="28" y="35" level="1" />
+			<entity type="18" x="30" y="36" level="1" />
+			<entity type="18" x="32" y="36" level="1" />
+			<entity type="18" x="34" y="36" level="1" />
+			<entity type="18" x="36" y="34" level="1" />
+			<entity type="18" x="36" y="32" level="1" />
+			<entity type="18" x="36" y="30" level="1" />
+			<entity type="18" x="36" y="28" level="1" />
+			<entity type="18" x="36" y="26" level="1" />
+			<entity type="18" x="34" y="25" level="1" />
+			<entity type="18" x="36" y="24" level="1" />
+			<entity type="18" x="36" y="36" level="1" />
+			<entity type="18" x="29" y="30" level="1" />
+			<entity type="18" x="64" y="36" level="1" />
+			<entity type="18" x="66" y="36" level="1" />
+			<entity type="18" x="68" y="36" level="1" />
+			<entity type="18" x="70" y="36" level="1" />
+			<entity type="18" x="71" y="35" level="1" />
+			<entity type="18" x="71" y="33" level="1" />
+			<entity type="18" x="71" y="31" level="1" />
+			<entity type="18" x="71" y="29" level="1" />
+			<entity type="18" x="69" y="29" level="1" />
+			<entity type="18" x="67" y="27" level="1" />
+			<entity type="18" x="66" y="25" level="1" />
+			<entity type="18" x="64" y="23" level="1" />
+			<entity type="18" x="63" y="24" level="1" />
+			<entity type="18" x="63" y="26" level="1" />
+			<entity type="18" x="63" y="28" level="1" />
+			<entity type="18" x="63" y="30" level="1" />
+			<entity type="18" x="63" y="32" level="1" />
+			<entity type="18" x="63" y="34" level="1" />
+			<entity type="18" x="63" y="35" level="1" />
+			<entity type="18" x="43" y="76" level="1" />
+			<entity type="18" x="45" y="76" level="1" />
+			<entity type="18" x="47" y="78" level="1" />
+			<entity type="18" x="49" y="79" level="1" />
+			<entity type="18" x="51" y="79" level="1" />
+			<entity type="18" x="42" y="77" level="1" />
+			<entity type="18" x="42" y="78" level="1" />
+			<entity type="18" x="44" y="79" level="1" />
+			<entity type="18" x="46" y="81" level="1" />
+			<entity type="18" x="48" y="83" level="1" />
+			<entity type="18" x="50" y="84" level="1" />
+			<entity type="18" x="52" y="85" level="1" />
+			<entity type="18" x="54" y="86" level="1" />
+			<entity type="18" x="55" y="86" level="1" />
+			<entity type="18" x="56" y="86" level="1" />
+			<entity type="18" x="30" y="81" level="1" />
+			<entity type="18" x="32" y="79" level="1" />
+			<entity type="18" x="34" y="77" level="1" />
+			<entity type="18" x="36" y="75" level="1" />
+			<entity type="18" x="37" y="75" level="1" />
+			<entity type="18" x="38" y="76" level="1" />
+			<entity type="18" x="38" y="77" level="1" />
+			<entity type="18" x="37" y="78" level="1" />
+			<entity type="18" x="35" y="80" level="1" />
+			<entity type="18" x="33" y="82" level="1" />
+			<entity type="18" x="31" y="84" level="1" />
+			<entity type="18" x="30" y="86" level="1" />
+			<entity type="15" x="21" y="46" level="1" />
+			<entity type="15" x="34" y="43" level="1" />
+			<entity type="15" x="21" y="38" level="1" />
+			<entity type="15" x="17" y="42" level="1" />
+			<entity type="16" x="27" y="44" level="1" />
+			<entity type="16" x="28" y="53" level="1" />
+			<entity type="17" x="66" y="149" level="1" />
+			<entity type="18" x="38" y="89" level="1" />
+			<entity type="18" x="38" y="88" level="1" />
+			<entity type="18" x="40" y="90" level="1" />
+			<entity type="18" x="37" y="87" level="1" />
+			<entity type="18" x="39" y="88" level="1" />
+			<entity type="18" x="40" y="88" level="1" />
+			<entity type="18" x="40" y="89" level="1" />
 		</entities>
 	</entity_manager>
 	<projectile_manager />
 	<enemy_AI_manager />
 	<fow_manager>
-		<fow_debug value="false" />
+		<fow_debug value="true" />
 	</fow_manager>
 	<dialog_manager />
 	<player>
-		<god_mode value="false" />
+		<god_mode value="true" />
 	</player>
 	<quest_manager />
 	<renderer>
-		<camera x="1877" y="-2607" />
+		<camera x="3064" y="-3359" />
 	</renderer>
 </game_state>
